@@ -6,6 +6,7 @@ import loginReducer from './loginReducer';
 import baseReducer from './baseReducer';
 import courseReducer from './courseReducer';
 import genReducer from './genReducer';
+import lessonCourseReducer from './lessonCourseReducer';
 
 
 const rootReducer = combineReducers({
@@ -13,5 +14,6 @@ const rootReducer = combineReducers({
     base: baseReducer,
     course: courseReducer,
     gen: genReducer,
+    lessonCourse: lessonCourseReducer,
 });
 export default rootReducer;

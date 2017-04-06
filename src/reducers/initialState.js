@@ -15,18 +15,24 @@ export default {
         baseData:[],
         isLoading: false,
         error: false,
-        selectedBaseID: -1
+        selectedBaseId: -1
     },
     course:{
         courseData:[],
         isLoading: false,
         error: false,
-        selectedCourseID: -1
+        selectedCourseId: -1
     },
     gen:{
         genData:[],
         isLoading: false,
         error: false,
-        selectedGenID: -1
+        selectedGenId: -1
     },
+    lessonCourse:{
+        lessonCourseData:[],
+        isLoading: false,
+        error: false,
+        selectedLessonCourseId: -1
+    }
 }

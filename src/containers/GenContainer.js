@@ -22,6 +22,7 @@ class GenContainer extends React.Component {
 
     onSelectedItem(genId){
         this.props.genActions.selectedGenId(genId);
+        Actions.lessonCourse();
     }
 
     componentWillReceiveProps(nextProps){
@@ -47,7 +48,7 @@ function mapStateToProps(state) {
         genData: state.gen.genData,
         error: state.gen.error,
         token: state.login.token,
-        selectedGenID: state.gen.selectedGenID
+        selectedGenId: state.gen.selectedGenId
     };
 }
 

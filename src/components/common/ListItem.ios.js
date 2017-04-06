@@ -12,9 +12,7 @@ const ListItem = ({rowData, onPress}) => {
             onPress = {() => onPress(rowData.id)}
             style={styles.item}
         >
-            <Text>
-                {rowData.name}
-            </Text>
+            <Text>{rowData.name}</Text>
         </TouchableHighlight>
     );
 

@@ -47,7 +47,8 @@ function mapStateToProps(state) {
         isLoading: state.course.isLoading,
         courseData: state.course.courseData,
         error: state.course.error,
-        token: state.login.token
+        token: state.login.token,
+        selectedCourseId: state.base.selectedCourseId
     };
 }
 

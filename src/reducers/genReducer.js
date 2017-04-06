@@ -24,7 +24,7 @@ export default function genReducer(state = initialState.gen, action) {
             });
         case types.SELECTED_GEN_ID:
             return Object.assign({},state,{
-                selectedGenID: action.selectedGenID
+                selectedGenId: action.selectedGenId
             })
         default:
             return state;

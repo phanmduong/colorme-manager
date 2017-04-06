@@ -49,7 +49,7 @@ function mapStateToProps(state) {
         baseData: state.base.baseData,
         error: state.base.error,
         token: state.login.token,
-        selectedBaseID: state.base.selectedBaseID
+        selectedBaseId: state.base.selectedBaseId
     };
 }
 

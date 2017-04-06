@@ -45,6 +45,6 @@ export function loadDataError() {
 export function selectedGenId(id) {
     return {
         type: types.SELECTED_GEN_ID,
-        selectedGenID: id
+        selectedGenId: id
     }
 }

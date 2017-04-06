@@ -45,6 +45,6 @@ export function loadDataError() {
 export function selectedBaseId(id) {
     return {
         type: types.SELECTED_BASE_ID,
-        selectedBaseID: id
+        selectedBaseId: id
     }
 }

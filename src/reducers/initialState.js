@@ -22,5 +22,11 @@ export default {
         isLoading: false,
         error: false,
         selectedCourseID: -1
-    }
+    },
+    gen:{
+        genData:[],
+        isLoading: false,
+        error: false,
+        selectedGenID: -1
+    },
 }

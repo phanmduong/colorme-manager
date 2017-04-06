@@ -16,7 +16,6 @@ import * as loginActions from '../actions/loginActions';
 class LoginContainer extends React.Component {
     constructor(props) {
         super(props);
-
         this.updateFormData = this.updateFormData.bind(this);
         this.onClickLogin = this.onClickLogin.bind(this);
     }
@@ -31,10 +30,10 @@ class LoginContainer extends React.Component {
         this.props.loginActions.loginUser(this.props.login);
     }
 
-    render() {
-        if (!_.isUndefined(this.props.token) && this.props.token.trim().length > 0) {
-            if (!this.props.isLoading && !this.props.error) {
-                if (this.props.user.role > 0){
+    componentWillReceiveProps(nextProps){
+        if (!_.isUndefined(nextProps.token) && nextProps.token.trim().length > 0) {
+            if (!nextProps.isLoading && !nextProps.error) {
+                if (nextProps.user.role > 0){
                     Actions.attendance();
                 }
                 else {
@@ -46,13 +45,15 @@ class LoginContainer extends React.Component {
             }
         }
 
-        if (this.props.error){
+        if (nextProps.error){
             Alert.alert(
                 'Thông báo',
                 alert.CHECK_INFO_LOGIN
             )
         }
+    }
 
+    render() {
         return (
             <LoginComponent
                 updateFormData={this.updateFormData}

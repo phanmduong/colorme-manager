@@ -6,6 +6,7 @@ import {Scene, Router} from 'react-native-router-flux';
 import LoginContainer from './containers/LoginContainer';
 import BaseContainer from './containers/BaseContainer';
 import CourseContainer from './containers/CourseContainer';
+import GenContainer from './containers/GenContainer';
 import {Navigator}from 'react-native'
 
 class RouterComponent extends React.Component {
@@ -17,10 +18,11 @@ class RouterComponent extends React.Component {
                 </Scene>
                 <Scene key="attendance">
                     <Scene key="base" component={BaseContainer} title="Cơ sở" initial/>
-                    <Scene key="course" component={CourseContainer} title="Khóa học"/>
+                    <Scene key="course" component={CourseContainer} title="Môn học"/>
+                    <Scene key="gen" component={GenContainer} title="Khóa học"/>
                 </Scene>
-
-            </Router>)
+            </Router>
+        )
     }
 }
 

@@ -4,25 +4,24 @@
 import React from'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import CourseComponent from '../components/CourseComponent';
-import * as courseActions from '../actions/courseActions';
+import GenComponent from '../components/GenComponent';
+import * as genActions from '../actions/genActions';
 import {Alert}from 'react-native';
 import * as alert from '../constants/alert';
 import {Actions} from 'react-native-router-flux';
 
-class CourseContainer extends React.Component {
+class GenContainer extends React.Component {
     constructor(props) {
         super(props);
         this.onSelectedItem = this.onSelectedItem.bind(this);
     }
 
     componentWillMount(){
-        this.props.courseActions.loadDataCourse(this.props.token);
+        this.props.genActions.loadDataGen(this.props.token);
     }
 
-    onSelectedItem(courseId){
-        this.props.courseActions.selectedCourseId(courseId);
-        Actions.gen();
+    onSelectedItem(genId){
+        this.props.genActions.selectedGenId(genId);
     }
 
     componentWillReceiveProps(nextProps){
@@ -33,8 +32,8 @@ class CourseContainer extends React.Component {
 
     render() {
         return (
-            <CourseComponent
-                courseData = {this.props.courseData}
+            <GenComponent
+                genData = {this.props.genData}
                 isLoading = {this.props.isLoading}
                 onSelectedItem = {this.onSelectedItem}
             />
@@ -44,17 +43,18 @@ class CourseContainer extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        isLoading: state.course.isLoading,
-        courseData: state.course.courseData,
-        error: state.course.error,
-        token: state.login.token
+        isLoading: state.gen.isLoading,
+        genData: state.gen.genData,
+        error: state.gen.error,
+        token: state.login.token,
+        selectedGenID: state.gen.selectedGenID
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        courseActions: bindActionCreators(courseActions, dispatch)
+        genActions: bindActionCreators(genActions, dispatch)
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CourseContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(GenContainer);

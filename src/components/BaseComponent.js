@@ -1,23 +1,24 @@
 import React from'react';
 import {StyleSheet, Text, ListView, ActivityIndicator} from 'react-native';
-import ListItem from '../components/common/ListItem';
+import ListItem from './common/ListItem';
 import _ from 'lodash';
 
 class BaseComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.renderRow = this.renderRow.bind(this);
+        this.renderListRow = this.renderListRow.bind(this);
+    }
 
+    componentWillMount(){
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        this.state = {
+        this.setState({
             dataSource: ds.cloneWithRows([])
-        };
+        });
     }
 
     componentWillReceiveProps(nextProps) {
         let baseData = nextProps.baseData;
         _.reverse(baseData);
-        console.log(baseData);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(baseData)
         });
@@ -38,14 +39,14 @@ class BaseComponent extends React.Component {
                         style = {styles.list}
                         enableEmptySections
                         dataSource = {this.state.dataSource}
-                        renderRow = {this.renderRow}
+                        renderRow = {this.renderListRow}
                     />
 
                 )
         );
     }
 
-    renderRow(rowData){
+    renderListRow(rowData) {
         return (
             <ListItem
                 rowData = {rowData}

@@ -3,10 +3,10 @@ import {StyleSheet, Text, ListView, ActivityIndicator} from 'react-native';
 import ListItem from './common/ListItem';
 import _ from 'lodash';
 
-class CourseComponent extends React.Component {
-    constructor(props) {
-        super(props);
-        this.renderRow = this.renderRow.bind(this);
+class GenComponent extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.renderListRow = this.renderListRow.bind(this);
     }
 
     componentWillMount(){
@@ -17,11 +17,9 @@ class CourseComponent extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        let courseData = nextProps.courseData;
-        _.reverse(courseData);
-        console.log(courseData);
+        let genData = nextProps.genData;
         this.setState({
-            dataSource: this.state.dataSource.cloneWithRows(courseData)
+            dataSource: this.state.dataSource.cloneWithRows(genData)
         });
     }
 
@@ -40,14 +38,15 @@ class CourseComponent extends React.Component {
                         style = {styles.list}
                         enableEmptySections
                         dataSource = {this.state.dataSource}
-                        renderRow = {this.renderRow}
+                        renderRow = {this.renderListRow}
                     />
 
                 )
         );
     }
 
-    renderRow(rowData){
+    renderListRow(rowData) {
+        rowData['name'] = 'Khóa ' + rowData['name'];
         return (
             <ListItem
                 rowData = {rowData}
@@ -68,4 +67,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default CourseComponent;
+export default GenComponent;

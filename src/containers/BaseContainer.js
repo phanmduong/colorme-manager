@@ -13,8 +13,11 @@ import {Actions} from 'react-native-router-flux';
 class BaseContainer extends React.Component {
     constructor(props) {
         super(props);
-        this.props.baseActions.loadDataBase(this.props.token);
         this.onSelectedItem = this.onSelectedItem.bind(this);
+    }
+
+    componentWillMount(){
+        this.props.baseActions.loadDataBase(this.props.token);
     }
 
     onSelectedItem(baseId){
@@ -23,11 +26,13 @@ class BaseContainer extends React.Component {
 
     }
 
-    render() {
-        if (this.props.error) {
+    componentWillReceiveProps(nextProps){
+        if (nextProps.error) {
             Alert.alert('Thông báo', alert.LOAD_DATA_ERROR);
         }
+    }
 
+    render() {
         return (
             <BaseComponent
                 baseData = {this.props.baseData}

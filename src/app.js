@@ -2,14 +2,15 @@
  * Created by phanmduong on 4/5/17.
  */
 import React from'react';
-import {createStore,compose, applyMiddleware}from 'redux';
+import {createStore, applyMiddleware}from 'redux';
 import {Provider}from'react-redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
 import Router from './routes';
 
+import { composeWithDevTools } from 'remote-redux-devtools';
 
-const store = createStore(reducers, compose(applyMiddleware(thunk)));
+const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)));
 
 class App extends React.Component {
     render() {

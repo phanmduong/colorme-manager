@@ -7,7 +7,7 @@ import * as env from '../constants/env';
 export function loadLoginApi(login) {
     let url = env.API_URL + "/login";
     return axios.post(url, {
-        email: login.email,
+        email: login.username,
         password: login.password
     });
 }

@@ -8,7 +8,9 @@ import BaseContainer from './containers/BaseContainer';
 import CourseContainer from './containers/CourseContainer';
 import GenContainer from './containers/GenContainer';
 import LessonCourseContainer from './containers/LessonCourseContainer';
+import ClassContainer from './containers/ClassContainer';
 import ChooseEnterStudentContainer from './containers/ChooseEnterStudentContainer';
+import EnterStudentCodeContainer from './containers/EnterStudentCodeContainer';
 import {Navigator}from 'react-native'
 
 class RouterComponent extends React.Component {
@@ -23,7 +25,9 @@ class RouterComponent extends React.Component {
                     <Scene key="course" component={CourseContainer} title="Môn học"/>
                     <Scene key="gen" component={GenContainer} title="Khóa học"/>
                     <Scene key="lessonCourse" component={LessonCourseContainer} title="Buổi học"/>
+                    <Scene key="classCourse" component={ClassContainer} title="Lớp học"/>
                     <Scene key="chooseEnterStudent" component={ChooseEnterStudentContainer} title="Điểm danh"/>
+                    <Scene key="enterStudentCode" component={EnterStudentCodeContainer} title="Điểm danh"/>
                 </Scene>
             </Router>
         )

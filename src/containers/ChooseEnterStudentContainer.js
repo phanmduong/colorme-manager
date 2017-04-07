@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import ChooseEnterStudentComponent from '../components/ChooseEnterStudentComponent';
 import * as chooseEnterStudentActions from '../actions/chooseEnterStudentActions';
 import {bindActionCreators} from 'redux';
+import {Actions} from 'react-native-router-flux';
 
 class ChooseEnterStudentContainer extends React.Component {
     constructor(props, context) {
@@ -14,7 +15,17 @@ class ChooseEnterStudentContainer extends React.Component {
     }
 
     onSelectEnterStudent(enterStudentId){
-        console.log(enterStudentId);
+        switch (enterStudentId){
+            case 0:
+                break;
+            case 1:
+                Actions.enterStudentCode();
+                break;
+            case 2:
+                break;
+            default:
+                break;
+        }
     }
 
     render() {

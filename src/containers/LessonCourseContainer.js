@@ -23,7 +23,7 @@ class LessonCourseContainer extends React.Component {
 
     onSelectedItem(lessonCourseId){
         this.props.lessonCourseActions.selectedLessonCourseId(lessonCourseId);
-        Actions.chooseEnterStudent();
+        Actions.classCourse();
     }
 
     componentWillReceiveProps(nextProps){

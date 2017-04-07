@@ -35,6 +35,12 @@ export default {
         error: false,
         selectedLessonCourseId: -1
     },
+    class: {
+        classData: [],
+        isLoading: false,
+        error: false,
+        selectedClassId: -1
+    },
     chooseEnterStudent: {
         dataListChooseEnterStudent: [
             {
@@ -51,5 +57,9 @@ export default {
             }
         ],
         selectedEnterStudentId: -1
+    },
+    enterStudentCode:{
+        studentCode: '',
+        studentCodeForm: '',
     }
 }

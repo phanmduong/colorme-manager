@@ -10,10 +10,6 @@ export default function enterStudentCodeReducer(state = initialState.enterStuden
             return Object.assign({}, state, {
                 studentCodeForm: action.studentCodeForm
             });
-        case types.SELECT_BUTTON_ENTER_STUDENT_CODE:
-            return Object.assign({}, state, {
-                studentCode: action.studentCode
-            });
         default:
             return state;
     }

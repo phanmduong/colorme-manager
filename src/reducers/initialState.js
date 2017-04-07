@@ -58,8 +58,18 @@ export default {
         ],
         selectedEnterStudentId: -1
     },
-    enterStudentCode:{
-        studentCode: '',
+    enterStudentCode: {
         studentCodeForm: '',
+    },
+    attendanceStudent: {
+        isLoadingInfoStudent: false,
+        isUpdatingAttendanceStudent: false,
+        student: {
+            attendances:[{}]
+        },
+        attendance: [],
+        message: '',
+        errorLoad: false,
+        errorUpdate: false
     }
 }

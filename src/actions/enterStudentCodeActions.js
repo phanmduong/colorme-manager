@@ -9,10 +9,3 @@ export function updateDataStudentCodeForm(studentCode) {
         studentCodeForm: studentCode,
     };
 }
-
-export function selectButtonEnterStudentCode(studentCode) {
-    return{
-        type: types.SELECT_BUTTON_ENTER_STUDENT_CODE,
-        studentCode: studentCode,
-    };
-}

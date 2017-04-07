@@ -10,6 +10,7 @@ import lessonCourseReducer from './lessonCourseReducer';
 import classReducer from './classReducer';
 import chooseEnterStudentReducer from './chooseEnterStudentReducer';
 import enterStudentCodeReducer from './enterStudentCodeReducer';
+import attendanceStudentReducer from './attendanceStudentReducer';
 
 
 const rootReducer = combineReducers({
@@ -21,5 +22,6 @@ const rootReducer = combineReducers({
     class: classReducer,
     chooseEnterStudent: chooseEnterStudentReducer,
     enterStudentCode: enterStudentCodeReducer,
+    attendanceStudent: attendanceStudentReducer,
 });
 export default rootReducer;

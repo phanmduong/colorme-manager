@@ -5,7 +5,9 @@ import React from'react';
 import {connect} from 'react-redux';
 import EnterStudentCodeComponent from '../components/EnterStudentCodeComponent';
 import * as enterStudentCodeActions from '../actions/enterStudentCodeActions';
+import * as attendanceStudentActions from '../actions/attendanceStudentActions';
 import {bindActionCreators} from 'redux';
+import {Actions} from 'react-native-router-flux';
 
 class EnterStudentCodeContainer extends React.Component {
     constructor(props, context) {
@@ -15,7 +17,8 @@ class EnterStudentCodeContainer extends React.Component {
     }
 
     onPressEnterStudent(){
-        this.props.enterStudentCodeActions.selectButtonEnterStudentCode(this.props.studentCodeForm);
+        this.props.attendanceStudentActions.selectButtonEnterStudentCode(this.props.studentCodeForm);
+        Actions.attendanceStudentCode();
     }
 
     updateStudentCodeForm(name, studentCodeForm){
@@ -41,7 +44,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        enterStudentCodeActions: bindActionCreators(enterStudentCodeActions, dispatch)
+        enterStudentCodeActions: bindActionCreators(enterStudentCodeActions, dispatch),
+        attendanceStudentActions: bindActionCreators(attendanceStudentActions, dispatch),
     };
 }
 

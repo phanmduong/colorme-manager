@@ -11,6 +11,7 @@ import LessonCourseContainer from './containers/LessonCourseContainer';
 import ClassContainer from './containers/ClassContainer';
 import ChooseEnterStudentContainer from './containers/ChooseEnterStudentContainer';
 import EnterStudentCodeContainer from './containers/EnterStudentCodeContainer';
+import AttendanceStudentContainer from './containers/AttendanceStudentContainer';
 import {Navigator}from 'react-native'
 
 class RouterComponent extends React.Component {
@@ -28,6 +29,7 @@ class RouterComponent extends React.Component {
                     <Scene key="classCourse" component={ClassContainer} title="Lớp học"/>
                     <Scene key="chooseEnterStudent" component={ChooseEnterStudentContainer} title="Điểm danh"/>
                     <Scene key="enterStudentCode" component={EnterStudentCodeContainer} title="Điểm danh"/>
+                    <Scene key="attendanceStudentCode" component={AttendanceStudentContainer} title="Điểm danh học viên"/>
                 </Scene>
             </Router>
         )

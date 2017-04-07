@@ -20,7 +20,6 @@ export default function loginReducer(state = initialState.login, action) {
                 token: action.token
             });
         case types.LOGIN_USER:
-            console.log(action.token);
             return Object.assign({},state,{
                 isLoading: action.isLoading,
                 error: action.error,

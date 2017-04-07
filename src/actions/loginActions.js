@@ -37,7 +37,6 @@ export function loginUser(login) {
 }
 
 export function updatedLoginForm(res) {
-    console.log(res);
     let token = res.data.token;
     return ({
         type: types.LOGIN_USER,

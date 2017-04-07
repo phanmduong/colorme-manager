@@ -7,6 +7,7 @@ import baseReducer from './baseReducer';
 import courseReducer from './courseReducer';
 import genReducer from './genReducer';
 import lessonCourseReducer from './lessonCourseReducer';
+import chooseEnterStudentReducer from './chooseEnterStudentReducer';
 
 
 const rootReducer = combineReducers({
@@ -15,5 +16,7 @@ const rootReducer = combineReducers({
     course: courseReducer,
     gen: genReducer,
     lessonCourse: lessonCourseReducer,
+    chooseEnterStudent: chooseEnterStudentReducer,
+
 });
 export default rootReducer;

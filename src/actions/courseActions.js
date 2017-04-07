@@ -25,7 +25,6 @@ export function loadDataCourse(token) {
 }
 
 export function loadDataSuccessful(res) {
-    console.log(res.data.courses);
     return ({
         type: types.LOAD_DATA_COURSE_SUCCESSFUL,
         courseData: res.data.courses,

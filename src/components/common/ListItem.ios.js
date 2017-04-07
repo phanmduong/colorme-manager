@@ -5,7 +5,6 @@ import React from'react';
 import {StyleSheet, TouchableHighlight, Text} from 'react-native'
 
 const ListItem = ({rowData, onPress}) => {
-
     return (
         <TouchableHighlight
             underlayColor = "#aca5ad"

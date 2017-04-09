@@ -21,8 +21,8 @@ class LessonCourseContainer extends React.Component {
             .loadDataLessonCourse(this.props.selectedCourseId, this.props.token);
     }
 
-    onSelectedItem(lessonCourseId){
-        this.props.lessonCourseActions.selectedLessonCourseId(lessonCourseId);
+    onSelectedItem(lessonCourseId, rowID){
+        this.props.lessonCourseActions.selectedLessonCourseId(rowID);
         Actions.classCourse();
     }
 

@@ -4,8 +4,8 @@
 export default {
     login: {
         login: {
-            username: 'phanminhduong@hotmail.com',
-            password: 'duong1997pcahi'
+            username: '',
+            password: ''
         },
         isLoading: false,
         error: false,
@@ -61,6 +61,9 @@ export default {
     enterStudentCode: {
         studentCodeForm: '',
     },
+    qrcode: {
+        isScanned: false,
+    },
     attendanceStudent: {
         isLoadingInfoStudent: false,
         isUpdatingAttendanceStudent: false,
@@ -70,6 +73,6 @@ export default {
         attendance: [],
         message: '',
         errorLoad: false,
-        errorUpdate: false
+        errorUpdate: false,
     }
 }

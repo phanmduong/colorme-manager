@@ -4,3 +4,5 @@
 export const NO_STAFF = 'Bạn không phải nhân viên của ColorME';
 export const CHECK_INFO_LOGIN = 'Kiểm tra thông tin tài khoản';
 export const LOAD_DATA_ERROR = 'Tải dữ liệu thất bại';
+export const ATTENDANCE_ERROR = 'Điểm danh thất bại';
+export const ATTENDANCE_SUCCESSFUL = 'Điểm danh thành công';

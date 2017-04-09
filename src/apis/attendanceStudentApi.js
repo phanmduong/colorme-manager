@@ -11,7 +11,7 @@ export function getInfoStudentApi(studentCode, token) {
 
 export function postAttendanceStudentApi(attendanceId, token) {
     let url = env.API_URL + "/attendances/" + attendanceId + "?token=" + token;
-    return axios.get(url,{
+    return axios.post(url,{
         status : 1,
         hw_status : 1
     });

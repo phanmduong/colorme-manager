@@ -10,6 +10,10 @@ export default function attendanceStudentReducer(state = initialState.attendance
             return Object.assign({}, state, {
                 studentCode: action.studentCode
             });
+        case types.SCANNED_QR_CODE:
+            return Object.assign({}, state, {
+                studentCode: action.studentCode
+            });
         case types.BEGIN_GET_INFOR_STUDENT:
             return Object.assign({}, state, initialState.attendanceStudent , {
                 isLoadingInfoStudent: action.isLoadingInfoStudent,
@@ -29,13 +33,15 @@ export default function attendanceStudentReducer(state = initialState.attendance
         case types.BEGIN_POST_ATTENDANCE_STUDENT:
             return Object.assign({}, state, {
                 isUpdatingAttendanceStudent: action.isUpdatingAttendanceStudent,
-                errorUpdate: action.errorLoad
+                errorUpdate: action.errorLoad,
+                message: action.message
             });
         case types.LOAD_POST_ATTENDANCE_STUDENT_SUCCESSFUL:
             return Object.assign({}, state, {
                 isUpdatingAttendanceStudent: action.isUpdatingAttendanceStudent,
                 errorUpdate: action.errorLoad,
-                attendance: action.attendance
+                orderAttendance: action.orderAttendance,
+                message: action.message
             });
         case types.LOAD_POST_ATTENDANCE_STUDENT_ERROR:
             return Object.assign({}, state, {

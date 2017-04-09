@@ -4,11 +4,11 @@
 import React from'react';
 import {StyleSheet, TouchableNativeFeedback, View, Text} from 'react-native'
 
-const ListItem = ({rowData, onPress}) => {
+const ListItem = ({rowData, onPress, rowID}) => {
 
     return (
         <TouchableNativeFeedback
-            onPress = {() => onPress(rowData.id)}
+            onPress = {() => onPress(rowData.id, rowID)}
             background={TouchableNativeFeedback.SelectableBackground()}
         >
             <View style={styles.item}>

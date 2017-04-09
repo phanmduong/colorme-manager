@@ -17,6 +17,7 @@ class ChooseEnterStudentContainer extends React.Component {
     onSelectEnterStudent(enterStudentId){
         switch (enterStudentId){
             case 0:
+                Actions.scanQRCode();
                 break;
             case 1:
                 Actions.enterStudentCode();

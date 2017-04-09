@@ -6,6 +6,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import AttendanceStudentComponent from '../components/AttendanceStudentComponent';
 import * as attendanceStudentActions from '../actions/attendanceStudentActions';
+import * as QRCodeActions from '../actions/QRCodeActions';
+
 import {Alert, Text}from 'react-native';
 import * as alert from '../constants/alert';
 import {Actions} from 'react-native-router-flux';
@@ -14,6 +16,11 @@ class AttendanceStudentContainer extends React.Component {
     constructor(props) {
         super(props);
         this.updateAttendance = this.updateAttendance.bind(this);
+        this.state = {
+            student: {
+                attendances: [{}]
+            }
+        }
     }
 
     componentWillMount() {
@@ -21,24 +28,48 @@ class AttendanceStudentContainer extends React.Component {
     }
 
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps) {
         if (nextProps.errorLoad) {
             Alert.alert('Thông báo', alert.LOAD_DATA_ERROR);
         }
+
+        if (nextProps.errorUpdate) {
+            Alert.alert('Thông báo', alert.ATTENDANCE_ERROR);
+        }
+
+        if (nextProps.message === 'success') {
+            Alert.alert('Thông báo', alert.ATTENDANCE_SUCCESSFUL);
+            var student = nextProps.student;
+            student.attendances[this.props.orderLessonCourse].status = 1;
+            this.setState({
+                student: Object.assign({}, this.state.student, student)
+            });
+        } else {
+            this.setState({
+                student: Object.assign({}, this.state.student, nextProps.student)
+            });
+        }
+
+
+        if (!nextProps.isLoadingInfoStudent || nextProps.isUpdatingAttendanceStudent) {
+            this.props.QRCodeActions.beginScanQRCode();
+        }
     }
 
-    updateAttendance(attendanceId){
-
+    updateAttendance(attendanceId, orderAttendance) {
+        this.props.attendanceStudentActions.updateAttendanceStudent(attendanceId, this.props.token, orderAttendance);
     }
 
     render() {
         return (
             <AttendanceStudentComponent
-                isLoadingInfoStudent = {this.props.isLoadingInfoStudent}
-                isUpdatingAttendanceStudent = {this.props.isUpdatingAttendanceStudent}
-                student = {this.props.student}
-                onUpdateAttendance = {this.updateAttendance}
-                studentCode = {this.props.studentCode}
+                isLoadingInfoStudent={this.props.isLoadingInfoStudent}
+                isUpdatingAttendanceStudent={this.props.isUpdatingAttendanceStudent}
+                student={this.state.student}
+                onUpdateAttendance={this.updateAttendance}
+                studentCode={this.props.studentCode}
+                orderLessonCourse={this.props.orderLessonCourse}
+                message = {this.props.message}
             />
         );
     }
@@ -53,13 +84,16 @@ function mapStateToProps(state) {
         attendance: state.attendanceStudent.attendance,
         errorLoad: state.attendanceStudent.errorLoad,
         errorUpdate: state.attendanceStudent.errorUpdate,
-        studentCode: state.attendanceStudent.studentCode
+        studentCode: state.attendanceStudent.studentCode,
+        orderLessonCourse: state.lessonCourse.selectedLessonCourseId,
+        message: state.attendanceStudent.message
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        attendanceStudentActions: bindActionCreators(attendanceStudentActions, dispatch)
+        attendanceStudentActions: bindActionCreators(attendanceStudentActions, dispatch),
+        QRCodeActions: bindActionCreators(QRCodeActions, dispatch),
     };
 }
 

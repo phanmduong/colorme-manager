@@ -46,11 +46,12 @@ class LessonCourseComponent extends React.Component {
         );
     }
 
-    renderListRow(rowData) {
+    renderListRow(rowData, sectionID, rowID) {
         return (
             <ListItem
                 rowData = {rowData}
                 onPress = {this.props.onSelectedItem}
+                rowID = {rowID}
             />
         );
     }

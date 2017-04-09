@@ -4,11 +4,11 @@
 import React from'react';
 import {StyleSheet, TouchableHighlight, Text} from 'react-native'
 
-const ListItem = ({rowData, onPress}) => {
+const ListItem = ({rowData, onPress, rowID}) => {
     return (
         <TouchableHighlight
             underlayColor = "#aca5ad"
-            onPress = {() => onPress(rowData.id)}
+            onPress = {() => onPress(rowData.id, rowID)}
             style={styles.item}
         >
             <Text>{rowData.name}</Text>

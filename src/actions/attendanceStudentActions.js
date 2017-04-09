@@ -25,7 +25,6 @@ export function loadInfoStudent(studentCode, token) {
 }
 
 export function loadedInforStudentSuccessful(res) {
-    console.log(res.data);
     return {
         type: types.LOAD_GET_INFOR_STUDENT_SUCCESSFUL,
         isLoadingInfoStudent: false,
@@ -45,15 +44,16 @@ export function beginPostAttendaceStudent() {
     return{
         type: types.BEGIN_POST_ATTENDANCE_STUDENT,
         isUpdatingAttendanceStudent: true,
-        errorUpdate: false
+        errorUpdate: false,
+        message: ''
     };
 }
 
-export function updateAttendanceStudent(attendanceId, token) {
+export function updateAttendanceStudent(attendanceId, token, orderAttendance) {
     return function (dispatch) {
         dispatch(beginPostAttendaceStudent());
         attendanceStudentApi.postAttendanceStudentApi(attendanceId, token).then(function (res) {
-            dispatch(updateAttendanceStudentSuccessful(res));
+            dispatch(updateAttendanceStudentSuccessful(res, orderAttendance));
         }).catch(error => {
             dispatch(updateAttendanceStudentError());
             throw (error);
@@ -62,12 +62,14 @@ export function updateAttendanceStudent(attendanceId, token) {
     }
 }
 
-export function updateAttendanceStudentSuccessful(res) {
+export function updateAttendanceStudentSuccessful(res, orderAttendance) {
     return ({
         type: types.LOAD_POST_ATTENDANCE_STUDENT_SUCCESSFUL,
         isUpdatingAttendanceStudent: false,
         errorUpdate: false,
-        attendance: res.data.attendance
+        orderAttendance: orderAttendance,
+        attendance: res.data.attendance,
+        message: res.data.message
     })
 }
 
@@ -82,5 +84,12 @@ export function selectButtonEnterStudentCode(studentCode) {
     return{
         type: types.SELECT_BUTTON_ENTER_STUDENT_CODE,
         studentCode: studentCode,
+    };
+}
+
+export function scannedQRCode(studentCode) {
+    return{
+        type: types.SCANNED_QR_CODE,
+        studentCode: studentCode
     };
 }

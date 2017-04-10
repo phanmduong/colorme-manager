@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.colormemanager"
+    package="vn.colorme.phanmduong.colormemanager"
     android:versionCode="1"
     android:versionName="1.0">
 

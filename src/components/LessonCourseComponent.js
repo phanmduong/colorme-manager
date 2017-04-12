@@ -1,6 +1,6 @@
 import React from'react';
 import {StyleSheet, Text, ListView, ActivityIndicator} from 'react-native';
-import ListItem from './common/ListItem';
+import ListItem from './common/ListItemLessonCourse';
 import _ from 'lodash';
 
 class LessonCourseComponent extends React.Component {

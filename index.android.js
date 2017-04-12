@@ -6,7 +6,7 @@
 
 
 import React, { Component } from 'react';
-import {AppRegistry} from 'react-native';
+import {AppRegistry,Text} from 'react-native';
 import App from './src/app'
 import codePush from "react-native-code-push";
 

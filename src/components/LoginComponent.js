@@ -39,7 +39,7 @@ class LoginComponent extends React.Component {
                     :
                     (
                         <Button
-                            title='Đăng nhập'
+                            title='Login'
                             onPress={this.props.onClickLogin}
                         />
                     )}

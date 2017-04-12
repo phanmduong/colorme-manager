@@ -594,7 +594,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 6BZ59393SB;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -1049,7 +1049,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 6BZ59393SB;
@@ -1067,8 +1067,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = vn.colorme.phanmduong.ColorMEManager;
 				PRODUCT_NAME = ColorMEManager;
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "f2b04cec-306e-4f75-9f21-0011b8bda569";
+				PROVISIONING_PROFILE_SPECIFIER = colormemanager;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1079,7 +1079,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6BZ59393SB;
 				HEADER_SEARCH_PATHS = (
@@ -1096,8 +1096,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = vn.colorme.phanmduong.ColorMEManager;
 				PRODUCT_NAME = ColorMEManager;
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "f2b04cec-306e-4f75-9f21-0011b8bda569";
+				PROVISIONING_PROFILE_SPECIFIER = colormemanager;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};

@@ -1,4 +1,4 @@
-package vn.colorme.phanmduong.colormemanager;
+package vn.colorme.phanminhduong.colormemanager;
 
 import android.app.Application;
 

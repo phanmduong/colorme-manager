@@ -14,6 +14,7 @@
     "react-native-barcodescanner": "^3.1.1",
     "react-native-busy-indicator": "^1.1.0",
     "react-native-camera": "^0.6.0",
+    "react-native-code-push": "^2.0.2-beta",
     "react-native-redux-router": "^1.0.7",
     "react-native-router-flux": "^3.38.0",
     "react-native-webpack": "^0.1.1",

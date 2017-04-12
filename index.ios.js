@@ -7,7 +7,9 @@
 import React, { Component } from 'react';
 import {AppRegistry} from 'react-native';
 import App from './src/app'
+import codePush from "react-native-code-push";
 
+let codePushOptions = {updateDialog: true, installMode: codePush.InstallMode.IMMEDIATE};
 
 export default class ColorMEManager extends Component {
   render() {
@@ -16,6 +18,8 @@ export default class ColorMEManager extends Component {
     );
   }
 }
+
+ColorMEManager = codePush(codePushOptions)(ColorMEManager);
 
 
 AppRegistry.registerComponent('ColorMEManager', () => ColorMEManager);

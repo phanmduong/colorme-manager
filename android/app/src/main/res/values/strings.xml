@@ -1,3 +1,4 @@
 <resources>
+    <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">m8bNiR4ypmvCxNpxUUuC4sWQYbgJ4JZk4WIpz</string>
     <string name="app_name">ColorME Manager</string>
 </resources>

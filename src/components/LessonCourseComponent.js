@@ -18,7 +18,6 @@ class LessonCourseComponent extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         let lessonCourseData = nextProps.lessonCourseData;
-        _.reverse(lessonCourseData);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(lessonCourseData)
         });

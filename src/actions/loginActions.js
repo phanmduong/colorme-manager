@@ -3,6 +3,7 @@
  */
 import * as types from '../constants/actionTypes';
 import * as loadLoginApi from '../apis/loginApi';
+import {AsyncStorage}from 'react-native';
 
 export function updateDataLoginForm(login) {
     return{
@@ -53,4 +54,82 @@ export function loginError() {
         isLoading: false,
         error: true
     }
+}
+
+export function beginGetDataLogin(){
+    return ({
+        type: types.BEGIN_GET_DATA_LOGIN,
+        isGettingData: true,
+        isGetDataError: false
+    })
+}
+
+export function getDataLogin(){
+    return async function (dispatch) {
+        dispatch(beginGetDataLogin());
+        try {
+            const username = await AsyncStorage.getItem('@ColorME:username');
+            const password = await AsyncStorage.getItem('@ColorME:password');
+            dispatch(gotDataLogin(username, password));
+        } catch (error) {
+            getDataLoginError();
+        }
+    };
+}
+
+export function gotDataLogin(username, password){
+    return ({
+        type: types.GOT_DATA_LOGIN,
+        isGettingData: false,
+        isGetDataError: false,
+        login: {
+            username: username,
+            password: password
+        }
+    })
+}
+
+export function getDataLoginError(){
+    return ({
+        type: types.GET_DATA_LOGIN_ERROR,
+        isGettingData: false,
+        isGetDataError: true
+    })
+}
+
+export function beginSetDataLogin(){
+    return ({
+        type: types.BEGIN_SET_DATA_LOGIN,
+        isSettingData: true,
+        isSetDataError: false
+    })
+}
+
+export function setDataLogin(login){
+    return async function (dispatch) {
+        dispatch(beginSetDataLogin());
+        try {
+            await AsyncStorage.setItem('@ColorME:username',login.username);
+            await AsyncStorage.setItem('@ColorME:password',login.password);
+            dispatch(settedDataLogin());
+        } catch (error) {
+            setDataLoginError();
+        }
+    };
+}
+
+export function settedDataLogin(){
+    return ({
+        type: types.SETTED_DATA_LOGIN,
+        isSettingData: false,
+        isSetDataError: false,
+    })
+}
+
+export function setDataLoginError(){
+    return ({
+        type: types.SET_DATA_LOGIN_ERROR,
+        isSettingData: false,
+        isSetDataError: true
+    })
 }

@@ -12,7 +12,7 @@ const ListItem = ({rowData, onPress, rowID}) => {
             background={TouchableNativeFeedback.SelectableBackground()}
         >
             <View style={styles.item}>
-                <Text>{rowData.order}</Text>
+                <Text>Buổi {rowData.order}</Text>
             </View>
         </TouchableNativeFeedback>
     );

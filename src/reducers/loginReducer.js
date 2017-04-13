@@ -32,6 +32,36 @@ export default function loginReducer(state = initialState.login, action) {
                 error: action.error,
                 token: action.token
             });
+            case types.BEGIN_GET_DATA_LOGIN:
+            return Object.assign({},state,{
+                isGettingData: action.isGettingData,
+                isGetDataError: action.isGetDataError
+            });
+            case types.GOT_DATA_LOGIN:
+            return Object.assign({},state,{
+                isGettingData: action.isGettingData,
+                isGetDataError: action.isGetDataError,
+                login: action.login
+            });
+            case types.GET_DATA_LOGIN_ERROR:
+            return Object.assign({},state,{
+                isGettingData: action.isGettingData,
+                isGetDataError: action.isGetDataError,
+            });case types.BEGIN_SET_DATA_LOGIN:
+            return Object.assign({},state,{
+                isSettingData: action.isSettingData,
+                isSetDataError: action.isSetDataError
+            });
+            case types.SETTED_DATA_LOGIN:
+            return Object.assign({},state,{
+                isSettingData: action.isSettingData,
+                isSetDataError: action.isSetDataError
+            });
+            case types.SET_DATA_LOGIN_ERROR:
+            return Object.assign({},state,{
+                isSettingData: action.isSettingData,
+                isSetDataError: action.isSetDataError
+            });
         default:
             return state;
     }

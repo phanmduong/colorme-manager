@@ -18,16 +18,42 @@ class LoginContainer extends React.Component {
         super(props);
         this.updateFormData = this.updateFormData.bind(this);
         this.onClickLogin = this.onClickLogin.bind(this);
+        this.saveDataLogin = this.saveDataLogin.bind(this);
+        this.state = {
+            isAutoLogin: false
+        }
+    }
+
+    componentWillMount(){
+        this.props.loginActions.getDataLogin();
+        this.setState({
+            isAutoLogin: true
+        });
+    }
+
+    saveDataLogin(){
+        this.props.loginActions.setDataLogin(this.props.login);
     }
 
     updateFormData(name, value) {
+        this.setState({
+            isAutoLogin: false
+        });
         let login = this.props.login;
         login[name] = value;
         this.props.loginActions.updateDataLoginForm(login);
     }
 
     onClickLogin() {
-        this.props.loginActions.loginUser(this.props.login);
+        if (this.props.login.username && this.props.login.password) {
+            this.props.loginActions.loginUser(this.props.login);
+            this.saveDataLogin();
+        } else {
+            Alert.alert(
+                'Thông báo',
+                alert.CHECK_INFO_LOGIN
+            )
+        }
     }
 
     componentWillReceiveProps(nextProps){
@@ -51,6 +77,16 @@ class LoginContainer extends React.Component {
                 alert.CHECK_INFO_LOGIN
             )
         }
+        
+        if (!nextProps.isGettingData && !nextProps.isGetDataError && this.state.isAutoLogin){
+            this.setState({
+                isAutoLogin: false
+            });
+            if (nextProps.login.username && nextProps.login.password){
+                nextProps.loginActions.loginUser(nextProps.login);
+            }
+
+        }
     }
 
     render() {
@@ -72,7 +108,11 @@ function mapStateToProps(state) {
         error: state.login.error,
         isLoading: state.login.isLoading,
         user: Object.assign({}, state.login.user),
-        token: state.login.token
+        token: state.login.token,
+        isGettingData: state.login.isGettingData,
+        isGetDataError: state.login.isGetDataError,
+        isSettingData: state.login.isSettingData,
+        isSetDataError: state.login.isSetDataError
     }
 }
 

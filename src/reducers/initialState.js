@@ -4,12 +4,16 @@
 export default {
     login: {
         login: {
-            username: '',
-            password: ''
+            username: null,
+            password: null
         },
         isLoading: false,
         error: false,
-        token: ''
+        token: '',
+        isSettingData: false,
+        isSetDataError: false,
+        isGettingData: true,
+        isGetDataError: false,
     },
     base: {
         baseData: [],

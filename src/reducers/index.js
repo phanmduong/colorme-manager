@@ -8,8 +8,6 @@ import courseReducer from './courseReducer';
 import genReducer from './genReducer';
 import lessonCourseReducer from './lessonCourseReducer';
 import classReducer from './classReducer';
-import chooseEnterStudentReducer from './chooseEnterStudentReducer';
-import enterStudentCodeReducer from './enterStudentCodeReducer';
 import QRCodeReducer from './QRCodeReducer';
 import attendanceStudentReducer from './attendanceStudentReducer';
 
@@ -21,8 +19,6 @@ const rootReducer = combineReducers({
     gen: genReducer,
     lessonCourse: lessonCourseReducer,
     class: classReducer,
-    chooseEnterStudent: chooseEnterStudentReducer,
-    enterStudentCode: enterStudentCodeReducer,
     qrCode: QRCodeReducer,
     attendanceStudent: attendanceStudentReducer,
 });

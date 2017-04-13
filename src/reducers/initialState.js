@@ -3,10 +3,7 @@
  */
 export default {
     login: {
-        login: {
-            username: null,
-            password: null
-        },
+        login: {},
         isLoading: false,
         error: false,
         token: '',
@@ -44,26 +41,6 @@ export default {
         isLoading: false,
         error: false,
         selectedClassId: -1
-    },
-    chooseEnterStudent: {
-        dataListChooseEnterStudent: [
-            {
-                id: 0,
-                name: 'Quét QR Code'
-            },
-            {
-                id: 1,
-                name: 'Nhập mã học viên'
-            },
-            {
-                id: 2,
-                name: 'Xem danh sách lớp'
-            }
-        ],
-        selectedEnterStudentId: -1
-    },
-    enterStudentCode: {
-        studentCodeForm: '',
     },
     qrcode: {
         isScanned: false,

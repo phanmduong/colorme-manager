@@ -23,7 +23,7 @@ class ClassContainer extends React.Component {
 
     onSelectedItem(classId){
         this.props.classActions.selectedClassId(classId);
-        Actions.chooseEnterStudent();
+        Actions.scanQRCode();
 
     }
 

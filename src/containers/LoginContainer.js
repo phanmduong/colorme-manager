@@ -83,7 +83,7 @@ class LoginContainer extends React.Component {
                 isAutoLogin: false
             });
             if (nextProps.login.username && nextProps.login.password){
-                nextProps.loginActions.loginUser(nextProps.login);
+                // nextProps.loginActions.loginUser(nextProps.login);
             }
 
         }

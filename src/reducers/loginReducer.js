@@ -41,7 +41,7 @@ export default function loginReducer(state = initialState.login, action) {
             return Object.assign({},state,{
                 isGettingData: action.isGettingData,
                 isGetDataError: action.isGetDataError,
-                login: action.login
+                login: Object.assign({},action.login)
             });
             case types.GET_DATA_LOGIN_ERROR:
             return Object.assign({},state,{

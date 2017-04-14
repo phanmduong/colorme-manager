@@ -16,14 +16,12 @@ import {Navigator}from 'react-native'
 class RouterComponent extends React.Component {
     render() {
         return (
-            <Router sceneStyle={{paddingTop: Navigator.NavigationBar.Styles.General.TotalNavHeight}}>
-                <Scene key="root" >
-                    <Scene key="login" component={LoginContainer} title="Login" initial hideNavBar/>
-                </Scene>
-                <Scene key="attendance">
-                    <Scene key="base" component={BaseContainer} title="Cơ sở" initial/>
-                    <Scene key="course" component={CourseContainer} title="Môn học"/>
-                    <Scene key="gen" component={GenContainer} title="Khóa học"/>
+            <Router>
+                <Scene key="root">
+                    <Scene key="login" component={LoginContainer} title="Login" initial hideNavBar type={ActionConst.RESET}/>
+                    <Scene key="base" component={BaseContainer} title="Cơ sở" type={ActionConst.RESET} hideNavBar/>
+                    <Scene key="course" component={CourseContainer} title="Môn học" />
+                    <Scene key="gen" component={GenContainer} title="Khóa học" />
                     <Scene key="lessonCourse" component={LessonCourseContainer} title="Buổi học"/>
                     <Scene key="classCourse" component={ClassContainer} title="Lớp học"/>
                     <Scene key="scanQRCode" component={QRCodeContainer} title="Scan QRCode" />

@@ -1,5 +1,6 @@
 import React from'react';
-import {StyleSheet, Text, ListView, ActivityIndicator} from 'react-native';
+import {StyleSheet, ListView, ActivityIndicator} from 'react-native';
+import {Container, Header, Content, Footer, Button, Left, Right, Title, Body, Icon, View} from 'native-base';
 import ListItem from './common/ListItem';
 import _ from 'lodash';
 
@@ -9,7 +10,7 @@ class BaseComponent extends React.Component {
         this.renderListRow = this.renderListRow.bind(this);
     }
 
-    componentWillMount(){
+    componentWillMount() {
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.setState({
             dataSource: ds.cloneWithRows([])
@@ -26,31 +27,50 @@ class BaseComponent extends React.Component {
 
     render() {
         return (
-            (this.props.isLoading) ?
-                (
-                    <ActivityIndicator
-                        animating = {this.props.isLoading}
-                        style = {styles.indicator}
-                        size = "large"
-                    />
-                ) :
-                (
-                    <ListView
-                        style = {styles.list}
-                        enableEmptySections
-                        dataSource = {this.state.dataSource}
-                        renderRow = {this.renderListRow}
-                    />
-
-                )
+            (<Container>
+                <Header>
+                    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                        <Left/>
+                        <Body>
+                        <Title>Header</Title>
+                        </Body>
+                        <Right style={{paddingRight: 6}}>
+                            <Button
+                                transparent
+                                style={{paddingLeft: 0, paddingRight: 0}}
+                            >
+                                <Icon name='menu' style={{color: '#fff'}} />
+                            </Button>
+                        </Right>
+                    </View>
+                </Header>
+                <Content>
+                    {(this.props.isLoading) ?
+                        (
+                            <ActivityIndicator
+                                animating = {this.props.isLoading}
+                                style = {styles.indicator}
+                                size = "large"
+                            />
+                        ) :
+                        (
+                            <ListView
+                                style = {styles.list}
+                                enableEmptySections
+                                dataSource = {this.state.dataSource}
+                                renderRow = {this.renderListRow}
+                            />
+                        )}
+                </Content>
+            </Container>)
         );
     }
 
     renderListRow(rowData) {
         return (
             <ListItem
-                rowData = {rowData}
-                onPress = {this.props.onSelectedItem}
+                rowData={rowData}
+                onPress={this.props.onSelectedItem}
             />
         );
     }
@@ -63,8 +83,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: 37
     },
-    list: {
-    }
+    list: {}
 });
 
 export default BaseComponent;

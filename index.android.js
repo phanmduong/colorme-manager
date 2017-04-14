@@ -20,7 +20,7 @@ export default class ColorMEManager extends Component {
     }
 }
 
-ColorMEManager = codePush(codePushOptions)(ColorMEManager);
+// ColorMEManager = codePush(codePushOptions)(ColorMEManager);
 
 
 AppRegistry.registerComponent('ColorMEManager', () => ColorMEManager);

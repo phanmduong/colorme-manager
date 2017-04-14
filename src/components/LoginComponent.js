@@ -95,7 +95,7 @@ const styles = {
         width: 100,
     },
     container_form: {
-        flex: 5,
+        flex: 3,
         marginHorizontal: 40,
         justifyContent: 'center',
     },

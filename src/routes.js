@@ -18,14 +18,14 @@ class RouterComponent extends React.Component {
         return (
             <Router>
                 <Scene key="root">
-                    <Scene key="login" component={LoginContainer} title="Login" initial hideNavBar type={ActionConst.RESET}/>
-                    <Scene key="base" component={BaseContainer} title="Cơ sở" type={ActionConst.RESET} hideNavBar/>
-                    <Scene key="course" component={CourseContainer} title="Môn học" />
-                    <Scene key="gen" component={GenContainer} title="Khóa học" />
-                    <Scene key="lessonCourse" component={LessonCourseContainer} title="Buổi học"/>
-                    <Scene key="classCourse" component={ClassContainer} title="Lớp học"/>
-                    <Scene key="scanQRCode" component={QRCodeContainer} title="Scan QRCode" />
-                    <Scene key="attendanceStudentCode" component={AttendanceStudentContainer} title="Điểm danh học viên"/>
+                    <Scene key="login" component={LoginContainer} initial hideNavBar type={ActionConst.RESET}/>
+                    <Scene key="base" component={BaseContainer}  type={ActionConst.RESET} hideNavBar/>
+                    <Scene key="course" component={CourseContainer} />
+                    <Scene key="gen" component={GenContainer}  />
+                    <Scene key="lessonCourse" component={LessonCourseContainer}/>
+                    <Scene key="classCourse" duration = {0} component={ClassContainer} />
+                    <Scene key="scanQRCode" duration = {0} component={QRCodeContainer} />
+                    <Scene key="attendanceStudentCode" duration = {0} component={AttendanceStudentContainer}/>
                 </Scene>
             </Router>
         )

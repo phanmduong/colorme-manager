@@ -14,6 +14,7 @@ class CourseContainer extends React.Component {
     constructor(props) {
         super(props);
         this.onSelectedItem = this.onSelectedItem.bind(this);
+        this.popRouter = this.popRouter.bind(this);
     }
 
     componentWillMount(){
@@ -31,12 +32,17 @@ class CourseContainer extends React.Component {
         }
     }
 
+    popRouter(){
+        Actions.pop();
+    }
+
     render() {
         return (
             <CourseComponent
                 courseData = {this.props.courseData}
                 isLoading = {this.props.isLoading}
                 onSelectedItem = {this.onSelectedItem}
+                popRouter = {this.popRouter}
             />
         );
     }

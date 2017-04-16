@@ -14,6 +14,7 @@ class LessonCourseContainer extends React.Component {
     constructor(props) {
         super(props);
         this.onSelectedItem = this.onSelectedItem.bind(this);
+        this.popRouter = this.popRouter.bind(this);
     }
 
     componentWillMount(){
@@ -24,6 +25,10 @@ class LessonCourseContainer extends React.Component {
     onSelectedItem(lessonCourseId, rowID){
         this.props.lessonCourseActions.selectedLessonCourseId(rowID);
         Actions.classCourse();
+    }
+
+    popRouter(){
+        Actions.pop();
     }
 
     componentWillReceiveProps(nextProps){
@@ -38,6 +43,8 @@ class LessonCourseContainer extends React.Component {
                 lessonCourseData = {this.props.lessonCourseData}
                 isLoading = {this.props.isLoading}
                 onSelectedItem = {this.onSelectedItem}
+                popRouter = {this.popRouter}
+                imageCourse = {this.props.course[this.props.selectedCourseId].icon_url}
             />
         );
     }
@@ -50,7 +57,8 @@ function mapStateToProps(state) {
         error: state.lessonCourse.error,
         token: state.login.token,
         selectedLessonCourseId: state.lessonCourse.selectedLessonCourseId,
-        selectedCourseId: state.course.selectedCourseId
+        selectedCourseId: state.course.selectedCourseId,
+        course: state.course.courseData
     };
 }
 

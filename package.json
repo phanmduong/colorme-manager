@@ -19,6 +19,7 @@
     "react-native-drawer": "^2.3.0",
     "react-native-redux-router": "^1.0.7",
     "react-native-router-flux": "^3.38.0",
+    "react-native-spinkit": "^1.0.2",
     "react-native-webpack": "^0.1.1",
     "react-redux": "^5.0.3",
     "redux": "^3.6.0",

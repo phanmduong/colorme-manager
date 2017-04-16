@@ -2,7 +2,7 @@
  * Created by phanmduong on 4/5/17.
  */
 import React from'react';
-import {StyleSheet, Image, ActivityIndicator, TextInput, Keyboard}from'react-native';
+import {Image, Dimensions, Keyboard}from'react-native';
 import {
     Container,
     Form,
@@ -13,6 +13,8 @@ import {
     Button,
     Text
 } from 'native-base';
+var {height, width} = Dimensions.get('window');
+import Spinkit from 'react-native-spinkit';
 
 class LoginComponent extends React.Component {
     constructor(props) {
@@ -35,48 +37,61 @@ class LoginComponent extends React.Component {
                     />
                 </View>
                 <View style={styles.container_form}>
-                    <Form>
-                        <InputGroup >
-                            <Icon
-                                name='ios-person'
-                                style={{color: '#3e3d44'}}
+                    {(this.props.isLoading) ?
+                        (
+                            <Spinkit
+                                isVisible
+                                color='#C50000'
+                                type='CircleFlip'
+                                size={width/6}
                             />
-                            <Input
-                                value={this.props.username }
-                                onChangeText={(data) => this.props.updateFormData('username', data)}
-                                returnKeyType={'next'}
-                                placeholder='Tên đăng nhập'
-                                blurOnSubmit={false}
-                                keyboardType={'email-address'}
-                                onSubmitEditing={() => {
-                                    this.refs.password._root.focus()
-                                }}
-                            />
-                        </InputGroup>
-                        <InputGroup>
-                            <Icon
-                                name='md-key'
-                                style={{color: '#3e3d44'}}
-                            />
-                            <Input
-                                ref='password'
-                                secureTextEntry
-                                onChangeText={(data) => this.props.updateFormData('password', data)}
-                                value={this.props.password}
-                                returnKeyType={'done'}
-                                placeholder='Mật khẩu'
-                                onSubmitEditing={this.props.onClickLogin}
-                            />
-                        </InputGroup>
-                        <Button
-                            block
-                            rounded
-                            style={styles.button}
-                            onPress={this.onPressLogin}
-                        >
-                            <Text>Đăng nhập</Text>
-                        </Button>
-                    </Form>
+                        )
+                        :
+                        (
+                            <Form>
+                                <InputGroup style={{width: width-50}}>
+                                    <Icon
+                                        name='ios-person'
+                                        style={{color: '#3e3d44'}}
+                                    />
+                                    <Input
+                                        value={this.props.username }
+                                        onChangeText={(data) => this.props.updateFormData('username', data)}
+                                        returnKeyType={'next'}
+                                        placeholder='Tên đăng nhập'
+                                        blurOnSubmit={false}
+                                        keyboardType={'email-address'}
+                                        onSubmitEditing={() => {
+                                            this.refs.password._root.focus()
+                                        }}
+                                    />
+                                </InputGroup>
+                                <InputGroup>
+                                    <Icon
+                                        name='md-key'
+                                        style={{color: '#3e3d44'}}
+                                    />
+                                    <Input
+                                        ref='password'
+                                        secureTextEntry
+                                        onChangeText={(data) => this.props.updateFormData('password', data)}
+                                        value={this.props.password}
+                                        returnKeyType={'done'}
+                                        placeholder='Mật khẩu'
+                                        onSubmitEditing={this.props.onClickLogin}
+                                    />
+                                </InputGroup>
+                                <Button
+                                    block
+                                    rounded
+                                    style={styles.button}
+                                    onPress={this.onPressLogin}
+                                >
+                                    <Text>Đăng nhập</Text>
+                                </Button>
+                            </Form>
+                        )
+                    }
                 </View>
             </Container>
         );
@@ -98,8 +113,9 @@ const styles = {
         flex: 3,
         marginHorizontal: 40,
         justifyContent: 'center',
+        alignItems: 'center'
     },
-    button:{
+    button: {
         backgroundColor: '#C50000',
         marginTop: 16
     }

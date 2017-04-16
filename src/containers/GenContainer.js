@@ -14,6 +14,7 @@ class GenContainer extends React.Component {
     constructor(props) {
         super(props);
         this.onSelectedItem = this.onSelectedItem.bind(this);
+        this.popRouter = this.popRouter.bind(this);
     }
 
     componentWillMount(){
@@ -23,6 +24,10 @@ class GenContainer extends React.Component {
     onSelectedItem(genId){
         this.props.genActions.selectedGenId(genId);
         Actions.lessonCourse();
+    }
+
+    popRouter(){
+        Actions.pop();
     }
 
     componentWillReceiveProps(nextProps){
@@ -37,6 +42,8 @@ class GenContainer extends React.Component {
                 genData = {this.props.genData}
                 isLoading = {this.props.isLoading}
                 onSelectedItem = {this.onSelectedItem}
+                popRouter = {this.popRouter}
+                imageCourse = {this.props.course[this.props.selectedCourseId].icon_url}
             />
         );
     }
@@ -48,7 +55,9 @@ function mapStateToProps(state) {
         genData: state.gen.genData,
         error: state.gen.error,
         token: state.login.token,
-        selectedGenId: state.gen.selectedGenId
+        selectedGenId: state.gen.selectedGenId,
+        selectedCourseId: state.course.selectedCourseId,
+        course: state.course.courseData
     };
 }
 

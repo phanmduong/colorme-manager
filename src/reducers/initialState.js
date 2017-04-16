@@ -51,6 +51,7 @@ export default {
         student: {
             attendances:[{}]
         },
+        classStudent:{},
         attendance: [],
         message: '',
         errorLoad: false,

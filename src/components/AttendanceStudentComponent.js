@@ -1,6 +1,17 @@
 import React from'react';
-import {StyleSheet, Image, ActivityIndicator, View, Text, ListView} from 'react-native';
-import Button from './common/Button';
+import {ActivityIndicator, ListView} from 'react-native';
+import {
+    Container,
+    Header,
+    Button,
+    Left,
+    Right,
+    Title,
+    Body,
+    Icon,
+    Text,
+    View
+} from 'native-base';
 import BusyIndicator from 'react-native-busy-indicator';
 import LoaderHandler from 'react-native-busy-indicator/LoaderHandler';
 
@@ -21,9 +32,9 @@ class AttendanceStudentComponent extends React.Component {
     componentWillReceiveProps(nextProps) {
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.setState({
-                    dataSource: ds.cloneWithRows(nextProps.student.attendances),
-                });
-        if (!this.props.isUpdatingAttendanceStudent){
+            dataSource: ds.cloneWithRows(nextProps.student.attendances),
+        });
+        if (!this.props.isUpdatingAttendanceStudent) {
             LoaderHandler.showLoader('Updating');
         } else {
             LoaderHandler.hideLoader();
@@ -36,39 +47,69 @@ class AttendanceStudentComponent extends React.Component {
 
     render() {
         return (
-            (this.props.isLoadingInfoStudent) ?
-                (
-                    <ActivityIndicator
-                        animating={this.props.isLoadingInfoStudent}
-                        style={styles.indicator}
-                        size="large"
-                    />
-                ) :
-                (
-                    <View style={styles.container}>
-                        <View style={styles.container}/>
-                        <Text>{this.props.student.name}</Text>
-                        <Text>{this.props.studentCode}</Text>
-                        <View/>
-                        <View style={styles.container}/>
-                        <ListView
-                            horizontal
-                            enableEmptySections
-                            style={styles.list}
-                            dataSource={this.state.dataSource}
-                            renderRow={this.renderRow}
-                        />
-                        <View/>
-                        <View style={styles.button}/>
-                                <Button
-                                    title={'Điểm danh buổi ' + (parseInt(this.props.orderLessonCourse) + 1)}
-                                    onPress={this.updateAttendance}
+            <Container>
+                <Header>
+                    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                        <Left>
+                            <Button
+                                transparent
+                                onPress={this.props.popRouter}
+                                style={{paddingLeft: 0, paddingRight: 0}}
+                            >
+                                <Icon
+                                    name="arrow-back"
+                                    style={{color: '#fff'}}
                                 />
-
-                        <View/>
-                        <BusyIndicator/>
+                            </Button>
+                        </Left>
+                        <Body>
+                        <Title>Điểm danh</Title>
+                        </Body>
+                        <Right style={{paddingRight: 6}}>
+                            <Button
+                                transparent
+                                style={{paddingLeft: 0, paddingRight: 0}}
+                            >
+                                <Icon name='menu' style={{color: '#fff'}}/>
+                            </Button>
+                        </Right>
                     </View>
-                )
+                </Header>
+                {(this.props.isLoadingInfoStudent) ?
+                    (
+                        <ActivityIndicator
+                            animating={this.props.isLoadingInfoStudent}
+                            style={styles.indicator}
+                            size="large"
+                        />
+                    ) :
+                    (
+                        <View style={styles.container}>
+                            <View style={styles.container}/>
+                            <Text>{this.props.student.name}</Text>
+                            <Text>{this.props.studentCode}</Text>
+                            <View/>
+                            <View style={styles.container}/>
+                            <ListView
+                                horizontal
+                                enableEmptySections
+                                style={styles.list}
+                                dataSource={this.state.dataSource}
+                                renderRow={this.renderRow}
+                            />
+                            <View/>
+                            <Button
+                                block
+                                rounded
+                                style={styles.button}
+                                onPress={this.updateAttendance}
+                            >
+                                <Text>{'Điểm danh buổi ' + (parseInt(this.props.orderLessonCourse) + 1)}</Text>
+                            </Button>
+                            <BusyIndicator/>
+                        </View>
+                    )}
+            </Container>
         );
     }
 
@@ -84,7 +125,7 @@ class AttendanceStudentComponent extends React.Component {
     }
 }
 
-const styles = StyleSheet.create({
+const styles = ({
     indicator: {
         flex: 1,
         justifyContent: 'center',
@@ -92,31 +133,18 @@ const styles = StyleSheet.create({
         height: 37
     },
     container: {
-        flex: 1,
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
     },
     list: {
         height: 50,
         marginTop: 20
     },
-    button: {
-        flex: 2,
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     textNumberRed: {
-        alignItems: 'center',
-        justifyContent: 'center',
         marginHorizontal: 7,
         height: 40,
         width: 30,
         borderRadius: 10,
         color: '#ff0800',
-        fontSize:15,
-        textAlign: 'center'
+        fontSize: 15,
     },
     textNumberGreen: {
         marginHorizontal: 7,
@@ -124,20 +152,17 @@ const styles = StyleSheet.create({
         width: 30,
         borderRadius: 10,
         color: '#00ff43',
-        fontSize:15,
-        alignItems: 'center',
-        justifyContent: 'center',
-        textAlign: 'center'
+        fontSize: 15,
     },
     textNumber: {
         marginHorizontal: 7,
         height: 40,
         width: 30,
         borderRadius: 10,
-        fontSize:15,
-        alignItems: 'center',
-        justifyContent: 'center',
-        textAlign: 'center'
+        fontSize: 15,
+    },
+    button: {
+        backgroundColor: '#C50000',
     }
 });
 

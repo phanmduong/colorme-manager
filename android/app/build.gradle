@@ -95,7 +95,7 @@ android {
         applicationId "vn.colorme.phanminhduong.colormemanager"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 4
+        versionCode 5
         versionName "1.1"
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -142,6 +142,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-spinkit')
     compile project(':react-native-code-push')
     compile project(':react-native-barcodescanner')
     compile project(':react-native-camera')

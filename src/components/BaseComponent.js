@@ -1,28 +1,33 @@
 import React from'react';
-import {StyleSheet, ListView, ActivityIndicator} from 'react-native';
-import {Container, Header, Content, Footer, Button, Left, Right, Title, Body, Icon, View} from 'native-base';
-import ListItem from './common/ListItem';
+import {Dimensions} from 'react-native';
+import {
+    Container,
+    Header,
+    Content,
+    Button,
+    Left,
+    Right,
+    Title,
+    Body,
+    Icon,
+    View,
+    ListItem,
+    List,
+    Text,
+    Thumbnail
+} from 'native-base';
+var {height, width} = Dimensions.get('window');
+import Spinkit from 'react-native-spinkit';
 import _ from 'lodash';
 
 class BaseComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.renderListRow = this.renderListRow.bind(this);
-    }
-
-    componentWillMount() {
-        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        this.setState({
-            dataSource: ds.cloneWithRows([])
-        });
     }
 
     componentWillReceiveProps(nextProps) {
         let baseData = nextProps.baseData;
         _.reverse(baseData);
-        this.setState({
-            dataSource: this.state.dataSource.cloneWithRows(baseData)
-        });
     }
 
     render() {
@@ -32,58 +37,74 @@ class BaseComponent extends React.Component {
                     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                         <Left/>
                         <Body>
-                        <Title>Header</Title>
+                        <Title>Cơ sở</Title>
                         </Body>
                         <Right style={{paddingRight: 6}}>
                             <Button
                                 transparent
                                 style={{paddingLeft: 0, paddingRight: 0}}
                             >
-                                <Icon name='menu' style={{color: '#fff'}} />
+                                <Icon name='menu' style={{color: '#fff'}}/>
                             </Button>
                         </Right>
                     </View>
                 </Header>
-                <Content>
+
                     {(this.props.isLoading) ?
                         (
-                            <ActivityIndicator
-                                animating = {this.props.isLoading}
-                                style = {styles.indicator}
-                                size = "large"
+                        <View style={styles.container}>
+                            <Spinkit
+                                isVisible
+                                color='#C50000'
+                                type='Wave'
+                                size={width/8}
                             />
+                        </View>
                         ) :
                         (
-                            <ListView
-                                style = {styles.list}
-                                enableEmptySections
-                                dataSource = {this.state.dataSource}
-                                renderRow = {this.renderListRow}
-                            />
+                            <Content>
+                            <List
+                                dataArray={this.props.baseData}
+                                renderRow={
+                                    (item) => (
+                                        <ListItem
+                                            onPress = {() => this.props.onSelectedItem(item.id)}
+                                            onLongPress = {()=>{}}
+                                            button
+                                        >
+                                            <Thumbnail small source = {require('../../assets/img/avartar_colorme.jpg')}/>
+                                            <Body>
+                                            <Text>{item.name}</Text>
+                                            </Body>
+                                            <Right>
+                                                <Icon name="arrow-forward"/>
+                                            </Right>
+                                        </ListItem>
+                                    )
+                                }
+                            >
+                            </List>
+                            </Content>
                         )}
-                </Content>
-            </Container>)
-        );
-    }
 
-    renderListRow(rowData) {
-        return (
-            <ListItem
-                rowData={rowData}
-                onPress={this.props.onSelectedItem}
-            />
+            </Container>)
         );
     }
 }
 
-const styles = StyleSheet.create({
+const styles = ({
     indicator: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         height: 37
     },
-    list: {}
+    list: {},
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
 });
 
 export default BaseComponent;

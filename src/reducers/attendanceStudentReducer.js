@@ -23,7 +23,8 @@ export default function attendanceStudentReducer(state = initialState.attendance
             return Object.assign({}, state, {
                 isLoadingInfoStudent: action.isLoadingInfoStudent,
                 errorLoad: action.errorLoad,
-                student: action.student
+                student: action.student,
+                classStudent: action.classStudent
             });
         case types.LOAD_GET_INFOR_STUDENT_ERROR:
             return Object.assign({}, state, {

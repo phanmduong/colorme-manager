@@ -19,8 +19,10 @@ class AttendanceStudentContainer extends React.Component {
         this.state = {
             student: {
                 attendances: [{}]
-            }
+            },
+            checkClass: false
         }
+        this.popRouter = this.popRouter.bind(this);
     }
 
     componentWillMount() {
@@ -29,6 +31,7 @@ class AttendanceStudentContainer extends React.Component {
 
 
     componentWillReceiveProps(nextProps) {
+
         if (nextProps.errorLoad) {
             Alert.alert('Thông báo', alert.LOAD_DATA_ERROR);
         }
@@ -54,10 +57,23 @@ class AttendanceStudentContainer extends React.Component {
         if (!nextProps.isLoadingInfoStudent || nextProps.isUpdatingAttendanceStudent) {
             this.props.QRCodeActions.beginScanQRCode();
         }
+
+        if (!nextProps.isLoadingInfoStudent){
+            if (nextProps.classStudent.id && nextProps.classStudent.id !== nextProps.classId){
+                if (!this.state.checkClass){
+                    Alert.alert('Thông báo', alert.STUDENT_HAVE_NOT_CLASS);
+                }
+              this.setState({checkClass: true});
+            }
+        }
     }
 
     updateAttendance(attendanceId, orderAttendance) {
         this.props.attendanceStudentActions.updateAttendanceStudent(attendanceId, this.props.token, orderAttendance);
+    }
+
+    popRouter(){
+        Actions.pop();
     }
 
     render() {
@@ -69,7 +85,8 @@ class AttendanceStudentContainer extends React.Component {
                 onUpdateAttendance={this.updateAttendance}
                 studentCode={this.props.studentCode}
                 orderLessonCourse={this.props.orderLessonCourse}
-                message = {this.props.message}
+                message={this.props.message}
+                popRouter = {this.popRouter}
             />
         );
     }
@@ -86,7 +103,9 @@ function mapStateToProps(state) {
         errorUpdate: state.attendanceStudent.errorUpdate,
         studentCode: state.attendanceStudent.studentCode,
         orderLessonCourse: state.lessonCourse.selectedLessonCourseId,
-        message: state.attendanceStudent.message
+        message: state.attendanceStudent.message,
+        classId: state.class.selectedClassId,
+        classStudent: state.attendanceStudent.classStudent
     };
 }
 

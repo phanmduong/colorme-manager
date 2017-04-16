@@ -3,7 +3,7 @@
  */
 import React from'react';
 import {connect} from 'react-redux';
-import QRCodeComponent from '../components/QRCodeComponent';
+import QRCodeComponent from '../components/QRCodeComponent.ios';
 import * as attendanceStudentActions from '../actions/attendanceStudentActions';
 import * as QRCodeActions from '../actions/QRCodeActions';
 import {bindActionCreators} from 'redux';
@@ -13,6 +13,7 @@ class QRCodeContainer extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.scannedQRCode = this.scannedQRCode.bind(this);
+        this.popRouter = this.popRouter.bind(this);
     }
 
     componentWillMount(){
@@ -27,10 +28,15 @@ class QRCodeContainer extends React.Component {
         }
     }
 
+    popRouter(){
+        Actions.pop();
+    }
+
     render() {
         return (
             <QRCodeComponent
                 onScannerQRCode = {this.scannedQRCode}
+                popRouter = {this.popRouter}
             />
         );
     }

@@ -14,6 +14,7 @@ class ClassContainer extends React.Component {
     constructor(props) {
         super(props);
         this.onSelectedItem = this.onSelectedItem.bind(this);
+        this.popRouter = this.popRouter.bind(this);
     }
 
     componentWillMount(){
@@ -33,12 +34,18 @@ class ClassContainer extends React.Component {
         }
     }
 
+    popRouter(){
+        Actions.pop();
+    }
+
     render() {
         return (
             <ClassComponent
                 classData = {this.props.classData}
                 isLoading = {this.props.isLoading}
                 onSelectedItem = {this.onSelectedItem}
+                popRouter = {this.popRouter}
+                imageCourse = {this.props.course[this.props.courseId].icon_url}
             />
         );
     }
@@ -53,7 +60,8 @@ function mapStateToProps(state) {
         selectedClassId: state.class.selectedClassId,
         baseId: state.base.selectedBaseId,
         courseId: state.course.selectedCourseId,
-        genId: state.gen.selectedGenId
+        genId: state.gen.selectedGenId,
+        course: state.course.courseData
     };
 }
 

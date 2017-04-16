@@ -29,7 +29,8 @@ export function loadedInforStudentSuccessful(res) {
         type: types.LOAD_GET_INFOR_STUDENT_SUCCESSFUL,
         isLoadingInfoStudent: false,
         errorLoad: false,
-        student: res.data.student
+        student: res.data.student,
+        classStudent: res.data.class
     }
 }
 

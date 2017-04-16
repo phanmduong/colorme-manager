@@ -1,69 +1,120 @@
 import React from'react';
-import {StyleSheet, Text, ListView, ActivityIndicator} from 'react-native';
-import ListItem from './common/ListItem';
+import { Dimensions} from 'react-native';
+import {
+    Container,
+    Header,
+    Content,
+    Button,
+    Left,
+    Right,
+    Title,
+    Body,
+    Icon,
+    View,
+    ListItem,
+    List,
+    Text,
+    Thumbnail
+} from 'native-base';
+var {height, width} = Dimensions.get('window');
+import Spinkit from 'react-native-spinkit';
 import _ from 'lodash';
 
 class CourseComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.renderRow = this.renderRow.bind(this);
-    }
-
-    componentWillMount(){
-        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        this.setState({
-            dataSource: ds.cloneWithRows([])
-        });
     }
 
     componentWillReceiveProps(nextProps) {
         let courseData = nextProps.courseData;
         _.reverse(courseData);
-        this.setState({
-            dataSource: this.state.dataSource.cloneWithRows(courseData)
-        });
     }
 
     render() {
         return (
-            (this.props.isLoading) ?
-                (
-                    <ActivityIndicator
-                        animating = {this.props.isLoading}
-                        style = {styles.indicator}
-                        size = "large"
-                    />
-                ) :
-                (
-                    <ListView
-                        style = {styles.list}
-                        enableEmptySections
-                        dataSource = {this.state.dataSource}
-                        renderRow = {this.renderRow}
-                    />
+            (<Container>
+                <Header>
+                    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                        <Left>
+                            <Button
+                                transparent
+                                onPress={this.props.popRouter}
+                                style={{paddingLeft: 0, paddingRight: 0}}
+                            >
+                                <Icon
+                                    name="arrow-back"
+                                    style={{color: '#fff'}}
+                                />
+                            </Button>
+                        </Left>
+                        <Body>
+                        <Title>Môn học</Title>
+                        </Body>
+                        <Right style={{paddingRight: 6}}>
+                            <Button
+                                transparent
+                                style={{paddingLeft: 0, paddingRight: 0}}
+                            >
+                                <Icon name='menu' style={{color: '#fff'}}/>
+                            </Button>
+                        </Right>
+                    </View>
+                </Header>
 
-                )
-        );
-    }
-
-    renderRow(rowData){
-        return (
-            <ListItem
-                rowData = {rowData}
-                onPress = {this.props.onSelectedItem}
-            />
+                {(this.props.isLoading) ?
+                    (
+                        <View style={styles.container}>
+                            <Spinkit
+                                isVisible
+                                color='#C50000'
+                                type='Wave'
+                                size={width/8}
+                            />
+                        </View>
+                    ) :
+                    (
+                        <Content>
+                            <List
+                                dataArray={this.props.courseData}
+                                renderRow={
+                                    (item) => (
+                                        <ListItem
+                                            onPress={() => this.props.onSelectedItem(item.id)}
+                                            onLongPress={() => {
+                                            }}
+                                            button
+                                        >
+                                            <Thumbnail small source={{uri: item.icon_url}}/>
+                                            <Body>
+                                            <Text>{item.name}</Text>
+                                            </Body>
+                                            <Right>
+                                                <Icon name="arrow-forward"/>
+                                            </Right>
+                                        </ListItem>
+                                    )
+                                }
+                            >
+                            </List>
+                        </Content>
+                    )}
+            </Container>)
         );
     }
 }
 
-const styles = StyleSheet.create({
+const styles = ({
     indicator: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         height: 37
     },
-    list: {
+    list: {},
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });
 

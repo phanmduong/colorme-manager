@@ -23,9 +23,9 @@ class RouterComponent extends React.Component {
                     <Scene key="course" component={CourseContainer} />
                     <Scene key="gen" component={GenContainer}  />
                     <Scene key="lessonCourse" component={LessonCourseContainer}/>
-                    <Scene key="classCourse" duration = {0} component={ClassContainer} />
-                    <Scene key="scanQRCode" duration = {0} component={QRCodeContainer} />
-                    <Scene key="attendanceStudentCode" duration = {0} component={AttendanceStudentContainer}/>
+                    <Scene key="classCourse" component={ClassContainer} />
+                    <Scene key="scanQRCode" component={QRCodeContainer} />
+                    <Scene key="attendanceStudentCode" component={AttendanceStudentContainer}/>
                 </Scene>
             </Router>
         )

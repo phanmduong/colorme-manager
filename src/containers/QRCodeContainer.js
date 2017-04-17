@@ -3,7 +3,7 @@
  */
 import React from'react';
 import {connect} from 'react-redux';
-import QRCodeComponent from '../components/QRCodeComponent.ios';
+import QRCodeComponent from '../components/QRCodeComponent';
 import * as attendanceStudentActions from '../actions/attendanceStudentActions';
 import * as QRCodeActions from '../actions/QRCodeActions';
 import {bindActionCreators} from 'redux';

@@ -5,7 +5,6 @@ import android.app.Application;
 import com.facebook.react.ReactApplication;
 import com.react.rnspinkit.RNSpinkitPackage;
 import com.microsoft.codepush.react.CodePush;
-import com.eguma.barcodescanner.BarcodeScannerPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -35,7 +34,6 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new RNSpinkitPackage(),
             new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG),
-            new BarcodeScannerPackage(),
             new RCTCameraPackage()
       );
     }

@@ -41,7 +41,11 @@ class AttendanceStudentContainer extends React.Component {
         }
 
         if (nextProps.message === 'success') {
-            Alert.alert('Thông báo', alert.ATTENDANCE_SUCCESSFUL);
+            Alert.alert('Thông báo',
+                alert.ATTENDANCE_SUCCESSFUL,
+                [{text: 'Đồng ý', onPress: this.popRouter}],
+                { cancelable: false }
+            );
             var student = nextProps.student;
             student.attendances[this.props.orderLessonCourse].status = 1;
             this.setState({
@@ -51,11 +55,6 @@ class AttendanceStudentContainer extends React.Component {
             this.setState({
                 student: Object.assign({}, this.state.student, nextProps.student)
             });
-        }
-
-
-        if (!nextProps.isLoadingInfoStudent || nextProps.isUpdatingAttendanceStudent) {
-            this.props.QRCodeActions.beginScanQRCode();
         }
 
         if (!nextProps.isLoadingInfoStudent){
@@ -74,6 +73,7 @@ class AttendanceStudentContainer extends React.Component {
 
     popRouter(){
         Actions.pop();
+        this.props.QRCodeActions.beginScanQRCode();
     }
 
     render() {

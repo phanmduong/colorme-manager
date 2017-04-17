@@ -1,5 +1,5 @@
 import React from'react';
-import {ActivityIndicator, ListView} from 'react-native';
+import {ActivityIndicator, Image, Dimensions} from 'react-native';
 import {
     Container,
     Header,
@@ -9,9 +9,13 @@ import {
     Title,
     Body,
     Icon,
-    Text,
-    View
+    ListItem,
+    List,
+    View,
+    Text
 } from 'native-base';
+var {height, width} = Dimensions.get('window');
+import Spinkit from 'react-native-spinkit';
 import BusyIndicator from 'react-native-busy-indicator';
 import LoaderHandler from 'react-native-busy-indicator/LoaderHandler';
 
@@ -23,17 +27,9 @@ class AttendanceStudentComponent extends React.Component {
     }
 
     componentWillMount() {
-        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        this.setState({
-            dataSource: ds.cloneWithRows([])
-        });
     }
 
     componentWillReceiveProps(nextProps) {
-        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        this.setState({
-            dataSource: ds.cloneWithRows(nextProps.student.attendances),
-        });
         if (!this.props.isUpdatingAttendanceStudent) {
             LoaderHandler.showLoader('Updating');
         } else {
@@ -49,7 +45,7 @@ class AttendanceStudentComponent extends React.Component {
         return (
             <Container>
                 <Header>
-                    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <View style={styles.header}>
                         <Left>
                             <Button
                                 transparent
@@ -77,35 +73,50 @@ class AttendanceStudentComponent extends React.Component {
                 </Header>
                 {(this.props.isLoadingInfoStudent) ?
                     (
-                        <ActivityIndicator
-                            animating={this.props.isLoadingInfoStudent}
-                            style={styles.indicator}
-                            size="large"
-                        />
+                        <View style={styles.containerFlex1}>
+                            <Spinkit
+                                isVisible
+                                color='#C50000'
+                                type='Wave'
+                                size={width/8}
+                            />
+                        </View>
                     ) :
                     (
                         <View style={styles.container}>
-                            <View style={styles.container}/>
-                            <Text>{this.props.student.name}</Text>
-                            <Text>{this.props.studentCode}</Text>
-                            <View/>
-                            <View style={styles.container}/>
-                            <ListView
-                                horizontal
-                                enableEmptySections
-                                style={styles.list}
-                                dataSource={this.state.dataSource}
-                                renderRow={this.renderRow}
-                            />
-                            <View/>
-                            <Button
-                                block
-                                rounded
-                                style={styles.button}
-                                onPress={this.updateAttendance}
-                            >
-                                <Text>{'Điểm danh buổi ' + (parseInt(this.props.orderLessonCourse) + 1)}</Text>
-                            </Button>
+                            <View style={styles.containerFlex1}>
+                                <Image
+                                    source={
+                                        (!this.props.student.avatar_url || this.props.student.avatar_url === '') ? (
+                                            require('../../assets/img/colorme.jpg')
+                                        ) :
+                                            ({uri: this.props.student.avatar_url})}
+                                    style={styles.image}
+                                />
+                            </View>
+                            <View style={styles.containerFlex1}>
+                                <Text style={styles.textName}>{this.props.student.name}</Text>
+                                <Text style={styles.textStudentCode}>{this.props.studentCode}</Text>
+                            </View>
+
+                            <View style={styles.containerList}>
+                                <List
+                                    horizontal
+                                    dataArray={this.props.student.attendances}
+                                    renderRow={this.renderRow}
+                                />
+                            </View>
+                            <View style={styles.viewButton}>
+                                <Button
+                                    block
+                                    rounded
+                                    style={styles.button}
+                                    onPress={this.updateAttendance}
+                                >
+                                    <Text>{'Điểm danh buổi ' + (parseInt(this.props.orderLessonCourse) + 1)}</Text>
+                                </Button>
+                            </View>
+                            <View style={styles.containerFlex1}/>
                             <BusyIndicator/>
                         </View>
                     )}
@@ -116,53 +127,99 @@ class AttendanceStudentComponent extends React.Component {
     renderRow(rowData) {
         switch (rowData.status) {
             case 0: // chua diem danh
-                return (<Text style={styles.textNumber}>{rowData.order}</Text>);
+                return (
+                    <View style={styles.textNumber}>
+                        <Text style={{color: 'white', textAlign: 'center'}}>{rowData.order}</Text>
+                    </View>
+                );
             case 1: // di hoc
-                return (<Text style={styles.textNumberGreen}>{rowData.order}</Text>);
+                return (
+                    <View style={styles.textNumberGreen}>
+                        <Text style={{color: 'white', textAlign: 'center'}}>{rowData.order}</Text>
+                    </View>
+                );
             default: // nghi hoc, -100
-                return (<Text style={styles.textNumberRed}>{rowData.order}</Text>);
+                return (
+                    <View style={styles.textNumberRed}>
+                        <Text style={{color: 'white', textAlign: 'center'}}>{rowData.order}</Text>
+                    </View>
+                );
         }
     }
 }
 
 const styles = ({
-    indicator: {
+    header:{
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 37
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     container: {
+        flex: 1,
+        alignItems: 'center',
+        marginTop: height/20
     },
-    list: {
-        height: 50,
-        marginTop: 20
+    containerFlex1: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    containerFlex2: {},
+    containerList: {
+        paddingTop: height/12,
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: width
+    },
+    image: {
+        width: width / 3,
+        height: width / 3,
+        borderRadius: width / 6
     },
     textNumberRed: {
-        marginHorizontal: 7,
-        height: 40,
         width: 30,
-        borderRadius: 10,
-        color: '#ff0800',
-        fontSize: 15,
+        height: 30,
+        borderRadius: 30 / 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#C50000',
+        marginHorizontal: 7
     },
     textNumberGreen: {
-        marginHorizontal: 7,
-        height: 40,
         width: 30,
-        borderRadius: 10,
-        color: '#00ff43',
-        fontSize: 15,
+        height: 30,
+        borderRadius: 30 / 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#009e23',
+        marginHorizontal: 7
     },
     textNumber: {
-        marginHorizontal: 7,
-        height: 40,
         width: 30,
-        borderRadius: 10,
-        fontSize: 15,
+        height: 30,
+        borderRadius: 30 / 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginHorizontal: 7,
+        backgroundColor: '#6b6b6b',
     },
     button: {
-        backgroundColor: '#C50000',
+        backgroundColor: '#C50000'
+    },
+    viewButton: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: width - width / 8
+    },
+    textName: {
+        fontSize: 20
+    },
+    textStudentCode: {
+        fontSize: 15,
+        color: '#888888',
+        marginTop: 10
     }
 });
 

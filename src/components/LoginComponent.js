@@ -22,6 +22,10 @@ class LoginComponent extends React.Component {
         this.onPressLogin = this.onPressLogin.bind(this);
     }
 
+    componentWillMount(){
+        console.log("login");
+    }
+
     onPressLogin() {
         this.props.onClickLogin();
         Keyboard.dismiss();
@@ -49,7 +53,7 @@ class LoginComponent extends React.Component {
                         :
                         (
                             <Form>
-                                <InputGroup style={{width: width-50}}>
+                                <InputGroup style={{width: width-width/8}}>
                                     <Icon
                                         name='ios-person'
                                         style={{color: '#3e3d44'}}

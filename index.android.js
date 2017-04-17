@@ -13,6 +13,9 @@ import codePush from "react-native-code-push";
 let codePushOptions = {updateDialog: true, installMode: codePush.InstallMode.IMMEDIATE};
 
 export default class ColorMEManager extends Component {
+    componentWillMount(){
+        console.log("colorme");
+    }
     render() {
         return (
             <App/>

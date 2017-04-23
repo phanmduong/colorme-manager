@@ -3,6 +3,7 @@
  */
 import {combineReducers} from 'redux';
 import loginReducer from './loginReducer';
+import drawerReducer from './drawerReducer';
 import baseReducer from './baseReducer';
 import courseReducer from './courseReducer';
 import genReducer from './genReducer';
@@ -14,6 +15,7 @@ import attendanceStudentReducer from './attendanceStudentReducer';
 
 const rootReducer = combineReducers({
     login: loginReducer,
+    drawer: drawerReducer,
     base: baseReducer,
     course: courseReducer,
     gen: genReducer,

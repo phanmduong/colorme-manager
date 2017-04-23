@@ -18,6 +18,7 @@ var {height, width} = Dimensions.get('window');
 import Spinkit from 'react-native-spinkit';
 import BusyIndicator from 'react-native-busy-indicator';
 import LoaderHandler from 'react-native-busy-indicator/LoaderHandler';
+import theme from '../styles';
 
 class AttendanceStudentComponent extends React.Component {
     constructor(props, context) {
@@ -64,6 +65,7 @@ class AttendanceStudentComponent extends React.Component {
                         <Right style={{paddingRight: 6}}>
                             <Button
                                 transparent
+                                onPress = {this.props.openDrawer}
                                 style={{paddingLeft: 0, paddingRight: 0}}
                             >
                                 <Icon name='menu' style={{color: '#fff'}}/>
@@ -76,7 +78,7 @@ class AttendanceStudentComponent extends React.Component {
                         <View style={styles.containerFlex1}>
                             <Spinkit
                                 isVisible
-                                color='#C50000'
+                                color={theme.mainColor}
                                 type='Wave'
                                 size={width/8}
                             />
@@ -183,7 +185,7 @@ const styles = ({
         borderRadius: 30 / 2,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#C50000',
+        backgroundColor: theme.mainColor,
         marginHorizontal: 7
     },
     textNumberGreen: {
@@ -205,7 +207,7 @@ const styles = ({
         backgroundColor: '#6b6b6b',
     },
     button: {
-        backgroundColor: '#C50000'
+        backgroundColor: theme.mainColor
     },
     viewButton: {
         flex: 1,

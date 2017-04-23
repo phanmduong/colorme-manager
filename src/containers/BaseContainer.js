@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import BaseComponent from '../components/BaseComponent';
 import * as baseActions from '../actions/baseActions';
+import * as drawerActions from '../actions/drawerActions';
 import {Alert}from 'react-native';
 import * as alert from '../constants/alert';
 import {Actions} from 'react-native-router-flux';
@@ -18,6 +19,7 @@ class BaseContainer extends React.Component {
 
     componentWillMount(){
         this.props.baseActions.loadDataBase(this.props.token);
+        this.props.drawerActions.enableDrawer();
     }
 
     onSelectedItem(baseId){
@@ -38,6 +40,7 @@ class BaseContainer extends React.Component {
                 baseData = {this.props.baseData}
                 isLoading = {this.props.isLoading}
                 onSelectedItem = {this.onSelectedItem}
+                openDrawer = {this.props.drawerActions.openDrawer}
             />
         );
     }
@@ -55,7 +58,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        baseActions: bindActionCreators(baseActions, dispatch)
+        baseActions: bindActionCreators(baseActions, dispatch),
+        drawerActions: bindActionCreators(drawerActions, dispatch)
     };
 }
 

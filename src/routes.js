@@ -11,15 +11,14 @@ import LessonCourseContainer from './containers/LessonCourseContainer';
 import ClassContainer from './containers/ClassContainer';
 import QRCodeContainer from './containers/QRCodeContainer';
 import AttendanceStudentContainer from './containers/AttendanceStudentContainer';
-import {Navigator}from 'react-native'
 
 class RouterComponent extends React.Component {
     render() {
         return (
             <Router>
-                <Scene key="root">
-                    <Scene key="login" component={LoginContainer} initial hideNavBar type={ActionConst.RESET}/>
-                    <Scene key="base" component={BaseContainer}  type={ActionConst.RESET} hideNavBar/>
+                <Scene key="root" hideNavBar>
+                    <Scene key="login" component={LoginContainer} initial type={ActionConst.RESET}/>
+                    <Scene key="base" component={BaseContainer} type={ActionConst.RESET}/>
                     <Scene key="course" component={CourseContainer} />
                     <Scene key="gen" component={GenContainer}  />
                     <Scene key="lessonCourse" component={LessonCourseContainer}/>

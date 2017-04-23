@@ -15,15 +15,12 @@ import {
 } from 'native-base';
 var {height, width} = Dimensions.get('window');
 import Spinkit from 'react-native-spinkit';
+import theme from '../styles';
 
 class LoginComponent extends React.Component {
     constructor(props) {
         super(props);
         this.onPressLogin = this.onPressLogin.bind(this);
-    }
-
-    componentWillMount(){
-        console.log("login");
     }
 
     onPressLogin() {
@@ -45,7 +42,7 @@ class LoginComponent extends React.Component {
                         (
                             <Spinkit
                                 isVisible
-                                color='#C50000'
+                                color={theme.mainColor}
                                 type='CircleFlip'
                                 size={width/6}
                             />
@@ -120,7 +117,7 @@ const styles = {
         alignItems: 'center'
     },
     button: {
-        backgroundColor: '#C50000',
+        backgroundColor: theme.mainColor,
         marginTop: 16
     }
 };

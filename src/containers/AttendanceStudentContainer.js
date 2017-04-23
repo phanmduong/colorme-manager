@@ -7,6 +7,7 @@ import {bindActionCreators} from 'redux';
 import AttendanceStudentComponent from '../components/AttendanceStudentComponent';
 import * as attendanceStudentActions from '../actions/attendanceStudentActions';
 import * as QRCodeActions from '../actions/QRCodeActions';
+import * as drawerActions from '../actions/drawerActions';
 
 import {Alert, Text}from 'react-native';
 import * as alert from '../constants/alert';
@@ -87,6 +88,7 @@ class AttendanceStudentContainer extends React.Component {
                 orderLessonCourse={this.props.orderLessonCourse}
                 message={this.props.message}
                 popRouter = {this.popRouter}
+                openDrawer = {this.props.drawerActions.openDrawer}
             />
         );
     }
@@ -113,6 +115,7 @@ function mapDispatchToProps(dispatch) {
     return {
         attendanceStudentActions: bindActionCreators(attendanceStudentActions, dispatch),
         QRCodeActions: bindActionCreators(QRCodeActions, dispatch),
+        drawerActions: bindActionCreators(drawerActions, dispatch)
     };
 }
 

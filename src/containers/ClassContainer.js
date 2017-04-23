@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import ClassComponent from '../components/ClassComponent';
 import * as classActions from '../actions/classActions';
+import * as drawerActions from '../actions/drawerActions';
 import {Alert}from 'react-native';
 import * as alert from '../constants/alert';
 import {Actions} from 'react-native-router-flux';
@@ -15,11 +16,15 @@ class ClassContainer extends React.Component {
         super(props);
         this.onSelectedItem = this.onSelectedItem.bind(this);
         this.popRouter = this.popRouter.bind(this);
+        this.state = {
+            imageCourse: ""
+        }
     }
 
     componentWillMount(){
         this.props.classActions
             .loadDataClass(this.props.baseId, this.props.courseId, this.props.genId, this.props.token);
+        this.imageCourse();
     }
 
     onSelectedItem(classId){
@@ -38,6 +43,14 @@ class ClassContainer extends React.Component {
         Actions.pop();
     }
 
+    imageCourse(){
+        this.props.course.map((course) =>{
+            if (course.id === this.props.courseId) {
+                return this.setState({imageCourse: course.icon_url});
+            }
+        })
+    }
+
     render() {
         return (
             <ClassComponent
@@ -45,7 +58,8 @@ class ClassContainer extends React.Component {
                 isLoading = {this.props.isLoading}
                 onSelectedItem = {this.onSelectedItem}
                 popRouter = {this.popRouter}
-                imageCourse = {this.props.course[this.props.courseId].icon_url}
+                imageCourse = {this.state.imageCourse}
+                openDrawer = {this.props.drawerActions.openDrawer}
             />
         );
     }
@@ -61,13 +75,15 @@ function mapStateToProps(state) {
         baseId: state.base.selectedBaseId,
         courseId: state.course.selectedCourseId,
         genId: state.gen.selectedGenId,
-        course: state.course.courseData
+        course: state.course.courseData,
+        drawerOpen: state.drawer.drawerOpen,
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        classActions: bindActionCreators(classActions, dispatch)
+        classActions: bindActionCreators(classActions, dispatch),
+        drawerActions: bindActionCreators(drawerActions, dispatch)
     };
 }
 

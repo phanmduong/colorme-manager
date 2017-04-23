@@ -5,6 +5,11 @@ import * as types from '../constants/actionTypes';
 import * as loadLoginApi from '../apis/loginApi';
 import {AsyncStorage}from 'react-native';
 
+export function openSceneLogin() {
+    return{
+        type: types.OPEN_SCENE_LOGIN,
+    };
+}
 export function updateDataLoginForm(login) {
     return{
         type: types.UPDATE_DATA_LOGIN_FORM,
@@ -28,7 +33,7 @@ export function loginUser(login) {
     return function (dispatch) {
         dispatch(beginLogin());
         loadLoginApi.loadLoginApi(login).then(function (res) {
-            dispatch(updatedLoginForm(res));
+            dispatch(loginSuccess(res));
         }).catch(error => {
             dispatch(loginError());
             throw (error);
@@ -37,7 +42,7 @@ export function loginUser(login) {
     }
 }
 
-export function updatedLoginForm(res) {
+export function loginSuccess(res) {
     let token = res.data.token;
     return ({
         type: types.LOGIN_USER,

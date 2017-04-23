@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import GenComponent from '../components/GenComponent';
 import * as genActions from '../actions/genActions';
+import * as drawerActions from '../actions/drawerActions';
 import {Alert}from 'react-native';
 import * as alert from '../constants/alert';
 import {Actions} from 'react-native-router-flux';
@@ -15,10 +16,14 @@ class GenContainer extends React.Component {
         super(props);
         this.onSelectedItem = this.onSelectedItem.bind(this);
         this.popRouter = this.popRouter.bind(this);
+        this.state = {
+            imageCourse: ""
+        }
     }
 
     componentWillMount(){
         this.props.genActions.loadDataGen(this.props.token);
+        this.imageCourse();
     }
 
     onSelectedItem(genId){
@@ -36,6 +41,14 @@ class GenContainer extends React.Component {
         }
     }
 
+    imageCourse(){
+        this.props.course.map((course) =>{
+            if (course.id === this.props.courseId) {
+                return this.setState({imageCourse: course.icon_url});
+            }
+        })
+    }
+
     render() {
         return (
             <GenComponent
@@ -43,7 +56,8 @@ class GenContainer extends React.Component {
                 isLoading = {this.props.isLoading}
                 onSelectedItem = {this.onSelectedItem}
                 popRouter = {this.popRouter}
-                imageCourse = {this.props.course[this.props.selectedCourseId].icon_url}
+                imageCourse = {this.state.imageCourse}
+                openDrawer = {this.props.drawerActions.openDrawer}
             />
         );
     }
@@ -56,14 +70,16 @@ function mapStateToProps(state) {
         error: state.gen.error,
         token: state.login.token,
         selectedGenId: state.gen.selectedGenId,
-        selectedCourseId: state.course.selectedCourseId,
-        course: state.course.courseData
+        courseId: state.course.selectedCourseId,
+        course: state.course.courseData,
+        drawerOpen: state.drawer.drawerOpen,
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        genActions: bindActionCreators(genActions, dispatch)
+        genActions: bindActionCreators(genActions, dispatch),
+        drawerActions: bindActionCreators(drawerActions, dispatch)
     };
 }
 

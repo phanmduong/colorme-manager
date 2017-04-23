@@ -1,6 +1,7 @@
 /**
  * Created by phanmduong on 4/5/17.
  */
+export const OPEN_SCENE_LOGIN = 'OPEN_SCENE_LOGIN';
 export const UPDATE_DATA_LOGIN_FORM = 'UPDATE_DATA_LOGIN_FORM';
 export const BEGIN_LOGIN = 'BEGIN_LOGIN';
 export const LOGIN_USER = 'LOGIN_USER';
@@ -13,6 +14,12 @@ export const BEGIN_SET_DATA_LOGIN = 'BEGIN_SET_DATA_LOGIN';
 export const SET_DATA_LOGIN = 'SET_DATA_LOGIN';
 export const SETTED_DATA_LOGIN = 'SETTED_DATA_LOGIN';
 export const SET_DATA_LOGIN_ERROR = 'SET_DATA_LOGIN_ERROR';
+
+export const CLOSE_DRAWER = 'CLOSE_DRAWER';
+export const OPEN_DRAWER = 'OPEN_DRAWER';
+export const DISABLE_DRAWER = 'DISABLE_DRAWER';
+export const ENABLE_DRAWER = 'ENABLE_DRAWER';
+
 
 
 export const BEGIN_DATA_BASE_LOAD = 'BEGIN_DATA_BASE_LOAD';

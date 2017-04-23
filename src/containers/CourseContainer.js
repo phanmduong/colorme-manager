@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import CourseComponent from '../components/CourseComponent';
 import * as courseActions from '../actions/courseActions';
+import * as drawerActions from '../actions/drawerActions';
 import {Alert}from 'react-native';
 import * as alert from '../constants/alert';
 import {Actions} from 'react-native-router-flux';
@@ -43,6 +44,7 @@ class CourseContainer extends React.Component {
                 isLoading = {this.props.isLoading}
                 onSelectedItem = {this.onSelectedItem}
                 popRouter = {this.popRouter}
+                openDrawer = {this.props.drawerActions.openDrawer}
             />
         );
     }
@@ -54,13 +56,15 @@ function mapStateToProps(state) {
         courseData: state.course.courseData,
         error: state.course.error,
         token: state.login.token,
-        selectedCourseId: state.base.selectedCourseId
+        selectedCourseId: state.base.selectedCourseId,
+        drawerOpen: state.drawer.drawerOpen,
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        courseActions: bindActionCreators(courseActions, dispatch)
+        courseActions: bindActionCreators(courseActions, dispatch),
+        drawerActions: bindActionCreators(drawerActions, dispatch)
     };
 }
 

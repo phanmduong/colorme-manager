@@ -2,6 +2,10 @@
  * Created by phanmduong on 4/5/17.
  */
 export default {
+    drawer: {
+        drawerOpen: false,
+        drawerDisable: true,
+    },
     login: {
         login: {},
         isLoading: false,
@@ -11,6 +15,7 @@ export default {
         isSetDataError: false,
         isGettingData: true,
         isGetDataError: false,
+        user:{}
     },
     base: {
         baseData: [],
@@ -49,9 +54,9 @@ export default {
         isLoadingInfoStudent: false,
         isUpdatingAttendanceStudent: false,
         student: {
-            attendances:[{}]
+            attendances: [{}]
         },
-        classStudent:{},
+        classStudent: {},
         attendance: [],
         message: '',
         errorLoad: false,

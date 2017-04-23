@@ -12,6 +12,7 @@ import LoginComponent from '../components/LoginComponent';
 import {Actions} from 'react-native-router-flux';
 
 import * as loginActions from '../actions/loginActions';
+import * as drawerActions from '../actions/drawerActions';
 
 class LoginContainer extends React.Component {
     constructor(props) {
@@ -25,6 +26,8 @@ class LoginContainer extends React.Component {
     }
 
     componentWillMount(){
+        this.props.loginActions.openSceneLogin();
+        this.props.drawerActions.disableDrawer();
         this.props.loginActions.getDataLogin();
         this.setState({
             isAutoLogin: true
@@ -60,6 +63,7 @@ class LoginContainer extends React.Component {
         if (!_.isUndefined(nextProps.token) && nextProps.token.trim().length > 0) {
             if (!nextProps.isLoading && !nextProps.error) {
                 if (nextProps.user.role > 0){
+                    console.log("base");
                     Actions.base();
                 }
                 else {
@@ -71,22 +75,22 @@ class LoginContainer extends React.Component {
             }
         }
 
-        if (nextProps.error){
-            Alert.alert(
-                'Thông báo',
-                alert.CHECK_INFO_LOGIN
-            )
-        }
+        // if (nextProps.error){
+        //     Alert.alert(
+        //         'Thông báo',
+        //         alert.CHECK_INFO_LOGIN
+        //     )
+        // }
         
-        if (!nextProps.isGettingData && !nextProps.isGetDataError && this.state.isAutoLogin){
-            this.setState({
-                isAutoLogin: false
-            });
-            if (nextProps.login.username && nextProps.login.password){
-                nextProps.loginActions.loginUser(nextProps.login);
-            }
-
-        }
+        // if (!nextProps.isGettingData && !nextProps.isGetDataError && this.state.isAutoLogin){
+        //     this.setState({
+        //         isAutoLogin: false
+        //     });
+        //     if (nextProps.login.username && nextProps.login.password){
+        //         nextProps.loginActions.loginUser(nextProps.login);
+        //     }
+        //
+        // }
     }
 
     render() {
@@ -118,7 +122,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        loginActions: bindActionCreators(loginActions, dispatch)
+        loginActions: bindActionCreators(loginActions, dispatch),
+        drawerActions: bindActionCreators(drawerActions, dispatch)
     }
 }
 

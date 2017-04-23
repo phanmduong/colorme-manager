@@ -1,3 +1,4 @@
+import theme from '../../styles';
 Object.defineProperty(exports,"__esModule",{value:true});var _color=require('color');var _color2=_interopRequireDefault(_color);
 
 var _reactNative=require('react-native');function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}
@@ -137,7 +138,7 @@ return this.fontSizeBase*1.4;
 
 
 footerHeight:55,
-footerDefaultBg:'#3F51B5',
+footerDefaultBg:'white',
 
 
 
@@ -157,9 +158,8 @@ topTabBarBorderColor:'#fff',
 topTabBarActiveBorderColor:'#fff',
 
 
-
 toolbarBtnColor:'#fff',
-toolbarDefaultBg:'#C50000',
+toolbarDefaultBg:theme.mainColor,
 toolbarHeight:platform==='ios'?76:56,
 toolbarIconSize:platform==='ios'?20:22,
 toolbarSearchIconSize:platform==='ios'?20:23,
@@ -167,7 +167,7 @@ toolbarInputColor:'#fff',
 searchBarHeight:platform==='ios'?30:40,
 toolbarInverseBg:'#222',
 toolbarTextColor:'#fff',
-toolbarDefaultBorder:'#C50000',
+toolbarDefaultBorder:theme.mainColor,
 iosStatusbar:'light-content',
 get statusBarColor(){
 return(0,_color2.default)(this.toolbarDefaultBg).darken(0.2).hexString();

@@ -19,6 +19,7 @@ import {
 var {height, width} = Dimensions.get('window');
 import Spinkit from 'react-native-spinkit';
 import _ from 'lodash';
+import theme from '../styles';
 
 class BaseComponent extends React.Component {
     constructor(props, context) {
@@ -43,6 +44,7 @@ class BaseComponent extends React.Component {
                             <Button
                                 transparent
                                 style={{paddingLeft: 0, paddingRight: 0}}
+                                onPress = {this.props.openDrawer}
                             >
                                 <Icon name='menu' style={{color: '#fff'}}/>
                             </Button>
@@ -55,7 +57,7 @@ class BaseComponent extends React.Component {
                         <View style={styles.container}>
                             <Spinkit
                                 isVisible
-                                color='#C50000'
+                                color={theme.mainColor}
                                 type='Wave'
                                 size={width/8}
                             />

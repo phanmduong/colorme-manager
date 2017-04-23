@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import LessonCourseComponent from '../components/LessonCourseComponent';
 import * as lessonCourseActions from '../actions/lessonCourseActions';
+import * as drawerActions from '../actions/drawerActions';
 import {Alert}from 'react-native';
 import * as alert from '../constants/alert';
 import {Actions} from 'react-native-router-flux';
@@ -15,11 +16,15 @@ class LessonCourseContainer extends React.Component {
         super(props);
         this.onSelectedItem = this.onSelectedItem.bind(this);
         this.popRouter = this.popRouter.bind(this);
+        this.state = {
+            imageCourse: ""
+        }
     }
 
     componentWillMount(){
         this.props.lessonCourseActions
             .loadDataLessonCourse(this.props.selectedCourseId, this.props.token);
+        this.imageCourse();
     }
 
     onSelectedItem(lessonCourseId, rowID){
@@ -37,6 +42,14 @@ class LessonCourseContainer extends React.Component {
         }
     }
 
+    imageCourse(){
+        this.props.course.map((course) =>{
+            if (course.id === this.props.selectedCourseId) {
+                return this.setState({imageCourse: course.icon_url});
+            }
+        })
+    }
+
     render() {
         return (
             <LessonCourseComponent
@@ -44,7 +57,8 @@ class LessonCourseContainer extends React.Component {
                 isLoading = {this.props.isLoading}
                 onSelectedItem = {this.onSelectedItem}
                 popRouter = {this.popRouter}
-                imageCourse = {this.props.course[this.props.selectedCourseId].icon_url}
+                imageCourse = {this.state.imageCourse}
+                openDrawer = {this.props.drawerActions.openDrawer}
             />
         );
     }
@@ -58,13 +72,15 @@ function mapStateToProps(state) {
         token: state.login.token,
         selectedLessonCourseId: state.lessonCourse.selectedLessonCourseId,
         selectedCourseId: state.course.selectedCourseId,
-        course: state.course.courseData
+        course: state.course.courseData,
+        drawerOpen: state.drawer.drawerOpen,
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        lessonCourseActions: bindActionCreators(lessonCourseActions, dispatch)
+        lessonCourseActions: bindActionCreators(lessonCourseActions, dispatch),
+        drawerActions: bindActionCreators(drawerActions, dispatch)
     };
 }
 

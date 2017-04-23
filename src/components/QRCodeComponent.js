@@ -13,6 +13,7 @@ import {
     View
 } from 'native-base';
 import Camera from 'react-native-camera';
+import theme from '../styles';
 
 class QRCodeComponent extends React.Component {
     constructor(props, context) {
@@ -42,6 +43,7 @@ class QRCodeComponent extends React.Component {
                         <Right style={{paddingRight: 6}}>
                             <Button
                                 transparent
+                                onPress = {this.props.openDrawer}
                                 style={{paddingLeft: 0, paddingRight: 0}}
                             >
                                 <Icon name='menu' style={{color: '#fff'}}/>

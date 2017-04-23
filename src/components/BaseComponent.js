@@ -34,16 +34,15 @@ class BaseComponent extends React.Component {
     render() {
         return (
             (<Container>
-                <Header>
+                <Header style={{paddingLeft: 0, paddingRight: 0}}>
                     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                         <Left/>
                         <Body>
                         <Title>Cơ sở</Title>
                         </Body>
-                        <Right style={{paddingRight: 6}}>
+                        <Right>
                             <Button
                                 transparent
-                                style={{paddingLeft: 0, paddingRight: 0}}
                                 onPress = {this.props.openDrawer}
                             >
                                 <Icon name='menu' style={{color: '#fff'}}/>

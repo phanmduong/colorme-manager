@@ -29,13 +29,12 @@ class GenComponent extends React.Component {
     render() {
         return (
             (<Container>
-                <Header>
+                <Header style={{paddingLeft: 0, paddingRight: 0}}>
                     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                         <Left>
                             <Button
                                 transparent
                                 onPress={this.props.popRouter}
-                                style={{paddingLeft: 0, paddingRight: 0}}
                             >
                                 <Icon
                                     name="arrow-back"
@@ -46,11 +45,10 @@ class GenComponent extends React.Component {
                         <Body>
                         <Title>Khóa học</Title>
                         </Body>
-                        <Right style={{paddingRight: 6}}>
+                        <Right>
                             <Button
                                 transparent
                                 onPress = {this.props.openDrawer}
-                                style={{paddingLeft: 0, paddingRight: 0}}
                             >
                                 <Icon name='menu' style={{color: '#fff'}}/>
                             </Button>

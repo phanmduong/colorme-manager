@@ -25,7 +25,10 @@ class SidebarComponent extends React.Component {
     render() {
         return (
             <Container style={styles.container}>
-                <Content>
+                <Content
+                    bounces={false}
+                    style={{ flex: 1, backgroundColor: '#fff', top: -1 }}
+                >
                     <View style={styles.header}>
                         <Thumbnail size={55} source={{uri: this.props.user.avatar_url}}/>
                         <Text style={styles.headerTitle}>{this.props.user.name}</Text>
@@ -49,7 +52,9 @@ class SidebarComponent extends React.Component {
 }
 
 const styles = {
-    container: {},
+    container: {
+        marginLeft: 3
+    },
     header: {
         backgroundColor: theme.mainColor,
         height: height / 4,

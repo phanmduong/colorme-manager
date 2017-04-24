@@ -34,6 +34,7 @@ class AppNavigator extends React.Component {
                 >
                     <StatusBar
                         backgroundColor={material.statusBarColor}
+                        barStyle={this.props.drawerDisable ? "default" : "light-content"}
                     />
                     <Router/>
                 </Drawer>

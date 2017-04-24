@@ -64,7 +64,7 @@ class LoginContainer extends React.Component {
             if (!nextProps.isLoading && !nextProps.error) {
                 if (nextProps.user.role > 0){
                     console.log("base");
-                    Actions.base();
+                    Actions.main();
                 }
                 else {
                     Alert.alert(

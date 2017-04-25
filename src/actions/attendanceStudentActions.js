@@ -46,15 +46,14 @@ export function beginPostAttendaceStudent() {
         type: types.BEGIN_POST_ATTENDANCE_STUDENT,
         isUpdatingAttendanceStudent: true,
         errorUpdate: false,
-        message: ''
     };
 }
 
-export function updateAttendanceStudent(attendanceId, token, orderAttendance) {
+export function updateAttendanceStudent(attendanceId, token) {
     return function (dispatch) {
         dispatch(beginPostAttendaceStudent());
         attendanceStudentApi.postAttendanceStudentApi(attendanceId, token).then(function (res) {
-            dispatch(updateAttendanceStudentSuccessful(res, orderAttendance));
+            dispatch(updateAttendanceStudentSuccessful(res));
         }).catch(error => {
             dispatch(updateAttendanceStudentError());
             throw (error);
@@ -63,12 +62,12 @@ export function updateAttendanceStudent(attendanceId, token, orderAttendance) {
     }
 }
 
-export function updateAttendanceStudentSuccessful(res, orderAttendance) {
+export function updateAttendanceStudentSuccessful(res) {
     return ({
         type: types.LOAD_POST_ATTENDANCE_STUDENT_SUCCESSFUL,
         isUpdatingAttendanceStudent: false,
         errorUpdate: false,
-        orderAttendance: orderAttendance,
+        statusRequestUpdated: res.status,
         attendance: res.data.attendance,
         message: res.data.message
     })

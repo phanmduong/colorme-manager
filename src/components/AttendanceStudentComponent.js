@@ -2,14 +2,7 @@ import React from'react';
 import {ActivityIndicator, Image, Dimensions} from 'react-native';
 import {
     Container,
-    Header,
     Button,
-    Left,
-    Right,
-    Title,
-    Body,
-    Icon,
-    ListItem,
     List,
     View,
     Text
@@ -45,34 +38,6 @@ class AttendanceStudentComponent extends React.Component {
     render() {
         return (
             <Container>
-                <Header>
-                    <View style={styles.header}>
-                        <Left>
-                            <Button
-                                transparent
-                                onPress={this.props.popRouter}
-                                style={{paddingLeft: 0, paddingRight: 0}}
-                            >
-                                <Icon
-                                    name="arrow-back"
-                                    style={{color: '#fff'}}
-                                />
-                            </Button>
-                        </Left>
-                        <Body>
-                        <Title>Điểm danh</Title>
-                        </Body>
-                        <Right style={{paddingRight: 6}}>
-                            <Button
-                                transparent
-                                onPress = {this.props.openDrawer}
-                                style={{paddingLeft: 0, paddingRight: 0}}
-                            >
-                                <Icon name='menu' style={{color: '#fff'}}/>
-                            </Button>
-                        </Right>
-                    </View>
-                </Header>
                 {(this.props.isLoadingInfoStudent) ?
                     (
                         <View style={styles.containerFlex1}>
@@ -86,7 +51,7 @@ class AttendanceStudentComponent extends React.Component {
                     ) :
                     (
                         <View style={styles.container}>
-                            <View style={styles.containerFlex1}>
+                            <View style={styles.containerFlex2}>
                                 <Image
                                     source={
                                         (!this.props.student.avatar_url || this.props.student.avatar_url === '') ? (
@@ -118,7 +83,7 @@ class AttendanceStudentComponent extends React.Component {
                                     <Text>{'Điểm danh buổi ' + (parseInt(this.props.orderLessonCourse) + 1)}</Text>
                                 </Button>
                             </View>
-                            <View style={styles.containerFlex1}/>
+
                             <BusyIndicator/>
                         </View>
                     )}
@@ -159,14 +124,17 @@ const styles = ({
     container: {
         flex: 1,
         alignItems: 'center',
-        marginTop: height/20
     },
     containerFlex1: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
     },
-    containerFlex2: {},
+    containerFlex2: {
+        flex: 2,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
     containerList: {
         paddingTop: height/12,
         flex: 1,

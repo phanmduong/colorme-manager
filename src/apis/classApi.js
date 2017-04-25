@@ -8,3 +8,10 @@ export function loadClassApi(baseId, courseId, genId, token) {
     let url = env.API_URL + "/gens/" + genId+ "/bases/" + baseId + "/courses/" + courseId+ "/classes?token=" + token;
     return axios.get(url);
 }
+
+export function loadCurrentClassStudyApi(token) {
+    let url = env.API_URL + "/current-study-class?token=" + token;
+    return axios.get(url);
+}
+
+

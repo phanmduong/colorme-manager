@@ -11,6 +11,7 @@ import lessonCourseReducer from './lessonCourseReducer';
 import classReducer from './classReducer';
 import QRCodeReducer from './QRCodeReducer';
 import attendanceStudentReducer from './attendanceStudentReducer';
+import currentClassStudyReducer from './currentClassStudyReducer';
 
 
 const rootReducer = combineReducers({
@@ -23,5 +24,6 @@ const rootReducer = combineReducers({
     class: classReducer,
     qrCode: QRCodeReducer,
     attendanceStudent: attendanceStudentReducer,
+    currentClassStudy: currentClassStudyReducer,
 });
 export default rootReducer;

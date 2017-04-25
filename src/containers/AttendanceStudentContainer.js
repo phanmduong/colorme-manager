@@ -7,8 +7,6 @@ import {bindActionCreators} from 'redux';
 import AttendanceStudentComponent from '../components/AttendanceStudentComponent';
 import * as attendanceStudentActions from '../actions/attendanceStudentActions';
 import * as QRCodeActions from '../actions/QRCodeActions';
-import * as drawerActions from '../actions/drawerActions';
-
 import {Alert, Text}from 'react-native';
 import * as alert from '../constants/alert';
 import {Actions} from 'react-native-router-flux';
@@ -18,9 +16,6 @@ class AttendanceStudentContainer extends React.Component {
         super(props);
         this.updateAttendance = this.updateAttendance.bind(this);
         this.state = {
-            student: {
-                attendances: [{}]
-            },
             checkClass: false
         }
         this.popRouter = this.popRouter.bind(this);
@@ -41,21 +36,12 @@ class AttendanceStudentContainer extends React.Component {
             Alert.alert('Thông báo', alert.ATTENDANCE_ERROR);
         }
 
-        if (nextProps.message === 'success') {
+        if (nextProps.statusRequestUpdated === 200) {
             Alert.alert('Thông báo',
                 alert.ATTENDANCE_SUCCESSFUL,
                 [{text: 'Đồng ý', onPress: this.popRouter}],
                 { cancelable: false }
             );
-            var student = nextProps.student;
-            student.attendances[this.props.orderLessonCourse].status = 1;
-            this.setState({
-                student: Object.assign({}, this.state.student, student)
-            });
-        } else {
-            this.setState({
-                student: Object.assign({}, this.state.student, nextProps.student)
-            });
         }
 
         if (!nextProps.isLoadingInfoStudent){
@@ -68,13 +54,13 @@ class AttendanceStudentContainer extends React.Component {
         }
     }
 
-    updateAttendance(attendanceId, orderAttendance) {
-        this.props.attendanceStudentActions.updateAttendanceStudent(attendanceId, this.props.token, orderAttendance);
-    }
-
     popRouter(){
         Actions.pop();
         this.props.QRCodeActions.beginScanQRCode();
+    }
+
+    updateAttendance(attendanceId) {
+        this.props.attendanceStudentActions.updateAttendanceStudent(attendanceId, this.props.token);
     }
 
     render() {
@@ -82,13 +68,10 @@ class AttendanceStudentContainer extends React.Component {
             <AttendanceStudentComponent
                 isLoadingInfoStudent={this.props.isLoadingInfoStudent}
                 isUpdatingAttendanceStudent={this.props.isUpdatingAttendanceStudent}
-                student={this.state.student}
+                student={this.props.student}
                 onUpdateAttendance={this.updateAttendance}
                 studentCode={this.props.studentCode}
                 orderLessonCourse={this.props.orderLessonCourse}
-                message={this.props.message}
-                popRouter = {this.popRouter}
-                openDrawer = {this.props.drawerActions.openDrawer}
             />
         );
     }
@@ -104,18 +87,18 @@ function mapStateToProps(state) {
         errorLoad: state.attendanceStudent.errorLoad,
         errorUpdate: state.attendanceStudent.errorUpdate,
         studentCode: state.attendanceStudent.studentCode,
-        orderLessonCourse: state.lessonCourse.selectedLessonCourseId,
+        orderLessonCourse: state.currentClassStudy.selectedCurrentClassStudy.lesson.order,
         message: state.attendanceStudent.message,
         classId: state.class.selectedClassId,
-        classStudent: state.attendanceStudent.classStudent
+        classStudent: state.attendanceStudent.classStudent,
+        statusRequestUpdated: state.attendanceStudent.statusRequestUpdated
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         attendanceStudentActions: bindActionCreators(attendanceStudentActions, dispatch),
-        QRCodeActions: bindActionCreators(QRCodeActions, dispatch),
-        drawerActions: bindActionCreators(drawerActions, dispatch)
+        QRCodeActions: bindActionCreators(QRCodeActions, dispatch)
     };
 }
 

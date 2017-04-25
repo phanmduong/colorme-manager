@@ -7,3 +7,4 @@ export const LOAD_DATA_ERROR = 'Tải dữ liệu thất bại';
 export const ATTENDANCE_ERROR = 'Điểm danh thất bại';
 export const ATTENDANCE_SUCCESSFUL = 'Điểm danh thành công';
 export const STUDENT_HAVE_NOT_CLASS = 'Học viên không thuộc lớp này';
+export const NO_CURRENT_CLASS_STUDY = 'Thời điểm hiện tại không có lớp đang học';

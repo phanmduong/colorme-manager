@@ -23,39 +23,13 @@ class QRCodeComponent extends React.Component {
     render() {
         return (
             <Container>
-                <Header style={{paddingLeft: 0, paddingRight: 0}}>
-                    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <Left>
-                            <Button
-                                transparent
-                                onPress={this.props.popRouter}
-                            >
-                                <Icon
-                                    name="arrow-back"
-                                    style={{color: '#fff'}}
-                                />
-                            </Button>
-                        </Left>
-                        <Body>
-                        <Title>Điểm danh</Title>
-                        </Body>
-                        <Right>
-                            <Button
-                                transparent
-                                onPress = {this.props.openDrawer}
-                            >
-                                <Icon name='menu' style={{color: '#fff'}}/>
-                            </Button>
-                        </Right>
-                    </View>
-                </Header>
-                    <Camera
-                        onBarCodeRead={(result) => this.props.onScannerQRCode(result.data)}
-                        barCodeTypes={['org.iso.QRCode']}
-                        orientation="portrait"
-                        style={styles.preview}
-                        aspect={Camera.constants.Aspect.fill}>
-                    </Camera>
+                <Camera
+                    onBarCodeRead={(result) => this.props.onScannerQRCode(result.data)}
+                    barCodeTypes={['org.iso.QRCode']}
+                    orientation="portrait"
+                    style={styles.preview}
+                    aspect={Camera.constants.Aspect.fill}>
+                </Camera>
             </Container>
         );
     }

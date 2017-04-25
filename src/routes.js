@@ -2,8 +2,8 @@
  * Created by phanmduong on 4/5/17.
  */
 import React from'react';
-import {StyleSheet, Text} from'react-native';
-import {Scene, Router, ActionConst} from 'react-native-router-flux';
+import {StyleSheet, Navigator} from'react-native';
+import {Scene, Router, ActionConst, Actions} from 'react-native-router-flux';
 import LoginContainer from './containers/LoginContainer';
 import BaseContainer from './containers/BaseContainer';
 import CourseContainer from './containers/CourseContainer';
@@ -12,6 +12,7 @@ import LessonCourseContainer from './containers/LessonCourseContainer';
 import ClassContainer from './containers/ClassContainer';
 import QRCodeContainer from './containers/QRCodeContainer';
 import AttendanceStudentContainer from './containers/AttendanceStudentContainer';
+import CurrentClassStudyContainer from './containers/CurrentClassStudyContainer';
 import CollectMoneyContainer from './containers/CollectMoneyContainer';
 import MoneyTransferContainer from './containers/MoneyTransferContainer';
 import AttendanceContainer from './containers/AttendanceContainer';
@@ -19,12 +20,14 @@ import ShiftRegisterContainer from './containers/ShiftRegisterContainer';
 import CheckInContainer from './containers/CheckInContainer';
 import DashboardContainer from './containers/DashboardContainer';
 import TabIcon from './components/common/TabIcon';
+import BackButton from './components/common/BackButton';
+import MenuButton from './components/common/MenuButton';
 import theme from './styles';
 
 class RouterComponent extends React.Component {
     render() {
         return (
-            <Router>
+            <Router >
                 <Scene key="root">
                     <Scene key="login" component={LoginContainer} hideNavBar initial type={ActionConst.RESET}/>
                     <Scene
@@ -37,16 +40,45 @@ class RouterComponent extends React.Component {
                     >
                         <Scene
                             key="tabAttendance"
-                            component={AttendanceContainer}
-                            title="Điểm danh"
                             nameIcon="fontawesome|qrcode"
                             icon={TabIcon}
+                            initial
                             navigationBarStyle={styles.navigationBarStyle}
                             titleStyle={styles.title}
-                            renderLeftButton={() => {
-                            }}
-
-                        />
+                        >
+                            <Scene
+                                key="currentClassStudy"
+                                component={CurrentClassStudyContainer}
+                                title="Điểm danh"
+                                renderLeftButton={() => {
+                                }}
+                                renderRightButton={MenuButton}
+                                sceneStyle={styles.sceneStyle}
+                                onRight={()=>{console.log('right')}}
+                            />
+                            <Scene
+                                key="scanQRCode"
+                                component={QRCodeContainer}
+                                title="Điểm danh"
+                                renderBackButton={BackButton}
+                                renderRightButton={MenuButton}
+                                onBack={()=> {
+                                    Actions.pop();
+                                }}
+                                onRight={()=>console.log('right')}
+                            />
+                            <Scene
+                                key="attendanceStudentCode"
+                                component={AttendanceStudentContainer}
+                                title="Điểm danh"
+                                sceneStyle={styles.sceneStyle}
+                                renderBackButton={BackButton}
+                                renderRightButton={MenuButton}
+                                onBack={()=> {
+                                    Actions.pop();
+                                }}
+                            />
+                        </Scene>
                         <Scene
                             key="tabShiftRegister"
                             component={ShiftRegisterContainer}
@@ -57,6 +89,7 @@ class RouterComponent extends React.Component {
                             titleStyle={styles.title}
                             renderLeftButton={() => {
                             }}
+                            renderRightButton={MenuButton}
                         />
                         <Scene
                             key="tabDashboard"
@@ -64,11 +97,11 @@ class RouterComponent extends React.Component {
                             title="Dashboard"
                             nameIcon="material|apps"
                             icon={TabIcon}
-                            initial
                             renderLeftButton={() => {
                             }}
                             navigationBarStyle={styles.navigationBarStyle}
                             titleStyle={styles.title}
+                            renderRightButton={MenuButton}
                         />
                         <Scene
                             key="tabCollectMoney"
@@ -80,6 +113,7 @@ class RouterComponent extends React.Component {
                             titleStyle={styles.title}
                             renderLeftButton={() => {
                             }}
+                            renderRightButton={MenuButton}
                         />
                         <Scene
                             key="tabMoneyTransfer"
@@ -91,6 +125,7 @@ class RouterComponent extends React.Component {
                             titleStyle={styles.title}
                             renderLeftButton={() => {
                             }}
+                            renderRightButton={MenuButton}
                         />
                     </Scene>
                 </Scene>
@@ -110,6 +145,10 @@ const styles = StyleSheet.create({
         backgroundColor: theme.mainColor
     },
     tabBarSelectedItemStyle: {},
+    sceneStyle: {
+        paddingTop: Navigator.NavigationBar.Styles.General.TotalNavHeight,
+        paddingBottom: 50
+    }
 });
 
 export default RouterComponent;

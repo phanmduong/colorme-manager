@@ -6,10 +6,6 @@ import initialState from './initialState'
 
 export default function attendanceStudentReducer(state = initialState.attendanceStudent, action) {
     switch (action.type) {
-        case types.SELECT_BUTTON_ENTER_STUDENT_CODE:
-            return Object.assign({}, state, {
-                studentCode: action.studentCode
-            });
         case types.SCANNED_QR_CODE:
             return Object.assign({}, state, {
                 studentCode: action.studentCode
@@ -35,13 +31,13 @@ export default function attendanceStudentReducer(state = initialState.attendance
             return Object.assign({}, state, {
                 isUpdatingAttendanceStudent: action.isUpdatingAttendanceStudent,
                 errorUpdate: action.errorLoad,
-                message: action.message
             });
         case types.LOAD_POST_ATTENDANCE_STUDENT_SUCCESSFUL:
             return Object.assign({}, state, {
                 isUpdatingAttendanceStudent: action.isUpdatingAttendanceStudent,
                 errorUpdate: action.errorLoad,
-                orderAttendance: action.orderAttendance,
+                statusRequestUpdated: action.statusRequestUpdated,
+                attendance: action.attendance,
                 message: action.message
             });
         case types.LOAD_POST_ATTENDANCE_STUDENT_ERROR:

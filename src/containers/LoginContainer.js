@@ -74,22 +74,22 @@ class LoginContainer extends React.Component {
             }
         }
 
-        // if (nextProps.error){
-        //     Alert.alert(
-        //         'Thông báo',
-        //         alert.CHECK_INFO_LOGIN
-        //     )
-        // }
+        if (nextProps.error){
+            Alert.alert(
+                'Thông báo',
+                alert.CHECK_INFO_LOGIN
+            )
+        }
         
-        // if (!nextProps.isGettingData && !nextProps.isGetDataError && this.state.isAutoLogin){
-        //     this.setState({
-        //         isAutoLogin: false
-        //     });
-        //     if (nextProps.login.username && nextProps.login.password){
-        //         nextProps.loginActions.loginUser(nextProps.login);
-        //     }
-        //
-        // }
+        if (!nextProps.isGettingData && !nextProps.isGetDataError && this.state.isAutoLogin){
+            this.setState({
+                isAutoLogin: false
+            });
+            if (nextProps.login.username && nextProps.login.password){
+                nextProps.loginActions.loginUser(nextProps.login);
+            }
+
+        }
     }
 
     render() {

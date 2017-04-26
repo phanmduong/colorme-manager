@@ -14,11 +14,12 @@ class CurrentClassStudyContainer extends React.Component {
     constructor(props) {
         super(props);
         this.onSelectedItem = this.onSelectedItem.bind(this);
+        this.reloadCurrentClassStudy = this.reloadCurrentClassStudy.bind(this);
     }
 
     componentWillMount(){
-        // this.props.currentClassStudyActions
-        //     .loadDataCurrentClassStudy(this.props.token);
+        this.props.currentClassStudyActions
+            .loadDataCurrentClassStudy(this.props.token);
     }
 
     onSelectedItem(classId, lessonOrder, classOrder){
@@ -27,22 +28,19 @@ class CurrentClassStudyContainer extends React.Component {
 
     }
 
-    componentWillReceiveProps(nextProps){
-        if (nextProps.error) {
-            Alert.alert('Thông báo', alert.LOAD_DATA_ERROR);
-        } else {
-            if (!nextProps.isLoading && nextProps.classData.length <= 0){
-                Alert.alert('Thông báo', alert.NO_CURRENT_CLASS_STUDY);
-            }
-        }
+    reloadCurrentClassStudy(){
+        this.props.currentClassStudyActions
+            .loadDataCurrentClassStudy(this.props.token);
     }
 
     render() {
         return (
             <CurrentClassStudyComponent
+                error = {this.props.error}
                 classData = {this.props.classData}
                 isLoading = {this.props.isLoading}
                 onSelectedItem = {this.onSelectedItem}
+                onReload = {this.reloadCurrentClassStudy}
             />
         );
     }

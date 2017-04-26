@@ -38,7 +38,7 @@ export function loadDataError() {
     return {
         type: types.LOAD_DATA_CURRENT_CLASS_STUDY_ERROR,
         isLoading: false,
-        error: false
+        error: true
     }
 }
 

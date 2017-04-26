@@ -24,7 +24,6 @@ class SidebarComponent extends React.Component {
 
     render() {
         return (
-            <View>
             <Container style={styles.container}>
                 <Content
                     bounces={false}
@@ -36,7 +35,6 @@ class SidebarComponent extends React.Component {
                         <Text style={styles.subTitle}>Chỉnh sửa thông tin</Text>
                     </View>
                 </Content>
-            </Container>
                 <Footer>
                     <FooterTab>
                         <Button
@@ -48,14 +46,14 @@ class SidebarComponent extends React.Component {
                         </Button>
                     </FooterTab>
                 </Footer>
-            </View>
+            </Container>
+
         );
     }
 }
 
 const styles = {
     container: {
-        marginLeft: 3
     },
     header: {
         backgroundColor: theme.mainColor,

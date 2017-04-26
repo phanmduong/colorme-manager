@@ -88,27 +88,27 @@ android {
     buildToolsVersion "23.0.1"
 
     lintOptions {
-            abortOnError false
-        }
+        abortOnError false
+    }
 
     defaultConfig {
         applicationId "vn.colorme.phanminhduong.colormemanager"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 6
-        versionName "1.1"
+        versionCode 7
+        versionName "1.2"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
     }
     signingConfigs {
         release {
-           if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
-               storeFile file(MYAPP_RELEASE_STORE_FILE)
-              storePassword MYAPP_RELEASE_STORE_PASSWORD
-              keyAlias MYAPP_RELEASE_KEY_ALIAS
-               keyPassword MYAPP_RELEASE_KEY_PASSWORD
-         }
+            if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
+                storeFile file(MYAPP_RELEASE_STORE_FILE)
+                storePassword MYAPP_RELEASE_STORE_PASSWORD
+                keyAlias MYAPP_RELEASE_KEY_ALIAS
+                keyPassword MYAPP_RELEASE_KEY_PASSWORD
+            }
         }
     }
     splits {
@@ -120,10 +120,24 @@ android {
         }
     }
     buildTypes {
+        debug {
+            // Note: CodePush updates should not be tested in Debug mode as they are overriden by the RN packager. However, because CodePush checks for updates in all modes, we must supply a key.
+            buildConfigField "String", "CODEPUSH_KEY", '""'
+
+        }
+
+        releaseStaging {
+            minifyEnabled enableProguardInReleaseBuilds
+            buildConfigField "String", "CODEPUSH_KEY", '"Pa6sWUXZXkboJUCmNuhN-AzKtC5D4JZk4WIpz"'
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
+        }
+
         release {
             minifyEnabled enableProguardInReleaseBuilds
+            buildConfigField "String", "CODEPUSH_KEY", '"lLIvapq0FmHFgoxv20zkRq3Pht-Y4JZk4WIpz"'
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-           signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
         }
     }
     // applicationVariants are e.g. debug, release
@@ -131,7 +145,7 @@ android {
         variant.outputs.each { output ->
             // For each separate APK per architecture, set a unique version code as described here:
             // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
-            def versionCodes = ["armeabi-v7a":1, "x86":2]
+            def versionCodes = ["armeabi-v7a": 1, "x86": 2]
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
@@ -142,6 +156,8 @@ android {
 }
 
 dependencies {
+    compile project(':mobile-center-crashes')
+    compile project(':mobile-center-analytics')
     compile project(':react-native-vector-icons')
     compile project(':react-native-spinkit')
     compile project(':react-native-code-push')

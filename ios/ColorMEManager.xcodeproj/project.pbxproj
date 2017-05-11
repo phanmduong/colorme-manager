@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -93,6 +92,7 @@
 		E8AFD41CBE2D454EB031D8EA /* MobileCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26F2BDA827DA4FBC83DB197E /* MobileCenter-Config.plist */; };
 		F432763CB23348BABD777257 /* Courier New.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 040FDBAF63A44C72A08170ED /* Courier New.ttf */; };
 		FDD19247F4B5480E9CA2B782 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1FBD2C75778B48E1A14FEA0F /* Zocial.ttf */; };
+		2ED3D4971071462592B9C8A5 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 16786121A717497580997ACC /* SimpleLineIcons.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -436,6 +436,7 @@
 		F835C841A97A4B31B9DC8779 /* Rubik-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-LightItalic.ttf"; path = "../node_modules/native-base/Fonts/Rubik-LightItalic.ttf"; sourceTree = "<group>"; };
 		F9782636772E47B7915D9C77 /* Rubik-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-Medium.ttf"; path = "../node_modules/native-base/Fonts/Rubik-Medium.ttf"; sourceTree = "<group>"; };
 		FBC46EFE9D144131A2573282 /* libRCTCamera.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTCamera.a; sourceTree = "<group>"; };
+		16786121A717497580997ACC /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -748,6 +749,7 @@
 				B763681FFCFD4CB5B184CDF7 /* Octicons.ttf */,
 				78C00CDB94D5440B826E623D /* SimpleLineIcons.ttf */,
 				1FBD2C75778B48E1A14FEA0F /* Zocial.ttf */,
+				16786121A717497580997ACC /* SimpleLineIcons.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1322,6 +1324,7 @@
 				01CC51B2041B477A9039B9B9 /* SimpleLineIcons.ttf in Resources */,
 				FDD19247F4B5480E9CA2B782 /* Zocial.ttf in Resources */,
 				E8AFD41CBE2D454EB031D8EA /* MobileCenter-Config.plist in Resources */,
+				2ED3D4971071462592B9C8A5 /* SimpleLineIcons.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1690,7 +1693,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 17;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 6BZ59393SB;
 				ENABLE_BITCODE = YES;
@@ -1728,7 +1731,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = 6BZ59393SB;
 				ENABLE_BITCODE = YES;
 				GCC_NO_COMMON_BLOCKS = NO;
@@ -1802,7 +1805,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = 6BZ59393SB;
 				ENABLE_BITCODE = YES;
 				GCC_NO_COMMON_BLOCKS = NO;

@@ -5,6 +5,7 @@ import React from'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {StyleSheet, Platform} from'react-native';
+import io from 'socket.io-client';
 import {Scene, Router, ActionConst, Actions} from 'react-native-router-flux';
 import LoginContainer from './containers/LoginContainer';
 import BaseContainer from './containers/BaseContainer';
@@ -40,13 +41,18 @@ const getSceneStyle = (/* NavigationSceneRendererProps */ props, computedProps) 
         shadowRadius: null,
     };
     if (computedProps.isActive) {
-        style.marginTop = computedProps.hideNavBar ? 0 : (Platform.OS === 'ios') ? 64 : 48;
+        style.marginTop = computedProps.hideNavBar ? 0 : (Platform.OS === 'ios') ? 64 : 52;
         style.marginBottom = computedProps.hideTabBar ? 0 : 50;
     }
     return style;
 };
 
 class RouterComponent extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.socket = io.connect("http://colorme.vn:3000/");
+    }
+
     render() {
         return (
             <Router getSceneStyle={getSceneStyle}>
@@ -113,6 +119,7 @@ class RouterComponent extends React.Component {
                                 renderLeftButton={() => {
                                 }}
                                 renderRightButton={MenuButton}
+                                socket={this.socket}
                             />
                             <Scene
                                 key="tabDashboard"

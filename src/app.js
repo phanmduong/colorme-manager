@@ -10,7 +10,7 @@ import AppNavigator from './AppNavigator';
 
 import { composeWithDevTools } from 'remote-redux-devtools';
 
-const store = createStore(reducers, compose(applyMiddleware(thunk)));
+const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)));
 
 class App extends React.Component {
     render() {

@@ -7,7 +7,7 @@ import {Text, StatusBar, Platform} from 'react-native';
 import {Drawer}from 'native-base';
 import {bindActionCreators} from 'redux';
 import SideBar from './SidebarContainer';
-import material from '../theme/variables/material';
+import material from '../native-base-theme/variables/material';
 import {Actions, DefaultRenderer} from 'react-native-router-flux';
 import * as drawerActions from '../actions/drawerActions';
 

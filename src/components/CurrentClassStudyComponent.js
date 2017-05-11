@@ -45,8 +45,10 @@ class ClassComponent extends React.Component {
                 return (
                     <Container>
                         <View style={styles.container}>
-                            <Text style={styles.textError}>{(this.props.error) ? alert.LOAD_DATA_ERROR : alert.NO_CURRENT_CLASS_STUDY}</Text>
-                            <Button iconLeft danger small onPress={this.props.onReload} style={{marginTop: 10, alignSelf: null}} >
+                            <Text
+                                style={styles.textError}>{(this.props.error) ? alert.LOAD_DATA_ERROR : alert.NO_CURRENT_CLASS_STUDY}</Text>
+                            <Button iconLeft danger small onPress={this.props.onReload}
+                                    style={{marginTop: 10, alignSelf: null}}>
                                 <MaterialCommunityIcons name='reload' color='white' size={20}/>
                                 <Text>Thử lại</Text>
                             </Button>
@@ -70,10 +72,9 @@ class ClassComponent extends React.Component {
                                         <Body>
                                         <Text>{item.name}</Text>
                                         <Text note>{item.study_time}</Text>
-
                                         </Body>
                                         <Right>
-                                            <Icon name="arrow-forward"/>
+                                            <Icon android="md-arrow-forward" ios="ios-arrow-forward"/>
                                         </Right>
                                     </ListItem>
                                 )
@@ -88,19 +89,13 @@ class ClassComponent extends React.Component {
 }
 
 const styles = ({
-    indicator: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 37
-    },
     list: {},
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
     },
-    textError:{
+    textError: {
         color: '#d9534f'
     }
 });

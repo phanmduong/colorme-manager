@@ -32,7 +32,7 @@ class AttendanceStudentComponent extends React.Component {
     }
 
     updateAttendance() {
-        this.props.onUpdateAttendance(this.props.student.attendances[this.props.orderLessonCourse].id, this.props.orderLessonCourse);
+        this.props.onUpdateAttendance(this.props.student.attendances[this.props.orderLessonCourse-1].id);
     }
 
     render() {
@@ -80,7 +80,7 @@ class AttendanceStudentComponent extends React.Component {
                                     style={styles.button}
                                     onPress={this.updateAttendance}
                                 >
-                                    <Text>{'Điểm danh buổi ' + (parseInt(this.props.orderLessonCourse) + 1)}</Text>
+                                    <Text>{'Điểm danh buổi ' + (parseInt(this.props.orderLessonCourse))}</Text>
                                 </Button>
                             </View>
 

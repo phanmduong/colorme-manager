@@ -89,7 +89,7 @@ function mapStateToProps(state) {
         studentCode: state.attendanceStudent.studentCode,
         orderLessonCourse: state.currentClassStudy.selectedCurrentClassStudy.lesson.order,
         message: state.attendanceStudent.message,
-        classId: state.class.selectedClassId,
+        classId: state.currentClassStudy.selectedCurrentClassStudy.class.id,
         classStudent: state.attendanceStudent.classStudent,
         statusRequestUpdated: state.attendanceStudent.statusRequestUpdated
     };

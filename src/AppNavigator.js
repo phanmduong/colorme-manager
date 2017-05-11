@@ -1,8 +1,8 @@
 import React from'react';
 import {StatusBar, View} from 'react-native';
 import {StyleProvider}from 'native-base';
-import getTheme from 'native-base/src/theme/components';
-import material from './theme/variables/material';
+import getTheme from './native-base-theme/components';
+import material from './native-base-theme/variables/material';
 import Router from './routes';
 
 class AppNavigator extends React.Component {

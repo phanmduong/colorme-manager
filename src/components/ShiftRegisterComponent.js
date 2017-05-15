@@ -1,5 +1,5 @@
 import React from'react';
-import {StyleSheet, Dimensions, RefreshControl, ScrollView} from 'react-native';
+import {StyleSheet, Dimensions, RefreshControl, ScrollView, ViewPagerAndroid} from 'react-native';
 import {
     Container,
     Content,
@@ -44,7 +44,7 @@ class ShiftRegisterComponent extends React.Component {
         } else {
             return (
                 <Container>
-                    <View style={{flexDirection: 'row'}}>
+                    <View style={styles.containerPicker}>
                         <Picker
                             style={{width: width / 2, padding: 0, margin: 0}}
                             iosHeader="Chọn khóa học"
@@ -79,35 +79,21 @@ class ShiftRegisterComponent extends React.Component {
                                 colors={['#d9534f']}
                             />
                         }>
-                        {
-                            (this.props.shiftRegisterData.weeks) ?
-                                (
-                                    <Swiper style={styles.wrapper}
-                                            showsPagination
-                                            buttonWrapperStyle={{
-                                                backgroundColor: 'transparent',
-                                                flexDirection: 'row',
-                                                position: 'absolute',
-                                                top: 0,
-                                                left: 0,
-                                                paddingHorizontal: 10,
-                                                justifyContent: 'space-between',
-                                                alignItems: 'stretch'
-
-                                            }}
-                                    >
-                                        {
-                                            this.props.shiftRegisterData.weeks.map((week, index) => {
-                                                return (<ShiftRegisterWeek key={index} weekData={week}/>);
-                                            })
-                                        }
-                                    </Swiper>
-                                )
-                                :
-                                (
-                                    <View/>
-                                )
-                        }
+                        <ScrollView horizontal={true} pagingEnabled showsHorizontalScrollIndicator={false}>
+                            {
+                                (this.props.shiftRegisterData.weeks) ?
+                                    (
+                                        this.props.shiftRegisterData.weeks.map((week, index) => {
+                                            return (<ShiftRegisterWeek key={index} weekData={week}
+                                                                       user={this.props.user}/>);
+                                        })
+                                    )
+                                    :
+                                    (
+                                        <View/>
+                                    )
+                            }
+                        </ScrollView>
                     </ScrollView>
 
                 </Container>
@@ -149,6 +135,20 @@ const styles = ({
         color: '#fff',
         fontSize: 30,
         fontWeight: 'bold',
+    },
+    containerPicker: {
+        flexDirection: 'row',
+        borderBottomColor: '#d3d3d3',
+        borderBottomWidth: 1,
+        padding: 1,
+        marginBottom: 4,
+        shadowColor: '#b4b4b4',
+        shadowOffset: {
+            width: 0,
+            height: 0
+        },
+        elevation: 0.5,
+        shadowOpacity: 0.5
     }
 });
 

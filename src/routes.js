@@ -71,7 +71,6 @@ class RouterComponent extends React.Component {
                                 key="tabAttendance"
                                 nameIcon="fontawesome|qrcode"
                                 icon={TabIcon}
-                                initial
                                 navigationBarStyle={styles.navigationBarStyle}
                                 titleStyle={styles.title}
                             >
@@ -118,6 +117,7 @@ class RouterComponent extends React.Component {
                                 titleStyle={styles.title}
                                 renderLeftButton={() => {
                                 }}
+                                initial
                                 renderRightButton={MenuButton}
                                 socket={this.socket}
                             />

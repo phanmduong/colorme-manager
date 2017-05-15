@@ -88,7 +88,7 @@ class ShiftRegisterContainer extends React.Component {
             this.setState({
                 genData: genData
             })
-            this.props.shiftRegisterActions.selectedGenId(genData[0].id);
+            this.props.shiftRegisterActions.selectedGenId(genData[1].id);
         }
 
         if (props.genData.length > 0 && props.baseData.length > 0 && !this.state.checkedDataShiftRegister) {
@@ -108,19 +108,19 @@ class ShiftRegisterContainer extends React.Component {
         this.checkData(this.props);
     }
 
-    loadDataShiftRegister() {
+    loadDataShiftRegister(baseId, genId) {
         this.props.shiftRegisterActions
-            .loadDataShiftRegister(this.props.selectedBaseId, this.props.selectedGenId, this.props.token);
+            .loadDataShiftRegister(baseId, genId, this.props.token);
     }
 
     onSelectBaseId(baseId) {
         this.props.shiftRegisterActions.selectedBaseId(baseId);
-        this.loadDataShiftRegister();
+        this.loadDataShiftRegister(baseId, this.props.selectedGenId);
     }
 
     onSelectGenId(genId) {
         this.props.shiftRegisterActions.selectedGenId(genId);
-        this.loadDataShiftRegister();
+        this.loadDataShiftRegister(this.props.selectedBaseId, genId);
     }
 
     render() {
@@ -137,6 +137,7 @@ class ShiftRegisterContainer extends React.Component {
                 onSelectBaseId={this.onSelectBaseId}
                 onSelectGenId={this.onSelectGenId}
                 loadDataShiftRegister={this.loadDataShiftRegister}
+                user={this.props.user}
             />
         );
     }
@@ -152,10 +153,11 @@ function mapStateToProps(state) {
         genData: state.gen.genData,
         errorGen: state.gen.error,
         isLoadingShiftRegister: state.shiftRegister.isLoading,
-        shiftRegisterData: state.shiftRegister.shiftRegisterData,
+        shiftRegisterData: Object.assign({}, state.shiftRegister.shiftRegisterData),
         errorShiftRegister: state.shiftRegister.error,
         selectedBaseId: state.shiftRegister.selectedBaseId,
         selectedGenId: state.shiftRegister.selectedGenId,
+        user: state.login.user
     };
 }
 

@@ -5,27 +5,54 @@ import {
     Text,
     Card,
     CardItem,
-    Body
+    Body,
+    Button
 } from 'native-base';
 
-
+var self;
 class ShiftRegisterDate extends React.Component {
     constructor(props, context) {
         super(props, context);
+        self = this;
+    }
+
+    onUnRegister(registerId) {
+        this.props.onUnRegister(registerId);
+    }
+
+    onRegister(registerId) {
+        this.props.onRegister(registerId);
     }
 
     renderShiftItem() {
         return this.props.dateData.shifts.map((shift, index) => {
-            if (shift.user) {
+            if (shift.isLoadingRegister) {
+                return (
+                    <View full key={index} style={styles.register}>
+                        <Text style={styles.textRegister}>Đang đăng kí lịch trực...</Text>
+                    </View>
+                );
+            } else if (shift.isLoadingUnRegister) {
+                return (
+                    <View full key={index} style={styles.registeredByUser}>
+                        <Text style={styles.textRegisteredByUser}>Đang hủy lịch trực...</Text>
+                    </View>
+                );
+            } else if (shift.user) {
                 if (shift.user.id === this.props.user.id) {
                     return (
-                        <View key={index} style={styles.registeredByUser}>
+                        <Button full key={index} style={styles.registeredByUser}
+                                onPress={() => self.onUnRegister(shift.id)}>
                             <Image
                                 style={styles.avatar}
                                 source={{uri: shift.user.avatar_url}}
                             />
-                            <Text style={styles.textRegisteredByUser}>{shift.user.name}</Text>
-                        </View>
+                            <Text style={styles.textRegisteredByUser}>
+                                {(shift.isLoadingUnRegisterError) ?
+                                    "Hủy đăng kí thất bại. Thử lại." : shift.user.name
+                                }
+                            </Text>
+                        </Button>
                     );
                 } else
                     return (
@@ -39,10 +66,14 @@ class ShiftRegisterDate extends React.Component {
                     )
             } else {
                 return (
-                    <View key={index} style={styles.register}>
+                    <Button full style={styles.register} key={index} onPress={() => self.onRegister(shift.id)}>
                         <Text
-                            style={styles.textRegister}>{shift.name + ": " + shift.start_time + " - " + shift.end_time}</Text>
-                    </View>
+                            style={styles.textRegister}>
+                            {(shift.isLoadingRegisterError) ?
+                                "Đăng kí thất bại. Thử lại." :
+                                shift.name + ": " + shift.start_time + " - " + shift.end_time}
+                        </Text>
+                    </Button>
                 )
             }
         });

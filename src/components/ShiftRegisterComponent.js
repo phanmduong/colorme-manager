@@ -1,30 +1,81 @@
 import React from'react';
-import {StyleSheet, Dimensions, RefreshControl, ScrollView, ViewPagerAndroid} from 'react-native';
+import {StyleSheet, Dimensions, RefreshControl, ScrollView} from 'react-native';
 import {
     Container,
-    Content,
     Button,
-    Header,
-    Body,
-    Icon,
     View,
-    ListItem,
-    List,
     Text,
-    Thumbnail,
     Picker,
-    Item,
+    Item
 } from 'native-base';
-import Swiper from 'react-native-swiper';
 var {height, width} = Dimensions.get('window');
 import Spinkit from 'react-native-spinkit';
-import _ from 'lodash';
 import theme from '../styles';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import ShiftRegisterWeek from './ShiftRegister/ShiftRegisterWeek';
+import * as alert from '../constants/alert';
 
 class ShiftRegisterComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
+        this.loadDataShiftRegister = this.loadDataShiftRegister.bind(this);
+    }
+
+    loadDataShiftRegister() {
+        console.log("load data");
+        this.props.loadDataShiftRegister(this.props.selectedBaseId, this.props.selectedGenId);
+    }
+
+
+    errorData() {
+        return (
+            <View style={styles.container}>
+                <Text
+                    style={styles.textError}>{(this.props.errorShiftRegister) ? alert.LOAD_DATA_ERROR : alert.NO_DATA_SHIFT_REGISTER}</Text>
+                <Button iconLeft danger small onPress={this.loadDataShiftRegister}
+                        style={{marginTop: 10, alignSelf: null}}>
+                    <MaterialCommunityIcons name='reload' color='white' size={20}/>
+                    <Text>Thử lại</Text>
+                </Button>
+            </View>
+        )
+    }
+
+    showShiftRegister() {
+        return (
+            <ScrollView
+                refreshControl={
+                    <RefreshControl
+                        refreshing={this.props.isLoadingShiftRegister}
+                        onRefresh={this.loadDataShiftRegister}
+                        titleColor={theme.mainColor}
+                        title="Đang tải..."
+                        tintColor='#d9534f'
+                        colors={['#d9534f']}
+                    />
+                }>
+                <ScrollView horizontal={true} pagingEnabled showsHorizontalScrollIndicator={false}>
+                    {
+                        (this.props.shiftRegisterData.weeks) ?
+                            (
+                                this.props.shiftRegisterData.weeks.map((week, index) => {
+                                    return (
+                                        <ShiftRegisterWeek
+                                            key={index} weekData={week}
+                                            user={this.props.user}
+                                            onRegister={this.props.onRegister}
+                                            onUnRegister={this.props.onUnRegister}
+                                        />);
+                                })
+                            )
+                            :
+                            (
+                                <View/>
+                            )
+                    }
+                </ScrollView>
+            </ScrollView>
+        )
     }
 
     render() {
@@ -68,34 +119,11 @@ class ShiftRegisterComponent extends React.Component {
                             })}
                         </Picker>
                     </View>
-                    <ScrollView
-                        refreshControl={
-                            <RefreshControl
-                                refreshing={this.props.isLoadingShiftRegister}
-                                onRefresh={this.props.loadDataShiftRegister}
-                                titleColor={theme.mainColor}
-                                title="Đang tải..."
-                                tintColor='#d9534f'
-                                colors={['#d9534f']}
-                            />
-                        }>
-                        <ScrollView horizontal={true} pagingEnabled showsHorizontalScrollIndicator={false}>
-                            {
-                                (this.props.shiftRegisterData.weeks) ?
-                                    (
-                                        this.props.shiftRegisterData.weeks.map((week, index) => {
-                                            return (<ShiftRegisterWeek key={index} weekData={week}
-                                                                       user={this.props.user}/>);
-                                        })
-                                    )
-                                    :
-                                    (
-                                        <View/>
-                                    )
-                            }
-                        </ScrollView>
-                    </ScrollView>
-
+                    {(!this.props.isLoadingShiftRegister && (this.props.errorShiftRegister ||
+                    (this.props.shiftRegisterData.weeks && this.props.shiftRegisterData.weeks.length <= 0))) ?
+                        this.errorData() :
+                        this.showShiftRegister()
+                    }
                 </Container>
             );
         }

@@ -10,11 +10,11 @@ export function loadShiftRegister(baseId, genId, token) {
 }
 
 export function register(shiftRegisterId, token) {
-    let url = env.API_URL + "/register-shift/" + shiftRegisterId + "?token=";
+    let url = env.API_URL + "/register-shift/" + shiftRegisterId + "?token=" + token;
     return axios.post(url);
 }
 
 export function unregister(shiftRegisterId, token) {
-    let url = env.API_URL + "/remove-shift-regis/" + shiftRegisterId + "?token=";
+    let url = env.API_URL + "/remove-shift-regis/" + shiftRegisterId + "?token=" + token;
     return axios.post(url);
 }

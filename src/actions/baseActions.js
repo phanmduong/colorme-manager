@@ -3,6 +3,7 @@
  */
 import * as types from '../constants/actionTypes';
 import * as baseApi from '../apis/baseApi';
+import _ from 'lodash';
 
 export function beginDataBaseLoad(){
     return {
@@ -28,7 +29,7 @@ export function loadDataBase(token) {
 export function loadDataSuccessful(res) {
     return ({
         type: types.LOAD_DATA_BASE_SUCCESSFUL,
-        baseData: res.data.bases,
+        baseData: _.reverse(res.data.bases),
         isLoading: false,
         error: false
     })

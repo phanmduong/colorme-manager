@@ -16,12 +16,14 @@ class ShiftRegisterContainer extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.socket = this.props.socket;
+
         this.socket.on('colorme-channel:regis-shift', (data) => {
-            console.log('register' + data);
+            this.props.shiftRegisterActions.updateDataRegister(data);
         });
         this.socket.on('colorme-channel:remove-shift', (data) => {
-            console.log('unregister' + data);
+            this.props.shiftRegisterActions.updateDataRegister(data);
         })
+
         this.state = {
             isLoading: false,
             checkedDataBase: false,
@@ -29,9 +31,12 @@ class ShiftRegisterContainer extends React.Component {
             checkedDataShiftRegister: false,
             genData: []
         }
+
         this.onSelectBaseId = this.onSelectBaseId.bind(this);
         this.onSelectGenId = this.onSelectGenId.bind(this);
         this.loadDataShiftRegister = this.loadDataShiftRegister.bind(this);
+        this.onRegister = this.onRegister.bind(this);
+        this.onUnRegister = this.onUnRegister.bind(this);
     }
 
     componentWillMount() {
@@ -70,7 +75,6 @@ class ShiftRegisterContainer extends React.Component {
         }
 
         this.checkData(nextProps);
-
     }
 
     checkData(props){
@@ -88,7 +92,7 @@ class ShiftRegisterContainer extends React.Component {
             this.setState({
                 genData: genData
             })
-            this.props.shiftRegisterActions.selectedGenId(genData[1].id);
+            this.props.shiftRegisterActions.selectedGenId(genData[0].id);
         }
 
         if (props.genData.length > 0 && props.baseData.length > 0 && !this.state.checkedDataShiftRegister) {
@@ -123,6 +127,14 @@ class ShiftRegisterContainer extends React.Component {
         this.loadDataShiftRegister(this.props.selectedBaseId, genId);
     }
 
+    onRegister(registerId) {
+        this.props.shiftRegisterActions.register(registerId, this.props.token);
+    }
+
+    onUnRegister(registerId) {
+        this.props.shiftRegisterActions.unRegister(registerId, this.props.token);
+    }
+
     render() {
         return (
             <ShiftRegisterComponent
@@ -138,6 +150,9 @@ class ShiftRegisterContainer extends React.Component {
                 onSelectGenId={this.onSelectGenId}
                 loadDataShiftRegister={this.loadDataShiftRegister}
                 user={this.props.user}
+                onRegister={this.onRegister}
+                onUnRegister={this.onUnRegister}
+                errorShiftRegister={this.props.errorShiftRegister}
             />
         );
     }

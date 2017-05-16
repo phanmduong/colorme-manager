@@ -37,7 +37,14 @@ export function loadDataShiftRegisterError() {
     return {
         type: types.LOAD_DATA_SHIFT_REGISTER_ERROR,
         isLoading: false,
-        error: false
+        error: true
+    }
+}
+
+export function updateDataRegister(shift) {
+    return {
+        type: types.UPDATE_DATA_SHIFT_REGISTER,
+        shift: JSON.parse(shift)
     }
 }
 
@@ -52,5 +59,88 @@ export function selectedGenId(genId) {
     return {
         type: types.SELECTED_GEN_ID_SHIFT_REGISTER,
         selectedGenId: genId
+    }
+}
+
+export function register(registerId, token) {
+    return function (dispatch) {
+        dispatch(postShiftRegister(registerId));
+        shiftRegisterApi.register(registerId, token).then(function (res) {
+            dispatch(updateDataRegister(JSON.stringify({
+                id: registerId,
+                user: res.data.data.user
+            })));
+            dispatch(shiftRegisterSuccessful(registerId, res));
+        }).catch(error => {
+            dispatch(ShiftRegisterError());
+            throw (error);
+        })
+    }
+}
+
+export function postShiftRegister(registerId) {
+    return {
+        type: types.POST_SHIFT_REGISTER,
+        registerId: registerId,
+        isLoadingRegister: true,
+        isLoadingRegisterError: false,
+    }
+}
+
+export function shiftRegisterSuccessful(registerId, res) {
+    return {
+        type: types.SHIFT_REGISTER_SUCCESSFUL,
+        registerId: registerId,
+        isLoadingRegister: false,
+        isLoadingRegisterError: false,
+    }
+}
+
+export function ShiftRegisterError(registerId) {
+    return {
+        type: types.SHIFT_REGISTER_ERROR,
+        registerId: registerId,
+        isLoadingRegister: false,
+        isLoadingRegisterError: true,
+    }
+}
+
+export function unRegister(registerId, token) {
+    return function (dispatch) {
+        dispatch(postShiftUnRegister(registerId));
+        shiftRegisterApi.unregister(registerId, token).then(function (res) {
+            dispatch(shiftUnRegisterSuccessful(registerId, res));
+        }).catch(error => {
+            dispatch(ShiftUnRegisterError());
+            throw (error);
+        })
+    }
+}
+
+export function postShiftUnRegister(registerId) {
+    return {
+        type: types.POST_SHIFT_UNREGISTER,
+        registerId: registerId,
+        isLoadingUnRegister: true,
+        isLoadingUnRegisterError: false,
+    }
+}
+
+export function shiftUnRegisterSuccessful(registerId, res) {
+    console.log(res);
+    return {
+        type: types.SHIFT_UNREGISTER_SUCCESSFUL,
+        registerId: registerId,
+        isLoadingUnRegister: false,
+        isLoadingUnRegisterError: false,
+    }
+}
+
+export function ShiftUnRegisterError(registerId) {
+    return {
+        type: types.SHIFT_UNREGISTER_ERROR,
+        registerId: registerId,
+        isLoadingUnRegister: false,
+        isLoadingUnRegisterError: true,
     }
 }

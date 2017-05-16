@@ -20,25 +20,37 @@ class ShiftRegisterWeek extends React.Component {
 
     renderShiftRegisterDate() {
 
-        if (Platform.OS === 'ios') {
+        // if (Platform.OS === 'ios') {
             return (
                 this.props.weekData.dates.map(
                     (date, index) => {
-                        return (<ShiftRegisterDate dateData={date} key={index} user={this.props.user}/>)
+                        return (
+                            <ShiftRegisterDate
+                                dateData={date}
+                                key={index}
+                                user={this.props.user}
+                                onRegister={this.props.onRegister}
+                                onUnRegister={this.props.onUnRegister}
+                            />)
                     })
             )
-        }
+        // }
 
-        return (
-            <List
-                dataArray={this.props.weekData.dates}
-                renderRow={
-                    (date) => (
-                        <ShiftRegisterDate dateData={date} user={this.props.user}/>
-                    )
-                }
-            />
-        )
+        // return (
+        //     <List
+        //         dataArray={this.props.weekData.dates}
+        //         renderRow={
+        //             (date) => (
+        //                 <ShiftRegisterDate
+        //                     dateData={date}
+        //                     user={this.props.user}
+        //                     onRegister={this.props.onRegister}
+        //                     onUnRegister={this.props.onUnRegister}
+        //                 />
+        //             )
+        //         }
+        //     />
+        // )
 
     }
 

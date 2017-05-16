@@ -10,6 +10,7 @@ export default function shiftRegisterReducer(state = initialState.shiftRegister,
             return Object.assign({}, state, {
                 isLoading: action.isLoading,
                 error: action.error,
+                shiftRegisterData: null
             });
         case types.LOAD_DATA_SHIFT_REGISTER_SUCCESSFUL:
             return Object.assign({}, state, {
@@ -30,8 +31,72 @@ export default function shiftRegisterReducer(state = initialState.shiftRegister,
             return Object.assign({}, state, {
                 selectedGenId: action.selectedGenId
             });
+        case types.UPDATE_DATA_SHIFT_REGISTER:
+            var shiftRegisterData = state.shiftRegisterData;
+            changeDataRegister(shiftRegisterData, action.shift.id, 'user', action.shift.user);
+            return Object.assign({}, state, {
+                shiftRegisterData: shiftRegisterData
+            });
+        case types.POST_SHIFT_REGISTER:
+            var shiftRegisterData = state.shiftRegisterData;
+            changeDataRegister(shiftRegisterData, action.registerId, 'isLoadingRegister', action.isLoadingRegister);
+            changeDataRegister(shiftRegisterData, action.registerId, 'isLoadingRegisterError', action.isLoadingRegisterError);
+            return Object.assign({}, state, {
+                shiftRegisterData: shiftRegisterData
+            });
+        case types.SHIFT_REGISTER_SUCCESSFUL:
+            var shiftRegisterData = state.shiftRegisterData;
+            changeDataRegister(shiftRegisterData, action.registerId, 'isLoadingRegister', action.isLoadingRegister);
+            changeDataRegister(shiftRegisterData, action.registerId, 'isLoadingRegisterError', action.isLoadingRegisterError);
+            return Object.assign({}, state, {
+                shiftRegisterData: shiftRegisterData
+            });
+        case types.SHIFT_REGISTER_ERROR:
+            var shiftRegisterData = state.shiftRegisterData;
+            changeDataRegister(shiftRegisterData, action.registerId, 'isLoadingRegister', action.isLoadingRegister);
+            changeDataRegister(shiftRegisterData, action.registerId, 'isLoadingRegisterError', action.isLoadingRegisterError);
+            return Object.assign({}, state, {
+                shiftRegisterData: shiftRegisterData
+            });
+        case types.POST_SHIFT_UNREGISTER:
+            var shiftRegisterData = state.shiftRegisterData;
+            changeDataRegister(shiftRegisterData, action.registerId, 'isLoadingUnRegister', action.isLoadingUnRegister);
+            changeDataRegister(shiftRegisterData, action.registerId, 'isLoadingUnRegisterError', action.isLoadingUnRegisterError);
+            return Object.assign({}, state, {
+                shiftRegisterData: shiftRegisterData
+            });
+        case types.SHIFT_UNREGISTER_SUCCESSFUL:
+            var shiftRegisterData = state.shiftRegisterData;
+            changeDataRegister(shiftRegisterData, action.registerId, 'isLoadingUnRegister', action.isLoadingUnRegister);
+            changeDataRegister(shiftRegisterData, action.registerId, 'isLoadingUnRegisterError', action.isLoadingUnRegisterError);
+            return Object.assign({}, state, {
+                shiftRegisterData: shiftRegisterData
+            });
+        case types.SHIFT_UNREGISTER_ERROR:
+            var shiftRegisterData = state.shiftRegisterData;
+            changeDataRegister(shiftRegisterData, action.registerId, 'isLoadingUnRegister', action.isLoadingUnRegister);
+            changeDataRegister(shiftRegisterData, action.registerId, 'isLoadingUnRegisterError', action.isLoadingUnRegisterError);
+            return Object.assign({}, state, {
+                shiftRegisterData: shiftRegisterData
+            });
         default:
             return state;
     }
+}
 
+function changeDataRegister(shiftRegisterData, shiftRegisterId, nameObject, dataObject) {
+    try {
+        shiftRegisterData.weeks.map((week) => {
+            week.dates.map((date) => {
+                date.shifts.map((shift) => {
+                    if (shift.id === shiftRegisterId) {
+                        shift[nameObject] = dataObject;
+                    }
+                })
+            })
+        });
+    }
+    catch (err) {
+        throw new Error(err);
+    }
 }

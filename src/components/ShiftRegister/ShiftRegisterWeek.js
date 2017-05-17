@@ -11,7 +11,6 @@ import {
 } from 'native-base';
 import ShiftRegisterDate from './ShiftRegisterDate'
 var {height, width} = Dimensions.get('window');
-import theme from '../../styles'
 
 class ShiftRegisterWeek extends React.Component {
     constructor(props, context) {

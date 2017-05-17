@@ -127,7 +127,6 @@ export function postShiftUnRegister(registerId) {
 }
 
 export function shiftUnRegisterSuccessful(registerId, res) {
-    console.log(res);
     return {
         type: types.SHIFT_UNREGISTER_SUCCESSFUL,
         registerId: registerId,

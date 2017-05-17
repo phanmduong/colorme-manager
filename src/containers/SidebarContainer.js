@@ -15,7 +15,6 @@ class SideBar extends React.Component {
     }
 
     logout() {
-        console.log("logout");
         this.props.drawerActions.closeDrawer();
         // setTimeout(() => {
             Actions.login();

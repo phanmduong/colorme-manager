@@ -34,6 +34,10 @@ export default function shiftRegisterReducer(state = initialState.shiftRegister,
         case types.UPDATE_DATA_SHIFT_REGISTER:
             var shiftRegisterData = state.shiftRegisterData;
             changeDataRegister(shiftRegisterData, action.shift.id, 'user', action.shift.user);
+            changeDataRegister(shiftRegisterData, action.shift.id, 'isLoadingRegister', false);
+            changeDataRegister(shiftRegisterData, action.shift.id, 'isLoadingRegisterError', false);
+            changeDataRegister(shiftRegisterData, action.shift.id, 'isLoadingUnRegister', false);
+            changeDataRegister(shiftRegisterData, action.shift.id, 'isLoadingUnRegisterError', false);
             return Object.assign({}, state, {
                 shiftRegisterData: shiftRegisterData
             });

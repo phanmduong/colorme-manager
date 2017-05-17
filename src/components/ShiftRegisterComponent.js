@@ -22,7 +22,6 @@ class ShiftRegisterComponent extends React.Component {
     }
 
     loadDataShiftRegister() {
-        console.log("load data");
         this.props.loadDataShiftRegister(this.props.selectedBaseId, this.props.selectedGenId);
     }
 

@@ -75,5 +75,13 @@ export default {
         shiftRegisterData: {},
         selectedBaseId: -1,
         selectedGenId: -1,
-    }
+    },
+    dashboard: {
+        isLoading: false,
+        error: false,
+        dashboardData: {},
+        selectedBaseId: -1,
+        selectedGenId: -1,
+    },
+
 }

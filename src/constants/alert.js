@@ -9,3 +9,4 @@ export const ATTENDANCE_SUCCESSFUL = 'Điểm danh thành công';
 export const STUDENT_HAVE_NOT_CLASS = 'Học viên không thuộc lớp này';
 export const NO_CURRENT_CLASS_STUDY = 'Thời điểm hiện tại không có lớp đang học';
 export const NO_DATA_SHIFT_REGISTER = 'Thời điểm hiện tại không có dữ liệu lịch trực';
+export const NO_DATA_DASHBOARD = 'Thời điểm hiện tại không có dữ liệu dashboard';

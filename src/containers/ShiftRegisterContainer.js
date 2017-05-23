@@ -4,8 +4,6 @@
 import React from'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {ScrollView, RefreshControl}from 'react-native';
-import {Text, Container, Content, Picker, Item} from 'native-base';
 import ShiftRegisterComponent from '../components/ShiftRegisterComponent';
 import * as baseActions from '../actions/baseActions';
 import * as genActions from '../actions/genActions';
@@ -98,7 +96,7 @@ class ShiftRegisterContainer extends React.Component {
         if (props.genData.length > 0 && props.baseData.length > 0 && !this.state.checkedDataShiftRegister) {
             this.setState({checkedDataShiftRegister: true});
             this.props.shiftRegisterActions
-                .loadDataShiftRegister(props.baseData[0].id, props.genData[0].id, this.props.token);
+                .loadDataShiftRegister(props.baseData[0].id, props.genData[1].id, this.props.token);
         }
     }
 

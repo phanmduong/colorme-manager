@@ -13,6 +13,7 @@ import QRCodeReducer from './QRCodeReducer';
 import attendanceStudentReducer from './attendanceStudentReducer';
 import currentClassStudyReducer from './currentClassStudyReducer';
 import shiftRegisterReducer from './shiftRegisterReducer';
+import dashboardReducer from './dashboardReducer';
 
 
 const rootReducer = combineReducers({
@@ -27,5 +28,6 @@ const rootReducer = combineReducers({
     attendanceStudent: attendanceStudentReducer,
     currentClassStudy: currentClassStudyReducer,
     shiftRegister: shiftRegisterReducer,
+    dashboard: dashboardReducer,
 });
 export default rootReducer;

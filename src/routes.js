@@ -117,8 +117,8 @@ class RouterComponent extends React.Component {
                                 titleStyle={styles.title}
                                 renderLeftButton={() => {
                                 }}
-                                initial
                                 renderRightButton={MenuButton}
+                                onRight={this.props.drawerActions.openDrawer}
                                 socket={this.socket}
                             />
                             <Scene
@@ -129,6 +129,7 @@ class RouterComponent extends React.Component {
                                 icon={TabIcon}
                                 renderLeftButton={() => {
                                 }}
+                                initial
                                 navigationBarStyle={styles.navigationBarStyle}
                                 titleStyle={styles.title}
                                 renderRightButton={MenuButton}

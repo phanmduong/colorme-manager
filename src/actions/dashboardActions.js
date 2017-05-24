@@ -25,7 +25,6 @@ export function loadDataDashboard(baseId, genId, token) {
 }
 
 export function loadDataDashboardSuccessful(res) {
-    console.log(JSON.stringify(res.data));
     return ({
         type: types.LOAD_DATA_DASHBOARD_SUCCESSFUL,
         dashboardData: res.data,

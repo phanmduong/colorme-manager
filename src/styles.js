@@ -3,4 +3,7 @@
  */
 export default styles = {
     mainColor: '#C50000',
+    secondColor: '#d92732',
+    secondColorOpacity: '#d9273230',
+    borderColor: '#d3d3d3'
 }

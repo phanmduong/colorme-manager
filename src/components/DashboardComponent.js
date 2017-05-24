@@ -1,18 +1,22 @@
 import React from'react';
-import {StyleSheet, Dimensions, RefreshControl, ScrollView} from 'react-native';
+import {StyleSheet, Dimensions, RefreshControl, ScrollView, Animated} from 'react-native';
 import {
     Container,
     Button,
     View,
     Text,
     Picker,
-    Item
+    Item,
+    List
 } from 'native-base';
+import Icon from '../components/common/Icon';
 var {height, width} = Dimensions.get('window');
 import Spinkit from 'react-native-spinkit';
+import Swiper from 'react-native-swiper'
 import theme from '../styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import * as alert from '../constants/alert';
+import * as Progress from 'react-native-progress';
 
 class DashboardComponent extends React.Component {
     constructor(props, context) {
@@ -51,9 +55,113 @@ class DashboardComponent extends React.Component {
                         colors={['#d9534f']}
                     />
                 }>
-                <Text>
-                    Data
-                </Text>
+                <Swiper
+                    style={styles.wrapper}
+                    height={height / 2.5}
+                    dotColor={theme.secondColor}
+                    dotStyle={styles.dotStyle}
+                    activeDotColor={theme.secondColor}
+                    index={1}
+                >
+                    <View style={styles.slide2}>
+                        <Text style={styles.text}>Beautiful</Text>
+                    </View>
+                    <View style={styles.slide1}>
+                        <Progress.Circle
+                            size={100}
+                            progress={0.9}
+                            indeterminate={false}
+                            color={theme.mainColor}
+                            showsText
+                            formatText={(progressValue) => {
+                                console.log(progressValue);
+                                return parseInt(0.9 * 100) + '%';
+                            }}
+                        />
+                        <Text style={{marginTop: 10, fontSize: 12, fontWeight: '500', color: '#555555'}}>123.000.000đ/130.000.000đ</Text>
+                        <View style={{width: width - width / 10, marginVertical: 25}}>
+                            <View style={{
+                                ...styles.bar, ...styles.points, ...{
+                                    backgroundColor: theme.secondColorOpacity
+                                }
+                            }}>
+                                <Animated.View style={[styles.bar, styles.points, {width: 3 * width / 5}]}/>
+                            </View>
+                            <View style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                marginTop: 5,
+                                marginHorizontal: 5
+                            }}>
+                                <Text style={{color: '#7d7d7d', fontSize: 12}}>{'Chỉ tiêu của bạn'}</Text>
+                                <Text style={{color: '#7d7d7d', fontSize: 12}}>{'48/60 (70%)'}</Text>
+                            </View>
+                        </View>
+
+                    </View>
+                    <View style={styles.slide3}>
+                        <Text style={styles.text}>And simple</Text>
+                    </View>
+                </Swiper>
+                <List style={{
+                    paddingTop: 10, paddingHorizontal: 20, borderTopColor: theme.borderColor,
+                    borderTopWidth: 1
+                }}>
+                    <View style={{flexDirection: 'row', paddingTop: 20}}>
+                        <Icon
+                            name="entypo|add-to-list"
+                            size={23}
+                            color='#7d7d7d'
+                        />
+                        <View style={{
+                            flex: 1, marginLeft: 30, borderBottomColor: theme.borderColor,
+                            paddingBottom: 20,
+                            borderBottomWidth: 1
+                        }}>
+                            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                                <Text style={{color: '#555555', fontWeight: '500'}}>TỔNG SỐ LỚP</Text>
+                                <Text style={{color: theme.secondColor, fontWeight: 'bold'}}>34</Text>
+                            </View>
+                            <Text style={{color: '#7d7d7d', fontSize: 12}}>{'Chỉ tiêu của bạn'}</Text>
+                        </View>
+                    </View>
+                    <View style={{flexDirection: 'row', paddingTop: 20}}>
+                        <Icon
+                            name="entypo|add-to-list"
+                            size={23}
+                            color='#7d7d7d'
+                        />
+                        <View style={{
+                            flex: 1, marginLeft: 30, borderBottomColor: theme.borderColor,
+                            paddingBottom: 20,
+                            borderBottomWidth: 1
+                        }}>
+                            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                                <Text style={{color: '#555555', fontWeight: '500'}}>TỔNG SỐ LỚP</Text>
+                                <Text style={{color: theme.secondColor, fontWeight: 'bold'}}>34</Text>
+                            </View>
+                            <Text style={{color: '#7d7d7d', fontSize: 12}}>{'Chỉ tiêu của bạn'}</Text>
+                        </View>
+                    </View>
+                    <View style={{flexDirection: 'row', paddingTop: 20}}>
+                        <Icon
+                            name="entypo|add-to-list"
+                            size={23}
+                            color='#7d7d7d'
+                        />
+                        <View style={{
+                            flex: 1, marginLeft: 30, borderBottomColor: theme.borderColor,
+                            paddingBottom: 20,
+                            borderBottomWidth: 1
+                        }}>
+                            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                                <Text style={{color: '#555555', fontWeight: '500'}}>TỔNG SỐ LỚP</Text>
+                                <Text style={{color: theme.secondColor, fontWeight: 'bold'}}>34</Text>
+                            </View>
+                            <Text style={{color: '#7d7d7d', fontSize: 12}}>{'Chỉ tiêu của bạn'}</Text>
+                        </View>
+                    </View>
+                </List>
             </ScrollView>
         )
     }
@@ -120,35 +228,35 @@ const styles = ({
         color: '#d9534f'
     },
     wrapper: {},
+    dotStyle: {
+        opacity: 0.4,
+        width: 5,
+        height: 5
+    },
     slide1: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#9DD6EB',
     },
     slide2: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#97CAE5',
     },
     slide3: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#92BBD9',
     },
     text: {
-        color: '#fff',
+        color: '#000000',
         fontSize: 30,
         fontWeight: 'bold',
     },
     containerPicker: {
         flexDirection: 'row',
-        borderBottomColor: '#d3d3d3',
+        borderBottomColor: theme.borderColor,
         borderBottomWidth: 1,
-        padding: 1,
-        marginBottom: 4,
         shadowColor: '#b4b4b4',
         shadowOffset: {
             width: 0,
@@ -156,6 +264,13 @@ const styles = ({
         },
         elevation: 0.5,
         shadowOpacity: 0.5
+    },
+    bar: {
+        borderRadius: 5,
+        height: 5
+    },
+    points: {
+        backgroundColor: theme.secondColor
     }
 });
 

@@ -10,18 +10,25 @@ import {
     List
 } from 'native-base';
 import Icon from '../components/common/Icon';
-var {height, width} = Dimensions.get('window');
 import Spinkit from 'react-native-spinkit';
 import Swiper from 'react-native-swiper'
 import theme from '../styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import * as alert from '../constants/alert';
 import * as Progress from 'react-native-progress';
+import BarchartItem from '../components/common/BarchartItem';
+var {height, width} = Dimensions.get('window');
+import _ from 'lodash';
 
+var _this;
 class DashboardComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.loadDataDashboard = this.loadDataDashboard.bind(this);
+        this.state = {
+            maxDataRegisterByDate: 1
+        }
+        _this = this;
     }
 
     loadDataDashboard() {
@@ -41,6 +48,12 @@ class DashboardComponent extends React.Component {
             </View>
         )
     }
+
+    // componentWillReceiveProps(nextProps) {
+    //     // if (nextProps.dashboardData.registers_by_date) {
+    //     //     this.setState({maxDataRegisterByDate: _.max(nextProps.dashboardData.registers_by_date)});
+    //     // }
+    // }
 
     showDashboard() {
         return (
@@ -64,7 +77,17 @@ class DashboardComponent extends React.Component {
                     index={1}
                 >
                     <View style={styles.slide2}>
-                        <Text style={styles.text}>Beautiful</Text>
+                        {(this.props.dashboardData && this.props.dashboardData.date_array) ?
+                            (this.props.dashboardData.date_array.map(function (date, index) {
+                                return (<BarchartItem
+                                    key={index}
+                                    maxData={_.max(_this.props.dashboardData.registers_by_date)}
+                                    dataColMax={_this.props.dashboardData.registers_by_date[index]}
+                                    dataColMin={_this.props.dashboardData.paid_by_date[index]}//
+                                />)
+                            })) :
+                            (<View/>)
+                        }
                     </View>
                     <View style={styles.slide1}>
                         <Progress.Circle
@@ -242,6 +265,7 @@ const styles = ({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        flexDirection: 'row'
     },
     slide3: {
         flex: 1,

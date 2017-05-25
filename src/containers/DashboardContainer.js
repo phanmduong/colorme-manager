@@ -4,11 +4,11 @@
 import React from'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {Text} from 'react-native';
 import * as baseActions from '../actions/baseActions';
 import * as genActions from '../actions/genActions';
 import * as dashboardActions from '../actions/dashboardActions';
 import DashboardComponent from '../components/DashboardComponent';
+
 
 class DashboardContainer extends React.Component {
     constructor(props, context) {
@@ -86,7 +86,7 @@ class DashboardContainer extends React.Component {
         if (props.genData.length > 0 && props.baseData.length > 0 && !this.state.checkedDataDashboard) {
             this.setState({checkedDataDashboard: true});
             this.props.dashboardActions
-                .loadDataDashboard(props.baseData[0].id, props.genData[0].id, this.props.token);
+                .loadDataDashboard(props.baseData[0].id, props.genData[1].id, this.props.token);
         }
     }
 
@@ -116,6 +116,7 @@ class DashboardContainer extends React.Component {
     }
 
     render() {
+        console.log(this.props.dashboardData);
         return (
             <DashboardComponent
                 isLoading={this.state.isLoading}

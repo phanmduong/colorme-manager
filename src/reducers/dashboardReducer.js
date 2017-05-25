@@ -9,8 +9,7 @@ export default function dashboardReducer(state = initialState.dashboard, action)
         case types.BEGIN_DATA_DASHBOARD_LOAD:
             return Object.assign({}, state, {
                 isLoading: action.isLoading,
-                error: action.error,
-                dashboardData: null
+                error: action.error
             });
         case types.LOAD_DATA_DASHBOARD_SUCCESSFUL:
             return Object.assign({}, state, {

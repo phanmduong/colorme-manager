@@ -1,8 +1,7 @@
 import React from'react';
-import {StyleSheet, Animated, Dimensions, TouchableHighlight} from 'react-native';
+import {Animated, Dimensions} from 'react-native';
 import {
-    View,
-    Text
+    View
 }from 'native-base';
 import theme from '../../styles';
 var {height, width} = Dimensions.get('window');
@@ -19,7 +18,7 @@ class BarchartItem extends React.Component {
             <View style={{
                 ...styles.bar, ...styles.points, ...{
                     marginHorizontal: 3,
-                    height: height / 4,
+                    height: height / 5,
                     position: 'relative',
                     backgroundColor: 'transparent'
                 }

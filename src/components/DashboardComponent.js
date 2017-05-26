@@ -10,25 +10,20 @@ import {
     List
 } from 'native-base';
 import Icon from '../components/common/Icon';
-import Spinkit from 'react-native-spinkit';
 import Swiper from 'react-native-swiper'
 import theme from '../styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import * as alert from '../constants/alert';
-import * as Progress from 'react-native-progress';
-import BarchartItem from '../components/common/BarchartItem';
-var {height, width} = Dimensions.get('window');
-import _ from 'lodash';
+import SlideBarchartRegister from './Dashboard/SlideBarchartRegister';
+import SlideTarget from './Dashboard/SlideTarget';
+import ListItem from './Dashboard/ListItem';
+import Loading from './common/Loading';
 
-var _this;
+var {height, width} = Dimensions.get('window');
 class DashboardComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.loadDataDashboard = this.loadDataDashboard.bind(this);
-        this.state = {
-            maxDataRegisterByDate: 1
-        }
-        _this = this;
     }
 
     loadDataDashboard() {
@@ -49,13 +44,8 @@ class DashboardComponent extends React.Component {
         )
     }
 
-    // componentWillReceiveProps(nextProps) {
-    //     // if (nextProps.dashboardData.registers_by_date) {
-    //     //     this.setState({maxDataRegisterByDate: _.max(nextProps.dashboardData.registers_by_date)});
-    //     // }
-    // }
-
     showDashboard() {
+        var {dashboardData} = this.props;
         return (
             <ScrollView
                 refreshControl={
@@ -76,133 +66,91 @@ class DashboardComponent extends React.Component {
                     activeDotColor={theme.secondColor}
                     index={1}
                 >
-                    <View style={styles.slide2}>
-                        {(this.props.dashboardData && this.props.dashboardData.date_array) ?
-                            (this.props.dashboardData.date_array.map(function (date, index) {
-                                return (<BarchartItem
-                                    key={index}
-                                    maxData={_.max(_this.props.dashboardData.registers_by_date)}
-                                    dataColMax={_this.props.dashboardData.registers_by_date[index]}
-                                    dataColMin={_this.props.dashboardData.paid_by_date[index]}//
-                                />)
-                            })) :
-                            (<View/>)
-                        }
-                    </View>
-                    <View style={styles.slide1}>
-                        <Progress.Circle
-                            size={100}
-                            progress={0.9}
-                            indeterminate={false}
-                            color={theme.mainColor}
-                            showsText
-                            formatText={(progressValue) => {
-                                console.log(progressValue);
-                                return parseInt(0.9 * 100) + '%';
-                            }}
-                        />
-                        <Text style={{marginTop: 10, fontSize: 12, fontWeight: '500', color: '#555555'}}>123.000.000đ/130.000.000đ</Text>
-                        <View style={{width: width - width / 10, marginVertical: 25}}>
-                            <View style={{
-                                ...styles.bar, ...styles.points, ...{
-                                    backgroundColor: theme.secondColorOpacity
-                                }
-                            }}>
-                                <Animated.View style={[styles.bar, styles.points, {width: 3 * width / 5}]}/>
-                            </View>
-                            <View style={{
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                                marginTop: 5,
-                                marginHorizontal: 5
-                            }}>
-                                <Text style={{color: '#7d7d7d', fontSize: 12}}>{'Chỉ tiêu của bạn'}</Text>
-                                <Text style={{color: '#7d7d7d', fontSize: 12}}>{'48/60 (70%)'}</Text>
-                            </View>
-                        </View>
+                    {(dashboardData && dashboardData.date_array) ?
+                        (
+                            <SlideBarchartRegister
+                                dateArray={dashboardData.date_array}
+                                registersByDate={dashboardData.registers_by_date}
+                                paidByDate={dashboardData.paid_by_date}
+                            />
+                        )
+                        :
+                        (<Loading size={width / 12}/>)
+                    }
+                    {(dashboardData && dashboardData.date_array) ?
+                        (
+                            <SlideTarget/>
+                        )
+                        :
+                        (<Loading size={width / 12}/>)
+                    }
 
-                    </View>
                     <View style={styles.slide3}>
-                        <Text style={styles.text}>And simple</Text>
+                        <Text style={styles.text}>Slide3</Text>
                     </View>
                 </Swiper>
-                <List style={{
-                    paddingTop: 10, paddingHorizontal: 20, borderTopColor: theme.borderColor,
-                    borderTopWidth: 1
-                }}>
-                    <View style={{flexDirection: 'row', paddingTop: 20}}>
-                        <Icon
-                            name="entypo|add-to-list"
-                            size={23}
-                            color='#7d7d7d'
-                        />
-                        <View style={{
-                            flex: 1, marginLeft: 30, borderBottomColor: theme.borderColor,
-                            paddingBottom: 20,
-                            borderBottomWidth: 1
-                        }}>
-                            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <Text style={{color: '#555555', fontWeight: '500'}}>TỔNG SỐ LỚP</Text>
-                                <Text style={{color: theme.secondColor, fontWeight: 'bold'}}>34</Text>
-                            </View>
-                            <Text style={{color: '#7d7d7d', fontSize: 12}}>{'Chỉ tiêu của bạn'}</Text>
-                        </View>
-                    </View>
-                    <View style={{flexDirection: 'row', paddingTop: 20}}>
-                        <Icon
-                            name="entypo|add-to-list"
-                            size={23}
-                            color='#7d7d7d'
-                        />
-                        <View style={{
-                            flex: 1, marginLeft: 30, borderBottomColor: theme.borderColor,
-                            paddingBottom: 20,
-                            borderBottomWidth: 1
-                        }}>
-                            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <Text style={{color: '#555555', fontWeight: '500'}}>TỔNG SỐ LỚP</Text>
-                                <Text style={{color: theme.secondColor, fontWeight: 'bold'}}>34</Text>
-                            </View>
-                            <Text style={{color: '#7d7d7d', fontSize: 12}}>{'Chỉ tiêu của bạn'}</Text>
-                        </View>
-                    </View>
-                    <View style={{flexDirection: 'row', paddingTop: 20}}>
-                        <Icon
-                            name="entypo|add-to-list"
-                            size={23}
-                            color='#7d7d7d'
-                        />
-                        <View style={{
-                            flex: 1, marginLeft: 30, borderBottomColor: theme.borderColor,
-                            paddingBottom: 20,
-                            borderBottomWidth: 1
-                        }}>
-                            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <Text style={{color: '#555555', fontWeight: '500'}}>TỔNG SỐ LỚP</Text>
-                                <Text style={{color: theme.secondColor, fontWeight: 'bold'}}>34</Text>
-                            </View>
-                            <Text style={{color: '#7d7d7d', fontSize: 12}}>{'Chỉ tiêu của bạn'}</Text>
-                        </View>
-                    </View>
-                </List>
+                {(dashboardData && dashboardData.total_classes) ?
+                    (
+                        <List style={styles.containerList}>
+                            <ListItem
+                                nameIcon="material|attach-money"
+                                title={"Tổng số tiền đã thu"}
+                                subTitle={"Chỉ tiêu của bạn"}
+                                number={parseInt(dashboardData.total_money).toLocaleString() + "đ"}
+                            />
+                            <ListItem
+                                nameIcon="material|class"
+                                title={"Tổng số lớp"}
+                                subTitle={"Chỉ tiêu của bạn"}
+                                number={dashboardData.total_classes.toLocaleString()}
+                            />
+                            <ListItem
+                                nameIcon="fontawesome|registered"
+                                title={"Tổng số đăng kí"}
+                                subTitle={"Chỉ tiêu của bạn"}
+                                number={dashboardData.register_number.toLocaleString()}
+                            />
+                            <ListItem
+                                nameIcon="fontawesome|money"
+                                title={"Doanh thu hôm nay"}
+                                subTitle={"Chỉ tiêu của bạn"}
+                                number={parseInt(dashboardData.money_today).toLocaleString() + "đ"}
+                            />
+                            <ListItem
+                                nameIcon="material|attach-money"
+                                title={"Số học viên đã đóng tiền"}
+                                subTitle={"Chỉ tiêu của bạn"}
+                                number={parseInt(dashboardData.paid_number).toLocaleString()}
+                            />
+                            <ListItem
+                                nameIcon="material|money-off"
+                                title={"Số học viên nộp 0 đồng"}
+                                subTitle={"Chỉ tiêu của bạn"}
+                                number={parseInt(dashboardData.zero_paid_num).toLocaleString()}
+                            />
+                            <ListItem
+                                nameIcon="material|phonelink-erase"
+                                title={"Số học viên chưa gọi điện"}
+                                subTitle={"Chỉ tiêu của bạn"}
+                                number={parseInt(dashboardData.uncalled_number).toLocaleString()}
+                            />
+                            <ListItem
+                                nameIcon="material|update"
+                                title={"Số ngày còn lại"}
+                                number={(dashboardData.remain_days < 0) ? "Đã hết" : dashboardData.remain_days}
+                            />
+                        </List>
+                    )
+                    :
+                    (<View/>)
+                }
             </ScrollView>
         )
     }
 
     render() {
         if (this.props.isLoading) {
-            return (
-                <Container>
-                    <View style={styles.container}>
-                        <Spinkit
-                            isVisible
-                            color={theme.mainColor}
-                            type='Wave'
-                            size={width / 8}
-                        />
-                    </View>
-                </Container>
-            )
+            return (<Loading size={width / 8}/>)
         } else {
             return (
                 <Container>
@@ -256,17 +204,6 @@ const styles = ({
         width: 5,
         height: 5
     },
-    slide1: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    slide2: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'row'
-    },
     slide3: {
         flex: 1,
         justifyContent: 'center',
@@ -289,12 +226,11 @@ const styles = ({
         elevation: 0.5,
         shadowOpacity: 0.5
     },
-    bar: {
-        borderRadius: 5,
-        height: 5
-    },
-    points: {
-        backgroundColor: theme.secondColor
+    containerList: {
+        paddingTop: 10,
+        paddingHorizontal: 20,
+        borderTopColor: theme.borderColor,
+        borderTopWidth: 1
     }
 });
 

@@ -5,7 +5,12 @@ import axios from 'axios';
 import * as env from '../constants/env';
 
 export function loadDashboard(baseId, genId, token) {
-    let url = env.API_URL + "/v2/gens/" + genId + "/dashboard/" + baseId + "?token=" + token;
+    let url = env.API_URL + "/v2/gens/" + genId + "/dashboard/";
+    if (baseId === -1) {
+        url += "?token=" + token;
+    } else {
+        url += baseId + "?token=" + token;
+    }
     console.log(url);
     return axios.get(url);
 }

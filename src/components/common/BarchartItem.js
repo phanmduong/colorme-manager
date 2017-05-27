@@ -6,31 +6,34 @@ import {
 import theme from '../../styles';
 var {height, width} = Dimensions.get('window');
 
-const maxHeight = 150;
+const maxHeight = height / 5.5;
 class BarchartItem extends React.Component {
     constructor(props, context) {
         super(props, context);
     }
 
     render() {
-        var {maxData, dataColMax, dataColMin} = this.props;
+        var {maxData, dataColMax, dataColMin, width} = this.props;
         return (
             <View style={{
                 ...styles.bar, ...styles.points, ...{
-                    marginHorizontal: 3,
+                    marginHorizontal: width / 2,
                     height: height / 5,
                     position: 'relative',
-                    backgroundColor: 'transparent'
+                    backgroundColor: 'transparent',
+                    width: width
                 }
             }}>
                 <Animated.View style={[styles.bar, styles.points, {
-                    height: maxHeight * dataColMax / maxData,
+                    height: (dataColMax === 0) ? 1 : maxHeight * dataColMax / maxData,
                     backgroundColor: theme.secondColorOpacity,
-                    position: 'absolute'
+                    position: 'absolute',
+                    width: width
                 }]}/>
                 <Animated.View style={[styles.bar, styles.points, {
                     height: maxHeight * dataColMin / maxData,
-                    position: 'absolute'
+                    position: 'absolute',
+                    width: width
                 }]}/>
             </View>
         );
@@ -40,7 +43,6 @@ class BarchartItem extends React.Component {
 const styles = ({
     bar: {
         borderRadius: 5,
-        width: 5,
         justifyContent: 'flex-end',
         bottom: 0
     },

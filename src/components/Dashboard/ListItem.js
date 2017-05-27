@@ -1,5 +1,5 @@
 import React from'react';
-import {Dimensions} from 'react-native';
+import {Dimensions, Platform} from 'react-native';
 import {
     View,
     Text,
@@ -40,7 +40,7 @@ const styles = ({
     },
     content: {
         flex: 1,
-        marginLeft: 30,
+        marginLeft: 20,
         borderBottomColor: theme.borderColor,
         paddingBottom: 20,
         borderBottomWidth: 1
@@ -52,7 +52,8 @@ const styles = ({
     },
     title: {
         color: '#555555',
-        fontWeight: '500'
+        fontWeight: '900',
+        fontSize: (Platform.isPad) ? 18 : 13
     },
     subTitle: {
         color: '#7d7d7d',
@@ -60,7 +61,8 @@ const styles = ({
     },
     numberTitle: {
         color: theme.secondColor,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontSize: (Platform.isPad) ? 18 : 13
     }
 });
 

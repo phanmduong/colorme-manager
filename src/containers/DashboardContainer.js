@@ -19,7 +19,8 @@ class DashboardContainer extends React.Component {
             checkedDataBase: false,
             checkedDataGen: false,
             checkedDataDashboard: false,
-            genData: []
+            genData: [],
+            baseData: []
         }
 
         this.onSelectBaseId = this.onSelectBaseId.bind(this);
@@ -68,7 +69,9 @@ class DashboardContainer extends React.Component {
     checkData(props) {
         if (props.baseData.length > 0 && !this.state.checkedDataBase) {
             this.setState({checkedDataBase: true});
-            this.props.dashboardActions.selectedBaseId(props.baseData[0].id);
+            var baseData = [{id: -1, name: 'Tất cả'}, ...props.baseData];
+            this.setState({baseData: baseData});
+            this.props.dashboardActions.selectedBaseId(baseData[0].id);
         }
 
         if (props.genData.length > 0 && !this.state.checkedDataGen) {
@@ -86,7 +89,7 @@ class DashboardContainer extends React.Component {
         if (props.genData.length > 0 && props.baseData.length > 0 && !this.state.checkedDataDashboard) {
             this.setState({checkedDataDashboard: true});
             this.props.dashboardActions
-                .loadDataDashboard(props.baseData[0].id, props.genData[1].id, this.props.token);
+                .loadDataDashboard(-1, props.genData[1].id, this.props.token);
         }
     }
 
@@ -123,7 +126,7 @@ class DashboardContainer extends React.Component {
                 isLoadingDashboard={this.props.isLoadingDashboard}
                 error={this.state.error}
                 genData={this.state.genData}
-                baseData={this.props.baseData}
+                baseData={this.state.baseData}
                 loadDataDashboard={this.loadDataDashboard}
                 dashboardData={this.props.dashboardData}
                 selectedBaseId={this.props.selectedBaseId}

@@ -6,6 +6,7 @@ import {
 } from 'native-base';
 import * as Progress from 'react-native-progress';
 import theme from '../../styles';
+import {dotNumber} from '../../helper';
 
 var {height, width} = Dimensions.get('window');
 class SlideTarget extends React.Component {
@@ -14,6 +15,7 @@ class SlideTarget extends React.Component {
     }
 
     render() {
+        var {totalMoney, countPaid, countTotal, bonus} = this.props;
         return (
             <View style={styles.slide}>
                 <Progress.Circle
@@ -26,17 +28,39 @@ class SlideTarget extends React.Component {
                         return parseInt(0.9 * 100) + '%';
                     }}
                 />
-                <Text style={styles.note}>123.000.000đ/130.000.000đ</Text>
-                <View style={styles.containerContentProcess}>
-                    <View style={{...styles.process, ...styles.containerProcess}}>
-                        <Animated.View style={[styles.process, styles.bar]}/>
-                    </View>
-                    <View style={styles.containerTextProcess}>
-                        <Text style={styles.text}>{'Chỉ tiêu của bạn'}</Text>
-                        <Text style={styles.text}>{'48/60 (70%)'}</Text>
-                    </View>
-                </View>
+                <Text style={styles.note}>123.000.000đ/{dotNumber(totalMoney)}đ</Text>
+                {(countPaid) ?
+                    (
+                        <View style={styles.containerContentProcess}>
+                            <View style={{...styles.process, ...styles.containerProcess}}>
+                                <Animated.View
+                                    style={[styles.process, styles.bar, {width: countPaid * (width - width / 10) / countTotal}]}/>
+                            </View>
+                            <View style={styles.containerText}>
+                                <View style={styles.contentSpaceBetween}>
+                                    <Text style={styles.text}>{'Chỉ tiêu của bạn'}</Text>
+                                    <Text
+                                        style={styles.text}>{countPaid + '/' + countTotal + ' (' + Math.round(countPaid * 100 / countTotal) + '%)'}</Text>
+                                </View>
+                                {(bonus) ?
+                                    (
+                                        <View style={styles.contentSpaceBetween}>
+                                            <Text style={styles.text}>{'Thưởng của bạn'}</Text>
+                                            <Text
+                                                style={styles.text}>{bonus + ''}</Text>
+                                        </View>
+                                    )
+                                    :
+                                    (<View/>)
+                                }
 
+                            </View>
+                        </View>
+                    )
+                    :
+                    (<View/>)
+
+                }
             </View>
         );
     }
@@ -55,14 +79,13 @@ const styles = ({
         color: '#555555'
     },
     containerContentProcess: {
-        width: width - width / 10,
-        marginVertical: 25
+        marginVertical: 25,
+        width: width - width / 10
     },
     containerProcess: {
         backgroundColor: theme.secondColorOpacity
     },
     bar: {
-        width: 3 * width / 5
     },
     process: {
         borderRadius: 5,
@@ -73,11 +96,13 @@ const styles = ({
         color: '#7d7d7d',
         fontSize: 12
     },
-    containerTextProcess: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+    containerText: {
         marginTop: 5,
         marginHorizontal: 5
+    },
+    contentSpaceBetween: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     }
 });
 

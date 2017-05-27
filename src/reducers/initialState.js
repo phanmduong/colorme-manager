@@ -6,6 +6,9 @@ export default {
         drawerOpen: false,
         drawerDisable: true,
     },
+    autoLogin: {
+        isAutoLogin: true
+    },
     login: {
         login: {},
         isLoading: false,

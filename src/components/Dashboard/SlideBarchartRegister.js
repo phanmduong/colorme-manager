@@ -1,11 +1,12 @@
 import React from'react';
-import {StyleSheet} from 'react-native'
+import {StyleSheet, Dimensions} from 'react-native';
 import {
     View,
     Text,
 } from 'native-base';
 import BarchartItem from '../common/BarchartItem';
 
+var {height, width} = Dimensions.get('window');
 
 class SlideBarchartRegister extends React.Component {
     constructor(props, context) {
@@ -22,8 +23,9 @@ class SlideBarchartRegister extends React.Component {
                             return (<BarchartItem
                                 key={index}
                                 maxData={_.max(registersByDate)}
-                                dataColMax={(registersByDate[index] === 0) ? 1 : registersByDate[index]}
-                                dataColMin={paidByDate[index]}//
+                                dataColMax={registersByDate[index]}
+                                dataColMin={paidByDate[index]}
+                                width={width / (2 * (dateArray.length + 2))}
                             />)
                         })
                     }

@@ -9,7 +9,6 @@ import {
     Item,
     List
 } from 'native-base';
-import Icon from '../components/common/Icon';
 import Swiper from 'react-native-swiper'
 import theme from '../styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -18,6 +17,7 @@ import SlideBarchartRegister from './Dashboard/SlideBarchartRegister';
 import SlideTarget from './Dashboard/SlideTarget';
 import ListItem from './Dashboard/ListItem';
 import Loading from './common/Loading';
+import {dotNumber} from '../helper';
 
 var {height, width} = Dimensions.get('window');
 class DashboardComponent extends React.Component {
@@ -79,7 +79,12 @@ class DashboardComponent extends React.Component {
                     }
                     {(dashboardData && dashboardData.date_array) ?
                         (
-                            <SlideTarget/>
+                            <SlideTarget
+                                totalMoney={dashboardData.total_money}
+                                countPaid={dashboardData.count_paid}
+                                countTotal={dashboardData.count_total}
+                                bonus={dashboardData.bonus}
+                            />
                         )
                         :
                         (<Loading size={width / 12}/>)
@@ -96,43 +101,43 @@ class DashboardComponent extends React.Component {
                                 nameIcon="material|attach-money"
                                 title={"Tổng số tiền đã thu"}
                                 subTitle={"Chỉ tiêu của bạn"}
-                                number={parseInt(dashboardData.total_money).toLocaleString() + "đ"}
+                                number={dotNumber(parseInt(dashboardData.total_money)) + "đ"}
                             />
                             <ListItem
                                 nameIcon="material|class"
                                 title={"Tổng số lớp"}
                                 subTitle={"Chỉ tiêu của bạn"}
-                                number={dashboardData.total_classes.toLocaleString()}
+                                number={dotNumber(dashboardData.total_classes)}
                             />
                             <ListItem
                                 nameIcon="fontawesome|registered"
                                 title={"Tổng số đăng kí"}
                                 subTitle={"Chỉ tiêu của bạn"}
-                                number={dashboardData.register_number.toLocaleString()}
+                                number={dotNumber(dashboardData.register_number)}
                             />
                             <ListItem
                                 nameIcon="fontawesome|money"
                                 title={"Doanh thu hôm nay"}
                                 subTitle={"Chỉ tiêu của bạn"}
-                                number={parseInt(dashboardData.money_today).toLocaleString() + "đ"}
+                                number={dotNumber(parseInt(dashboardData.money_today)) + "đ"}
                             />
                             <ListItem
                                 nameIcon="material|attach-money"
                                 title={"Số học viên đã đóng tiền"}
                                 subTitle={"Chỉ tiêu của bạn"}
-                                number={parseInt(dashboardData.paid_number).toLocaleString()}
+                                number={dotNumber(parseInt(dashboardData.paid_number))}
                             />
                             <ListItem
                                 nameIcon="material|money-off"
                                 title={"Số học viên nộp 0 đồng"}
                                 subTitle={"Chỉ tiêu của bạn"}
-                                number={parseInt(dashboardData.zero_paid_num).toLocaleString()}
+                                number={dotNumber(parseInt(dashboardData.zero_paid_num))}
                             />
                             <ListItem
                                 nameIcon="material|phonelink-erase"
                                 title={"Số học viên chưa gọi điện"}
                                 subTitle={"Chỉ tiêu của bạn"}
-                                number={parseInt(dashboardData.uncalled_number).toLocaleString()}
+                                number={dotNumber(parseInt(dashboardData.uncalled_number))}
                             />
                             <ListItem
                                 nameIcon="material|update"

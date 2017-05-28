@@ -13,9 +13,10 @@ import Swiper from 'react-native-swiper'
 import theme from '../styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import * as alert from '../constants/alert';
-import SlideBarchartRegister from './Dashboard/SlideBarchartRegister';
-import SlideTarget from './Dashboard/SlideTarget';
-import ListItem from './Dashboard/ListItem';
+import SlideBarchartRegister from './dashboard/SlideBarchartRegister';
+import SlideTarget from './dashboard/SlideTarget';
+import SlideBarchartMoney from './dashboard/SlideBarchartMoney';
+import ListItem from './dashboard/ListItem';
 import Loading from './common/Loading';
 import {dotNumber} from '../helper';
 
@@ -89,10 +90,17 @@ class DashboardComponent extends React.Component {
                         :
                         (<Loading size={width / 12}/>)
                     }
-
-                    <View style={styles.slide3}>
-                        <Text style={styles.text}>Slide3</Text>
-                    </View>
+                    {(dashboardData && dashboardData.date_array) ?
+                        (
+                            <SlideBarchartMoney
+                                dateArray={dashboardData.date_array}
+                                moneyByDate={dashboardData.money_by_date}
+                                moneyToday={parseInt(dashboardData.money_today)}
+                            />
+                        )
+                        :
+                        (<Loading size={width / 12}/>)
+                    }
                 </Swiper>
                 {(dashboardData && dashboardData.total_classes) ?
                     (
@@ -114,12 +122,6 @@ class DashboardComponent extends React.Component {
                                 title={"Tổng số đăng kí"}
                                 subTitle={"Chỉ tiêu của bạn"}
                                 number={dotNumber(dashboardData.register_number)}
-                            />
-                            <ListItem
-                                nameIcon="fontawesome|money"
-                                title={"Doanh thu hôm nay"}
-                                subTitle={"Chỉ tiêu của bạn"}
-                                number={dotNumber(parseInt(dashboardData.money_today)) + "đ"}
                             />
                             <ListItem
                                 nameIcon="material|attach-money"

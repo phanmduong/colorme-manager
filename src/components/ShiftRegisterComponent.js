@@ -12,7 +12,7 @@ var {height, width} = Dimensions.get('window');
 import Spinkit from 'react-native-spinkit';
 import theme from '../styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import ShiftRegisterWeek from './ShiftRegister/ShiftRegisterWeek';
+import ShiftRegisterWeek from './shiftRegister/ShiftRegisterWeek';
 import * as alert from '../constants/alert';
 
 class ShiftRegisterComponent extends React.Component {

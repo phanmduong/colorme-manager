@@ -14,6 +14,9 @@ class BarchartItem extends React.Component {
 
     render() {
         var {maxData, dataColMax, dataColMin, width} = this.props;
+
+        console.log("data" + dataColMin);
+        console.log('maxData' + maxData);
         return (
             <View style={{
                 ...styles.bar, ...styles.points, ...{

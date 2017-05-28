@@ -1,5 +1,5 @@
 import React from'react';
-import {Dimensions, Platform} from 'react-native';
+import {Dimensions, Platform, TouchableNativeFeedback, TouchableOpacity} from 'react-native';
 import {
     View,
     Text,
@@ -12,7 +12,7 @@ class ListItem extends React.Component {
         super(props, context);
     }
 
-    render() {
+    content() {
         var {title, subTitle, number, nameIcon} = this.props;
         return (
             <View style={styles.container}>
@@ -29,7 +29,24 @@ class ListItem extends React.Component {
                     <Text style={styles.subTitle}>{subTitle}</Text>
                 </View>
             </View>
-        );
+        )
+    }
+
+    render() {
+        if (Platform.OS === 'ios') {
+            return (
+                <TouchableOpacity>
+                    {this.content()}
+                </TouchableOpacity>
+            );
+        } else {
+            return (
+                <TouchableNativeFeedback>
+                    {this.content()}
+                </TouchableNativeFeedback>
+            );
+        }
+
     }
 }
 

@@ -12,6 +12,7 @@ class ListItem extends React.Component {
         super(props, context);
     }
 
+
     content() {
         var {title, subTitle, number, nameIcon} = this.props;
         return (
@@ -35,13 +36,13 @@ class ListItem extends React.Component {
     render() {
         if (Platform.OS === 'ios') {
             return (
-                <TouchableOpacity>
+                <TouchableOpacity onPress={this.props.onPress}>
                     {this.content()}
                 </TouchableOpacity>
             );
         } else {
             return (
-                <TouchableNativeFeedback>
+                <TouchableNativeFeedback onPress={this.props.onPress}>
                     {this.content()}
                 </TouchableNativeFeedback>
             );
@@ -52,6 +53,7 @@ class ListItem extends React.Component {
 
 const styles = ({
     container: {
+        paddingHorizontal: 20,
         flexDirection: 'row',
         paddingTop: 20
     },

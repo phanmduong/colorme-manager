@@ -6,7 +6,7 @@ import {
 import theme from '../../styles';
 var {height, width} = Dimensions.get('window');
 
-const maxHeight = height / 5.5;
+const maxHeight = height / 5;
 class BarchartItem extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -21,7 +21,7 @@ class BarchartItem extends React.Component {
             <View style={{
                 ...styles.bar, ...styles.points, ...{
                     marginHorizontal: width / 2,
-                    height: height / 5,
+                    height: height / 4,
                     position: 'relative',
                     backgroundColor: 'transparent',
                     width: width
@@ -45,7 +45,7 @@ class BarchartItem extends React.Component {
 
 const styles = ({
     bar: {
-        borderRadius: 5,
+        borderRadius: 50,
         justifyContent: 'flex-end',
         bottom: 0
     },

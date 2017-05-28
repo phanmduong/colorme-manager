@@ -1,122 +1,55 @@
 import React from'react';
-import {StyleSheet, Dimensions} from 'react-native';
+import {Dimensions} from 'react-native';
 import {
-    Container,
-    Header,
     Content,
-    Button,
-    Left,
     Right,
-    Title,
     Body,
     Icon,
-    View,
     ListItem,
     List,
     Text,
     Thumbnail
 } from 'native-base';
 var {height, width} = Dimensions.get('window');
-import Spinkit from 'react-native-spinkit';
-import _ from 'lodash';
-import theme from '../styles';
+import ListItemClass from './common/ListItemClass';
 
 class ClassComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
     }
 
-    componentWillReceiveProps(nextProps) {
-        let classData = nextProps.classData;
-        _.reverse(classData);
-    }
-
     render() {
         return (
-            (<Container>
-                <Header style={{paddingLeft: 0, paddingRight: 0}}>
-                    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <Left>
-                            <Button
-                                transparent
-                                onPress={this.props.popRouter}
-                            >
-                                <Icon
-                                    name="arrow-back"
-                                    style={{color: '#fff'}}
+            (
+                <Content>
+                    <List
+                        dataArray={this.props.classData}
+                        renderRow={
+                            (item, sectionID, rowID) => (
+                                <ListItemClass
+                                    nameClass={item.name}
+                                    avatar={item.avatar_url}
+                                    studyTime={item.study_time}
                                 />
-                            </Button>
-                        </Left>
-                        <Body>
-                        <Title>Lớp học</Title>
-                        </Body>
-                        <Right>
-                            <Button
-                                transparent
-                                onPress = {this.props.openDrawer}
-                            >
-                                <Icon name='menu' style={{color: '#fff'}}/>
-                            </Button>
-                        </Right>
-                    </View>
-                </Header>
-
-                {(this.props.isLoading) ?
-                    (
-                        <View style={styles.container}>
-                            <Spinkit
-                                isVisible
-                                color={theme.mainColor}
-                                type='Wave'
-                                size={width/8}
-                            />
-                        </View>
-                    ) :
-                    (
-                        <Content>
-                            <List
-                                dataArray={this.props.classData}
-                                renderRow={
-                                    (item) => (
-                                        <ListItem
-                                            onPress={() => this.props.onSelectedItem(item.id)}
-                                            onLongPress={() => {}}
-                                            button
-                                        >
-                                            <Thumbnail small source={{uri: this.props.imageCourse}}/>
-                                            <Body>
-                                            <Text>{item.name}</Text>
-                                            <Text note>{item.study_time}</Text>
-
-                                            </Body>
-                                            <Right>
-                                                <Icon name="arrow-forward"/>
-                                            </Right>
-                                        </ListItem>
-                                    )
-                                }
-                            >
-                            </List>
-                        </Content>
-                    )}
-            </Container>)
+                            )
+                        }
+                    >
+                    </List>
+                </Content>
+            )
         );
     }
 }
 
 const styles = ({
-    indicator: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 37
-    },
-    list: {
-    },
+    list: {},
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    textError: {
+        color: '#d9534f'
     }
 });
 

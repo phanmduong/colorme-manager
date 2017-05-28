@@ -1,5 +1,5 @@
 import React from'react';
-import {StyleSheet, Dimensions, RefreshControl, ScrollView, Animated} from 'react-native';
+import {StyleSheet, Dimensions, RefreshControl, ScrollView, Animated, Platform} from 'react-native';
 import {
     Container,
     Button,
@@ -61,7 +61,7 @@ class DashboardComponent extends React.Component {
                 }>
                 <Swiper
                     style={styles.wrapper}
-                    height={height / 2.5}
+                    height={(Platform.isPad) ? height / 2.8 : height / 2}
                     dotColor={theme.secondColor}
                     dotStyle={styles.dotStyle}
                     activeDotColor={theme.secondColor}
@@ -85,6 +85,7 @@ class DashboardComponent extends React.Component {
                                 countPaid={dashboardData.count_paid}
                                 countTotal={dashboardData.count_total}
                                 bonus={dashboardData.bonus}
+                                targetRevenue={dashboardData.target_revenue}
                             />
                         )
                         :
@@ -95,7 +96,7 @@ class DashboardComponent extends React.Component {
                             <SlideBarchartMoney
                                 dateArray={dashboardData.date_array}
                                 moneyByDate={dashboardData.money_by_date}
-                                moneyToday={parseInt(dashboardData.money_today)}
+                                moneyToday={dashboardData.money_today}
                             />
                         )
                         :
@@ -115,6 +116,7 @@ class DashboardComponent extends React.Component {
                                 nameIcon="material|class"
                                 title={"Tổng số lớp"}
                                 subTitle={"Chỉ tiêu của bạn"}
+                                onPress={this.props.onClickClass}
                                 number={dotNumber(dashboardData.total_classes)}
                             />
                             <ListItem
@@ -234,8 +236,6 @@ const styles = ({
         shadowOpacity: 0.5
     },
     containerList: {
-        paddingTop: 10,
-        paddingHorizontal: 20,
         borderTopColor: theme.borderColor,
         borderTopWidth: 1
     }

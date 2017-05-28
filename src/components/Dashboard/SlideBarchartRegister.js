@@ -5,7 +5,8 @@ import {
     Text,
 } from 'native-base';
 import BarchartItem from '../common/BarchartItem';
-
+import {dotNumber, maxArray} from '../../helper';
+import _ from 'lodash';
 var {height, width} = Dimensions.get('window');
 
 class SlideBarchartRegister extends React.Component {
@@ -22,7 +23,7 @@ class SlideBarchartRegister extends React.Component {
                         dateArray.map(function (date, index) {
                             return (<BarchartItem
                                 key={index}
-                                maxData={_.max(registersByDate)}
+                                maxData={maxArray(registersByDate)}
                                 dataColMax={registersByDate[index]}
                                 dataColMin={paidByDate[index]}
                                 width={width / (2 * (dateArray.length + 2))}
@@ -31,8 +32,8 @@ class SlideBarchartRegister extends React.Component {
                     }
                 </View>
                 <Text style={styles.note}>
-                    {_.sum(paidByDate) + " đóng tiền/" +
-                    _.sum(registersByDate) + " đăng kí học"}
+                    {dotNumber(_.sum(paidByDate)) + " đóng tiền/" +
+                    dotNumber(_.sum(registersByDate)) + " đăng kí học"}
                 </Text>
             </View>
         );

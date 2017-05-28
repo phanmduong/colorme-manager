@@ -57,7 +57,8 @@ class RouterComponent extends React.Component {
         return (
             <Router getSceneStyle={getSceneStyle}>
                 <Scene key="root">
-                    <Scene key="login" component={LoginContainer} hideNavBar hideTabBar initial type={ActionConst.RESET}/>
+                    <Scene key="login" component={LoginContainer} hideNavBar hideTabBar initial
+                           type={ActionConst.RESET}/>
                     <Scene key="drawer" component={NatigationDrawerContainer} type={ActionConst.RESET}>
                         <Scene
                             key="main"
@@ -123,17 +124,35 @@ class RouterComponent extends React.Component {
                             />
                             <Scene
                                 key="tabDashboard"
-                                component={DashboardContainer}
-                                title="Dashboard"
+                                title="Quản lý"
                                 nameIcon="material|apps"
                                 icon={TabIcon}
-                                renderLeftButton={() => {
-                                }}
-                                initial
                                 navigationBarStyle={styles.navigationBarStyle}
                                 titleStyle={styles.title}
-                                renderRightButton={MenuButton}
-                            />
+                                initial
+                            >
+                                <Scene
+                                    key="dashboard"
+                                    component={DashboardContainer}
+                                    title="Dashboard"
+                                    renderLeftButton={() => {
+                                    }}
+                                    initial
+                                    renderRightButton={MenuButton}
+                                    onRight={this.props.drawerActions.openDrawer}
+                                />
+                                <Scene
+                                    key="class"
+                                    component={ClassContainer}
+                                    title="Danh sách lớp"
+                                    renderBackButton={BackButton}
+                                    renderRightButton={MenuButton}
+                                    onBack={() => {
+                                        Actions.pop();
+                                    }}
+                                    onRight={this.props.drawerActions.openDrawer}
+                                />
+                            </Scene>
                             <Scene
                                 key="tabCollectMoney"
                                 component={CollectMoneyContainer}

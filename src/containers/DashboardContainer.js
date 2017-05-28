@@ -8,7 +8,7 @@ import * as baseActions from '../actions/baseActions';
 import * as genActions from '../actions/genActions';
 import * as dashboardActions from '../actions/dashboardActions';
 import DashboardComponent from '../components/DashboardComponent';
-
+import {Actions} from 'react-native-router-flux';
 
 class DashboardContainer extends React.Component {
     constructor(props, context) {
@@ -26,6 +26,7 @@ class DashboardContainer extends React.Component {
         this.onSelectBaseId = this.onSelectBaseId.bind(this);
         this.onSelectGenId = this.onSelectGenId.bind(this);
         this.loadDataDashboard = this.loadDataDashboard.bind(this);
+        this.onClickClass = this.onClickClass.bind(this);
     }
 
     componentWillMount() {
@@ -118,6 +119,10 @@ class DashboardContainer extends React.Component {
         this.loadDataDashboard(this.props.selectedBaseId, genId);
     }
 
+    onClickClass() {
+        Actions.class();
+    }
+
     render() {
         console.log(this.props.dashboardData);
         return (
@@ -134,6 +139,7 @@ class DashboardContainer extends React.Component {
                 onSelectBaseId={this.onSelectBaseId}
                 onSelectGenId={this.onSelectGenId}
                 errorDashboard={this.props.errorDashboard}
+                onClickClass={this.onClickClass}
             />
         );
     }

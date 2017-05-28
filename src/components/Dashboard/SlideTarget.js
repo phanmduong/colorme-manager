@@ -1,5 +1,5 @@
 import React from'react';
-import {Dimensions, Animated} from 'react-native';
+import {Dimensions, Animated, Platform} from 'react-native';
 import {
     View,
     Text,
@@ -15,20 +15,23 @@ class SlideTarget extends React.Component {
     }
 
     render() {
-        var {totalMoney, countPaid, countTotal, bonus} = this.props;
+        var {totalMoney, countPaid, countTotal, bonus, targetRevenue} = this.props;
         return (
             <View style={styles.slide}>
                 <Progress.Circle
-                    size={100}
-                    progress={0.9}
+                    size={(Platform.isPad) ? 150 : 100}
+                    progress={(isNaN(totalMoney / targetRevenue) ? 0 : totalMoney / targetRevenue)}
                     indeterminate={false}
                     color={theme.mainColor}
                     showsText
                     formatText={(progressValue) => {
-                        return parseInt(0.9 * 100) + '%';
+                        if (isNaN(totalMoney / targetRevenue))
+                            return "0%";
+                        else
+                            return parseInt(totalMoney / targetRevenue * 100) + '%';
                     }}
                 />
-                <Text style={styles.note}>123.000.000đ/{dotNumber(totalMoney)}đ</Text>
+                <Text style={styles.note}>{dotNumber(totalMoney)}đ/{dotNumber(targetRevenue)}đ</Text>
                 {(countPaid) ?
                     (
                         <View style={styles.containerContentProcess}>
@@ -38,16 +41,16 @@ class SlideTarget extends React.Component {
                             </View>
                             <View style={styles.containerText}>
                                 <View style={styles.contentSpaceBetween}>
-                                    <Text style={styles.text}>{'Chỉ tiêu của bạn'}</Text>
+                                    <Text style={styles.text}>{'Tỉ lệ chốt đơn'}</Text>
                                     <Text
-                                        style={styles.text}>{countPaid + '/' + countTotal + ' (' + Math.round(countPaid * 100 / countTotal) + '%)'}</Text>
+                                        style={{...styles.text, ...styles.textNote}}>{countPaid + '/' + countTotal + ' (' + Math.round(countPaid * 100 / countTotal) + '%)'}</Text>
                                 </View>
                                 {(bonus) ?
                                     (
                                         <View style={styles.contentSpaceBetween}>
                                             <Text style={styles.text}>{'Thưởng của bạn'}</Text>
                                             <Text
-                                                style={styles.text}>{bonus + ''}</Text>
+                                                style={{...styles.text, ...styles.textNote}}>{bonus + ''}</Text>
                                         </View>
                                     )
                                     :
@@ -85,8 +88,7 @@ const styles = ({
     containerProcess: {
         backgroundColor: theme.secondColorOpacity
     },
-    bar: {
-    },
+    bar: {},
     process: {
         borderRadius: 5,
         height: 5,
@@ -95,6 +97,9 @@ const styles = ({
     text: {
         color: '#7d7d7d',
         fontSize: 12
+    },
+    textNote: {
+        fontWeight: '900'
     },
     containerText: {
         marginTop: 5,

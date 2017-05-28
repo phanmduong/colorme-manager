@@ -32,7 +32,7 @@ class SlideBarchartRegister extends React.Component {
                     }
                 </View>
                 <Text style={styles.note}>
-                    Doanh thu hôm nay {dotNumber(moneyToday)} đ
+                    Doanh thu hôm nay {moneyToday}
                 </Text>
             </View>
         );

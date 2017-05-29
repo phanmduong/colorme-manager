@@ -2,13 +2,7 @@ import React from'react';
 import {Dimensions} from 'react-native';
 import {
     Content,
-    Right,
-    Body,
-    Icon,
-    ListItem,
     List,
-    Text,
-    Thumbnail
 } from 'native-base';
 var {height, width} = Dimensions.get('window');
 import ListItemClass from './common/ListItemClass';
@@ -21,21 +15,24 @@ class ClassComponent extends React.Component {
     render() {
         return (
             (
-                <Content>
-                    <List
-                        dataArray={this.props.classData}
-                        renderRow={
-                            (item, sectionID, rowID) => (
-                                <ListItemClass
-                                    nameClass={item.name}
-                                    avatar={item.avatar_url}
-                                    studyTime={item.study_time}
-                                />
-                            )
-                        }
-                    >
-                    </List>
-                </Content>
+                <List
+                    dataArray={this.props.classData}
+                    renderRow={
+                        (item, sectionID, rowID) => (
+                            <ListItemClass
+                                nameClass={item.name}
+                                avatar={item.avatar_url}
+                                studyTime={item.study_time}
+                                totalPaid={item.total_paid}
+                                totalRegisters={item.total_registers}
+                                paidTarget={item.paid_target}
+                                registerTarget={item.register_target}
+                                status={item.status}
+                            />
+                        )
+                    }
+                >
+                </List>
             )
         );
     }

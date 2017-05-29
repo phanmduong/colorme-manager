@@ -1,9 +1,10 @@
 import React from'react';
-import {Dimensions, Platform, TouchableNativeFeedback, TouchableOpacity, Animated, Switch} from 'react-native';
+import {Dimensions, Platform, TouchableNativeFeedback, TouchableOpacity, Animated} from 'react-native';
 import {
     View,
     Text,
     Thumbnail,
+    Icon
 } from 'native-base';
 import theme from '../../styles';
 
@@ -13,11 +14,19 @@ var maxWidthProcess = width / 2;
 class ListItemClass extends React.Component {
     constructor(props, context) {
         super(props, context);
+        this.state = {
+            onPressed: false
+        };
     }
 
+    onChangePress() {
+        this.setState({
+            onPressed: !this.state.onPressed
+        });
+    }
 
     content() {
-        var {nameClass, studyTime, avatar, totalPaid, totalRegisters, paidTarget, registerTarget, status} = this.props;
+        var {nameClass, studyTime, avatar, totalPaid, totalRegisters, paidTarget, registerTarget} = this.props;
         var tmpTotalPaid, tmpTotalRegister;
         tmpTotalPaid = (totalPaid < paidTarget) ? totalPaid : paidTarget;
         tmpTotalRegister = (totalRegisters < registerTarget) ? totalRegisters : registerTarget;
@@ -27,10 +36,24 @@ class ListItemClass extends React.Component {
                 <View style={styles.content}>
                     <View style={styles.containerTitle}>
                         <Text style={styles.title}>{nameClass.toUpperCase()}</Text>
-                        <Switch
-                            value={Boolean(status)}
-
-                        />
+                        {(this.state.onPressed) ?
+                            (
+                                <Icon
+                                    style={styles.icon}
+                                    ios='ios-arrow-up'
+                                    android="md-arrow-dropup"
+                                    name="ios-arrow-up"/>
+                            )
+                            :
+                            (
+                                <Icon
+                                    name="ios-arrow-up"
+                                    ios='ios-arrow-down'
+                                    android="md-arrow-dropdown"
+                                    style={styles.icon}
+                                />
+                            )
+                        }
 
                     </View>
                     <Text style={styles.subTitle}>{studyTime}</Text>
@@ -73,22 +96,39 @@ class ListItemClass extends React.Component {
         )
     }
 
+    renderExpand() {
+        if (this.state.onPressed) {
+            return (
+                <View style={styles.containerExpand}>
+                    <View style={styles.line}/>
+                    <Text>Text</Text>
+                </View>
+            );
+        }
+    }
+
     render() {
         if (Platform.OS === 'ios') {
             return (
                 <View>
-                    <TouchableOpacity >
-                        {this.content()}
-                    </TouchableOpacity>
+                    <View style={styles.containerAll}>
+                        <TouchableOpacity onPress={() => this.onChangePress()}>
+                            {this.content()}
+                        </TouchableOpacity>
+                        {this.renderExpand()}
+                    </View>
                     <View style={styles.line}/>
                 </View>
             );
         } else {
             return (
                 <View>
-                    <TouchableNativeFeedback >
-                        {this.content()}
-                    </TouchableNativeFeedback>
+                    <View style={styles.containerAll}>
+                        <TouchableNativeFeedback onPress={() => this.onChangePress()}>
+                            {this.content()}
+                        </TouchableNativeFeedback>
+                        {this.renderExpand()}
+                    </View>
                     <View style={styles.line}/>
                 </View>
             );
@@ -98,16 +138,20 @@ class ListItemClass extends React.Component {
 }
 
 const styles = ({
-
-    container: {
+    containerAll: {
+        paddingVertical: 20
+    },
+    containerExpand: {
         paddingHorizontal: 20,
+        paddingTop: 10
+    },
+    container: {
         flexDirection: 'row',
-        paddingTop: 20
+        paddingHorizontal: 20
     },
     content: {
         flex: 1,
         marginLeft: 20,
-        paddingBottom: 20,
     },
     containerTitle: {
         flex: 1,
@@ -115,12 +159,12 @@ const styles = ({
         justifyContent: 'space-between'
     },
     title: {
-        color: '#555555',
+        color: theme.colorTitle,
         fontWeight: '900',
         fontSize: (Platform.isPad) ? 18 : 13
     },
     subTitle: {
-        color: '#7d7d7d',
+        color: theme.colorSubTitle,
         fontSize: 12
     },
     icon: {

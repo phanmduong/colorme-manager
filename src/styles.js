@@ -5,5 +5,7 @@ export default styles = {
     mainColor: '#C50000',
     secondColor: '#d92732',
     secondColorOpacity: '#d9273230',
-    borderColor: '#d3d3d3'
+    borderColor: '#d3d3d3',
+    colorTitle: '#555555',
+    colorSubTitle: '#7d7d7d',
 }

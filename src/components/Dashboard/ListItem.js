@@ -36,15 +36,21 @@ class ListItem extends React.Component {
     render() {
         if (Platform.OS === 'ios') {
             return (
-                <TouchableOpacity onPress={this.props.onPress}>
-                    {this.content()}
-                </TouchableOpacity>
+                <View>
+                    <TouchableOpacity onPress={this.props.onPress}>
+                        {this.content()}
+                    </TouchableOpacity>
+                    <View style={styles.line}/>
+                </View>
             );
         } else {
             return (
-                <TouchableNativeFeedback onPress={this.props.onPress}>
-                    {this.content()}
-                </TouchableNativeFeedback>
+                <View>
+                    <TouchableNativeFeedback onPress={this.props.onPress}>
+                        {this.content()}
+                    </TouchableNativeFeedback>
+                    <View style={styles.line}/>
+                </View>
             );
         }
 
@@ -60,9 +66,7 @@ const styles = ({
     content: {
         flex: 1,
         marginLeft: 20,
-        borderBottomColor: theme.borderColor,
         paddingBottom: 20,
-        borderBottomWidth: 1
     },
     containerTitle: {
         flex: 1,
@@ -82,7 +86,13 @@ const styles = ({
         color: theme.secondColor,
         fontWeight: 'bold',
         fontSize: (Platform.isPad) ? 18 : 13
-    }
+    },
+    line: {
+        height: 1,
+        backgroundColor: theme.borderColor,
+        marginRight: 20,
+        marginLeft: 65
+    },
 });
 
 export default ListItem;

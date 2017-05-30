@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import ClassComponent from '../components/ClassComponent';
 import * as classActions from '../actions/classActions';
+import {Actions} from 'react-native-router-flux';
 
 class ClassContainer extends React.Component {
     constructor(props) {
@@ -14,15 +15,16 @@ class ClassContainer extends React.Component {
     }
 
 
-    onSelectedItem(classId){
+    onSelectedItem(classId) {
         this.props.classActions.selectedClassId(classId);
+        Actions.listStudentClass();
     }
 
     render() {
         return (
             <ClassComponent
-                classData = {this.props.classData}
-                onSelectedItem = {this.onSelectedItem}
+                classData={this.props.classData}
+                onSelectedItem={this.onSelectedItem}
             />
         );
     }

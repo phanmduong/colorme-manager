@@ -124,7 +124,6 @@ class DashboardContainer extends React.Component {
     }
 
     render() {
-        console.log(this.props.dashboardData);
         return (
             <DashboardComponent
                 isLoading={this.state.isLoading}

@@ -6,8 +6,6 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import CurrentClassStudyComponent from '../components/CurrentClassStudyComponent';
 import * as currentClassStudyActions from '../actions/currentClassStudyActions';
-import {Alert}from 'react-native';
-import * as alert from '../constants/alert';
 import {Actions} from 'react-native-router-flux';
 
 class CurrentClassStudyContainer extends React.Component {

@@ -1,34 +1,71 @@
 import React from'react';
-import {Dimensions, Platform, TouchableNativeFeedback, TouchableOpacity, Animated, Switch} from 'react-native';
+import {Dimensions, Platform, TouchableNativeFeedback, TouchableOpacity, Animated} from 'react-native';
 import {
     View,
     Text,
     Thumbnail,
+    Icon
 } from 'native-base';
 import theme from '../../styles';
-
+import _ from 'lodash';
 var {height, width} = Dimensions.get('window');
 
 var maxWidthProcess = width / 2;
-class ListItemClass extends React.Component {
+class ListItemStudent extends React.Component {
     constructor(props, context) {
         super(props, context);
+        this.state = {
+            onPressed: false
+        };
     }
 
+    onChangePress() {
+        this.setState({
+            onPressed: !this.state.onPressed
+        });
+    }
 
     content() {
-        var {nameClass, studyTime, avatar, totalPaid, totalRegisters, paidTarget, registerTarget} = this.props;
-        var tmpTotalPaid, tmpTotalRegister;
-        tmpTotalPaid = (totalPaid < paidTarget) ? totalPaid : paidTarget;
-        tmpTotalRegister = (totalRegisters < registerTarget) ? totalRegisters : registerTarget;
+        var {name, avatar, code} = this.props;
         return (
             <View style={styles.container}>
                 <Thumbnail small source={{uri: avatar}}/>
                 <View style={styles.content}>
                     <View style={styles.containerTitle}>
-                        <Text style={styles.title}>{nameClass.toUpperCase()}</Text>
+                        <Text style={styles.title}>{name.trim().toUpperCase()}</Text>
+                        {(this.state.onPressed) ?
+                            (
+                                <Icon
+                                    style={styles.icon}
+                                    ios='ios-arrow-up'
+                                    android="md-arrow-dropup"
+                                    name="ios-arrow-up"/>
+                            )
+                            :
+                            (
+                                <Icon
+                                    name="ios-arrow-up"
+                                    ios='ios-arrow-down'
+                                    android="md-arrow-dropdown"
+                                    style={styles.icon}
+                                />
+                            )
+                        }
                     </View>
-                    <Text style={styles.subTitle}>{studyTime}</Text>
+                    <Text style={styles.subTitle}>{code}</Text>
+                </View>
+            </View>
+        )
+    }
+
+    renderExpand() {
+        var {attendances} = this.props;
+        var sumLesson = attendances.length;
+        var sumAttendance = _.filter(attendances, {status: 1}).length;
+        var sumHomeWork = _.filter(attendances, {hw_status: 1}).length;
+        if (this.state.onPressed) {
+            return (
+                <View style={styles.containerExpand}>
                     <View style={styles.containerContentProcess}>
                         <View style={styles.processAndText}>
                             <View style={{
@@ -39,12 +76,12 @@ class ListItemClass extends React.Component {
                                 <Animated.View
                                     style={[styles.process, styles.bar,
                                         {
-                                            width: maxWidthProcess * tmpTotalPaid / paidTarget,
+                                            width: maxWidthProcess * sumAttendance / sumLesson,
                                             backgroundColor: theme.processColor1
                                         }]}
                                 />
                             </View>
-                            <Text style={styles.textProcess}>{totalPaid}/{paidTarget}</Text>
+                            <Text style={styles.textProcess}>{sumAttendance}/{sumLesson}</Text>
                         </View>
                         <View style={styles.processAndText}>
                             <View style={{
@@ -55,25 +92,28 @@ class ListItemClass extends React.Component {
                                 <Animated.View
                                     style={[styles.process, styles.bar,
                                         {
-                                            width: maxWidthProcess * tmpTotalRegister / registerTarget,
+                                            width: maxWidthProcess * sumHomeWork / sumLesson,
                                             backgroundColor: theme.processColor2
                                         }]}
                                 />
                             </View>
-                            <Text style={styles.textProcess}>{totalRegisters}/{registerTarget}</Text>
+                            <Text style={styles.textProcess}>{sumHomeWork}/{sumLesson}</Text>
                         </View>
                     </View>
                 </View>
-            </View>
-        )
+            );
+        }
     }
 
     render() {
         if (Platform.OS === 'ios') {
             return (
                 <View>
-                    <TouchableOpacity onPress={() => this.props.onPress(this.props.classId)}>
-                        {this.content()}
+                    <TouchableOpacity onPress={() => this.onChangePress()}>
+                        <View style={styles.containerAll}>
+                            {this.content()}
+                            {this.renderExpand()}
+                        </View>
                     </TouchableOpacity>
                     <View style={styles.line}/>
                 </View>
@@ -81,8 +121,11 @@ class ListItemClass extends React.Component {
         } else {
             return (
                 <View>
-                    <TouchableNativeFeedback onPress={() => this.props.onPress(this.props.classId)}>
-                        {this.content()}
+                    <TouchableNativeFeedback onPress={() => this.onChangePress()}>
+                        <View style={styles.containerAll}>
+                            {this.content()}
+                            {this.renderExpand()}
+                        </View>
                     </TouchableNativeFeedback>
                     <View style={styles.line}/>
                 </View>
@@ -93,16 +136,19 @@ class ListItemClass extends React.Component {
 }
 
 const styles = ({
-
-    container: {
+    containerAll: {
         paddingHorizontal: 20,
+        paddingVertical: 20
+    },
+    container: {
         flexDirection: 'row',
-        paddingTop: 20
+    },
+    containerExpand: {
+        marginLeft: 55
     },
     content: {
         flex: 1,
         marginLeft: 20,
-        paddingBottom: 20,
     },
     containerTitle: {
         flex: 1,
@@ -149,6 +195,9 @@ const styles = ({
         color: theme.colorTitle,
         fontSize: 12
     },
+    containerSubTitle: {
+        flexDirection: 'row'
+    }
 });
 
-export default ListItemClass;
+export default ListItemStudent;

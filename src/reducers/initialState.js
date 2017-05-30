@@ -86,5 +86,11 @@ export default {
         selectedBaseId: -1,
         selectedGenId: -1,
     },
+    listStudentClass: {
+        listStudentClassData: [],
+        isLoading: false,
+        error: false,
+    },
+
 
 }

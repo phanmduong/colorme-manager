@@ -15,6 +15,7 @@ import currentClassStudyReducer from './currentClassStudyReducer';
 import shiftRegisterReducer from './shiftRegisterReducer';
 import dashboardReducer from './dashboardReducer';
 import autoLoginReducer from './autoLoginReducer';
+import listStudentClassReducer from './listStudentClassReducer';
 
 
 const rootReducer = combineReducers({
@@ -30,6 +31,8 @@ const rootReducer = combineReducers({
     currentClassStudy: currentClassStudyReducer,
     shiftRegister: shiftRegisterReducer,
     dashboard: dashboardReducer,
-    autoLogin: autoLoginReducer
+    autoLogin: autoLoginReducer,
+    listStudentClass: listStudentClassReducer,
+
 });
 export default rootReducer;

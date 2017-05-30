@@ -1,10 +1,7 @@
 import React from'react';
-import {Dimensions} from 'react-native';
 import {
-    Content,
-    List,
+    List
 } from 'native-base';
-var {height, width} = Dimensions.get('window');
 import ListItemClass from './common/ListItemClass';
 
 class ClassComponent extends React.Component {
@@ -27,7 +24,8 @@ class ClassComponent extends React.Component {
                                 totalRegisters={item.total_registers}
                                 paidTarget={item.paid_target}
                                 registerTarget={item.register_target}
-                                status={item.status}
+                                onPress={this.props.onSelectedItem}
+                                classId={item.id}
                             />
                         )
                     }
@@ -37,17 +35,5 @@ class ClassComponent extends React.Component {
         );
     }
 }
-
-const styles = ({
-    list: {},
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    textError: {
-        color: '#d9534f'
-    }
-});
 
 export default ClassComponent;

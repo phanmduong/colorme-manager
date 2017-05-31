@@ -13,9 +13,10 @@ import Spinkit from 'react-native-spinkit';
 import theme from '../styles';
 import * as alert from '../constants/alert';
 import ListItemStudent from './common/ListItemStudent';
+import _ from 'lodash';
 
 var {height, width} = Dimensions.get('window');
-
+const heightSwiper = (Platform.OS === 'ios') ? height - 114 : height - 125;
 class ListStudenClassComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -54,28 +55,22 @@ class ListStudenClassComponent extends React.Component {
             } else {
                 return (
                     <Swiper
-                        height={(Platform.OS === 'ios') ? height - 114 : height - 125}
+                        height={heightSwiper}
                         style={styles.wrapper}
                         dotColor={theme.secondColor}
                         dotStyle={styles.dotStyle}
                         activeDotColor={theme.secondColor}
-                        index={1}
+                        index={0}
                         paginationStyle={{
-                            top: (Platform.OS === 'ios') ? -(height - 200) : -(height - 210)
+                            top: (Platform.OS === 'ios') ? -(height - 220) : -(height - 230)
                         }}
                     >
-
-                        <View><Text>dsadsa</Text>
-                            <Text>dsadsa</Text><
-                                Text>dsadsa</Text>
-                            <Text>dsadsa</Text>
-                            <Text>dsadsa</Text>
-                            <Text>dsadsa</Text></View>
-                        <View>
-                            <Text>Đã đóng tiền</Text>
+                        <View style={styles.slide}>
+                            <Text style={styles.titleList}>ĐÃ NỘP TIỀN</Text>
                             <List
+
                                 style={styles.list}
-                                dataArray={this.props.listStudentClass}
+                                dataArray={_.filter(this.props.listStudentClass, {'status': 1})}
                                 renderRow={
                                     (item, sectionID, rowID) => (
                                         <ListItemStudent
@@ -83,16 +78,38 @@ class ListStudenClassComponent extends React.Component {
                                             avatar={item.avatar_url}
                                             code={item.code}
                                             attendances={item.attendances}
+                                            phone={item.phone}
+                                            email={item.email}
+                                            money={item.money}
+                                            receivedIdCard={item.received_id_card}
+                                            status={item.status}
                                         />
                                     )
                                 }
                             >
                             </List>
                         </View>
-
-                        <View><Text>dsadsa</Text></View>
-                        <View><Text>dsadsa</Text></View>
-                        <View><Text>dsadsa</Text></View>
+                        <View style={styles.slide}>
+                            <Text style={styles.titleList}>CHƯA NỘP TIỀN</Text>
+                            <List
+                                style={styles.list}
+                                dataArray={_.filter(this.props.listStudentClass, {'status': 0})}
+                                renderRow={
+                                    (item, sectionID, rowID) => (
+                                        <ListItemStudent
+                                            name={item.name}
+                                            avatar={item.avatar_url}
+                                            code={item.code}
+                                            attendances={item.attendances}
+                                            phone={item.phone}
+                                            email={item.email}
+                                            status={item.status}
+                                        />
+                                    )
+                                }
+                            >
+                            </List>
+                        </View>
                     </Swiper>
                 )
             }
@@ -102,7 +119,7 @@ class ListStudenClassComponent extends React.Component {
 
 const styles = ({
     list: {
-        marginTop: 20
+        marginTop: 30
     },
     container: {
         flex: 1,
@@ -118,6 +135,17 @@ const styles = ({
         width: 5,
         height: 5
     },
+    titleList: {
+        paddingTop: 10,
+        width: width,
+        textAlign: 'center',
+        color: theme.colorTitle,
+        fontWeight: '900'
+
+    },
+    slide: {
+        height: heightSwiper
+    }
 });
 
 export default ListStudenClassComponent;

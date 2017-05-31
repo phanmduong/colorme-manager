@@ -8,8 +8,9 @@ import {
 } from 'native-base';
 import theme from '../../styles';
 import _ from 'lodash';
-var {height, width} = Dimensions.get('window');
+import {formatPhone, dotNumber} from '../../helper/index';
 
+var {height, width} = Dimensions.get('window');
 var maxWidthProcess = width / 2;
 class ListItemStudent extends React.Component {
     constructor(props, context) {
@@ -26,7 +27,10 @@ class ListItemStudent extends React.Component {
     }
 
     content() {
-        var {name, avatar, code} = this.props;
+        const {name, avatar, code, status, money, receivedIdCard, attendances} = this.props;
+        const sumLesson = attendances.length;
+        const sumAttendance = _.filter(attendances, {status: 1}).length;
+        const sumHomeWork = _.filter(attendances, {hw_status: 1}).length;
         return (
             <View style={styles.container}>
                 <Thumbnail small source={{uri: avatar}}/>
@@ -52,54 +56,91 @@ class ListItemStudent extends React.Component {
                             )
                         }
                     </View>
-                    <Text style={styles.subTitle}>{code}</Text>
+                    <View style={styles.containerSubTitle}>
+                        <Text style={styles.subTitle}>{code}</Text>
+                        {(Boolean(status)) ?
+                            (
+                                <View style={styles.containerSubTitle}>
+                                    <View style={{...styles.card, ... {backgroundColor: theme.processColor1}}}>
+                                        <Text style={styles.money}>{dotNumber(money)}đ</Text>
+                                    </View>
+                                    {(Boolean(receivedIdCard)) ?
+                                        (
+                                            <View style={{...styles.card, ... {backgroundColor: theme.processColor2}}}>
+                                                <Text style={styles.isReceivedCard}>Đã nhận thẻ</Text>
+                                            </View>
+                                        )
+                                        :
+                                        (
+                                            <View style={{...styles.card, ... {backgroundColor: theme.secondColor}}}>
+                                                <Text style={styles.isReceivedCard}>Chưa nhận thẻ</Text>
+                                            </View>
+                                        )
+                                    }
+                                </View>
+                            )
+                            :
+                            (
+                                <View/>
+                            )
+                        }
+
+
+                    </View>
+                    {(Boolean(status)) ?
+                        (
+                            <View style={styles.containerContentProcess}>
+                                <View style={styles.processAndText}>
+                                    <View style={{
+                                        ...styles.process, ...styles.containerProcess, ...{
+                                            backgroundColor: theme.processColorOpacity1,
+                                        }
+                                    }}>
+                                        <Animated.View
+                                            style={[styles.process, styles.bar,
+                                                {
+                                                    width: maxWidthProcess * sumAttendance / sumLesson,
+                                                    backgroundColor: theme.processColor1
+                                                }]}
+                                        />
+                                    </View>
+                                    <Text style={styles.textProcess}>{sumAttendance}/{sumLesson}</Text>
+                                </View>
+                                <View style={styles.processAndText}>
+                                    <View style={{
+                                        ...styles.process, ...styles.containerProcess, ...{
+                                            backgroundColor: theme.processColorOpacity2
+                                        }
+                                    }}>
+                                        <Animated.View
+                                            style={[styles.process, styles.bar,
+                                                {
+                                                    width: maxWidthProcess * sumHomeWork / sumLesson,
+                                                    backgroundColor: theme.processColor2
+                                                }]}
+                                        />
+                                    </View>
+                                    <Text style={styles.textProcess}>{sumHomeWork}/{sumLesson}</Text>
+                                </View>
+                            </View>
+                        )
+                        :
+                        (
+                            <View/>
+                        )
+                    }
                 </View>
             </View>
         )
     }
 
     renderExpand() {
-        var {attendances} = this.props;
-        var sumLesson = attendances.length;
-        var sumAttendance = _.filter(attendances, {status: 1}).length;
-        var sumHomeWork = _.filter(attendances, {hw_status: 1}).length;
+        var {phone, email} = this.props;
         if (this.state.onPressed) {
             return (
                 <View style={styles.containerExpand}>
-                    <View style={styles.containerContentProcess}>
-                        <View style={styles.processAndText}>
-                            <View style={{
-                                ...styles.process, ...styles.containerProcess, ...{
-                                    backgroundColor: theme.processColorOpacity1,
-                                }
-                            }}>
-                                <Animated.View
-                                    style={[styles.process, styles.bar,
-                                        {
-                                            width: maxWidthProcess * sumAttendance / sumLesson,
-                                            backgroundColor: theme.processColor1
-                                        }]}
-                                />
-                            </View>
-                            <Text style={styles.textProcess}>{sumAttendance}/{sumLesson}</Text>
-                        </View>
-                        <View style={styles.processAndText}>
-                            <View style={{
-                                ...styles.process, ...styles.containerProcess, ...{
-                                    backgroundColor: theme.processColorOpacity2
-                                }
-                            }}>
-                                <Animated.View
-                                    style={[styles.process, styles.bar,
-                                        {
-                                            width: maxWidthProcess * sumHomeWork / sumLesson,
-                                            backgroundColor: theme.processColor2
-                                        }]}
-                                />
-                            </View>
-                            <Text style={styles.textProcess}>{sumHomeWork}/{sumLesson}</Text>
-                        </View>
-                    </View>
+                    <Text style={styles.email}>{email}</Text>
+                    <Text style={styles.phone}>{formatPhone(phone)}</Text>
                 </View>
             );
         }
@@ -144,7 +185,7 @@ const styles = ({
         flexDirection: 'row',
     },
     containerExpand: {
-        marginLeft: 55
+        marginLeft: 55,
     },
     content: {
         flex: 1,
@@ -174,7 +215,9 @@ const styles = ({
         marginRight: 20,
         marginLeft: 75
     },
-    containerContentProcess: {},
+    containerContentProcess: {
+        paddingTop: 5
+    },
     containerProcess: {
         marginVertical: 5,
         backgroundColor: theme.secondColorOpacity,
@@ -197,6 +240,30 @@ const styles = ({
     },
     containerSubTitle: {
         flexDirection: 'row'
+    },
+    email: {
+        color: theme.colorSubTitle,
+        marginTop: 5,
+        fontSize: (Platform.isPad) ? 18 : 13
+    },
+    phone: {
+        color: '#0087ff',
+        fontSize: (Platform.isPad) ? 18 : 13
+    },
+    card: {
+        paddingHorizontal: 10,
+        marginLeft: 5,
+        borderRadius: 20,
+    },
+    money: {
+        fontSize: 12,
+        color: 'white',
+        textAlign: 'center'
+    },
+    isReceivedCard: {
+        fontSize: 12,
+        color: 'white',
+        textAlign: 'center'
     }
 });
 

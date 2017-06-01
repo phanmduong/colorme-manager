@@ -16,6 +16,7 @@ import shiftRegisterReducer from './shiftRegisterReducer';
 import dashboardReducer from './dashboardReducer';
 import autoLoginReducer from './autoLoginReducer';
 import listStudentClassReducer from './listStudentClassReducer';
+import registerListReducer from './registerListReducer';
 
 
 const rootReducer = combineReducers({
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
     dashboard: dashboardReducer,
     autoLogin: autoLoginReducer,
     listStudentClass: listStudentClassReducer,
+    registerList: registerListReducer,
 
 });
 export default rootReducer;

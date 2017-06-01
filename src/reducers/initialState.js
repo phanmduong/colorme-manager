@@ -91,6 +91,13 @@ export default {
         isLoading: false,
         error: false,
     },
+    registerList: {
+        registerListData: [],
+        isLoading: false,
+        error: false,
+        page: 0
+    },
+
 
 
 }

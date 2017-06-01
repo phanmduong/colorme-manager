@@ -4,20 +4,21 @@
 import * as types from '../constants/actionTypes';
 import initialState from './initialState'
 
-export default function listStudentClassReducer(state = initialState.listStudentClass, action) {
+export default function registerListReducer(state = initialState.registerList, action) {
     switch (action.type) {
-        case types.BEGIN_DATA_LIST_STUDENT_CLASS_LOAD:
+        case types.BEGIN_DATA_REGISTER_LIST_LOAD:
             return Object.assign({}, state, {
                 isLoading: action.isLoading,
                 error: action.error,
             });
-        case types.LOAD_DATA_LIST_STUDENT_CLASS_SUCCESSFUL:
+        case types.LOAD_DATA_REGISTER_LIST_SUCCESSFUL:
             return Object.assign({}, state, {
                 isLoading: action.isLoading,
                 error: action.error,
-                listStudentClassData: action.listStudentClassData
+                registerListData: [...state.registerListData, ...action.registerListData],
+                page: action.page
             });
-        case types.LOAD_DATA_LIST_STUDENT_CLASS_ERROR:
+        case types.LOAD_DATA_REGISTER_LIST_ERROR:
             return Object.assign({}, state, {
                 isLoading: action.isLoading,
                 error: action.error

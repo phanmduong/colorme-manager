@@ -2,11 +2,11 @@
  * Created by phanmduong on 4/6/17.
  */
 import * as types from '../constants/actionTypes';
-import * as classApi from '../apis/classApi';
+import * as studentApi from '../apis/studentApi';
 
 export function beginDataListStudentClassLoad() {
     return {
-        type: types.BEGIN_DATA_LIST_LIST_STUDENT_CLASS_LOAD,
+        type: types.BEGIN_DATA_LIST_STUDENT_CLASS_LOAD,
         isLoading: true,
         error: false
     }
@@ -15,7 +15,7 @@ export function beginDataListStudentClassLoad() {
 export function loadDataListStudentClass(classId, token) {
     return function (dispatch) {
         dispatch(beginDataListStudentClassLoad());
-        classApi.loadListStudentClassApi(classId, token).then(function (res) {
+        studentApi.loadListStudentClassApi(classId, token).then(function (res) {
             dispatch(loadDataSuccessful(res));
         }).catch(error => {
             dispatch(loadDataError());

@@ -24,6 +24,7 @@ import CheckInContainer from './containers/CheckInContainer';
 import DashboardContainer from './containers/DashboardContainer';
 import NatigationDrawerContainer from './containers/NatigationDrawerContainer';
 import ListStudentClassContainer from './containers/ListStudentClassContainer';
+import RegisterListContainer from './containers/RegisterListContainer';
 import TabIcon from './components/common/TabIcon';
 import BackButton from './components/common/BackButton';
 import MenuButton from './components/common/MenuButton';
@@ -157,6 +158,17 @@ class RouterComponent extends React.Component {
                                     key="listStudentClass"
                                     component={ListStudentClassContainer}
                                     title="Danh sách học viên"
+                                    renderBackButton={BackButton}
+                                    renderRightButton={MenuButton}
+                                    onBack={() => {
+                                        Actions.pop();
+                                    }}
+                                    onRight={this.props.drawerActions.openDrawer}
+                                />
+                                <Scene
+                                    key="registerList"
+                                    component={RegisterListContainer}
+                                    title="Danh sách đăng ký"
                                     renderBackButton={BackButton}
                                     renderRightButton={MenuButton}
                                     onBack={() => {

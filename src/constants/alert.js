@@ -11,3 +11,4 @@ export const NO_CURRENT_CLASS_STUDY = 'Thời điểm hiện tại không có l�
 export const NO_DATA_SHIFT_REGISTER = 'Thời điểm hiện tại không có dữ liệu lịch trực';
 export const NO_DATA_DASHBOARD = 'Thời điểm hiện tại không có dữ liệu dashboard';
 export const NO_DATA_LIST_STUDENT_CLASS = 'Thời điểm hiện tại lớp không có danh sách học viên';
+export const NO_DATA_REGISTER_LIST_CLASS = 'Thời điểm hiện tại không có danh sách học viên đăng kí';

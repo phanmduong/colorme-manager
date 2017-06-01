@@ -124,6 +124,7 @@ class DashboardComponent extends React.Component {
                                 title={"Tổng số đăng kí"}
                                 subTitle={"Chỉ tiêu của bạn"}
                                 number={dotNumber(dashboardData.register_number)}
+                                onPress={this.props.onClickRegisterList}
                             />
                             <ListItem
                                 nameIcon="material|attach-money"
@@ -205,7 +206,8 @@ const styles = ({
         alignItems: 'center'
     },
     textError: {
-        color: '#d9534f'
+        color: '#d9534f',
+        textAlign: 'center'
     },
     wrapper: {},
     dotStyle: {

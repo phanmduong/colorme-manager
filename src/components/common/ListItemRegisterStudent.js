@@ -27,9 +27,7 @@ class ListItemStudent extends React.Component {
     }
 
     content() {
-        const {name, avatar, code, status, money, receivedIdCard, attendances, score, maxScore} = this.props;
-        const sumLesson = attendances.length;
-        const sumAttendance = _.filter(attendances, {status: 1}).length;
+        const {name, avatar, nameClass, status, money} = this.props;
         return (
             <View style={styles.container}>
                 <Thumbnail small source={{uri: avatar}}/>
@@ -56,12 +54,12 @@ class ListItemStudent extends React.Component {
                         }
                     </View>
                     <View style={styles.containerSubTitle}>
-                        <Text style={styles.subTitle}>{code}</Text>
+                        <Text style={styles.subTitle}>{nameClass}</Text>
                         {(Boolean(status)) ?
                             (
                                 <View style={styles.containerSubTitle}>
                                     <View style={{...styles.card, ... {backgroundColor: theme.processColor1}}}>
-                                        <Text style={styles.money}>{dotNumber(money)}đ</Text>
+                                        <Text style={styles.saler}>{dotNumber(money)}đ</Text>
                                     </View>
                                     {(Boolean(receivedIdCard)) ?
                                         (
@@ -86,48 +84,6 @@ class ListItemStudent extends React.Component {
 
 
                     </View>
-                    {(Boolean(status)) ?
-                        (
-                            <View style={styles.containerContentProcess}>
-                                <View style={styles.processAndText}>
-                                    <View style={{
-                                        ...styles.process, ...styles.containerProcess, ...{
-                                            backgroundColor: theme.processColorOpacity1,
-                                        }
-                                    }}>
-                                        <Animated.View
-                                            style={[styles.process, styles.bar,
-                                                {
-                                                    width: maxWidthProcess * sumAttendance / sumLesson,
-                                                    backgroundColor: theme.processColor1
-                                                }]}
-                                        />
-                                    </View>
-                                    <Text style={styles.textProcess}>{sumAttendance}/{sumLesson}</Text>
-                                </View>
-                                <View style={styles.processAndText}>
-                                    <View style={{
-                                        ...styles.process, ...styles.containerProcess, ...{
-                                            backgroundColor: theme.processColorOpacity2
-                                        }
-                                    }}>
-                                        <Animated.View
-                                            style={[styles.process, styles.bar,
-                                                {
-                                                    width: maxWidthProcess * score / maxScore,
-                                                    backgroundColor: theme.processColor2
-                                                }]}
-                                        />
-                                    </View>
-                                    <Text style={styles.textProcess}>{score}/{maxScore}</Text>
-                                </View>
-                            </View>
-                        )
-                        :
-                        (
-                            <View/>
-                        )
-                    }
                 </View>
             </View>
         )
@@ -214,29 +170,6 @@ const styles = ({
         marginRight: 20,
         marginLeft: 75
     },
-    containerContentProcess: {
-        paddingTop: 5
-    },
-    containerProcess: {
-        marginVertical: 5,
-        backgroundColor: theme.secondColorOpacity,
-        width: maxWidthProcess
-    },
-    bar: {},
-    process: {
-        borderRadius: 5,
-        height: 5,
-        backgroundColor: theme.secondColor
-    },
-    processAndText: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-    },
-    textProcess: {
-        color: theme.colorTitle,
-        fontSize: 12
-    },
     containerSubTitle: {
         flexDirection: 'row'
     },
@@ -254,7 +187,7 @@ const styles = ({
         marginLeft: 5,
         borderRadius: 20,
     },
-    money: {
+    saler: {
         fontSize: 12,
         color: 'white',
         textAlign: 'center'

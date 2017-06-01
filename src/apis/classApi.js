@@ -13,10 +13,6 @@ export function loadCurrentClassStudyApi(token) {
     let url = env.API_URL + "/current-study-class?token=" + token;
     return axios.get(url);
 }
-export function loadListStudentClassApi(classId, token) {
-    let url = env.API_URL + "/class/" + classId + "/students?token=" + token;
-    console.log(url);
-    return axios.get(url);
-}
+
 
 

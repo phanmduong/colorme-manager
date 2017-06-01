@@ -137,7 +137,8 @@ const styles = ({
         alignItems: 'center'
     },
     textError: {
-        color: '#d9534f'
+        color: '#d9534f',
+        textAlign: 'center'
     },
     wrapper: {},
     slide1: {

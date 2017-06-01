@@ -83,6 +83,8 @@ class ListStudenClassComponent extends React.Component {
                                             money={item.money}
                                             receivedIdCard={item.received_id_card}
                                             status={item.status}
+                                            score={item.score}
+                                            maxScore={item.max_score}
                                         />
                                     )
                                 }
@@ -127,7 +129,8 @@ const styles = ({
         alignItems: 'center'
     },
     textError: {
-        color: '#d9534f'
+        color: '#d9534f',
+        textAlign: 'center'
     },
     wrapper: {},
     dotStyle: {

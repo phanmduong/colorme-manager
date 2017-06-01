@@ -27,6 +27,7 @@ class DashboardContainer extends React.Component {
         this.onSelectGenId = this.onSelectGenId.bind(this);
         this.loadDataDashboard = this.loadDataDashboard.bind(this);
         this.onClickClass = this.onClickClass.bind(this);
+        this.onClickRegisterList = this.onClickRegisterList.bind(this);
     }
 
     componentWillMount() {
@@ -123,6 +124,10 @@ class DashboardContainer extends React.Component {
         Actions.class();
     }
 
+    onClickRegisterList() {
+        Actions.registerList();
+    }
+
     render() {
         return (
             <DashboardComponent
@@ -139,6 +144,7 @@ class DashboardContainer extends React.Component {
                 onSelectGenId={this.onSelectGenId}
                 errorDashboard={this.props.errorDashboard}
                 onClickClass={this.onClickClass}
+                onClickRegisterList={this.onClickRegisterList}
             />
         );
     }

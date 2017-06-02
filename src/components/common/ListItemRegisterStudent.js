@@ -27,7 +27,7 @@ class ListItemStudent extends React.Component {
     }
 
     content() {
-        const {name, avatar, nameClass, status, money} = this.props;
+        const {name, avatar, nameClass, saler, campaign} = this.props;
         return (
             <View style={styles.container}>
                 <Thumbnail small source={{uri: avatar}}/>
@@ -55,25 +55,19 @@ class ListItemStudent extends React.Component {
                     </View>
                     <View style={styles.containerSubTitle}>
                         <Text style={styles.subTitle}>{nameClass}</Text>
-                        {(Boolean(status)) ?
+                    </View>
+                    <View style={styles.containerSubTitle}>
+                        {(saler) ?
                             (
-                                <View style={styles.containerSubTitle}>
-                                    <View style={{...styles.card, ... {backgroundColor: theme.processColor1}}}>
-                                        <Text style={styles.saler}>{dotNumber(money)}đ</Text>
-                                    </View>
-                                    {(Boolean(receivedIdCard)) ?
-                                        (
-                                            <View style={{...styles.card, ... {backgroundColor: theme.processColor2}}}>
-                                                <Text style={styles.isReceivedCard}>Đã nhận thẻ</Text>
-                                            </View>
-                                        )
-                                        :
-                                        (
-                                            <View style={{...styles.card, ... {backgroundColor: theme.secondColor}}}>
-                                                <Text style={styles.isReceivedCard}>Chưa nhận thẻ</Text>
-                                            </View>
-                                        )
-                                    }
+                                <View style={{
+                                    ...styles.card, ...
+                                        {
+                                            backgroundColor: (!saler.color || saler.color === '')
+                                                ? theme.processColor1 : '#' + saler.color
+                                        }
+                                }}
+                                >
+                                    <Text style={styles.saler}>{saler.name}</Text>
                                 </View>
                             )
                             :
@@ -81,7 +75,25 @@ class ListItemStudent extends React.Component {
                                 <View/>
                             )
                         }
-
+                        {(campaign) ?
+                            (
+                                <View style={{
+                                    ...styles.card, ...
+                                        {
+                                            backgroundColor: (!campaign.color || campaign.color === '')
+                                                ? theme.processColor1 : '#' + campaign.color,
+                                            marginLeft: 5
+                                        }
+                                }}
+                                >
+                                    <Text style={styles.campaign}>{campaign.name}</Text>
+                                </View>
+                            )
+                            :
+                            (
+                                <View/>
+                            )
+                        }
 
                     </View>
                 </View>
@@ -184,7 +196,7 @@ const styles = ({
     },
     card: {
         paddingHorizontal: 10,
-        marginLeft: 5,
+        marginTop: 5,
         borderRadius: 20,
     },
     saler: {
@@ -192,7 +204,7 @@ const styles = ({
         color: 'white',
         textAlign: 'center'
     },
-    isReceivedCard: {
+    campaign: {
         fontSize: 12,
         color: 'white',
         textAlign: 'center'

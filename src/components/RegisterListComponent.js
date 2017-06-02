@@ -12,6 +12,7 @@ import Spinkit from 'react-native-spinkit';
 import theme from '../styles';
 import * as alert from '../constants/alert';
 import ListItemRegisterStudent from './common/ListItemRegisterStudent';
+import Loading from './common/Loading';
 import _ from 'lodash';
 
 var {height, width} = Dimensions.get('window');
@@ -53,7 +54,7 @@ class RegisterListComponent extends React.Component {
                 return (
                     <List
                         onEndReached={this.props.loadDataRegisterList}
-                        onEndReachedThreshold={5}
+                        onEndReachedThreshold={height / 2}
                         dataArray={this.props.registerList}
                         renderRow={
                             (item, sectionID, rowID) => (
@@ -63,11 +64,17 @@ class RegisterListComponent extends React.Component {
                                     avatar={item.avatar_url}
                                     email={item.email}
                                     phone={item.phone}
+                                    saler={item.saler}
+                                    campaign={item.campaign}
                                 />
                             )
                         }
                         renderFooter={() => {
-                            return <View><Text>Loading...</Text></View>
+                            return (
+                                <View style={styles.loading}>
+                                    <Loading size={width / 12}/>
+                                </View>
+                            )
                         }}
                     >
                     </List>
@@ -102,7 +109,9 @@ const styles = ({
         textAlign: 'center',
         color: theme.colorTitle,
         fontWeight: '900'
-
+    },
+    loading: {
+        height: 95
     }
 });
 

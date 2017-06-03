@@ -95,7 +95,11 @@ export default {
         registerListData: [],
         isLoading: false,
         error: false,
-        page: 0
+        isSearchLoading: false,
+        errorSearch: false,
+        page: 0,
+        pageSearch: 0,
+        search: ''
     },
 
 

@@ -9,6 +9,7 @@ import {
 import theme from '../../styles';
 import _ from 'lodash';
 import {formatPhone, dotNumber} from '../../helper/index';
+import Call from '../common/Call';
 
 var {height, width} = Dimensions.get('window');
 var maxWidthProcess = width / 2;
@@ -66,13 +67,13 @@ class ListItemStudent extends React.Component {
                                     {(Boolean(receivedIdCard)) ?
                                         (
                                             <View style={{...styles.card, ... {backgroundColor: theme.processColor2}}}>
-                                                <Text style={styles.isReceivedCard}>Đã nhận thẻ</Text>
+                                                <Text style={styles.isReceivedCard}>ĐÃ NHẬN THẺ</Text>
                                             </View>
                                         )
                                         :
                                         (
                                             <View style={{...styles.card, ... {backgroundColor: theme.secondColor}}}>
-                                                <Text style={styles.isReceivedCard}>Chưa nhận thẻ</Text>
+                                                <Text style={styles.isReceivedCard}>CHƯA NHẬN THẺ</Text>
                                             </View>
                                         )
                                     }
@@ -139,7 +140,10 @@ class ListItemStudent extends React.Component {
             return (
                 <View style={styles.containerExpand}>
                     <Text style={styles.email}>{email}</Text>
-                    <Text style={styles.phone}>{formatPhone(phone)}</Text>
+                    <Call
+                        url={'tel:' + phone}
+                        phone={phone}
+                    />
                 </View>
             );
         }
@@ -212,6 +216,7 @@ const styles = ({
         height: 1,
         backgroundColor: theme.borderColor,
         marginRight: 20,
+
         marginLeft: 75
     },
     containerContentProcess: {
@@ -245,22 +250,21 @@ const styles = ({
         marginTop: 5,
         fontSize: (Platform.isPad) ? 18 : 13
     },
-    phone: {
-        color: '#0087ff',
-        fontSize: (Platform.isPad) ? 18 : 13
-    },
     card: {
         paddingHorizontal: 10,
         marginLeft: 5,
         borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 15,
     },
     money: {
-        fontSize: 12,
+        fontSize: 10,
         color: 'white',
         textAlign: 'center'
     },
     isReceivedCard: {
-        fontSize: 12,
+        fontSize: 10,
         color: 'white',
         textAlign: 'center'
     }

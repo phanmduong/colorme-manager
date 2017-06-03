@@ -7,11 +7,9 @@ import {
     Icon
 } from 'native-base';
 import theme from '../../styles';
-import _ from 'lodash';
-import {formatPhone, dotNumber} from '../../helper/index';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Call from '../common/Call';
 
-var {height, width} = Dimensions.get('window');
-var maxWidthProcess = width / 2;
 class ListItemStudent extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -27,13 +25,37 @@ class ListItemStudent extends React.Component {
     }
 
     content() {
-        const {name, avatar, nameClass, saler, campaign} = this.props;
+        const {name, avatar, nameClass, saler, campaign, callStatus, paidStatus, money} = this.props;
         return (
             <View style={styles.container}>
-                <Thumbnail small source={{uri: avatar}}/>
+                <View style={{position: 'relative'}}>
+                    <Thumbnail small source={{uri: avatar}} style={styles.avatar}/>
+                    <View style={{
+                        ...styles.dotCall, ...{
+                            backgroundColor: (callStatus === 'uncall') ? '#bdbdbd' :
+                                (callStatus === 'success') ? '#4dc151' : theme.secondColor
+                        }
+                    }}/>
+                </View>
                 <View style={styles.content}>
                     <View style={styles.containerTitle}>
-                        <Text style={styles.title}>{name.trim().toUpperCase()}</Text>
+                        <View style={styles.contentTitle}>
+                            <Text style={styles.title}>{name.trim().toUpperCase()}</Text>
+                            {(Boolean(paidStatus)) ?
+                                (
+                                    <MaterialCommunityIcons
+                                        name='checkbox-marked-circle'
+                                        color={(money <= 0) ? '#bdbdbd' : '#4dc151'}
+                                        size={12}
+                                    />
+                                )
+                                :
+                                (
+                                    <View/>
+                                )
+                            }
+
+                        </View>
                         {(this.state.onPressed) ?
                             (
                                 <Icon
@@ -67,7 +89,7 @@ class ListItemStudent extends React.Component {
                                         }
                                 }}
                                 >
-                                    <Text style={styles.saler}>{saler.name}</Text>
+                                    <Text style={styles.saler}>{saler.name.trim().toUpperCase()}</Text>
                                 </View>
                             )
                             :
@@ -86,7 +108,7 @@ class ListItemStudent extends React.Component {
                                         }
                                 }}
                                 >
-                                    <Text style={styles.campaign}>{campaign.name}</Text>
+                                    <Text style={styles.campaign}>{campaign.name.trim().toUpperCase()}</Text>
                                 </View>
                             )
                             :
@@ -107,7 +129,10 @@ class ListItemStudent extends React.Component {
             return (
                 <View style={styles.containerExpand}>
                     <Text style={styles.email}>{email}</Text>
-                    <Text style={styles.phone}>{formatPhone(phone)}</Text>
+                    <Call
+                        url={'tel:' + phone}
+                        phone={phone}
+                    />
                 </View>
             );
         }
@@ -166,7 +191,8 @@ const styles = ({
     title: {
         color: '#555555',
         fontWeight: '900',
-        fontSize: (Platform.isPad) ? 18 : 13
+        fontSize: (Platform.isPad) ? 18 : 13,
+        marginRight: 5
     },
     subTitle: {
         color: '#7d7d7d',
@@ -190,25 +216,39 @@ const styles = ({
         marginTop: 5,
         fontSize: (Platform.isPad) ? 18 : 13
     },
-    phone: {
-        color: '#0087ff',
-        fontSize: (Platform.isPad) ? 18 : 13
-    },
     card: {
+        height: 15,
         paddingHorizontal: 10,
         marginTop: 5,
         borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     saler: {
-        fontSize: 12,
+        fontSize: 10,
         color: 'white',
         textAlign: 'center'
     },
     campaign: {
-        fontSize: 12,
+        fontSize: 10,
         color: 'white',
         textAlign: 'center'
-    }
+    },
+    contentTitle: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    dotCall: {
+        position: 'absolute',
+        top: 25,
+        left: 25,
+        height: 12,
+        width: 12,
+        borderRadius: 20,
+        borderWidth: 1.5,
+        borderColor: 'white',
+    },
 });
 
 export default ListItemStudent;

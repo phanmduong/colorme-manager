@@ -6,6 +6,9 @@ import {
     View,
     List,
     Text,
+    Item,
+    Icon,
+    Input
 } from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Spinkit from 'react-native-spinkit';
@@ -24,19 +27,10 @@ class RegisterListComponent extends React.Component {
     render() {
         if (this.props.isLoading && this.props.registerList.length <= 0) {
             return (
-                <Container>
-                    <View style={styles.container}>
-                        <Spinkit
-                            isVisible
-                            color={theme.mainColor}
-                            type='Wave'
-                            size={width / 8}
-                        />
-                    </View>
-                </Container>
+                <Loading size={width / 8}/>
             )
         } else {
-            if (this.props.error || this.props.registerList.length <= 0) {
+            if ((this.props.error || this.props.registerList.length <= 0) && !this.props.isSearchLoading) {
                 return (
                     <Container>
                         <View style={styles.container}>
@@ -52,32 +46,63 @@ class RegisterListComponent extends React.Component {
                 )
             } else {
                 return (
-                    <List
-                        onEndReached={this.props.loadDataRegisterList}
-                        onEndReachedThreshold={height / 2}
-                        dataArray={this.props.registerList}
-                        renderRow={
-                            (item, sectionID, rowID) => (
-                                <ListItemRegisterStudent
-                                    nameClass={item.class.name}
-                                    name={item.name}
-                                    avatar={item.avatar_url}
-                                    email={item.email}
-                                    phone={item.phone}
-                                    saler={item.saler}
-                                    campaign={item.campaign}
+                    <View style={{flex: 1}}>
+                        <View style={styles.search}>
+                            <Item>
+                                <Icon name="ios-search"/>
+                                <Input
+                                    placeholder="Tìm kiếm (Email, tên, số điện thoại)"
+                                    onChangeText={(data) => this.props.updateSearchFrom(data)}
+                                    returnKeyType='search'
+                                    onSubmitEditing={this.props.loadDataSearchRegisterList}
                                 />
+                                <Icon name="ios-close" ios="ios-close" android="md-close"/>
+                            </Item>
+                        </View>
+                        {(this.props.isSearchLoading) ?
+                            (
+                                <Loading size={width / 8}/>
+                            )
+                            :
+                            (
+                                <List
+                                    style={styles.list}
+                                    onEndReached={this.props.loadDataRegisterList}
+                                    onEndReachedThreshold={height / 2}
+                                    dataArray={this.props.registerList}
+                                    renderRow={
+                                        (item, sectionID, rowID) => (
+                                            <ListItemRegisterStudent
+                                                nameClass={item.class.name}
+                                                name={item.name}
+                                                avatar={item.course_avatar_url}
+                                                email={item.email}
+                                                phone={item.phone}
+                                                saler={item.saler}
+                                                campaign={item.campaign}
+                                                callStatus={item.call_status}
+                                                paidStatus={item.paid_status}
+                                                money={item.money}
+                                            />
+                                        )
+                                    }
+                                    renderFooter={() => {
+                                        if (this.props.isLoading || this.props.isSearchLoading) {
+                                            return (
+                                                <View style={styles.loading}>
+                                                    <Loading size={width / 12}/>
+                                                </View>
+                                            )
+                                        } else {
+                                            <View/>
+                                        }
+                                    }}
+                                >
+                                </List>
                             )
                         }
-                        renderFooter={() => {
-                            return (
-                                <View style={styles.loading}>
-                                    <Loading size={width / 12}/>
-                                </View>
-                            )
-                        }}
-                    >
-                    </List>
+
+                    </View>
                 )
             }
         }
@@ -85,9 +110,7 @@ class RegisterListComponent extends React.Component {
 }
 
 const styles = ({
-    list: {
-        marginTop: 30
-    },
+    list: {},
     container: {
         flex: 1,
         justifyContent: 'center',
@@ -112,6 +135,9 @@ const styles = ({
     },
     loading: {
         height: 95
+    },
+    search: {
+        paddingHorizontal: 10
     }
 });
 

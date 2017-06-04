@@ -91,3 +91,10 @@ export function updateDateSearchRegisterListFrom(search) {
         search: search
     }
 }
+
+export function changeSegmentRegisterList(segment) {
+    return {
+        type: types.CHANGE_SEGMENT_REGISTER_LIST,
+        segment: segment
+    }
+}

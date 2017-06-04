@@ -4,7 +4,7 @@
 import React from'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {StyleSheet, Platform} from'react-native';
+import {StyleSheet, Platform, View, Text} from'react-native';
 import io from 'socket.io-client';
 import {Scene, Router, ActionConst, Actions} from 'react-native-router-flux';
 import LoginContainer from './containers/LoginContainer';
@@ -28,10 +28,12 @@ import RegisterListContainer from './containers/RegisterListContainer';
 import TabIcon from './components/common/TabIcon';
 import BackButton from './components/common/BackButton';
 import MenuButton from './components/common/MenuButton';
+import SegmentRegisterList from './components/registerList/SegmentRegisterList';
 import theme from './styles';
 
 import * as QRCodeActions from './actions/QRCodeActions';
 import * as drawerActions from './actions/drawerActions';
+import * as registerListActions from './actions/registerListActions';
 
 const getSceneStyle = (/* NavigationSceneRendererProps */ props, computedProps) => {
     const style = {
@@ -53,6 +55,15 @@ class RouterComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.socket = io.connect("http://colorme.vn:3000/");
+        this.changeSegment = this.changeSegment.bind(this);
+    }
+
+    changeSegment(segment) {
+        this.props.registerListActions.changeSegmentRegisterList(segment);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log("props" + nextProps.segmentActive);
     }
 
     render() {
@@ -169,12 +180,15 @@ class RouterComponent extends React.Component {
                                     key="registerList"
                                     component={RegisterListContainer}
                                     title="Danh sách đăng ký"
+                                    renderTitle={SegmentRegisterList}
                                     renderBackButton={BackButton}
                                     renderRightButton={MenuButton}
                                     onBack={() => {
                                         Actions.pop();
                                     }}
                                     onRight={this.props.drawerActions.openDrawer}
+                                    changeSegment={this.changeSegment}
+                                    segmentActive={this.props.segmentActive}
                                 />
                             </Scene>
                             <Scene
@@ -223,13 +237,16 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-    return {};
+    return {
+        segmentActive: state.registerList.segment
+    };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         QRCodeActions: bindActionCreators(QRCodeActions, dispatch),
-        drawerActions: bindActionCreators(drawerActions, dispatch)
+        drawerActions: bindActionCreators(drawerActions, dispatch),
+        registerListActions: bindActionCreators(registerListActions, dispatch)
     };
 }
 

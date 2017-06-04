@@ -11,12 +11,10 @@ import {
     Input
 } from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Spinkit from 'react-native-spinkit';
 import theme from '../styles';
 import * as alert from '../constants/alert';
-import ListItemRegisterStudent from './common/ListItemRegisterStudent';
+import ListItemRegisterStudent from './registerList/ListItemRegisterStudent';
 import Loading from './common/Loading';
-import _ from 'lodash';
 
 var {height, width} = Dimensions.get('window');
 class RegisterListComponent extends React.Component {
@@ -47,18 +45,18 @@ class RegisterListComponent extends React.Component {
             } else {
                 return (
                     <View style={{flex: 1}}>
-                        <View style={styles.search}>
-                            <Item>
-                                <Icon name="ios-search"/>
-                                <Input
-                                    placeholder="Tìm kiếm (Email, tên, số điện thoại)"
-                                    onChangeText={(data) => this.props.updateSearchFrom(data)}
-                                    returnKeyType='search'
-                                    onSubmitEditing={this.props.loadDataSearchRegisterList}
-                                />
-                                <Icon name="ios-close" ios="ios-close" android="md-close"/>
-                            </Item>
-                        </View>
+                        {/*<View style={styles.search}>*/}
+                        {/*<Item>*/}
+                        {/*<Icon name="ios-search"/>*/}
+                        {/*<Input*/}
+                        {/*placeholder="Tìm kiếm (Email, tên, số điện thoại)"*/}
+                        {/*onChangeText={(data) => this.props.updateSearchFrom(data)}*/}
+                        {/*returnKeyType='search'*/}
+                        {/*onSubmitEditing={this.props.loadDataSearchRegisterList}*/}
+                        {/*/>*/}
+                        {/*<Icon name="ios-close" ios="ios-close" android="md-close"/>*/}
+                        {/*</Item>*/}
+                        {/*</View>*/}
                         {(this.props.isSearchLoading) ?
                             (
                                 <Loading size={width / 8}/>

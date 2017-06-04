@@ -3,7 +3,6 @@
  */
 import React from'react';
 import {connect} from 'react-redux';
-import {Text} from 'react-native';
 import {bindActionCreators} from 'redux';
 import * as registerListActions from '../actions/registerListActions';
 import RegisterListComponent from '../components/RegisterListComponent';
@@ -59,7 +58,6 @@ function mapStateToProps(state) {
         page: state.registerList.page,
         pageSearch: state.registerList.pageSearch,
         search: state.registerList.search,
-
     };
 }
 

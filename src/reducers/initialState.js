@@ -99,7 +99,8 @@ export default {
         errorSearch: false,
         page: 0,
         pageSearch: 0,
-        search: ''
+        search: '',
+        segment: 1
     },
 
 

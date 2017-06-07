@@ -9,7 +9,6 @@ import * as attendanceStudentActions from '../actions/attendanceStudentActions';
 import * as QRCodeActions from '../actions/QRCodeActions';
 import {Alert, Text}from 'react-native';
 import * as alert from '../constants/alert';
-import {Actions} from 'react-native-router-flux';
 
 class AttendanceStudentContainer extends React.Component {
     constructor(props) {
@@ -55,7 +54,7 @@ class AttendanceStudentContainer extends React.Component {
     }
 
     popRouter(){
-        Actions.pop();
+        this.props.navigation.goBack();
         this.props.QRCodeActions.beginScanQRCode();
     }
 
@@ -94,6 +93,10 @@ function mapStateToProps(state) {
         statusRequestUpdated: state.attendanceStudent.statusRequestUpdated
     };
 }
+
+AttendanceStudentContainer.navigationOptions = {
+    title: 'Điểm danh học viên',
+};
 
 function mapDispatchToProps(dispatch) {
     return {

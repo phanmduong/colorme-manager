@@ -7,7 +7,7 @@ import QRCodeComponent from '../components/QRCodeComponent';
 import * as attendanceStudentActions from '../actions/attendanceStudentActions';
 import * as QRCodeActions from '../actions/QRCodeActions';
 import {bindActionCreators} from 'redux';
-import {Actions} from 'react-native-router-flux';
+import {NavigationActions} from 'react-navigation';
 
 class QRCodeContainer extends React.Component {
     constructor(props, context) {
@@ -23,7 +23,7 @@ class QRCodeContainer extends React.Component {
         if (!this.props.isScanned) {
             this.props.QRCodeActions.scannedQRCode();
             this.props.attendanceStudentActions.scannedQRCode(studentCode);
-            Actions.attendanceStudentCode();
+            this.props.attendanceStudentScreen();
         }
     }
 
@@ -36,6 +36,10 @@ class QRCodeContainer extends React.Component {
     }
 }
 
+QRCodeContainer.navigationOptions = {
+    title: 'Quét QR code',
+};
+
 function mapStateToProps(state) {
     return {
         isScanned: state.qrCode.isScanned,
@@ -46,6 +50,8 @@ function mapDispatchToProps(dispatch) {
     return {
         attendanceStudentActions: bindActionCreators(attendanceStudentActions, dispatch),
         QRCodeActions: bindActionCreators(QRCodeActions, dispatch),
+        attendanceStudentScreen: () =>
+            dispatch(NavigationActions.navigate({routeName: 'AttendanceStudent'}))
     };
 }
 

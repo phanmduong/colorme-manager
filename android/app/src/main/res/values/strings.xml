@@ -1,5 +1,6 @@
 <resources>
+    <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">Pa6sWUXZXkboJUCmNuhN-AzKtC5D4JZk4WIpz</string>
     <string moduleConfig="true" name="mobileCenterCrashes_whenToSendCrashes">ALWAYS_SEND</string>
     <string moduleConfig="true" name="mobileCenterAnalytics_whenToEnableAnalytics">ALWAYS_SEND</string>
-    <string name="app_name">ColorME Manager</string>
+    <string name="app_name">ColorME Manage</string>
 </resources>

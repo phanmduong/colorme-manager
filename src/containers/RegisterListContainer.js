@@ -7,7 +7,7 @@ import {bindActionCreators} from 'redux';
 import * as registerListActions from '../actions/registerListActions';
 import RegisterListComponent from '../components/RegisterListComponent';
 
-class RegisterList extends React.Component {
+class RegisterListContainer extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.loadDataRegisterList = this.loadDataRegisterList.bind(this);
@@ -47,6 +47,10 @@ class RegisterList extends React.Component {
     }
 }
 
+RegisterListContainer.navigationOptions = {
+    title: 'Danh sách đăng kí',
+};
+
 function mapStateToProps(state) {
     return {
         token: state.login.token,
@@ -67,4 +71,4 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterList);
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterListContainer);

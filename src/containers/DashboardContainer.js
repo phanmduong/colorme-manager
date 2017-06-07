@@ -8,7 +8,7 @@ import * as baseActions from '../actions/baseActions';
 import * as genActions from '../actions/genActions';
 import * as dashboardActions from '../actions/dashboardActions';
 import DashboardComponent from '../components/DashboardComponent';
-import {Actions} from 'react-native-router-flux';
+import {NavigationActions} from 'react-navigation';
 
 class DashboardContainer extends React.Component {
     constructor(props, context) {
@@ -121,11 +121,11 @@ class DashboardContainer extends React.Component {
     }
 
     onClickClass() {
-        Actions.class();
+        this.props.classScreen();
     }
 
     onClickRegisterList() {
-        Actions.registerList();
+        this.props.registerListScreen();
     }
 
     render() {
@@ -150,6 +150,11 @@ class DashboardContainer extends React.Component {
     }
 }
 
+DashboardContainer.navigationOptions = {
+    title: 'Quản lý',
+};
+
+
 function mapStateToProps(state) {
     return {
         isLoadingBase: state.base.isLoading,
@@ -171,7 +176,11 @@ function mapDispatchToProps(dispatch) {
     return {
         baseActions: bindActionCreators(baseActions, dispatch),
         genActions: bindActionCreators(genActions, dispatch),
-        dashboardActions: bindActionCreators(dashboardActions, dispatch)
+        dashboardActions: bindActionCreators(dashboardActions, dispatch),
+        classScreen: () =>
+            dispatch(NavigationActions.navigate({routeName: 'Class'})),
+        registerListScreen: () =>
+            dispatch(NavigationActions.navigate({routeName: 'RegisterList'}))
     };
 }
 

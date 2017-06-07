@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import CurrentClassStudyComponent from '../components/CurrentClassStudyComponent';
 import * as currentClassStudyActions from '../actions/currentClassStudyActions';
-import {Actions} from 'react-native-router-flux';
+import {NavigationActions} from 'react-navigation';
 
 class CurrentClassStudyContainer extends React.Component {
     constructor(props) {
@@ -16,13 +16,13 @@ class CurrentClassStudyContainer extends React.Component {
     }
 
     componentWillMount(){
-        this.props.currentClassStudyActions
-            .loadDataCurrentClassStudy(this.props.token);
+        // this.props.currentClassStudyActions
+        //     .loadDataCurrentClassStudy(this.props.token);
     }
 
     onSelectedItem(classId, lessonOrder, classOrder){
         this.props.currentClassStudyActions.selectedCurrentClassStudy(classId, lessonOrder, classOrder);
-        Actions.scanQRCode();
+        this.props.qrCodeScreen();
 
     }
 
@@ -44,6 +44,10 @@ class CurrentClassStudyContainer extends React.Component {
     }
 }
 
+CurrentClassStudyContainer.navigationOptions = {
+    title: 'Danh sách lớp học',
+};
+
 function mapStateToProps(state) {
     return {
         isLoading: state.currentClassStudy.isLoading,
@@ -55,7 +59,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        currentClassStudyActions: bindActionCreators(currentClassStudyActions, dispatch)
+        currentClassStudyActions: bindActionCreators(currentClassStudyActions, dispatch),
+        qrCodeScreen: () =>
+            dispatch(NavigationActions.navigate({routeName: 'QRCode'}))
     };
 }
 

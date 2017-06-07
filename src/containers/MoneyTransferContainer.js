@@ -17,6 +17,10 @@ class MoneyTransferContainer extends React.Component {
     }
 }
 
+MoneyTransferContainer.navigationOptions = {
+    title: 'Chuyển tiền',
+};
+
 function mapStateToProps(state) {
     return {};
 }

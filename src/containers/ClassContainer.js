@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import ClassComponent from '../components/ClassComponent';
 import * as classActions from '../actions/classActions';
-import {Actions} from 'react-native-router-flux';
+import {NavigationActions} from 'react-navigation';
 
 class ClassContainer extends React.Component {
     constructor(props) {
@@ -17,7 +17,7 @@ class ClassContainer extends React.Component {
 
     onSelectedItem(classId) {
         this.props.classActions.selectedClassId(classId);
-        Actions.listStudentClass();
+        this.props.listStudentClassScreen();
     }
 
     render() {
@@ -30,6 +30,10 @@ class ClassContainer extends React.Component {
     }
 }
 
+ClassContainer.navigationOptions = {
+    title: 'Danh sách lớp học',
+};
+
 function mapStateToProps(state) {
     return {
         classData: state.dashboard.dashboardData.classes,
@@ -41,6 +45,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         classActions: bindActionCreators(classActions, dispatch),
+        listStudentClassScreen: () =>
+            dispatch(NavigationActions.navigate({routeName: 'ListStudentClass'}))
     };
 }
 

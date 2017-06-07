@@ -1,6 +1,10 @@
 /**
  * Created by phanmduong on 4/5/17.
  */
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
+export const CHANGE_STATUSBAR_COLOR = 'CHANGE_STATUSBAR_COLOR';
+
 export const OPEN_SCENE_LOGIN = 'OPEN_SCENE_LOGIN';
 export const UPDATE_DATA_LOGIN_FORM = 'UPDATE_DATA_LOGIN_FORM';
 export const BEGIN_LOGIN = 'BEGIN_LOGIN';

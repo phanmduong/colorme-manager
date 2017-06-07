@@ -9,7 +9,6 @@ import * as baseActions from '../actions/baseActions';
 import * as drawerActions from '../actions/drawerActions';
 import {Alert}from 'react-native';
 import * as alert from '../constants/alert';
-import {Actions} from 'react-native-router-flux';
 
 class BaseContainer extends React.Component {
     constructor(props) {
@@ -24,7 +23,6 @@ class BaseContainer extends React.Component {
 
     onSelectedItem(baseId){
         this.props.baseActions.selectedBaseId(baseId);
-        Actions.course();
 
     }
 

@@ -9,7 +9,6 @@ import * as lessonCourseActions from '../actions/lessonCourseActions';
 import * as drawerActions from '../actions/drawerActions';
 import {Alert}from 'react-native';
 import * as alert from '../constants/alert';
-import {Actions} from 'react-native-router-flux';
 
 class LessonCourseContainer extends React.Component {
     constructor(props) {
@@ -29,11 +28,9 @@ class LessonCourseContainer extends React.Component {
 
     onSelectedItem(lessonCourseId, rowID){
         this.props.lessonCourseActions.selectedLessonCourseId(rowID);
-        Actions.classCourse();
     }
 
     popRouter(){
-        Actions.pop();
     }
 
     componentWillReceiveProps(nextProps){

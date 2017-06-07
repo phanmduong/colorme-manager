@@ -35,6 +35,10 @@ class ListStudentClassContainer extends React.Component {
     }
 }
 
+ListStudentClassContainer.navigationOptions = {
+    title: 'Danh sách học viên',
+};
+
 function mapStateToProps(state) {
     return {
         token: state.login.token,

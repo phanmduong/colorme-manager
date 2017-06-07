@@ -5,7 +5,6 @@ import React from'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import SidebarComponent from '../components/SidebarComponent';
-import {Actions} from 'react-native-router-flux';
 import * as drawerActions from '../actions/drawerActions';
 
 class SideBar extends React.Component {
@@ -16,9 +15,6 @@ class SideBar extends React.Component {
 
     logout() {
         this.props.drawerActions.closeDrawer();
-        // setTimeout(() => {
-            Actions.login();
-        // }, 480);
 
     }
 

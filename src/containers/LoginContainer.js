@@ -8,11 +8,7 @@ import {bindActionCreators} from 'redux';
 import {Alert}from 'react-native';
 import * as alert from '../constants/alert';
 import LoginComponent from '../components/LoginComponent';
-
-import {Actions} from 'react-native-router-flux';
-
 import * as loginActions from '../actions/loginActions';
-import * as drawerActions from '../actions/drawerActions';
 
 class LoginContainer extends React.Component {
     constructor(props) {
@@ -21,13 +17,12 @@ class LoginContainer extends React.Component {
         this.onClickLogin = this.onClickLogin.bind(this);
         this.saveDataLogin = this.saveDataLogin.bind(this);
         this.state = {
-            isAutoLogin: false
+            isAutoLogin: true
         }
     }
 
     componentWillMount(){
         this.props.loginActions.openSceneLogin();
-        this.props.drawerActions.disableDrawer();
         this.props.loginActions.getDataLogin();
         this.setState({
             isAutoLogin: true
@@ -63,7 +58,7 @@ class LoginContainer extends React.Component {
         if (!_.isUndefined(nextProps.token) && nextProps.token.trim().length > 0) {
             if (!nextProps.isLoading && !nextProps.error) {
                 if (nextProps.user.role > 0){
-                    Actions.drawer();
+                    // this.props.mainScreen();
                 }
                 else {
                     Alert.alert(
@@ -105,6 +100,10 @@ class LoginContainer extends React.Component {
     }
 }
 
+LoginContainer.navigationOptions = {
+    title: 'Đăng nhập',
+};
+
 function mapStateToProps(state) {
     return {
         login: Object.assign({}, state.login.login),
@@ -122,7 +121,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         loginActions: bindActionCreators(loginActions, dispatch),
-        drawerActions: bindActionCreators(drawerActions, dispatch)
+        mainScreen: () =>
+            dispatch(NavigationActions.navigate({routeName: 'Main'}))
     }
 }
 

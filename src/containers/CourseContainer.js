@@ -9,7 +9,6 @@ import * as courseActions from '../actions/courseActions';
 import * as drawerActions from '../actions/drawerActions';
 import {Alert}from 'react-native';
 import * as alert from '../constants/alert';
-import {Actions} from 'react-native-router-flux';
 
 class CourseContainer extends React.Component {
     constructor(props) {
@@ -24,7 +23,6 @@ class CourseContainer extends React.Component {
 
     onSelectedItem(courseId){
         this.props.courseActions.selectedCourseId(courseId);
-        Actions.gen();
     }
 
     componentWillReceiveProps(nextProps){
@@ -34,7 +32,7 @@ class CourseContainer extends React.Component {
     }
 
     popRouter(){
-        Actions.pop();
+
     }
 
     render() {

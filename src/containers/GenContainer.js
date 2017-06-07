@@ -9,7 +9,6 @@ import * as genActions from '../actions/genActions';
 import * as drawerActions from '../actions/drawerActions';
 import {Alert}from 'react-native';
 import * as alert from '../constants/alert';
-import {Actions} from 'react-native-router-flux';
 
 class GenContainer extends React.Component {
     constructor(props) {
@@ -28,11 +27,9 @@ class GenContainer extends React.Component {
 
     onSelectedItem(genId){
         this.props.genActions.selectedGenId(genId);
-        Actions.lessonCourse();
     }
 
     popRouter(){
-        Actions.pop();
     }
 
     componentWillReceiveProps(nextProps){

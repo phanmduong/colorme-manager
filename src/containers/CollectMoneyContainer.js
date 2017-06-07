@@ -17,6 +17,10 @@ class CollectMoneyContainer extends React.Component {
     }
 }
 
+CollectMoneyContainer.navigationOptions = {
+    title: 'Nộp tiền',
+};
+
 function mapStateToProps(state) {
     return {};
 }

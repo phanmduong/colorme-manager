@@ -15,12 +15,12 @@ class ShiftRegisterContainer extends React.Component {
         super(props, context);
         this.socket = this.props.socket;
 
-        this.socket.on('colorme-channel:regis-shift', (data) => {
-            this.props.shiftRegisterActions.updateDataRegister(data);
-        });
-        this.socket.on('colorme-channel:remove-shift', (data) => {
-            this.props.shiftRegisterActions.updateDataRegister(data);
-        })
+        // this.socket.on('colorme-channel:regis-shift', (data) => {
+        //     this.props.shiftRegisterActions.updateDataRegister(data);
+        // });
+        // this.socket.on('colorme-channel:remove-shift', (data) => {
+        //     this.props.shiftRegisterActions.updateDataRegister(data);
+        // })
 
         this.state = {
             isLoading: false,
@@ -155,6 +155,10 @@ class ShiftRegisterContainer extends React.Component {
         );
     }
 }
+
+ShiftRegisterComponent.navigationOptions = {
+    title: 'Đăng kí lịch trực',
+};
 
 function mapStateToProps(state) {
     return {

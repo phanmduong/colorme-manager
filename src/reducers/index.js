@@ -17,6 +17,8 @@ import dashboardReducer from './dashboardReducer';
 import autoLoginReducer from './autoLoginReducer';
 import listStudentClassReducer from './listStudentClassReducer';
 import registerListReducer from './registerListReducer';
+import navigatorReducer from './navigatorReducer';
+import statusbarReducer from './statusbarReducer';
 
 
 const rootReducer = combineReducers({
@@ -35,6 +37,7 @@ const rootReducer = combineReducers({
     autoLogin: autoLoginReducer,
     listStudentClass: listStudentClassReducer,
     registerList: registerListReducer,
-
+    nav: navigatorReducer,
+    statusBar: statusbarReducer,
 });
 export default rootReducer;

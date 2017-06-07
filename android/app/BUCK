@@ -45,12 +45,12 @@ android_library(
 
 android_build_config(
     name = "build_config",
-    package = "vn.colorme.phanmduong.colormemanager",
+    package = "com.colormemanager",
 )
 
 android_resource(
     name = "res",
-    package = "vn.colorme.phanmduong.colormemanager",
+    package = "com.colormemanager",
     res = "src/main/res",
 )
 

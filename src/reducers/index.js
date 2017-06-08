@@ -3,7 +3,6 @@
  */
 import {combineReducers} from 'redux';
 import loginReducer from './loginReducer';
-import drawerReducer from './drawerReducer';
 import baseReducer from './baseReducer';
 import courseReducer from './courseReducer';
 import genReducer from './genReducer';
@@ -14,16 +13,16 @@ import attendanceStudentReducer from './attendanceStudentReducer';
 import currentClassStudyReducer from './currentClassStudyReducer';
 import shiftRegisterReducer from './shiftRegisterReducer';
 import dashboardReducer from './dashboardReducer';
-import autoLoginReducer from './autoLoginReducer';
 import listStudentClassReducer from './listStudentClassReducer';
 import registerListReducer from './registerListReducer';
 import navigatorReducer from './navigatorReducer';
 import statusbarReducer from './statusbarReducer';
+import autoLoginReducer from './autoLoginReducer';
 
 
 const rootReducer = combineReducers({
     login: loginReducer,
-    drawer: drawerReducer,
+    autoLogin: autoLoginReducer,
     base: baseReducer,
     course: courseReducer,
     gen: genReducer,
@@ -34,7 +33,6 @@ const rootReducer = combineReducers({
     currentClassStudy: currentClassStudyReducer,
     shiftRegister: shiftRegisterReducer,
     dashboard: dashboardReducer,
-    autoLogin: autoLoginReducer,
     listStudentClass: listStudentClassReducer,
     registerList: registerListReducer,
     nav: navigatorReducer,

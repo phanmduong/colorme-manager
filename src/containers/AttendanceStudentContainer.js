@@ -16,21 +16,21 @@ class AttendanceStudentContainer extends React.Component {
         this.updateAttendance = this.updateAttendance.bind(this);
         this.state = {
             checkClass: false
-        }
+        };
         this.popRouter = this.popRouter.bind(this);
+        this.onLoadDataStudent = this.onLoadDataStudent.bind(this);
     }
 
     componentWillMount() {
+        this.onLoadDataStudent();
+    }
+
+    onLoadDataStudent() {
         this.props.attendanceStudentActions.loadInfoStudent(this.props.studentCode, this.props.token);
     }
 
 
     componentWillReceiveProps(nextProps) {
-
-        if (nextProps.errorLoad) {
-            Alert.alert('Thông báo', alert.LOAD_DATA_ERROR);
-        }
-
         if (nextProps.errorUpdate) {
             Alert.alert('Thông báo', alert.ATTENDANCE_ERROR);
         }
@@ -71,6 +71,9 @@ class AttendanceStudentContainer extends React.Component {
                 onUpdateAttendance={this.updateAttendance}
                 studentCode={this.props.studentCode}
                 orderLessonCourse={this.props.orderLessonCourse}
+                messageError={this.props.messageError}
+                onReload={this.onLoadDataStudent}
+                error={this.props.errorLoad}
             />
         );
     }
@@ -90,7 +93,8 @@ function mapStateToProps(state) {
         message: state.attendanceStudent.message,
         classId: state.currentClassStudy.selectedCurrentClassStudy.class.id,
         classStudent: state.attendanceStudent.classStudent,
-        statusRequestUpdated: state.attendanceStudent.statusRequestUpdated
+        statusRequestUpdated: state.attendanceStudent.statusRequestUpdated,
+        messageError: state.attendanceStudent.messageError
     };
 }
 

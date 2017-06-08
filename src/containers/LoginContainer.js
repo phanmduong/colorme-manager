@@ -9,6 +9,7 @@ import {Alert}from 'react-native';
 import * as alert from '../constants/alert';
 import LoginComponent from '../components/LoginComponent';
 import * as loginActions from '../actions/loginActions';
+import * as autoLoginActions from '../actions/autoLoginActions';
 
 class LoginContainer extends React.Component {
     constructor(props) {
@@ -16,17 +17,10 @@ class LoginContainer extends React.Component {
         this.updateFormData = this.updateFormData.bind(this);
         this.onClickLogin = this.onClickLogin.bind(this);
         this.saveDataLogin = this.saveDataLogin.bind(this);
-        this.state = {
-            isAutoLogin: true
-        }
     }
 
     componentWillMount(){
-        this.props.loginActions.openSceneLogin();
         this.props.loginActions.getDataLogin();
-        this.setState({
-            isAutoLogin: true
-        });
     }
 
     saveDataLogin(){
@@ -34,9 +28,6 @@ class LoginContainer extends React.Component {
     }
 
     updateFormData(name, value) {
-        this.setState({
-            isAutoLogin: false
-        });
         let login = this.props.login;
         login[name] = value;
         this.props.loginActions.updateDataLoginForm(login);
@@ -57,10 +48,7 @@ class LoginContainer extends React.Component {
     componentWillReceiveProps(nextProps){
         if (!_.isUndefined(nextProps.token) && nextProps.token.trim().length > 0) {
             if (!nextProps.isLoading && !nextProps.error) {
-                if (nextProps.user.role > 0){
-                    // this.props.mainScreen();
-                }
-                else {
+                if (nextProps.user.role <= 0) {
                     Alert.alert(
                         'Thông báo',
                         alert.NO_STAFF
@@ -75,15 +63,12 @@ class LoginContainer extends React.Component {
                 alert.CHECK_INFO_LOGIN
             )
         }
-        
-        if (!nextProps.isGettingData && !nextProps.isGetDataError && this.state.isAutoLogin){
-            this.setState({
-                isAutoLogin: false
-            });
+
+        if (nextProps.isGetDataLocalSuccessful && nextProps.isAutoLogin) {
+            nextProps.autoLoginActions.setAutoLogin(false);
             if (nextProps.login.username && nextProps.login.password){
                 nextProps.loginActions.loginUser(nextProps.login);
             }
-
         }
     }
 
@@ -106,23 +91,20 @@ LoginContainer.navigationOptions = {
 
 function mapStateToProps(state) {
     return {
-        login: Object.assign({}, state.login.login),
+        login: state.login.login,
         error: state.login.error,
         isLoading: state.login.isLoading,
-        user: Object.assign({}, state.login.user),
+        user: state.login.user,
         token: state.login.token,
-        isGettingData: state.login.isGettingData,
-        isGetDataError: state.login.isGetDataError,
-        isSettingData: state.login.isSettingData,
-        isSetDataError: state.login.isSetDataError
+        isGetDataLocalSuccessful: state.login.isGetDataLocalSuccessful,
+        isAutoLogin: state.autoLogin.isAutoLogin
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         loginActions: bindActionCreators(loginActions, dispatch),
-        mainScreen: () =>
-            dispatch(NavigationActions.navigate({routeName: 'Main'}))
+        autoLoginActions: bindActionCreators(autoLoginActions, dispatch),
     }
 }
 

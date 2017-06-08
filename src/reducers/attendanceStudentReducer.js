@@ -26,6 +26,7 @@ export default function attendanceStudentReducer(state = initialState.attendance
             return Object.assign({}, state, {
                 isLoadingInfoStudent: action.isLoadingInfoStudent,
                 errorLoad: action.errorLoad,
+                messageError: action.messageError
             });
         case types.BEGIN_POST_ATTENDANCE_STUDENT:
             return Object.assign({}, state, {

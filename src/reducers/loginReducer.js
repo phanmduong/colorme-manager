@@ -6,15 +6,12 @@ import initialState from './initialState'
 
 export default function loginReducer(state = initialState.login, action) {
     switch (action.type) {
-        case types.OPEN_SCENE_LOGIN:
-            return Object.assign({}, initialState.login);
         case types.UPDATE_DATA_LOGIN_FORM:
-            return Object.assign({}, state, {
-                login: action.login,
-                isLoading: action.isLoading,
-                error: action.error,
-                token: action.token
-            });
+            return {
+                ...initialState.login, ...{
+                    login: action.login
+                }
+            };
         case types.BEGIN_LOGIN:
             return Object.assign({}, state, {
                 isLoading: action.isLoading,
@@ -34,36 +31,10 @@ export default function loginReducer(state = initialState.login, action) {
                 error: action.error,
                 token: action.token
             });
-        case types.BEGIN_GET_DATA_LOGIN:
-            return Object.assign({}, state, {
-                isGettingData: action.isGettingData,
-                isGetDataError: action.isGetDataError
-            });
         case types.GOT_DATA_LOGIN:
-            return Object.assign({}, state, {
-                isGettingData: action.isGettingData,
-                isGetDataError: action.isGetDataError,
-                login: Object.assign({}, action.login)
-            });
-        case types.GET_DATA_LOGIN_ERROR:
-            return Object.assign({}, state, {
-                isGettingData: action.isGettingData,
-                isGetDataError: action.isGetDataError,
-            });
-        case types.BEGIN_SET_DATA_LOGIN:
-            return Object.assign({}, state, {
-                isSettingData: action.isSettingData,
-                isSetDataError: action.isSetDataError
-            });
-        case types.SETTED_DATA_LOGIN:
-            return Object.assign({}, state, {
-                isSettingData: action.isSettingData,
-                isSetDataError: action.isSetDataError
-            });
-        case types.SET_DATA_LOGIN_ERROR:
-            return Object.assign({}, state, {
-                isSettingData: action.isSettingData,
-                isSetDataError: action.isSetDataError
+            return Object.assign({}, initialState.login, {
+                login: action.login,
+                isGetDataLocalSuccessful: action.isGetDataLocalSuccessful
             });
         default:
             return state;

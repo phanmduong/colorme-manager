@@ -4,27 +4,18 @@
 import * as types from '../constants/actionTypes';
 import * as loadLoginApi from '../apis/loginApi';
 import {AsyncStorage}from 'react-native';
-import {NavigationActions} from 'react-navigation';
 
-export function openSceneLogin() {
-    return {
-        type: types.OPEN_SCENE_LOGIN,
-    };
-}
 export function updateDataLoginForm(login) {
     return {
         type: types.UPDATE_DATA_LOGIN_FORM,
-        login: login,
-        token: '',
-        isLoading: false,
-        error: false
+        login: Object.assign({}, login),
     };
 }
 
 export function beginLogin() {
     return {
         type: types.BEGIN_LOGIN,
-        token: '',
+        token: undefined,
         isLoading: true,
         error: false
     }
@@ -53,7 +44,7 @@ export function openMainScreen(res) {
     }
 }
 
-export function changeStatusBarColor(res) {
+export function changeStatusBarColor() {
     return ({
         type: types.CHANGE_STATUSBAR_COLOR,
         color: 'light-content'
@@ -80,23 +71,13 @@ export function loginError() {
     }
 }
 
-export function beginGetDataLogin() {
-    return ({
-        type: types.BEGIN_GET_DATA_LOGIN,
-        isGettingData: true,
-        isGetDataError: false
-    })
-}
-
 export function getDataLogin() {
     return async function (dispatch) {
-        dispatch(beginGetDataLogin());
         try {
             const username = await AsyncStorage.getItem('@ColorME:username');
             const password = await AsyncStorage.getItem('@ColorME:password');
             dispatch(gotDataLogin(username, password));
         } catch (error) {
-            getDataLoginError();
         }
     };
 }
@@ -104,56 +85,21 @@ export function getDataLogin() {
 export function gotDataLogin(username, password) {
     return ({
         type: types.GOT_DATA_LOGIN,
-        isGettingData: false,
-        isGetDataError: false,
         login: {
             username: username,
             password: password
-        }
+        },
+        isGetDataLocalSuccessful: true
     })
 }
 
-export function getDataLoginError() {
-    return ({
-        type: types.GET_DATA_LOGIN_ERROR,
-        isGettingData: false,
-        isGetDataError: true
-    })
-}
-
-export function beginSetDataLogin() {
-    return ({
-        type: types.BEGIN_SET_DATA_LOGIN,
-        isSettingData: true,
-        isSetDataError: false
-    })
-}
 
 export function setDataLogin(login) {
-    return async function (dispatch) {
-        dispatch(beginSetDataLogin());
+    return async function () {
         try {
             await AsyncStorage.setItem('@ColorME:username', login.username);
             await AsyncStorage.setItem('@ColorME:password', login.password);
-            dispatch(settedDataLogin());
         } catch (error) {
-            setDataLoginError();
         }
     };
-}
-
-export function settedDataLogin() {
-    return ({
-        type: types.SETTED_DATA_LOGIN,
-        isSettingData: false,
-        isSetDataError: false,
-    })
-}
-
-export function setDataLoginError() {
-    return ({
-        type: types.SET_DATA_LOGIN_ERROR,
-        isSettingData: false,
-        isSetDataError: true
-    })
 }

@@ -9,6 +9,7 @@ export function beginGetInforStudent() {
         type: types.BEGIN_GET_INFOR_STUDENT,
         isLoadingInfoStudent : true,
         errorLoad: false,
+        messageError: undefined
     };
 }
 
@@ -18,7 +19,7 @@ export function loadInfoStudent(studentCode, token) {
         attendanceStudentApi.getInfoStudentApi(studentCode, token).then(function (res) {
             dispatch(loadedInforStudentSuccessful(res));
         }).catch(error => {
-            dispatch(loadedInforStudentError());
+            dispatch(loadedInforStudentError(error.response.data));
             throw (error);
         })
     }
@@ -34,10 +35,11 @@ export function loadedInforStudentSuccessful(res) {
     }
 }
 
-export function loadedInforStudentError() {
+export function loadedInforStudentError(res) {
     return {type: types.LOAD_GET_INFOR_STUDENT_ERROR,
         isLoadingInfoStudent: false,
         errorLoad: true,
+        messageError: res.error
     }
 }
 

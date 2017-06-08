@@ -8,10 +8,10 @@ import {
     Text
 } from 'native-base';
 var {height, width} = Dimensions.get('window');
-import Spinkit from 'react-native-spinkit';
-import BusyIndicator from 'react-native-busy-indicator';
-import LoaderHandler from 'react-native-busy-indicator/LoaderHandler';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import theme from '../styles';
+import Loading from '../components/common/Loading';
+import * as alert from '../constants/alert';
 
 class AttendanceStudentComponent extends React.Component {
     constructor(props, context) {
@@ -20,75 +20,79 @@ class AttendanceStudentComponent extends React.Component {
         this.updateAttendance = this.updateAttendance.bind(this);
     }
 
-    componentWillMount() {
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (!this.props.isUpdatingAttendanceStudent) {
-            LoaderHandler.showLoader('Updating');
-        } else {
-            LoaderHandler.hideLoader();
-        }
-    }
 
     updateAttendance() {
-        this.props.onUpdateAttendance(this.props.student.attendances[this.props.orderLessonCourse-1].id);
+        this.props.onUpdateAttendance(this.props.student.attendances[this.props.orderLessonCourse - 1].id);
     }
 
     render() {
-        return (
-            <Container>
-                {(this.props.isLoadingInfoStudent) ?
-                    (
-                        <View style={styles.containerFlex1}>
-                            <Spinkit
-                                isVisible
-                                color={theme.mainColor}
-                                type='Wave'
-                                size={width/8}
+        if (this.props.isLoadingInfoStudent) {
+            return (
+                <Loading size={width / 8}/>
+            )
+        } else {
+            if (this.props.error) {
+                return (
+                    <Container>
+                        <View style={styles.container}>
+                            <Text
+                                style={styles.textError}>{(!this.props.messageError) ? alert.LOAD_DATA_ERROR : this.props.messageError}</Text>
+                            <Button iconLeft danger small onPress={this.props.onReload}
+                                    style={{marginTop: 10, alignSelf: null}}>
+                                <MaterialCommunityIcons name='reload' color='white' size={20}/>
+                                <Text>Thử lại</Text>
+                            </Button>
+                        </View>
+                    </Container>
+                )
+            } else {
+                return (
+                    <View style={styles.container}>
+                        <View style={styles.containerFlex2}>
+                            <Image
+                                source={
+                                    (!this.props.student.avatar_url || this.props.student.avatar_url === '') ? (
+                                        require('../../assets/img/colorme.jpg')
+                                    ) :
+                                        ({uri: this.props.student.avatar_url})}
+                                style={styles.image}
                             />
                         </View>
-                    ) :
-                    (
-                        <View style={styles.container}>
-                            <View style={styles.containerFlex2}>
-                                <Image
-                                    source={
-                                        (!this.props.student.avatar_url || this.props.student.avatar_url === '') ? (
-                                            require('../../assets/img/colorme.jpg')
-                                        ) :
-                                            ({uri: this.props.student.avatar_url})}
-                                    style={styles.image}
-                                />
-                            </View>
-                            <View style={styles.containerFlex1}>
-                                <Text style={styles.textName}>{this.props.student.name}</Text>
-                                <Text style={styles.textStudentCode}>{this.props.studentCode}</Text>
-                            </View>
-
-                            <View style={styles.containerList}>
-                                <List
-                                    horizontal
-                                    dataArray={this.props.student.attendances}
-                                    renderRow={this.renderRow}
-                                />
-                            </View>
-                            <View style={styles.viewButton}>
-                                <Button
-                                    block
-                                    rounded
-                                    style={styles.button}
-                                    onPress={this.updateAttendance}
-                                >
-                                    <Text>{'Điểm danh buổi ' + (parseInt(this.props.orderLessonCourse))}</Text>
-                                </Button>
-                            </View>
-
-                            <BusyIndicator/>
+                        <View style={styles.containerFlex1}>
+                            <Text style={styles.textName}>{this.props.student.name}</Text>
+                            <Text style={styles.textStudentCode}>{this.props.studentCode}</Text>
                         </View>
-                    )}
-            </Container>
-        );
+
+                        <View style={styles.containerList}>
+                            <List
+                                horizontal
+                                dataArray={this.props.student.attendances}
+                                renderRow={this.renderRow}
+                            />
+                        </View>
+                        <View style={styles.viewButton}>
+                            <Button
+                                disabled={this.props.isUpdatingAttendanceStudent}
+                                block
+                                rounded
+                                style={(this.props.isUpdatingAttendanceStudent) ? styles.disableButton : styles.button}
+                                onPress={this.updateAttendance}
+                            >
+                                {(this.props.isUpdatingAttendanceStudent) ?
+                                    (
+                                        <Text>Đang cập nhật dữ liệu...</Text>
+                                    )
+                                    :
+                                    (
+                                        <Text>{'Điểm danh buổi ' + (parseInt(this.props.orderLessonCourse))}</Text>
+                                    )
+                                }
+                            </Button>
+                        </View>
+                    </View>
+                )
+            }
+        }
     }
 
     renderRow(rowData) {
@@ -116,14 +120,15 @@ class AttendanceStudentComponent extends React.Component {
 }
 
 const styles = ({
-    header:{
+    header: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
     container: {
         flex: 1,
-        alignItems: 'center',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     containerFlex1: {
         flex: 1,
@@ -136,7 +141,7 @@ const styles = ({
         justifyContent: 'center'
     },
     containerList: {
-        paddingTop: height/12,
+        paddingTop: height / 12,
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
@@ -177,6 +182,9 @@ const styles = ({
     button: {
         backgroundColor: theme.mainColor
     },
+    disableButton: {
+        backgroundColor: theme.mainColor + 'AF'
+    },
     viewButton: {
         flex: 1,
         alignItems: 'center',
@@ -190,6 +198,10 @@ const styles = ({
         fontSize: 15,
         color: '#888888',
         marginTop: 10
+    },
+    textError: {
+        color: '#d9534f',
+        textAlign: 'center'
     }
 });
 

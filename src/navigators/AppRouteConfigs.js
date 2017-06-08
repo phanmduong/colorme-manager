@@ -82,13 +82,13 @@ const DashboardMain = TabNavigator({
             tabBarIcon: (<TabIcon nameIcon="fontawesome|qrcode"/>)
         }),
     },
-    TabRegisterShift: {
-        screen: TabShiftRegister,
-        navigationOptions: ({navigation}) => ({
-            tabBarLabel: 'Lịch trực',
-            tabBarIcon: (<TabIcon nameIcon="fontawesome|edit"/>)
-        }),
-    },
+    // TabRegisterShift: {
+    //     screen: TabShiftRegister,
+    //     navigationOptions: ({navigation}) => ({
+    //         tabBarLabel: 'Lịch trực',
+    //         tabBarIcon: (<TabIcon nameIcon="fontawesome|edit"/>)
+    //     }),
+    // },
     TabDashboard: {
         screen: TabDashboard,
         navigationOptions: ({navigation}) => ({
@@ -113,6 +113,7 @@ const DashboardMain = TabNavigator({
 }, {
     tabBarComponent: TabBarTop,
     swipeEnabled: true,
+    animationEnabled: true,
     tabBarOptions: {
         indicatorStyle: {
             backgroundColor: 'transparent'

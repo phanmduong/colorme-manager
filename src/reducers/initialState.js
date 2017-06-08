@@ -5,10 +5,6 @@ export default {
     statusBar: {
         color: 'default'
     },
-    drawer: {
-        drawerOpen: false,
-        drawerDisable: true,
-    },
     autoLogin: {
         isAutoLogin: true
     },
@@ -16,12 +12,9 @@ export default {
         login: {},
         isLoading: false,
         error: false,
-        token: '',
-        isSettingData: false,
-        isSetDataError: false,
-        isGettingData: true,
-        isGetDataError: false,
-        user:{}
+        token: undefined,
+        user: {},
+        isGetDataLocalSuccessful: false
     },
     base: {
         baseData: [],
@@ -421,7 +414,8 @@ export default {
         message: '',
         errorLoad: false,
         errorUpdate: false,
-        statusRequestUpdated: -1
+        statusRequestUpdated: -1,
+        messageError: undefined
     },
     shiftRegister: {
         isLoading: false,

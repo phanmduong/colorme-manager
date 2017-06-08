@@ -165,7 +165,7 @@ function mapStateToProps(state) {
         genData: state.gen.genData,
         errorGen: state.gen.error,
         isLoadingDashboard: state.dashboard.isLoading,
-        dashboardData: Object.assign({}, state.dashboard.dashboardData),
+        dashboardData: state.dashboard.dashboardData,
         errorDashboard: state.dashboard.error,
         selectedBaseId: state.dashboard.selectedBaseId,
         selectedGenId: state.dashboard.selectedGenId,

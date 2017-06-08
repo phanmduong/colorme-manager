@@ -15,10 +15,8 @@ import {
 } from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 var {height, width} = Dimensions.get('window');
-import Spinkit from 'react-native-spinkit';
-import _ from 'lodash';
-import theme from '../styles';
 import * as alert from '../constants/alert';
+import Loading from '../components/common/Loading';
 
 class ClassComponent extends React.Component {
     constructor(props, context) {
@@ -29,16 +27,7 @@ class ClassComponent extends React.Component {
 
         if (this.props.isLoading) {
             return (
-                <Container>
-                    <View style={styles.container}>
-                        <Spinkit
-                            isVisible
-                            color={theme.mainColor}
-                            type='Wave'
-                            size={width / 8}
-                        />
-                    </View>
-                </Container>
+                <Loading size={width / 8}/>
             )
         } else {
             if (this.props.error || this.props.classData.length <= 0) {

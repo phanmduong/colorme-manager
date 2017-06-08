@@ -170,7 +170,7 @@ function mapStateToProps(state) {
         genData: state.gen.genData,
         errorGen: state.gen.error,
         isLoadingShiftRegister: state.shiftRegister.isLoading,
-        shiftRegisterData: Object.assign({}, state.shiftRegister.shiftRegisterData),
+        shiftRegisterData: state.shiftRegister.shiftRegisterData,
         errorShiftRegister: state.shiftRegister.error,
         selectedBaseId: state.shiftRegister.selectedBaseId,
         selectedGenId: state.shiftRegister.selectedGenId,

@@ -9,18 +9,19 @@ import * as baseActions from '../actions/baseActions';
 import * as genActions from '../actions/genActions';
 import * as shiftRegisterActions from '../actions/shiftRegisterActions';
 import _ from 'lodash';
+import io from 'socket.io-client';
 
 class ShiftRegisterContainer extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.socket = this.props.socket;
+        this.socket = io.connect("http://colorme.vn:3000/", {transports: ['websocket']});
 
-        // this.socket.on('colorme-channel:regis-shift', (data) => {
-        //     this.props.shiftRegisterActions.updateDataRegister(data);
-        // });
-        // this.socket.on('colorme-channel:remove-shift', (data) => {
-        //     this.props.shiftRegisterActions.updateDataRegister(data);
-        // })
+        this.socket.on('colorme-channel:regis-shift', (data) => {
+            this.props.shiftRegisterActions.updateDataRegister(data);
+        });
+        this.socket.on('colorme-channel:remove-shift', (data) => {
+            this.props.shiftRegisterActions.updateDataRegister(data);
+        })
 
         this.state = {
             isLoading: false,
@@ -96,7 +97,7 @@ class ShiftRegisterContainer extends React.Component {
         if (props.genData.length > 0 && props.baseData.length > 0 && !this.state.checkedDataShiftRegister) {
             this.setState({checkedDataShiftRegister: true});
             this.props.shiftRegisterActions
-                .loadDataShiftRegister(props.baseData[0].id, props.genData[1].id, this.props.token);
+                .loadDataShiftRegister(props.baseData[0].id, props.genData[0].id, this.props.token);
         }
     }
 
@@ -156,7 +157,7 @@ class ShiftRegisterContainer extends React.Component {
     }
 }
 
-ShiftRegisterComponent.navigationOptions = {
+ShiftRegisterContainer.navigationOptions = {
     title: 'Đăng kí lịch trực',
 };
 

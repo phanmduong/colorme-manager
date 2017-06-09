@@ -3,7 +3,6 @@ import {Platform} from 'react-native';
 import {View, Segment, Button, Text} from 'native-base';
 import theme from '../../styles';
 const SegmentRegisterList = (props) => {
-    console.log(props.segmentActive);
     return (
         <View>
             <Segment style={styles.segment}>

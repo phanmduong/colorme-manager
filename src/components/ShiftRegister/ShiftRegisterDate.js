@@ -8,75 +8,30 @@ import {
     Body,
     Button
 } from 'native-base';
-
+import _ from 'lodash';
+import ShiftRegisterItem from './ShiftRegisterItem';
 var self;
+
 class ShiftRegisterDate extends React.Component {
     constructor(props, context) {
         super(props, context);
         self = this;
     }
 
-    onUnRegister(registerId) {
-        this.props.onUnRegister(registerId);
-    }
-
-    onRegister(registerId) {
-        this.props.onRegister(registerId);
+    shouldComponentUpdate(nextProps) {
+        return !_.isEqual(nextProps.dateData, this.props.dateData);
     }
 
     renderShiftItem() {
-        return this.props.dateData.shifts.map((shift, index) => {
-            if (shift.isLoadingRegister) {
-                return (
-                    <View full key={index} style={styles.register}>
-                        <Text style={styles.textRegister}>Đang đăng kí lịch trực...</Text>
-                    </View>
-                );
-            } else if (shift.isLoadingUnRegister) {
-                return (
-                    <View full key={index} style={styles.registeredByUser}>
-                        <Text style={styles.textRegisteredByUser}>Đang hủy lịch trực...</Text>
-                    </View>
-                );
-            } else if (shift.user) {
-                if (shift.user.id === this.props.user.id) {
-                    return (
-                        <Button full key={index} style={styles.registeredByUser}
-                                onPress={() => self.onUnRegister(shift.id)}>
-                            <Image
-                                style={styles.avatar}
-                                source={{uri: shift.user.avatar_url}}
-                            />
-                            <Text style={styles.textRegisteredByUser}>
-                                {(shift.isLoadingUnRegisterError) ?
-                                    "Hủy đăng kí thất bại. Thử lại." : shift.user.name
-                                }
-                            </Text>
-                        </Button>
-                    );
-                } else
-                    return (
-                        <View key={index} style={styles.registered}>
-                            <Image
-                                style={styles.avatar}
-                                source={{uri: shift.user.avatar_url}}
-                            />
-                            <Text style={styles.textRegistered}>{shift.user.name}</Text>
-                        </View>
-                    )
-            } else {
-                return (
-                    <Button full style={styles.register} key={index} onPress={() => self.onRegister(shift.id)}>
-                        <Text
-                            style={styles.textRegister}>
-                            {(shift.isLoadingRegisterError) ?
-                                "Đăng kí thất bại. Thử lại." :
-                                shift.name + ": " + shift.start_time + " - " + shift.end_time}
-                        </Text>
-                    </Button>
-                )
-            }
-        });
+        return this.props.dateData.shifts.map((shift, index) => (
+            <ShiftRegisterItem
+                shift={shift}
+                key={index}
+                onUnRegister={self.props.onUnRegister}
+                onRegister={self.props.onRegister}
+                user={this.props.user}
+            />
+        ));
 
     }
 

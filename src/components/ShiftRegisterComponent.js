@@ -1,5 +1,5 @@
 import React from'react';
-import {StyleSheet, Dimensions, RefreshControl, ScrollView} from 'react-native';
+import {Platform, Dimensions, RefreshControl, ScrollView} from 'react-native';
 import {
     Container,
     Button,
@@ -11,14 +11,18 @@ import {
 var {height, width} = Dimensions.get('window');
 import Spinkit from 'react-native-spinkit';
 import theme from '../styles';
+import Swiper from 'react-native-swiper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import ShiftRegisterWeek from './shiftRegister/ShiftRegisterWeek';
 import * as alert from '../constants/alert';
 
+const heightSwiper = (Platform.OS === 'ios') ? height - 160 : height - 170;
+let self;
 class ShiftRegisterComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.loadDataShiftRegister = this.loadDataShiftRegister.bind(this);
+        self = this;
     }
 
     loadDataShiftRegister() {
@@ -42,38 +46,33 @@ class ShiftRegisterComponent extends React.Component {
 
     showShiftRegister() {
         return (
-            <ScrollView
-                refreshControl={
-                    <RefreshControl
-                        refreshing={this.props.isLoadingShiftRegister}
-                        onRefresh={this.loadDataShiftRegister}
-                        titleColor={theme.mainColor}
-                        title="Đang tải..."
-                        tintColor='#d9534f'
-                        colors={['#d9534f']}
-                    />
-                }>
-                <ScrollView horizontal={true} pagingEnabled showsHorizontalScrollIndicator={false}>
-                    {
-                        (this.props.shiftRegisterData.weeks) ?
-                            (
-                                this.props.shiftRegisterData.weeks.map((week, index) => {
-                                    return (
-                                        <ShiftRegisterWeek
-                                            key={index} weekData={week}
-                                            user={this.props.user}
-                                            onRegister={this.props.onRegister}
-                                            onUnRegister={this.props.onUnRegister}
-                                        />);
-                                })
-                            )
-                            :
-                            (
-                                <View/>
-                            )
-                    }
-                </ScrollView>
-            </ScrollView>
+            <Swiper
+                height={heightSwiper}
+                showsPagination={false}
+                loop={false}
+            >
+                {
+
+                    (this.props.shiftRegisterData.weeks) ?
+                        (
+                            this.props.shiftRegisterData.weeks.map((week, index) => {
+                                return (
+                                    <ShiftRegisterWeek
+                                        loadDataShiftRegister={self.loadDataShiftRegister}
+                                        isLoadingShiftRegister={self.props.isLoadingShiftRegister}
+                                        key={index} weekData={week}
+                                        user={self.props.user}
+                                        onRegister={self.props.onRegister}
+                                        onUnRegister={self.props.onUnRegister}
+                                    />);
+                            })
+                        )
+                        :
+                        (
+                            <View/>
+                        )
+                }
+            </Swiper>
         )
     }
 

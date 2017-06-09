@@ -8,7 +8,7 @@ import {
     Text,
 } from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Swiper from 'react-native-swiper'
+import Swiper from 'react-native-swiper';
 import Spinkit from 'react-native-spinkit';
 import theme from '../styles';
 import * as alert from '../constants/alert';

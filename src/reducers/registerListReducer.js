@@ -48,7 +48,6 @@ export default function registerListReducer(state = initialState.registerList, a
                 search: action.search,
             });
         case types.CHANGE_SEGMENT_REGISTER_LIST:
-            console.log("action: " + action.segment);
             return Object.assign({}, state, {
                 segment: action.segment,
             });

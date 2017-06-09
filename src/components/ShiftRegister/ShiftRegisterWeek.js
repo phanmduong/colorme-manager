@@ -1,55 +1,59 @@
 import React from'react';
-import {StyleSheet, ScrollView, Dimensions, Platform} from 'react-native';
+import {RefreshControl, Dimensions, Platform} from 'react-native';
 import {
     View,
     Text,
-    Card,
-    Content,
-    List,
-    ListItem,
-    Body
+    List
 } from 'native-base';
 import ShiftRegisterDate from './ShiftRegisterDate'
 var {height, width} = Dimensions.get('window');
+import theme from '../../styles';
 
 class ShiftRegisterWeek extends React.Component {
     constructor(props, context) {
         super(props, context);
     }
 
-    renderShiftRegisterDate() {
+    shouldComponentUpdate(nextProps) {
+        return !_.isEqual(nextProps.weekData, this.props.weekData);
+    }
 
-        // if (Platform.OS === 'ios') {
-            return (
-                this.props.weekData.dates.map(
-                    (date, index) => {
-                        return (
-                            <ShiftRegisterDate
-                                dateData={date}
-                                key={index}
-                                user={this.props.user}
-                                onRegister={this.props.onRegister}
-                                onUnRegister={this.props.onUnRegister}
-                            />)
-                    })
-            )
-        // }
+    renderHeader() {
+        return (
+            <View style={styles.header}>
+                <Text style={styles.headerTitle}>{'Tuần ' + this.props.weekData.week}</Text>
+                <Text>{this.time()}</Text>
+            </View>
+        )
+    }
 
-        // return (
-        //     <List
-        //         dataArray={this.props.weekData.dates}
-        //         renderRow={
-        //             (date) => (
-        //                 <ShiftRegisterDate
-        //                     dateData={date}
-        //                     user={this.props.user}
-        //                     onRegister={this.props.onRegister}
-        //                     onUnRegister={this.props.onUnRegister}
-        //                 />
-        //             )
-        //         }
-        //     />
-        // )
+    render() {
+        return (
+            <List
+                refreshControl={
+                    <RefreshControl
+                        refreshing={this.props.isLoadingShiftRegister}
+                        onRefresh={this.loadDataShiftRegister}
+                        titleColor={theme.mainColor}
+                        title="Đang tải..."
+                        tintColor='#d9534f'
+                        colors={['#d9534f']}
+                    />
+                }
+                renderHeader={() => this.renderHeader()}
+                dataArray={this.props.weekData.dates}
+                renderRow={
+                    (date) => (
+                        <ShiftRegisterDate
+                            dateData={date}
+                            user={this.props.user}
+                            onRegister={this.props.onRegister}
+                            onUnRegister={this.props.onUnRegister}
+                        />
+                    )
+                }
+            />
+        )
 
     }
 
@@ -57,20 +61,6 @@ class ShiftRegisterWeek extends React.Component {
         const startDate = this.props.weekData.dates[0].date;
         const endDate = this.props.weekData.dates[this.props.weekData.dates.length - 1].date;
         return startDate.substr(startDate.length - 10) + " - " + endDate.substr(endDate.length - 10);
-    }
-
-    render() {
-        return (
-            <View style={{width: width}}>
-                <View style={styles.header}>
-                    <Text style={styles.headerTitle}>{'Tuần ' + this.props.weekData.week}</Text>
-                    <Text>{this.time()}</Text>
-                </View>
-
-                {this.renderShiftRegisterDate()}
-            </View>
-
-        );
     }
 }
 

@@ -26,7 +26,6 @@ export function loadDataListStudentClass(classId, token) {
 }
 
 export function loadDataSuccessful(res) {
-    console.log(JSON.stringify(res.data));
     return ({
         type: types.LOAD_DATA_LIST_STUDENT_CLASS_SUCCESSFUL,
         listStudentClassData: res.data.students,

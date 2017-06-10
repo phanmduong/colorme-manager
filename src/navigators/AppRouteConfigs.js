@@ -16,6 +16,7 @@ import DashboardContainer from '../containers/DashboardContainer';
 import ListStudentClassContainer from '../containers/ListStudentClassContainer';
 import RegisterListContainer from '../containers/RegisterListContainer';
 import TabIcon from '../components/common/TabIcon';
+import MenuButton from '../components/common/MenuButton';
 
 
 const navigationOptionsDefault = {
@@ -26,6 +27,7 @@ const navigationOptionsDefault = {
             backgroundColor: theme.mainColor
         },
         headerPressColorAndroid: '#ffffff80',
+        headerRight: (<MenuButton onOpenMenu={() => navigation.navigate('DrawerOpen')}/>)
     }),
 };
 
@@ -82,7 +84,7 @@ const DashboardMain = TabNavigator({
             tabBarIcon: (<TabIcon nameIcon="fontawesome|qrcode"/>)
         }),
     },
-    TabRegisterShift: {
+    TabShiftRegister: {
         screen: TabShiftRegister,
         navigationOptions: ({navigation}) => ({
             tabBarLabel: 'Lịch trực',
@@ -93,7 +95,7 @@ const DashboardMain = TabNavigator({
         screen: TabDashboard,
         navigationOptions: ({navigation}) => ({
             tabBarLabel: 'Quản lý',
-            tabBarIcon: (<TabIcon nameIcon="material|apps"/>)
+            tabBarIcon: (<TabIcon nameIcon="material|apps"/>),
         }),
     },
     TabCollectMoney: {
@@ -113,7 +115,7 @@ const DashboardMain = TabNavigator({
 }, {
     tabBarComponent: TabBarTop,
     swipeEnabled: true,
-    // animationEnabled: true,
+    animationEnabled: true,
     tabBarOptions: {
         indicatorStyle: {
             backgroundColor: 'transparent'
@@ -133,9 +135,13 @@ const DashboardMain = TabNavigator({
 const Drawer = DrawerNavigator({
     TabDashboard: {
         screen: DashboardMain,
+        navigationOptions: ({navigation}) => ({
+            title: 'Bảng điều khiển',
+        })
     }
 }, {
     drawerPosition: 'right',
+    backBehavior: 'none',
 });
 
 const Main = StackNavigator({

@@ -9,6 +9,7 @@ import * as genActions from '../actions/genActions';
 import * as dashboardActions from '../actions/dashboardActions';
 import DashboardComponent from '../components/DashboardComponent';
 import {NavigationActions} from 'react-navigation';
+import MenuButton from '../components/common/MenuButton';
 
 class DashboardContainer extends React.Component {
     constructor(props, context) {
@@ -30,6 +31,9 @@ class DashboardContainer extends React.Component {
         this.onClickRegisterList = this.onClickRegisterList.bind(this);
     }
 
+    static navigationOptions = ({navigation}) => ({
+        title: 'Quản lý'
+    });
     componentWillMount() {
         this.loadData();
     }
@@ -150,9 +154,6 @@ class DashboardContainer extends React.Component {
     }
 }
 
-DashboardContainer.navigationOptions = {
-    title: 'Quản lý',
-};
 
 
 function mapStateToProps(state) {

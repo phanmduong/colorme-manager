@@ -66,6 +66,7 @@ class DashboardComponent extends React.Component {
                     dotStyle={styles.dotStyle}
                     activeDotColor={theme.secondColor}
                     index={1}
+                    loop={false}
                 >
                     {(dashboardData && dashboardData.date_array) ?
                         (

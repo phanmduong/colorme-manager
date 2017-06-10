@@ -2,18 +2,8 @@ import React from'react';
 import {StyleSheet} from 'react-native';
 import {
     Container,
-    Header,
-    Content,
-    Button,
-    Left,
-    Right,
-    Title,
-    Body,
-    Icon,
-    View
 } from 'native-base';
 import Camera from 'react-native-camera';
-import theme from '../styles';
 
 class QRCodeComponent extends React.Component {
     constructor(props, context) {

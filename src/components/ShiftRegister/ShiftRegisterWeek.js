@@ -15,10 +15,12 @@ class ShiftRegisterWeek extends React.Component {
     }
 
     shouldComponentUpdate(nextProps) {
-        return !_.isEqual(nextProps.weekData, this.props.weekData);
+        return (!_.isEqual(nextProps.weekData, this.props.weekData) ||
+        !_.isEqual(nextProps.isLoadingShiftRegister, this.props.isLoadingShiftRegister));
     }
 
     renderHeader() {
+        console.log('render');
         return (
             <View style={styles.header}>
                 <Text style={styles.headerTitle}>{'Tuần ' + this.props.weekData.week}</Text>

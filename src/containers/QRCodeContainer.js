@@ -3,6 +3,7 @@
  */
 import React from'react';
 import {connect} from 'react-redux';
+import {View} from 'react-native';
 import QRCodeComponent from '../components/QRCodeComponent';
 import * as attendanceStudentActions from '../actions/attendanceStudentActions';
 import * as QRCodeActions from '../actions/QRCodeActions';
@@ -28,11 +29,15 @@ class QRCodeContainer extends React.Component {
     }
 
     render() {
-        return (
-            <QRCodeComponent
-                onScannerQRCode = {this.scannedQRCode}
-            />
-        );
+        if (!this.props.isScanned) {
+            return (
+                <QRCodeComponent
+                    onScannerQRCode={this.scannedQRCode}
+                />
+            );
+        } else {
+            return (<View/>);
+        }
     }
 }
 

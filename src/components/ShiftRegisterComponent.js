@@ -16,7 +16,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import ShiftRegisterWeek from './shiftRegister/ShiftRegisterWeek';
 import * as alert from '../constants/alert';
 
-const heightSwiper = (Platform.OS === 'ios') ? height - 160 : height - 170;
+const heightSwiper = (Platform.OS === 'ios') ? height - 160 : height - 175;
 let self;
 class ShiftRegisterComponent extends React.Component {
     constructor(props, context) {
@@ -77,7 +77,7 @@ class ShiftRegisterComponent extends React.Component {
     }
 
     render() {
-        if (this.props.isLoading) {
+        if (this.props.isLoading || (this.props.isLoadingShiftRegister && !this.props.shiftRegisterData.weeks)) {
             return (
                 <Container>
                     <View style={styles.container}>

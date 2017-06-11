@@ -35,13 +35,14 @@ class ShiftRegisterWeek extends React.Component {
                 refreshControl={
                     <RefreshControl
                         refreshing={this.props.isLoadingShiftRegister}
-                        onRefresh={this.loadDataShiftRegister}
+                        onRefresh={this.props.loadDataShiftRegister}
                         titleColor={theme.mainColor}
                         title="Đang tải..."
                         tintColor='#d9534f'
                         colors={['#d9534f']}
                     />
                 }
+
                 renderHeader={() => this.renderHeader()}
                 dataArray={this.props.weekData.dates}
                 renderRow={

@@ -1,5 +1,5 @@
 import React from'react';
-import {Platform, Dimensions, RefreshControl, ScrollView} from 'react-native';
+import {Platform, Dimensions, ViewPagerAndroid, ScrollView} from 'react-native';
 import {
     Container,
     Button,
@@ -16,13 +16,19 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import ShiftRegisterWeek from './shiftRegister/ShiftRegisterWeek';
 import * as alert from '../constants/alert';
 
-const heightSwiper = (Platform.OS === 'ios') ? height - 160 : height - 175;
+const heightSwiper = (Platform.OS === 'ios') ? height - 165 : height - 180;
 let self;
 class ShiftRegisterComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.loadDataShiftRegister = this.loadDataShiftRegister.bind(this);
         self = this;
+    }
+
+    componentWillMount() {
+        this.state = ({
+            sizeShiftRegister: 0
+        })
     }
 
     loadDataShiftRegister() {
@@ -44,37 +50,58 @@ class ShiftRegisterComponent extends React.Component {
         )
     }
 
-    showShiftRegister() {
+    renderShiftRegister() {
         return (
-            <Swiper
-                height={heightSwiper}
-                showsPagination={false}
-                loop={false}
-            >
-                {
-
-                    (this.props.shiftRegisterData.weeks) ?
-                        (
-                            this.props.shiftRegisterData.weeks.map((week, index) => {
-                                return (
-                                    <ShiftRegisterWeek
-                                        loadDataShiftRegister={self.loadDataShiftRegister}
-                                        isLoadingShiftRegister={self.props.isLoadingShiftRegister}
-                                        key={index} weekData={week}
-                                        user={self.props.user}
-                                        onRegister={self.props.onRegister}
-                                        onUnRegister={self.props.onUnRegister}
-                                    />);
-                            })
-                        )
-                        :
-                        (
-                            <View/>
-                        )
-                }
-            </Swiper>
+            this.props.shiftRegisterData.weeks.map((week, index) => {
+                return (
+                    <ShiftRegisterWeek
+                        loadDataShiftRegister={self.loadDataShiftRegister}
+                        isLoadingShiftRegister={self.props.isLoadingShiftRegister}
+                        key={index}
+                        weekData={week}
+                        user={self.props.user}
+                        onRegister={self.props.onRegister}
+                        onUnRegister={self.props.onUnRegister}
+                    />);
+            })
         )
     }
+
+    showShiftRegister() {
+        if (this.props.shiftRegisterData.weeks) {
+            if (Platform.OS === 'ios') {
+                return (
+                    <Swiper
+                        height={heightSwiper}
+                        loop={false}
+                        showsPagination={false}
+                    >
+                        {this.renderShiftRegister()}
+                    </Swiper>
+
+                )
+            }
+
+            if (this.state.sizeShiftRegister !== this.props.shiftRegisterData.weeks.length) {
+                this.setState({
+                    sizeShiftRegister: this.props.shiftRegisterData.weeks.length
+                })
+                return <View/>
+            }
+
+            return (
+                <Swiper
+                    height={height - 180}
+                    loop={false}
+                    showsPagination={false}
+                >
+                    {this.renderShiftRegister()}
+                </Swiper>
+            )
+        }
+        return (<View/>);
+    }
+
 
     render() {
         if (this.props.isLoading || (this.props.isLoadingShiftRegister && !this.props.shiftRegisterData.weeks)) {
@@ -165,10 +192,8 @@ const styles = ({
     },
     containerPicker: {
         flexDirection: 'row',
-        borderBottomColor: '#d3d3d3',
+        borderBottomColor: theme.borderColor,
         borderBottomWidth: 1,
-        padding: 1,
-        marginBottom: 4,
         shadowColor: '#b4b4b4',
         shadowOffset: {
             width: 0,
@@ -176,6 +201,10 @@ const styles = ({
         },
         elevation: 0.5,
         shadowOpacity: 0.5
+    },
+    containerList: {
+        borderTopColor: theme.borderColor,
+        borderTopWidth: 1
     }
 });
 

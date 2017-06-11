@@ -13,7 +13,7 @@ export default function navigatorReducer(state = initialState, action) {
     switch (action.type) {
         case types.LOGIN:
             nextState = AppNavigator.router.getStateForAction(
-                NavigationActions.navigate({routeName: 'Main'}),
+                resetAction,
                 state
             );
             break;
@@ -24,3 +24,11 @@ export default function navigatorReducer(state = initialState, action) {
     // Simply return the original `state` if `nextState` is null or undefined.
     return nextState || state;
 };
+
+const resetAction = NavigationActions.reset({
+    index: 0,
+    key: null,
+    actions: [
+        NavigationActions.navigate({routeName: 'Main'})
+    ]
+})

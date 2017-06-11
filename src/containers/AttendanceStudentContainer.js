@@ -10,7 +10,7 @@ import * as QRCodeActions from '../actions/QRCodeActions';
 import {Alert, BackHandler, Text, Button}from 'react-native';
 import * as alert from '../constants/alert';
 import BackButton from '../components/common/BackButton';
-import MenuButton from '../components/common/MenuButton';
+
 let self;
 class AttendanceStudentContainer extends React.Component {
     constructor(props) {

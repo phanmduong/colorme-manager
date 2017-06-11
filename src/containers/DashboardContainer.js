@@ -9,7 +9,6 @@ import * as genActions from '../actions/genActions';
 import * as dashboardActions from '../actions/dashboardActions';
 import DashboardComponent from '../components/DashboardComponent';
 import {NavigationActions} from 'react-navigation';
-import MenuButton from '../components/common/MenuButton';
 
 class DashboardContainer extends React.Component {
     constructor(props, context) {

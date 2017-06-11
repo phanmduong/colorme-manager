@@ -11,7 +11,6 @@ export default function shiftRegisterReducer(state = initialState.shiftRegister,
             return Object.assign({}, state, {
                 isLoading: action.isLoading,
                 error: action.error,
-                shiftRegisterData: {}
             });
         case types.LOAD_DATA_SHIFT_REGISTER_SUCCESSFUL:
             return Object.assign({}, state, {

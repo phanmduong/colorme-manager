@@ -4,64 +4,110 @@
 import React from'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import Segment from '../components/common/SegmentTwo';
 import * as registerListActions from '../actions/registerListActions';
 import RegisterListComponent from '../components/RegisterListComponent';
 
 class RegisterListContainer extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.loadDataRegisterList = this.loadDataRegisterList.bind(this);
-        this.loadDataSearchRegisterList = this.loadDataSearchRegisterList.bind(this);
-        this.updateSearchFrom = this.updateSearchFrom.bind(this);
+        this.loadDataRegisterListAll = this.loadDataRegisterListAll.bind(this);
+        this.updateFormAndLoadDataSearchAll = this.updateFormAndLoadDataSearchAll.bind(this);
+        this.loadDataRegisterListMy = this.loadDataRegisterListMy.bind(this);
+        this.updateFormAndLoadDataSearchMy = this.updateFormAndLoadDataSearchMy.bind(this);
+    }
+
+    static navigationOptions = ({navigation}) => ({
+        headerTitle: (<Segment
+                nameSeg1="Tất cả"
+                nameSeg2="Của bạn"
+                segmentActive={(navigation.state.params && navigation.state.params.segment) ? navigation.state.params.segment : 1}
+                changeSegmentActive={(navigation.state.params && navigation.state.params.changeSegmentActive)
+                    ? navigation.state.params.changeSegmentActive : null
+                }
+            />
+        ),
+    });
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.segment !== this.props.segment) {
+            nextProps.navigation.setParams({segment: nextProps.segment});
+        }
     }
 
     componentWillMount() {
-        this.loadDataRegisterList();
+        this.loadDataRegisterListAll();
+        this.loadDataRegisterListMy();
+        this.props.navigation.setParams({segment: 1});
+        this.props.navigation.setParams({changeSegmentActive: this.props.registerListActions.changeSegmentRegisterList});
     }
 
-    loadDataRegisterList() {
-        this.props.registerListActions.loadDataRegisterList(this.props.page + 1, this.props.token);
+    loadDataRegisterListAll() {
+        if (this.props.currentPageAll < this.props.totalPageAll)
+            this.props.registerListActions.loadDataRegisterListAll(this.props.token, this.props.currentPageAll + 1, this.props.searchAll);
     }
 
-    loadDataSearchRegisterList() {
-        this.props.registerListActions.loadDataSearchRegisterList(this.props.search, this.props.pageSearch + 1, this.props.token);
+    updateFormAndLoadDataSearchAll(search) {
+        this.props.registerListActions.updateFormAndLoadDataSearchAll(search, this.props.token);
     }
 
-    updateSearchFrom(search) {
-        this.props.registerListActions.updateDateSearchRegisterListFrom(search);
+    loadDataRegisterListMy() {
+        if (this.props.currentPageMy < this.props.totalPageMy)
+            this.props.registerListActions
+                .loadDataRegisterListMy(this.props.token, this.props.currentPageMy + 1, this.props.searchMy, this.props.userId);
+    }
+
+    updateFormAndLoadDataSearchMy(search) {
+        this.props.registerListActions.updateFormAndLoadDataSearchMy(search, this.props.userId, this.props.token);
     }
 
     render() {
-        return (
-            <RegisterListComponent
-                registerList={this.props.registerListData}
-                error={this.props.error}
-                isLoading={this.props.isLoading}
-                errorSearch={this.props.errorSearch}
-                isSearchLoading={this.props.isSearchLoading}
-                loadDataRegisterList={this.loadDataRegisterList}
-                loadDataSearchRegisterList={this.loadDataSearchRegisterList}
-                updateSearchFrom={this.updateSearchFrom}
-            />
-        );
+        if (this.props.segment === 1) {
+            return (
+                <RegisterListComponent
+                    registerList={this.props.registerListDataAll}
+                    error={this.props.errorAll}
+                    isLoading={this.props.isLoadingAll}
+                    search={this.props.searchAll}
+                    loadDataRegisterList={this.loadDataRegisterListAll}
+                    updateFormAndLoadDataSearch={this.updateFormAndLoadDataSearchAll}
+                    segmentActive={1}
+                />
+            );
+        } else {
+            return (
+                <RegisterListComponent
+                    registerList={this.props.registerListDataMy}
+                    error={this.props.errorMy}
+                    isLoading={this.props.isLoadingMy}
+                    search={this.props.searchMy}
+                    loadDataRegisterList={this.loadDataRegisterListMy}
+                    updateFormAndLoadDataSearch={this.updateFormAndLoadDataSearchMy}
+                    segmentActive={2}
+
+                />
+            );
+        }
     }
 }
 
-RegisterListContainer.navigationOptions = {
-    title: 'Danh sách đăng kí',
-};
-
 function mapStateToProps(state) {
     return {
+        userId: state.login.user.id,
         token: state.login.token,
-        registerListData: state.registerList.registerListData,
-        isLoading: state.registerList.isLoading,
-        error: state.registerList.error,
-        isSearchLoading: state.registerList.isSearchLoading,
-        errorSearch: state.registerList.errorSearch,
-        page: state.registerList.page,
-        pageSearch: state.registerList.pageSearch,
-        search: state.registerList.search,
+        registerListDataAll: state.registerList.registerListDataAll,
+        isLoadingAll: state.registerList.isLoadingAll,
+        errorAll: state.registerList.errorAll,
+        currentPageAll: state.registerList.currentPageAll,
+        totalPageAll: state.registerList.totalPageAll,
+        searchAll: state.registerList.searchAll,
+        registerListDataMy: state.registerList.registerListDataMy,
+        isLoadingMy: state.registerList.isLoadingMy,
+        errorMy: state.registerList.errorMy,
+        currentPageMy: state.registerList.currentPageMy,
+        totalPageMy: state.registerList.totalPageMy,
+        searchMy: state.registerList.searchMy,
+        segment: state.registerList.segment
     };
 }
 

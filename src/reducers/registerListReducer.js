@@ -6,46 +6,59 @@ import initialState from './initialState'
 
 export default function registerListReducer(state = initialState.registerList, action) {
     switch (action.type) {
-        case types.BEGIN_DATA_REGISTER_LIST_LOAD:
+        case types.BEGIN_DATA_REGISTER_LIST_LOAD_ALL:
             return Object.assign({}, state, {
-                isLoading: action.isLoading,
-                error: action.error,
-                pageSearch: action.pageSearch
+                isLoadingAll: action.isLoadingAll,
+                errorAll: action.errorAll,
             });
-        case types.LOAD_DATA_REGISTER_LIST_SUCCESSFUL:
+        case types.LOAD_DATA_REGISTER_LIST_SUCCESSFUL_ALL:
+            let registerListDataAll = (action.currentPageAll === 1) ? action.registerListDataAll :
+                [...state.registerListDataAll, ...action.registerListDataAll];
             return Object.assign({}, state, {
-                isLoading: action.isLoading,
-                error: action.error,
-                registerListData: [...state.registerListData, ...action.registerListData],
-                page: action.page
+                isLoadingAll: action.isLoadingAll,
+                errorAll: action.errorAll,
+                registerListDataAll: registerListDataAll,
+                currentPageAll: action.currentPageAll,
+                totalPageAll: action.totalPageAll,
             });
-        case types.LOAD_DATA_REGISTER_LIST_ERROR:
+        case types.LOAD_DATA_REGISTER_LIST_ERROR_ALL:
             return Object.assign({}, state, {
-                isLoading: action.isLoading,
-                error: action.error
+                isLoadingAll: action.isLoadingAll,
+                errorAll: action.errorAll
             });
-        case types.BEGIN_DATA_SEARCH_REGISTER_LIST_LOAD:
+        case types.UPDATE_FORM_SEARCH_REGISTER_LIST_ALL:
             return Object.assign({}, state, {
-                isSearchLoading: action.isSearchLoading,
-                errorSearch: action.error,
-                page: action.page,
-                registerListData: action.registerListData
+                searchAll: action.searchAll,
+                registerListDataAll: action.registerListDataAll,
+                currentPageAll: action.currentPageAll,
+                totalPageAll: action.totalPageAll,
             });
-        case types.LOAD_DATA_SEARCH_REGISTER_LIST_SUCCESSFUL:
+        case types.BEGIN_DATA_REGISTER_LIST_LOAD_MY:
             return Object.assign({}, state, {
-                isSearchLoading: action.isSearchLoading,
-                errorSearch: action.error,
-                registerListData: action.registerListData,
-                pageSearch: action.page
+                isLoadingMy: action.isLoadingMy,
+                errorMy: action.errorMy,
             });
-        case types.LOAD_DATA_SEARCH_REGISTER_LIST_ERROR:
+        case types.LOAD_DATA_REGISTER_LIST_SUCCESSFUL_MY:
+            let registerListDataMy = (action.currentPageMy === 1) ? action.registerListDataMy :
+                [...state.registerListDataMy, ...action.registerListDataMy];
             return Object.assign({}, state, {
-                isSearchLoading: action.isSearchLoading,
-                errorSearch: action.error
+                isLoadingMy: action.isLoadingMy,
+                errorMy: action.errorMy,
+                registerListDataMy: registerListDataMy,
+                currentPageMy: action.currentPageMy,
+                totalPageMy: action.totalPageMy,
             });
-        case types.UPDATE_DATA_SEARCH_REGISTER_LIST_FROM:
+        case types.LOAD_DATA_REGISTER_LIST_ERROR_MY:
             return Object.assign({}, state, {
-                search: action.search,
+                isLoadingMy: action.isLoadingMy,
+                errorMy: action.errorMy
+            });
+        case types.UPDATE_FORM_SEARCH_REGISTER_LIST_MY:
+            return Object.assign({}, state, {
+                searchMy: action.searchMy,
+                registerListDataMy: action.registerListDataMy,
+                currentPageMy: action.currentPageMy,
+                totalPageMy: action.totalPageMy,
             });
         case types.CHANGE_SEGMENT_REGISTER_LIST:
             return Object.assign({}, state, {

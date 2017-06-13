@@ -1,12 +1,11 @@
 import React from'react';
-import {RefreshControl, Dimensions, Platform} from 'react-native';
+import {RefreshControl} from 'react-native';
 import {
     View,
     Text,
     List
 } from 'native-base';
 import ShiftRegisterDate from './ShiftRegisterDate'
-var {height, width} = Dimensions.get('window');
 import theme from '../../styles';
 
 class ShiftRegisterWeek extends React.Component {
@@ -20,7 +19,6 @@ class ShiftRegisterWeek extends React.Component {
     }
 
     renderHeader() {
-        console.log('render');
         return (
             <View style={styles.header}>
                 <Text style={styles.headerTitle}>{'Tuần ' + this.props.weekData.week}</Text>

@@ -1,5 +1,5 @@
 import React from'react';
-import {Dimensions, Platform, TouchableNativeFeedback, TouchableOpacity, Animated, Switch} from 'react-native';
+import {Dimensions, Platform, TouchableNativeFeedback, TouchableOpacity, Animated} from 'react-native';
 import {
     View,
     Text,

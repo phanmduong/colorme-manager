@@ -1,5 +1,5 @@
 import React from'react';
-import {StyleSheet, Dimensions, Platform} from 'react-native';
+import {Dimensions, Platform} from 'react-native';
 import {
     Container,
     Button,

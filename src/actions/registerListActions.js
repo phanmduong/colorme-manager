@@ -3,92 +3,135 @@
  */
 import * as types from '../constants/actionTypes';
 import * as studentApi from '../apis/studentApi';
+import axios from 'axios';
+let CancelToken = axios.CancelToken;
+let sourceCancelAll = CancelToken.source();
+let sourceCancelMy = CancelToken.source();
 
-export function beginDataRegisterListLoad() {
+export function beginDataRegisterListLoadAll() {
     return {
-        type: types.BEGIN_DATA_REGISTER_LIST_LOAD,
-        isLoading: true,
-        error: false,
-        pageSearch: 0,
+        type: types.BEGIN_DATA_REGISTER_LIST_LOAD_ALL,
+        isLoadingAll: true,
+        errorAll: false,
     }
 }
 
-export function loadDataRegisterList(page, token) {
+export function loadDataRegisterListAll(token, page, search) {
     return function (dispatch) {
-        dispatch(beginDataRegisterListLoad());
-        studentApi.loadRegisterListApi(page, token).then(function (res) {
-            dispatch(loadDataSuccessful(page, res));
+        dispatch(beginDataRegisterListLoadAll());
+        studentApi.loadRegisterListApi(token, page, search, '', sourceCancelAll).then(function (res) {
+            dispatch(loadDataSuccessfulAll(res));
         }).catch(error => {
-            dispatch(loadDataError());
-            throw (error);
-        })
+            if (axios.isCancel(error)) {
+                console.log('Request canceled', error.message);
+            } else {
+                dispatch(loadDataErrorAll());
+                throw (error);
+            }
 
+        })
     }
 }
 
-export function loadDataSuccessful(page, res) {
+export function loadDataSuccessfulAll(res) {
     return ({
-        type: types.LOAD_DATA_REGISTER_LIST_SUCCESSFUL,
-        registerListData: res.data.registers,
-        isLoading: false,
-        error: false,
-        page: page
+        type: types.LOAD_DATA_REGISTER_LIST_SUCCESSFUL_ALL,
+        registerListDataAll: res.data.registers,
+        currentPageAll: res.data.paginator.current_page,
+        totalPageAll: res.data.paginator.total_pages,
+        isLoadingAll: false,
+        errorAll: false,
     })
 }
 
-export function loadDataError() {
+export function loadDataErrorAll() {
     return {
-        type: types.LOAD_DATA_REGISTER_LIST_ERROR,
-        isLoading: false,
-        error: true
+        type: types.LOAD_DATA_REGISTER_LIST_ERROR_ALL,
+        isLoadingAll: false,
+        errorAll: true
     }
 }
 
-export function beginDataSearchRegisterListLoad() {
+export function updateFormAndLoadDataSearchAll(searchAll, token) {
+    sourceCancelAll.cancel('Canceled by api register list (all).');
+    sourceCancelAll = CancelToken.source();
+    return (dispatch) => {
+        dispatch(updateFormSearchAll(searchAll));
+        dispatch(loadDataRegisterListAll(token, 1, searchAll));
+    }
+
+}
+
+export function updateFormSearchAll(searchAll) {
     return {
-        type: types.BEGIN_DATA_SEARCH_REGISTER_LIST_LOAD,
-        isSearchLoading: true,
-        errorSearch: false,
-        page: 0,
-        registerListData: []
+        type: types.UPDATE_FORM_SEARCH_REGISTER_LIST_ALL,
+        searchAll: searchAll,
+        currentPageAll: 1,
+        totalPageAll: 1,
+        registerListDataAll: []
     }
 }
 
-export function loadDataSearchRegisterList(search, page, token) {
+export function beginDataRegisterListLoadMy() {
+    return {
+        type: types.BEGIN_DATA_REGISTER_LIST_LOAD_MY,
+        isLoadingMy: true,
+        errorMy: false,
+    }
+}
+
+export function loadDataRegisterListMy(token, page, search, salerId) {
     return function (dispatch) {
-        dispatch(beginDataSearchRegisterListLoad());
-        studentApi.loadSearchRegisterListApi(search, page, token).then(function (res) {
-            dispatch(loadDataSearchSuccessful(page, res));
+        dispatch(beginDataRegisterListLoadMy());
+        studentApi.loadRegisterListApi(token, page, search, salerId, sourceCancelMy).then(function (res) {
+            dispatch(loadDataSuccessfulMy(res));
         }).catch(error => {
-            dispatch(loadDataSearchError());
-            throw (error);
+            if (axios.isCancel(error)) {
+                console.log('Request canceled', error.message);
+            } else {
+                dispatch(loadDataErrorMy());
+                throw (error);
+            }
         })
-
     }
 }
 
-export function loadDataSearchSuccessful(page, res) {
+export function loadDataSuccessfulMy(res) {
     return ({
-        type: types.LOAD_DATA_SEARCH_REGISTER_LIST_SUCCESSFUL,
-        registerListData: res.data.registers,
-        isSearchLoading: false,
-        errorSearch: false,
-        pageSearch: page
+        type: types.LOAD_DATA_REGISTER_LIST_SUCCESSFUL_MY,
+        registerListDataMy: res.data.registers,
+        currentPageMy: res.data.paginator.current_page,
+        totalPageMy: res.data.paginator.total_pages,
+        isLoadingMy: false,
+        errorMy: false,
     })
 }
 
-export function loadDataSearchError() {
+export function loadDataErrorMy() {
     return {
-        type: types.LOAD_DATA_SEARCH_REGISTER_LIST_ERROR,
-        isSearchLoading: false,
-        errorSearch: true
+        type: types.LOAD_DATA_REGISTER_LIST_ERROR_MY,
+        isLoadingMy: false,
+        errorMy: true
     }
 }
 
-export function updateDateSearchRegisterListFrom(search) {
+export function updateFormAndLoadDataSearchMy(searchMy, salerId, token) {
+    sourceCancelMy.cancel('Canceled by api register list (my).');
+    sourceCancelMy = CancelToken.source();
+    return (dispatch) => {
+        dispatch(updateFormSearchMy(searchMy));
+        dispatch(loadDataRegisterListMy(token, 1, searchMy, salerId));
+    }
+
+}
+
+export function updateFormSearchMy(searchMy) {
     return {
-        type: types.UPDATE_DATA_SEARCH_REGISTER_LIST_FROM,
-        search: search
+        type: types.UPDATE_FORM_SEARCH_REGISTER_LIST_MY,
+        searchMy: searchMy,
+        currentPageMy: 1,
+        totalPageMy: 1,
+        registerListDataMy: []
     }
 }
 

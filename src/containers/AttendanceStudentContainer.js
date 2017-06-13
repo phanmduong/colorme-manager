@@ -7,7 +7,7 @@ import {bindActionCreators} from 'redux';
 import AttendanceStudentComponent from '../components/AttendanceStudentComponent';
 import * as attendanceStudentActions from '../actions/attendanceStudentActions';
 import * as QRCodeActions from '../actions/QRCodeActions';
-import {Alert, BackHandler, Text, Button}from 'react-native';
+import {Alert, BackHandler}from 'react-native';
 import * as alert from '../constants/alert';
 import BackButton from '../components/common/BackButton';
 

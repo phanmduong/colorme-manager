@@ -1,5 +1,5 @@
 import React from'react';
-import {ActivityIndicator, Image, Dimensions} from 'react-native';
+import {Image, Dimensions} from 'react-native';
 import {
     Container,
     Button,

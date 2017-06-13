@@ -114,7 +114,7 @@ const DashboardMain = TabNavigator({
     }
 }, {
     tabBarComponent: TabBarTop,
-    swipeEnabled: true,
+    swipeEnabled: false,
     animationEnabled: true,
     tabBarOptions: {
         indicatorStyle: {

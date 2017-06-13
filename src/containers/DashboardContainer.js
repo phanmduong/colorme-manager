@@ -15,7 +15,7 @@ class DashboardContainer extends React.Component {
         super(props, context);
 
         this.state = {
-            isLoading: false,
+            isLoading: true,
             checkedDataBase: false,
             checkedDataGen: false,
             checkedDataDashboard: false,
@@ -33,6 +33,7 @@ class DashboardContainer extends React.Component {
     static navigationOptions = ({navigation}) => ({
         title: 'Quản lý'
     });
+
     componentWillMount() {
         this.loadData();
     }

@@ -4,14 +4,9 @@
 import axios from 'axios';
 import * as env from '../constants/env';
 
-export function loadRegisterListApi(page, token) {
-    let url = env.API_URL + "/register-list?page=" + page + "&token=" + token;
-    return axios.get(url);
-}
-
-export function loadSearchRegisterListApi(search, page, token) {
-    let url = env.API_URL + "/register-list?page=" + page + "&search=" + search + "&token=" + token;
-    return axios.get(url);
+export function loadRegisterListApi(token, page = 1, search = '', salerId = '', sourceCancel) {
+    let url = env.API_URL + "/register-list?page=" + page + "&search=" + search + "&saler_id=" + salerId + "&token=" + token;
+    return axios.get(url, {cancelToken: sourceCancel.token});
 }
 
 export function loadListStudentClassApi(classId, token) {

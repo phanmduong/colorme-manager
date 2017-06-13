@@ -1,10 +1,10 @@
 import React from'react';
-import {StyleSheet, Dimensions} from 'react-native';
+import {Dimensions} from 'react-native';
 import {
     View,
     Text,
 } from 'native-base';
-import {dotNumber, maxArray} from '../../helper';
+import {maxArray} from '../../helper';
 import BarchartItem from '../common/BarchartItem';
 var {height, width} = Dimensions.get('window');
 

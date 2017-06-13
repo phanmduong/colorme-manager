@@ -3,7 +3,6 @@
  */
 import React from'react';
 import {connect} from 'react-redux';
-import {Text} from 'react-native';
 import {bindActionCreators} from 'redux';
 import * as listStudentClassActions from '../actions/listStudentClassActions';
 import ListStudenClassComponent from '../components/ListStudenClassComponent';

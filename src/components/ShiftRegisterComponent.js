@@ -1,5 +1,5 @@
 import React from'react';
-import {Platform, Dimensions, ViewPagerAndroid, ScrollView} from 'react-native';
+import {Platform, Dimensions} from 'react-native';
 import {
     Container,
     Button,

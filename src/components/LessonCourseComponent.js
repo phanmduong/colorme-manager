@@ -18,7 +18,6 @@ import {
 } from 'native-base';
 var {height, width} = Dimensions.get('window');
 import Spinkit from 'react-native-spinkit';
-import _ from 'lodash';
 import theme from '../styles';
 
 class LessonCourseComponent extends React.Component {

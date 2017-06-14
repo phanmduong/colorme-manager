@@ -103,6 +103,15 @@ export default {
         searchMy: '',
         segment: 1
     },
+    collectMoney: {
+        studentListData: [],
+        isLoading: false,
+        error: false,
+        currentPage: 0,
+        totalPage: 1,
+        search: '',
+        newestCode: ''
+    }
 
 
 

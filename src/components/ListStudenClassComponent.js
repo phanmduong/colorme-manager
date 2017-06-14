@@ -12,7 +12,7 @@ import Swiper from 'react-native-swiper';
 import Spinkit from 'react-native-spinkit';
 import theme from '../styles';
 import * as alert from '../constants/alert';
-import ListItemStudent from './common/ListItemStudent';
+import ListItemStudent from './listItem/ListItemStudent';
 import _ from 'lodash';
 
 var {height, width} = Dimensions.get('window');

@@ -14,5 +14,11 @@ export function loadListStudentClassApi(classId, token) {
     return axios.get(url);
 }
 
+export function searchStudentApi(sourceCancel, search, token, page, limit = 20) {
+    let url = env.API_URL + "/students?search=" + search + "&page=" + page + "&limit=" + limit + "&token=" + token;
+    console.log(url);
+    return axios.get(url, {cancelToken: sourceCancel.token});
+}
+
 
 

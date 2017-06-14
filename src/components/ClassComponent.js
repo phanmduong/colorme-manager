@@ -2,7 +2,7 @@ import React from'react';
 import {
     List
 } from 'native-base';
-import ListItemClass from './common/ListItemClass';
+import ListItemClass from './listItem/ListItemClass';
 
 class ClassComponent extends React.Component {
     constructor(props, context) {

@@ -26,50 +26,30 @@ class ListItemStudentCollectMoney extends React.Component {
     }
 
     content() {
-        const {name, avatar, email} = this.props;
+        const {name, avatar, email, phone} = this.props;
         return (
             <View style={styles.container}>
                 <Thumbnail small source={{uri: avatar}}/>
                 <View style={styles.content}>
                     <View style={styles.containerTitle}>
                         <Text style={styles.title}>{name.trim().toUpperCase()}</Text>
-                        {(this.state.onPressed) ?
-                            (
-                                <Icon
-                                    style={styles.icon}
-                                    ios='ios-arrow-up'
-                                    android="md-arrow-dropup"
-                                    name="ios-arrow-up"/>
-                            )
-                            :
-                            (
-                                <Icon
-                                    name="ios-arrow-up"
-                                    ios='ios-arrow-down'
-                                    android="md-arrow-dropdown"
-                                    style={styles.icon}
-                                />
-                            )
-                        }
                     </View>
-                    {/*<View style={styles.containerSubTitle}>*/}
-                    {/*<Text style={styles.subTitle}>{email}</Text>*/}
-                    {/*</View>*/}
+                    <View style={styles.containerSubTitle}>
+                        <Text style={styles.subTitle}>{email}</Text>
+                        <Call
+                            url={'tel:' + phone}
+                            phone={phone}
+                        />
+                    </View>
                 </View>
             </View>
         )
     }
 
     renderExpand() {
-        var {phone, email} = this.props;
         if (this.state.onPressed) {
             return (
                 <View style={styles.containerExpand}>
-                    <Text style={styles.email}>{email}</Text>
-                    <Call
-                        url={'tel:' + phone}
-                        phone={phone}
-                    />
                 </View>
             );
         }
@@ -79,7 +59,7 @@ class ListItemStudentCollectMoney extends React.Component {
         if (Platform.OS === 'ios') {
             return (
                 <View>
-                    <TouchableOpacity onPress={() => this.onChangePress()}>
+                    <TouchableOpacity onPress={() => this.props.onPress(this.props.student)}>
                         <View style={styles.containerAll}>
                             {this.content()}
                             {this.renderExpand()}
@@ -91,7 +71,7 @@ class ListItemStudentCollectMoney extends React.Component {
         } else {
             return (
                 <View>
-                    <TouchableNativeFeedback onPress={() => this.onChangePress()}>
+                    <TouchableNativeFeedback onPress={() => this.props.onPress(this.props.student)}>
                         <View style={styles.containerAll}>
                             {this.content()}
                             {this.renderExpand()}
@@ -131,7 +111,7 @@ const styles = ({
         fontSize: (Platform.isPad) ? 18 : 13
     },
     subTitle: {
-        color: '#7d7d7d',
+        color: theme.colorSubTitle,
         fontSize: 12
     },
     icon: {
@@ -169,7 +149,7 @@ const styles = ({
         fontSize: 12
     },
     containerSubTitle: {
-        flexDirection: 'row'
+        flexDirection: 'column'
     },
     email: {
         color: theme.colorSubTitle,

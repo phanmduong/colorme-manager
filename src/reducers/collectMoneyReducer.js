@@ -12,15 +12,12 @@ export default function collectMoneyReducer(state = initialState.collectMoney, a
                 error: action.error,
             });
         case types.LOAD_DATA_STUDENT_LIST_COLLECT_MONEY_SUCCESSFUL:
-            let studentListData = (action.currentPage === 1) ? action.studentListData :
-                [...state.studentListData, ...action.studentListData];
             return Object.assign({}, state, {
                 isLoading: action.isLoading,
                 error: action.error,
-                studentListData: studentListData,
-                currentPage: action.currentPage,
-                totalPage: action.totalPage,
-                newestCode: action.newestCode
+                studentListData: action.studentListData,
+                nextCode: action.nextCode,
+                nextWaitingCode: action.nextWaitingCode
             });
         case types.LOAD_DATA_STUDENT_LIST_COLLECT_MONEY_ERROR:
             return Object.assign({}, state, {
@@ -31,8 +28,6 @@ export default function collectMoneyReducer(state = initialState.collectMoney, a
             return Object.assign({}, state, {
                 search: action.search,
                 studentListData: action.studentListData,
-                currentPage: action.currentPage,
-                totalPage: action.totalPage,
             });
         default:
             return state;

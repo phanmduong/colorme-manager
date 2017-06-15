@@ -16,10 +16,10 @@ export function beginDataStudentListLoad() {
     }
 }
 
-export function loadDataStudentList(token, search, page, limit) {
+export function loadDataStudentList(token, search) {
     return function (dispatch) {
         dispatch(beginDataStudentListLoad());
-        studentApi.searchStudentApi(sourceCancel, search, token, page, limit).then(function (res) {
+        studentApi.searchStudentRegisterApi(sourceCancel, search, token).then(function (res) {
             dispatch(loadDataSuccessful(res));
         }).catch(error => {
             if (axios.isCancel(error)) {
@@ -36,10 +36,9 @@ export function loadDataStudentList(token, search, page, limit) {
 export function loadDataSuccessful(res) {
     return ({
         type: types.LOAD_DATA_STUDENT_LIST_COLLECT_MONEY_SUCCESSFUL,
-        studentListData: res.data.data,
-        currentPage: res.data.paginator.current_page,
-        totalPage: res.data.paginator.total_pages,
-        newestCode: res.data.newest_code,
+        studentListData: res.data.data.users,
+        nextCode: res.data.data.next_code,
+        nextWaitingCode: res.data.data.next_waiting_code,
         isLoading: false,
         error: false,
 
@@ -59,7 +58,7 @@ export function updateFormAndLoadDataSearch(search, token) {
     sourceCancel = CancelToken.source();
     return (dispatch) => {
         dispatch(updateFormSearch(search));
-        dispatch(loadDataStudentList(token, search, 1));
+        dispatch(loadDataStudentList(token, search));
     }
 
 }
@@ -68,8 +67,6 @@ export function updateFormSearch(search) {
     return {
         type: types.UPDATE_FORM_SEARCH_STUDENT_LIST_COLLECT_MONEY,
         search: search,
-        currentPage: 1,
-        totalPage: 1,
         studentListData: []
     }
 }

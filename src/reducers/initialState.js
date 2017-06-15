@@ -107,12 +107,8 @@ export default {
         studentListData: [],
         isLoading: false,
         error: false,
-        currentPage: 0,
-        totalPage: 1,
         search: '',
-        newestCode: ''
+        nextCode: '',
+        nextWaitingCode: ''
     }
-
-
-
 }

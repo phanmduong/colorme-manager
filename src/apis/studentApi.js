@@ -20,5 +20,11 @@ export function searchStudentApi(sourceCancel, search, token, page, limit = 20) 
     return axios.get(url, {cancelToken: sourceCancel.token});
 }
 
+export function searchStudentRegisterApi(sourceCancel, search, token) {
+    let url = env.API_URL + "/v2/search-registers?search=" + search + "&token=" + token;
+    console.log(url);
+    return axios.get(url, {cancelToken: sourceCancel.token});
+}
+
 
 

@@ -1,11 +1,12 @@
 import React from'react';
-import {Dimensions} from 'react-native';
+import {Dimensions, FlatList} from 'react-native';
 import {
     Container,
     Button,
     View,
     List,
     Text,
+    Thumbnail
 } from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../styles';
@@ -13,11 +14,18 @@ import * as alert from '../constants/alert';
 import Loading from './common/Loading';
 import Search from './common/Search';
 import ListItemStudentCollectMoney from "./listItem/ListItemStudentCollectMoney";
+import Modal from 'react-native-modalbox';
 
 var {height, width} = Dimensions.get('window');
 class RegisterListComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
+        this.openModal = this.openModal.bind(this);
+        this.state = ({
+            student: {
+                registers: {}
+            }
+        });
     }
 
     renderSearch() {
@@ -29,6 +37,14 @@ class RegisterListComponent extends React.Component {
                 value={search}
             />
         )
+    }
+
+    openModal(student) {
+        this._modal.open();
+        this.setState({
+            student: student
+        })
+
     }
 
     renderContent() {
@@ -54,10 +70,18 @@ class RegisterListComponent extends React.Component {
             } else {
                 return (
                     <View style={{flex: 1}}>
+                        <View style={styles.containerCode}>
+                            <View style={styles.contentCode}>
+                                <Text style={styles.titleCode}>Mã học viên tiếp theo: </Text>
+                                <Text style={styles.code}>{this.props.nextCode}</Text>
+                            </View>
+                            <View style={styles.contentCode}>
+                                <Text style={styles.titleCode}>Mã học viên chờ tiếp theo: </Text>
+                                <Text style={styles.code}>{this.props.nextWaitingCode}</Text>
+                            </View>
+                        </View>
                         <List
                             style={styles.list}
-                            onEndReached={this.props.loadDataStudentList}
-                            onEndReachedThreshold={height / 2}
                             dataArray={this.props.studentList}
                             renderRow={
                                 (item, sectionID, rowID) => (
@@ -66,20 +90,11 @@ class RegisterListComponent extends React.Component {
                                         avatar={item.avatar_url}
                                         email={item.email}
                                         phone={item.phone}
+                                        onPress={this.openModal}
+                                        student={item}
                                     />
                                 )
                             }
-                            renderFooter={() => {
-                                if (this.props.isLoading) {
-                                    return (
-                                        <View style={styles.loading}>
-                                            <Loading size={width / 12}/>
-                                        </View>
-                                    )
-                                } else {
-                                    <View/>
-                                }
-                            }}
                         >
                         </List>
                     </View>
@@ -94,6 +109,22 @@ class RegisterListComponent extends React.Component {
             <View style={{flex: 1}}>
                 {this.renderSearch()}
                 {this.renderContent()}
+                <Modal
+                    style={styles.modal}
+                    position={"center"}
+                    ref={(modal) => {
+                        this._modal = modal
+                    }}
+                >
+                    <View style={styles.containerInfoStudent}>
+                        <Thumbnail small source={{uri: this.state.student.avatar_url}}/>
+                        <Text>{this.state.student.name}</Text>
+                    </View>
+                    <FlatList
+                        data={[{key: 'a'}, {key: 'b'}]}
+                        renderItem={({item}) => <Text>{item.key}</Text>}
+                    />
+                </Modal>
             </View>
         )
 
@@ -127,6 +158,36 @@ const styles = ({
     loading: {
         height: 95
     },
+    contentCode: {
+        paddingHorizontal: 15,
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+
+    },
+    titleCode: {
+        color: theme.colorSubTitle,
+        fontSize: 12
+    },
+    code: {
+        fontSize: 14
+    },
+    containerCode: {
+        borderBottomWidth: 1,
+        borderBottomColor: '#d3d3d3',
+        paddingBottom: 5
+    },
+    modal: {
+        height: height - 200,
+        width: width - 50
+    },
+    containerInfoStudent: {
+        flexDirection: 'row',
+        borderBottomWidth: 1,
+        borderBottomColor: '#d3d3d3',
+        marginHorizontal: 10,
+        alignItems: 'center',
+        paddingVertical: 10
+    }
 
 });
 

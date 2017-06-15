@@ -20,8 +20,7 @@ class CollectMoneyContainer extends React.Component {
     }
 
     loadDataStudentList() {
-        if (this.props.currentPage < this.props.totalPage)
-            this.props.collectMoneyActions.loadDataStudentList(this.props.token, this.props.search, this.props.currentPage + 1);
+        this.props.collectMoneyActions.loadDataStudentList(this.props.token, this.props.search);
     }
 
     updateFormAndLoadDataSearch(search) {
@@ -38,6 +37,8 @@ class CollectMoneyContainer extends React.Component {
                 search={this.props.search}
                 loadDataStudentList={this.loadDataStudentList}
                 updateFormAndLoadDataSearch={this.updateFormAndLoadDataSearch}
+                nextCode={this.props.nextCode}
+                nextWaitingCode={this.props.nextWaitingCode}
             />
         );
     }
@@ -53,10 +54,9 @@ function mapStateToProps(state) {
         studentListData: state.collectMoney.studentListData,
         isLoading: state.collectMoney.isLoading,
         error: state.collectMoney.error,
-        currentPage: state.collectMoney.currentPage,
-        totalPage: state.collectMoney.totalPage,
         search: state.collectMoney.search,
-        newestCode: state.collectMoney.newestCode
+        nextCode: state.collectMoney.nextCode,
+        nextWaitingCode: state.collectMoney.nextWaitingCode,
     };
 }
 

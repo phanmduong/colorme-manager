@@ -13,10 +13,11 @@ import theme from '../styles';
 import * as alert from '../constants/alert';
 import Loading from './common/Loading';
 import Search from './common/Search';
-import ListItemStudentCollectMoney from "./listItem/ListItemStudentCollectMoney";
+import ListItemStudentCollectMoney from "./collectMoney/ListItemStudentCollectMoney";
 import Modal from 'react-native-modalbox';
 
 var {height, width} = Dimensions.get('window');
+let self;
 class RegisterListComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -26,6 +27,7 @@ class RegisterListComponent extends React.Component {
                 registers: {}
             }
         });
+        self = this;
     }
 
     renderSearch() {
@@ -90,7 +92,7 @@ class RegisterListComponent extends React.Component {
                                         avatar={item.avatar_url}
                                         email={item.email}
                                         phone={item.phone}
-                                        onPress={this.openModal}
+                                        onPress={self.props.onSelectStudent}
                                         student={item}
                                     />
                                 )

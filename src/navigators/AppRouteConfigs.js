@@ -10,6 +10,7 @@ import QRCodeContainer from '../containers/QRCodeContainer';
 import AttendanceStudentContainer from '../containers/AttendanceStudentContainer';
 import CurrentClassStudyContainer from '../containers/CurrentClassStudyContainer';
 import CollectMoneyContainer from '../containers/CollectMoneyContainer';
+import StudentRegisterClassContainer from '../containers/StudentRegisterClassContainer';
 import MoneyTransferContainer from '../containers/MoneyTransferContainer';
 import ShiftRegisterContainer from '../containers/ShiftRegisterContainer';
 import DashboardContainer from '../containers/DashboardContainer';
@@ -67,6 +68,9 @@ const TabDashboard = StackNavigator({
 const TabCollectMoney = StackNavigator({
     CollectMoney: {
         screen: CollectMoneyContainer
+    },
+    StudentRegisterClass: {
+        screen: StudentRegisterClassContainer
     }
 }, navigationOptionsDefault);
 

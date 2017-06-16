@@ -70,3 +70,10 @@ export function updateFormSearch(search) {
         studentListData: []
     }
 }
+
+export function selectStudentClassRegister(student) {
+    return {
+        type: types.SELECTED_STUDENT_OF_STUDENT_LIST_COLLECT_MONEY,
+        studentSelected: student
+    }
+}

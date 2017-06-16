@@ -29,6 +29,10 @@ export default function collectMoneyReducer(state = initialState.collectMoney, a
                 search: action.search,
                 studentListData: action.studentListData,
             });
+        case types.SELECTED_STUDENT_OF_STUDENT_LIST_COLLECT_MONEY:
+            return Object.assign({}, state, {
+                studentSelected: action.studentSelected,
+            });
         default:
             return state;
     }

@@ -12,6 +12,7 @@ class CollectMoneyContainer extends React.Component {
         super(props, context);
         this.loadDataStudentList = this.loadDataStudentList.bind(this);
         this.updateFormAndLoadDataSearch = this.updateFormAndLoadDataSearch.bind(this);
+        this.selectStudent = this.selectStudent.bind(this);
     }
 
 
@@ -27,6 +28,11 @@ class CollectMoneyContainer extends React.Component {
         this.props.collectMoneyActions.updateFormAndLoadDataSearch(search, this.props.token);
     }
 
+    selectStudent(student) {
+        this.props.collectMoneyActions.selectStudentClassRegister(student);
+        this.props.navigation.navigate("StudentRegisterClass");
+    }
+
     render() {
 
         return (
@@ -39,6 +45,7 @@ class CollectMoneyContainer extends React.Component {
                 updateFormAndLoadDataSearch={this.updateFormAndLoadDataSearch}
                 nextCode={this.props.nextCode}
                 nextWaitingCode={this.props.nextWaitingCode}
+                onSelectStudent={this.selectStudent}
             />
         );
     }

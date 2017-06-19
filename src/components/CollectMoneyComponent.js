@@ -281,7 +281,7 @@ const styles = ({
         textAlign: 'center'
     },
     modal: {
-        height: height / 2 - 20,
+        height: height / 2,
         width: width - 40,
         borderRadius: 10,
     },
@@ -366,7 +366,7 @@ const styles = ({
         fontSize: 15,
         color: theme.colorSubTitle,
         lineHeight: 20,
-        height: 40
+        height: 35
     },
     containerInfoStudent: {
         flexDirection: 'row',

@@ -4,10 +4,12 @@ import {
     View,
     Text,
     Thumbnail,
-    Icon
+    Icon,
+    List
 } from 'native-base';
 import theme from '../../styles';
 import Call from '../common/Call';
+import ListItemRegisterStudentClass from './ListItemRegisterStudentClass';
 
 var {height, width} = Dimensions.get('window');
 var maxWidthProcess = width / 2;
@@ -33,6 +35,24 @@ class ListItemStudentCollectMoney extends React.Component {
                 <View style={styles.content}>
                     <View style={styles.containerTitle}>
                         <Text style={styles.title}>{name.trim().toUpperCase()}</Text>
+                        {(this.state.onPressed) ?
+                            (
+                                <Icon
+                                    style={styles.icon}
+                                    ios='ios-arrow-up'
+                                    android="md-arrow-dropup"
+                                    name="ios-arrow-up"/>
+                            )
+                            :
+                            (
+                                <Icon
+                                    name="ios-arrow-up"
+                                    ios='ios-arrow-down'
+                                    android="md-arrow-dropdown"
+                                    style={styles.icon}
+                                />
+                            )
+                        }
                     </View>
                     <View style={styles.containerSubTitle}>
                         <Text style={styles.subTitle}>{email}</Text>
@@ -47,9 +67,23 @@ class ListItemStudentCollectMoney extends React.Component {
     }
 
     renderExpand() {
+        const {registers, student, onPress} = this.props;
         if (this.state.onPressed) {
             return (
                 <View style={styles.containerExpand}>
+                    <List
+                        dataArray={registers}
+                        renderRow={(item) => (
+                            <ListItemRegisterStudentClass
+                                className={item.class}
+                                isPaid={item.is_paid}
+                                register={item}
+                                student={student}
+                                onPress={onPress}
+                            />
+                        )}
+                    >
+                    </List>
                 </View>
             );
         }
@@ -59,7 +93,7 @@ class ListItemStudentCollectMoney extends React.Component {
         if (Platform.OS === 'ios') {
             return (
                 <View>
-                    <TouchableOpacity onPress={() => this.props.onPress(this.props.student)}>
+                    <TouchableOpacity onPress={() => this.onChangePress()}>
                         <View style={styles.containerAll}>
                             {this.content()}
                             {this.renderExpand()}
@@ -71,7 +105,7 @@ class ListItemStudentCollectMoney extends React.Component {
         } else {
             return (
                 <View>
-                    <TouchableNativeFeedback onPress={() => this.props.onPress(this.props.student)}>
+                    <TouchableNativeFeedback onPress={() => this.onChangePress()}>
                         <View style={styles.containerAll}>
                             {this.content()}
                             {this.renderExpand()}

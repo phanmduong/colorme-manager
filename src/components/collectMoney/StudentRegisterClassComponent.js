@@ -122,6 +122,7 @@ const styles = ({
         height: height - 200,
         width: width - 50
     },
+
     containerModal: {
         padding: 15,
         alignItems: 'center',

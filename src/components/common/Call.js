@@ -45,7 +45,7 @@ class Call extends React.Component {
 const styles = StyleSheet.create({
     phone: {
         color: '#0087ff',
-        fontSize: (Platform.isPad) ? 20 : 15
+        fontSize: (Platform.isPad) ? 18 : 13
     },
 });
 

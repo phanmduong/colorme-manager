@@ -6,6 +6,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as collectMoneyActions from '../actions/collectMoneyActions';
 import CollectMoneyComponent from '../components/CollectMoneyComponent';
+import {Dimensions, Keyboard, Platform, Alert} from 'react-native';
+import * as alert from '../constants/alert';
 
 class CollectMoneyContainer extends React.Component {
     constructor(props, context) {
@@ -13,11 +15,28 @@ class CollectMoneyContainer extends React.Component {
         this.loadDataStudentList = this.loadDataStudentList.bind(this);
         this.updateFormAndLoadDataSearch = this.updateFormAndLoadDataSearch.bind(this);
         this.selectStudent = this.selectStudent.bind(this);
+        this.updateFormData = this.updateFormData.bind(this);
+        this.updateFormDataAll = this.updateFormDataAll.bind(this);
+        this.updateMoneyStudent = this.updateMoneyStudent.bind(this);
     }
 
 
     componentWillMount() {
         this.loadDataStudentList();
+    }
+
+    updateFormData(name, value) {
+        let formInfoMoney = Object.assign({}, this.props.formInfoMoney);
+        formInfoMoney[name] = value;
+        this.props.collectMoneyActions.updateFormInfoMoney(formInfoMoney);
+    }
+
+    updateFormDataAll(formInfoMoney) {
+        this.props.collectMoneyActions.updateFormInfoMoney(formInfoMoney);
+    }
+
+    updateMoneyStudent(registerId) {
+        this.props.collectMoneyActions.updateMoneyStudent(this.props.token, this.props.formInfoMoney, registerId);
     }
 
     loadDataStudentList() {
@@ -33,6 +52,34 @@ class CollectMoneyContainer extends React.Component {
         this.props.navigation.navigate("StudentRegisterClass");
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log("updating" + nextProps.isUpdatingData  );
+        if (nextProps.isUpdatingData !== this.props.isUpdatingData) {
+            console.log('is updating');
+            if (!nextProps.isUpdatingData) {
+                if (!nextProps.errorUpdate) {
+                    Alert.alert(
+                        'Thông báo',
+                        alert.COLLECT_MONEY_SUCCESSFUL
+                    );
+                } else {
+                    if (nextProps.messageErrorUpdate && nextProps.messageErrorUpdate.trim().length > 0) {
+                        Alert.alert(
+                            'Thông báo',
+                            nextProps.messageErrorUpdate
+                        );
+                    } else {
+                        Alert.alert(
+                            'Thông báo',
+                            alert.COLLECT_MONEY_FAILED
+                        );
+                    }
+                }
+            }
+
+        }
+    }
+
     render() {
 
         return (
@@ -46,6 +93,12 @@ class CollectMoneyContainer extends React.Component {
                 nextCode={this.props.nextCode}
                 nextWaitingCode={this.props.nextWaitingCode}
                 onSelectStudent={this.selectStudent}
+                updateFormData={this.updateFormData}
+                updateFormDataAll={this.updateFormDataAll}
+                updateMoneyStudent={this.updateMoneyStudent}
+                formInfoMoney={this.props.formInfoMoney}
+                isUpdatingMoneyStudent={this.props.isUpdatingData}
+                errorUpdate={this.props.errorUpdate}
             />
         );
     }
@@ -61,9 +114,14 @@ function mapStateToProps(state) {
         studentListData: state.collectMoney.studentListData,
         isLoading: state.collectMoney.isLoading,
         error: state.collectMoney.error,
+        isUpdatingData: state.collectMoney.isUpdatingData,
+        errorUpdate: state.collectMoney.errorUpdate,
+        messageErrorUpdate: state.collectMoney.messageErrorUpdate,
         search: state.collectMoney.search,
         nextCode: state.collectMoney.nextCode,
         nextWaitingCode: state.collectMoney.nextWaitingCode,
+        formInfoMoney: state.collectMoney.formInfoMoney,
+
     };
 }
 

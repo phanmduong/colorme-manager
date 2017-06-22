@@ -63,6 +63,13 @@ export function updateFormAndLoadDataSearch(search, token) {
 
 }
 
+export function updateFormInfoMoney(formInfoMoney) {
+    return {
+        type: types.UPDATE_FORM_INFO_MONEY,
+        formInfoMoney: formInfoMoney
+    }
+}
+
 export function updateFormSearch(search) {
     return {
         type: types.UPDATE_FORM_SEARCH_STUDENT_LIST_COLLECT_MONEY,
@@ -77,3 +84,56 @@ export function selectStudentClassRegister(student) {
         studentSelected: student
     }
 }
+
+export function beginUpdateMoneyStudent() {
+    return {
+        type: types.BEGIN_UPDATE_MONEY_STUDENT_COLLECT_MONEY,
+        isUpdatingData: true,
+        errorUpdate: false,
+        messageError: ''
+    }
+}
+
+export function updateMoneyStudent(token, formInfoMoney, registerId) {
+    let {money, code, note, isReceivedCard} = formInfoMoney;
+    return function (dispatch) {
+        dispatch(beginUpdateMoneyStudent());
+        collectMoneyApi.updateMoneyApi(token, registerId, money, code, note, isReceivedCard)
+            .then(function (res) {
+                dispatch(updateDataSuccessful(res));
+            })
+            .catch(error => {
+            dispatch(updateDataError(error.response.data));
+        })
+    }
+}
+
+export function updateDataSuccessful(res) {
+    console.log(JSON.stringify(res));
+    return ({
+        type: types.UPDATE_MONEY_STUDENT_COLLECT_MONEY_SUCCESSFUL,
+        nextCode: res.data.data.next_code,
+        nextWaitingCode: res.data.data.next_waiting_code,
+        registerData: {
+            code: res.data.data.code,
+            money: res.data.data.money,
+            id: res.data.data.id,
+            paid_time: res.data.data.paid_time,
+            received_id_card: res.data.data.received_id_card,
+            is_paid: 1,
+            note: res.data.data.note
+        },
+        isUpdatingData: false,
+        errorUpdate: false,
+    })
+}
+
+export function updateDataError(res) {
+    return {
+        type: types.UPDATE_MONEY_STUDENT_COLLECT_MONEY_ERROR,
+        isUpdatingData: false,
+        errorUpdate: true,
+        messageErrorUpdate: res.error
+    }
+}
+

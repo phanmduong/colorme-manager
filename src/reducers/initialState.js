@@ -107,8 +107,17 @@ export default {
         studentListData: [],
         isLoading: false,
         error: false,
+        isUpdatingData: false,
+        errorUpdate: false,
+        messageErrorUpdate: false,
         search: '',
         nextCode: '',
-        nextWaitingCode: ''
+        nextWaitingCode: '',
+        formInfoMoney: {
+            code: '',
+            money: '',
+            note: '',
+            isReceivedCard: false
+        }
     }
 }

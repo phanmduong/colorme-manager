@@ -1,13 +1,10 @@
 import React from'react';
-import {Dimensions, Platform, TouchableNativeFeedback, TouchableOpacity} from 'react-native';
+import {Dimensions, Platform, TouchableOpacity} from 'react-native';
 import {
     View,
-    Text,
-    Thumbnail,
-    Icon
+    Text
 } from 'native-base';
 import theme from '../../styles';
-import Call from '../common/Call';
 
 var {height, width} = Dimensions.get('window');
 class ListItemStudentCollectMoney extends React.Component {
@@ -15,6 +12,9 @@ class ListItemStudentCollectMoney extends React.Component {
         super(props, context);
     }
 
+    shouldComponentUpdate(nextProps) {
+        return !_.isEqual(nextProps.isPaid, this.props.isPaid);
+    }
 
     content() {
         const {className, isPaid} = this.props;
@@ -42,6 +42,7 @@ class ListItemStudentCollectMoney extends React.Component {
     }
 
     render() {
+        console.log('render collect Money');
         return (
             <View>
                 <TouchableOpacity onPress={() => this.props.onPress(this.props.student, this.props.register)}>

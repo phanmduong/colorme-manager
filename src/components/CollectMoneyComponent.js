@@ -1,5 +1,5 @@
 import React from'react';
-import {Dimensions, Keyboard, Platform} from 'react-native';
+import {Dimensions, Keyboard, Platform, Alert} from 'react-native';
 import {
     Container,
     Button,
@@ -22,7 +22,7 @@ import Call from './common/Call';
 
 var {height, width} = Dimensions.get('window');
 let self;
-class RegisterListComponent extends React.Component {
+class CollectMoneyComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.openModal = this.openModal.bind(this);
@@ -46,6 +46,15 @@ class RegisterListComponent extends React.Component {
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide);
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.isUpdatingMoneyStudent !== this.props.isUpdatingMoneyStudent) {
+            if (!nextProps.isUpdatingMoneyStudent) {
+                    this._modal.close();
+            }
+
+        }
+    }
+
     renderSearch() {
         const {updateFormAndLoadDataSearch, search} = this.props;
         return (
@@ -58,15 +67,47 @@ class RegisterListComponent extends React.Component {
     }
 
     openModal(student, register) {
-        this._modal.open();
+        let formInfoMoney = Object.assign({}, this.props.formInfoMoney);
+        if (register.is_paid) {
+            formInfoMoney.code = register.code;
+            formInfoMoney.money = register.money;
+            formInfoMoney.note = register.note;
+            formInfoMoney.isReceivedCard = Boolean(register.received_id_card);
+            this.props.updateFormDataAll(formInfoMoney);
+        } else {
+            if (register.class && register.class.indexOf('.') !== -1) {
+                formInfoMoney.code = this.props.nextCode;
+            } else {
+                formInfoMoney.code = this.props.nextWaitingCode;
+            }
+            formInfoMoney.money = '';
+            formInfoMoney.note = '';
+            formInfoMoney.isReceivedCard = false;
+            this.props.updateFormDataAll(formInfoMoney);
+        }
         this.setState({
             student: student,
             register: register
-        })
+        });
+        this._modal.open();
     }
 
     updateMoneyStudent() {
-
+        if (this.props.formInfoMoney.code.trim().length <= 0) {
+            Alert.alert(
+                'Thông báo',
+                alert.MUST_ENTER_CODE
+            );
+            return;
+        }
+        if (this.props.formInfoMoney.money.trim().length <= 0) {
+            Alert.alert(
+                'Thông báo',
+                alert.MUST_ENTER_MONEY
+            );
+            return;
+        }
+        this.props.updateMoneyStudent(this.state.register.id);
     }
 
     componentWillUnmount() {
@@ -144,6 +185,8 @@ class RegisterListComponent extends React.Component {
                         this._modal = modal
                     }}
                     position={!this.state.isKeyboardShow ? 'center' : 'top'}
+                    backdropPressToClose={!this.props.isUpdatingMoneyStudent}
+                    swipeToClose={!this.props.isUpdatingMoneyStudent}
                 >
                     <View style={styles.containerModal}>
                         {(!this.state.isKeyboardShow) ?
@@ -189,26 +232,34 @@ class RegisterListComponent extends React.Component {
                             </View>
                             <InputGroup>
                                 <Input
+                                    onChangeText={(data) => this.props.updateFormData('code', data)}
                                     style={styles.textInput}
+                                    value={this.props.formInfoMoney.code}
                                     returnKeyType={'next'}
                                     placeholder='Mã học viên'
                                     blurOnSubmit={false}
                                     onSubmitEditing={() => {
                                         this.refs.money._root.focus();
                                     }}
-                                    editable={this.props.isUpdatingMoneyStudent || !Boolean(this.state.register.is_paid)}
+                                    editable={!this.props.isUpdatingMoneyStudent && !Boolean(this.state.register.is_paid)}
                                 />
                             </InputGroup>
                             <View style={styles.containerIsReceivedCard}>
                                 <Text style={styles.textIsReceivedCard}>Đã nhận thẻ</Text>
                                 <CheckBox
-                                    checked={true}
-                                    editable={this.props.isUpdatingMoneyStudent || !Boolean(this.state.register.is_paid)}
+                                    checked={Boolean(this.props.formInfoMoney.isReceivedCard)}
+                                    onPress={() => {
+                                        if (!this.props.isUpdatingMoneyStudent && !Boolean(this.state.register.is_paid)) {
+                                            this.props.updateFormData('isReceivedCard', !this.props.formInfoMoney.isReceivedCard)
+                                        }
+                                    }}
                                 />
 
                             </View>
                             <InputGroup style={styles.inputGroup}>
                                 <Input
+                                    value={this.props.formInfoMoney.money.toString()}
+                                    onChangeText={(data) => this.props.updateFormData('money', data)}
                                     style={styles.textInput}
                                     ref='money'
                                     returnKeyType={'next'}
@@ -218,16 +269,18 @@ class RegisterListComponent extends React.Component {
                                     onSubmitEditing={() => {
                                         this.refs.note._root.focus();
                                     }}
-                                    editable={this.props.isUpdatingMoneyStudent || !Boolean(this.state.register.is_paid)}
+                                    editable={!this.props.isUpdatingMoneyStudent && !Boolean(this.state.register.is_paid)}
                                 />
                             </InputGroup>
                             <InputGroup>
                                 <Input
+                                    value={this.props.formInfoMoney.note}
+                                    onChangeText={(data) => this.props.updateFormData('note', data)}
                                     style={styles.textInput}
                                     ref='note'
                                     returnKeyType={'done'}
                                     placeholder='Ghi chú'
-                                    editable={this.props.isUpdatingMoneyStudent || !Boolean(this.state.register.is_paid)}
+                                    editable={!this.props.isUpdatingMoneyStudent && !Boolean(this.state.register.is_paid)}
                                     onSubmitEditing={() => {
                                         this.updateMoneyStudent();
                                         Keyboard.dismiss();
@@ -331,7 +384,10 @@ const styles = ({
         width: width - 80,
     },
     disableButton: {
-        backgroundColor: theme.mainColor + 'AF'
+        backgroundColor: theme.mainColor + 'AF',
+        position: 'absolute',
+        bottom: 0,
+        width: width - 80,
     },
     containerIsReceivedCard: {
         width: width - 80,
@@ -380,4 +436,4 @@ const styles = ({
     }
 });
 
-export default RegisterListComponent;
+export default CollectMoneyComponent;

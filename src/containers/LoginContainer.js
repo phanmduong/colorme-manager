@@ -20,7 +20,7 @@ class LoginContainer extends React.Component {
     }
 
     componentWillMount(){
-        this.props.loginActions.getDataLogin();
+        // this.props.loginActions.getDataLogin();
     }
 
     saveDataLogin(){

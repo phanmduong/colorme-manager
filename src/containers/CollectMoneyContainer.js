@@ -53,9 +53,7 @@ class CollectMoneyContainer extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log("updating" + nextProps.isUpdatingData  );
         if (nextProps.isUpdatingData !== this.props.isUpdatingData) {
-            console.log('is updating');
             if (!nextProps.isUpdatingData) {
                 if (!nextProps.errorUpdate) {
                     Alert.alert(

@@ -109,11 +109,10 @@ export function updateMoneyStudent(token, formInfoMoney, registerId) {
 }
 
 export function updateDataSuccessful(res) {
-    console.log(JSON.stringify(res));
     return ({
         type: types.UPDATE_MONEY_STUDENT_COLLECT_MONEY_SUCCESSFUL,
-        nextCode: res.data.data.next_code,
-        nextWaitingCode: res.data.data.next_waiting_code,
+        nextCode: res.data.next_code,
+        nextWaitingCode: res.data.next_waiting_code,
         registerData: {
             code: res.data.data.code,
             money: res.data.data.money,

@@ -17,6 +17,7 @@
     "react-native-busy-indicator": "^1.1.0",
     "react-native-camera": "^0.9.0",
     "react-native-code-push": "^2.0.3-beta",
+    "react-native-linear-gradient": "react-native-community/react-native-linear-gradient",
     "react-native-modalbox": "^1.3.9",
     "react-native-progress": "^3.2.1",
     "react-native-spinkit": "^1.0.2",
@@ -27,6 +28,11 @@
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
     "socket.io-client": "^2.0.2"
+  },
+  "rnpm": {
+    "assets": [
+      "assets/fonts"
+    ]
   },
   "devDependencies": {
     "babel-jest": "20.0.3",

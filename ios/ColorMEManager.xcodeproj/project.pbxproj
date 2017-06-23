@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -60,6 +59,7 @@
 		6E0C531E07024C49A3AEED83 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 79676A4988A948CCBB8D999F /* Entypo.ttf */; };
 		71CDD633848A45218E5B4DFB /* Rubik-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 196AF44FA247409A89F8C202 /* Rubik-Italic.ttf */; };
 		78BB0673D3F647518750B015 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E18250D31DFE483987A7CBE1 /* MaterialCommunityIcons.ttf */; };
+		7ABC6FF8A1344850A8DD3C1E /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B14FEDFFA1F3472EA41F0C34 /* libBVLinearGradient.a */; };
 		7DF0D49752304B648F104DCD /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7EBDA1B06DC4485B91475A46 /* rubicon-icon-font.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		84F886D811836ABEBC9372A7 /* libPods-ColorMEManager-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0654B0FEC5F2AF51E2815B8 /* libPods-ColorMEManager-tvOSTests.a */; };
@@ -94,6 +94,7 @@
 		F91385275527415EBE0F3C87 /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7090DF6D8AC405F880716D2 /* Roboto_medium.ttf */; };
 		F963A005BBEE4C1E9E0C3607 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BCCAC0933EA64B77841EC225 /* FontAwesome.ttf */; };
 		FCB9173F34AD424CA9E97921 /* Rubik-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D06B1A32A87146D895C89773 /* Rubik-Light.ttf */; };
+		7FCB292802E3442E85F30ABE /* SegoeUI-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0127A27BE074CCA8EC5A9DC /* SegoeUI-Bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -159,6 +160,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 83CBBA2E1A601D0E00E9B192;
 			remoteInfo = React;
+		};
+		17206ABC1EFD578700CBB8A3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 22A8EC8B09A941A387CAB1D2 /* BVLinearGradient.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = BVLinearGradient;
 		};
 		176E51A31EFC42D9000E5A3E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -395,6 +403,7 @@
 		1F4C8AA5D4EE96EB77B015A6 /* Pods-ColorMEManagerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColorMEManagerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ColorMEManagerTests/Pods-ColorMEManagerTests.release.xcconfig"; sourceTree = "<group>"; };
 		2107997E98154B3B9F0EE900 /* SanFranciscoThin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SanFranciscoThin.ttf; path = "../node_modules/native-base/Fonts/SanFranciscoThin.ttf"; sourceTree = "<group>"; };
 		219E669F0CB44AF4879D14A8 /* Rubik-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-BlackItalic.ttf"; path = "../node_modules/native-base/Fonts/Rubik-BlackItalic.ttf"; sourceTree = "<group>"; };
+		22A8EC8B09A941A387CAB1D2 /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
 		231D3128B671624ED69FCDCC /* Pods-ColorMEManager-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColorMEManager-tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ColorMEManager-tvOS/Pods-ColorMEManager-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		29A548DC29B44E609A1D523B /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* ColorMEManager-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ColorMEManager-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -434,6 +443,7 @@
 		A6725888BE0F414F87E674CB /* SanFrancisco.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SanFrancisco.ttf; path = "../node_modules/native-base/Fonts/SanFrancisco.ttf"; sourceTree = "<group>"; };
 		A7090DF6D8AC405F880716D2 /* Roboto_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto_medium.ttf; path = "../node_modules/native-base/Fonts/Roboto_medium.ttf"; sourceTree = "<group>"; };
 		AFB4794B2CE1B7E8B8FC1549 /* Pods-ColorMEManagerTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColorMEManagerTests.staging.xcconfig"; path = "Pods/Target Support Files/Pods-ColorMEManagerTests/Pods-ColorMEManagerTests.staging.xcconfig"; sourceTree = "<group>"; };
+		B14FEDFFA1F3472EA41F0C34 /* libBVLinearGradient.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libBVLinearGradient.a; sourceTree = "<group>"; };
 		B1511525FC1C470F909CAB0D /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		B4B6A72D153D418BB03C8848 /* Skia.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Skia.ttf; path = "../node_modules/native-base/Fonts/Skia.ttf"; sourceTree = "<group>"; };
 		BCB69D5B1C1A4353A29ED7F7 /* libz.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -466,6 +476,7 @@
 		F78D7E99F72643B4B4D883FC /* RNSpinkit.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSpinkit.xcodeproj; path = "../node_modules/react-native-spinkit/ios/RNSpinkit.xcodeproj"; sourceTree = "<group>"; };
 		FE9C0B681BB050453CE9A570 /* Pods-ColorMEManager-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColorMEManager-tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-ColorMEManager-tvOS/Pods-ColorMEManager-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		FF90E50D55A1467389965B21 /* RNAnalytics.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNAnalytics.xcodeproj; path = "../node_modules/mobile-center-analytics/ios/RNAnalytics.xcodeproj"; sourceTree = "<group>"; };
+		F0127A27BE074CCA8EC5A9DC /* SegoeUI-Bold.ttf */ = {isa = PBXFileReference; name = "SegoeUI-Bold.ttf"; path = "../assets/fonts/SegoeUI/SegoeUI-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -501,6 +512,7 @@
 				ABF1D798DDFF45BB96FF9F7A /* libz.tbd in Frameworks */,
 				B93A98E737134F76BB88F8A0 /* libRNSpinkit.a in Frameworks */,
 				B3ED86B03D134403988E27B8 /* libRNVectorIcons.a in Frameworks */,
+				7ABC6FF8A1344850A8DD3C1E /* libBVLinearGradient.a in Frameworks */,
 				517F8EE738B5E79AF794781A /* libPods-ColorMEManager.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -640,6 +652,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		17206AB71EFD578600CBB8A3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				17206ABD1EFD578700CBB8A3 /* libBVLinearGradient.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		17FB83521EE713A6005FE375 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -756,6 +776,7 @@
 				04FCC9F4BC034A2495B5A0F4 /* CodePush.xcodeproj */,
 				F78D7E99F72643B4B4D883FC /* RNSpinkit.xcodeproj */,
 				73C5446A49F2490285A12C7C /* RNVectorIcons.xcodeproj */,
+				22A8EC8B09A941A387CAB1D2 /* BVLinearGradient.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -856,6 +877,7 @@
 				5FC50D529F9C47179ABC166A /* Octicons.ttf */,
 				63B46074BE4A4FCA9942A356 /* SimpleLineIcons.ttf */,
 				B1511525FC1C470F909CAB0D /* Zocial.ttf */,
+				F0127A27BE074CCA8EC5A9DC /* SegoeUI-Bold.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -991,6 +1013,10 @@
 					ProjectRef = 17FB843A1EE72DE9005FE375 /* ART.xcodeproj */;
 				},
 				{
+					ProductGroup = 17206AB71EFD578600CBB8A3 /* Products */;
+					ProjectRef = 22A8EC8B09A941A387CAB1D2 /* BVLinearGradient.xcodeproj */;
+				},
+				{
 					ProductGroup = 17FB83C01EE71BED005FE375 /* Products */;
 					ProjectRef = 04FCC9F4BC034A2495B5A0F4 /* CodePush.xcodeproj */;
 				},
@@ -1124,6 +1150,13 @@
 			fileType = archive.ar;
 			path = libReact.a;
 			remoteRef = 146834031AC3E56700842450 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		17206ABD1EFD578700CBB8A3 /* libBVLinearGradient.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libBVLinearGradient.a;
+			remoteRef = 17206ABC1EFD578700CBB8A3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		176E51A41EFC42D9000E5A3E /* libART-tvOS.a */ = {
@@ -1365,6 +1398,7 @@
 				A0E5211F037046098E78C49F /* Rubik-Medium.ttf in Resources */,
 				160F11071477480EB97ED0BC /* Rubik-MediumItalic.ttf in Resources */,
 				B829430BA0A241BFA9C8561B /* Rubik-Regular.ttf in Resources */,
+				1A5CD6D2730F4E018AF385C5 /* FontAwesome.ttf in Resources */,
 				0D895CF85F1A4F8E958A639D /* SF-UI-Text-Regular.otf in Resources */,
 				EBCEDE0C22304A71ADB68499 /* SanFrancisco.ttf in Resources */,
 				11435E47A9154AB5BDFCA873 /* SanFranciscoBold.ttf in Resources */,
@@ -1376,7 +1410,6 @@
 				7DF0D49752304B648F104DCD /* rubicon-icon-font.ttf in Resources */,
 				6E0C531E07024C49A3AEED83 /* Entypo.ttf in Resources */,
 				9E803EC46FE444F28450B6ED /* EvilIcons.ttf in Resources */,
-				1A5CD6D2730F4E018AF385C5 /* FontAwesome.ttf in Resources */,
 				A77DDED961044140BF3A2D10 /* Foundation.ttf in Resources */,
 				1DB9BE673F32435BAB4C9E04 /* Ionicons.ttf in Resources */,
 				78BB0673D3F647518750B015 /* MaterialCommunityIcons.ttf in Resources */,
@@ -1384,6 +1417,7 @@
 				EE044A21DAEA45B19FD1E4B4 /* Octicons.ttf in Resources */,
 				3D79B1F3566F4FBE95DEB9AD /* SimpleLineIcons.ttf in Resources */,
 				DD7A2BB79D534B468FE34450 /* Zocial.ttf in Resources */,
+				7FCB292802E3442E85F30ABE /* SegoeUI-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1695,12 +1729,14 @@
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 				);
 				INFOPLIST_FILE = ColorMEManagerTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1731,12 +1767,14 @@
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 				);
 				INFOPLIST_FILE = ColorMEManagerTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1769,16 +1807,22 @@
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 				);
 				INFOPLIST_FILE = ColorMEManager/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
+				PODS_CONFIGURATION_BUILD_DIR = "$PODS_BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				PRODUCT_BUNDLE_IDENTIFIER = vn.colorme.phanmduong.ColorMEManager;
 				PRODUCT_NAME = ColorMEManager;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1801,10 +1845,15 @@
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 				);
 				INFOPLIST_FILE = ColorMEManager/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1869,10 +1918,15 @@
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 				);
 				INFOPLIST_FILE = ColorMEManager/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1900,12 +1954,14 @@
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 				);
 				INFOPLIST_FILE = ColorMEManagerTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1943,11 +1999,13 @@
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 				);
 				INFOPLIST_FILE = "ColorMEManager-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1989,6 +2047,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.ColorMEManager-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2019,11 +2078,13 @@
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 				);
 				INFOPLIST_FILE = "ColorMEManager-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2064,11 +2125,13 @@
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 				);
 				INFOPLIST_FILE = "ColorMEManager-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2110,6 +2173,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.ColorMEManager-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2135,6 +2199,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",

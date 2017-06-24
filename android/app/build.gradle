@@ -33,6 +33,13 @@ import com.android.build.OutputFile
  *   // bundleInPaidRelease: true,
  *   // bundleInBeta: true,
  *
+ *   // whether to disable dev mode in custom build variants (by default only disabled in release)
+ *   // for example: to disable dev mode in the staging build type (if configured)
+ *   devDisabledInStaging: true,
+ *   // The configuration property can be in the following formats
+ *   //         'devDisabledIn${productFlavor}${buildType}'
+ *   //         'devDisabledIn${buildType}'
+ *
  *   // the root of your project, i.e. where "package.json" lives
  *   root: "../../",
  *
@@ -91,7 +98,7 @@ android {
         applicationId "vn.colorme.phanminhduong.colormemanager"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 10
+        versionCode 11
         versionName "1.2"
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -152,11 +159,11 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-linear-gradient')
     compile project(':react-native-vector-icons')
     compile project(':react-native-spinkit')
     compile project(':react-native-code-push')
     compile project(':react-native-camera')
+    compile project(':react-native-linear-gradient')
     compile project(':mobile-center-crashes')
     compile project(':mobile-center-analytics')
     compile fileTree(dir: "libs", include: ["*.jar"])

@@ -32,14 +32,14 @@ class LoginComponent extends React.Component {
             <View style={{flex: 2, position: 'relative', backgroundColor: '#fff',}}>
                 <LinearGradient colors={['#ff0064', '#c51600']} style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                     <View style={{alignItems: 'flex-end'}}>
-                        <Text style={{color: 'white', fontSize: 35, fontWeight: (Platform.OS === 'ios') ? 'bold' : 'normal',
-                            fontFamily: (Platform.OS === 'ios') ? 'Segoe UI' : 'SegoeUI-Bold',
+                        <Text style={{color: 'white', fontSize: 35, fontWeight: (Platform.OS === 'ios') ? '900' : 'normal',
+                            fontFamily: (Platform.OS === 'ios') ? 'Segoe UI' : 'SegoeUI-Blank',
                             backgroundColor: 'transparent',
                         }}>
                             color
                         </Text>
-                        <Text style={{color: 'white', fontSize: 100, fontWeight: (Platform.OS === 'ios') ? 'bold' : 'normal',
-                            fontFamily: (Platform.OS === 'ios') ? 'Segoe UI' : 'SegoeUI-Bold',
+                        <Text style={{color: 'white', fontSize: 100, fontWeight: (Platform.OS === 'ios') ? '900' : 'normal',
+                            fontFamily: (Platform.OS === 'ios') ? 'Segoe UI' : 'SegoeUI-Blank',
                             backgroundColor: 'transparent',
                             lineHeight: (Platform.OS === 'ios') ? 100 : 70
                         }}>

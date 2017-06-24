@@ -3,7 +3,7 @@
  */
 export default {
     statusBar: {
-        color: 'default'
+        color: 'light-content'
     },
     autoLogin: {
         isAutoLogin: true

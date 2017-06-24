@@ -27,7 +27,7 @@ export function loginUser(login) {
         loadLoginApi.loadLoginApi(login).then(function (res) {
             dispatch(loginSuccess(res));
             dispatch(openMainScreen(res));
-            dispatch(changeStatusBarColor());
+            dispatch(changeStatusBarColor('light-content'));
         }).catch(error => {
             dispatch(loginError());
             throw (error);
@@ -44,10 +44,10 @@ export function openMainScreen(res) {
     }
 }
 
-export function changeStatusBarColor() {
+export function changeStatusBarColor(color) {
     return ({
         type: types.CHANGE_STATUSBAR_COLOR,
-        color: 'light-content'
+        color: color
     })
 }
 

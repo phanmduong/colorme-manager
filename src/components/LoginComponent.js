@@ -4,10 +4,8 @@
 import React from'react';
 import {Dimensions, Keyboard, Text, View, Platform}from'react-native';
 import {
-    Container,
     Form,
     InputGroup,
-    Icon,
     Input,
     Button
 } from 'native-base';
@@ -16,10 +14,15 @@ import Spinkit from 'react-native-spinkit';
 import theme from '../styles';
 import LinearGradient from 'react-native-linear-gradient';
 
+let self;
 class LoginComponent extends React.Component {
     constructor(props) {
         super(props);
         this.onPressLogin = this.onPressLogin.bind(this);
+        this.state = ({
+            isKeyboardShow: false
+        });
+        self = this;
     }
 
     onPressLogin() {
@@ -27,94 +30,130 @@ class LoginComponent extends React.Component {
         Keyboard.dismiss();
     }
 
+    componentWillMount() {
+        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow);
+        this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide);
+    }
+
+    keyboardDidShow() {
+        self.setState({
+            isKeyboardShow: true
+        })
+        self.props.changeStatusBarColor('default');
+    }
+
+    keyboardDidHide() {
+        self.setState({
+            isKeyboardShow: false
+        });
+        self.props.changeStatusBarColor('light-content');
+    }
+
     render() {
         return (
-            <View style={{flex: 2, position: 'relative', backgroundColor: '#fff',}}>
-                <LinearGradient colors={['#ff0064', '#c51600']} style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                    <View style={{alignItems: 'flex-end'}}>
-                        <Text style={{color: 'white', fontSize: 35, fontWeight: (Platform.OS === 'ios') ? '900' : 'normal',
-                            fontFamily: (Platform.OS === 'ios') ? 'Segoe UI' : 'SegoeUI-Blank',
-                            backgroundColor: 'transparent',
-                        }}>
+            <View style={{
+                ...styles.container,
+                ...{
+                    paddingBottom: (this.state.isKeyboardShow && Platform.OS === 'ios') ? height / 3 : 0,
+                    justifyContent: (!this.state.isKeyboardShow) ? 'flex-start' : 'center',
+                    alignItems: (!this.state.isKeyboardShow) ? 'stretch' : 'center'
+                }
+            }}
+            >
+                {!this.state.isKeyboardShow &&
+                <LinearGradient colors={['#ff0064', '#c51600']} style={styles.containerColorME}>
+                    <View style={styles.contentColorME}>
+                        <Text style={styles.textColor}>
                             color
                         </Text>
-                        <Text style={{color: 'white', fontSize: 100, fontWeight: (Platform.OS === 'ios') ? '900' : 'normal',
-                            fontFamily: (Platform.OS === 'ios') ? 'Segoe UI' : 'SegoeUI-Blank',
-                            backgroundColor: 'transparent',
-                            lineHeight: (Platform.OS === 'ios') ? 100 : 70
-                        }}>
+                        <Text style={styles.textME}>
                             ME
                         </Text>
                     </View>
                 </LinearGradient>
-                <View style={{flex: 1, backgroundColor: '#fff',}}/>
-                <View style={{position: 'absolute', top: height/2 - 25, height: 2* height /5 , width: width, paddingBottom: 25 }}>
-                    <View style={{flex: 1
-                    ,position: 'relative',}}>
-
-                    <View style={{backgroundColor: '#fff', flex: 1, marginHorizontal: width / 10,
-                        borderRadius: 10,
-                        elevation: 10,
-                        shadowColor: '#666666',
-                        shadowOffset: {
-                            width: 0,
-                            height: 3
-                        },
-                        shadowRadius: 10,
-                        shadowOpacity: 0.4,
-                        justifyContent: 'center',
-                        alignItems: 'center'
+                }
+                {!this.state.isKeyboardShow && <View style={{flex: 1, backgroundColor: '#fff'}}/>}
+                <View style={{
+                    ...styles.containerFormLogin,
+                    ...{
+                        position: (!this.state.isKeyboardShow) ? 'absolute' : 'relative',
+                        top: (!this.state.isKeyboardShow) ? (height / 2 - 25) : 0,
+                    }
+                }}>
+                    <View style={{
+                        flex: 1,
+                        position: 'relative',
                     }}>
-                        <Form>
-                            <Text style={{
-                                color: '#ff0038',
-                                fontWeight: (Platform.OS === 'ios') ? 'bold' : 'normal',
-                                fontFamily: (Platform.OS === 'ios') ? 'Segoe UI' : 'SegoeUI-Bold',
-                            }}>EMAIL</Text>
-                            <InputGroup style={{width: width-width*0.3}}>
-                                <Input
-                                    value={this.props.username }
-                                    onChangeText={(data) => this.props.updateFormData('username', data)}
-                                    returnKeyType={'next'}
-                                    placeholder='Email'
-                                    blurOnSubmit={false}
-                                    keyboardType={'email-address'}
-                                    onSubmitEditing={() => {
-                                        this.refs.password._root.focus()
-                                    }}
-                                />
-                            </InputGroup>
-                            <Text style={{paddingTop: 15,
-                                color: '#ff0038',
-                                fontWeight: (Platform.OS === 'ios') ? 'bold' : 'normal',
-                                fontFamily: (Platform.OS === 'ios') ? 'Segoe UI' : 'SegoeUI-Bold',
-                            }}>PASSWORD</Text>
-                            <InputGroup>
-                                <Input
-                                    ref='password'
-                                    secureTextEntry
-                                    onChangeText={(data) => this.props.updateFormData('password', data)}
-                                    value={this.props.password}
-                                    returnKeyType={'done'}
-                                    placeholder='Password'
-                                    onSubmitEditing={this.props.onClickLogin}
-                                />
-                            </InputGroup>
-                        </Form>
 
-                    </View>
+                        <View style={styles.contentForm}>
+                            <Form>
+                                <Text style={styles.textTitleInput}>EMAIL</Text>
+                                <InputGroup style={{width: width - width * 0.3}}>
+                                    <Input
+                                        value={this.props.username }
+                                        onChangeText={(data) => this.props.updateFormData('username', data)}
+                                        returnKeyType={'next'}
+                                        placeholder='Email'
+                                        blurOnSubmit={false}
+                                        keyboardType={'email-address'}
+                                        onSubmitEditing={() => {
+                                            this.refs.password._root.focus()
+                                        }}
+                                        editable={!this.props.isLoading}
+                                    />
+                                </InputGroup>
+                                <Text style={{
+                                    ...styles.textTitleInput,
+                                    ...{
+                                        paddingTop: 15
+                                    }
+                                }}>PASSWORD</Text>
+                                <InputGroup>
+                                    <Input
+                                        ref='password'
+                                        secureTextEntry
+                                        onChangeText={(data) => this.props.updateFormData('password', data)}
+                                        value={this.props.password}
+                                        returnKeyType={'done'}
+                                        placeholder='Password'
+                                        onSubmitEditing={this.props.onClickLogin}
+                                        editable={!this.props.isLoading}
+                                    />
+                                </InputGroup>
+                            </Form>
+
+                        </View>
                         <Button
+                            disabled={this.props.isLoading}
                             block
                             rounded
                             style={styles.button}
                             onPress={this.onPressLogin}
                         >
-                            <Text style={{color: '#FFF', fontSize: 15, fontWeight: 'bold'}}>ĐĂNG NHẬP</Text>
+                            {(this.props.isLoading) ? (
+                                <View style={styles.containerLoading}>
+                                    <Spinkit
+                                        isVisible
+                                        color='white'
+                                        type='ThreeBounce'
+                                        size={40}
+                                    />
+                                </View>
+                            ) : (
+                                <Text style={styles.textLogin}>ĐĂNG NHẬP</Text>
+                            )
+                            }
                         </Button>
+
                     </View>
                 </View>
-                <View style={{position: 'absolute', bottom: 0, width: width, justifyContent: 'center', alignItems: 'center', height: height / 10}}>
-                    <Text style={{color: '#797979', fontWeight: 'bold'}}>QUÊN MẬT KHẨU?</Text>
+                <View
+                    style={{
+                        ...styles.contentResetPassword,
+                        ...{position: (!this.state.isKeyboardShow) ? 'absolute' : 'relative'}
+                    }}
+                >
+                    <Text style={styles.textResetPassword}>QUÊN MẬT KHẨU?</Text>
                 </View>
             </View>
         );
@@ -152,7 +191,82 @@ const styles = {
         shadowRadius: 10,
         shadowOpacity: 0.5,
         marginHorizontal: width / 5,
-        width: width - 2* width/5
+        width: width - 2 * width / 5,
+    },
+    container: {
+        flex: 1,
+        position: 'relative',
+        backgroundColor: '#fff',
+    },
+    containerColorME: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    contentColorME: {
+        alignItems: 'flex-end'
+    },
+    textColor: {
+        color: 'white',
+        fontSize: 35,
+        fontWeight: (Platform.OS === 'ios') ? '900' : 'normal',
+        fontFamily: (Platform.OS === 'ios') ? 'Segoe UI' : 'SegoeUI-Blank',
+        backgroundColor: 'transparent',
+    },
+    textME: {
+        color: 'white',
+        fontSize: 100,
+        fontWeight: (Platform.OS === 'ios') ? '900' : 'normal',
+        fontFamily: (Platform.OS === 'ios') ? 'Segoe UI' : 'SegoeUI-Blank',
+        backgroundColor: 'transparent',
+        lineHeight: (Platform.OS === 'ios') ? 100 : 70
+    },
+    containerFormLogin: {
+        height: 2 * height / 5,
+        width: width,
+        paddingBottom: 25
+    },
+    contentForm: {
+        backgroundColor: '#fff',
+        flex: 1,
+        marginHorizontal: width / 10,
+        borderRadius: 10,
+        elevation: 10,
+        shadowColor: '#666666',
+        shadowOffset: {
+            width: 0,
+            height: 3
+        },
+        shadowRadius: 10,
+        shadowOpacity: 0.4,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    textTitleInput: {
+        color: '#ff0038',
+        fontWeight: (Platform.OS === 'ios') ? 'bold' : 'normal',
+        fontFamily: (Platform.OS === 'ios') ? 'Segoe UI' : 'SegoeUI-Bold',
+    },
+    contentResetPassword: {
+        bottom: 0,
+        width: width,
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: height / 10
+    },
+    textResetPassword: {
+        color: '#797979',
+        fontWeight: 'bold'
+    },
+    textLogin: {
+        color: '#FFF',
+        fontSize: 15,
+        fontWeight: 'bold'
+    },
+    containerLoading: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 };
 

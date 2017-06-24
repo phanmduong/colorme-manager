@@ -20,7 +20,7 @@ class LoginContainer extends React.Component {
     }
 
     componentWillMount(){
-        // this.props.loginActions.getDataLogin();
+        this.props.loginActions.getDataLogin();
     }
 
     saveDataLogin(){
@@ -80,6 +80,7 @@ class LoginContainer extends React.Component {
                 username={this.props.login.username}
                 password={this.props.login.password}
                 isLoading={this.props.isLoading}
+                changeStatusBarColor={this.props.loginActions.changeStatusBarColor}
             />
         );
     }

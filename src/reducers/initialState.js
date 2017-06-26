@@ -119,5 +119,8 @@ export default {
             note: '',
             isReceivedCard: false
         }
+    },
+    moneyTransfer: {
+        segment: 1
     }
 }

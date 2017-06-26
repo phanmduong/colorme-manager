@@ -19,6 +19,7 @@ import navigatorReducer from './navigatorReducer';
 import statusbarReducer from './statusbarReducer';
 import autoLoginReducer from './autoLoginReducer';
 import collectMoneyReducer from './collectMoneyReducer';
+import moneyTransferReducer from './moneyTransferReducer';
 
 
 const rootReducer = combineReducers({
@@ -39,5 +40,6 @@ const rootReducer = combineReducers({
     nav: navigatorReducer,
     statusBar: statusbarReducer,
     collectMoney: collectMoneyReducer,
+    moneyTransfer: moneyTransferReducer,
 });
 export default rootReducer;

@@ -422,7 +422,7 @@ const styles = ({
         fontSize: 15,
         color: theme.colorSubTitle,
         lineHeight: 20,
-        height: 35
+        height: 40
     },
     containerInfoStudent: {
         flexDirection: 'row',

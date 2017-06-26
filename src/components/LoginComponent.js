@@ -100,6 +100,9 @@ class LoginComponent extends React.Component {
                                             this.refs.password._root.focus()
                                         }}
                                         editable={!this.props.isLoading}
+                                        style={{
+                                            lineHeight: 20,
+                                            height: 40}}
                                     />
                                 </InputGroup>
                                 <Text style={{
@@ -110,6 +113,8 @@ class LoginComponent extends React.Component {
                                 }}>PASSWORD</Text>
                                 <InputGroup>
                                     <Input
+                                        style={{
+                                        height: 40}}
                                         ref='password'
                                         secureTextEntry
                                         onChangeText={(data) => this.props.updateFormData('password', data)}

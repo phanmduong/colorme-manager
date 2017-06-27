@@ -121,6 +121,12 @@ export default {
         }
     },
     moneyTransfer: {
-        segment: 1
+        segment: 1,
+        staffListData: [],
+        isLoadingStaffList: false,
+        errorStaffList: false,
+        currentPageStaffList: 0,
+        totalPageStaffList: 1,
+        searchStaff: '',
     }
 }

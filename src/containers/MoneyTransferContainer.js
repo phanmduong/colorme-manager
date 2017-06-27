@@ -8,10 +8,13 @@ import {bindActionCreators} from 'redux';
 import Segment from '../components/common/SegmentTwo';
 import * as moneyTransferActions from '../actions/moneyTransferActions';
 import HistoryMoneyTransferComponent from '../components/moneyTransfer/HistoryMoneyTransferComponent';
-import MoneyTransferComponent from '../components/moneyTransfer/MoneyTransferComponent';
+import SearchStaffMoneyTransferComponent from '../components/moneyTransfer/SearchStaffMoneyTransferComponent';
+
 class MoneyTransferContainer extends React.Component {
     constructor(props, context) {
         super(props, context);
+        this.loadDataStaffList = this.loadDataStaffList.bind(this);
+        this.updateFormAndLoadDataSearchStaff = this.updateFormAndLoadDataSearchStaff.bind(this);
     }
 
     static navigationOptions = ({navigation}) => ({
@@ -33,13 +36,30 @@ class MoneyTransferContainer extends React.Component {
     }
 
     componentWillMount() {
+        this.loadDataStaffList();
         this.props.navigation.setParams({changeSegmentActive: this.props.moneyTransferActions.changeSegmentMoneyTransfer});
+    }
+
+    loadDataStaffList() {
+        if (this.props.currentPageStaffList < this.props.totalPageStaffList)
+            this.props.moneyTransferActions.loadDataStaffList(this.props.token, this.props.currentPageStaffList + 1, this.props.searchStaff);
+    }
+
+    updateFormAndLoadDataSearchStaff(search) {
+        this.props.moneyTransferActions.updateFormAndLoadDataSearchStaff(search, this.props.token);
     }
 
     render() {
         if (this.props.segment === 1) {
             return (
-                <MoneyTransferComponent/>
+                <SearchStaffMoneyTransferComponent
+                    updateFormAndLoadDataSearch={this.updateFormAndLoadDataSearchStaff}
+                    loadDataStaffList={this.loadDataStaffList}
+                    isLoading={this.props.isLoadingStaffList}
+                    error={this.props.errorStaffList}
+                    staffList={this.props.staffListData}
+                    search={this.props.searchStaff}
+                />
             )
         } else {
             return (
@@ -51,7 +71,13 @@ class MoneyTransferContainer extends React.Component {
 function mapStateToProps(state) {
     return {
         token: state.login.token,
-        segment: state.moneyTransfer.segment
+        segment: state.moneyTransfer.segment,
+        currentPageStaffList: state.moneyTransfer.currentPageStaffList,
+        totalPageStaffList: state.moneyTransfer.totalPageStaffList,
+        searchStaff: state.moneyTransfer.searchStaff,
+        staffListData: state.moneyTransfer.staffListData,
+        isLoadingStaffList: state.moneyTransfer.isLoadingStaffList,
+        errorStaffList: state.moneyTransfer.errorStaffList,
     };
 }
 

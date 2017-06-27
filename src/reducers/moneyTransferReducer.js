@@ -6,59 +6,32 @@ import initialState from './initialState'
 
 export default function moneyTransferReducer(state = initialState.moneyTransfer, action) {
     switch (action.type) {
-        case types.BEGIN_DATA_REGISTER_LIST_LOAD_ALL:
+        case types.BEGIN_DATA_STAFF_OF_MONEY_TRANSFER_LOAD:
             return Object.assign({}, state, {
-                isLoadingAll: action.isLoadingAll,
-                errorAll: action.errorAll,
+                isLoadingStaffList: action.isLoadingStaffList,
+                errorStaffList: action.errorStaffList,
             });
-        case types.LOAD_DATA_REGISTER_LIST_SUCCESSFUL_ALL:
-            let registerListDataAll = (action.currentPageAll === 1) ? action.registerListDataAll :
-                [...state.registerListDataAll, ...action.registerListDataAll];
+        case types.LOAD_DATA_STAFF_OF_MONEY_TRANSFER_SUCCESSFUL:
+            let staffListData = (action.currentPageAll === 1) ? action.staffListData :
+                [...state.staffListData, ...action.staffListData];
             return Object.assign({}, state, {
-                isLoadingAll: action.isLoadingAll,
-                errorAll: action.errorAll,
-                registerListDataAll: registerListDataAll,
-                currentPageAll: action.currentPageAll,
-                totalPageAll: action.totalPageAll,
+                isLoadingStaffList: action.isLoadingStaffList,
+                errorStaffList: action.errorStaffList,
+                staffListData: staffListData,
+                currentPageStaffList: action.currentPageStaffList,
+                totalPageStaffList: action.totalPageStaffList
             });
-        case types.LOAD_DATA_REGISTER_LIST_ERROR_ALL:
+        case types.LOAD_DATA_STAFF_OF_MONEY_TRANSFER_ERROR:
             return Object.assign({}, state, {
-                isLoadingAll: action.isLoadingAll,
-                errorAll: action.errorAll
+                isLoadingStaffList: action.isLoadingStaffList,
+                errorStaffList: action.errorStaffList
             });
-        case types.UPDATE_FORM_SEARCH_REGISTER_LIST_ALL:
+        case types.UPDATE_FORM_SEARCH_STAFF_LIST:
             return Object.assign({}, state, {
-                searchAll: action.searchAll,
-                registerListDataAll: action.registerListDataAll,
-                currentPageAll: action.currentPageAll,
-                totalPageAll: action.totalPageAll,
-            });
-        case types.BEGIN_DATA_REGISTER_LIST_LOAD_MY:
-            return Object.assign({}, state, {
-                isLoadingMy: action.isLoadingMy,
-                errorMy: action.errorMy,
-            });
-        case types.LOAD_DATA_REGISTER_LIST_SUCCESSFUL_MY:
-            let registerListDataMy = (action.currentPageMy === 1) ? action.registerListDataMy :
-                [...state.registerListDataMy, ...action.registerListDataMy];
-            return Object.assign({}, state, {
-                isLoadingMy: action.isLoadingMy,
-                errorMy: action.errorMy,
-                registerListDataMy: registerListDataMy,
-                currentPageMy: action.currentPageMy,
-                totalPageMy: action.totalPageMy,
-            });
-        case types.LOAD_DATA_REGISTER_LIST_ERROR_MY:
-            return Object.assign({}, state, {
-                isLoadingMy: action.isLoadingMy,
-                errorMy: action.errorMy
-            });
-        case types.UPDATE_FORM_SEARCH_REGISTER_LIST_MY:
-            return Object.assign({}, state, {
-                searchMy: action.searchMy,
-                registerListDataMy: action.registerListDataMy,
-                currentPageMy: action.currentPageMy,
-                totalPageMy: action.totalPageMy,
+                searchStaff: action.searchStaff,
+                staffListData: action.staffListData,
+                currentPageStaffList: action.currentPageStaffList,
+                totalPageStaffList: action.totalPageStaffList
             });
         case types.CHANGE_SEGMENT_MONEY_TRANSFER:
             return Object.assign({}, state, {

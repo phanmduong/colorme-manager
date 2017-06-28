@@ -112,6 +112,9 @@ const styles = ({
         color: '#d9534f',
         textAlign: 'center'
     },
+    loading: {
+        height: 95
+    },
 });
 
 export default SearchStaffMoneyTransferComponent;

@@ -14,6 +14,7 @@ export const NO_DATA_LIST_STUDENT_CLASS = 'Thời điểm hiện tại lớp kh�
 export const NO_DATA_REGISTER_LIST_CLASS = 'Thời điểm hiện tại không có danh sách học viên đăng kí';
 export const NO_DATA_STUDENT_LIST = 'Không tìm thấy học viên';
 export const NO_DATA_STAFF_LIST = 'Không tìm thấy nhân viên';
+export const NO_DATA_HISTORY_TRANSACTION = 'Thời điểm hiện tại không có lịch sử giao dịch';
 export const MUST_ENTER_CODE = 'Bạn phải nhập mã học viên';
 export const MUST_ENTER_MONEY = 'Bạn phải nhập tổng số tiền';
 export const COLLECT_MONEY_SUCCESSFUL = 'Nộp tiền thành công';

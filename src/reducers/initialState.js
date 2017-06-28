@@ -128,5 +128,10 @@ export default {
         currentPageStaffList: 0,
         totalPageStaffList: 1,
         searchStaff: '',
+        transactionListData: [],
+        isLoadingHistoryTransaction: false,
+        errorHistoryTransaction: false,
+        currentPageHistoryTransaction: 0,
+        totalPageHistoryTransaction: 1,
     }
 }

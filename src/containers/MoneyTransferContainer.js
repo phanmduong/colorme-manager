@@ -15,6 +15,7 @@ class MoneyTransferContainer extends React.Component {
         super(props, context);
         this.loadDataStaffList = this.loadDataStaffList.bind(this);
         this.updateFormAndLoadDataSearchStaff = this.updateFormAndLoadDataSearchStaff.bind(this);
+        this.loadDataHistoryTransaction = this.loadDataHistoryTransaction.bind(this);
     }
 
     static navigationOptions = ({navigation}) => ({
@@ -37,6 +38,7 @@ class MoneyTransferContainer extends React.Component {
 
     componentWillMount() {
         this.loadDataStaffList();
+        this.loadDataHistoryTransaction();
         this.props.navigation.setParams({changeSegmentActive: this.props.moneyTransferActions.changeSegmentMoneyTransfer});
     }
 
@@ -47,6 +49,11 @@ class MoneyTransferContainer extends React.Component {
 
     updateFormAndLoadDataSearchStaff(search) {
         this.props.moneyTransferActions.updateFormAndLoadDataSearchStaff(search, this.props.token);
+    }
+
+    loadDataHistoryTransaction() {
+        if (this.props.currentPageHistoryTransaction < this.props.totalPageHistoryTransaction)
+            this.props.moneyTransferActions.loadDataHistoryTransaction(this.props.token, this.props.currentPageHistoryTransaction + 1);
     }
 
     render() {
@@ -63,7 +70,12 @@ class MoneyTransferContainer extends React.Component {
             )
         } else {
             return (
-                <HistoryMoneyTransferComponent/>
+                <HistoryMoneyTransferComponent
+                    loadDataHistoryTransaction={this.loadDataHistoryTransaction}
+                    isLoading={this.props.isLoadingHistoryTransaction}
+                    error={this.props.errorHistoryTransaction}
+                    transactionList={this.props.transactionListData}
+                />
             )
         }
     }
@@ -78,6 +90,11 @@ function mapStateToProps(state) {
         staffListData: state.moneyTransfer.staffListData,
         isLoadingStaffList: state.moneyTransfer.isLoadingStaffList,
         errorStaffList: state.moneyTransfer.errorStaffList,
+        currentPageHistoryTransaction: state.moneyTransfer.currentPageHistoryTransaction,
+        totalPageHistoryTransaction: state.moneyTransfer.totalPageHistoryTransaction,
+        transactionListData: state.moneyTransfer.transactionListData,
+        isLoadingHistoryTransaction: state.moneyTransfer.isLoadingHistoryTransaction,
+        errorHistoryTransaction: state.moneyTransfer.errorHistoryTransaction,
     };
 }
 

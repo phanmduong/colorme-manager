@@ -77,3 +77,47 @@ export function changeSegmentMoneyTransfer(segment) {
         segment: segment
     }
 }
+
+export function beginDataHistoryTransactionLoad() {
+    return {
+        type: types.BEGIN_DATA_HISTORY_TRANSACTION_LOAD,
+        isLoadingHistoryTransaction: true,
+        errorHistoryTransaction: false,
+    }
+}
+
+export function loadDataHistoryTransaction(token, page) {
+    return function (dispatch) {
+        dispatch(beginDataHistoryTransactionLoad());
+        moneyTransferApi.transactionApi(token, page).then(function (res) {
+            dispatch(loadDataHistoryTransactionSuccessful(res));
+        }).catch(error => {
+            if (axios.isCancel(error)) {
+                console.log('Request canceled', error.message);
+            } else {
+                dispatch(loadDataHistoryTransactionError());
+                throw (error);
+            }
+
+        })
+    }
+}
+
+export function loadDataHistoryTransactionSuccessful(res) {
+    return ({
+        type: types.LOAD_DATA_HISTORY_TRANSACTION_SUCCESSFUL,
+        transactionListData: res.data.data,
+        currentPageHistoryTransaction: res.data.paginator.current_page,
+        totalPageHistoryTransaction: res.data.paginator.total_pages,
+        isLoadingHistoryTransaction: false,
+        errorHistoryTransaction: false,
+    })
+}
+
+export function loadDataHistoryTransactionError() {
+    return {
+        type: types.LOAD_DATA_HISTORY_TRANSACTION_ERROR,
+        isLoadingHistoryTransaction: false,
+        errorHistoryTransaction: true
+    }
+}

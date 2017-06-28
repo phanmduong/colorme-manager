@@ -4,16 +4,15 @@ import {
     View,
     Text,
     Thumbnail,
-    Icon,
-    List,
-    Button
+    List
 } from 'native-base';
 import theme from '../../styles';
-import Call from '../common/Call';
+import {dotNumber} from '../../helper';
+import Icon from '../common/Icon';
 
 var {height, width} = Dimensions.get('window');
 var maxWidthProcess = width / 2;
-class ListItemStaffMoneyTransfer extends React.Component {
+class ListItemHistoryTransaction extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
@@ -28,29 +27,41 @@ class ListItemStaffMoneyTransfer extends React.Component {
     }
 
     content() {
-        const {name, avatar, email, phone} = this.props;
+        const {sender, money, type, receiver, note, created_at, status} = this.props.data;
         return (
             <View style={styles.container}>
-                <Thumbnail small source={{uri: avatar}}/>
-                <View style={styles.contentLeft}>
-                    <View style={styles.content}>
-                        <View style={styles.containerTitle}>
-                            <Text style={styles.title}>{name.trim().toUpperCase()}</Text>
-                        </View>
-                        <View style={styles.containerSubTitle}>
-                            <Text style={styles.subTitle}>{email}</Text>
-                            <Call
-                                url={'tel:' + phone}
-                                phone={phone}
-                            />
-                        </View>
+                {(type === 'thu') ?
+                    (
+                        <Icon
+                            style={{...styles.icon, ...{color: '#13b300'}}}
+                            name="entypo|arrow-right"/>
+                    )
+                    :
+                    (
+                        <Icon
+                            name="entypo|arrow-left"
+                            style={{...styles.icon, ...{color: theme.secondColor}}}
+                        />
+                    )
+                }
+                <View style={styles.content}>
+                    <View style={styles.containerTitle}>
+                        <Text style={styles.title}>
+                            {(type === 'thu') ? sender.trim().toUpperCase() : receiver.trim().toUpperCase()}
+                        </Text>
+                        <Text style={{
+                            ...styles.statusTransaction,
+                            ...{
+                            color: (status ==='success') ? '#13b300' : theme.secondColor
+                            }
+                        }}>
+                            {(status ==='success') ? 'Thành công' : 'Thất bại'}
+                        </Text>
                     </View>
-                    <Button
-                        style={styles.buttonMoneyTransfer}
-                        rounded
-                    >
-                        <Text style={styles.textButtonMoneyTransfer}>Chuyển tiền</Text>
-                    </Button>
+                    <View style={styles.containerSubTitle}>
+                        <Text style={styles.subTitle}>{dotNumber(money)}đ - {created_at}</Text>
+                        <Text style={styles.subTitle}>{(type === 'thu') ? note : 'Nhân viên'}</Text>
+                    </View>
                 </View>
             </View>
         )
@@ -97,7 +108,7 @@ const styles = ({
     },
     content: {
         flex: 1,
-        marginLeft: 20
+        marginLeft: 20,
     },
     containerTitle: {
         flex: 1,
@@ -107,15 +118,15 @@ const styles = ({
     title: {
         color: '#555555',
         fontWeight: '900',
-        fontSize: (Platform.isPad) ? 18 : 13
+        fontSize: (Platform.isPad) ? 18 : 13,
+        width: width / 2
     },
     subTitle: {
         color: theme.colorSubTitle,
         fontSize: 12
     },
     icon: {
-        fontSize: 20,
-        color: theme.colorTitle,
+        fontSize: 35
     },
     line: {
         height: 1,
@@ -148,6 +159,7 @@ const styles = ({
         fontSize: 12
     },
     containerSubTitle: {
+        width: width / 2,
         flexDirection: 'column'
     },
     email: {
@@ -173,25 +185,9 @@ const styles = ({
         color: 'white',
         textAlign: 'center'
     },
-    buttonMoneyTransfer: {
-        paddingLeft: 10,
-        paddingBottom: 0,
-        paddingTop: 0,
-        paddingRight: 10,
-        height: 25,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    textButtonMoneyTransfer: {
+    statusTransaction: {
         fontSize: 13
-    },
-    contentLeft: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center'
     }
-
 });
 
-export default ListItemStaffMoneyTransfer;
+export default ListItemHistoryTransaction;

@@ -37,6 +37,26 @@ export default function moneyTransferReducer(state = initialState.moneyTransfer,
             return Object.assign({}, state, {
                 segment: action.segment,
             });
+        case types.BEGIN_DATA_HISTORY_TRANSACTION_LOAD:
+            return Object.assign({}, state, {
+                isLoadingHistoryTransaction: action.isLoadingHistoryTransaction,
+                errorHistoryTransaction: action.errorHistoryTransaction,
+            });
+        case types.LOAD_DATA_HISTORY_TRANSACTION_SUCCESSFUL:
+            let transactionListData = (action.currentPageAll === 1) ? action.transactionListData :
+                [...state.transactionListData, ...action.transactionListData];
+            return Object.assign({}, state, {
+                isLoadingHistoryTransaction: action.isLoadingHistoryTransaction,
+                errorHistoryTransaction: action.errorHistoryTransaction,
+                transactionListData: transactionListData,
+                currentPageHistoryTransaction: action.currentPageHistoryTransaction,
+                totalPageHistoryTransaction: action.totalPageHistoryTransaction
+            });
+        case types.LOAD_DATA_HISTORY_TRANSACTION_ERROR:
+            return Object.assign({}, state, {
+                isLoadingHistoryTransaction: action.isLoadingHistoryTransaction,
+                errorHistoryTransaction: action.errorHistoryTransaction
+            });
         default:
             return state;
     }

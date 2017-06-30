@@ -33,6 +33,8 @@ class SearchStaffMoneyTransferComponent extends React.Component {
         )
     }
 
+    com
+
 
     renderContent() {
         if (this.props.isLoading && this.props.staffList.length <= 0) {
@@ -62,14 +64,19 @@ class SearchStaffMoneyTransferComponent extends React.Component {
                         onEndReachedThreshold={height / 2}
                         dataArray={this.props.staffList}
                         renderRow={
-                            (item, sectionID, rowID) => (
+                            (item, sectionID, rowID) => {
+                                item.isTransaction = self.props.isLoadingTransaction;
+                                return (
                                 <ListItemStaffMoneyTransfer
+                                    postTransaction={this.props.postTransaction}
+                                    userId={item.id}
                                     name={item.name}
                                     avatar={item.avatar_url}
                                     email={item.email}
                                     phone={item.phone}
+                                    isTransaction={item.isTransaction}
                                 />
-                            )
+                            )}
                         }
                         renderFooter={() => {
                             if (this.props.isLoading) {

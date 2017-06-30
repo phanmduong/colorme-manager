@@ -57,6 +57,27 @@ export default function moneyTransferReducer(state = initialState.moneyTransfer,
                 isLoadingHistoryTransaction: action.isLoadingHistoryTransaction,
                 errorHistoryTransaction: action.errorHistoryTransaction
             });
+        case types.BEGIN_TRANSACTION:
+            return {
+                ...state, ...{
+                    isLoadingTransaction: action.isLoadingTransaction,
+                    errorTransaction: action.errorTransaction
+                }
+            };
+        case types.TRANSACTION_SUCCESSFUL:
+            return {
+                ...state, ...{
+                    isLoadingTransaction: action.isLoadingTransaction,
+                    errorTransaction: action.errorTransaction
+                }
+            };
+        case types.TRANSACTION_ERROR:
+            return {
+                ...state, ...{
+                    isLoadingTransaction: action.isLoadingTransaction,
+                    errorTransaction: action.errorTransaction
+                }
+            };
         default:
             return state;
     }

@@ -10,6 +10,7 @@ import {
 } from 'native-base';
 import theme from '../../styles';
 import Call from '../common/Call';
+import Spinkit from 'react-native-spinkit';
 
 var {height, width} = Dimensions.get('window');
 var maxWidthProcess = width / 2;
@@ -45,12 +46,23 @@ class ListItemStaffMoneyTransfer extends React.Component {
                             />
                         </View>
                     </View>
-                    <Button
+                    <TouchableOpacity
                         style={styles.buttonMoneyTransfer}
-                        rounded
+                        onPress={() => this.props.postTransaction(this.props.userId)}
                     >
-                        <Text style={styles.textButtonMoneyTransfer}>Chuyển tiền</Text>
-                    </Button>
+                        {(this.props.isTransaction) ? (
+                            <View style={styles.containerLoading}>
+                                <Spinkit
+                                    isVisible
+                                    color='white'
+                                    type='ThreeBounce'
+                                    size={20}
+                                />
+                            </View>
+                        ) : (
+                            <Text style={styles.textButtonMoneyTransfer}>CHUYỂN TIỀN</Text>
+                        )}
+                    </TouchableOpacity>
                 </View>
             </View>
         )
@@ -174,21 +186,27 @@ const styles = ({
         textAlign: 'center'
     },
     buttonMoneyTransfer: {
-        paddingLeft: 10,
-        paddingBottom: 0,
-        paddingTop: 0,
-        paddingRight: 10,
         height: 25,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        width: width/3.5,
+        backgroundColor: theme.secondColor,
+        padding: 5,
+        borderRadius: 5
     },
     textButtonMoneyTransfer: {
-        fontSize: 13
+        fontSize: 11,
+        color: 'white'
     },
     contentLeft: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    containerLoading: {
+        flex: 1,
+        justifyContent: 'center',
         alignItems: 'center'
     }
 

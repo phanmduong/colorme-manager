@@ -89,7 +89,7 @@ export function beginDataHistoryTransactionLoad() {
 export function loadDataHistoryTransaction(token, page) {
     return function (dispatch) {
         dispatch(beginDataHistoryTransactionLoad());
-        moneyTransferApi.transactionApi(token, page).then(function (res) {
+        moneyTransferApi.getTransactionApi(token, page).then(function (res) {
             dispatch(loadDataHistoryTransactionSuccessful(res));
         }).catch(error => {
             if (axios.isCancel(error)) {
@@ -121,3 +121,48 @@ export function loadDataHistoryTransactionError() {
         errorHistoryTransaction: true
     }
 }
+
+export function beginTransaction() {
+    return {
+        type: types.BEGIN_TRANSACTION,
+        isLoadingTransaction: true,
+        errorTransaction: false,
+    }
+}
+
+export function updateTransaction(receiverId, token) {
+    return function (dispatch) {
+        dispatch(beginTransaction());
+        moneyTransferApi.postTransactionApi(receiverId, token).then(function (res) {
+            console.log(res);
+            dispatch(transactionSuccessful());
+        }).catch(error => {
+            if (axios.isCancel(error)) {
+                console.log('Request canceled', error.message);
+            } else {
+                console.log(error);
+                dispatch(transactionError());
+                throw (error);
+            }
+
+        })
+    }
+}
+
+export function transactionSuccessful() {
+    return ({
+        type: types.TRANSACTION_SUCCESSFUL,
+        isLoadingTransaction: true,
+        errorTransaction: false,
+    })
+}
+
+export function transactionError() {
+    return {
+        type: types.TRANSACTION_ERROR,
+        isLoadingTransaction: false,
+        errorTransaction: true
+    }
+}
+
+

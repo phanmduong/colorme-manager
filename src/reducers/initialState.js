@@ -133,5 +133,7 @@ export default {
         errorHistoryTransaction: false,
         currentPageHistoryTransaction: 0,
         totalPageHistoryTransaction: 1,
+        isLoadingTransaction: false,
+        errorTransaction: false
     }
 }

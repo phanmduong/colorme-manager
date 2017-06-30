@@ -3,12 +3,13 @@
  */
 import React from'react';
 import {connect} from 'react-redux';
-import {Text} from 'react-native';
+import {Text, Alert} from 'react-native';
 import {bindActionCreators} from 'redux';
 import Segment from '../components/common/SegmentTwo';
 import * as moneyTransferActions from '../actions/moneyTransferActions';
 import HistoryMoneyTransferComponent from '../components/moneyTransfer/HistoryMoneyTransferComponent';
 import SearchStaffMoneyTransferComponent from '../components/moneyTransfer/SearchStaffMoneyTransferComponent';
+import * as alert from '../constants/alert';
 
 class MoneyTransferContainer extends React.Component {
     constructor(props, context) {
@@ -16,6 +17,7 @@ class MoneyTransferContainer extends React.Component {
         this.loadDataStaffList = this.loadDataStaffList.bind(this);
         this.updateFormAndLoadDataSearchStaff = this.updateFormAndLoadDataSearchStaff.bind(this);
         this.loadDataHistoryTransaction = this.loadDataHistoryTransaction.bind(this);
+        this.postTransaction = this.postTransaction.bind(this);
     }
 
     static navigationOptions = ({navigation}) => ({
@@ -34,6 +36,22 @@ class MoneyTransferContainer extends React.Component {
         if (nextProps.segment !== this.props.segment) {
             nextProps.navigation.setParams({segment: nextProps.segment});
         }
+
+        if (nextProps.isLoadingTransaction !== this.props.isLoadingTransaction) {
+            if (!nextProps.isLoadingTransaction) {
+                if (nextProps.errorTransaction) {
+                    Alert.alert(
+                        'Thông báo',
+                        alert.TRANSACTION_ERROR
+                    );
+                }
+            }
+
+        }
+    }
+
+    postTransaction(receiverId){
+        this.props.moneyTransferActions.updateTransaction(receiverId, this.props.token);
     }
 
     componentWillMount() {
@@ -66,6 +84,8 @@ class MoneyTransferContainer extends React.Component {
                     error={this.props.errorStaffList}
                     staffList={this.props.staffListData}
                     search={this.props.searchStaff}
+                    postTransaction={this.postTransaction}
+                    isLoadingTransaction={this.props.isLoadingTransaction}
                 />
             )
         } else {
@@ -95,6 +115,8 @@ function mapStateToProps(state) {
         transactionListData: state.moneyTransfer.transactionListData,
         isLoadingHistoryTransaction: state.moneyTransfer.isLoadingHistoryTransaction,
         errorHistoryTransaction: state.moneyTransfer.errorHistoryTransaction,
+        isLoadingTransaction: state.moneyTransfer.isLoadingTransaction,
+        errorTransaction: state.moneyTransfer.errorTransaction,
     };
 }
 

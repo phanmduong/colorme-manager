@@ -9,7 +9,15 @@ export function searchStaffApi(token, search, page = 1, sourceCancel, limit = 20
     return axios.get(url, {cancelToken: sourceCancel.token});
 }
 
-export function transactionApi(token, page = 1, limit = 20) {
+export function getTransactionApi(token, page = 1, limit = 20) {
     let url = env.API_URL + "/transactions?page=" + page + "&limit=" + limit + "&token=" + token;
     return axios.get(url);
+}
+
+
+export function postTransactionApi(receiverId, token) {
+    let url = env.API_URL + "/transactions?token=" + token;
+    return axios.post(url, {
+        receiver_id: receiverId
+    });
 }

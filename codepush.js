@@ -23,37 +23,37 @@ export default class ColorMEManager extends Component {
     }
 
     componentDidMount() {
-        // CodePush.sync({updateDialog: true, installMode: CodePush.InstallMode.IMMEDIATE},
-        //     (status) => {
-        //         switch (status) {
-        //             case CodePush.SyncStatus.DOWNLOADING_PACKAGE:
-        //                 this.setState({
-        //                     codePushDownloading: true,
-        //                     codePushInstalling: false,
-        //                 });
-        //                 this._modal.open();
-        //                 break;
-        //             case CodePush.SyncStatus.INSTALLING_UPDATE:
-        //                 this.setState({
-        //                     codePushDownloading: false,
-        //                     codePushInstalling: true,
-        //                 });
-        //                 break;
-        //             case CodePush.SyncStatus.UPDATE_INSTALLED:
-        //                 this._modal.close();
-        //                 this.setState({
-        //                     codePushDownloading: false,
-        //                     codePushInstalling: false
-        //                 });
-        //                 break;
-        //             default:
-        //                 break;
-        //         }
-        //     },
-        //     ({receivedBytes, totalBytes}) => {
-        //         this.setState({downloadProgress: (receivedBytes / totalBytes) * 100});
-        //     }
-        // );
+        CodePush.sync({updateDialog: true, installMode: CodePush.InstallMode.IMMEDIATE},
+            (status) => {
+                switch (status) {
+                    case CodePush.SyncStatus.DOWNLOADING_PACKAGE:
+                        this.setState({
+                            codePushDownloading: true,
+                            codePushInstalling: false,
+                        });
+                        this._modal.open();
+                        break;
+                    case CodePush.SyncStatus.INSTALLING_UPDATE:
+                        this.setState({
+                            codePushDownloading: false,
+                            codePushInstalling: true,
+                        });
+                        break;
+                    case CodePush.SyncStatus.UPDATE_INSTALLED:
+                        this._modal.close();
+                        this.setState({
+                            codePushDownloading: false,
+                            codePushInstalling: false
+                        });
+                        break;
+                    default:
+                        break;
+                }
+            },
+            ({receivedBytes, totalBytes}) => {
+                this.setState({downloadProgress: (receivedBytes / totalBytes) * 100});
+            }
+        );
     }
 
     updateText() {
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     }
 });
 
-// let codePushOptions = {updateDialog: true, installMode: CodePush.InstallMode.IMMEDIATE};
-// ColorMEManager = CodePush(codePushOptions)(ColorMEManager);
+let codePushOptions = {updateDialog: true, installMode: CodePush.InstallMode.IMMEDIATE};
+ColorMEManager = CodePush(codePushOptions)(ColorMEManager);
 
 AppRegistry.registerComponent('ColorMEManager', () => ColorMEManager);

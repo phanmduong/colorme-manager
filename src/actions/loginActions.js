@@ -28,6 +28,7 @@ export function loginUser(login) {
             dispatch(loginSuccess(res));
             dispatch(openMainScreen(res));
             dispatch(changeStatusBarColor('light-content'));
+            dispatch(changeStatusTransaction(res.data.user));
         }).catch(error => {
             dispatch(loginError());
             throw (error);
@@ -42,6 +43,13 @@ export function openMainScreen(res) {
             type: types.LOGIN
         });
     }
+}
+
+
+export function logout() {
+        return ({
+            type: types.LOGOUT
+        });
 }
 
 export function changeStatusBarColor(color) {
@@ -91,6 +99,15 @@ export function gotDataLogin(username, password) {
         },
         isGetDataLocalSuccessful: true
     })
+}
+
+function changeStatusTransaction(user) {
+    let status = (user.status === 2);
+    return ({
+        type: types.CHANGE_STATUS_TRANSACTION,
+        isLoadingTransaction: status,
+        currentMoney: user.money
+    });
 }
 
 

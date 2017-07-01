@@ -17,6 +17,11 @@ export default function navigatorReducer(state = initialState, action) {
                 state
             );
             break;
+        case types.LOGOUT:
+            nextState = AppNavigator.router.getStateForAction(
+                resetAction,
+                state
+            );
         default:
             nextState = AppNavigator.router.getStateForAction(action, state);
     }
@@ -30,5 +35,13 @@ const resetAction = NavigationActions.reset({
     key: null,
     actions: [
         NavigationActions.navigate({routeName: 'Main'})
+    ]
+})
+
+const resetLogout = NavigationActions.reset({
+    index: 0,
+    key: null,
+    actions: [
+        NavigationActions.navigate({routeName: 'Login'})
     ]
 })

@@ -1,6 +1,7 @@
 /**
  * Created by phanmduong on 4/5/17.
  */
+import * as types from '../constants/actionTypes';
 import {combineReducers} from 'redux';
 import loginReducer from './loginReducer';
 import baseReducer from './baseReducer';
@@ -22,7 +23,7 @@ import collectMoneyReducer from './collectMoneyReducer';
 import moneyTransferReducer from './moneyTransferReducer';
 
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
     login: loginReducer,
     autoLogin: autoLoginReducer,
     base: baseReducer,
@@ -42,4 +43,17 @@ const rootReducer = combineReducers({
     collectMoney: collectMoneyReducer,
     moneyTransfer: moneyTransferReducer,
 });
+
+const rootReducer = (state, action) => {
+    if (action.type === types.LOGOUT) {
+        state = {
+            autoLogin: {
+                isAutoLogin: false
+            }
+        }
+    }
+
+    return appReducer(state, action)
+}
+
 export default rootReducer;

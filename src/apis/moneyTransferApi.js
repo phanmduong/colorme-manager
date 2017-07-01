@@ -21,3 +21,11 @@ export function postTransactionApi(receiverId, token) {
         receiver_id: receiverId
     });
 }
+
+export function conformTransactionApi(transactionId,status, token) {
+    let url = env.API_URL + "/confirm-transactions?token=" + token;
+    return axios.post(url, {
+        transaction_id: transactionId,
+        status : status
+    });
+}

@@ -16,6 +16,7 @@ import ShiftRegisterContainer from '../containers/ShiftRegisterContainer';
 import DashboardContainer from '../containers/DashboardContainer';
 import ListStudentClassContainer from '../containers/ListStudentClassContainer';
 import RegisterListContainer from '../containers/RegisterListContainer';
+import SidebarContainer from '../containers/SidebarContainer';
 import TabIcon from '../components/common/TabIcon';
 import MenuButton from '../components/common/MenuButton';
 
@@ -146,6 +147,7 @@ const Drawer = DrawerNavigator({
 }, {
     drawerPosition: 'right',
     backBehavior: 'none',
+    contentComponent: props => (<SidebarContainer {...props}/>)
 });
 
 const Main = StackNavigator({

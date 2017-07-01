@@ -98,7 +98,7 @@ android {
         applicationId "vn.colorme.phanminhduong.colormemanager"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 11
+        versionCode 12
         versionName "1.2"
         ndk {
             abiFilters "armeabi-v7a", "x86"

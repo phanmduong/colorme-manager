@@ -17,7 +17,7 @@ export default function moneyTransferReducer(state = initialState.moneyTransfer,
             return Object.assign({}, state, {
                 isLoadingStaffList: action.isLoadingStaffList,
                 errorStaffList: action.errorStaffList,
-                staffListData: staffListData,
+                staffListData: updateStaffListDataData(staffListData, state.isLoadingTransaction),
                 currentPageStaffList: action.currentPageStaffList,
                 totalPageStaffList: action.totalPageStaffList
             });
@@ -42,6 +42,12 @@ export default function moneyTransferReducer(state = initialState.moneyTransfer,
                 isLoadingHistoryTransaction: action.isLoadingHistoryTransaction,
                 errorHistoryTransaction: action.errorHistoryTransaction,
             });
+        case types.UPDATE_HISTORY_TRANSACTION_SOCKET:
+            return Object.assign({}, state, {
+                isLoadingHistoryTransaction: action.isLoadingHistoryTransaction,
+                errorHistoryTransaction: action.errorHistoryTransaction,
+                transactionListData: action.transactionListData
+            });
         case types.LOAD_DATA_HISTORY_TRANSACTION_SUCCESSFUL:
             let transactionListData = (action.currentPageAll === 1) ? action.transactionListData :
                 [...state.transactionListData, ...action.transactionListData];
@@ -50,7 +56,11 @@ export default function moneyTransferReducer(state = initialState.moneyTransfer,
                 errorHistoryTransaction: action.errorHistoryTransaction,
                 transactionListData: transactionListData,
                 currentPageHistoryTransaction: action.currentPageHistoryTransaction,
-                totalPageHistoryTransaction: action.totalPageHistoryTransaction
+                totalPageHistoryTransaction: action.totalPageHistoryTransaction,
+                currentMoney: action.currentMoney,
+                isLoadingTransaction: action.isLoadingTransaction,
+                staffListData: updateStaffListDataData(state.staffListData, action.isLoadingTransaction)
+
             });
         case types.LOAD_DATA_HISTORY_TRANSACTION_ERROR:
             return Object.assign({}, state, {
@@ -61,25 +71,89 @@ export default function moneyTransferReducer(state = initialState.moneyTransfer,
             return {
                 ...state, ...{
                     isLoadingTransaction: action.isLoadingTransaction,
-                    errorTransaction: action.errorTransaction
+                    errorTransaction: action.errorTransaction,
+                    staffListData: updateStaffListDataData(state.staffListData, action.isLoadingTransaction)
                 }
             };
         case types.TRANSACTION_SUCCESSFUL:
             return {
                 ...state, ...{
                     isLoadingTransaction: action.isLoadingTransaction,
-                    errorTransaction: action.errorTransaction
+                    errorTransaction: action.errorTransaction,
+                    staffListData: updateStaffListDataData(state.staffListData, action.isLoadingTransaction)
                 }
             };
         case types.TRANSACTION_ERROR:
             return {
                 ...state, ...{
                     isLoadingTransaction: action.isLoadingTransaction,
-                    errorTransaction: action.errorTransaction
+                    errorTransaction: action.errorTransaction,
+                    staffListData: updateStaffListDataData(state.staffListData, action.isLoadingTransaction)
                 }
             };
+        case types.BEGIN_CONFIRM_TRANSACTION:
+            return {
+                ...state, ...{
+                    transactionListData: updateTransactionListData(state.transactionListData, action.isLoadingConfirmTransaction, action.errorConfirmTransaction)
+                }
+            };
+        case types.CONFIRM_TRANSACTION_SUCCESSFUL:
+            return {
+                ...state, ...{
+                    transactionListData: updateTransactionListData(state.transactionListData, action.isLoadingConfirmTransaction, action.errorConfirmTransaction)
+                }
+            };
+        case types.CONFIRM_TRANSACTION_ERROR:
+            return {
+                ...state, ...{
+                    transactionListData: updateTransactionListData(state.transactionListData, action.isLoadingConfirmTransaction, action.errorConfirmTransaction)
+                }
+            };
+        case types.CHANGE_STATUS_TRANSACTION: {
+            return {
+                ...state, ...{
+                    isLoadingTransaction: action.isLoadingTransaction,
+                    staffListData: updateStaffListDataData(state.staffListData, action.isLoadingTransaction),
+                    currentMoney: action.currentMoney
+                }
+            };
+        }
+        case 'Navigation/NAVIGATE':
+            if (action.routeName === 'TabMoneyTransfer') {
+                return {
+                    ...state,
+                    openTabMoneyTransfer: true
+                }
+            }
         default:
             return state;
     }
 
+}
+
+function updateStaffListDataData(staffListData, isLoadingTransaction) {
+    if (staffListData) {
+        return staffListData.map((data) => {
+            return {
+                ...data,
+                isTransaction: isLoadingTransaction
+            }
+        });
+    }
+    return staffListData;
+}
+
+function updateTransactionListData(transactionListData, isLoadingConfirmTransaction, errorConfirmTransaction) {
+    if (transactionListData) {
+        return transactionListData.map((data) => {
+            return {
+                ...data,
+                ...{
+                    isLoadingConfirmTransaction: isLoadingConfirmTransaction,
+                    errorConfirmTransaction: errorConfirmTransaction
+                }
+            }
+        })
+    }
+    return transactionListData;
 }

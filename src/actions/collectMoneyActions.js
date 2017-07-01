@@ -104,7 +104,6 @@ export function updateMoneyStudent(token, formInfoMoney, registerId) {
                 dispatch(updateDataSuccessful(res));
             })
             .catch(error => {
-                console.log(error);
             dispatch(updateDataError(error.response.data));
         })
     }
@@ -130,7 +129,6 @@ export function updateDataSuccessful(res) {
 }
 
 export function updateDataError(res) {
-    console.log(res);
     return {
         type: types.UPDATE_MONEY_STUDENT_COLLECT_MONEY_ERROR,
         isUpdatingData: false,

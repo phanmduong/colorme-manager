@@ -4,6 +4,10 @@
 import * as types from '../constants/actionTypes';
 import * as moneyTransferApi from '../apis/moneyTransferApi';
 import axios from 'axios';
+import React from 'react';
+import {Alert} from 'react-native';
+import * as alert from '../constants/alert';
+
 let CancelToken = axios.CancelToken;
 let sourceCancel = CancelToken.source();
 
@@ -106,7 +110,9 @@ export function loadDataHistoryTransaction(token, page) {
 export function loadDataHistoryTransactionSuccessful(res) {
     return ({
         type: types.LOAD_DATA_HISTORY_TRANSACTION_SUCCESSFUL,
-        transactionListData: res.data.data,
+        transactionListData: res.data.data.transactions,
+        currentMoney: res.data.data.current_money,
+        isLoadingTransaction: (res.data.data.status === 2),
         currentPageHistoryTransaction: res.data.paginator.current_page,
         totalPageHistoryTransaction: res.data.paginator.total_pages,
         isLoadingHistoryTransaction: false,
@@ -134,13 +140,11 @@ export function updateTransaction(receiverId, token) {
     return function (dispatch) {
         dispatch(beginTransaction());
         moneyTransferApi.postTransactionApi(receiverId, token).then(function (res) {
-            console.log(res);
             dispatch(transactionSuccessful());
         }).catch(error => {
             if (axios.isCancel(error)) {
                 console.log('Request canceled', error.message);
             } else {
-                console.log(error);
                 dispatch(transactionError());
                 throw (error);
             }
@@ -162,6 +166,71 @@ export function transactionError() {
         type: types.TRANSACTION_ERROR,
         isLoadingTransaction: false,
         errorTransaction: true
+    }
+}
+
+export function beginConfirmTransaction(transactionId) {
+    return {
+        type: types.BEGIN_CONFIRM_TRANSACTION,
+        isLoadingConfirmTransaction: true,
+        errorConfirmTransaction: false,
+        transactionId: transactionId
+    }
+}
+
+export function updateConfirmTransaction(transactionId, status, token) {
+    return function (dispatch) {
+        dispatch(beginConfirmTransaction());
+        moneyTransferApi.conformTransactionApi(transactionId, status, token).then(function (res) {
+            dispatch(confirmTransactionSuccessful(transactionId));
+        }).catch(error => {
+            if (axios.isCancel(error)) {
+                console.log('Request canceled', error.message);
+            } else {
+                dispatch(confirmTransactionError(transactionId));
+                throw (error);
+            }
+
+        })
+    }
+}
+
+export function confirmTransactionSuccessful(transactionId) {
+    return ({
+        type: types.CONFIRM_TRANSACTION_SUCCESSFUL,
+        isLoadingConfirmTransaction: true,
+        errorConfirmTransaction: false,
+        transactionId: transactionId
+    })
+}
+
+export function updateHistoryTransactionWithSocket(token) {
+    return function (dispatch) {
+        dispatch(setDataUpdateHistoryTransactionWithSocket());
+        dispatch(loadDataHistoryTransaction(token, 1));
+    }
+}
+
+export function setDataUpdateHistoryTransactionWithSocket() {
+    return ({
+        type: types.UPDATE_HISTORY_TRANSACTION_SOCKET,
+        transactionListData: [],
+        isLoadingHistoryTransaction: true,
+        errorHistoryTransaction: false,
+    })
+
+}
+
+export function confirmTransactionError(transactionId) {
+    Alert.alert(
+        'Thông báo',
+        alert.CONFIRM_TRANSACTION_ERROR
+    );
+    return {
+        type: types.CONFIRM_TRANSACTION_ERROR,
+        isLoadingConfirmTransaction: false,
+        errorConfirmTransaction: true,
+        transactionId: transactionId
     }
 }
 

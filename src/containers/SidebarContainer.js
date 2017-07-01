@@ -5,7 +5,8 @@ import React from'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import SidebarComponent from '../components/SidebarComponent';
-import * as drawerActions from '../actions/drawerActions';
+import * as loginActions from '../actions/loginActions';
+
 
 class SideBar extends React.Component {
     constructor(props, context) {
@@ -14,8 +15,7 @@ class SideBar extends React.Component {
     }
 
     logout() {
-        this.props.drawerActions.closeDrawer();
-
+        this.props.loginActions.logout();
     }
 
     render() {
@@ -23,6 +23,7 @@ class SideBar extends React.Component {
             <SidebarComponent
                 logout = {this.logout}
                 user = {this.props.user}
+                {...this.props}
             />
         );
     }
@@ -36,7 +37,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        drawerActions: bindActionCreators(drawerActions, dispatch)
+        loginActions: bindActionCreators(loginActions, dispatch),
     };
 }
 

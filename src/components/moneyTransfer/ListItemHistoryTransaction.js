@@ -9,6 +9,7 @@ import {
 import theme from '../../styles';
 import {dotNumber} from '../../helper';
 import Icon from '../common/Icon';
+import Spinkit from 'react-native-spinkit';
 
 var {height, width} = Dimensions.get('window');
 var maxWidthProcess = width / 2;
@@ -27,44 +28,189 @@ class ListItemHistoryTransaction extends React.Component {
     }
 
     content() {
-        const {sender, money, type, receiver, note, created_at, status} = this.props.data;
-        return (
-            <View style={styles.container}>
-                {(type === 'thu') ?
-                    (
-                        <Icon
-                            style={{...styles.icon, ...{color: '#13b300'}}}
-                            name="entypo|arrow-right"/>
-                    )
-                    :
-                    (
-                        <Icon
-                            name="entypo|arrow-left"
-                            style={{...styles.icon, ...{color: theme.secondColor}}}
-                        />
-                    )
-                }
-                <View style={styles.content}>
-                    <View style={styles.containerTitle}>
-                        <Text style={styles.title}>
-                            {(type === 'thu') ? sender.trim().toUpperCase() : receiver.trim().toUpperCase()}
-                        </Text>
-                        <Text style={{
-                            ...styles.statusTransaction,
-                            ...{
-                            color: (status ==='success') ? '#13b300' : theme.secondColor
-                            }
-                        }}>
-                            {(status ==='success') ? 'Thành công' : 'Thất bại'}
-                        </Text>
+        const {sender, money, type, receiver, note, created_at, status, id, isLoadingConfirmTransaction} = this.props.data;
+        if (type === 'chuyentien') {
+            return (
+                <View style={styles.container}>
+                    {(receiver && receiver.id === this.props.userId) ?
+                        (
+                            <Icon
+                                style={{...styles.icon, ...{color: '#13b300'}}}
+                                name="entypo|arrow-right"/>
+                        )
+                        :
+                        (
+                            <Icon
+                                name="entypo|arrow-left"
+                                style={{...styles.icon, ...{color: theme.secondColor}}}
+                            />
+                        )
+                    }
+
+                    <View style={styles.content}>
+                        <View style={styles.contentLeft}>
+                            <View style={styles.content}>
+                                <View style={styles.containerTitle}>
+                                    <Text style={styles.title}>
+                                        {(receiver && receiver.id === this.props.userId) ?
+                                            (
+                                                sender.name.trim().toUpperCase()
+                                            )
+                                            :
+                                            (
+                                                receiver.name.trim().toUpperCase()
+                                            )
+                                        }
+                                    </Text>
+                                </View>
+                                <View style={styles.containerSubTitle}>
+                                    <Text style={styles.subTitle}>{dotNumber(money)}đ
+                                        - {created_at.substr(0, 10)}</Text>
+                                    <Text style={styles.subTitle}>{(type === 'thu') ? note : 'Nhân viên'}</Text>
+                                </View>
+                            </View>
+                            <View >
+                                {(status === 'pending') ?
+                                    (
+                                        (receiver && receiver.id === this.props.userId) ? (
+                                            <View style={styles.containerButtonConform}>
+                                                <TouchableOpacity
+                                                    style={{...styles.buttonConfirm, backgroundColor: '#13b300'}}
+                                                    onPress={() => {
+                                                        !isLoadingConfirmTransaction && this.props.acceptTransaction(id)
+                                                    }}
+                                                >
+                                                    {(isLoadingConfirmTransaction) ?
+                                                        (
+                                                            <View style={styles.containerLoading}>
+                                                                <Spinkit
+                                                                    isVisible
+                                                                    color='white'
+                                                                    type='ThreeBounce'
+                                                                    size={20}
+                                                                />
+                                                            </View>
+                                                        )
+                                                        :
+                                                        (
+                                                            <Text
+                                                                style={styles.textButtonConfirm}
+                                                            >
+                                                                ĐỒNG Ý
+                                                            </Text>
+                                                        )}
+                                                </TouchableOpacity>
+                                                <TouchableOpacity
+                                                    style={{
+                                                        ...styles.buttonConfirm,
+                                                        backgroundColor: theme.secondColor
+                                                    }}
+                                                    onPress={() => {
+                                                        !isLoadingConfirmTransaction && this.props.rejectTransaction(id)
+                                                    }}
+                                                >
+                                                    {(isLoadingConfirmTransaction) ?
+                                                        (
+                                                            <View style={styles.containerLoading}>
+                                                                <Spinkit
+                                                                    isVisible
+                                                                    color='white'
+                                                                    type='ThreeBounce'
+                                                                    size={20}
+                                                                />
+                                                            </View>
+                                                        )
+                                                        :
+                                                        (
+                                                            <Text
+                                                                style={styles.textButtonConfirm}
+                                                            >
+                                                                TỪ CHỐI
+                                                            </Text>
+                                                        )}
+
+                                                </TouchableOpacity>
+                                            </View>
+                                        )
+                                            :
+                                            (
+                                                <Text style={{
+                                                    ...styles.statusTransaction,
+                                                    ...{
+                                                        color: theme.secondColor
+                                                    }
+                                                }}>
+                                                    Đang chuyển tiền...
+                                                </Text>
+                                            )
+
+                                    )
+                                    :
+                                    (
+                                        <Text style={{
+                                            ...styles.statusTransaction,
+                                            ...{
+                                                color: (status === 'success') ? '#13b300' : theme.secondColor
+                                            }
+                                        }}>
+                                            {(status === 'success') ? 'Thành công' : 'Thất bại'}
+                                        </Text>
+                                    )}
+
+                            </View>
+                        </View>
                     </View>
-                    <View style={styles.containerSubTitle}>
-                        <Text style={styles.subTitle}>{dotNumber(money)}đ - {created_at}</Text>
-                        <Text style={styles.subTitle}>{(type === 'thu') ? note : 'Nhân viên'}</Text>
-                    </View>
+
                 </View>
-            </View>
-        )
+            )
+        } else {
+            let pos = note.indexOf('-');
+            let nameStudent;
+
+            if (pos > 0) {
+                nameStudent = note.substring(9, pos);
+            } else {
+                nameStudent = note.slice(9);
+            }
+
+            return (
+                <View style={styles.container}>
+
+                    <Icon
+                        style={{...styles.icon, ...{color: '#13b300'}}}
+                        name="entypo|arrow-right"/>
+                    <View style={styles.content}>
+                        <View style={styles.contentLeft}>
+                            <View style={styles.content}>
+                                <View style={styles.containerTitle}>
+                                    <Text style={styles.title}>
+                                        {nameStudent.trim().toUpperCase()}
+                                    </Text>
+                                </View>
+                                <View style={styles.containerSubTitle}>
+                                    <Text style={styles.subTitle}>{dotNumber(money)}đ
+                                        - {created_at.substr(0, 10)}</Text>
+                                    <Text style={styles.subTitle}>
+                                        {(pos <= 0) ? 'Học viên' : note.substr(0, 9) + note.slice(pos)}
+                                    </Text>
+                                </View>
+                            </View>
+                            <View >
+                                <Text style={{
+                                    ...styles.statusTransaction,
+                                    ...{
+                                        color: (status === 'success') ? '#13b300' : theme.secondColor
+                                    }
+                                }}>
+                                    {(status === 'success') ? 'Thành công' : 'Thất bại'}
+                                </Text>
+                            </View>
+                        </View>
+                    </View>
+
+                </View>
+            )
+        }
     }
 
     render() {
@@ -108,7 +254,7 @@ const styles = ({
     },
     content: {
         flex: 1,
-        marginLeft: 20,
+        marginLeft: 10
     },
     containerTitle: {
         flex: 1,
@@ -187,6 +333,33 @@ const styles = ({
     },
     statusTransaction: {
         fontSize: 13
+    },
+    contentLeft: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    containerButtonConform: {
+        flexDirection: 'column'
+    },
+    buttonConfirm: {
+        height: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: width / 3.5,
+        backgroundColor: theme.secondColor,
+        padding: 5,
+        borderRadius: 5,
+        marginVertical: 2.5
+    },
+    textButtonConfirm: {
+        fontSize: 11,
+        color: 'white'
+    },
+    containerLoading: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });
 

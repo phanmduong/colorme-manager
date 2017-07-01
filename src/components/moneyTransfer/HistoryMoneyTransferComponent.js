@@ -1,5 +1,5 @@
 import React from'react';
-import {Dimensions} from 'react-native';
+import {Dimensions, Platform} from 'react-native';
 import {
     Container,
     Button,
@@ -11,6 +11,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import * as alert from '../../constants/alert';
 import Loading from '../common/Loading';
 import ListItemHistoryTransaction from "./ListItemHistoryTransaction";
+import {dotNumber} from "../../helper/index";
+import theme from '../../styles';
 
 var {height, width} = Dimensions.get('window');
 let self;
@@ -43,6 +45,11 @@ class HistoryMoneyTransferComponent extends React.Component {
                 )
             } else {
                 return (
+                    <View style={{flex: 1}}>
+                        <View style={styles.contentCurrentMoney}>
+                                <Text style={styles.titleCurrentMoney}>SỐ TIỀN CỦA BẠN: </Text>
+                                <Text style={styles.textCurrentMoney}>{dotNumber(this.props.currentMoney)}đ</Text>
+                        </View>
                     <List
                         style={styles.list}
                         onEndReached={this.props.loadDataHistoryTransaction}
@@ -52,6 +59,9 @@ class HistoryMoneyTransferComponent extends React.Component {
                             (item, sectionID, rowID) => (
                                 <ListItemHistoryTransaction
                                     data={item}
+                                    userId={this.props.userId}
+                                    acceptTransaction={this.props.acceptTransaction}
+                                    rejectTransaction={this.props.rejectTransaction}
                                 />
                             )
                         }
@@ -68,6 +78,7 @@ class HistoryMoneyTransferComponent extends React.Component {
                         }}
                     >
                     </List>
+                    </View>
                 )
             }
         }
@@ -87,6 +98,23 @@ const styles = ({
     },
     loading: {
         height: 95
+    },
+    contentCurrentMoney: {
+        padding: 15,
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        borderBottomWidth: 1,
+        borderBottomColor: '#d3d3d3',
+    },
+    titleCurrentMoney: {
+        color: '#555555',
+        fontWeight: '900',
+        fontSize: (Platform.isPad) ? 18 : 13
+    },
+    textCurrentMoney: {
+        color: theme.secondColor,
+        fontWeight: 'bold',
+        fontSize: (Platform.isPad) ? 18 : 13
     },
 });
 

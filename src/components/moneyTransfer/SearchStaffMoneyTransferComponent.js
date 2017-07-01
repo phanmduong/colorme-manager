@@ -65,7 +65,6 @@ class SearchStaffMoneyTransferComponent extends React.Component {
                         dataArray={this.props.staffList}
                         renderRow={
                             (item, sectionID, rowID) => {
-                                item.isTransaction = self.props.isLoadingTransaction;
                                 return (
                                 <ListItemStaffMoneyTransfer
                                     postTransaction={this.props.postTransaction}

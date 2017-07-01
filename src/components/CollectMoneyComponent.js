@@ -19,6 +19,7 @@ import Search from './common/Search';
 import ListItemStudentCollectMoney from "./collectMoney/ListItemStudentCollectMoney";
 import Modal from 'react-native-modalbox';
 import Call from './common/Call';
+import {dotNumber}from '../helper/index';
 
 var {height, width} = Dimensions.get('window');
 let self;
@@ -258,8 +259,8 @@ class CollectMoneyComponent extends React.Component {
                             </View>
                             <InputGroup style={styles.inputGroup}>
                                 <Input
-                                    value={this.props.formInfoMoney.money.toString()}
-                                    onChangeText={(data) => this.props.updateFormData('money', data)}
+                                    value={dotNumber(this.props.formInfoMoney.money)}
+                                    onChangeText={(data) => this.props.updateFormData('money', data.replace(/,/g , ""))}
                                     style={styles.textInput}
                                     ref='money'
                                     returnKeyType={'next'}

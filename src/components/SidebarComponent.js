@@ -10,6 +10,7 @@ import {
     FooterTab,
     Thumbnail
 } from 'native-base';
+import { DrawerItems } from 'react-navigation';
 import theme from '../styles';
 
 var {height, width} = Dimensions.get('window');
@@ -30,6 +31,7 @@ class SidebarComponent extends React.Component {
                         <Text style={styles.headerTitle}>{this.props.user.name}</Text>
                         <Text style={styles.subTitle}>Chỉnh sửa thông tin</Text>
                     </View>
+                    <DrawerItems {...this.props} />
                 </Content>
                 <Footer>
                     <FooterTab>
@@ -67,7 +69,8 @@ const styles = {
     },
     logout: {
         color: 'white',
-        fontSize: 16
+        fontSize: 16,
+        lineHeight: 30
     }
 };
 

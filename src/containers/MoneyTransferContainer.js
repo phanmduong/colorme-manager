@@ -10,7 +10,8 @@ import * as moneyTransferActions from '../actions/moneyTransferActions';
 import HistoryMoneyTransferComponent from '../components/moneyTransfer/HistoryMoneyTransferComponent';
 import SearchStaffMoneyTransferComponent from '../components/moneyTransfer/SearchStaffMoneyTransferComponent';
 import * as alert from '../constants/alert';
-
+import io from 'socket.io-client';
+let self;
 class MoneyTransferContainer extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -18,6 +19,16 @@ class MoneyTransferContainer extends React.Component {
         this.updateFormAndLoadDataSearchStaff = this.updateFormAndLoadDataSearchStaff.bind(this);
         this.loadDataHistoryTransaction = this.loadDataHistoryTransaction.bind(this);
         this.postTransaction = this.postTransaction.bind(this);
+        this.rejectTransaction = this.rejectTransaction.bind(this);
+        this.acceptTransaction = this.acceptTransaction.bind(this);
+        self = this;
+        this.socket = io.connect("http://colorme.vn:3000/", {transports: ['websocket']});
+
+        this.socket.on('colorme-channel:notification', (data) => {
+            if (data.notification && data.notification.transaction) {
+                this.props.moneyTransferActions.updateHistoryTransactionWithSocket(this.props.token);
+            }
+        });
     }
 
     static navigationOptions = ({navigation}) => ({
@@ -37,6 +48,10 @@ class MoneyTransferContainer extends React.Component {
             nextProps.navigation.setParams({segment: nextProps.segment});
         }
 
+        if (nextProps.openTabMoneyTransfer !== this.props.openTabMoneyTransfer) {
+            this.props.navigation.setParams({changeSegmentActive: this.props.moneyTransferActions.changeSegmentMoneyTransfer});
+        }
+
         if (nextProps.isLoadingTransaction !== this.props.isLoadingTransaction) {
             if (!nextProps.isLoadingTransaction) {
                 if (nextProps.errorTransaction) {
@@ -50,14 +65,21 @@ class MoneyTransferContainer extends React.Component {
         }
     }
 
-    postTransaction(receiverId){
+    acceptTransaction(transactionId) {
+        this.props.moneyTransferActions.updateConfirmTransaction(transactionId, 1, this.props.token);
+    }
+
+    rejectTransaction(transactionId) {
+        this.props.moneyTransferActions.updateConfirmTransaction(transactionId, -1, this.props.token);
+    }
+
+    postTransaction(receiverId) {
         this.props.moneyTransferActions.updateTransaction(receiverId, this.props.token);
     }
 
     componentWillMount() {
         this.loadDataStaffList();
         this.loadDataHistoryTransaction();
-        this.props.navigation.setParams({changeSegmentActive: this.props.moneyTransferActions.changeSegmentMoneyTransfer});
     }
 
     loadDataStaffList() {
@@ -86,6 +108,7 @@ class MoneyTransferContainer extends React.Component {
                     search={this.props.searchStaff}
                     postTransaction={this.postTransaction}
                     isLoadingTransaction={this.props.isLoadingTransaction}
+
                 />
             )
         } else {
@@ -95,6 +118,10 @@ class MoneyTransferContainer extends React.Component {
                     isLoading={this.props.isLoadingHistoryTransaction}
                     error={this.props.errorHistoryTransaction}
                     transactionList={this.props.transactionListData}
+                    userId={this.props.userId}
+                    rejectTransaction={this.rejectTransaction}
+                    acceptTransaction={this.acceptTransaction}
+                    currentMoney={this.props.currentMoney}
                 />
             )
         }
@@ -103,6 +130,7 @@ class MoneyTransferContainer extends React.Component {
 function mapStateToProps(state) {
     return {
         token: state.login.token,
+        userId: state.login.user.id,
         segment: state.moneyTransfer.segment,
         currentPageStaffList: state.moneyTransfer.currentPageStaffList,
         totalPageStaffList: state.moneyTransfer.totalPageStaffList,
@@ -117,6 +145,8 @@ function mapStateToProps(state) {
         errorHistoryTransaction: state.moneyTransfer.errorHistoryTransaction,
         isLoadingTransaction: state.moneyTransfer.isLoadingTransaction,
         errorTransaction: state.moneyTransfer.errorTransaction,
+        currentMoney: state.moneyTransfer.currentMoney,
+        openTabMoneyTransfer: state.moneyTransfer.openTabMoneyTransfer,
     };
 }
 

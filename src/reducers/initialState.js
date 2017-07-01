@@ -134,6 +134,8 @@ export default {
         currentPageHistoryTransaction: 0,
         totalPageHistoryTransaction: 1,
         isLoadingTransaction: false,
-        errorTransaction: false
+        errorTransaction: false,
+        currentMoney: 0,
+        openTabMoneyTransfer: false
     }
 }

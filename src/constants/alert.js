@@ -20,3 +20,4 @@ export const MUST_ENTER_MONEY = 'Bạn phải nhập tổng số tiền';
 export const COLLECT_MONEY_SUCCESSFUL = 'Nộp tiền thành công';
 export const COLLECT_MONEY_FAILED = 'Nộp tiền thất bại';
 export const TRANSACTION_ERROR = 'Quá trình chuyển tiền có lỗi xảy ra';
+export const CONFIRM_TRANSACTION_ERROR = 'Quá trình xác nhận chuyển tiền có lỗi xảy ra';

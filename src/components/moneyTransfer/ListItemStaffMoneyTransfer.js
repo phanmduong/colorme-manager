@@ -48,7 +48,7 @@ class ListItemStaffMoneyTransfer extends React.Component {
                     </View>
                     <TouchableOpacity
                         style={styles.buttonMoneyTransfer}
-                        onPress={() => this.props.postTransaction(this.props.userId)}
+                        onPress={() => {!this.props.isTransaction && this.props.postTransaction(this.props.userId)}}
                     >
                         {(this.props.isTransaction) ? (
                             <View style={styles.containerLoading}>
@@ -202,7 +202,6 @@ const styles = ({
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
     },
     containerLoading: {
         flex: 1,

@@ -21,7 +21,7 @@ class ShiftRegisterContainer extends React.Component {
         });
         this.socket.on('colorme-channel:remove-shift', (data) => {
             this.props.shiftRegisterActions.updateDataRegister(data);
-        })
+        });
 
         this.state = {
             isLoading: false,

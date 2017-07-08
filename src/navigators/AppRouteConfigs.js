@@ -15,6 +15,8 @@ import MoneyTransferContainer from '../containers/MoneyTransferContainer';
 import ShiftRegisterContainer from '../containers/ShiftRegisterContainer';
 import DashboardContainer from '../containers/DashboardContainer';
 import ListStudentClassContainer from '../containers/ListStudentClassContainer';
+import ListStudentPaidContainer from '../containers/ListStudentPaidContainer';
+import ListStudentZeroContainer from '../containers/ListStudentZeroContainer';
 import RegisterListContainer from '../containers/RegisterListContainer';
 import SidebarContainer from '../containers/SidebarContainer';
 import TabIcon from '../components/common/TabIcon';
@@ -60,6 +62,12 @@ const TabDashboard = StackNavigator({
     },
     ListStudentClass: {
         screen: ListStudentClassContainer
+    },
+    ListStudentPaid: {
+        screen: ListStudentPaidContainer
+    },
+    ListStudentZero: {
+        screen: ListStudentZeroContainer
     },
     RegisterList: {
         screen: RegisterListContainer

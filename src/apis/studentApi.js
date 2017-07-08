@@ -9,6 +9,13 @@ export function loadRegisterListApi(token, page = 1, search = '', salerId = '', 
     return axios.get(url, {cancelToken: sourceCancel.token});
 }
 
+export function loadStudentListByFilterApi(genId, baseId, filter) {
+
+    let url = (baseId >= 0) ? `${env.API_NODE_URL}/students/${genId}/${filter}?base_id=${baseId}`
+                : `${env.API_NODE_URL}/students/${genId}/${filter}`;
+    return axios.get(url);
+}
+
 export function loadListStudentClassApi(classId, token) {
     let url = env.API_URL + "/class/" + classId + "/students?token=" + token;
     return axios.get(url);

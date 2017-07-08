@@ -137,5 +137,16 @@ export default {
         errorTransaction: false,
         currentMoney: 0,
         openTabMoneyTransfer: false
-    }
+    },
+    listStudentPaid: {
+        listStudentPaidData: [],
+        isLoading: false,
+        error: false,
+    },
+
+    listStudentZero: {
+        listStudentZeroData: [],
+        isLoading: false,
+        error: false,
+    },
 }

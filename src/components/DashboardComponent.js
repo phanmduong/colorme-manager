@@ -132,12 +132,14 @@ class DashboardComponent extends React.Component {
                                 title={"Số học viên đã đóng tiền"}
                                 subTitle={"Chỉ tiêu của bạn"}
                                 number={dotNumber(parseInt(dashboardData.paid_number))}
+                                onPress={this.props.onClickListStudentPaid}
                             />
                             <ListItem
                                 nameIcon="material|money-off"
                                 title={"Số học viên nộp 0 đồng"}
                                 subTitle={"Chỉ tiêu của bạn"}
                                 number={dotNumber(parseInt(dashboardData.zero_paid_num))}
+                                onPress={this.props.onClickListStudentZero}
                             />
                             <ListItem
                                 nameIcon="material|phonelink-erase"

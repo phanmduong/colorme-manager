@@ -28,6 +28,8 @@ class DashboardContainer extends React.Component {
         this.loadDataDashboard = this.loadDataDashboard.bind(this);
         this.onClickClass = this.onClickClass.bind(this);
         this.onClickRegisterList = this.onClickRegisterList.bind(this);
+        this.onClickListStudentPaid = this.onClickListStudentPaid.bind(this);
+        this.onClickListStudentZero = this.onClickListStudentZero.bind(this);
     }
 
     static navigationOptions = ({navigation}) => ({
@@ -128,6 +130,14 @@ class DashboardContainer extends React.Component {
         this.props.classScreen();
     }
 
+    onClickListStudentPaid() {
+        this.props.listStudentPaidScreen();
+    }
+
+    onClickListStudentZero() {
+        this.props.listStudentZeroScreen();
+    }
+
     onClickRegisterList() {
         this.props.registerListScreen();
     }
@@ -149,11 +159,12 @@ class DashboardContainer extends React.Component {
                 errorDashboard={this.props.errorDashboard}
                 onClickClass={this.onClickClass}
                 onClickRegisterList={this.onClickRegisterList}
+                onClickListStudentPaid={this.onClickListStudentPaid}
+                onClickListStudentZero={this.onClickListStudentZero}
             />
         );
     }
 }
-
 
 
 function mapStateToProps(state) {
@@ -180,6 +191,10 @@ function mapDispatchToProps(dispatch) {
         dashboardActions: bindActionCreators(dashboardActions, dispatch),
         classScreen: () =>
             dispatch(NavigationActions.navigate({routeName: 'Class'})),
+        listStudentPaidScreen: () =>
+            dispatch(NavigationActions.navigate({routeName: 'ListStudentPaid'})),
+        listStudentZeroScreen: () =>
+            dispatch(NavigationActions.navigate({routeName: 'ListStudentZero'})),
         registerListScreen: () =>
             dispatch(NavigationActions.navigate({routeName: 'RegisterList'}))
     };

@@ -15,6 +15,8 @@ import currentClassStudyReducer from './currentClassStudyReducer';
 import shiftRegisterReducer from './shiftRegisterReducer';
 import dashboardReducer from './dashboardReducer';
 import listStudentClassReducer from './listStudentClassReducer';
+import listStudentPaidReducer from './listStudentPaidReducer';
+import listStudentZeroReducer from './listStudentZeroReducer';
 import registerListReducer from './registerListReducer';
 import navigatorReducer from './navigatorReducer';
 import statusbarReducer from './statusbarReducer';
@@ -42,6 +44,8 @@ const appReducer = combineReducers({
     statusBar: statusbarReducer,
     collectMoney: collectMoneyReducer,
     moneyTransfer: moneyTransferReducer,
+    listStudentPaid: listStudentPaidReducer,
+    listStudentZero: listStudentZeroReducer,
 });
 
 const rootReducer = (state, action) => {

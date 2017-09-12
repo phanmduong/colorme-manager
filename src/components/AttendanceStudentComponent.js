@@ -1,4 +1,4 @@
-import React from'react';
+import React from 'react';
 import {Image, Dimensions} from 'react-native';
 import {
     Container,
@@ -7,6 +7,7 @@ import {
     View,
     Text
 } from 'native-base';
+
 var {height, width} = Dimensions.get('window');
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import theme from '../styles';
@@ -22,7 +23,10 @@ class AttendanceStudentComponent extends React.Component {
 
 
     updateAttendance() {
-        this.props.onUpdateAttendance(this.props.student.attendances[this.props.orderLessonCourse - 1].id);
+        let attendanceId = this.props.student.attendances.filter( (attendances) => {
+            return attendances.order == this.props.orderLessonCourse;
+        })[0].id;
+        this.props.onUpdateAttendance(attendanceId);
     }
 
     render() {
@@ -52,8 +56,8 @@ class AttendanceStudentComponent extends React.Component {
                             <Image
                                 source={
                                     (!this.props.student.avatar_url || this.props.student.avatar_url === '') ? (
-                                        require('../../assets/img/colorme.jpg')
-                                    ) :
+                                            require('../../assets/img/colorme.jpg')
+                                        ) :
                                         ({uri: this.props.student.avatar_url})}
                                 style={styles.image}
                             />

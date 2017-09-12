@@ -1,4 +1,4 @@
-import React from'react';
+import React from 'react';
 import {Dimensions, Platform, TouchableNativeFeedback, TouchableOpacity, Animated} from 'react-native';
 import {
     View,
@@ -13,6 +13,7 @@ import Call from '../common/Call';
 
 var {height, width} = Dimensions.get('window');
 var maxWidthProcess = width / 2;
+
 class ListItemStudent extends React.Component {
     constructor(props, context) {
         super(props, context);

@@ -3,7 +3,9 @@
  */
 
 export function dotNumber(number) {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    if (number) {
+        return number.toString().replace(/\./g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
 }
 
 export function maxArray(arr) {

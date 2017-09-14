@@ -21,7 +21,7 @@ import RegisterListContainer from '../containers/RegisterListContainer';
 import SidebarContainer from '../containers/SidebarContainer';
 import TabIcon from '../components/common/TabIcon';
 import MenuButton from '../components/common/MenuButton';
-
+import CheckInContainer from '../containers/CheckInContainer';
 
 const navigationOptionsDefault = {
     navigationOptions: ({navigation}) => ({
@@ -142,14 +142,25 @@ const DashboardMain = TabNavigator({
     initialRouteName: 'TabDashboard',
     tabBarPosition: 'bottom',
     backBehavior: 'none',
-
 });
+
+const CheckIn = StackNavigator({
+    CheckIn: {
+        screen: CheckInContainer
+    }
+}, navigationOptionsDefault);
 
 const Drawer = DrawerNavigator({
     TabDashboard: {
         screen: DashboardMain,
         navigationOptions: ({navigation}) => ({
             title: 'Bảng điều khiển',
+        })
+    },
+    MenuCheckIn: {
+        screen: CheckIn,
+        navigationOptions: ({navigation}) => ({
+            title: 'Check in',
         })
     }
 }, {

@@ -1,14 +1,16 @@
 /**
  * Created by phanmduong on 4/25/17.
  */
-import React from'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as baseActions from '../actions/baseActions';
 import * as genActions from '../actions/genActions';
 import * as dashboardActions from '../actions/dashboardActions';
+import * as loginActions from '../actions/loginActions';
 import DashboardComponent from '../components/DashboardComponent';
 import {NavigationActions} from 'react-navigation';
+import {Alert} from 'react-native';
 
 class DashboardContainer extends React.Component {
     constructor(props, context) {
@@ -37,6 +39,16 @@ class DashboardContainer extends React.Component {
     });
 
     componentWillMount() {
+        if (!this.props.isCheckIn) {
+            Alert.alert("Thiết bị", "Đây là máy của " + this.props.deviceUser.name +
+                ". Bạn sẽ không thể dùng tính năng check in và check out. Bạn có muốn tiếp tục?",
+                [
+                    {text: 'Đăng xuất', onPress: () => this.logout()},
+                    {text: 'Tiếp tục', onPress: () => {}},
+                ],
+                { cancelable: false }
+                )
+        }
         this.loadData();
     }
 
@@ -61,7 +73,13 @@ class DashboardContainer extends React.Component {
             })
         }
 
-        if (!nextProps.isLoadingGen) {
+        if (!nextProps.isLoadingGen && this.props.isLoadingGen !== nextProps.isLoadingGen) {
+            // if (nextProps.errorGen) {
+            //     Alert.alert('Điểm danh', "Kiểm tra các kết nối trước khi điểm danh");
+            // } else {
+            //     Alert.alert('Điểm danh', "Đã lưu trữ thời gian và toạ độ của bạn");
+            // }
+
             var genData = _.sortBy(nextProps.genData, [function (o) {
                 return parseInt(o.name);
             }]);
@@ -72,6 +90,10 @@ class DashboardContainer extends React.Component {
         }
 
         this.checkData(nextProps);
+    }
+
+    logout() {
+        this.props.loginActions.logout();
     }
 
     checkData(props) {
@@ -173,6 +195,8 @@ function mapStateToProps(state) {
         baseData: state.base.baseData,
         errorBase: state.base.error,
         token: state.login.token,
+        isCheckIn: state.login.isCheckIn,
+        deviceUser: state.login.deviceUser,
         isLoadingGen: state.gen.isLoading,
         genData: state.gen.genData,
         errorGen: state.gen.error,
@@ -189,6 +213,7 @@ function mapDispatchToProps(dispatch) {
         baseActions: bindActionCreators(baseActions, dispatch),
         genActions: bindActionCreators(genActions, dispatch),
         dashboardActions: bindActionCreators(dashboardActions, dispatch),
+        loginActions: bindActionCreators(loginActions, dispatch),
         classScreen: () =>
             dispatch(NavigationActions.navigate({routeName: 'Class'})),
         listStudentPaidScreen: () =>

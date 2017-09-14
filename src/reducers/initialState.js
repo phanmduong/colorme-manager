@@ -14,7 +14,9 @@ export default {
         error: false,
         token: undefined,
         user: {},
-        isGetDataLocalSuccessful: false
+        isGetDataLocalSuccessful: false,
+        isCheckIn: false,
+        deviceUser: {},
     },
     base: {
         baseData: [],
@@ -50,7 +52,7 @@ export default {
         classData: [],
         isLoading: false,
         error: false,
-        selectedCurrentClassStudy:{}
+        selectedCurrentClassStudy: {}
     },
     qrcode: {
         isScanned: false,
@@ -149,4 +151,12 @@ export default {
         isLoading: false,
         error: false,
     },
+    checkInCheckOut:{
+        isLoadingCheckIn: false,
+        errorCheckIn: false,
+        isLoadingCheckOut: false,
+        errorCheckOut: false,
+        message: '',
+        checkIn: {}
+    }
 }

@@ -23,7 +23,9 @@ export default function loginReducer(state = initialState.login, action) {
                 isLoading: action.isLoading,
                 error: action.error,
                 user: action.user,
-                token: action.token
+                token: action.token,
+                isCheckIn: action.isCheckIn,
+                deviceUser: action.deviceUser
             });
         case types.LOGIN_ERROR:
             return Object.assign({}, state, {

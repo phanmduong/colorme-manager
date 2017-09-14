@@ -24,3 +24,14 @@ export function formatPhone(phone) {
         return phone.replace(/(\d{4})(\d{3})(\d{4})/, '$1.$2.$3');
     }
 }
+
+export function typeConnect(type) {
+    if (type.toLowerCase() == 'wifi'){
+        return 'Wifi';
+    }
+    if (type.toLowerCase() == 'mobile'){
+        return 'Điện thoại';
+    }
+    return '';
+
+}

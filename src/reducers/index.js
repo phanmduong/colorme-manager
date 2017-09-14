@@ -23,6 +23,7 @@ import statusbarReducer from './statusbarReducer';
 import autoLoginReducer from './autoLoginReducer';
 import collectMoneyReducer from './collectMoneyReducer';
 import moneyTransferReducer from './moneyTransferReducer';
+import checkInCheckOutReducer from './checkInCheckOutReducer';
 
 
 const appReducer = combineReducers({
@@ -46,6 +47,7 @@ const appReducer = combineReducers({
     moneyTransfer: moneyTransferReducer,
     listStudentPaid: listStudentPaidReducer,
     listStudentZero: listStudentZeroReducer,
+    checkInCheckOut: checkInCheckOutReducer,
 });
 
 const rootReducer = (state, action) => {

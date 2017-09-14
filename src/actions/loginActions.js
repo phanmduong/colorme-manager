@@ -3,7 +3,8 @@
  */
 import * as types from '../constants/actionTypes';
 import * as loadLoginApi from '../apis/loginApi';
-import {AsyncStorage}from 'react-native';
+import {AsyncStorage} from 'react-native';
+import DeviceInfo from 'react-native-device-info';
 
 export function updateDataLoginForm(login) {
     return {
@@ -22,16 +23,27 @@ export function beginLogin() {
 }
 
 export function loginUser(login) {
+
+    let device = {
+        device_id: DeviceInfo.getUniqueID(),
+        name: DeviceInfo.getModel(),
+        os: DeviceInfo.getBrand() + " - " + DeviceInfo.getSystemVersion(),
+    }
     return function (dispatch) {
         dispatch(beginLogin());
         loadLoginApi.loadLoginApi(login).then(function (res) {
-            dispatch(loginSuccess(res));
-            dispatch(openMainScreen(res));
-            dispatch(changeStatusBarColor('light-content'));
-            dispatch(changeStatusTransaction(res.data.user));
+            loadLoginApi.loadCheckDevice(device, res.data.token).then(function (resCheckDevice) {
+                if (resCheckDevice.data.status === 0) {
+                    dispatch(loginSuccess(res, false, resCheckDevice.data.message.device_user));
+                } else {
+                    dispatch(loginSuccess(res, true));
+                }
+                dispatch(openMainScreen(res));
+                dispatch(changeStatusBarColor('light-content'));
+                dispatch(changeStatusTransaction(res.data.user));
+            });
         }).catch(error => {
             dispatch(loginError());
-            throw (error);
         })
 
     }
@@ -47,9 +59,9 @@ export function openMainScreen(res) {
 
 
 export function logout() {
-        return ({
-            type: types.LOGOUT
-        });
+    return ({
+        type: types.LOGOUT
+    });
 }
 
 export function changeStatusBarColor(color) {
@@ -59,12 +71,14 @@ export function changeStatusBarColor(color) {
     })
 }
 
-export function loginSuccess(res) {
+export function loginSuccess(res, isCheckIn = true, deviceUser = {}) {
     let token = res.data.token;
     return ({
         type: types.LOGIN_USER,
         token: token,
         user: res.data.user,
+        isCheckIn: isCheckIn,
+        deviceUser: deviceUser,
         isLoading: false,
         error: false
     })

@@ -1,5 +1,5 @@
 import React from'react';
-import {Platform, TouchableNativeFeedback, TouchableOpacity} from 'react-native';
+import {Platform, TouchableNativeFeedback, TouchableOpacity,Dimensions} from 'react-native';
 import {
     View,
     Text,
@@ -7,6 +7,7 @@ import {
 import Icon from '../common/Icon';
 import theme from '../../styles';
 
+let {height, width} = Dimensions.get('window');
 class ListItem extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -27,7 +28,8 @@ class ListItem extends React.Component {
                         <Text style={styles.title}>{title.toUpperCase()}</Text>
                         <Text style={styles.numberTitle}>{number}</Text>
                     </View>
-                    <Text style={styles.subTitle}>{subTitle}</Text>
+                    {!this.props.disableSubTitle && <Text style={styles.subTitle}>{subTitle}</Text>}
+
                 </View>
             </View>
         )
@@ -64,12 +66,12 @@ const styles = ({
         paddingTop: 20
     },
     content: {
-        flex: 1,
         marginLeft: 20,
         paddingBottom: 20,
     },
     containerTitle: {
-        flex: 1,
+        width: width-80,
+        // flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between'
     },

@@ -196,7 +196,10 @@ const Drawer = DrawerNavigator({
     }
 }, {
     drawerPosition: 'right',
-    backBehavior: 'none',
+    // backBehavior: 'none',
+    useNativeAnimations: 'false',
+    disableOpenGesture: false,
+    drawerLockMode: 'locked-closed',
     contentComponent: props => (<SidebarContainer {...props}/>)
 });
 

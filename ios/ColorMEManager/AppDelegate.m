@@ -8,6 +8,7 @@
  */
 
 #import "AppDelegate.h"
+#import <RNMobileCenter/RNMobileCenter.h>
 #import <CodePush/CodePush.h>
 #import <RNCrashes/RNCrashes.h>
 
@@ -22,6 +23,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   NSURL *jsCodeLocation;
+
+  [RNMobileCenter register];  // Initialize Mobile Center 
 
 //  for (NSString* family in [UIFont familyNames])
 //  {

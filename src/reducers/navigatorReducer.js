@@ -23,7 +23,7 @@ export default function navigatorReducer(state = initialState, action) {
                 state
             );
         case "Navigation/NAVIGATE":
-            //Check can open 2 same screen
+            // Check can open 2 same screen
             if (action.routeName === "DrawerOpen" || action.routeName === "DrawerClose"){
                 nextState = AppNavigator.router.getStateForAction(action, state);
                 return nextState;

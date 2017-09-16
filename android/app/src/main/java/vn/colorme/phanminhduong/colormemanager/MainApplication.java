@@ -1,8 +1,12 @@
 package vn.colorme.phanminhduong.colormemanager;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 
 import com.facebook.react.ReactApplication;
+import com.microsoft.azure.mobile.react.mobilecenter.RNMobileCenterPackage;
 import com.pusherman.networkinfo.RNNetworkInfoPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.BV.LinearGradient.LinearGradientPackage;
@@ -20,7 +24,7 @@ import com.facebook.soloader.SoLoader;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainApplication extends Application implements ReactApplication {
+public class MainApplication extends MultiDexApplication implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
 
@@ -38,6 +42,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNMobileCenterPackage(MainApplication.this),
             new RNNetworkInfoPackage(),
             new RNDeviceInfo(),
             new LinearGradientPackage(),

@@ -2,7 +2,7 @@
  * Created by phanmduong on 6/7/17.
  */
 import * as React from "react";
-import {StackNavigator, TabBarTop, TabNavigator, DrawerNavigator}from 'react-navigation';
+import {StackNavigator, TabBarTop, TabNavigator, DrawerNavigator} from 'react-navigation';
 import theme from '../styles';
 import LoginContainer from '../containers/LoginContainer';
 import ClassContainer from '../containers/ClassContainer';
@@ -146,9 +146,34 @@ const DashboardMain = TabNavigator({
 
 const CheckIn = StackNavigator({
     CheckIn: {
-        screen: CheckInContainer
+        screen: CheckInContainer,
+
     }
-}, navigationOptionsDefault);
+}, {
+    ...navigationOptionsDefault, ...{
+        initialRouteName: 'CheckIn',
+        initialRouteParams: {
+            title: 'Check in',
+            type: 'checkin'
+        }
+    }
+});
+
+const CheckOut = StackNavigator({
+    CheckOut: {
+        screen: CheckInContainer,
+
+    }
+}, {
+    ...navigationOptionsDefault, ...{
+        initialRouteName: 'CheckOut',
+        initialRouteParams: {
+            title: 'Check out',
+            type: 'checkout'
+        }
+    }
+});
+
 
 const Drawer = DrawerNavigator({
     TabDashboard: {
@@ -161,6 +186,12 @@ const Drawer = DrawerNavigator({
         screen: CheckIn,
         navigationOptions: ({navigation}) => ({
             title: 'Check in',
+        })
+    },
+    MenuCheckOut: {
+        screen: CheckOut,
+        navigationOptions: ({navigation}) => ({
+            title: 'Check out',
         })
     }
 }, {

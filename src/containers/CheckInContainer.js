@@ -7,19 +7,28 @@ import CheckInComponent from '../components/CheckInComponent';
 import {Alert} from 'react-native';
 import * as checkInCheckOutActions from '../actions/checkInCheckOutActions';
 import {bindActionCreators} from 'redux';
+import { NavigationActions } from 'react-navigation'
 
 class CheckInContainer extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.checkIn = this.checkIn.bind(this);
+        this.onCheck = this.onCheck.bind(this);
+        this.onExit = this.onExit.bind(this);
     }
+
+
+    static navigationOptions = ({navigation}) => ({
+        title: navigation.state.params.title
+    });
 
     componentWillMount(){
-        this.checkIn()
+        this.onCheck();
     }
 
-    checkIn(){
-        this.props.checkInCheckOutActions.checkIn(this.props.token);
+    onCheck(){
+        // console.log("push");
+        // console.log(this.props.navigation.state.params.type);
+        this.props.checkInCheckOutActions.loadCheck(this.props.token, this.props.navigation.state.params.type);
     }
 
 
@@ -31,19 +40,22 @@ class CheckInContainer extends React.Component {
         // }
     }
 
+    onExit(){
+        this.props.navigation.navigate('TabDashboard');
+    }
+
     render() {
         return (
             <CheckInComponent
                 {...this.props}
-                checkIn={this.checkIn}
+                onCheck={this.onCheck}
+                onExit={this.onExit}
             />
         );
     }
 }
 
-CheckInContainer.navigationOptions = {
-    title: 'Check in',
-};
+
 
 function mapStateToProps(state) {
     return {

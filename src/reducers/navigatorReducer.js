@@ -22,6 +22,21 @@ export default function navigatorReducer(state = initialState, action) {
                 resetAction,
                 state
             );
+        case "Navigation/NAVIGATE":
+            //Check can open 2 same screen
+            if (action.routeName === "DrawerOpen" || action.routeName === "DrawerClose"){
+                nextState = AppNavigator.router.getStateForAction(action, state);
+                return nextState;
+            }
+            if (action.routeName !== state.currentScreen) {
+                let stateData = {
+                    ...state,
+                    ...{currentScreen: action.routeName}
+                };
+                nextState = AppNavigator.router.getStateForAction(action, stateData);
+                return nextState;
+            }
+            return state;
         default:
             nextState = AppNavigator.router.getStateForAction(action, state);
     }

@@ -99,25 +99,25 @@ class CheckInComponent extends React.Component {
                         <View style={{flex: 1}}>
                             <List style={styles.containerList}>
                                 <ListItem
-                                    nameIcon="material|attach-money"
+                                    nameIcon="fontawesome|clock-o"
                                     title="Giờ"
                                     disableSubTitle
                                     number={this.props.checkInData.time}
                                 />
                                 <ListItem
-                                    nameIcon="material|attach-money"
+                                    nameIcon="material|share"
                                     title={"Kết nối với mạng"}
                                     disableSubTitle
                                     number={this.state.typeConnect}
                                 />
                                 <ListItem
-                                    nameIcon="material|attach-money"
+                                    nameIcon="fontawesome|wifi"
                                     title={"Tên wifi"}
                                     disableSubTitle
                                     number={this.state.wifiName}
                                 />
                                 <ListItem
-                                    nameIcon="material|attach-money"
+                                    nameIcon="material|place"
                                     title={"Địa điểm"}
                                     disableSubTitle
                                     number={this.props.checkInData.base}
@@ -130,9 +130,9 @@ class CheckInComponent extends React.Component {
                             block
                             rounded
                             style={styles.button}
-                            onPress={this.props.checkIn}
+                            onPress={this.props.errorCheckIn ? this.props.onCheck : this.props.onExit}
                         >
-                            <Text>Thử lại</Text>
+                            <Text>{this.props.errorCheckIn ? 'Thử lại' : 'OK'}</Text>
                         </Button>
                     </View>
                 </View>
@@ -198,9 +198,9 @@ const styles = ({
     },
     button: {
         backgroundColor: theme.mainColor,
-        marginHorizontal: width/4,
+        marginHorizontal: width / 4,
     },
-    buttonGroup:{
+    buttonGroup: {
         flex: 1,
         width: width,
         justifyContent: 'center',

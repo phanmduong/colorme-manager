@@ -55,15 +55,17 @@ export function loadCheck(token, type) {
 
                         },
                         (error) => {
-                            if (countCheckLocation > 10) {
-                                callback("Không thể tìm vị trí" + JSON.stringify(error));
-                            }
-                            countCheckLocation++;
+                                if (error.code === 1) {
+                                    Alert.alert("Thông báo", "Kiểm tra định vị trên thiết bị của bạn");
+                                }
+                                callback("Không thể tìm vị trí " + JSON.stringify(error));
+
                         },
                     );
                 },
                 function (callback) {
                     navigator.geolocation.clearWatch(watchID);
+                    console.log(device);
                     if (type === 'checkin') {
                         checkInCheckOutApi.checkin(device, token).then(function (res) {
                             // console.log(device);

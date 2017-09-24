@@ -1,7 +1,7 @@
 /**
  * Created by phanmduong on 4/9/17.
  */
-import React from'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {View} from 'react-native';
 import QRCodeComponent from '../components/QRCodeComponent';
@@ -16,11 +16,11 @@ class QRCodeContainer extends React.Component {
         this.scannedQRCode = this.scannedQRCode.bind(this);
     }
 
-    componentWillMount(){
+    componentWillMount() {
         this.props.QRCodeActions.beginScanQRCode();
     }
 
-    scannedQRCode(studentCode){
+    scannedQRCode(studentCode) {
         if (!this.props.isScanned) {
             this.props.QRCodeActions.scannedQRCode();
             this.props.attendanceStudentActions.scannedQRCode(studentCode);
@@ -29,14 +29,14 @@ class QRCodeContainer extends React.Component {
     }
 
     render() {
-        if (!this.props.isScanned) {
+        if (this.props.isScanned) {
+            return (<View/>);
+        } else {
             return (
                 <QRCodeComponent
                     onScannerQRCode={this.scannedQRCode}
                 />
             );
-        } else {
-            return (<View/>);
         }
     }
 }
@@ -60,4 +60,4 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(QRCodeContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(QRCodeContainer);

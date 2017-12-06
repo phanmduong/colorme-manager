@@ -113,13 +113,13 @@ class DashboardContainer extends React.Component {
             this.setState({
                 genData: genData
             })
-            this.props.dashboardActions.selectedGenId(genData[0].id);
+            this.props.dashboardActions.selectedGenId(props.currentGen.id);
         }
 
         if (props.genData.length > 0 && props.baseData.length > 0 && !this.state.checkedDataDashboard) {
             this.setState({checkedDataDashboard: true});
             this.props.dashboardActions
-                .loadDataDashboard(-1, props.genData[1].id, this.props.token);
+                .loadDataDashboard(-1, props.currentGen.id, this.props.token);
         }
     }
 
@@ -198,6 +198,7 @@ function mapStateToProps(state) {
         isCheckIn: state.login.isCheckIn,
         deviceUser: state.login.deviceUser,
         isLoadingGen: state.gen.isLoading,
+        currentGen: state.gen.currentGen,
         genData: state.gen.genData,
         errorGen: state.gen.error,
         isLoadingDashboard: state.dashboard.isLoading,

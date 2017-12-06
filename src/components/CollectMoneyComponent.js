@@ -76,7 +76,7 @@ class CollectMoneyComponent extends React.Component {
             formInfoMoney.isReceivedCard = Boolean(register.received_id_card);
             this.props.updateFormDataAll(formInfoMoney);
         } else {
-            if (register.class && register.class.indexOf('.') !== -1) {
+            if (register.class && register.class_type != 'waiting') {
                 formInfoMoney.code = this.props.nextCode;
             } else {
                 formInfoMoney.code = this.props.nextWaitingCode;

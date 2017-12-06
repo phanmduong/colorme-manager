@@ -5,9 +5,6 @@ import * as types from '../constants/actionTypes';
 import * as checkInCheckOutApi from '../apis/checkInCheckOutApi';
 import {NetworkInfo} from 'react-native-network-info';
 import DeviceInfo from 'react-native-device-info';
-import {
-    Platform
-} from 'react-native';
 import async from 'async';
 import {Alert} from 'react-native';
 
@@ -55,10 +52,10 @@ export function loadCheck(token, type) {
 
                         },
                         (error) => {
-                                if (error.code === 1) {
-                                    Alert.alert("Thông báo", "Kiểm tra định vị trên thiết bị của bạn");
-                                }
-                                callback("Không thể tìm vị trí " + JSON.stringify(error));
+                            if (error.code === 1) {
+                                Alert.alert("Thông báo", "Kiểm tra định vị trên thiết bị của bạn");
+                            }
+                            callback("Không thể tìm vị trí " + JSON.stringify(error));
 
                         },
                     );
@@ -69,17 +66,24 @@ export function loadCheck(token, type) {
                     if (type === 'checkin') {
                         checkInCheckOutApi.checkin(device, token).then(function (res) {
                             // console.log(device);
+                            Alert.alert("Thông báo", "Hãy đọc nội dung thông báo");
                             callback(null, res);
                         }).catch(error => {
+                            Alert.alert("Thông báo",
+                                JSON.stringify(device) + ", token" + token
+                            );
                             callback("Có lỗi xảy ra thử lại");
-
                         })
                     }
                     else {
                         checkInCheckOutApi.checkout(device, token).then(function (res) {
                             // console.log(device);
+                            Alert.alert("Thông báo", "Hãy đọc nội dung thông báo");
                             callback(null, res);
                         }).catch(error => {
+                            Alert.alert("Thông báo",
+                                JSON.stringify(device) + ", token" + token
+                            );
                             callback("Có lỗi xảy ra thử lại");
 
                         })
@@ -92,8 +96,8 @@ export function loadCheck(token, type) {
                 if (err || result.data.status === 0) {
                     dispatch({
                         type: types.CHECK_IN_ERROR,
-                        message: result && result.data ? result.data.data.message : err,
-                        checkIn: result && result.data ? result.data.data.check_in : {}
+                        message: result && result.data && result.data.data ? result.data.data.message : err,
+                        checkIn: result && result.data && result.data.data ? result.data.data.check_in : {}
                     });
                 } else {
                     dispatch({

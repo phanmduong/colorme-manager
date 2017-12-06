@@ -28,7 +28,8 @@ export function loadDataGen(token) {
 export function loadDataSuccessful(res) {
     return ({
         type: types.LOAD_DATA_GEN_SUCCESSFUL,
-        genData: res.data.gens,
+        genData: res.data.data.gens,
+        currentGen: res.data.data.current_gen,
         isLoading: false,
         error: false
     })

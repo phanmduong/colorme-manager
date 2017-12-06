@@ -91,13 +91,13 @@ class ShiftRegisterContainer extends React.Component {
             this.setState({
                 genData: genData
             })
-            this.props.shiftRegisterActions.selectedGenId(genData[0].id);
+            this.props.shiftRegisterActions.selectedGenId(props.currentGen.id);
         }
 
         if (props.genData.length > 0 && props.baseData.length > 0 && !this.state.checkedDataShiftRegister) {
             this.setState({checkedDataShiftRegister: true});
             this.props.shiftRegisterActions
-                .loadDataShiftRegister(props.baseData[0].id, props.genData[1].id, this.props.token);
+                .loadDataShiftRegister(props.baseData[0].id, props.currentGen.id, this.props.token);
         }
     }
 
@@ -165,9 +165,11 @@ function mapStateToProps(state) {
     return {
         isLoadingBase: state.base.isLoading,
         baseData: state.base.baseData,
+
         errorBase: state.base.error,
         token: state.login.token,
         isLoadingGen: state.gen.isLoading,
+        currentGen: state.gen.currentGen,
         genData: state.gen.genData,
         errorGen: state.gen.error,
         isLoadingShiftRegister: state.shiftRegister.isLoading,

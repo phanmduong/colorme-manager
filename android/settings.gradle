@@ -1,4 +1,6 @@
 rootProject.name = 'ColorMEManager'
+include ':react-native-onesignal'
+project(':react-native-onesignal').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-onesignal/android')
 include ':mobile-center'
 project(':mobile-center').projectDir = new File(rootProject.projectDir, '../node_modules/mobile-center/android')
 include ':react-native-network-info'

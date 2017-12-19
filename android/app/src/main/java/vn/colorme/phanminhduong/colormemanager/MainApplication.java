@@ -6,6 +6,7 @@ import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
 import com.facebook.react.ReactApplication;
+import com.geektime.rnonesignalandroid.ReactNativeOneSignalPackage;
 import com.microsoft.azure.mobile.react.mobilecenter.RNMobileCenterPackage;
 import com.pusherman.networkinfo.RNNetworkInfoPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
@@ -42,6 +43,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ReactNativeOneSignalPackage(),
             new RNMobileCenterPackage(MainApplication.this),
             new RNNetworkInfoPackage(),
             new RNDeviceInfo(),

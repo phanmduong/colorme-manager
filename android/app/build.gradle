@@ -104,6 +104,8 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+        manifestPlaceholders = [onesignal_app_id: "ceea18e8-322a-4748-b18b-fdf066d9a5ff",
+                                        onesignal_google_project_number: "71360044341"]
     }
 
     dexOptions {
@@ -165,6 +167,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-onesignal')
     compile project(':mobile-center')
     compile project(':react-native-network-info')
     compile project(':react-native-device-info')

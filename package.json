@@ -23,6 +23,7 @@
     "react-native-linear-gradient": "^2.3.0",
     "react-native-modalbox": "^1.4.2",
     "react-native-network-info": "^3.0.0",
+    "react-native-onesignal": "^3.0.7",
     "react-native-progress": "^3.4.0",
     "react-native-spinkit": "^1.1.1",
     "react-native-swiper": "^1.5.12",

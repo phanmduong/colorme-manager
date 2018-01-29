@@ -5,6 +5,7 @@ import * as types from '../constants/actionTypes';
 import * as loadLoginApi from '../apis/loginApi';
 import {AsyncStorage} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import OneSignal from "react-native-onesignal";
 
 export function updateDataLoginForm(login) {
     return {
@@ -73,6 +74,7 @@ export function changeStatusBarColor(color) {
 
 export function loginSuccess(res, isCheckIn = true, deviceUser = {}) {
     let token = res.data.token;
+    OneSignal.sendTags({user_id: res.data.user ? res.data.user.id : 0});
     return ({
         type: types.LOGIN_USER,
         token: token,

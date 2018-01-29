@@ -9,8 +9,11 @@ import CodePush from "react-native-code-push";
 import Modal from 'react-native-modalbox';
 import {Container, Content, Text, View} from 'native-base';
 import * as Progress from 'react-native-progress';
+
 var {height, width} = Dimensions.get('window');
 import theme from './src/styles';
+import OneSignal from "react-native-onesignal";
+
 
 export default class ColorMEManager extends Component {
     constructor(props) {
@@ -20,6 +23,7 @@ export default class ColorMEManager extends Component {
             codePushInstalling: false,
             downloadProgress: 0
         };
+        OneSignal.sendTags({device_type: 'mobile_manage'});
     }
 
     componentDidMount() {

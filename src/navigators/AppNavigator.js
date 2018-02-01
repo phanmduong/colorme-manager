@@ -3,41 +3,17 @@
  */
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {StatusBar, View, BackHandler} from 'react-native';
-import {addNavigationHelpers, StackNavigator} from 'react-navigation';
-import {routeConfigs, navigationOptions} from './AppRouteConfigs';
+import {StatusBar, View} from 'react-native';
+import {addNavigationHelpers} from 'react-navigation';
 import material from '../native-base-theme/variables/material';
+import AppNav from "../AppNav";
 
-export const AppNavigator = StackNavigator(routeConfigs, navigationOptions);
 
 class AppWithNavigationState extends React.Component {
     constructor(props) {
         super(props);
-        this.handleBack = this.handleBack.bind(this);
     }
 
-    shouldCloseApp(nav) {
-
-        return nav.index === 0;
-    }
-
-    componentDidMount() {
-        BackHandler.addEventListener('hardwareBackPress', this.handleBack);
-    }
-
-    handleBack() {
-        const {dispatch, nav} = this.props;
-        console.log(nav);
-        if (this.shouldCloseApp(nav)) return false;
-        dispatch({
-            type: 'Navigation/BACK'
-        });
-        return true;
-    }
-
-    componentWillUnmount() {
-        BackHandler.removeEventListener('hardwareBackPress', this.handleBack);
-    }
 
     render() {
         const {dispatch, nav, statusBar} = this.props;
@@ -47,7 +23,7 @@ class AppWithNavigationState extends React.Component {
                     backgroundColor={material.statusBarColor}
                     barStyle={statusBar.color}
                 />
-                <AppNavigator navigation={addNavigationHelpers({dispatch, state: nav})}/>
+                <AppNav navigation={addNavigationHelpers({dispatch, state: nav})}/>
             </View>
         );
     }

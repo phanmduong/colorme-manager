@@ -17,9 +17,12 @@ class CheckInContainer extends React.Component {
     }
 
 
-    static navigationOptions = ({navigation}) => ({
+    static navigationOptions = ({navigation}) => {
+        console.log(navigation);
+        return ({
+
         title: navigation.state.params.title
-    });
+    })};
 
     componentWillMount(){
         this.onCheck();

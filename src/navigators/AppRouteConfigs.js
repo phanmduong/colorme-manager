@@ -147,7 +147,7 @@ const DashboardMain = TabNavigator({
 const CheckIn = StackNavigator({
     CheckIn: {
         screen: CheckInContainer,
-
+        path: 'checkin2/:title'
     }
 }, {
     ...navigationOptionsDefault, ...{
@@ -180,19 +180,22 @@ const Drawer = DrawerNavigator({
         screen: DashboardMain,
         navigationOptions: ({navigation}) => ({
             title: 'Bảng điều khiển',
-        })
+        }),
+        path: 'dashboard'
     },
     MenuCheckIn: {
         screen: CheckIn,
         navigationOptions: ({navigation}) => ({
             title: 'Check in',
-        })
+        }),
+        path: 'checkin'
     },
     MenuCheckOut: {
         screen: CheckOut,
         navigationOptions: ({navigation}) => ({
             title: 'Check out',
-        })
+        }),
+        path: 'checkout'
     }
 }, {
     drawerPosition: 'right',
@@ -203,20 +206,23 @@ const Drawer = DrawerNavigator({
     contentComponent: props => (<SidebarContainer {...props}/>)
 });
 
-const Main = StackNavigator({
-    Drawer: {
-        screen: Drawer
-    }
-}, {
-    headerMode: 'none'
-});
+// const Main = StackNavigator({
+//     Drawer: {
+//         screen: Drawer,
+//         path: 'drawer'
+//     }
+// }, {
+//     headerMode: 'none'
+// });
 
 export const routeConfigs = {
     Login: {
         screen: LoginContainer,
+        path: 'login'
     },
     Main: {
-        screen: Main
+        screen: Drawer,
+        path: 'main'
     }
 };
 

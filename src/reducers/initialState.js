@@ -12,8 +12,11 @@ export default {
         login: {},
         isLoading: false,
         error: false,
-        token: undefined,
-        user: {},
+        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjMyOTAsImlzcyI6Imh0dHA6Ly9hcGkuY29sb3JtZS52bi9sb2dpbiIsImlhdCI6MTUxNzM4MTcxMiwiZXhwIjoxNTE3OTg2NTEyLCJuYmYiOjE1MTczODE3MTIsImp0aSI6ImxmWW5TZzAwTVloMkoyS1kifQ.euYnUMWzyK19NK_mZNLzdu0Rt5HYZ7zTdYq3qBunMqA',
+        user: {
+            phone: '',
+            email: '',
+        },
         isGetDataLocalSuccessful: false,
         isCheckIn: false,
         deviceUser: {},

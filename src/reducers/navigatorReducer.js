@@ -4,9 +4,11 @@
 import {NavigationActions} from 'react-navigation';
 import * as types from '../constants/actionTypes';
 
-import {AppNavigator} from '../navigators/AppNavigator';
+import {AppNavigator} from '../AppNav';
 
 const initialState = AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams('Login'));
+
+// const initialState = AppNavigator.router.getStateForAction(NavigationActions.init());
 
 export default function navigatorReducer(state = initialState, action) {
     let nextState;
@@ -43,7 +45,8 @@ export default function navigatorReducer(state = initialState, action) {
                 nextState = AppNavigator.router.getStateForAction(action, stateData);
                 return nextState;
             }
-            return state;
+
+            return nextState;
         default:
             nextState = AppNavigator.router.getStateForAction(action, state);
     }

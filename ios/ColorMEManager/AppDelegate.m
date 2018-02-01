@@ -11,7 +11,7 @@
 #import <RNMobileCenter/RNMobileCenter.h>
 #import <CodePush/CodePush.h>
 #import <RNCrashes/RNCrashes.h>
-
+#import <React/RCTLinkingManager.h>
 #import <RNAnalytics/RNAnalytics.h>
 
 
@@ -61,5 +61,12 @@
   [self.window makeKeyAndVisible];
   return YES;
 }
-
+// Add this above the `@end`:
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+  return [RCTLinkingManager application:application openURL:url
+                      sourceApplication:sourceApplication annotation:annotation];
+}
 @end
+

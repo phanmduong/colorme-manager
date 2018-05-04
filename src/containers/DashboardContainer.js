@@ -10,7 +10,7 @@ import * as dashboardActions from '../actions/dashboardActions';
 import * as loginActions from '../actions/loginActions';
 import DashboardComponent from '../components/DashboardComponent';
 import {NavigationActions} from 'react-navigation';
-import {Alert} from 'react-native';
+import {Alert, NativeModules} from 'react-native';
 
 class DashboardContainer extends React.Component {
     constructor(props, context) {
@@ -44,10 +44,13 @@ class DashboardContainer extends React.Component {
                 ". Bạn sẽ không thể dùng tính năng check in và check out. Bạn có muốn tiếp tục?",
                 [
                     {text: 'Đăng xuất', onPress: () => this.logout()},
-                    {text: 'Tiếp tục', onPress: () => {}},
+                    {
+                        text: 'Tiếp tục', onPress: () => {
+                        }
+                    },
                 ],
-                { cancelable: false }
-                )
+                {cancelable: false}
+            )
         }
         this.loadData();
     }

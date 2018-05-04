@@ -6,7 +6,7 @@ import * as checkInCheckOutApi from '../apis/checkInCheckOutApi';
 import {NetworkInfo} from 'react-native-network-info';
 import DeviceInfo from 'react-native-device-info';
 import async from 'async';
-import {Alert} from 'react-native';
+import {Alert, NativeModules, Platform} from 'react-native';
 
 let watchID;
 
@@ -42,26 +42,49 @@ export function loadCheck(token, type) {
                 },
                 function (callback) {
                     let countCheckLocation = 0;
-                    watchID = navigator.geolocation.watchPosition((position) => {
+
+                    if (Platform.OS == 'ios') {
+                        watchID = navigator.geolocation.watchPosition((position) => {
+                                if (countCheckLocation === 0) {
+                                    device.long = position.coords.longitude;
+                                    device.lat = position.coords.latitude;
+                                    callback(null);
+                                }
+                                countCheckLocation++;
+
+                            },
+                            (error) => {
+                                if (error.code === 1) {
+                                    Alert.alert("Thông báo", "Kiểm tra định vị trên thiết bị của bạn");
+                                }
+                                callback("Không thể tìm vị trí " + JSON.stringify(error));
+
+                            },
+                        );
+                    } else {
+
+                        let location = NativeModules.RNLocationModule;
+                        location.getLocation((lat, long) => {
+                            if (lat == null || long == null) {
+                                Alert.alert("Thông báo", "Kiểm tra định vị trên thiết bị của bạn");
+                                callback("Không thể tìm vị trí ");
+                                return;
+                            }
                             if (countCheckLocation === 0) {
-                                device.long = position.coords.longitude;
-                                device.lat = position.coords.latitude;
+                                device.long = long;
+                                device.lat = lat;
                                 callback(null);
                             }
                             countCheckLocation++;
+                        });
+                    }
 
-                        },
-                        (error) => {
-                            if (error.code === 1) {
-                                Alert.alert("Thông báo", "Kiểm tra định vị trên thiết bị của bạn");
-                            }
-                            callback("Không thể tìm vị trí " + JSON.stringify(error));
 
-                        },
-                    );
                 },
                 function (callback) {
-                    navigator.geolocation.clearWatch(watchID);
+                    if (watchID) {
+                        navigator.geolocation.clearWatch(watchID);
+                    }
                     console.log(device);
                     if (type === 'checkin') {
                         checkInCheckOutApi.checkin(device, token).then(function (res) {
@@ -92,7 +115,9 @@ export function loadCheck(token, type) {
             ],
 
             function (err, result) {
-                navigator.geolocation.clearWatch(watchID);
+                if (watchID) {
+                    navigator.geolocation.clearWatch(watchID);
+                }
                 if (err || result.data.status === 0) {
                     dispatch({
                         type: types.CHECK_IN_ERROR,

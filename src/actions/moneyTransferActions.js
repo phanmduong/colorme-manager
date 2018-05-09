@@ -142,18 +142,18 @@ export function updateTransaction(receiverId, token) {
         moneyTransferApi.postTransactionApi(receiverId, token).then(function (res) {
             dispatch(transactionSuccessful());
         }).catch(error => {
-            if (axios.isCancel(error)) {
-                console.log('Request canceled', error.message);
-            } else {
-                dispatch(transactionError());
-                throw (error);
-            }
+            // if (axios.isCancel(error)) {
+            //     console.log('Request canceled', error.message);
+            // } else {
+            //     dispatch(transactionError());
+            //     throw (error);
+            // }
 
         })
     }
 }
 
-export function transactionSuccessful() {
+export function duongtransactionSuccessful() {
     return ({
         type: types.TRANSACTION_SUCCESSFUL,
         isLoadingTransaction: true,

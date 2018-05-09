@@ -1,4 +1,4 @@
-import React from'react';
+import React from 'react';
 import {Dimensions} from 'react-native';
 import {
     Container,
@@ -15,6 +15,7 @@ import ListItemStaffMoneyTransfer from "./ListItemStaffMoneyTransfer";
 
 var {height, width} = Dimensions.get('window');
 let self;
+
 class SearchStaffMoneyTransferComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -32,9 +33,6 @@ class SearchStaffMoneyTransferComponent extends React.Component {
             />
         )
     }
-
-    com
-
 
     renderContent() {
         if (this.props.isLoading && this.props.staffList.length <= 0) {
@@ -66,16 +64,17 @@ class SearchStaffMoneyTransferComponent extends React.Component {
                         renderRow={
                             (item, sectionID, rowID) => {
                                 return (
-                                <ListItemStaffMoneyTransfer
-                                    postTransaction={this.props.postTransaction}
-                                    userId={item.id}
-                                    name={item.name}
-                                    avatar={item.avatar_url}
-                                    email={item.email}
-                                    phone={item.phone}
-                                    isTransaction={item.isTransaction}
-                                />
-                            )}
+                                    <ListItemStaffMoneyTransfer
+                                        postTransaction={this.props.postTransaction}
+                                        userId={item.id}
+                                        name={item.name}
+                                        avatar={item.avatar_url}
+                                        email={item.email}
+                                        phone={item.phone}
+                                        isTransaction={item.isTransaction || this.props.user.status == 2}
+                                    />
+                                )
+                            }
                         }
                         renderFooter={() => {
                             if (this.props.isLoading) {

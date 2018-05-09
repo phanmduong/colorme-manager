@@ -16,16 +16,16 @@ export function getTransactionApi(token, page = 1, limit = 20) {
 
 
 export function postTransactionApi(receiverId, token) {
-    let url = env.API_URL + "/transactions?token=" + token;
+    let url = env.MANAGE_API_URL_V3 + "/finance/create-transaction?token=" + token;
     return axios.post(url, {
-        receiver_id: receiverId
+        receiver_id: receiverId,
     });
 }
 
-export function conformTransactionApi(transactionId,status, token) {
+export function conformTransactionApi(transactionId, status, token) {
     let url = env.MANAGE_API_URL_V3 + "/finance/confirm-transaction?token=" + token;
     return axios.post(url, {
         transaction_id: transactionId,
-        status : status
+        status: status
     });
 }

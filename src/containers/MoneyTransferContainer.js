@@ -108,6 +108,7 @@ class MoneyTransferContainer extends React.Component {
                     search={this.props.searchStaff}
                     postTransaction={this.postTransaction}
                     isLoadingTransaction={this.props.isLoadingTransaction}
+                    user={this.props.user}
 
                 />
             )
@@ -130,6 +131,7 @@ class MoneyTransferContainer extends React.Component {
 function mapStateToProps(state) {
     return {
         token: state.login.token,
+        user: state.login.user,
         userId: state.login.user.id,
         segment: state.moneyTransfer.segment,
         currentPageStaffList: state.moneyTransfer.currentPageStaffList,

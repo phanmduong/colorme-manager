@@ -23,7 +23,7 @@ export function postTransactionApi(receiverId, token) {
 }
 
 export function conformTransactionApi(transactionId,status, token) {
-    let url = env.API_URL + "/confirm-transactions?token=" + token;
+    let url = env.MANAGE_API_URL_V3 + "/finance/confirm-transaction?token=" + token;
     return axios.post(url, {
         transaction_id: transactionId,
         status : status

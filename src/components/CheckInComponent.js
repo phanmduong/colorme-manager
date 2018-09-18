@@ -13,7 +13,7 @@ import theme from '../styles';
 import {NetworkInfo} from 'react-native-network-info';
 import DeviceInfo from 'react-native-device-info';
 import Call from './common/Call';
-import ListItem from './Dashboard/ListItem';
+import ListItem from './dashboard/ListItem';
 
 let {height, width} = Dimensions.get('window');
 import * as helper from '../helper/index';

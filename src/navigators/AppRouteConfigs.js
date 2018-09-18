@@ -118,13 +118,13 @@ const DashboardMain = TabNavigator({
             tabBarIcon: (<TabIcon nameIcon="material|attach-money"/>)
         }),
     },
-    TabMoneyTransfer: {
-        screen: TabMoneyTransfer,
-        navigationOptions: ({navigation}) => ({
-            tabBarLabel: 'Chuyển tiền',
-            tabBarIcon: (<TabIcon nameIcon="entypo|wallet"/>)
-        }),
-    }
+    // TabMoneyTransfer: {
+    //     screen: TabMoneyTransfer,
+    //     navigationOptions: ({navigation}) => ({
+    //         tabBarLabel: 'Chuyển tiền',
+    //         tabBarIcon: (<TabIcon nameIcon="entypo|wallet"/>)
+    //     }),
+    // }
 }, {
     tabBarComponent: TabBarTop,
     swipeEnabled: false,
@@ -150,7 +150,8 @@ const CheckIn = StackNavigator({
 
     }
 }, {
-    ...navigationOptionsDefault, ...{
+    ...navigationOptionsDefault,
+    ...{
         initialRouteName: 'CheckIn',
         initialRouteParams: {
             title: 'Check in',

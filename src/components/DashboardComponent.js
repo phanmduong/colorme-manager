@@ -13,10 +13,10 @@ import Swiper from 'react-native-swiper'
 import theme from '../styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import * as alert from '../constants/alert';
-import SlideBarchartRegister from './dashboard/SlideBarchartRegister';
-import SlideTarget from './dashboard/SlideTarget';
-import SlideBarchartMoney from './dashboard/SlideBarchartMoney';
-import ListItem from './dashboard/ListItem';
+import SlideBarchartRegister from './Dashboard/SlideBarchartRegister';
+import SlideTarget from './Dashboard/SlideTarget';
+import SlideBarchartMoney from './Dashboard/SlideBarchartMoney';
+import ListItem from './Dashboard/ListItem';
 import Loading from './common/Loading';
 import {dotNumber} from '../helper';
 

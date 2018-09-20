@@ -4,7 +4,7 @@
 import * as types from '../constants/actionTypes';
 import * as classApi from '../apis/classApi';
 
-export function beginDataCurrentClassStudyLoad(){
+export function beginDataCurrentClassStudyLoad() {
     return {
         type: types.BEGIN_DATA_CURRENT_CLASS_STUDY_LOAD,
         isLoading: true,
@@ -42,18 +42,19 @@ export function loadDataError() {
     }
 }
 
-export function selectedCurrentClassStudy(classId, lessonOrder, classOrder) {
+export function selectedCurrentClassStudy(classItem) {
     return {
         type: types.SELECTED_CURRENT_CLASS_STUDY,
-        selectedCurrentClassStudy: {
-            class: {
-                id: classId,
-                order: classOrder
-            },
-            lesson: {
-                    order: lessonOrder
-            }
-
-        }
+        // selectedCurrentClassStudy: {
+        //     class: {
+        //         id: classId,
+        //         order: classOrder
+        //     },
+        //     lesson: {
+        //             order: lessonOrder
+        //     }
+        //
+        // }
+        selectedCurrentClassStudy: classItem
     }
 }

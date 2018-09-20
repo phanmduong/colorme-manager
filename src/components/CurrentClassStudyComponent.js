@@ -1,5 +1,5 @@
-import React from'react';
-import {Dimensions} from 'react-native';
+import React from 'react';
+import {Dimensions, RefreshControl} from 'react-native';
 import {
     Container,
     Content,
@@ -14,9 +14,11 @@ import {
     Thumbnail,
 } from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+
 var {height, width} = Dimensions.get('window');
 import * as alert from '../constants/alert';
 import Loading from '../components/common/Loading';
+import theme from "../styles";
 
 class ClassComponent extends React.Component {
     constructor(props, context) {
@@ -25,7 +27,7 @@ class ClassComponent extends React.Component {
 
     render() {
 
-        if (this.props.isLoading) {
+        if (this.props.isLoading && this.props.classData.length <= 0) {
             return (
                 <Loading size={width / 8}/>
             )
@@ -46,31 +48,56 @@ class ClassComponent extends React.Component {
                 )
             } else {
                 return (
-                    <Content>
-                        <List
-                            dataArray={this.props.classData}
-                            renderRow={
-                                (item, sectionID, rowID) => (
-                                    <ListItem
-                                        onPress={() => this.props.onSelectedItem(item.id, item.lesson[0].order, rowID)}
-                                        onLongPress={() => {
-                                        }}
-                                        button
-                                    >
-                                        <Thumbnail small source={{uri: item.avatar_url}}/>
-                                        <Body>
+                    <List
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={this.props.isLoading}
+                                onRefresh={this.props.onReload}
+                                titleColor={theme.mainColor}
+                                title="Đang tải..."
+                                tintColor='#d9534f'
+                                colors={['#d9534f']}
+                            />
+                        }
+                        dataArray={this.props.classData}
+                        renderRow={
+                            (item, sectionID, rowID) => (
+                                <ListItem
+                                    // onPress={() => this.props.onSelectedItem(item.id, item.lesson[0].order, rowID)}
+                                    onPress={() => this.props.onSelectedItem(item, rowID)}
+                                    onLongPress={() => {
+                                    }}
+                                    button
+                                >
+                                    <Thumbnail small source={{uri: item.avatar_url}}/>
+                                    <Body>
+                                    <View style={styles.containerClassName}>
                                         <Text>{item.name}</Text>
-                                        <Text note>{item.study_time}</Text>
-                                        </Body>
-                                        <Right>
-                                            <Icon android="md-arrow-forward" ios="ios-arrow-forward"/>
-                                        </Right>
-                                    </ListItem>
-                                )
-                            }
-                        >
-                        </List>
-                    </Content>
+                                        {item.lesson[0] &&
+                                        <View style={{...styles.card, ... {backgroundColor: theme.processColor1}}}>
+                                            <Text
+                                                style={styles.textCard}>BUỔI {item.lesson[0].order}</Text>
+                                        </View>
+                                        }
+                                        {item.lesson[0] &&
+                                        <View style={{...styles.card, ... {backgroundColor: theme.secondColor}}}>
+                                            <Text
+                                                style={styles.textCard}>{item.lesson[0].number_student_attendance} HỌC
+                                                VIÊN</Text>
+                                        </View>
+                                        }
+
+                                    </View>
+                                    <Text note>{item.study_time}</Text>
+                                    </Body>
+                                    <Right>
+                                        <Icon android="md-arrow-forward" ios="ios-arrow-forward"/>
+                                    </Right>
+                                </ListItem>
+                            )
+                        }
+                    >
+                    </List>
                 )
             }
         }
@@ -86,6 +113,24 @@ const styles = ({
     },
     textError: {
         color: '#d9534f',
+        textAlign: 'center'
+    },
+    containerClassName: {
+        marginHorizontal: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    card: {
+        paddingHorizontal: 10,
+        marginLeft: 5,
+        borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 15,
+    },
+    textCard: {
+        fontSize: 10,
+        color: 'white',
         textAlign: 'center'
     }
 });

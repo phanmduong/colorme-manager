@@ -1,7 +1,7 @@
 /**
  * Created by phanmduong on 4/25/17.
  */
-import React from'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import CurrentClassStudyComponent from '../components/CurrentClassStudyComponent';
@@ -15,18 +15,18 @@ class CurrentClassStudyContainer extends React.Component {
         this.reloadCurrentClassStudy = this.reloadCurrentClassStudy.bind(this);
     }
 
-    componentWillMount(){
+    componentWillMount() {
         this.props.currentClassStudyActions
             .loadDataCurrentClassStudy(this.props.token);
     }
 
-    onSelectedItem(classId, lessonOrder, classOrder){
-        this.props.currentClassStudyActions.selectedCurrentClassStudy(classId, lessonOrder, classOrder);
-        this.props.qrCodeScreen();
+    onSelectedItem(classItem) {
+        this.props.currentClassStudyActions.selectedCurrentClassStudy(classItem);
+        this.props.listStudentAttendanceScreen();
 
     }
 
-    reloadCurrentClassStudy(){
+    reloadCurrentClassStudy() {
         this.props.currentClassStudyActions
             .loadDataCurrentClassStudy(this.props.token);
     }
@@ -34,11 +34,11 @@ class CurrentClassStudyContainer extends React.Component {
     render() {
         return (
             <CurrentClassStudyComponent
-                error = {this.props.error}
-                classData = {this.props.classData}
-                isLoading = {this.props.isLoading}
-                onSelectedItem = {this.onSelectedItem}
-                onReload = {this.reloadCurrentClassStudy}
+                error={this.props.error}
+                classData={this.props.classData}
+                isLoading={this.props.isLoading}
+                onSelectedItem={this.onSelectedItem}
+                onReload={this.reloadCurrentClassStudy}
             />
         );
     }
@@ -60,8 +60,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         currentClassStudyActions: bindActionCreators(currentClassStudyActions, dispatch),
-        qrCodeScreen: () =>
-            dispatch(NavigationActions.navigate({routeName: 'QRCode'}))
+        listStudentAttendanceScreen: () =>
+            dispatch(NavigationActions.navigate({routeName: 'ListStudentAttendance'}))
     };
 }
 

@@ -6,6 +6,7 @@ export function dotNumber(number) {
     if (number) {
         return number.toString().replace(/\./g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
+    return number;
 }
 
 export function maxArray(arr) {
@@ -18,6 +19,7 @@ export function maxArray(arr) {
 }
 
 export function formatPhone(phone) {
+    if (phone == undefined || phone == null) return phone;
     if (phone.length === 10) {
         return phone.replace(/(\d{4})(\d{3})(\d{3})/, '$1.$2.$3');
     } else {
@@ -26,10 +28,10 @@ export function formatPhone(phone) {
 }
 
 export function typeConnect(type) {
-    if (type.toLowerCase() == 'wifi'){
+    if (type.toLowerCase() == 'wifi') {
         return 'Wifi';
     }
-    if (type.toLowerCase() == 'mobile'){
+    if (type.toLowerCase() == 'mobile') {
         return 'Điện thoại';
     }
     return '';

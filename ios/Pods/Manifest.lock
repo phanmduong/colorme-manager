@@ -12,10 +12,15 @@ DEPENDENCIES:
   - MobileCenter/Crashes (~> 0.12.1)
   - RNMobileCenterShared (~> 0.9.0)
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - MobileCenter
+    - RNMobileCenterShared
+
 SPEC CHECKSUMS:
-  MobileCenter: 95f224fd050d7d6ed861d943b1bf9b960885ddb9
+  MobileCenter: bec20de6421e7603870a0d832c14e87955b3cdd1
   RNMobileCenterShared: 3d8f8472a3f1011f2faa62f47aca8bfd577175c0
 
 PODFILE CHECKSUM: 4e2a96736c91b8e50077fc17dee1c5e4675110c2
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.5.3

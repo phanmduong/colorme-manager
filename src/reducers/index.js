@@ -24,6 +24,7 @@ import autoLoginReducer from './autoLoginReducer';
 import collectMoneyReducer from './collectMoneyReducer';
 import moneyTransferReducer from './moneyTransferReducer';
 import checkInCheckOutReducer from './checkInCheckOutReducer';
+import listStudentAttendanceReducer from './listStudentAttendanceReducer';
 
 
 const appReducer = combineReducers({
@@ -48,6 +49,7 @@ const appReducer = combineReducers({
     listStudentPaid: listStudentPaidReducer,
     listStudentZero: listStudentZeroReducer,
     checkInCheckOut: checkInCheckOutReducer,
+    listStudentAttendance: listStudentAttendanceReducer,
 });
 
 const rootReducer = (state, action) => {

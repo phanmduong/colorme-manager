@@ -37,7 +37,7 @@ class ListItemStudent extends React.Component {
                 <Thumbnail small source={{uri: avatar}}/>
                 <View style={styles.content}>
                     <View style={styles.containerTitle}>
-                        <Text style={styles.title}>{name.trim().toUpperCase()}</Text>
+                        <Text style={styles.title}>{name ? name.trim().toUpperCase() : ''}</Text>
                         {(this.state.onPressed) ?
                             (
                                 <Icon
@@ -107,22 +107,27 @@ class ListItemStudent extends React.Component {
                                     </View>
                                     <Text style={styles.textProcess}>{sumAttendance}/{sumLesson}</Text>
                                 </View>
-                                <View style={styles.processAndText}>
-                                    <View style={{
-                                        ...styles.process, ...styles.containerProcess, ...{
-                                            backgroundColor: theme.processColorOpacity2
-                                        }
-                                    }}>
-                                        <Animated.View
-                                            style={[styles.process, styles.bar,
-                                                {
-                                                    width: maxWidthProcess * score / maxScore,
-                                                    backgroundColor: theme.processColor2
-                                                }]}
-                                        />
-                                    </View>
-                                    <Text style={styles.textProcess}>{score}/{maxScore}</Text>
-                                </View>
+                                {
+                                    score && maxScore ?
+                                        <View style={styles.processAndText}>
+                                            <View style={{
+                                                ...styles.process, ...styles.containerProcess, ...{
+                                                    backgroundColor: theme.processColorOpacity2
+                                                }
+                                            }}>
+                                                <Animated.View
+                                                    style={[styles.process, styles.bar,
+                                                        {
+                                                            width: maxWidthProcess * score / maxScore,
+                                                            backgroundColor: theme.processColor2
+                                                        }]}
+                                                />
+                                            </View>
+                                            <Text style={styles.textProcess}>{score}/{maxScore}</Text>
+                                        </View>
+                                        :
+                                        <View/>
+                                }
                             </View>
                         )
                         :

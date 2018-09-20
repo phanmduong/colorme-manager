@@ -4,29 +4,24 @@
 import * as types from '../constants/actionTypes';
 import initialState from './initialState'
 
-export default function classReducer(state = initialState.currentClassStudy, action) {
+export default function listStudentAttendanceReducer(state = initialState.listStudentAttendance, action) {
     switch (action.type) {
-        case types.BEGIN_DATA_CURRENT_CLASS_STUDY_LOAD:
+        case types.BEGIN_DATA_LIST_STUDENT_ATTENDANCE_LOAD:
             return Object.assign({}, state, {
                 isLoading: action.isLoading,
                 error: action.error,
             });
-        case types.LOAD_DATA_CURRENT_CLASS_STUDY_SUCCESSFUL:
+        case types.LOAD_DATA_LIST_STUDENT_ATTENDANCE_SUCCESSFUL:
             return Object.assign({}, state, {
                 isLoading: action.isLoading,
                 error: action.error,
-                classData: action.classData,
-                // classData: state.classData
+                listStudentAttendanceData: action.listStudentAttendanceData
             });
-        case types.LOAD_DATA_CURRENT_CLASS_STUDY_ERROR:
+        case types.LOAD_DATA_LIST_STUDENT_ATTENDANCE_ERROR:
             return Object.assign({}, state, {
                 isLoading: action.isLoading,
                 error: action.error
             });
-        case types.SELECTED_CURRENT_CLASS_STUDY:
-            return Object.assign({}, state, {
-                selectedCurrentClassStudy: action.selectedCurrentClassStudy
-            })
         default:
             return state;
     }

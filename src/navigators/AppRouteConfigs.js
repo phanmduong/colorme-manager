@@ -6,8 +6,8 @@ import {StackNavigator, TabBarTop, TabNavigator, DrawerNavigator} from 'react-na
 import theme from '../styles';
 import LoginContainer from '../containers/LoginContainer';
 import ClassContainer from '../containers/ClassContainer';
-import QRCodeContainer from '../containers/QRCodeContainer';
-import AttendanceStudentContainer from '../containers/AttendanceStudentContainer';
+// import QRCodeContainer from '../containers/QRCodeContainer';
+// import AttendanceStudentContainer from '../containers/AttendanceStudentContainer';
 import CurrentClassStudyContainer from '../containers/CurrentClassStudyContainer';
 import CollectMoneyContainer from '../containers/CollectMoneyContainer';
 import StudentRegisterClassContainer from '../containers/StudentRegisterClassContainer';
@@ -22,6 +22,7 @@ import SidebarContainer from '../containers/SidebarContainer';
 import TabIcon from '../components/common/TabIcon';
 import MenuButton from '../components/common/MenuButton';
 import CheckInContainer from '../containers/CheckInContainer';
+import ListStudentAttendanceContainer from "../containers/ListStudentAttendanceContainer";
 
 const navigationOptionsDefault = {
     navigationOptions: ({navigation}) => ({
@@ -39,12 +40,15 @@ const TabAttendance = StackNavigator({
     CurrentClassStudy: {
         screen: CurrentClassStudyContainer
     },
-    QRCode: {
-        screen: QRCodeContainer
+    ListStudentAttendance: {
+        screen: ListStudentAttendanceContainer
     },
-    AttendanceStudent: {
-        screen: AttendanceStudentContainer
-    }
+    // QRCode: {
+    //     screen: QRCodeContainer
+    // },
+    // AttendanceStudent: {
+    //     screen: AttendanceStudentContainer
+    // }
 }, navigationOptionsDefault);
 
 const TabShiftRegister = StackNavigator({

@@ -8,12 +8,11 @@
  */
 
 #import "AppDelegate.h"
-#import <RNMobileCenter/RNMobileCenter.h>
+#import <AppCenterReactNativeCrashes/AppCenterReactNativeCrashes.h>
+#import <AppCenterReactNativeAnalytics/AppCenterReactNativeAnalytics.h>
+#import <AppCenterReactNative/AppCenterReactNative.h>
+
 #import <CodePush/CodePush.h>
-#import <RNCrashes/RNCrashes.h>
-
-#import <RNAnalytics/RNAnalytics.h>
-
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
@@ -24,9 +23,14 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   NSURL *jsCodeLocation;
+
+  [AppCenterReactNativeCrashes registerWithAutomaticProcessing];  // Initialize AppCenter crashes
+
+  [AppCenterReactNativeAnalytics registerWithInitiallyEnabled:true];  // Initialize AppCenter analytics
+
+  [AppCenterReactNative register];  // Initialize AppCenter 
   self.oneSignal = [[RCTOneSignal alloc] initWithLaunchOptions:launchOptions
                                                          appId:@"ceea18e8-322a-4748-b18b-fdf066d9a5ff"];
-  [RNMobileCenter register];  // Initialize Mobile Center 
 
 //  for (NSString* family in [UIFont familyNames])
 //  {
@@ -36,10 +40,6 @@
 //      NSLog(@" %@", name);
 //    }
 //  }
-
-  [RNCrashes registerWithCrashDelegate: [[RNCrashesDelegateAlwaysSend alloc] init]];  // Initialize Mobile Center crashes
-
-  [RNAnalytics registerWithInitiallyEnabled:true];  // Initialize Mobile Center analytics
 
   
 #ifdef DEBUG

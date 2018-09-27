@@ -25,11 +25,11 @@ const ICON_SET_MAP = {
 // This is a composition is a drop in replacement for users migrating from the
 // react-native-icons module. Please don't use this component for new apps/views.
 export default class Icon extends React.Component {
-    static propTypes = {
-        name: React.PropTypes.string.isRequired,
-        size: React.PropTypes.number,
-        color: React.PropTypes.string,
-    };
+    // static propTypes = {
+    //     name: React.PropTypes.string.isRequired,
+    //     size: React.PropTypes.number,
+    //     color: React.PropTypes.string,
+    // };
 
     setNativeProps(nativeProps) {
         if (this.iconRef) {

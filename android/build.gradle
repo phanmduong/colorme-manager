@@ -1,28 +1,66 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
+    ext {
+        buildToolsVersion = "27.0.3"
+        minSdkVersion = 16
+        compileSdkVersion = 27
+        targetSdkVersion = 26
+        supportLibVersion = "27.1.1"
+    }
     repositories {
         jcenter()
+
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
-
-        // NOTE: Do not place your application dependencies here; they belong
+        classpath 'com.android.tools.build:gradle:3.1.4'
+        classpath 'com.google.gms:google-services:3.1.2'
+        // NOTE: Do not place your aapplication dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
 
 allprojects {
     repositories {
-
         mavenLocal()
         jcenter()
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
             url "$rootDir/../node_modules/react-native/android"
         }
-        // Add jitpack repository (added by react-native-spinkit)
         maven { url "https://jitpack.io" }
-        maven { url "https://maven.google.com" }
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
+}
+
+subprojects {
+    project.configurations.all {
+        afterEvaluate {project ->
+            if (project.hasProperty("android")) {
+                android {
+                    compileSdkVersion 27
+                    buildToolsVersion '27.0.3'
+                }
+            }
+        }
+        resolutionStrategy.eachDependency { details ->
+            if (details.requested.group == 'com.android.support'
+                    && !details.requested.name.contains('multidex') ) {
+                details.useVersion '27.1.1'
+            }
+        }
+    }
+}
+
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.4'
+    distributionUrl = distributionUrl.replace("bin", "all")
 }

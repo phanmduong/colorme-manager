@@ -7,6 +7,7 @@ import {
 } from 'native-base';
 import ShiftRegisterDate from './ShiftRegisterDate'
 import theme from '../../styles';
+import _ from 'lodash';
 
 class ShiftRegisterWeek extends React.Component {
     constructor(props, context) {

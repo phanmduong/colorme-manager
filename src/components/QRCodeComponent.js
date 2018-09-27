@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 import {
     Container,
 } from 'native-base';
-import Camera from 'react-native-camera';
+// import Camera from 'react-native-camera';
 
 class QRCodeComponent extends React.Component {
     constructor(props, context) {
@@ -13,13 +13,13 @@ class QRCodeComponent extends React.Component {
     render() {
         return (
             <Container>
-                <Camera
-                    onBarCodeRead={(result) => this.props.onScannerQRCode(result.data)}
-                    barCodeTypes={['org.iso.QRCode']}
-                    orientation="portrait"
-                    style={styles.preview}
-                    aspect={Camera.constants.Aspect.fill}>
-                </Camera>
+                {/*<Camera*/}
+                    {/*onBarCodeRead={(result) => this.props.onScannerQRCode(result.data)}*/}
+                    {/*barCodeTypes={['org.iso.QRCode']}*/}
+                    {/*orientation="portrait"*/}
+                    {/*style={styles.preview}*/}
+                    {/*aspect={Camera.constants.Aspect.fill}>*/}
+                {/*</Camera>*/}
             </Container>
         );
     }

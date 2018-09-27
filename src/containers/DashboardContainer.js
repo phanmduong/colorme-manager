@@ -11,6 +11,7 @@ import * as loginActions from '../actions/loginActions';
 import DashboardComponent from '../components/DashboardComponent';
 import {NavigationActions} from 'react-navigation';
 import {Alert, NativeModules} from 'react-native';
+import _ from 'lodash';
 
 class DashboardContainer extends React.Component {
     constructor(props, context) {

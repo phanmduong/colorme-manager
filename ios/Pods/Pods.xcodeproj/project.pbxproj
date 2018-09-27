@@ -37,11 +37,12 @@
 		188082323B0139D7236032A0AC994460 /* Pods-ColorMEManager-tvOS-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ColorMEManager-tvOS-frameworks.sh"; sourceTree = "<group>"; };
 		1CE772C62CCA406F8F1ADC77AB0A0F01 /* Pods-ColorMEManager-tvOSTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ColorMEManager-tvOSTests.staging.xcconfig"; sourceTree = "<group>"; };
 		1FE83CD81CB08E2B6A64E9A8C79CFCA9 /* Pods-ColorMEManager-tvOS-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ColorMEManager-tvOS-resources.sh"; sourceTree = "<group>"; };
+		1FF8CBE3D70C3B5EE02BF7F1402952A2 /* AppCenterCrashes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppCenterCrashes.framework; path = "AppCenter-SDK-Apple/iOS/AppCenterCrashes.framework"; sourceTree = "<group>"; };
 		25860BCE3E0B9C595BC460E06593C138 /* libPods-ColorMEManager.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-ColorMEManager.a"; path = "libPods-ColorMEManager.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		267ADFD84E834A72983235705EC1817D /* Pods-ColorMEManager.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ColorMEManager.debug.xcconfig"; sourceTree = "<group>"; };
-		2788FEC11F8146F7275E65528605A55A /* MobileCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCenter.framework; path = "MobileCenter-SDK-Apple/iOS/MobileCenter.framework"; sourceTree = "<group>"; };
 		29840AE94BB2D6CD486BAD6C359B2626 /* Pods-ColorMEManager-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ColorMEManager-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		2B94B3ECE284D60614E6F5AD68EBE94C /* Pods-ColorMEManager-tvOSTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ColorMEManager-tvOSTests-frameworks.sh"; sourceTree = "<group>"; };
+		2E280B58529AEBA76B5F11C0705D0856 /* AppCenterReactNativeShared.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppCenterReactNativeShared.framework; path = AppCenterReactNativeShared/AppCenterReactNativeShared.framework; sourceTree = "<group>"; };
 		2F3B855DBF2F06FB725F840A714E3E01 /* Pods-ColorMEManager-tvOS.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ColorMEManager-tvOS.staging.xcconfig"; sourceTree = "<group>"; };
 		42DD157BC702962E411CE076E7BC8C60 /* Pods-ColorMEManager-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ColorMEManager-dummy.m"; sourceTree = "<group>"; };
 		4F6EB1D0BC41432BC162070331FE31C8 /* Pods-ColorMEManager-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ColorMEManager-resources.sh"; sourceTree = "<group>"; };
@@ -49,7 +50,7 @@
 		5D7B39CA65D222E260BA838A215073B9 /* Pods-ColorMEManager-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ColorMEManager-frameworks.sh"; sourceTree = "<group>"; };
 		5E18A35EDFD267E75939EF808C877EA4 /* Pods-ColorMEManagerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ColorMEManagerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5E8DF8B49BE58A3392B158FF512DAA64 /* Pods-ColorMEManager-tvOS-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ColorMEManager-tvOS-acknowledgements.markdown"; sourceTree = "<group>"; };
-		66FDE8BD8CFFF7F9E330AC716F8CCE79 /* RNMobileCenterShared.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RNMobileCenterShared.framework; path = RNMobileCenterShared/RNMobileCenterShared.framework; sourceTree = "<group>"; };
+		697057EB6F6A315777E7EA941A2AAF3B /* AppCenterAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppCenterAnalytics.framework; path = "AppCenter-SDK-Apple/iOS/AppCenterAnalytics.framework"; sourceTree = "<group>"; };
 		6BD8DBA82D8AEBA4B81B8A9B270D9F8E /* Pods-ColorMEManager-tvOS-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ColorMEManager-tvOS-acknowledgements.plist"; sourceTree = "<group>"; };
 		7AECD5B1442E727977CA291FF4DC9F1F /* Pods-ColorMEManagerTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ColorMEManagerTests-dummy.m"; sourceTree = "<group>"; };
 		83624323A021591D8613EB9839CCE769 /* Pods-ColorMEManager-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ColorMEManager-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -64,13 +65,12 @@
 		B5F927B56BA4B49690E6B790D9DA8D21 /* Pods-ColorMEManager.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ColorMEManager.staging.xcconfig"; sourceTree = "<group>"; };
 		B619679B8849AE94D2C7E1DE50872D65 /* libPods-ColorMEManagerTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-ColorMEManagerTests.a"; path = "libPods-ColorMEManagerTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D379F8C0ACE8CEFDFDB73164AC046F97 /* Pods-ColorMEManagerTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ColorMEManagerTests-acknowledgements.plist"; sourceTree = "<group>"; };
-		D5C7CDE8B6C81556FECA91ECA2F585C1 /* MobileCenterCrashes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCenterCrashes.framework; path = "MobileCenter-SDK-Apple/iOS/MobileCenterCrashes.framework"; sourceTree = "<group>"; };
 		D8F8D9BE475B37D2F890EE5A034D7281 /* Pods-ColorMEManager-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ColorMEManager-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		DC65AFFB7964130E42157D207BE3A6DE /* AppCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppCenter.framework; path = "AppCenter-SDK-Apple/iOS/AppCenter.framework"; sourceTree = "<group>"; };
 		E10B8A0564CD4C7012CB628E2645391F /* Pods-ColorMEManagerTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ColorMEManagerTests-resources.sh"; sourceTree = "<group>"; };
 		E60E34BC695D17656396010AF174C489 /* Pods-ColorMEManager-tvOSTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ColorMEManager-tvOSTests-dummy.m"; sourceTree = "<group>"; };
 		F0FD27FBCD5A9D0BB556FDB29A233ED6 /* Pods-ColorMEManager-tvOS-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ColorMEManager-tvOS-dummy.m"; sourceTree = "<group>"; };
 		F2F0BDE2D9797BECA1E386BA302026B1 /* libPods-ColorMEManager-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-ColorMEManager-tvOSTests.a"; path = "libPods-ColorMEManager-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F6199D58EB18EAC74C922EDD40097F60 /* MobileCenterAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCenterAnalytics.framework; path = "MobileCenter-SDK-Apple/iOS/MobileCenterAnalytics.framework"; sourceTree = "<group>"; };
 		F993F325F6E35D8D92B77BA3ADF56C85 /* Pods-ColorMEManager-tvOSTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ColorMEManager-tvOSTests-acknowledgements.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -122,12 +122,12 @@
 			path = "Target Support Files/Pods-ColorMEManager";
 			sourceTree = "<group>";
 		};
-		0C8F650681EDBD4EE7B75937B83B734E /* Core */ = {
+		0C0416FA3744ECAB6C76E95960896084 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9532E17AC500601C0B61118C45F8CA53 /* Frameworks */,
+				DC65AFFB7964130E42157D207BE3A6DE /* AppCenter.framework */,
 			);
-			name = Core;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		0F8D2E47FE03D3B91B51069F7C273AF4 /* Frameworks */ = {
@@ -135,6 +135,30 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2299AF501E253B95F2AE1FAD00A3B182 /* Crashes */ = {
+			isa = PBXGroup;
+			children = (
+				4789B2888C9F3A64D9BB98A64504484B /* Frameworks */,
+			);
+			name = Crashes;
+			sourceTree = "<group>";
+		};
+		260E672E181DB8BDAC7A2999772A7AE4 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				8E2C96EA6162ABA11EBE8E8817909062 /* Frameworks */,
+			);
+			name = Analytics;
+			sourceTree = "<group>";
+		};
+		2D20FC01AE47C04E62202F456C8DC21D /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				0C0416FA3744ECAB6C76E95960896084 /* Frameworks */,
+			);
+			name = Core;
 			sourceTree = "<group>";
 		};
 		43521762E823BF511F05240187B59886 /* Targets Support Files */ = {
@@ -148,20 +172,12 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
-		64729F3932E7686C42D122B3FA76659C /* Frameworks */ = {
+		4789B2888C9F3A64D9BB98A64504484B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D5C7CDE8B6C81556FECA91ECA2F585C1 /* MobileCenterCrashes.framework */,
+				1FF8CBE3D70C3B5EE02BF7F1402952A2 /* AppCenterCrashes.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		7BB62F2734812856D646B1FAE653D67B /* Crashes */ = {
-			isa = PBXGroup;
-			children = (
-				64729F3932E7686C42D122B3FA76659C /* Frameworks */,
-			);
-			name = Crashes;
 			sourceTree = "<group>";
 		};
 		7DB346D0F39D3F0E887471402A8071AB = {
@@ -169,18 +185,10 @@
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
 				0F8D2E47FE03D3B91B51069F7C273AF4 /* Frameworks */,
-				BFBE4D750AD608E527628562FD3CE2A3 /* Pods */,
+				B1C0FD4C526B54B6F7B5EA76C32A7B4C /* Pods */,
 				CD6FF6C85E9D737DD92FBD361013C341 /* Products */,
 				43521762E823BF511F05240187B59886 /* Targets Support Files */,
 			);
-			sourceTree = "<group>";
-		};
-		8105DB5B47CAD8C77F1C062E174212B5 /* Analytics */ = {
-			isa = PBXGroup;
-			children = (
-				D4AF3EF24AE5FB6FFCB6E4B61478CB81 /* Frameworks */,
-			);
-			name = Analytics;
 			sourceTree = "<group>";
 		};
 		86EF537A544DCCB83A6AD8821D5C34C6 /* Pods-ColorMEManager-tvOSTests */ = {
@@ -215,36 +223,19 @@
 			path = "Target Support Files/Pods-ColorMEManager-tvOS";
 			sourceTree = "<group>";
 		};
-		92FB20EF272686758C16E3413C088C00 /* RNMobileCenterShared */ = {
+		8E2C96EA6162ABA11EBE8E8817909062 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9A83E2945B877C24308F99246FBEFCF4 /* Frameworks */,
-			);
-			name = RNMobileCenterShared;
-			path = RNMobileCenterShared;
-			sourceTree = "<group>";
-		};
-		9532E17AC500601C0B61118C45F8CA53 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				2788FEC11F8146F7275E65528605A55A /* MobileCenter.framework */,
+				697057EB6F6A315777E7EA941A2AAF3B /* AppCenterAnalytics.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		9A83E2945B877C24308F99246FBEFCF4 /* Frameworks */ = {
+		B1C0FD4C526B54B6F7B5EA76C32A7B4C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				66FDE8BD8CFFF7F9E330AC716F8CCE79 /* RNMobileCenterShared.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		BFBE4D750AD608E527628562FD3CE2A3 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				D475BD27B7EA251F3A9187F2B27E749A /* MobileCenter */,
-				92FB20EF272686758C16E3413C088C00 /* RNMobileCenterShared */,
+				D6F4E16E170AFF42D929EF8FFF92078F /* AppCenter */,
+				FDE42022E7C36FE2A980950DD051F732 /* AppCenterReactNativeShared */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -260,23 +251,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D475BD27B7EA251F3A9187F2B27E749A /* MobileCenter */ = {
+		D6F4E16E170AFF42D929EF8FFF92078F /* AppCenter */ = {
 			isa = PBXGroup;
 			children = (
-				8105DB5B47CAD8C77F1C062E174212B5 /* Analytics */,
-				0C8F650681EDBD4EE7B75937B83B734E /* Core */,
-				7BB62F2734812856D646B1FAE653D67B /* Crashes */,
+				260E672E181DB8BDAC7A2999772A7AE4 /* Analytics */,
+				2D20FC01AE47C04E62202F456C8DC21D /* Core */,
+				2299AF501E253B95F2AE1FAD00A3B182 /* Crashes */,
 			);
-			name = MobileCenter;
-			path = MobileCenter;
-			sourceTree = "<group>";
-		};
-		D4AF3EF24AE5FB6FFCB6E4B61478CB81 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				F6199D58EB18EAC74C922EDD40097F60 /* MobileCenterAnalytics.framework */,
-			);
-			name = Frameworks;
+			name = AppCenter;
+			path = AppCenter;
 			sourceTree = "<group>";
 		};
 		ECC781962B426739B8C773C497EF71DC /* Pods-ColorMEManagerTests */ = {
@@ -293,6 +276,23 @@
 			);
 			name = "Pods-ColorMEManagerTests";
 			path = "Target Support Files/Pods-ColorMEManagerTests";
+			sourceTree = "<group>";
+		};
+		F84ACEF4E4D3666C3A595115D01D3868 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2E280B58529AEBA76B5F11C0705D0856 /* AppCenterReactNativeShared.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FDE42022E7C36FE2A980950DD051F732 /* AppCenterReactNativeShared */ = {
+			isa = PBXGroup;
+			children = (
+				F84ACEF4E4D3666C3A595115D01D3868 /* Frameworks */,
+			);
+			name = AppCenterReactNativeShared;
+			path = AppCenterReactNativeShared;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

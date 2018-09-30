@@ -23,3 +23,8 @@ export function checkout(device, token) {
         'wifi_name': device.wifiName,
     });
 }
+
+export function historyAttendanceShiftApi(genID, token) {
+    let url = env.MANAGE_API_URL + "/checkincheckout/history-checkin-checkout-shifts?token=" + token;
+    return axios.get(url);
+}

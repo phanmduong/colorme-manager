@@ -23,6 +23,7 @@ import TabIcon from '../components/common/TabIcon';
 import MenuButton from '../components/common/MenuButton';
 import CheckInContainer from '../containers/CheckInContainer';
 import ListStudentAttendanceContainer from "../containers/ListStudentAttendanceContainer";
+import HistoryAttendanceShiftContainer from "../containers/historyAttendanceShift/HistoryAttendanceShiftContainer";
 
 const navigationOptionsDefault = {
     navigationOptions: ({navigation}) => ({
@@ -164,6 +165,20 @@ const CheckIn = StackNavigator({
     }
 });
 
+const HistoryAttendanceShift = StackNavigator({
+    HistoryAttendanceShift: {
+        screen: HistoryAttendanceShiftContainer,
+    }
+}, {
+    ...navigationOptionsDefault,
+    ...{
+        initialRouteName: 'HistoryAttendanceShift',
+        initialRouteParams: {
+            title: 'Lịch sử lịch trực',
+        }
+    }
+});
+
 const CheckOut = StackNavigator({
     CheckOut: {
         screen: CheckInContainer,
@@ -197,6 +212,12 @@ const Drawer = DrawerNavigator({
         screen: CheckOut,
         navigationOptions: ({navigation}) => ({
             title: 'Check out',
+        })
+    },
+    HistoryAttendanceShift: {
+        screen: HistoryAttendanceShift,
+        navigationOptions: ({navigation}) => ({
+            title: 'Lịch sử điểm danh lịch trực',
         })
     }
 }, {

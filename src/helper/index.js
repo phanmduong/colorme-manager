@@ -37,3 +37,13 @@ export function typeConnect(type) {
     return '';
 
 }
+
+export function groupBy(collection, iteratee, props) {
+    return _.chain(collection)
+        .groupBy(iteratee)
+        .toPairs()
+        .map(function(currentItem) {
+            return _.zipObject(props, currentItem);
+        })
+        .value();
+}

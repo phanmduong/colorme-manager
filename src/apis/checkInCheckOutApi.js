@@ -24,7 +24,31 @@ export function checkout(device, token) {
     });
 }
 
-export function historyAttendanceShiftApi(genID, token) {
+export function historyAttendanceShiftApi(baseID, genID, token) {
     let url = env.MANAGE_API_URL + "/checkincheckout/history-checkin-checkout-shifts?token=" + token;
-    return axios.get(url);
+    return axios.get(url, {
+        params: {
+            gen_id: genID,
+            base_id: baseID,
+        }
+    });
+}
+
+export function historyAttendanceWorkShiftApi(baseID, genID, token) {
+    let url = env.MANAGE_API_URL + "/checkincheckout/history-checkin-checkout-work-shifts?token=" + token;
+    return axios.get(url, {
+        params: {
+            gen_id: genID,
+            base_id: baseID,
+        }
+    });
+}
+
+export function historyAttendanceTeacherApi(genID, token) {
+    let url = env.MANAGE_API_URL + "/checkincheckout/history-checkin-checkout-teachers?token=" + token;
+    return axios.get(url, {
+        params: {
+            gen_id: genID,
+        }
+    });
 }

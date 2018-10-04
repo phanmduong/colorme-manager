@@ -5,21 +5,21 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Dimensions} from 'react-native';
 import {observer} from "mobx-react";
-import HistoryAttendanceShiftStore from "./HistoryAttendanceShiftStore";
+import HistoryAttendanceTeachingStore from "./HistoryAttendanceTeachingStore";
 import Spinkit from "react-native-spinkit";
 import theme from "../../styles";
 import {Button, Container, Item, Picker, Text, View} from "native-base";
-import ListHistoryAttendanceShift from "./ListHistoryAttendanceShift";
+import ListHistoryAttendanceTeaching from "./ListHistoryAttendanceTeaching";
 import * as alert from "../../constants/alert";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 var {height, width} = Dimensions.get('window');
 
 @observer
-class HistoryAttendanceShiftContainer extends React.Component {
+class HistoryAttendanceTeachingContainer extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.store = new HistoryAttendanceShiftStore();
+        this.store = new HistoryAttendanceTeachingStore();
     }
 
 
@@ -29,25 +29,19 @@ class HistoryAttendanceShiftContainer extends React.Component {
 
     componentWillMount() {
         this.loadData();
-        this.store.loadBases(this.props.token);
         this.store.loadGens(this.props.token);
     };
 
     loadData = () => {
-        if (this.props.navigation.state.params.type == 'shift') {
-            this.store.loadHistoryShift(this.props.token)
-        } else {
-            this.store.loadHistoryWorkShift(this.props.token)
-        }
+        this.store.loadHistoryTeaching(this.props.token)
     };
 
     errorData() {
         const {error} = this.store;
-        const NO_DATA = this.props.navigation.state.params.type == 'shift' ? alert.NO_DATA_SHIFT_REGISTER : alert.NO_DATA_WORK_SHIFT_REGISTER;
         return (
             <View style={styles.container}>
                 <Text
-                    style={styles.textError}>{(error) ? alert.LOAD_DATA_ERROR : NO_DATA}</Text>
+                    style={styles.textError}>{(error) ? alert.LOAD_DATA_ERROR : alert.NO_DATA_CLASS}</Text>
                 <Button iconLeft danger small onPress={this.loadData}
                         style={{marginTop: 10, alignSelf: null}}>
                     <MaterialCommunityIcons name='reload' color='white' size={20}/>
@@ -57,18 +51,13 @@ class HistoryAttendanceShiftContainer extends React.Component {
         )
     }
 
-    onSelectBaseId = (baseId) => {
-        this.store.selectedBaseId = baseId;
-        this.loadData();
-    };
-
     onSelectGenId = (genId) => {
         this.store.selectedGenId = genId;
         this.loadData();
     };
 
     render() {
-        const {isLoading, error, shifts, bases, gens, selectedBaseId, selectedGenId} = this.store;
+        const {isLoading, error, attendances, gens, selectedGenId} = this.store;
         return (
             <Container>
                 <View style={styles.containerPicker}>
@@ -83,17 +72,6 @@ class HistoryAttendanceShiftContainer extends React.Component {
                             return (<Item label={"Khóa " + gen.name} value={gen.id} key={index}/>)
                         })}
                     </Picker>
-                    <Picker
-                        style={{width: width / 2, padding: 0, margin: 0}}
-                        iosHeader="Chọn cơ sở"
-                        mode="dialog"
-                        defaultLabel={"Chọn cơ sở"}
-                        selectedValue={selectedBaseId}
-                        onValueChange={this.onSelectBaseId}>
-                        {bases.map(function (base, index) {
-                            return (<Item label={base.name} value={base.id} key={index}/>)
-                        })}
-                    </Picker>
                 </View>
                 {
                     isLoading ?
@@ -104,12 +82,14 @@ class HistoryAttendanceShiftContainer extends React.Component {
                                 type='Wave'
                                 size={width / 8}
                             />
-                        </View>
-                        :
-                        (error || (shifts && shifts.length <= 0)) ?
-                            this.errorData() :
-                            <ListHistoryAttendanceShift store={this.store}/>
+                        </View> :
+                        (
+                            (error || (attendances && attendances.length <= 0)) ?
+                                this.errorData() :
+                                <ListHistoryAttendanceTeaching store={this.store}/>
+                        )
                 }
+
             </Container>
         )
     }
@@ -148,4 +128,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps)(HistoryAttendanceShiftContainer);
+export default connect(mapStateToProps)(HistoryAttendanceTeachingContainer);

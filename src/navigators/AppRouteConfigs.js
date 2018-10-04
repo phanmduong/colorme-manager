@@ -24,6 +24,8 @@ import MenuButton from '../components/common/MenuButton';
 import CheckInContainer from '../containers/CheckInContainer';
 import ListStudentAttendanceContainer from "../containers/ListStudentAttendanceContainer";
 import HistoryAttendanceShiftContainer from "../containers/historyAttendanceShift/HistoryAttendanceShiftContainer";
+import HistoryAttendanceTeachingContainer
+    from "../containers/historyAttendanceTeaching/HistoryAttendanceTeachingContainer";
 
 const navigationOptionsDefault = {
     navigationOptions: ({navigation}) => ({
@@ -175,6 +177,36 @@ const HistoryAttendanceShift = StackNavigator({
         initialRouteName: 'HistoryAttendanceShift',
         initialRouteParams: {
             title: 'Lịch sử lịch trực',
+            type: 'shift'
+        }
+    }
+});
+
+const HistoryAttendanceWorkShift = StackNavigator({
+    HistoryAttendanceWorkShift: {
+        screen: HistoryAttendanceShiftContainer,
+    }
+}, {
+    ...navigationOptionsDefault,
+    ...{
+        initialRouteName: 'HistoryAttendanceWorkShift',
+        initialRouteParams: {
+            title: 'Lịch sử lịch làm việc',
+            type: 'work_shift'
+        }
+    }
+});
+
+const HistoryAttendanceTeaching = StackNavigator({
+    HistoryAttendanceTeaching: {
+        screen: HistoryAttendanceTeachingContainer,
+    }
+}, {
+    ...navigationOptionsDefault,
+    ...{
+        initialRouteName: 'HistoryAttendanceTeaching',
+        initialRouteParams: {
+            title: 'Lịch sử lịch giảng dạy',
         }
     }
 });
@@ -219,7 +251,21 @@ const Drawer = DrawerNavigator({
         navigationOptions: ({navigation}) => ({
             title: 'Lịch sử điểm danh lịch trực',
         })
-    }
+    },
+    HistoryAttendanceWorkShift: {
+        screen: HistoryAttendanceWorkShift,
+        navigationOptions: ({navigation}) => ({
+            title: 'Lịch sử điểm danh lịch làm việc',
+
+        })
+    },
+    HistoryAttendanceTeaching: {
+        screen: HistoryAttendanceTeaching,
+        navigationOptions: ({navigation}) => ({
+            title: 'Lịch sử điểm danh lịch giảng dạy',
+
+        })
+    },
 }, {
     drawerPosition: 'right',
     // backBehavior: 'none',

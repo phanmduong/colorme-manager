@@ -12,4 +12,7 @@ export default styles = {
     borderColor: '#d3d3d3',
     colorTitle: '#555555',
     colorSubTitle: '#7d7d7d',
+    warningColor: '#ff9700',
+    dangerColor: '#d92732',
+    successColor: '#2da802'
 }

@@ -43,18 +43,15 @@ export function loadDataError() {
 }
 
 export function selectedCurrentClassStudy(classItem) {
+    console.log({
+        ...classItem,
+        lesson: classItem.lesson[0]
+    });
     return {
         type: types.SELECTED_CURRENT_CLASS_STUDY,
-        // selectedCurrentClassStudy: {
-        //     class: {
-        //         id: classId,
-        //         order: classOrder
-        //     },
-        //     lesson: {
-        //             order: lessonOrder
-        //     }
-        //
-        // }
-        selectedCurrentClassStudy: classItem
+        selectedCurrentClassStudy: {
+            ...classItem,
+            lesson: classItem.lesson[0]
+        }
     }
 }

@@ -1,12 +1,11 @@
 import React from 'react';
-import {Dimensions, RefreshControl} from 'react-native';
+import {Dimensions, RefreshControl, TouchableOpacity} from 'react-native';
 import {
     Container,
     Content,
     Button,
     Right,
     Body,
-    Icon,
     View,
     ListItem,
     List,
@@ -19,6 +18,7 @@ var {height, width} = Dimensions.get('window');
 import * as alert from '../constants/alert';
 import Loading from '../components/common/Loading';
 import theme from "../styles";
+import Icon from "./common/Icon";
 
 class ClassComponent extends React.Component {
     constructor(props, context) {
@@ -91,7 +91,10 @@ class ClassComponent extends React.Component {
                                     <Text note>{item.study_time}</Text>
                                     </Body>
                                     <Right>
-                                        <Icon android="md-arrow-forward" ios="ios-arrow-forward"/>
+                                        <TouchableOpacity
+                                            onPress={() => this.props.openQrCode(item, rowID)}>
+                                            <Icon name="fontawesome|qrcode" size={30} color={theme.mainColor}/>
+                                        </TouchableOpacity>
                                     </Right>
                                 </ListItem>
                             )

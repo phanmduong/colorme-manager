@@ -23,7 +23,7 @@ class AttendanceStudentComponent extends React.Component {
 
 
     updateAttendance() {
-        let attendanceId = this.props.student.attendances.filter( (attendances) => {
+        let attendanceId = this.props.student.attendances.filter((attendances) => {
             return attendances.order == this.props.orderLessonCourse;
         })[0].id;
         this.props.onUpdateAttendance(attendanceId);
@@ -40,7 +40,7 @@ class AttendanceStudentComponent extends React.Component {
                     <Container>
                         <View style={styles.container}>
                             <Text
-                                style={styles.textError}>{(!this.props.messageError) ? alert.LOAD_DATA_ERROR : this.props.messageError}</Text>
+                                style={styles.textError}>{(!this.props.messageError) ? alert.LOAD_DATA_ERROR : this.props.messageError} {this.props.studentCode}</Text>
                             <Button iconLeft danger small onPress={this.props.onReload}
                                     style={{marginTop: 10, alignSelf: null}}>
                                 <MaterialCommunityIcons name='reload' color='white' size={20}/>

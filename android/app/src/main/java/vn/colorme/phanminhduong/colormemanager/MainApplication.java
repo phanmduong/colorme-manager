@@ -3,6 +3,7 @@ package vn.colorme.phanminhduong.colormemanager;
 import android.support.multidex.MultiDexApplication;
 
 import com.facebook.react.ReactApplication;
+import org.reactnative.camera.RNCameraPackage;
 
 import com.react.rnspinkit.RNSpinkitPackage;
 import com.geektime.rnonesignalandroid.ReactNativeOneSignalPackage;
@@ -42,6 +43,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
+            new RNCameraPackage(),
                     new AppCenterReactNativeCrashesPackage(MainApplication.this, getResources().getString(R.string.appCenterCrashes_whenToSendCrashes)),
                     new AppCenterReactNativeAnalyticsPackage(MainApplication.this, getResources().getString(R.string.appCenterAnalytics_whenToEnableAnalytics)),
                     new AppCenterReactNativePackage(MainApplication.this),

@@ -1,17 +1,18 @@
 /**
  * Created by phanmduong on 4/6/17.
  */
-import React from'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import AttendanceStudentComponent from '../components/AttendanceStudentComponent';
 import * as attendanceStudentActions from '../actions/attendanceStudentActions';
 import * as QRCodeActions from '../actions/QRCodeActions';
-import {Alert, BackHandler}from 'react-native';
+import {Alert, BackHandler} from 'react-native';
 import * as alert from '../constants/alert';
 import BackButton from '../components/common/BackButton';
 
 let self;
+
 class AttendanceStudentContainer extends React.Component {
     constructor(props) {
         super(props);
@@ -48,16 +49,16 @@ class AttendanceStudentContainer extends React.Component {
             Alert.alert('Thông báo',
                 alert.ATTENDANCE_SUCCESSFUL,
                 [{text: 'Đồng ý', onPress: self.popRouter}],
-                { cancelable: false }
+                {cancelable: false}
             );
         }
 
-        if (!nextProps.isLoadingInfoStudent){
-            if (nextProps.classStudent.id && nextProps.classStudent.id !== nextProps.classId){
-                if (!this.state.checkClass){
+        if (!nextProps.isLoadingInfoStudent) {
+            if (nextProps.classStudent.id && nextProps.classStudent.id !== nextProps.classId) {
+                if (!this.state.checkClass) {
                     Alert.alert('Thông báo', alert.STUDENT_HAVE_NOT_CLASS);
                 }
-              this.setState({checkClass: true});
+                this.setState({checkClass: true});
             }
         }
     }
@@ -75,7 +76,7 @@ class AttendanceStudentContainer extends React.Component {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBack);
     }
 
-    popRouter(){
+    popRouter() {
         this.props.QRCodeActions.beginScanQRCode();
         this.props.navigation.goBack();
     }
@@ -113,7 +114,7 @@ function mapStateToProps(state) {
         studentCode: state.attendanceStudent.studentCode,
         orderLessonCourse: state.currentClassStudy.selectedCurrentClassStudy.lesson.order,
         message: state.attendanceStudent.message,
-        classId: state.currentClassStudy.selectedCurrentClassStudy.class.id,
+        classId: state.currentClassStudy.selectedCurrentClassStudy.id,
         classStudent: state.attendanceStudent.classStudent,
         statusRequestUpdated: state.attendanceStudent.statusRequestUpdated,
         messageError: state.attendanceStudent.messageError

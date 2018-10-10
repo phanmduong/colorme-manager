@@ -26,6 +26,8 @@ import ListStudentAttendanceContainer from "../containers/ListStudentAttendanceC
 import HistoryAttendanceShiftContainer from "../containers/historyAttendanceShift/HistoryAttendanceShiftContainer";
 import HistoryAttendanceTeachingContainer
     from "../containers/historyAttendanceTeaching/HistoryAttendanceTeachingContainer";
+import QRCodeContainer from "../containers/QRCodeContainer";
+import AttendanceStudentContainer from "../containers/AttendanceStudentContainer";
 
 const navigationOptionsDefault = {
     navigationOptions: ({navigation}) => ({
@@ -46,12 +48,12 @@ const TabAttendance = StackNavigator({
     ListStudentAttendance: {
         screen: ListStudentAttendanceContainer
     },
-    // QRCode: {
-    //     screen: QRCodeContainer
-    // },
-    // AttendanceStudent: {
-    //     screen: AttendanceStudentContainer
-    // }
+    QRCode: {
+        screen: QRCodeContainer
+    },
+    AttendanceStudent: {
+        screen: AttendanceStudentContainer
+    }
 }, navigationOptionsDefault);
 
 const TabShiftRegister = StackNavigator({

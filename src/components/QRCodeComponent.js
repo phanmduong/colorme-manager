@@ -1,9 +1,9 @@
-import React from'react';
+import React from 'react';
 import {StyleSheet} from 'react-native';
 import {
     Container,
 } from 'native-base';
-// import Camera from 'react-native-camera';
+import {RNCamera} from 'react-native-camera';
 
 class QRCodeComponent extends React.Component {
     constructor(props, context) {
@@ -13,13 +13,15 @@ class QRCodeComponent extends React.Component {
     render() {
         return (
             <Container>
-                {/*<Camera*/}
-                    {/*onBarCodeRead={(result) => this.props.onScannerQRCode(result.data)}*/}
-                    {/*barCodeTypes={['org.iso.QRCode']}*/}
-                    {/*orientation="portrait"*/}
-                    {/*style={styles.preview}*/}
-                    {/*aspect={Camera.constants.Aspect.fill}>*/}
-                {/*</Camera>*/}
+                <RNCamera
+                    onBarCodeRead={(result) => this.props.onScannerQRCode(result.data)}
+                    barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
+                    orientation="portrait"
+                    style={styles.preview}
+                    permissionDialogTitle={'Permission to use camera'}
+                    permissionDialogMessage={'We need your permission to use your camera phone'}
+                >
+                </RNCamera>
             </Container>
         );
     }

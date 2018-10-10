@@ -16,13 +16,19 @@ class CurrentClassStudyContainer extends React.Component {
     }
 
     componentWillMount() {
-        this.props.currentClassStudyActions
-            .loadDataCurrentClassStudy(this.props.token);
+        // this.props.currentClassStudyActions
+        //     .loadDataCurrentClassStudy(this.props.token);
     }
 
     onSelectedItem(classItem) {
         this.props.currentClassStudyActions.selectedCurrentClassStudy(classItem);
         this.props.listStudentAttendanceScreen();
+
+    }
+
+    openQrCode = (classItem) => {
+        this.props.currentClassStudyActions.selectedCurrentClassStudy(classItem);
+        this.props.qrCodeScreen();
 
     }
 
@@ -32,12 +38,14 @@ class CurrentClassStudyContainer extends React.Component {
     }
 
     render() {
+        console.log(this.props.classData);
         return (
             <CurrentClassStudyComponent
                 error={this.props.error}
                 classData={this.props.classData}
                 isLoading={this.props.isLoading}
                 onSelectedItem={this.onSelectedItem}
+                openQrCode={this.openQrCode}
                 onReload={this.reloadCurrentClassStudy}
             />
         );
@@ -61,7 +69,9 @@ function mapDispatchToProps(dispatch) {
     return {
         currentClassStudyActions: bindActionCreators(currentClassStudyActions, dispatch),
         listStudentAttendanceScreen: () =>
-            dispatch(NavigationActions.navigate({routeName: 'ListStudentAttendance'}))
+            dispatch(NavigationActions.navigate({routeName: 'ListStudentAttendance'})),
+        qrCodeScreen: () =>
+            dispatch(NavigationActions.navigate({routeName: 'QRCode'}))
     };
 }
 

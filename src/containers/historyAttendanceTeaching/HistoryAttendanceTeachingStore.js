@@ -24,7 +24,7 @@ class HistoryAttendanceTeachingStore {
                 this.attendances = res.data.data.teaching;
             })
             .catch(() => {
-                this.error = false
+                this.error = true;
             })
             .finally(() => {
                 this.isLoading = false;
@@ -39,11 +39,11 @@ class HistoryAttendanceTeachingStore {
         loadGenApi(token)
             .then((res) => {
                 this.gens = res.data.data.gens;
-                // this.selectedGenId = res.data.data.current_gen.id;
-                this.selectedGenId = 33;
+                this.selectedGenId = res.data.data.teaching_gen.id;
+                // this.selectedGenId = 33;
             })
             .catch(() => {
-                this.errorGen = false
+                this.errorGen = true;
             })
             .finally(() => {
                 this.isLoadingGen = false;

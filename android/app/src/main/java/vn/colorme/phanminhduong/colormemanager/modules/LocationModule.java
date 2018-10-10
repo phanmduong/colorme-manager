@@ -1,8 +1,11 @@
 package vn.colorme.phanminhduong.colormemanager.modules;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -53,6 +56,20 @@ public class LocationModule extends ReactContextBaseJavaModule implements Connec
 
     @ReactMethod
     public void getLocation(Callback callback) {
+        if (ActivityCompat.checkSelfPermission(getReactApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getCurrentActivity(),
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    100);
+            callback.invoke(null, null);
+            return;
+        }
+        if (ActivityCompat.checkSelfPermission(getReactApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getCurrentActivity(),
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                    99);
+            callback.invoke(null, null);
+            return;
+        }
         Location mLastLocation = LocationServices.FusedLocationApi
                 .getLastLocation(mGoogleApiClient);
 
@@ -119,4 +136,6 @@ public class LocationModule extends ReactContextBaseJavaModule implements Connec
     public void onConnectionSuspended(int arg0) {
         mGoogleApiClient.connect();
     }
+
+
 }

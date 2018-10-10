@@ -99,7 +99,7 @@ android {
         applicationId "vn.colorme.phanminhduong.colormemanager"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 20
+        versionCode 24
         versionName "1.5"
         multiDexEnabled true
         ndk {

@@ -9,8 +9,10 @@ import {
 import _ from 'lodash';
 import ShiftRegisterItem from "./ShiftRegisterItem";
 import {observer} from "mobx-react";
+import {Dimensions} from "react-native";
 
 var self;
+var {height, width} = Dimensions.get('window');
 
 @observer
 class ShiftRegisterDate extends React.Component {
@@ -38,7 +40,7 @@ class ShiftRegisterDate extends React.Component {
         return (
             <View style={styles.card}>
                 <Card>
-                    <CardItem>
+                    <CardItem style={{width: '100%'}}>
                         <Body style={styles.container}>
                         <View style={styles.date}>
                             <Text style={styles.textDate}>{this.props.dateData.date}</Text>
@@ -60,64 +62,14 @@ const styles = {
         fontWeight: 'bold'
     },
     card: {
-        marginHorizontal: 10
+        marginHorizontal: 10,
     },
     date: {
         padding: 5,
         borderBottomColor: '#d3d3d3',
         borderBottomWidth: 1,
         marginBottom: 5,
-    },
-    register: {
-        backgroundColor: '#4dc151',
-        marginVertical: 5,
-        padding: 5,
-        borderRadius: 3,
-        height: 40,
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'row',
-    },
-    registered: {
-        backgroundColor: '#bdbdbd',
-        marginVertical: 5,
-        padding: 5,
-        borderRadius: 3,
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'row',
-        height: 40,
-    },
-    registeredByUser: {
-        backgroundColor: '#d9534f',
-        marginVertical: 5,
-        padding: 5,
-        borderRadius: 3,
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'row',
-        height: 40,
-    },
-    textRegister: {
-        color: 'white',
-        textAlign: 'center',
-
-    },
-    textRegistered: {
-        textAlign: 'center',
-        marginLeft: 10
-    },
-    textRegisteredByUser: {
-        textAlign: 'center',
-        marginLeft: 10,
-        color: 'white'
-    },
-
-    avatar: {
-        width: 30,
-        height: 30,
-        borderRadius: 15
-    },
+    }
 };
 
 export default ShiftRegisterDate;

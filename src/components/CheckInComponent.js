@@ -11,7 +11,6 @@ import {
 } from 'native-base';
 import theme from '../styles';
 import {NetworkInfo} from 'react-native-network-info';
-import DeviceInfo from 'react-native-device-info';
 import Call from './common/Call';
 import ListItem from './dashboard/ListItem';
 
@@ -143,9 +142,6 @@ class CheckInComponent extends React.Component {
 }
 
 const styles = ({
-    button: {
-        backgroundColor: theme.mainColor
-    },
     container: {
         flex: 1,
         flexDirection: 'column'

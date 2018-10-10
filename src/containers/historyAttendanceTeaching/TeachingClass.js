@@ -51,7 +51,7 @@ class TeachingClass extends React.Component {
                     () => (
                         <View style={styles.card}>
                             <Card>
-                                <CardItem>
+                                <CardItem style={{width: '100%'}}>
                                     <Body style={styles.container}>
                                     {this.renderItem()}
                                     </Body>

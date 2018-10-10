@@ -27,7 +27,7 @@ class HistoryAttendanceShiftStore {
                 this.shifts = res.data.data.shifts;
             })
             .catch(() => {
-                this.error = false
+                this.error = true;
             })
             .finally(() => {
                 this.isLoading = false;
@@ -44,7 +44,7 @@ class HistoryAttendanceShiftStore {
                 this.shifts = res.data.data.work_shifts;
             })
             .catch(() => {
-                this.error = false
+                this.error = true;
             })
             .finally(() => {
                 this.isLoading = false;

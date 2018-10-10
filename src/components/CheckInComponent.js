@@ -29,14 +29,14 @@ class CheckInComponent extends React.Component {
 
     componentWillMount() {
         NetInfo.addEventListener(
-            'change',
+            'connectChange',
             this.handleConnectChange
         );
-        NetInfo.fetch().done(
-            (reachability) => {
+        NetInfo.getConnectionInfo().then(
+            (data) => {
                 this.getWifiName();
                 this.setState({
-                    typeConnect: helper.typeConnect(reachability)
+                    typeConnect: helper.typeConnect(data.type)
                 });
             }
         );
@@ -44,12 +44,12 @@ class CheckInComponent extends React.Component {
 
     componentWillUnmount() {
         NetInfo.removeEventListener(
-            'change',
+            'connectChange',
             this.handleConnectChange
         );
     };
 
-    getWifiName() {
+    getWifiName = () => {
         NetworkInfo.getSSID(ssid => {
             let wifiName = '';
             if (ssid && ssid != 'error' && ssid.indexOf("ssid") == -1) {
@@ -59,10 +59,10 @@ class CheckInComponent extends React.Component {
         });
     }
 
-    handleConnectChange(reachability) {
+    handleConnectChange = (data) => {
         this.getWifiName();
         this.setState({
-            typeConnect: helper.typeConnect(reachability)
+            typeConnect: helper.typeConnect(data.type)
         });
     };
 

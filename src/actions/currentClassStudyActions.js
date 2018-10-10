@@ -43,10 +43,6 @@ export function loadDataError() {
 }
 
 export function selectedCurrentClassStudy(classItem) {
-    console.log({
-        ...classItem,
-        lesson: classItem.lesson[0]
-    });
     return {
         type: types.SELECTED_CURRENT_CLASS_STUDY,
         selectedCurrentClassStudy: {

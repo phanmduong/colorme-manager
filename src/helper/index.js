@@ -33,7 +33,7 @@ export function typeConnect(type) {
     if (type.toLowerCase() == 'wifi') {
         return 'Wifi';
     }
-    if (type.toLowerCase() == 'mobile') {
+    if (type.toLowerCase() == 'cellular') {
         return 'Điện thoại';
     }
     return '';

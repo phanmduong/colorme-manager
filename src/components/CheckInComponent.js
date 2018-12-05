@@ -28,10 +28,10 @@ class CheckInComponent extends React.Component {
     }
 
     componentWillMount() {
-        NetInfo.addEventListener(
-            'connectChange',
-            this.handleConnectChange
-        );
+        // NetInfo.addEventListener(
+        //     'connectChange',
+        //     this.handleConnectChange
+        // );
         NetInfo.getConnectionInfo().then(
             (data) => {
                 this.getWifiName();
@@ -43,10 +43,10 @@ class CheckInComponent extends React.Component {
     }
 
     componentWillUnmount() {
-        NetInfo.removeEventListener(
-            'connectChange',
-            this.handleConnectChange
-        );
+        // NetInfo.removeEventListener(
+        //     'connectChange',
+        //     this.handleConnectChange
+        // );
     };
 
     getWifiName = () => {

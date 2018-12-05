@@ -99,8 +99,8 @@ android {
         applicationId "vn.colorme.phanminhduong.colormemanager"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 24
-        versionName "1.5"
+        versionCode 26
+        versionName "1.6"
         multiDexEnabled true
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -187,7 +187,7 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.1'
     implementation 'com.facebook.react:react-native:+'
     // From node_modules
-    implementation 'com.google.android.gms:play-services-location:15.0.1'
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
 }
 
 // Run this once to be able to run the application with BUCK

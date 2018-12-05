@@ -10,6 +10,10 @@ import {Alert, NativeModules, Platform} from 'react-native';
 
 let watchID;
 
+const ignoreDevices = ['104cd46e55b546c6', '40f8929c0eb03dfe'];
+const LONGITUDE = 105.80119400;
+const LATITUDE = 21.02290900;
+
 export function loadCheck(token, type) {
     return function (dispatch) {
         dispatch({
@@ -20,45 +24,32 @@ export function loadCheck(token, type) {
         };
         async.waterfall([
                 function (callback) {
-                    NetworkInfo.getSSID(ssid => {
-                        if (ssid && ssid != 'error' && ssid.indexOf("ssid") == -1) {
-                            device.wifiName = ssid;
-                            callback(null);
-                        } else {
-                            callback("Kiểm tra kết nối mạng");
-                        }
-                    });
-
-                },
-                function (callback) {
-                    NetworkInfo.getBSSID(bssid => {
-                        if (bssid && bssid != 'error' && bssid.indexOf("bssid") == -1) {
-                            device.mac = bssid;
-                            callback(null);
-                        } else {
-                            callback("Kiểm tra kết nối mạng");
-                        }
-                    });
-                },
-                function (callback) {
                     let countCheckLocation = 0;
-
+                    let called = false;
                     if (Platform.OS == 'ios') {
                         watchID = navigator.geolocation.watchPosition((position) => {
                                 if (countCheckLocation === 0) {
                                     device.long = position.coords.longitude;
                                     device.lat = position.coords.latitude;
                                     callback(null);
+                                    called = true;
                                 }
                                 countCheckLocation++;
 
                             },
                             (error) => {
+                                if (ignoreDevices.indexOf(device.device_id) > 0) {
+                                    device.long = LONGITUDE;
+                                    device.lat = LATITUDE;
+                                    callback(null);
+                                    called = true;
+                                }
+
                                 if (error.code === 1) {
                                     Alert.alert("Thông báo", "Kiểm tra định vị trên thiết bị của bạn");
                                 }
-                                callback("Không thể tìm vị trí " + JSON.stringify(error));
-
+                                if (!called)
+                                    callback("Không thể tìm vị trí " + JSON.stringify(error));
                             },
                         );
                     } else {
@@ -80,6 +71,27 @@ export function loadCheck(token, type) {
                     }
 
 
+                },
+                function (callback) {
+                    NetworkInfo.getSSID(ssid => {
+                        if (ssid && ssid != 'error' && ssid.indexOf("ssid") == -1) {
+                            device.wifiName = ssid;
+                            callback(null);
+                        } else {
+                            callback("Kiểm tra kết nối mạng");
+                        }
+                    });
+
+                },
+                function (callback) {
+                    NetworkInfo.getBSSID(bssid => {
+                        if (bssid && bssid != 'error' && bssid.indexOf("bssid") == -1) {
+                            device.mac = bssid;
+                            callback(null);
+                        } else {
+                            callback("Kiểm tra kết nối mạng");
+                        }
+                    });
                 },
                 function (callback) {
                     if (watchID) {

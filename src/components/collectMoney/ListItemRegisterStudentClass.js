@@ -5,6 +5,7 @@ import {
     Text
 } from 'native-base';
 import theme from '../../styles';
+import _ from 'lodash';
 
 var {height, width} = Dimensions.get('window');
 class ListItemStudentCollectMoney extends React.Component {

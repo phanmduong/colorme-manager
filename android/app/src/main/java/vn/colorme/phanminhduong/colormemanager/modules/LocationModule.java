@@ -17,9 +17,9 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.location.LocationServices;
 
 import com.facebook.react.bridge.Callback;
+import com.google.android.gms.location.LocationServices;
 
 /**
  * Created by phanmduong on 5/2/18.

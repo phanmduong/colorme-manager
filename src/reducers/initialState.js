@@ -46,6 +46,8 @@ export default {
     class: {
         classData: [],
         isLoading: false,
+        courseData: [],
+        isLoadingCourse: false,
         error: false,
         selectedClassId: -1
     },

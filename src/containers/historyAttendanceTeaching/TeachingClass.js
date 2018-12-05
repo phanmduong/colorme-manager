@@ -22,7 +22,7 @@ class TeachingClass extends React.Component {
     }
 
     renderHeader() {
-        const classData = this.props.classData.lessons[1];
+        const classData = this.props.classData.lessons[0];
         return (
             <View style={styles.header}>
                 <Text style={styles.headerTitle}>{classData.class_name}</Text>

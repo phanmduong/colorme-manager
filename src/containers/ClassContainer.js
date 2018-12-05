@@ -1,7 +1,7 @@
 /**
  * Created by phanmduong on 4/6/17.
  */
-import React from'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import ClassComponent from '../components/ClassComponent';
@@ -14,6 +14,10 @@ class ClassContainer extends React.Component {
         this.onSelectedItem = this.onSelectedItem.bind(this);
     }
 
+    componentDidMount() {
+        this.props.classActions.loadDataCourse(this.props.token);
+    }
+
 
     onSelectedItem(classId) {
         this.props.classActions.selectedClassId(classId);
@@ -24,6 +28,8 @@ class ClassContainer extends React.Component {
         return (
             <ClassComponent
                 classData={this.props.classData}
+                courseData={this.props.courseData}
+                isLoadingCourse={this.props.isLoadingCourse}
                 onSelectedItem={this.onSelectedItem}
             />
         );
@@ -39,6 +45,8 @@ function mapStateToProps(state) {
         classData: state.dashboard.dashboardData.classes,
         token: state.login.token,
         selectedClassId: state.class.selectedClassId,
+        courseData: state.class.courseData,
+        isLoadingCourse: state.class.isLoadingCourse,
     };
 }
 

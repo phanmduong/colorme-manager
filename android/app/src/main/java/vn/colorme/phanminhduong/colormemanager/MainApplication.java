@@ -50,7 +50,6 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
                     new AppCenterReactNativeAnalyticsPackage(MainApplication.this, getResources().getString(R.string.appCenterAnalytics_whenToEnableAnalytics)),
                     new AppCenterReactNativePackage(MainApplication.this),
                     new ReactNativeOneSignalPackage(),
-                    new RNNetworkInfoPackage(),
                     new RNDeviceInfo(),
                     new VectorIconsPackage(),
                     new LinearGradientPackage(),

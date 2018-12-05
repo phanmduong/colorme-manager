@@ -1,11 +1,11 @@
 /**
  * Created by phanmduong on 4/5/17.
  */
-import React from'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 import {bindActionCreators} from 'redux';
-import {Alert}from 'react-native';
+import {Alert, PermissionsAndroid} from 'react-native';
 import * as alert from '../constants/alert';
 import LoginComponent from '../components/LoginComponent';
 import * as loginActions from '../actions/loginActions';
@@ -19,11 +19,39 @@ class LoginContainer extends React.Component {
         this.saveDataLogin = this.saveDataLogin.bind(this);
     }
 
-    componentWillMount(){
-        this.props.loginActions.getDataLogin();
+    async requestPermission() {
+
+        try {
+            const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+                {
+                    'title': 'Wifi networks',
+                    'message': 'We need your permission in order to find wifi networks'
+                }
+            )
+            const granted2 = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
+                {
+                    'title': 'GPS location',
+                    'message': 'We need your permission in order to find location'
+                }
+            )
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                console.log("Thank you for your permission! :)");
+            } else {
+                console.log("You will not able to retrieve wifi available networks list");
+            }
+        } catch (err) {
+            console.warn(err)
+        }
     }
 
-    saveDataLogin(){
+    componentWillMount() {
+        this.props.loginActions.getDataLogin();
+        this.requestPermission();
+    }
+
+    saveDataLogin() {
         this.props.loginActions.setDataLogin(this.props.login);
     }
 
@@ -45,7 +73,7 @@ class LoginContainer extends React.Component {
         }
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps) {
         if (!_.isUndefined(nextProps.token) && nextProps.token.trim().length > 0) {
             if (!nextProps.isLoading && !nextProps.error) {
                 if (nextProps.user.role <= 0) {
@@ -57,7 +85,7 @@ class LoginContainer extends React.Component {
             }
         }
 
-        if (nextProps.error){
+        if (nextProps.error) {
             Alert.alert(
                 'Thông báo',
                 alert.CHECK_INFO_LOGIN
@@ -66,7 +94,7 @@ class LoginContainer extends React.Component {
 
         if (nextProps.isGetDataLocalSuccessful && nextProps.isAutoLogin) {
             nextProps.autoLoginActions.setAutoLogin(false);
-            if (nextProps.login.username && nextProps.login.password){
+            if (nextProps.login.username && nextProps.login.password) {
                 nextProps.loginActions.loginUser(nextProps.login);
             }
         }

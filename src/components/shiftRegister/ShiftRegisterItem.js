@@ -5,7 +5,7 @@ import {
     Text,
     Button
 } from 'native-base';
-
+import _ from 'lodash';
 
 class ShiftRegisterItem extends React.Component {
     constructor(props, context) {

@@ -1,20 +1,22 @@
 /**
  * Created by phanmduong on 4/5/17.
  */
-import React from'react';
-import {Dimensions, Keyboard, Text, View, Platform}from'react-native';
+import React from 'react';
+import {Dimensions, Keyboard, Text, View, Platform} from 'react-native';
 import {
     Form,
     InputGroup,
     Input,
     Button
 } from 'native-base';
+
 var {height, width} = Dimensions.get('window');
 import Spinkit from 'react-native-spinkit';
 import theme from '../styles';
 import LinearGradient from 'react-native-linear-gradient';
 
 let self;
+
 class LoginComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -90,7 +92,7 @@ class LoginComponent extends React.Component {
                                 <Text style={styles.textTitleInput}>EMAIL</Text>
                                 <InputGroup style={{width: width - width * 0.3}}>
                                     <Input
-                                        value={this.props.username }
+                                        value={this.props.username}
                                         onChangeText={(data) => this.props.updateFormData('username', data)}
                                         returnKeyType={'next'}
                                         placeholder='Email'
@@ -102,7 +104,8 @@ class LoginComponent extends React.Component {
                                         editable={!this.props.isLoading}
                                         style={{
                                             lineHeight: 20,
-                                            height: 40}}
+                                            height: 40
+                                        }}
                                     />
                                 </InputGroup>
                                 <Text style={{
@@ -114,7 +117,8 @@ class LoginComponent extends React.Component {
                                 <InputGroup>
                                     <Input
                                         style={{
-                                        height: 40}}
+                                            height: 40
+                                        }}
                                         ref='password'
                                         secureTextEntry
                                         onChangeText={(data) => this.props.updateFormData('password', data)}
@@ -224,7 +228,7 @@ const styles = {
         fontWeight: (Platform.OS === 'ios') ? '900' : 'normal',
         fontFamily: (Platform.OS === 'ios') ? 'Segoe UI' : 'SegoeUI-Blank',
         backgroundColor: 'transparent',
-        lineHeight: (Platform.OS === 'ios') ? 100 : 70
+        lineHeight: 100
     },
     containerFormLogin: {
         height: 2 * height / 5,

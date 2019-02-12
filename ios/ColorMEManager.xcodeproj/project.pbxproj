@@ -73,6 +73,7 @@
 		8C99FAB1FA4B44B9BDA47584 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84BDD099523F4071A7A28193 /* EvilIcons.ttf */; };
 		8E887125DEB04B1286B4CD48 /* libCodePush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E30066162ED4555AAC7C27D /* libCodePush.a */; };
 		96D6A60862A045C89953A960 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4A1FB656D1494FA589C10967 /* MaterialCommunityIcons.ttf */; };
+		9D69EBC322130E11001716EE /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D69EBBE22130E03001716EE /* libRNImagePicker.a */; };
 		AA1A8057C49D4F629489285E /* SegoeUI-Blank.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 13CEA1EA591E4D16A0F2B19B /* SegoeUI-Blank.ttf */; };
 		AB8072B60143C32A1D54B362 /* libPods-ColorMEManager-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E772576E3CC553F9D8B19048 /* libPods-ColorMEManager-tvOS.a */; };
 		C076BA3C5D8A4589AA343BE7 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E0E97AE03E234C2DB586B8F5 /* FontAwesome5_Brands.ttf */; };
@@ -450,6 +451,13 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		9D69EBBD22130E03001716EE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9D69EB8B22130E03001716EE /* RNImagePicker.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 014A3B5C1C6CF33500B6D375;
+			remoteInfo = RNImagePicker;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -532,6 +540,7 @@
 		8C637DBC94064F92AB680AE2 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		8EC3DA4E5325482DB24A85FB /* Rubik-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-BoldItalic.ttf"; path = "../node_modules/native-base/Fonts/Rubik-BoldItalic.ttf"; sourceTree = "<group>"; };
 		9CDFC82C80D24139A4520258 /* Georgia.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Georgia.ttf; path = "../node_modules/native-base/Fonts/Georgia.ttf"; sourceTree = "<group>"; };
+		9D69EB8B22130E03001716EE /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
 		A2355EFAE2F7453196C7E5EE /* AppCenterReactNative.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AppCenterReactNative.xcodeproj; path = ../node_modules/appcenter/ios/AppCenterReactNative.xcodeproj; sourceTree = "<group>"; };
 		A6809B9CD01A49DAA342450B /* libz.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		A7044A2D1FF8CCD3CEEA0256 /* Pods-ColorMEManager-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColorMEManager-tvOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ColorMEManager-tvOSTests/Pods-ColorMEManager-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -590,6 +599,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D69EBC322130E11001716EE /* libRNImagePicker.a in Frameworks */,
 				1703E8C02153E6EC00AE7A07 /* libRNDeviceInfo.a in Frameworks */,
 				17157B511EFEC3DA00B712CE /* libART.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -926,6 +936,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				9D69EB8B22130E03001716EE /* RNImagePicker.xcodeproj */,
 				1703E8BA2153E6D800AE7A07 /* RNDeviceInfo.xcodeproj */,
 				17157B481EFEC3C900B712CE /* ART.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
@@ -986,6 +997,14 @@
 				00E356EE1AD99517003FC87E /* ColorMEManagerTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* ColorMEManager-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* ColorMEManager-tvOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9D69EB8C22130E03001716EE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9D69EBBE22130E03001716EE /* libRNImagePicker.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1253,6 +1272,10 @@
 				{
 					ProductGroup = 1703E8BB2153E6D800AE7A07 /* Products */;
 					ProjectRef = 1703E8BA2153E6D800AE7A07 /* RNDeviceInfo.xcodeproj */;
+				},
+				{
+					ProductGroup = 9D69EB8C22130E03001716EE /* Products */;
+					ProjectRef = 9D69EB8B22130E03001716EE /* RNImagePicker.xcodeproj */;
 				},
 				{
 					ProductGroup = 17C09C0F1F6A866F0041AE52 /* Products */;
@@ -1626,6 +1649,13 @@
 			fileType = archive.ar;
 			path = libRCTText.a;
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9D69EBBE22130E03001716EE /* libRNImagePicker.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNImagePicker.a;
+			remoteRef = 9D69EBBD22130E03001716EE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

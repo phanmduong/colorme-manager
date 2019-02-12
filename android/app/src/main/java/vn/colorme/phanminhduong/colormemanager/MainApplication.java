@@ -3,6 +3,7 @@ package vn.colorme.phanminhduong.colormemanager;
 import android.support.multidex.MultiDexApplication;
 
 import com.facebook.react.ReactApplication;
+import com.imagepicker.ImagePickerPackage;
 import com.pusherman.networkinfo.RNNetworkInfoPackage;
 import org.reactnative.camera.RNCameraPackage;
 
@@ -44,6 +45,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
+            new ImagePickerPackage(),
             new RNNetworkInfoPackage(),
             new RNCameraPackage(),
                     new AppCenterReactNativeCrashesPackage(MainApplication.this, getResources().getString(R.string.appCenterCrashes_whenToSendCrashes)),

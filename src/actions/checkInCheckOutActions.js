@@ -49,7 +49,7 @@ export function loadCheck(token, type) {
                                     Alert.alert("Thông báo", "Kiểm tra định vị trên thiết bị của bạn");
                                 }
                                 if (!called)
-                                    callback("Không thể tìm vị trí " + JSON.stringify(error));
+                                    callback("Không thể tìm vị trí " + JSON.stringify(error) + device.device_id);
                             },
                         );
                     } else {

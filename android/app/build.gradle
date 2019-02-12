@@ -99,7 +99,7 @@ android {
         applicationId "vn.colorme.phanminhduong.colormemanager"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 26
+        versionCode 27
         versionName "1.6"
         multiDexEnabled true
         ndk {
@@ -170,6 +170,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-image-picker')
     implementation project(':react-native-network-info')
     implementation project(':react-native-camera')
     implementation project(':react-native-vector-icons')

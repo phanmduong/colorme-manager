@@ -28,6 +28,7 @@ import HistoryAttendanceTeachingContainer
     from "../containers/historyAttendanceTeaching/HistoryAttendanceTeachingContainer";
 import QRCodeContainer from "../containers/QRCodeContainer";
 import AttendanceStudentContainer from "../containers/AttendanceStudentContainer";
+import AccurateStudentContainer from "../containers/accurateStudent/AccurateStudentContainer";
 
 const navigationOptionsDefault = {
     navigationOptions: ({navigation}) => ({
@@ -199,6 +200,20 @@ const HistoryAttendanceWorkShift = StackNavigator({
     }
 });
 
+const AccurateStudent = StackNavigator({
+    AccurateStudent: {
+        screen: AccurateStudentContainer,
+    }
+}, {
+    ...navigationOptionsDefault,
+    ...{
+        initialRouteName: 'AccurateStudent',
+        initialRouteParams: {
+            title: 'Xác thực học viên',
+        }
+    }
+});
+
 const HistoryAttendanceTeaching = StackNavigator({
     HistoryAttendanceTeaching: {
         screen: HistoryAttendanceTeachingContainer,
@@ -265,6 +280,13 @@ const Drawer = DrawerNavigator({
         screen: HistoryAttendanceTeaching,
         navigationOptions: ({navigation}) => ({
             title: 'Lịch sử điểm danh lịch giảng dạy',
+
+        })
+    },
+    AccurateStudent: {
+        screen: AccurateStudent,
+        navigationOptions: ({navigation}) => ({
+            title: 'Xác thực học viên',
 
         })
     },

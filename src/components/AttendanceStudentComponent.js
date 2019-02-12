@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, Dimensions} from 'react-native';
+import {Image, Dimensions, TouchableOpacity} from 'react-native';
 import {
     Container,
     Button,
@@ -13,12 +13,17 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import theme from '../styles';
 import Loading from '../components/common/Loading';
 import * as alert from '../constants/alert';
+import ImageView from "react-native-image-view";
 
 class AttendanceStudentComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.renderRow = this.renderRow.bind(this);
         this.updateAttendance = this.updateAttendance.bind(this);
+        this.state = {
+            imageIndex: 0,
+            isImageViewVisible: false
+        }
     }
 
 
@@ -50,9 +55,10 @@ class AttendanceStudentComponent extends React.Component {
                     </Container>
                 )
             } else {
+                const images = this.getImages(this.props.student);
                 return (
                     <View style={styles.container}>
-                        <View style={styles.containerFlex2}>
+                        <View style={styles.containerFlex1}>
                             <Image
                                 source={
                                     (!this.props.student.avatar_url || this.props.student.avatar_url === '') ? (
@@ -66,9 +72,26 @@ class AttendanceStudentComponent extends React.Component {
                             <Text style={styles.textName}>{this.props.student.name}</Text>
                             <Text style={styles.textStudentCode}>{this.props.studentCode}</Text>
                         </View>
+                        <View style={styles.containerFlexImage}>
+                            {images.map((image, index) => {
+                                return (
+                                    <TouchableOpacity
+                                        key={index}
+                                        onPress={() => this.setState({imageIndex: index, isImageViewVisible: true})}
+                                    >
+                                        <Image
+                                            style={styles.imageStudent}
+                                            source={image.source}
+                                            resizeMode="cover"
+                                        />
+                                    </TouchableOpacity>
+                                )
+                            })}
+                        </View>
 
                         <View style={styles.containerList}>
                             <List
+                                style={{height: 30}}
                                 horizontal
                                 dataArray={this.props.student.attendances}
                                 renderRow={this.renderRow}
@@ -93,6 +116,14 @@ class AttendanceStudentComponent extends React.Component {
                                 }
                             </Button>
                         </View>
+                        <ImageView
+                            glideAlways
+                            images={images}
+                            imageIndex={this.state.imageIndex}
+                            animationType="fade"
+                            isVisible={this.state.isImageViewVisible}
+                            onClose={() => this.setState({isImageViewVisible: false})}
+                        />
                     </View>
                 )
             }
@@ -121,6 +152,27 @@ class AttendanceStudentComponent extends React.Component {
                 );
         }
     }
+
+    getImages(student) {
+        return [
+            {
+                source: (student.image1 == null || student.image1 === '') ? require('../../assets/img/no_photo.png') : {
+                    uri: student.image1
+                },
+                title: 'Ảnh 1',
+                width: 1280,
+                height: 960
+            },
+            {
+                source: (student.image2 == null || student.image2 === '') ? require('../../assets/img/no_photo.png') : {
+                    uri: student.image2
+                },
+                title: 'Ảnh 2',
+                width: 1280,
+                height: 960
+            }
+        ];
+    }
 }
 
 const styles = ({
@@ -139,22 +191,33 @@ const styles = ({
         alignItems: 'center',
         justifyContent: 'center'
     },
+    containerFlexImage: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+    },
     containerFlex2: {
         flex: 2,
         alignItems: 'center',
         justifyContent: 'center'
     },
     containerList: {
-        paddingTop: height / 12,
-        flex: 1,
+        marginTop: 15,
+        height: 30,
         alignItems: 'center',
         justifyContent: 'center',
         width: width
     },
+    imageStudent: {
+        width: width / 3.5,
+        height: width / 3.5,
+        marginHorizontal: 10,
+    },
     image: {
-        width: width / 3,
-        height: width / 3,
-        borderRadius: width / 6
+        width: width / 4,
+        height: width / 4,
+        borderRadius: width / 8
     },
     textNumberRed: {
         width: 30,

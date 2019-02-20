@@ -17,8 +17,8 @@ class QRCodeContainer extends React.Component {
     }
 
     componentWillMount() {
-        this.props.QRCodeActions.beginScanQRCode();
-        // this.scannedQRCode("CM26415");
+        // this.props.QRCodeActions.beginScanQRCode();
+        this.scannedQRCode("CM26415");
     }
 
     scannedQRCode(studentCode) {

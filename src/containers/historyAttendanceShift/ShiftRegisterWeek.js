@@ -30,7 +30,7 @@ class ShiftRegisterWeek extends React.Component {
     }
 
     convertData = () => {
-        return groupBy(this.props.weekData.shifts, shift => shift.date, ["date", "shifts"]);
+        return _.sortBy(groupBy(this.props.weekData.shifts, shift => shift.date, ["date", "shifts"]), shift => shift.shifts[0].datetime);
     };
 
     render() {

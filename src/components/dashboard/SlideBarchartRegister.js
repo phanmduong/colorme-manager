@@ -15,7 +15,7 @@ class SlideBarchartRegister extends React.Component {
     }
 
     render() {
-        var {dateArray, registersByDate, paidByDate} = this.props;
+        var {dateArray, registersByDate, paidByDate,paidNumber,registerNumber} = this.props;
         return (
             <View style={styles.slide}>
                 <View style={styles.barchart}>
@@ -32,8 +32,8 @@ class SlideBarchartRegister extends React.Component {
                     }
                 </View>
                 <Text style={styles.note}>
-                    {dotNumber(_.sum(paidByDate)) + " đóng tiền/" +
-                    dotNumber(_.sum(registersByDate)) + " đăng kí học"}
+                    {dotNumber(paidNumber) + " đóng tiền/" +
+                    dotNumber(registerNumber) + " đăng kí học"}
                 </Text>
             </View>
         );

@@ -74,6 +74,8 @@ class DashboardComponent extends React.Component {
                                 dateArray={dashboardData.date_array}
                                 registersByDate={dashboardData.registers_by_date}
                                 paidByDate={dashboardData.paid_by_date}
+                                registerNumber={dashboardData.register_number}
+                                paidNumber={dashboardData.paid_number}
                             />
                         )
                         :

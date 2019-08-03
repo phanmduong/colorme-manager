@@ -1,12 +1,16 @@
 # colorme-manager
 
-1. install
-    -   npm install
-    -   react-native link
-2. config
-    -   Camera android: go node_modules/react-native-camera/android/src/main/java/com/lwansbrough/RCTCamera/RCTCameraViewFinder.java
-        Replace code: BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
-        -> BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source.invert()));
+1. run-ios
+    -   cd ios
+    -   pod install
+
+2. run-android
+    -   cd android
+    -   create new file local.properties with content
+
+    ndk.dir=/Users/phanminhduong/Library/Android/sdk/ndk-bundle
+    sdk.dir=/Users/phanminhduong/Library/Android/sdk
+
 
 MYAPP_RELEASE_STORE_FILE=my-release-key.keystore
 MYAPP_RELEASE_KEY_ALIAS=my-key-alias

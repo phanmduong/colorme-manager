@@ -362,7 +362,7 @@ export default {
         selectedBaseId: -1,
         selectedGenId: -1,
     },
-    dashboard: {
+    analytics: {
         isLoading: false,
         error: false,
         dashboardData: {},

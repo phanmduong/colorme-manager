@@ -21,9 +21,9 @@ class ShiftRegisterDate extends React.Component {
         self = this;
     }
 
-    shouldComponentUpdate(nextProps) {
-        return !_.isEqual(nextProps.dateData, this.props.dateData);
-    }
+    // shouldComponentUpdate(nextProps) {
+    //     return !_.isEqual(nextProps.dateData, this.props.dateData);
+    // }
 
     renderShiftItem() {
         const data = _.sortBy(this.props.dateData.shifts, shift => shift.id);

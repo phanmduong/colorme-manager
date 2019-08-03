@@ -16,9 +16,9 @@ class ShiftRegisterWeek extends React.Component {
         super(props, context);
     }
 
-    shouldComponentUpdate(nextProps) {
-        return (!_.isEqual(nextProps.weekData, this.props.weekData));
-    }
+    // shouldComponentUpdate(nextProps) {
+    //     return (!_.isEqual(nextProps.weekData, this.props.weekData));
+    // }
 
     renderHeader() {
         return (

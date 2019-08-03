@@ -25,7 +25,8 @@ class QRCodeContainer extends React.Component {
         if (!this.props.isScanned) {
             this.props.QRCodeActions.scannedQRCode();
             this.props.attendanceStudentActions.scannedQRCode(studentCode);
-            this.props.attendanceStudentScreen();
+            // this.props.attendanceStudentScreen();
+            this.props.navigation.navigate("AttendanceStudent")
         }
     }
 

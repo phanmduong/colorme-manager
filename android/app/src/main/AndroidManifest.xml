@@ -1,7 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="vn.colorme.phanminhduong.colormemanager"
-    android:versionCode="1"
-    android:versionName="1.0">
+    package="vn.colorme.phanminhduong.colormemanager">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
@@ -9,10 +7,6 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- Approximate location - If you want to use promptLocation for letting OneSignal know the user location. -->
     <uses-feature android:name="android.hardware.location.gps" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <uses-sdk
-        android:minSdkVersion="16"
-        android:targetSdkVersion="22" />
 
     <application
         android:name=".MainApplication"

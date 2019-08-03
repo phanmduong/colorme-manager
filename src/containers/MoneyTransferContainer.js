@@ -32,15 +32,16 @@ class MoneyTransferContainer extends React.Component {
     }
 
     static navigationOptions = ({navigation}) => ({
-        headerTitle: (<Segment
-                nameSeg1="Chuyển tiền"
-                nameSeg2="Lịch sử"
-                segmentActive={(navigation.state.params && navigation.state.params.segment) ? navigation.state.params.segment : 1}
-                changeSegmentActive={(navigation.state.params && navigation.state.params.changeSegmentActive)
-                    ? navigation.state.params.changeSegmentActive : null
-                }
-            />
-        ),
+        headerTitle: "Chuyển tiền",
+        // headerTitle: (<Segment
+        //         nameSeg1="Chuyển tiền"
+        //         nameSeg2="Lịch sử"
+        //         segmentActive={(navigation.state.params && navigation.state.params.segment) ? navigation.state.params.segment : 1}
+        //         changeSegmentActive={(navigation.state.params && navigation.state.params.changeSegmentActive)
+        //             ? navigation.state.params.changeSegmentActive : null
+        //         }
+        //     />
+        // ),
     });
 
     componentWillReceiveProps(nextProps) {
@@ -97,35 +98,51 @@ class MoneyTransferContainer extends React.Component {
     }
 
     render() {
-        if (this.props.segment === 1) {
-            return (
-                <SearchStaffMoneyTransferComponent
-                    updateFormAndLoadDataSearch={this.updateFormAndLoadDataSearchStaff}
-                    loadDataStaffList={this.loadDataStaffList}
-                    isLoading={this.props.isLoadingStaffList}
-                    error={this.props.errorStaffList}
-                    staffList={this.props.staffListData}
-                    search={this.props.searchStaff}
-                    postTransaction={this.postTransaction}
-                    isLoadingTransaction={this.props.isLoadingTransaction}
-                    user={this.props.user}
 
-                />
-            )
-        } else {
-            return (
-                <HistoryMoneyTransferComponent
-                    loadDataHistoryTransaction={this.loadDataHistoryTransaction}
-                    isLoading={this.props.isLoadingHistoryTransaction}
-                    error={this.props.errorHistoryTransaction}
-                    transactionList={this.props.transactionListData}
-                    userId={this.props.userId}
-                    rejectTransaction={this.rejectTransaction}
-                    acceptTransaction={this.acceptTransaction}
-                    currentMoney={this.props.currentMoney}
-                />
-            )
-        }
+        return (
+            <SearchStaffMoneyTransferComponent
+                updateFormAndLoadDataSearch={this.updateFormAndLoadDataSearchStaff}
+                loadDataStaffList={this.loadDataStaffList}
+                isLoading={this.props.isLoadingStaffList}
+                error={this.props.errorStaffList}
+                staffList={this.props.staffListData}
+                search={this.props.searchStaff}
+                postTransaction={this.postTransaction}
+                isLoadingTransaction={this.props.isLoadingTransaction}
+                user={this.props.user}
+
+            />
+        )
+
+        // if (this.props.segment === 1) {
+        //     return (
+        //         <SearchStaffMoneyTransferComponent
+        //             updateFormAndLoadDataSearch={this.updateFormAndLoadDataSearchStaff}
+        //             loadDataStaffList={this.loadDataStaffList}
+        //             isLoading={this.props.isLoadingStaffList}
+        //             error={this.props.errorStaffList}
+        //             staffList={this.props.staffListData}
+        //             search={this.props.searchStaff}
+        //             postTransaction={this.postTransaction}
+        //             isLoadingTransaction={this.props.isLoadingTransaction}
+        //             user={this.props.user}
+        //
+        //         />
+        //     )
+        // } else {
+        //     return (
+        //         <HistoryMoneyTransferComponent
+        //             loadDataHistoryTransaction={this.loadDataHistoryTransaction}
+        //             isLoading={this.props.isLoadingHistoryTransaction}
+        //             error={this.props.errorHistoryTransaction}
+        //             transactionList={this.props.transactionListData}
+        //             userId={this.props.userId}
+        //             rejectTransaction={this.rejectTransaction}
+        //             acceptTransaction={this.acceptTransaction}
+        //             currentMoney={this.props.currentMoney}
+        //         />
+        //     )
+        // }
     }
 }
 function mapStateToProps(state) {

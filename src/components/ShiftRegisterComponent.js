@@ -91,7 +91,7 @@ class ShiftRegisterComponent extends React.Component {
 
             return (
                 <Swiper
-                    height={height - 180}
+                    height={height - 250}
                     loop={false}
                     showsPagination={false}
                 >

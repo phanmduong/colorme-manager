@@ -1,12 +1,12 @@
 import React from 'react';
 import Icon from './Icon';
 
-const TabIcon = ({nameIcon, tintColor}) => (
-            <Icon
-                name={nameIcon}
-                size={26}
-                color="white"
-            />
+const TabIcon = ({nameIcon, color}) => (
+    <Icon
+        name={nameIcon}
+        size={26}
+        color={color}
+    />
 );
 
 export default TabIcon;

@@ -1,86 +1,202 @@
 PODS:
-  - AppCenter/Analytics (1.9.0):
+  - appcenter (2.2.0):
+    - AppCenterReactNativeShared
+    - React
+  - appcenter-analytics (2.2.0):
+    - AppCenter/Analytics
+    - AppCenterReactNativeShared
+    - React
+  - appcenter-crashes (2.2.0):
+    - AppCenter/Crashes
+    - AppCenterReactNativeShared
+    - React
+  - AppCenter/Analytics (2.2.0):
     - AppCenter/Core
-  - AppCenter/Core (1.9.0)
-  - AppCenter/Crashes (1.9.0):
+  - AppCenter/Core (2.2.0)
+  - AppCenter/Crashes (2.2.0):
     - AppCenter/Core
-  - AppCenterReactNativeShared (1.8.1):
-    - AppCenter/Core (= 1.9.0)
+  - AppCenterReactNativeShared (2.2.0):
+    - AppCenter/Core (= 2.2.0)
+  - Base64 (1.1.2)
   - boost-for-react-native (1.63.0)
+  - BVLinearGradient (2.5.6):
+    - React
+  - CodePush (5.6.1):
+    - Base64 (~> 1.1)
+    - JWT (~> 3.0.0-beta.7)
+    - React
+    - SSZipArchive (~> 2.1)
   - DoubleConversion (1.1.6)
-  - Folly (2016.10.31.00):
+  - Folly (2018.10.22.00):
+    - boost-for-react-native
+    - DoubleConversion
+    - Folly/Default (= 2018.10.22.00)
+    - glog
+  - Folly/Default (2018.10.22.00):
     - boost-for-react-native
     - DoubleConversion
     - glog
   - glog (0.3.5)
-  - React (0.57.0):
-    - React/Core (= 0.57.0)
-  - react-native-camera (1.3.0):
-    - React
-    - react-native-camera/RCT (= 1.3.0)
-    - react-native-camera/RN (= 1.3.0)
-  - react-native-camera/RCT (1.3.0):
-    - React
-  - react-native-camera/RN (1.3.0):
-    - React
-  - React/Core (0.57.0):
-    - yoga (= 0.57.0.React)
-  - React/CxxBridge (0.57.0):
-    - Folly (= 2016.10.31.00)
-    - React/Core
-    - React/cxxreact
-  - React/cxxreact (0.57.0):
+  - JWT (3.0.0-beta.11):
+    - Base64 (~> 1.1.2)
+  - OneSignal (2.10.0)
+  - React (0.60.4):
+    - React-Core (= 0.60.4)
+    - React-DevSupport (= 0.60.4)
+    - React-RCTActionSheet (= 0.60.4)
+    - React-RCTAnimation (= 0.60.4)
+    - React-RCTBlob (= 0.60.4)
+    - React-RCTImage (= 0.60.4)
+    - React-RCTLinking (= 0.60.4)
+    - React-RCTNetwork (= 0.60.4)
+    - React-RCTSettings (= 0.60.4)
+    - React-RCTText (= 0.60.4)
+    - React-RCTVibration (= 0.60.4)
+    - React-RCTWebSocket (= 0.60.4)
+  - React-Core (0.60.4):
+    - Folly (= 2018.10.22.00)
+    - React-cxxreact (= 0.60.4)
+    - React-jsiexecutor (= 0.60.4)
+    - yoga (= 0.60.4.React)
+  - React-cxxreact (0.60.4):
     - boost-for-react-native (= 1.63.0)
-    - Folly (= 2016.10.31.00)
-    - React/jschelpers
-    - React/jsinspector
-  - React/DevSupport (0.57.0):
-    - React/Core
-    - React/RCTWebSocket
-  - React/fishhook (0.57.0)
-  - React/jschelpers (0.57.0):
-    - Folly (= 2016.10.31.00)
-    - React/PrivateDatabase
-  - React/jsinspector (0.57.0)
-  - React/PrivateDatabase (0.57.0)
-  - React/RCTAnimation (0.57.0):
-    - React/Core
-  - React/RCTBlob (0.57.0):
-    - React/Core
-  - React/RCTNetwork (0.57.0):
-    - React/Core
-  - React/RCTText (0.57.0):
-    - React/Core
-  - React/RCTWebSocket (0.57.0):
-    - React/Core
-    - React/fishhook
-    - React/RCTBlob
-  - yoga (0.57.0.React)
+    - DoubleConversion
+    - Folly (= 2018.10.22.00)
+    - glog
+    - React-jsinspector (= 0.60.4)
+  - React-DevSupport (0.60.4):
+    - React-Core (= 0.60.4)
+    - React-RCTWebSocket (= 0.60.4)
+  - React-fishhook (0.60.4)
+  - React-jsi (0.60.4):
+    - boost-for-react-native (= 1.63.0)
+    - DoubleConversion
+    - Folly (= 2018.10.22.00)
+    - glog
+    - React-jsi/Default (= 0.60.4)
+  - React-jsi/Default (0.60.4):
+    - boost-for-react-native (= 1.63.0)
+    - DoubleConversion
+    - Folly (= 2018.10.22.00)
+    - glog
+  - React-jsiexecutor (0.60.4):
+    - DoubleConversion
+    - Folly (= 2018.10.22.00)
+    - glog
+    - React-cxxreact (= 0.60.4)
+    - React-jsi (= 0.60.4)
+  - React-jsinspector (0.60.4)
+  - react-native-camera (3.0.0):
+    - React
+    - react-native-camera/RCT (= 3.0.0)
+    - react-native-camera/RN (= 3.0.0)
+  - react-native-camera/RCT (3.0.0):
+    - React
+  - react-native-camera/RN (3.0.0):
+    - React
+  - react-native-image-picker (1.0.1):
+    - React
+  - react-native-netinfo (4.1.3):
+    - React
+  - react-native-network-info (5.1.0):
+    - React
+  - react-native-onesignal (3.3.1):
+    - OneSignal (= 2.10.0)
+    - React (< 1.0.0, >= 0.13.0)
+  - react-native-spinkit (1.0.2):
+    - React
+  - React-RCTActionSheet (0.60.4):
+    - React-Core (= 0.60.4)
+  - React-RCTAnimation (0.60.4):
+    - React-Core (= 0.60.4)
+  - React-RCTBlob (0.60.4):
+    - React-Core (= 0.60.4)
+    - React-RCTNetwork (= 0.60.4)
+    - React-RCTWebSocket (= 0.60.4)
+  - React-RCTImage (0.60.4):
+    - React-Core (= 0.60.4)
+    - React-RCTNetwork (= 0.60.4)
+  - React-RCTLinking (0.60.4):
+    - React-Core (= 0.60.4)
+  - React-RCTNetwork (0.60.4):
+    - React-Core (= 0.60.4)
+  - React-RCTSettings (0.60.4):
+    - React-Core (= 0.60.4)
+  - React-RCTText (0.60.4):
+    - React-Core (= 0.60.4)
+  - React-RCTVibration (0.60.4):
+    - React-Core (= 0.60.4)
+  - React-RCTWebSocket (0.60.4):
+    - React-Core (= 0.60.4)
+    - React-fishhook (= 0.60.4)
+  - RNDeviceInfo (2.3.1):
+    - React
+  - RNGestureHandler (1.3.0):
+    - React
+  - RNVectorIcons (6.6.0):
+    - React
+  - SSZipArchive (2.2.2)
+  - yoga (0.60.4.React)
 
 DEPENDENCIES:
-  - AppCenter/Analytics (~> 1.9.0)
-  - AppCenter/Crashes (~> 1.9.0)
-  - AppCenterReactNativeShared (~> 1.8.1)
+  - appcenter (from `../node_modules/appcenter`)
+  - appcenter-analytics (from `../node_modules/appcenter-analytics`)
+  - appcenter-crashes (from `../node_modules/appcenter-crashes`)
+  - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
+  - CodePush (from `../node_modules/react-native-code-push`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - React (from `../node_modules/react-native/`)
+  - React-Core (from `../node_modules/react-native/React`)
+  - React-cxxreact (from `../node_modules/react-native/ReactCommon/cxxreact`)
+  - React-DevSupport (from `../node_modules/react-native/React`)
+  - React-fishhook (from `../node_modules/react-native/Libraries/fishhook`)
+  - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
+  - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
+  - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-camera (from `../node_modules/react-native-camera`)
-  - React/Core (from `../node_modules/react-native`)
-  - React/CxxBridge (from `../node_modules/react-native`)
-  - React/DevSupport (from `../node_modules/react-native`)
-  - React/RCTAnimation (from `../node_modules/react-native`)
-  - React/RCTNetwork (from `../node_modules/react-native`)
-  - React/RCTText (from `../node_modules/react-native`)
-  - React/RCTWebSocket (from `../node_modules/react-native`)
+  - react-native-image-picker (from `../node_modules/react-native-image-picker`)
+  - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
+  - react-native-network-info (from `../node_modules/react-native-network-info`)
+  - react-native-onesignal (from `../node_modules/react-native-onesignal`)
+  - react-native-spinkit (from `../node_modules/react-native-spinkit`)
+  - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
+  - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
+  - React-RCTBlob (from `../node_modules/react-native/Libraries/Blob`)
+  - React-RCTImage (from `../node_modules/react-native/Libraries/Image`)
+  - React-RCTLinking (from `../node_modules/react-native/Libraries/LinkingIOS`)
+  - React-RCTNetwork (from `../node_modules/react-native/Libraries/Network`)
+  - React-RCTSettings (from `../node_modules/react-native/Libraries/Settings`)
+  - React-RCTText (from `../node_modules/react-native/Libraries/Text`)
+  - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
+  - React-RCTWebSocket (from `../node_modules/react-native/Libraries/WebSocket`)
+  - RNDeviceInfo (from `../node_modules/react-native-device-info`)
+  - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AppCenter
     - AppCenterReactNativeShared
+    - Base64
     - boost-for-react-native
+    - JWT
+    - OneSignal
+    - SSZipArchive
 
 EXTERNAL SOURCES:
+  appcenter:
+    :path: "../node_modules/appcenter"
+  appcenter-analytics:
+    :path: "../node_modules/appcenter-analytics"
+  appcenter-crashes:
+    :path: "../node_modules/appcenter-crashes"
+  BVLinearGradient:
+    :path: "../node_modules/react-native-linear-gradient"
+  CodePush:
+    :path: "../node_modules/react-native-code-push"
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   Folly:
@@ -88,23 +204,107 @@ EXTERNAL SOURCES:
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   React:
-    :path: "../node_modules/react-native"
+    :path: "../node_modules/react-native/"
+  React-Core:
+    :path: "../node_modules/react-native/React"
+  React-cxxreact:
+    :path: "../node_modules/react-native/ReactCommon/cxxreact"
+  React-DevSupport:
+    :path: "../node_modules/react-native/React"
+  React-fishhook:
+    :path: "../node_modules/react-native/Libraries/fishhook"
+  React-jsi:
+    :path: "../node_modules/react-native/ReactCommon/jsi"
+  React-jsiexecutor:
+    :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
+  React-jsinspector:
+    :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-camera:
     :path: "../node_modules/react-native-camera"
+  react-native-image-picker:
+    :path: "../node_modules/react-native-image-picker"
+  react-native-netinfo:
+    :path: "../node_modules/@react-native-community/netinfo"
+  react-native-network-info:
+    :path: "../node_modules/react-native-network-info"
+  react-native-onesignal:
+    :path: "../node_modules/react-native-onesignal"
+  react-native-spinkit:
+    :path: "../node_modules/react-native-spinkit"
+  React-RCTActionSheet:
+    :path: "../node_modules/react-native/Libraries/ActionSheetIOS"
+  React-RCTAnimation:
+    :path: "../node_modules/react-native/Libraries/NativeAnimation"
+  React-RCTBlob:
+    :path: "../node_modules/react-native/Libraries/Blob"
+  React-RCTImage:
+    :path: "../node_modules/react-native/Libraries/Image"
+  React-RCTLinking:
+    :path: "../node_modules/react-native/Libraries/LinkingIOS"
+  React-RCTNetwork:
+    :path: "../node_modules/react-native/Libraries/Network"
+  React-RCTSettings:
+    :path: "../node_modules/react-native/Libraries/Settings"
+  React-RCTText:
+    :path: "../node_modules/react-native/Libraries/Text"
+  React-RCTVibration:
+    :path: "../node_modules/react-native/Libraries/Vibration"
+  React-RCTWebSocket:
+    :path: "../node_modules/react-native/Libraries/WebSocket"
+  RNDeviceInfo:
+    :path: "../node_modules/react-native-device-info"
+  RNGestureHandler:
+    :path: "../node_modules/react-native-gesture-handler"
+  RNVectorIcons:
+    :path: "../node_modules/react-native-vector-icons"
   yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  AppCenter: 3cf7b9387549e9703dab068793e404013e8c0cc1
-  AppCenterReactNativeShared: 3d804f256b964e040d902d1a215d7866fedae55d
+  AppCenter: c809e69d93218b9861b4f8e54ded8dcf4d2131e7
+  appcenter: 751d5e9592c58768f1ddeb1574c7eaa83d0c3176
+  appcenter-analytics: 06f728fa22f6a5043c989bcbadd7946f19f41347
+  appcenter-crashes: a2be5031df97dcab4357f429e74cec4c67f4d158
+  AppCenterReactNativeShared: 5751a607a8aa06ebf19b48bf9d92bf3a75dab04e
+  Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
-  DoubleConversion: bb338842f62ab1d708ceb63ec3d999f0f3d98ecd
-  Folly: c89ac2d5c6ab169cd7397ef27485c44f35f742c7
-  glog: e8acf0ebbf99759d3ff18c86c292a5898282dcde
-  React: 1fe0eb13d90b625d94c3b117c274dcfd2e760e11
-  react-native-camera: ec435a5b2498faa288b4574e005d5c1021f18608
-  yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
+  BVLinearGradient: b0b70acf63ee888829b7c2ebbf6b50e227396e55
+  CodePush: f6b348759cdc42c734d9c3a46ceb2997c270b12e
+  DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
+  Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
+  glog: 1f3da668190260b06b429bb211bfbee5cd790c28
+  JWT: 05028b9624591bba9681bb57df2c5f95fa258bad
+  OneSignal: 0f5ff711d9f25da54885e4ab06ef0abc221a46ef
+  React: c438ccc7e14e86d4702bb92d7e262f549ffaa995
+  React-Core: c76495f5c14e73c0f803b89c3fa83f804da61bd6
+  React-cxxreact: f64bc64cf4682d6ea5a064f6017da72482858682
+  React-DevSupport: 30336bca00f72681eac995d21a31b963e7d5cfec
+  React-fishhook: 73dc8058ca42828cc92e8fbba6cd9571100e10ca
+  React-jsi: 40f467ff088c811c6630acccb4aea57ea7ccb1b5
+  React-jsiexecutor: e4b4717060a0cd8d0270323b5655a68c95432efd
+  React-jsinspector: 044105eea064aec81adc5e4d777a8f6589e7d094
+  react-native-camera: 9c50d7def800895e7991ccda6203929553ceec9c
+  react-native-image-picker: 97e6c8436b3a4e83f56b57ff5ab68cdc6834ee00
+  react-native-netinfo: d16e16984e3ff0f164d3747508151a461ced301e
+  react-native-network-info: 777ff688109eebcab92e2af3fd09f3432c613361
+  react-native-onesignal: 5df225d9d35727a9c4350cf96141e8601f8d4e65
+  react-native-spinkit: c9f5826e1a0bf0da889b3795278eb96ae15c1350
+  React-RCTActionSheet: 08864c609d9f959abf3d51fdd93f8bc6e91f21eb
+  React-RCTAnimation: a4547e9fac2627ded3df9d302f5558b475faf819
+  React-RCTBlob: 62d5c263a2adb8f7a2cafd601beba18a2d99cbbb
+  React-RCTImage: 963859de2b05d2037d1b7842cdbddc8d7f3a2f3b
+  React-RCTLinking: 5998a7db9a6156ed112b006d01f76b2d1cc83d98
+  React-RCTNetwork: 0b676e8194f3f893db813007d37e37e9820173a3
+  React-RCTSettings: fdd7606f1b6050eced69fc6046d5db6768aefd57
+  React-RCTText: 36c0532feb5521cb295ba80e7e44b70cf1c36fc7
+  React-RCTVibration: dabb8d59bb47e1d9124b3f77bfdc1b33d42b0a74
+  React-RCTWebSocket: f32b93e0953d7c07fd5dd45305406282cfdc95cf
+  RNDeviceInfo: 5b5b42b12587207b6bd686441ac42d19d8e07933
+  RNGestureHandler: 7ccf2f3f60458e084f9ada01fbaf610f6fef073c
+  RNVectorIcons: 66af4d5c8ff4f584c7b7cd9c4b0780920f27fce2
+  SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
+  yoga: 88c514f310aff89b94a14c5fbf44b95735af0cb7
 
-PODFILE CHECKSUM: 26a6f5d4f1ab9b32bfebfb1f7c0633acc95409f6
+PODFILE CHECKSUM: 58ffab20aba97790b85e10b1751271ea3162ccd0
 
 COCOAPODS: 1.5.3

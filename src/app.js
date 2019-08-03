@@ -11,9 +11,12 @@ import {StyleProvider}from 'native-base';
 import getTheme from './native-base-theme/components';
 import material from './native-base-theme/variables/material';
 
-import {composeWithDevTools} from 'remote-redux-devtools';
+// import {composeWithDevTools} from 'remote-redux-devtools';
 
-const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)));
+const store = createStore(reducers,{}, compose(applyMiddleware(thunk)));
+console.ignoredYellowBox = ['Warning: Each', 'Warning: Failed'];
+
+console.disableYellowBox = true;
 
 class App extends React.Component {
     render() {
@@ -26,5 +29,7 @@ class App extends React.Component {
         );
     }
 }
+
+
 
 export default App;

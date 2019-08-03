@@ -17,6 +17,7 @@ class LoginContainer extends React.Component {
         this.updateFormData = this.updateFormData.bind(this);
         this.onClickLogin = this.onClickLogin.bind(this);
         this.saveDataLogin = this.saveDataLogin.bind(this);
+        this.openMainScreen = this.openMainScreen.bind(this);
     }
 
     componentWillMount() {
@@ -33,9 +34,13 @@ class LoginContainer extends React.Component {
         this.props.loginActions.updateDataLoginForm(login);
     }
 
+    openMainScreen = () => {
+        this.props.navigation.navigate("Main");
+    }
+
     onClickLogin() {
         if (this.props.login.username && this.props.login.password) {
-            this.props.loginActions.loginUser(this.props.login);
+            this.props.loginActions.loginUser(this.props.login, this.openMainScreen);
             this.saveDataLogin();
         } else {
             Alert.alert(
@@ -67,7 +72,7 @@ class LoginContainer extends React.Component {
         if (nextProps.isGetDataLocalSuccessful && nextProps.isAutoLogin) {
             nextProps.autoLoginActions.setAutoLogin(false);
             if (nextProps.login.username && nextProps.login.password) {
-                nextProps.loginActions.loginUser(nextProps.login);
+                nextProps.loginActions.loginUser(nextProps.login, this.openMainScreen);
             }
         }
     }
@@ -86,9 +91,9 @@ class LoginContainer extends React.Component {
     }
 }
 
-LoginContainer.navigationOptions = {
-    title: 'Đăng nhập',
-};
+// LoginContainer.navigationOptions = {
+//     title: 'Đăng nhập',
+// };
 
 function mapStateToProps(state) {
     return {

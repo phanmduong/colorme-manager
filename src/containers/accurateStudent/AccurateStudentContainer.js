@@ -39,7 +39,7 @@ class AccurateStudentContainer extends React.Component {
     }
 
     static navigationOptions = ({navigation}) => ({
-        title: navigation.state.params.title
+        title: "Xác thực học viên"
     });
 
     searchStudent = (value) => {

@@ -22,14 +22,15 @@ class CurrentClassStudyContainer extends React.Component {
 
     onSelectedItem(classItem) {
         this.props.currentClassStudyActions.selectedCurrentClassStudy(classItem);
-        this.props.listStudentAttendanceScreen();
+        // this.props.listStudentAttendanceScreen();
+        this.props.navigation.navigate("ListStudentAttendance");
 
     }
 
     openQrCode = (classItem) => {
         this.props.currentClassStudyActions.selectedCurrentClassStudy(classItem);
-        this.props.qrCodeScreen();
-
+        // this.props.qrCodeScreen();
+        this.props.navigation.navigate("QRCode");
     }
 
     reloadCurrentClassStudy() {

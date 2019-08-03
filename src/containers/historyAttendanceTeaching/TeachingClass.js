@@ -17,9 +17,9 @@ class TeachingClass extends React.Component {
         super(props, context);
     }
 
-    shouldComponentUpdate(nextProps) {
-        return (!_.isEqual(nextProps.classData, this.props.classData));
-    }
+    // shouldComponentUpdate(nextProps) {
+    //     return (!_.isEqual(nextProps.classData, this.props.classData));
+    // }
 
     renderHeader() {
         const classData = this.props.classData.lessons[0];

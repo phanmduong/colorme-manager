@@ -41,8 +41,8 @@ ListStudentPaidContainer.navigationOptions = {
 function mapStateToProps(state) {
     return {
         token: state.login.token,
-        selectedGenId: state.dashboard.selectedGenId,
-        selectedBaseId: state.dashboard.selectedBaseId,
+        selectedGenId: state.analytics.selectedGenId,
+        selectedBaseId: state.analytics.selectedBaseId,
         listStudentPaidData: state.listStudentPaid.listStudentPaidData,
         isLoading: state.listStudentPaid.isLoading,
         error: state.listStudentPaid.error,

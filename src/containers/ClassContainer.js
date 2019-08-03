@@ -42,7 +42,7 @@ ClassContainer.navigationOptions = {
 
 function mapStateToProps(state) {
     return {
-        classData: state.dashboard.dashboardData.classes,
+        classData: state.analytics.dashboardData.classes,
         token: state.login.token,
         selectedClassId: state.class.selectedClassId,
         courseData: state.class.courseData,

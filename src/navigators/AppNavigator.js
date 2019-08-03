@@ -4,11 +4,11 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {StatusBar, View, BackHandler} from 'react-native';
-import {addNavigationHelpers, StackNavigator} from 'react-navigation';
+import {createStackNavigator, createAppContainer} from 'react-navigation';
 import {routeConfigs, navigationOptions} from './AppRouteConfigs';
 import material from '../native-base-theme/variables/material';
 
-export const AppNavigator = StackNavigator(routeConfigs, navigationOptions);
+export const AppNavigator = createAppContainer(createStackNavigator(routeConfigs, navigationOptions));
 
 class AppWithNavigationState extends React.Component {
     constructor(props) {
@@ -42,12 +42,14 @@ class AppWithNavigationState extends React.Component {
     render() {
         const {dispatch, nav, statusBar} = this.props;
         return (
+
             <View style={{flex: 1}}>
                 <StatusBar
                     backgroundColor={material.statusBarColor}
                     barStyle={statusBar.color}
                 />
-                <AppNavigator navigation={addNavigationHelpers({dispatch, state: nav})}/>
+                {/*<AppNavigator navigation={addNavigationHelpers({dispatch, state: nav})}/>*/}
+                <AppNavigator/>
             </View>
         );
     }

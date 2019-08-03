@@ -10,8 +10,10 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Zocial from 'react-native-vector-icons/Zocial';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const ICON_SET_MAP = {
+    ant: AntDesign,
     fontawesome: FontAwesome,
     foundation: Foundation,
     ion: Ionicons,

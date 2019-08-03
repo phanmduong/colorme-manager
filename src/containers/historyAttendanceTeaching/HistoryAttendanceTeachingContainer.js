@@ -24,7 +24,7 @@ class HistoryAttendanceTeachingContainer extends React.Component {
 
 
     static navigationOptions = ({navigation}) => ({
-        title: navigation.state.params.title
+        title: "Lịch sử lịch giảng dạy"
     });
 
     componentWillMount() {

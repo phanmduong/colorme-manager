@@ -1,7 +1,8 @@
 import React from 'react';
 import {StyleSheet} from 'react-native'
 import Loading from '../components/common/Loading';
-import {Dimensions, NetInfo} from 'react-native';
+import {Dimensions} from 'react-native';
+import NetInfo from "@react-native-community/netinfo";
 import {
     View,
     List,
@@ -40,6 +41,13 @@ class CheckInComponent extends React.Component {
                 });
             }
         );
+
+        // NetInfo.fetch().then(state => {
+        //     this.getWifiName();
+        //     this.setState({
+        //         typeConnect: helper.typeConnect(state.type)
+        //     });
+        // });
     }
 
     componentWillUnmount() {
@@ -49,14 +57,13 @@ class CheckInComponent extends React.Component {
         // );
     };
 
-    getWifiName = () => {
-        NetworkInfo.getSSID(ssid => {
-            let wifiName = '';
-            if (ssid && ssid != 'error' && ssid.indexOf("ssid") == -1) {
-                wifiName = ssid;
-            }
-            this.setState({wifiName: wifiName});
-        });
+    getWifiName = async () => {
+        const ssid = await NetworkInfo.getSSID();
+        let wifiName = '';
+        if (ssid && ssid != 'error' && ssid.indexOf("ssid") == -1) {
+            wifiName = ssid;
+        }
+        this.setState({wifiName: wifiName});
     }
 
     handleConnectChange = (data) => {

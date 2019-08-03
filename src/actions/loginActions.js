@@ -23,7 +23,7 @@ export function beginLogin() {
     }
 }
 
-export function loginUser(login) {
+export function loginUser(login, openMainScreen) {
 
     let device = {
         device_id: DeviceInfo.getUniqueID(),
@@ -39,8 +39,9 @@ export function loginUser(login) {
                 } else {
                     dispatch(loginSuccess(res, true));
                 }
-                dispatch(openMainScreen(res));
-                dispatch(changeStatusBarColor('light-content'));
+                openMainScreen();
+                // dispatch(openMainScreen(res));
+                dispatch(changeStatusBarColor('default'));
                 dispatch(changeStatusTransaction(res.data.user));
             });
         }).catch(error => {

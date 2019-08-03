@@ -13,12 +13,12 @@ import QRCodeReducer from './QRCodeReducer';
 import attendanceStudentReducer from './attendanceStudentReducer';
 import currentClassStudyReducer from './currentClassStudyReducer';
 import shiftRegisterReducer from './shiftRegisterReducer';
-import dashboardReducer from './dashboardReducer';
+import analyticsReducer from './analyticsReducer';
 import listStudentClassReducer from './listStudentClassReducer';
 import listStudentPaidReducer from './listStudentPaidReducer';
 import listStudentZeroReducer from './listStudentZeroReducer';
 import registerListReducer from './registerListReducer';
-import navigatorReducer from './navigatorReducer';
+// import navigatorReducer from './navigatorReducer';
 import statusbarReducer from './statusbarReducer';
 import autoLoginReducer from './autoLoginReducer';
 import collectMoneyReducer from './collectMoneyReducer';
@@ -39,10 +39,10 @@ const appReducer = combineReducers({
     attendanceStudent: attendanceStudentReducer,
     currentClassStudy: currentClassStudyReducer,
     shiftRegister: shiftRegisterReducer,
-    dashboard: dashboardReducer,
+    analytics: analyticsReducer,
     listStudentClass: listStudentClassReducer,
     registerList: registerListReducer,
-    nav: navigatorReducer,
+    nav: statusbarReducer,
     statusBar: statusbarReducer,
     collectMoney: collectMoneyReducer,
     moneyTransfer: moneyTransferReducer,

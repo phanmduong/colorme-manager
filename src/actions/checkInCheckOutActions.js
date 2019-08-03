@@ -7,6 +7,7 @@ import {NetworkInfo} from 'react-native-network-info';
 import DeviceInfo from 'react-native-device-info';
 import async from 'async';
 import {Alert, NativeModules, Platform} from 'react-native';
+import Geolocation from 'react-native-geolocation-service';
 
 let watchID;
 
@@ -22,12 +23,15 @@ export function loadCheck(token, type) {
         let device = {
             device_id: DeviceInfo.getUniqueID()
         };
+
         async.waterfall([
                 function (callback) {
                     let countCheckLocation = 0;
                     let called = false;
+                    console.log("get location")
                     if (Platform.OS == 'ios') {
-                        watchID = navigator.geolocation.watchPosition((position) => {
+                        watchID = Geolocation.watchPosition((position) => {
+                                console.log(position)
                                 if (countCheckLocation === 0) {
                                     device.long = position.coords.longitude;
                                     device.lat = position.coords.latitude;
@@ -38,6 +42,7 @@ export function loadCheck(token, type) {
 
                             },
                             (error) => {
+                                console.log("errror");
                                 if (ignoreDevices.indexOf(device.device_id) > 0) {
                                     device.long = LONGITUDE;
                                     device.lat = LATITUDE;
@@ -71,31 +76,30 @@ export function loadCheck(token, type) {
                     }
 
 
-                },
-                function (callback) {
-                    NetworkInfo.getSSID(ssid => {
-                        if (ssid && ssid != 'error' && ssid.indexOf("ssid") == -1) {
-                            device.wifiName = ssid;
-                            callback(null);
-                        } else {
-                            callback("Kiểm tra kết nối mạng");
-                        }
-                    });
+                }, async function (callback) {
+                    console.log("ok");
+                    const ssid = await NetworkInfo.getSSID();
+                    console.log(ssid);
+                    if (ssid && ssid != 'error' && ssid.indexOf("ssid") == -1) {
+                        device.wifiName = ssid;
+                        callback(null);
+                    } else {
+                        callback("Kiểm tra kết nối mạng");
+                    }
+                }, async function (callback) {
+                    console.log("ok2");
+                    const bssid = await NetworkInfo.getBSSID();
 
-                },
-                function (callback) {
-                    NetworkInfo.getBSSID(bssid => {
-                        if (bssid && bssid != 'error' && bssid.indexOf("bssid") == -1) {
-                            device.mac = bssid;
-                            callback(null);
-                        } else {
-                            callback("Kiểm tra kết nối mạng");
-                        }
-                    });
+                    if (bssid && bssid != 'error' && bssid.indexOf("bssid") == -1) {
+                        device.mac = bssid;
+                        callback(null);
+                    } else {
+                        callback("Kiểm tra kết nối mạng");
+                    }
                 },
                 function (callback) {
                     if (watchID) {
-                        navigator.geolocation.clearWatch(watchID);
+                        Geolocation.clearWatch(watchID);
                     }
                     console.log(device);
                     if (type === 'checkin') {
@@ -127,8 +131,10 @@ export function loadCheck(token, type) {
             ],
 
             function (err, result) {
+                console.log(err)
+                console.log(result)
                 if (watchID) {
-                    navigator.geolocation.clearWatch(watchID);
+                    Geolocation.clearWatch(watchID);
                 }
                 if (err || result.data.status === 0) {
                     dispatch({

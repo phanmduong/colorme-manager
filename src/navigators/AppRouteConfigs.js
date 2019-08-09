@@ -31,6 +31,7 @@ import AttendanceStudentContainer from "../containers/AttendanceStudentContainer
 import AccurateStudentContainer from "../containers/accurateStudent/AccurateStudentContainer";
 import TabBar from "../components/common/TabBar";
 import DashboardContainer from "../containers/DashboardContainer";
+import MeetingContainer from "../containers/meeting/MeetingContainer";
 
 const navigationOptionsDefault = {
     navigationOptions: ({navigation}) => ({
@@ -104,6 +105,10 @@ const TabDashboard = createStackNavigator({
     },
     AccurateStudent: {
         screen: AccurateStudentContainer
+    },
+    Meeting: {
+        screen: MeetingContainer,
+
     }
 }, navigationOptionsDefault);
 
@@ -333,6 +338,7 @@ export const routeConfigs = {
     },
     Main: {
         screen: DashboardMain
+        // screen: MeetingContainer
     }
 };
 

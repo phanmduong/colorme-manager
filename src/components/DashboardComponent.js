@@ -90,7 +90,11 @@ class DashboardComponent extends React.Component {
                                       this.props.navigation.navigate("AccurateStudent")
                                   }}
                         />
-                        <View style={styles.cardItemMenu}/>
+                        <CardMenu icon={"ant|bulb1"} title={"Họp"}
+                                  onPress={() => {
+                                      this.props.navigation.navigate("Meeting")
+                                  }}
+                        />
                         <View style={styles.cardItemMenu}/>
                     </View>
 

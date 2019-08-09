@@ -13,7 +13,7 @@ import Spinkit from 'react-native-spinkit';
 import theme from '../styles';
 import Swiper from 'react-native-swiper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import ShiftRegisterWeek from './shiftRegisters/ShiftRegisterWeek';
+import ShiftRegisterWeek from './shiftRegister/ShiftRegisterWeek';
 import * as alert from '../constants/alert';
 
 const heightSwiper = (Platform.OS === 'ios') ? height - 165 : height - 180;

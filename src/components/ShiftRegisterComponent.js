@@ -13,7 +13,7 @@ import Spinkit from 'react-native-spinkit';
 import theme from '../styles';
 import Swiper from 'react-native-swiper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import ShiftRegisterWeeks from './shiftRegister/ShiftRegisterWeeks';
+import ShiftRegisterWeek from './shiftRegisters/ShiftRegisterWeek';
 import * as alert from '../constants/alert';
 
 const heightSwiper = (Platform.OS === 'ios') ? height - 165 : height - 180;
@@ -54,7 +54,7 @@ class ShiftRegisterComponent extends React.Component {
         return (
             this.props.shiftRegisterData.weeks.map((week, index) => {
                 return (
-                    <ShiftRegisterWeeks
+                    <ShiftRegisterWeek
                         loadDataShiftRegister={self.loadDataShiftRegister}
                         isLoadingShiftRegister={self.props.isLoadingShiftRegister}
                         key={index}

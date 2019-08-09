@@ -6,7 +6,7 @@ import {View, Text, ImageBackground, Image, TouchableOpacity, Alert} from 'react
 import {observer} from "mobx-react";
 import moment from "moment";
 import {FORMAT_TIME_MYSQL} from "../../constants/constant";
-import * as alert from "../../constants/alert";
+import {getMeetingStatus} from "../../helper";
 
 @observer
 class MeetingItem extends React.Component {
@@ -65,7 +65,7 @@ class MeetingItem extends React.Component {
         return (
             <View style={style.container}>
                 <ImageBackground
-                    source={require('./background.png')}
+                    source={require('../../../assets/meeting/background.png')}
                     style={style.containerContent}
                     imageStyle={{borderRadius: 10}}
                 >
@@ -102,22 +102,25 @@ class MeetingItem extends React.Component {
                             </Text>
                         </View>
                         <View style={style.flex1}>
-                            <View style={style.row}>
-                                {participates.slice(0, 3).map((participate) => {
-                                    return (
-                                        <Image
-                                            style={style.avatar}
-                                            source={{uri: participate.user.avatar_url}}
-                                        >
-                                        </Image>
-                                    )
-                                })}
-                                {participates.length > 3 &&
-                                <Text style={style.numberParticipate}>
-                                    +{participates.length - 3}
-                                </Text>
-                                }
-                            </View>
+                            <TouchableOpacity onPress={() => this.props.openModalParticipate(participates)}>
+                                <View style={style.row}>
+                                    {participates.slice(0, 3).map((participate, index) => {
+                                        return (
+                                            <Image
+                                                key={index}
+                                                style={style.avatar}
+                                                source={{uri: participate.user.avatar_url}}
+                                            >
+                                            </Image>
+                                        )
+                                    })}
+                                    {participates.length > 3 &&
+                                    <Text style={style.numberParticipate}>
+                                        +{participates.length - 3}
+                                    </Text>
+                                    }
+                                </View>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </ImageBackground>
@@ -133,16 +136,16 @@ class MeetingItem extends React.Component {
                                                     this.isCheckIn() ?
                                                         <View style={style.contentAction}>
                                                             <Image style={style.iconAction2}
-                                                                   source={require("./heart.png")}/>
+                                                                   source={getMeetingStatus('check_in').icon}/>
                                                             <Text style={style.textAction}>
-                                                                Đã check in
+                                                                {getMeetingStatus('check_in').text}
                                                             </Text>
                                                         </View>
                                                         :
                                                         <TouchableOpacity onPress={this.onCheckin}>
                                                             <View style={style.contentAction}>
                                                                 <Image style={style.iconAction}
-                                                                       source={require("./heart.png")}/>
+                                                                       source={getMeetingStatus('check_in').icon}/>
                                                                 <Text style={style.textAction}>
                                                                     Check in
                                                                 </Text>
@@ -151,9 +154,10 @@ class MeetingItem extends React.Component {
                                                 )
                                                 :
                                                 <View style={style.contentAction}>
-                                                    <Image style={style.iconAction2} source={require("./like.png")}/>
+                                                    <Image style={style.iconAction2}
+                                                           source={getMeetingStatus('accept').icon}/>
                                                     <Text style={style.textAction}>
-                                                        Sẽ tham gia
+                                                        {getMeetingStatus('accept').text}
                                                     </Text>
                                                 </View>
                                         )
@@ -162,9 +166,9 @@ class MeetingItem extends React.Component {
                                         :
                                         <View style={style.contentAction}>
                                             <Image style={[style.iconAction2, {marginTop: 20}]}
-                                                   source={require("./sad.png")}/>
+                                                   source={getMeetingStatus('reject').icon}/>
                                             <Text style={style.textAction}>
-                                                Không tham gia
+                                                {getMeetingStatus('reject').text}
                                             </Text>
                                         </View>
 
@@ -173,10 +177,12 @@ class MeetingItem extends React.Component {
                             :
                             <View>
                                 <TouchableOpacity onPress={this.onAccept}>
-                                    <Image style={style.iconAction} source={require("./like.png")}/>
+                                    <Image style={style.iconAction}
+                                           source={getMeetingStatus('accept').icon}/>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={this.onReject}>
-                                    <Image style={[style.iconAction, {marginTop: 20}]} source={require("./sad.png")}/>
+                                    <Image style={[style.iconAction, {marginTop: 20}]}
+                                           source={getMeetingStatus('reject').icon}/>
                                 </TouchableOpacity>
                             </View>
                     }

@@ -3,6 +3,7 @@
  */
 
 import _ from 'lodash';
+import {MEETING_STATUS} from "../constants/constant";
 
 export function dotNumber(number) {
     if (number) {
@@ -193,4 +194,8 @@ export function calculatorAttendance(
         late_leave_span
     };
     return data;
+}
+
+export function getMeetingStatus(status) {
+    return MEETING_STATUS[status] ? MEETING_STATUS[status] : {};
 }

@@ -337,8 +337,8 @@ export const routeConfigs = {
         screen: LoginContainer,
     },
     Main: {
-        screen: DashboardMain
-        // screen: MeetingContainer
+        // screen: DashboardMain
+        screen: MeetingContainer
     }
 };
 

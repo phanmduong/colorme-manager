@@ -6,6 +6,7 @@ import {Text, View, TouchableOpacity} from 'react-native';
 import {Body, Card, CardItem} from "native-base";
 import LinearGradient from "react-native-linear-gradient";
 import Icon from "./common/Icon";
+import ModalCustom from "./common/ModalCustom";
 
 const CardMenu = ({icon, title, onPress}) => {
     return (

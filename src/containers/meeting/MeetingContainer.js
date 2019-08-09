@@ -3,9 +3,9 @@
  */
 import React from 'react';
 import {connect} from 'react-redux';
-import MeetingComponent from "../../components/MeetingComponent";
 import MeetingStore from "./MeetingStore";
 import {observer} from "mobx-react";
+import MeetingComponent from "./MeetingComponent";
 
 @observer
 class MeetingContainer extends React.Component {

@@ -3,19 +3,31 @@
  */
 import React from 'react';
 import {SafeAreaView, View} from 'react-native';
-import HeaderSection from "./common/HeaderSection";
-import withStyle from "./HOC/withStyle";
-import MeetingItem from "./meeting/MeetingItem";
-import Section from "./common/Section";
 import {observer} from "mobx-react";
-import Loading from "./common/Loading";
+import Loading from "../../components/common/Loading";
 import moment from "moment";
-import {FORMAT_TIME_MYSQL} from "../constants/constant";
+import {FORMAT_TIME_MYSQL} from "../../constants/constant";
+import ModalMeetingParticipate from "./ModalMeetingParticipate";
+import Section from "../../components/common/Section";
+import HeaderSection from "../../components/common/HeaderSection";
+import withStyle from "../../components/HOC/withStyle";
+import MeetingItem from "./MeetingItem";
+import _ from 'lodash';
+import {getMeetingStatus} from "../../helper";
 
 @observer
 class MeetingComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
+    }
+
+    openModalParticipate = (participates) => {
+        this.props.store.isVisibleModalParticipate = true;
+        participates = _.sortBy(participates, [function (participate) {
+            const status = getMeetingStatus(participate.status);
+            return status.order;
+        }]);
+        this.props.store.participates = participates;
     }
 
     render() {
@@ -27,9 +39,10 @@ class MeetingComponent extends React.Component {
                         {meetingsNow.length > 0 &&
                         <Section>
                             <HeaderSection title={"Cuộc họp"} subtitle={"Đang diễn ra"}/>
-                            {meetingsNow.map((meeting) => {
+                            {meetingsNow.map((meeting, index) => {
                                 const date = moment(meeting.date, FORMAT_TIME_MYSQL);
                                 return <MeetingItem
+                                    key={index}
                                     store={this.props.store}
                                     joined={meeting.joined}
                                     name={meeting.name}
@@ -41,6 +54,7 @@ class MeetingComponent extends React.Component {
                                     hour={date.format("HH:mm")}
                                     isNow={true}
                                     datetime={meeting.date}
+                                    openModalParticipate={this.openModalParticipate}
                                 />
                             })}
                         </Section>
@@ -48,9 +62,10 @@ class MeetingComponent extends React.Component {
                         {meetingsSoon.length > 0 &&
                         <Section>
                             <HeaderSection title={"Cuộc họp"} subtitle={"Sắp tới"}/>
-                            {meetingsSoon.map((meeting) => {
+                            {meetingsSoon.map((meeting, index) => {
                                 const date = moment(meeting.date, FORMAT_TIME_MYSQL);
                                 return <MeetingItem
+                                    key={index}
                                     store={this.props.store}
                                     joined={meeting.joined}
                                     name={meeting.name}
@@ -61,12 +76,14 @@ class MeetingComponent extends React.Component {
                                     month={date.format("M")}
                                     hour={date.format("HH:mm")}
                                     datetime={meeting.date}
+                                    openModalParticipate={this.openModalParticipate}
                                 />
                             })}
                         </Section>
                         }
                     </View>
                 }
+                <ModalMeetingParticipate store={this.props.store}/>
             </SafeAreaView>
 
         );

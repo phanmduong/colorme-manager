@@ -12,6 +12,8 @@ class MeetingStore {
     @observable errorCheckIn = false;
     @observable meetings = [];
     @observable token = "";
+    @observable isVisibleModalParticipate = false;
+    @observable participates = [];
 
     constructor(token) {
         this.token = token
@@ -98,9 +100,6 @@ class MeetingStore {
         return this.meetings.filter((meeting) => {
             const date = moment(meeting.date, FORMAT_TIME_MYSQL).format("X");
             const now = moment().unix();
-            console.log(date - 1800)
-            console.log(now)
-            console.log(date + 3600)
             return date - 1800 <= now && now <= parseInt(date) + 3600;
         });
     }

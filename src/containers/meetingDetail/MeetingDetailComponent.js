@@ -7,7 +7,6 @@ import {observer} from "mobx-react";
 import Loading from "../../components/common/Loading";
 import moment from "moment";
 import {FORMAT_TIME_MYSQL} from "../../constants/constant";
-import ModalMeetingParticipate from "./ModalMeetingParticipate";
 import Section from "../../components/common/Section";
 import HeaderSection from "../../components/common/HeaderSection";
 import withStyle from "../../components/HOC/withStyle";
@@ -51,10 +50,12 @@ class MeetingDetailComponent extends React.Component {
     render() {
         const {isLoading, meetings, meeting, isLoadingMeetings} = this.props.store;
         if (meetings.length > 0 && this.indexDefault == -1) {
-            const meetingId = this.props.selectedMeetingId;
-            this.indexDefault = _.findIndex(this.props.store.meetings, function (o) {
+            const meetingId = this.props.store.selectedMeetingId;
+            console.log(meetings);
+            this.indexDefault = _.findIndex(meetings, function (o) {
                 return o.id == meetingId;
             });
+            console.log(this.indexDefault);
         }
         return (
             <SafeAreaView style={{flex: 1}}>

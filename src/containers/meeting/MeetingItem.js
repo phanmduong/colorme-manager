@@ -50,144 +50,136 @@ class MeetingItem extends React.Component {
         }
     };
 
-    isCheckIn = () => {
-        const {joined} = this.props;
-        const date = moment(joined.check_in_time, FORMAT_TIME_MYSQL);
-        if (joined) {
-            console.log(date.isValid())
-            return date.isValid();
-        }
-        return false;
-    }
-
     render() {
-        const {name, total_issues, date, month, hour, joined, participates, isNow} = this.props;
+        const {name, total_issues, date, month, hour, joined, participates, isNow, meetingId} = this.props;
         return (
-            <View style={style.container}>
-                <ImageBackground
-                    source={require('../../../assets/meeting/background.png')}
-                    style={style.containerContent}
-                    imageStyle={{borderRadius: 10}}
-                >
-                    <View style={style.row}>
-                        <View style={style.flex1}>
-                            <Text style={style.timeDate}>
-                                {date}
-                            </Text>
-                        </View>
-                        <View style={style.flex1}>
-                            <Text style={style.title}>
-                                {name}
-                            </Text>
-                        </View>
-                    </View>
-                    <View style={style.row}>
-                        <View style={style.flex1}>
-                            <Text style={style.timeMonth}>
-                                Tháng {month}
-                            </Text>
-                        </View>
-                        <View style={style.flex1}>
-                            <View style={style.row}>
-                                <Text style={style.issue}>
-                                    {total_issues} vấn đề
+            <TouchableOpacity onPress={() => this.props.onClickDetail(meetingId)}>
+                <View style={style.container}>
+                    <ImageBackground
+                        source={require('../../../assets/meeting/background.png')}
+                        style={style.containerContent}
+                        imageStyle={{borderRadius: 10}}
+                    >
+                        <View style={style.row}>
+                            <View style={style.flex1}>
+                                <Text style={style.timeDate}>
+                                    {date}
+                                </Text>
+                            </View>
+                            <View style={style.flex1}>
+                                <Text style={style.title}>
+                                    {name}
                                 </Text>
                             </View>
                         </View>
-                    </View>
-                    <View style={style.row}>
-                        <View style={style.flex1}>
-                            <Text style={style.timeHour}>
-                                {hour}
-                            </Text>
-                        </View>
-                        <View style={style.flex1}>
-                            <TouchableOpacity onPress={() => this.props.openModalParticipate(participates)}>
+                        <View style={style.row}>
+                            <View style={style.flex1}>
+                                <Text style={style.timeMonth}>
+                                    Tháng {month}
+                                </Text>
+                            </View>
+                            <View style={style.flex1}>
                                 <View style={style.row}>
-                                    {participates.slice(0, 3).map((participate, index) => {
-                                        return (
-                                            <Image
-                                                key={index}
-                                                style={style.avatar}
-                                                source={{uri: participate.user.avatar_url}}
-                                            >
-                                            </Image>
-                                        )
-                                    })}
-                                    {participates.length > 3 &&
-                                    <Text style={style.numberParticipate}>
-                                        +{participates.length - 3}
+                                    <Text style={style.issue}>
+                                        {total_issues} vấn đề
                                     </Text>
-                                    }
                                 </View>
-                            </TouchableOpacity>
+                            </View>
                         </View>
-                    </View>
-                </ImageBackground>
-                <View style={style.containerAction}>
-                    {
-                        joined ?
-                            <View>
-                                {
-                                    joined.status == "accept" ?
-                                        (
-                                            isNow ?
-                                                (
-                                                    this.isCheckIn() ?
-                                                        <View style={style.contentAction}>
-                                                            <Image style={style.iconAction2}
-                                                                   source={getMeetingStatus('check_in').icon}/>
-                                                            <Text style={style.textAction}>
-                                                                {getMeetingStatus('check_in').text}
-                                                            </Text>
-                                                        </View>
-                                                        :
-                                                        <TouchableOpacity onPress={this.onCheckin}>
+                        <View style={style.row}>
+                            <View style={style.flex1}>
+                                <Text style={style.timeHour}>
+                                    {hour}
+                                </Text>
+                            </View>
+                            <View style={style.flex1}>
+                                <TouchableOpacity onPress={() => this.props.openModalParticipate(participates)}>
+                                    <View style={style.row}>
+                                        {participates.slice(0, 3).map((participate, index) => {
+                                            return (
+                                                <Image
+                                                    key={index}
+                                                    style={style.avatar}
+                                                    source={{uri: participate.user.avatar_url}}
+                                                >
+                                                </Image>
+                                            )
+                                        })}
+                                        {participates.length > 3 &&
+                                        <Text style={style.numberParticipate}>
+                                            +{participates.length - 3}
+                                        </Text>
+                                        }
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </ImageBackground>
+                    <View style={style.containerAction}>
+                        {
+                            joined ?
+                                <View>
+                                    {
+                                        joined.status != "reject" ?
+                                            (
+                                                isNow ?
+                                                    (
+                                                        joined.status == "check_in" ?
                                                             <View style={style.contentAction}>
-                                                                <Image style={style.iconAction}
+                                                                <Image style={style.iconAction2}
                                                                        source={getMeetingStatus('check_in').icon}/>
                                                                 <Text style={style.textAction}>
-                                                                    Check in
+                                                                    {getMeetingStatus('check_in').text}
                                                                 </Text>
                                                             </View>
-                                                        </TouchableOpacity>
-                                                )
-                                                :
-                                                <View style={style.contentAction}>
-                                                    <Image style={style.iconAction2}
-                                                           source={getMeetingStatus('accept').icon}/>
-                                                    <Text style={style.textAction}>
-                                                        {getMeetingStatus('accept').text}
-                                                    </Text>
-                                                </View>
-                                        )
+                                                            :
+                                                            <TouchableOpacity onPress={this.onCheckin}>
+                                                                <View style={style.contentAction}>
+                                                                    <Image style={style.iconAction}
+                                                                           source={getMeetingStatus('check_in').icon}/>
+                                                                    <Text style={style.textAction}>
+                                                                        Check in
+                                                                    </Text>
+                                                                </View>
+                                                            </TouchableOpacity>
+                                                    )
+                                                    :
+                                                    <View style={style.contentAction}>
+                                                        <Image style={style.iconAction2}
+                                                               source={getMeetingStatus('accept').icon}/>
+                                                        <Text style={style.textAction}>
+                                                            {getMeetingStatus('accept').text}
+                                                        </Text>
+                                                    </View>
+                                            )
 
 
-                                        :
-                                        <View style={style.contentAction}>
-                                            <Image style={[style.iconAction2, {marginTop: 20}]}
-                                                   source={getMeetingStatus('reject').icon}/>
-                                            <Text style={style.textAction}>
-                                                {getMeetingStatus('reject').text}
-                                            </Text>
-                                        </View>
+                                            :
+                                            <View style={style.contentAction}>
+                                                <Image style={[style.iconAction2, {marginTop: 20}]}
+                                                       source={getMeetingStatus('reject').icon}/>
+                                                <Text style={style.textAction}>
+                                                    {getMeetingStatus('reject').text}
+                                                </Text>
+                                            </View>
 
-                                }
-                            </View>
-                            :
-                            <View>
-                                <TouchableOpacity onPress={this.onAccept}>
-                                    <Image style={style.iconAction}
-                                           source={getMeetingStatus('accept').icon}/>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={this.onReject}>
-                                    <Image style={[style.iconAction, {marginTop: 20}]}
-                                           source={getMeetingStatus('reject').icon}/>
-                                </TouchableOpacity>
-                            </View>
-                    }
+                                    }
+                                </View>
+                                :
+                                <View>
+                                    <TouchableOpacity onPress={this.onAccept}>
+                                        <Image style={style.iconAction}
+                                               source={getMeetingStatus('accept').icon}/>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={this.onReject}>
+                                        <Image style={[style.iconAction, {marginTop: 20}]}
+                                               source={getMeetingStatus('reject').icon}/>
+                                    </TouchableOpacity>
+                                </View>
+                        }
+                    </View>
                 </View>
-            </View>
+            </TouchableOpacity>
         );
     }
 }

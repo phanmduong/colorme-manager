@@ -3,15 +3,15 @@
  */
 import React from 'react';
 import {connect} from 'react-redux';
-import MeetingStore from "./MeetingStore";
+import MeetingDetailStore from "./MeetingDetailStore";
 import {observer} from "mobx-react";
-import MeetingComponent from "./MeetingComponent";
+import MeetingDetailComponent from "./MeetingDetailComponent";
 
 @observer
-class MeetingContainer extends React.Component {
+class MeetingDetailContainer extends React.Component {
     constructor(props) {
         super(props);
-        this.store = new MeetingStore(props.token);
+        this.store = new MeetingDetailStore(props.token);
     }
 
     componentDidMount() {
@@ -20,7 +20,7 @@ class MeetingContainer extends React.Component {
 
     render() {
         return (
-            <MeetingComponent store={this.store} {...this.props}/>
+            <MeetingDetailComponent store={this.store}/>
         );
     }
 }
@@ -35,4 +35,4 @@ function mapDispatchToProps(dispatch) {
     return {};
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MeetingContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(MeetingDetailContainer);

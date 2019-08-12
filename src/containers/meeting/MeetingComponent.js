@@ -30,6 +30,10 @@ class MeetingComponent extends React.Component {
         this.props.store.participates = participates;
     }
 
+    onClickDetail = (meetingId) => {
+        this.props.navigation.navigate('MeetingDetail', {meetingId})
+    };
+
     render() {
         const {isLoading, meetingsNow, meetingsSoon} = this.props.store;
         return (
@@ -55,6 +59,7 @@ class MeetingComponent extends React.Component {
                                     isNow={true}
                                     datetime={meeting.date}
                                     openModalParticipate={this.openModalParticipate}
+                                    onClickDetail={this.onClickDetail}
                                 />
                             })}
                         </Section>
@@ -77,6 +82,7 @@ class MeetingComponent extends React.Component {
                                     hour={date.format("HH:mm")}
                                     datetime={meeting.date}
                                     openModalParticipate={this.openModalParticipate}
+                                    onClickDetail={this.onClickDetail}
                                 />
                             })}
                         </Section>

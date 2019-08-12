@@ -26,6 +26,7 @@ class MeetingDetailComponent extends React.Component {
         this.state = {
             currentIndex: 0
         }
+        this.indexDefault = -1
     }
 
     openModalParticipate = (participates) => {
@@ -35,36 +36,49 @@ class MeetingDetailComponent extends React.Component {
             return status.order;
         }]);
         this.props.store.participates = participates;
+    };
+
+    componentDidMount() {
+        this.props.store.loadMeetingDetail();
     }
 
-    onClickItem = (data, index) => {
+    onClickItem = (meetingId, index) => {
         this._carousel.snapToItem(index);
+        this.props.store.selectedMeetingId = meetingId;
+        this.props.store.loadMeetingDetail();
     }
 
     render() {
-        const {isLoading, meetings} = this.props.store;
-        const meeting = meetings[0] ? meetings[0] : {};
+        const {isLoading, meetings, meeting, isLoadingMeetings} = this.props.store;
+        if (meetings.length > 0 && this.indexDefault == -1) {
+            const meetingId = this.props.selectedMeetingId;
+            this.indexDefault = _.findIndex(this.props.store.meetings, function (o) {
+                return o.id == meetingId;
+            });
+        }
         return (
             <SafeAreaView style={{flex: 1}}>
-                {isLoading ? <Loading/> :
-                    <View>
+                <View style={{flex: 1}}>
+                    {isLoadingMeetings ? <Loading/>
+                        :
                         <Section>
                             <HeaderSection title={"Nội dung"} subtitle={"Buổi họp"}/>
                             <Carousel
                                 ref={(c) => {
                                     this._carousel = c;
                                 }}
-                                enableMomentum={true}
                                 activeAnimationType={"decay"}
-                                activeSlideAlignment={this.state.currentIndex == 0 ? "start" : (this.state.currentIndex == 5 ? "end" : "center")}
+                                // activeSlideAlignment={this.state.currentIndex == 0 ? "start" : (this.state.currentIndex == meetings.length - 1 ? "end" : "center")}
+                                activeSlideAlignment={"center"}
                                 inactiveSlideScale={0.8}
-                                data={[...meetings, ...meetings, ...meetings]}
+                                data={meetings}
+                                firstItem={this.indexDefault}
                                 onBeforeSnapToItem={(slideIndex) => this.setState({currentIndex: slideIndex})}
                                 renderItem={({item, index}) => {
                                     const date = moment(item.date, FORMAT_TIME_MYSQL);
                                     return (
                                         <MeetingItem
-                                            index={index}
+                                            keyIndex={index}
                                             store={this.props.store}
                                             name={item.name}
                                             meetingId={item.id}
@@ -78,21 +92,32 @@ class MeetingDetailComponent extends React.Component {
                                     )
                                 }
                                 }
-                                sliderWidth={this.state.currentIndex == 5 ? width - 40 : width}
+                                sliderWidth={this.state.currentIndex == meetings.length - 1 ? width - 40 : width}
                                 itemWidth={width / 3}
+                                keyExtractor={(item, index) => index.toString()}
                             />
+
                         </Section>
-                        <MeetingDetailItem
-                            store={this.props.store}
-                            name={meeting.name}
-                            meetingId={meeting.id}
-                            total_issues={meeting.total_issues}
-                            datetime={meeting.date}
-                            participates={meeting.participates ? meeting.participates : 0}
-                            joined={meeting.joined}
-                        />
-                    </View>
-                }
+                    }
+
+
+                    {(isLoading ?
+                            <View style={{flex: 1}}>
+                                <Loading/>
+                            </View>
+                            :
+                            <MeetingDetailItem
+                                store={this.props.store}
+                                name={meeting.name}
+                                issues={meeting.issues}
+                                meetingId={meeting.id}
+                                datetime={meeting.date}
+                                participates={meeting.participates ? meeting.participates : []}
+                                joined={meeting.joined}
+                            />
+                    )
+                    }
+                </View>
             </SafeAreaView>
 
         );

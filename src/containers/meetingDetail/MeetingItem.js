@@ -63,10 +63,10 @@ class MeetingItem extends React.Component {
     }
 
     render() {
-        const {name, total_issues, date, month, hour, index, meetingId, isNow} = this.props;
+        const {name, total_issues, date, month, hour, keyIndex, meetingId, isNow} = this.props;
         return (
             <TouchableOpacity onPress={() => {
-                this.props.onClick(meetingId, index)
+                this.props.onClick(meetingId, keyIndex)
             }}>
                 <View style={style.container}>
                     <ImageBackground
@@ -92,7 +92,7 @@ class MeetingItem extends React.Component {
                         </View>
 
                         <Text style={style.title}>
-                            {name} {index}
+                            {name} {keyIndex}
                         </Text>
                     </ImageBackground>
                 </View>

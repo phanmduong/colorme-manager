@@ -9,6 +9,11 @@ export function loadMeetings(token, status = "available") {
     return axios.get(url);
 }
 
+export function loadMeetingDetail(token, meetingId) {
+    let url = env.MANAGE_API_URL_V3 + `/meeting/meeting-detail/${meetingId}?token=` + token;
+    return axios.get(url);
+}
+
 export function joinMeeting(token, meeting_id, status, note) {
     let url = env.MANAGE_API_URL_V3 + `/meeting/join-meeting?token=` + token;
     return axios.post(url, {
@@ -22,5 +27,15 @@ export function checkInMeeting(token, meeting_id) {
     let url = env.MANAGE_API_URL_V3 + `/meeting/check-in-meeting?token=` + token;
     return axios.post(url, {
         meeting_id,
+    });
+}
+
+export function storeIssue(token, meeting_id, issue, description = '', status = "accept") {
+    let url = env.MANAGE_API_URL_V3 + `/meeting/store-issue?token=` + token;
+    return axios.post(url, {
+        meeting_id,
+        issue,
+        description,
+        status
     });
 }

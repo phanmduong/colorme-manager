@@ -11,7 +11,9 @@ import MeetingDetailComponent from "./MeetingDetailComponent";
 class MeetingDetailContainer extends React.Component {
     constructor(props) {
         super(props);
-        this.store = new MeetingDetailStore(props.token);
+        const {navigation} = this.props;
+        const meetingId = navigation.getParam('meetingId', 0);
+        this.store = new MeetingDetailStore(props.token, meetingId);
     }
 
     componentDidMount() {

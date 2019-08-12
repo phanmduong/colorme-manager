@@ -2,11 +2,24 @@
  * Created by phanmduong on 9/29/18.
  */
 import React from 'react';
-import {View, Text, ImageBackground, Image, TouchableOpacity, Alert} from 'react-native';
+import {
+    View,
+    Text,
+    TextInput,
+    Image,
+    TouchableOpacity,
+    Alert,
+    StyleSheet,
+    Dimensions,
+    FlatList,
+    KeyboardAvoidingView
+} from 'react-native';
 import {observer} from "mobx-react";
 import moment from "moment";
 import {FORMAT_TIME_MYSQL} from "../../constants/constant";
 import {getMeetingStatus} from "../../helper";
+
+var {height, width} = Dimensions.get('window');
 
 @observer
 class MeetingDetailItem extends React.Component {
@@ -17,7 +30,7 @@ class MeetingDetailItem extends React.Component {
     checkCanJoin = () => {
         const date = moment(this.props.datetime, FORMAT_TIME_MYSQL).format("X");
         const now = moment().unix();
-        if (now <= date - 18000) {
+        if (now <= date - 3600) {
             return true
         }
         return false;
@@ -29,7 +42,7 @@ class MeetingDetailItem extends React.Component {
         if (this.checkCanJoin()) {
             joinMeeting(meetingId, "accept", "");
         } else {
-            Alert.alert('Thông báo', "Bạn phải đăng kí trước 5 tiếng");
+            Alert.alert('Thông báo', "Bạn phải đăng kí trước 1 tiếng");
         }
 
     };
@@ -51,11 +64,18 @@ class MeetingDetailItem extends React.Component {
     };
 
     render() {
-        const {name, total_issues, datetime, joined, participates} = this.props;
+        const {name, issues, datetime, joined, participates} = this.props;
         const meetingDate = moment(datetime, FORMAT_TIME_MYSQL).format("X");
         const now = moment().unix();
 
         const isNow = meetingDate - 1800 <= now && now <= parseInt(meetingDate) + 3600;
+
+        const totalCheckIn = participates.filter((item) => item.status == "check_in").length;
+        const totalAccept = participates.filter((item) => item.status == "accept").length;
+        const totalReject = participates.filter((item) => item.status == "reject").length;
+
+        console.log(issues);
+
         return (
             <View style={styles.container}>
                 <View style={styles.containerAction}>
@@ -81,7 +101,7 @@ class MeetingDetailItem extends React.Component {
                                                             <Image style={styles.iconAction}
                                                                    source={getMeetingStatus('check_in').icon}/>
                                                             <Text style={styles.textAction}>
-                                                                Check in
+                                                                Đã đến
                                                             </Text>
                                                         </TouchableOpacity>
                                                 )
@@ -125,7 +145,7 @@ class MeetingDetailItem extends React.Component {
                     <View style={styles.contentParticipates}>
                         <View style={styles.statusParticipates}>
                             <Text style={styles.textStatus}>
-                                <Text style={{fontWeight: 'bold'}}>{10} </Text>
+                                <Text style={{fontWeight: 'bold'}}>{totalCheckIn} </Text>
                                 Check in
                             </Text>
                             <Image style={[styles.iconStatus]}
@@ -133,7 +153,7 @@ class MeetingDetailItem extends React.Component {
                         </View>
                         <View style={styles.statusParticipates}>
                             <Text style={styles.textStatus}>
-                                <Text style={{fontWeight: 'bold'}}>{8} </Text>
+                                <Text style={{fontWeight: 'bold'}}>{totalAccept} </Text>
                                 Tham gia
                             </Text>
                             <Image style={[styles.iconStatus]}
@@ -141,7 +161,7 @@ class MeetingDetailItem extends React.Component {
                         </View>
                         <View style={styles.statusParticipates}>
                             <Text style={styles.textStatus}>
-                                <Text style={{fontWeight: 'bold'}}>{5} </Text>
+                                <Text style={{fontWeight: 'bold'}}>{totalReject} </Text>
                                 Ko tham gia
                             </Text>
                             <Image style={[styles.iconStatus]}
@@ -152,15 +172,49 @@ class MeetingDetailItem extends React.Component {
                 </View>
                 <View style={styles.containerParticipates}>
                     <Text style={styles.titleParticipates}>Các vấn đề cần xử lý</Text>
+
+                    <FlatList
+                        style={styles.listIssue}
+                        data={issues}
+                        renderItem={({item}) => {
+                            return (
+                                <View style={styles.itemIssue}>
+                                    <Image style={styles.avatarIssue}
+                                           source={{uri: item.creator.avatar_url}}/>
+                                    <View>
+                                        <Text style={styles.titleIssue}>{item.issue}</Text>
+                                        <Text
+                                            style={styles.subTitleIssue}>{item.creator.name} - {item.created_at}</Text>
+                                    </View>
+                                </View>
+                            )
+                        }}
+                        keyExtractor={(item, index) => index.toString()}
+                    />
+
                 </View>
+                <KeyboardAvoidingView style={styles.containerInput}>
+                    <TextInput style={styles.createIssue}
+                               placeholder={"Thêm vấn đề"}
+                               value={this.props.store.nameIssue}
+                               editable={!this.props.store.isStoringIssue}
+                               onChangeText={(text) => {
+                                   this.props.store.nameIssue = text
+                               }}
+                               onSubmitEditing={() => {
+                                   this.props.store.storeIssue();
+                               }}
+                    />
+                </KeyboardAvoidingView>
             </View>
         );
     }
 }
 
-const styles = {
+const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
+        flex: 1
     },
     containerAction: {
         flexDirection: 'row',
@@ -280,8 +334,44 @@ const styles = {
     },
     textStatus: {
         fontSize: 12
+    },
+    itemIssue: {
+        flexDirection: 'row',
+        alignItems: "center",
+        marginTop: 20
+    },
+    avatarIssue: {
+        height: 40,
+        width: 40,
+        borderRadius: 20,
+        marginRight: 20,
+    },
+    titleIssue: {
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    subTitleIssue: {
+        color: '#828282',
+        fontSize: 12
+    },
+    containerInput: {
+        position: 'absolute',
+        bottom: 0,
+        width: width - 40,
+    },
+    createIssue: {
+        borderRadius: 20,
+        height: 40,
+        flex: 1,
+        backgroundColor: '#ececec',
+        paddingHorizontal: 20,
+        color: "#363636",
+    },
+    listIssue: {
+        marginTop: 10,
+        height: 100
     }
 
-}
+});
 
 export default (MeetingDetailItem);

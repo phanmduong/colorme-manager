@@ -1,10 +1,12 @@
 import {observable, action, computed} from "mobx";
-import {checkInMeeting, joinMeeting, loadMeetings} from "../../apis/meetingApi";
+import {checkInMeeting, joinMeeting, loadMeetingDetail, loadMeetings, storeIssue} from "../../apis/meetingApi";
 import moment from "moment";
 import {FORMAT_TIME_MYSQL} from "../../constants/constant";
 
 class MeetingDetailStore {
     @observable isLoading = false;
+    @observable errorMeetings = false;
+    @observable isLoadingMeetings = false;
     @observable error = false;
     @observable isJoining = false;
     @observable errorJoin = false;
@@ -14,15 +16,21 @@ class MeetingDetailStore {
     @observable token = "";
     @observable isVisibleModalParticipate = false;
     @observable participates = [];
+    @observable meeting = {};
+    @observable selectedMeetingId = 0;
+    @observable nameIssue = '';
+    @observable isStoringIssue = false;
+    @observable errorStoringIssue = false;
 
-    constructor(token) {
-        this.token = token
+    constructor(token, meetingId) {
+        this.token = token;
+        this.selectedMeetingId = meetingId;
     }
 
     @action
     loadList = () => {
-        this.isLoading = true;
-        this.error = false;
+        this.isLoadingMeetings = true;
+        this.errorMeetings = false;
 
         loadMeetings(this.token)
             .then((res) => {
@@ -31,10 +39,49 @@ class MeetingDetailStore {
             })
             .catch((error) => {
                 console.log(error)
+                this.errorMeetings = true;
+            })
+            .finally(() => {
+                this.isLoadingMeetings = false;
+            })
+    }
+
+    @action
+    loadMeetingDetail = () => {
+        this.isLoading = true;
+        this.error = false;
+        console.log(this.selectedMeetingId);
+        loadMeetingDetail(this.token, this.selectedMeetingId)
+            .then((res) => {
+                this.meeting = res.data.data.meeting;
+                console.log(this.meeting);
+            })
+            .catch((error) => {
+                console.log(error)
                 this.error = true;
             })
             .finally(() => {
                 this.isLoading = false;
+            })
+    }
+
+    @action
+    storeIssue = () => {
+        this.isStoringIssue = true;
+        this.errorStoringIssue = false;
+        console.log(this.nameIssue);
+
+        storeIssue(this.token, this.selectedMeetingId, this.nameIssue)
+            .then((res) => {
+                this.meeting.issues = [...this.meeting.issues, res.data.data.issue];
+                this.nameIssue = '';
+            })
+            .catch((error) => {
+                console.log(error)
+                this.errorStoringIssue = true;
+            })
+            .finally(() => {
+                this.isStoringIssue = false;
             })
     }
 
@@ -47,16 +94,10 @@ class MeetingDetailStore {
         joinMeeting(this.token, meetingId, status, note)
             .then((res) => {
                 console.log(res.data);
-                this.meetings = this.meetings.map((meeting) => {
-                    if (meeting.id == meetingId) {
-                        return {
-                            ...meeting,
-                            joined: res.data.data.meeting_participate
-                        }
-                    }
-                    return meeting;
-
-                })
+                this.meeting = {
+                    ...this.meeting,
+                    joined: res.data.data.meeting_participate
+                }
             })
             .catch((error) => {
                 console.log(error)
@@ -75,16 +116,10 @@ class MeetingDetailStore {
         checkInMeeting(this.token, meetingId)
             .then((res) => {
                 console.log(res.data);
-                this.meetings = this.meetings.map((meeting) => {
-                    if (meeting.id == meetingId) {
-                        return {
-                            ...meeting,
-                            joined: res.data.data.meeting_participate
-                        }
-                    }
-                    return meeting;
-
-                })
+                this.meeting = {
+                    ...this.meeting,
+                    joined: res.data.data.meeting_participate
+                }
             })
             .catch((error) => {
                 console.log(error)

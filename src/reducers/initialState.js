@@ -1,3 +1,7 @@
+import HistoryAttendanceTeachingContainer
+    from "../containers/historyAttendanceTeaching/HistoryAttendanceTeachingContainer";
+import React from "react";
+
 /**
  * Created by phanmduong on 4/5/17.
  */
@@ -447,5 +451,26 @@ export default {
         errorCheckOut: false,
         message: '',
         checkIn: {}
+    },
+    historyTab: {
+        teachingShift: {
+            gradient: ['#E26800', '#E00000'],
+            textColor: {
+                color: 'white'
+            }
+        },
+        workShift: {
+            gradient: ['#FFFFFF', '#FFFFFF'],
+            textColor: {
+                color: 'black'
+            }
+        },
+        dutyShift: {
+            gradient: ['#FFFFFF', '#FFFFFF'],
+            textColor: {
+                color: 'black'
+            }
+        },
+        tabComponent: <HistoryAttendanceTeachingContainer/>
     }
 }

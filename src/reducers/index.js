@@ -25,6 +25,7 @@ import collectMoneyReducer from './collectMoneyReducer';
 import moneyTransferReducer from './moneyTransferReducer';
 import checkInCheckOutReducer from './checkInCheckOutReducer';
 import listStudentAttendanceReducer from './listStudentAttendanceReducer';
+import {historyTabReducer} from "./historyTabReducer";
 
 
 const appReducer = combineReducers({
@@ -50,6 +51,7 @@ const appReducer = combineReducers({
     listStudentZero: listStudentZeroReducer,
     checkInCheckOut: checkInCheckOutReducer,
     listStudentAttendance: listStudentAttendanceReducer,
+    historyTab: historyTabReducer
 });
 
 const rootReducer = (state, action) => {

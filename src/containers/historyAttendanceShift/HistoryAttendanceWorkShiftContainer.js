@@ -34,12 +34,12 @@ class HistoryAttendanceShiftContainer extends React.Component {
     };
 
     loadData = () => {
-        this.store.loadHistoryShift(this.props.token)
+        this.store.loadHistoryWorkShift(this.props.token)
     };
 
     errorData() {
         const {error} = this.store;
-        const NO_DATA =  alert.NO_DATA_SHIFT_REGISTER;
+        const NO_DATA = alert.NO_DATA_WORK_SHIFT_REGISTER;
         return (
             <View style={styles.container}>
                 <Text

@@ -33,6 +33,9 @@ import TabBar from "../components/common/TabBar";
 import DashboardContainer from "../containers/DashboardContainer";
 import MeetingContainer from "../containers/meeting/MeetingContainer";
 import MeetingDetailContainer from "../containers/meetingDetail/MeetingDetailContainer";
+import HistoryContainer from "../containers/HistoryContainer";
+import HistoryAttendanceWorkShiftContainer
+    from "../containers/historyAttendanceShift/HistoryAttendanceWorkShiftContainer";
 
 const navigationOptionsDefault = {
     navigationOptions: ({navigation}) => ({
@@ -95,11 +98,14 @@ const TabDashboard = createStackNavigator({
     CheckOut: {
         screen: CheckInContainer
     },
+    HistoryAllAttendance: {
+        screen: HistoryContainer
+    },
     HistoryAttendanceShift: {
         screen: HistoryAttendanceShiftContainer
     },
     HistoryAttendanceWorkShift: {
-        screen: HistoryAttendanceShiftContainer
+        screen: HistoryAttendanceWorkShiftContainer
     },
     HistoryAttendanceTeaching: {
         screen: HistoryAttendanceTeachingContainer

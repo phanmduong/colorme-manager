@@ -2,6 +2,7 @@ import React from 'react';
 import HistoryComponent from '../components/HistoryComponent';
 import {connect}  from 'react-redux';
 import * as historyTabAction from "../actions/historyTabActions";
+import {bindActionCreators} from "redux";
 
 class HistoryContainer extends React.Component {
     constructor(props, context) {
@@ -13,15 +14,15 @@ class HistoryContainer extends React.Component {
     });
 
     tabTeaching = () => {
-        this.props.onTabTeaching();
+        this.props.historyTabAction.tabTeaching();
     };
 
     tabWork = () => {
-        this.props.onTabWork();
+        this.props.historyTabAction.tabWork();
     };
 
     tabDuty = () => {
-        this.props.onTabDuty();
+        this.props.historyTabAction.tabDuty();
     };
 
     render() {
@@ -49,10 +50,10 @@ function mapStateToProps(state) {
     }
 }
 
-const mapActionsToProps = {
-    onTabTeaching: historyTabAction.tabTeaching,
-    onTabWork: historyTabAction.tabWork,
-    onTabDuty: historyTabAction.tabDuty
-};
+function mapDispatchToProps(dispatch) {
+    return {
+        historyTabAction: bindActionCreators(historyTabAction, dispatch)
+    }
+}
 
-export default connect(mapStateToProps, mapActionsToProps)(HistoryContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(HistoryContainer);

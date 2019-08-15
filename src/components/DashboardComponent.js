@@ -17,11 +17,11 @@ class CardMenu extends React.Component {
                 <LinearGradient colors={[this.props.colorOne, this.props.colorTwo]}
                                 style={this.props.checkInOutStyle}>
                     <Text style={[styles.featureTitle, this.props.standOutFontSize]}>{this.props.title}</Text>
-                    <View style={styles.characterImgPosition}>
-                        <ScalableImage source={this.props.imageSource}
-                                       width={this.props.imageWidth}/>
-                    </View>
                 </LinearGradient>
+                <View style={this.props.characterImgPosition}>
+                    <ScalableImage source={this.props.imageSource}
+                                   width={this.props.imageWidth}/>
+                </View>
             </TouchableOpacity>
         )
     }
@@ -62,8 +62,9 @@ class DashboardComponent extends React.Component {
                               checkInOutStyle={styles.checkInContainer}
                               standOutFontSize={{fontSize: 17}}
                               imageSource={require('../../assets/img/walle.png')}
-                              imageWidth={(Dimensions.get('window').width - 32) * 0.40 * 0.8}
+                              imageWidth={(Dimensions.get('window').width - 32) * 0.40}
                               title={'Check in'}
+                              characterImgPosition={styles.checkInCharacterImgPosition}
                               onPress={() => {
                                   this.props.navigation.navigate("CheckIn", {
                                       title: 'Check in',
@@ -74,8 +75,9 @@ class DashboardComponent extends React.Component {
                               colorTwo={'#2F94EB'}
                               checkInOutStyle={styles.checkOutContainer}
                               imageSource={require('../../assets/img/buzzLightyear.png')}
-                              imageWidth={(Dimensions.get('window').width - 32) * 0.26 * 0.5}
+                              imageWidth={(Dimensions.get('window').width - 32) * 0.26 * 0.7}
                               title={'Check out'}
+                              characterImgPosition={styles.checkOutCharacterImgPosition}
                               onPress={() => {
                                   this.props.navigation.navigate("CheckOut", {
                                       title: 'Check out',
@@ -86,8 +88,9 @@ class DashboardComponent extends React.Component {
                               colorTwo={'#E29950'}
                               checkInOutStyle={styles.checkOutContainer}
                               imageSource={require('../../assets/img/bunny.png')}
-                              imageWidth={(Dimensions.get('window').width - 32) * 0.26 * 0.7}
+                              imageWidth={(Dimensions.get('window').width - 32) * 0.26 * 0.9}
                               title={'Lịch sử'}
+                              characterImgPosition={styles.historyCharacterImgPosition}
                               onPress={() => {
                                   this.props.navigation.navigate("HistoryAllAttendance")
                               }}/>
@@ -141,10 +144,20 @@ const styles = {
         fontWeight: 'bold',
         color: 'white',
     },
-    characterImgPosition: {
-        flex:1 ,
-        justifyContent: 'flex-end',
-        alignItems: 'flex-end'
+    checkInCharacterImgPosition: {
+        position: 'absolute',
+        top: (Dimensions.get('window').width - 32) * 0.18,
+        left: (Dimensions.get('window').width - 32) * 0.08
+    },
+    checkOutCharacterImgPosition: {
+        position: 'absolute',
+        top: (Dimensions.get('window').width - 32) * 0.15,
+        left: (Dimensions.get('window').width - 32) * 0.09
+    },
+    historyCharacterImgPosition: {
+        position: 'absolute',
+        top: (Dimensions.get('window').width - 32) * 0.14,
+        left: (Dimensions.get('window').width - 32) * 0.06
     },
     circleTab: {
         width: 52,

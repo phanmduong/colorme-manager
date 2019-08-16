@@ -2,7 +2,7 @@
  * Created by phanmduong on 9/29/18.
  */
 import React from 'react';
-import {Dimensions, FlatList, SafeAreaView, View} from 'react-native';
+import {Dimensions, FlatList, ScrollView, KeyboardAvoidingView, StyleSheet, SafeAreaView, TextInput, View} from 'react-native';
 import {observer} from "mobx-react";
 import Loading from "../../components/common/Loading";
 import moment from "moment";
@@ -23,7 +23,7 @@ class MeetingDetailComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            currentIndex: 0
+            currentIndex: 0,
         }
         this.indexDefault = -1
     }
@@ -119,10 +119,42 @@ class MeetingDetailComponent extends React.Component {
                     )
                     }
                 </View>
+                <KeyboardAvoidingView style={styles.containerInput}
+                                      behavior="padding"
+                                      enabled
+                                      keyboardVerticalOffset={Dimensions.get('window').height* 0.15}>
+                    <TextInput style={styles.createIssue}
+                               placeholder={"Thêm vấn đề"}
+                               value={this.props.store.nameIssue}
+                               editable={!this.props.store.isStoringIssue}
+                               onChangeText={(text) => {
+                                   this.props.store.nameIssue = text
+                               }}
+                               onSubmitEditing={() => {
+                                   this.props.store.storeIssue();
+                               }}
+                    />
+                </KeyboardAvoidingView>
             </SafeAreaView>
 
         );
     }
 }
+
+const styles = StyleSheet.create({
+    containerInput: {
+        position: 'absolute',
+        bottom: 0,
+        width: width - 40
+    },
+    createIssue: {
+        borderRadius: 20,
+        height: 40,
+        flex: 1,
+        backgroundColor: '#ececec',
+        paddingHorizontal: 20,
+        color: "#363636",
+    },
+});
 
 export default withStyle()(MeetingDetailComponent);

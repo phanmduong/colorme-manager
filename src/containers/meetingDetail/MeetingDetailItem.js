@@ -193,19 +193,7 @@ class MeetingDetailItem extends React.Component {
                     />
 
                 </View>
-                <KeyboardAvoidingView style={styles.containerInput}>
-                    <TextInput style={styles.createIssue}
-                               placeholder={"Thêm vấn đề"}
-                               value={this.props.store.nameIssue}
-                               editable={!this.props.store.isStoringIssue}
-                               onChangeText={(text) => {
-                                   this.props.store.nameIssue = text
-                               }}
-                               onSubmitEditing={() => {
-                                   this.props.store.storeIssue();
-                               }}
-                    />
-                </KeyboardAvoidingView>
+
             </View>
         );
     }

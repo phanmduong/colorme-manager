@@ -103,11 +103,12 @@ class MeetingDetailComponent extends React.Component {
 
         return (
             <SafeAreaView style={{flexGrow: 1}}>
-                <KeyboardAvoidingView style={{flex: 1}} behavior="position"
-                                      enabled keyboardVerticalOffset={Dimensions.get('window').height* 0.11}>
-
+                <KeyboardAvoidingView style={{flex: 1}}
+                                      behavior="position"
+                                      enabled
+                                      keyboardVerticalOffset={Dimensions.get('window').height* 0.11}>
                     {(isLoading ?
-                            <View style={{flex: 1}}>
+                            <View style={{marginTop: Dimensions.get('window').height * 0.35}}>
                                 <Loading/>
                             </View>
                             :

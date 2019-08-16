@@ -20,8 +20,9 @@ class Section extends React.Component {
 
 const style = {
     container: {
-        marginBottom: 20
+        marginBottom: 20,
+        marginTop: 10
     }
-}
+};
 
 export default (Section);

@@ -20,12 +20,11 @@ const withStyle = () => {
 const style = {
     container: {
         paddingHorizontal: 20,
-        paddingVertical: 20,
         flex: 1
     },
     row: {
         flexDirection: 'row'
     }
-}
+};
 
 export default withStyle;

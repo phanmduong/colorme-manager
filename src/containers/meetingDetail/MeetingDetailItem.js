@@ -184,7 +184,6 @@ class MeetingDetailItem extends React.Component {
         return (
 
             <FlatList
-                style={styles.listIssue}
                 data={issues}
                 ListHeaderComponent={headerComponent}
                 ListFooterComponent={footerComponent}
@@ -364,12 +363,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#ececec',
         paddingHorizontal: 20,
         color: "#363636",
-    },
-    listIssue: {
-        marginTop: 10,
-        height: 100
     }
-
 });
 
 export default (MeetingDetailItem);

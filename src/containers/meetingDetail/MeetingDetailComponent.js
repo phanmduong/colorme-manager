@@ -123,21 +123,22 @@ class MeetingDetailComponent extends React.Component {
                             />
                     )}
                 </KeyboardAvoidingView>
-                <KeyboardAvoidingView style={styles.containerInput}
-                                      behavior="padding"
+                <KeyboardAvoidingView behavior="position"
                                       enabled
                                       keyboardVerticalOffset={Dimensions.get('window').height* 0.11}>
-                    <TextInput style={styles.createIssue}
-                               placeholder={"Thêm vấn đề"}
-                               value={this.props.store.nameIssue}
-                               editable={!this.props.store.isStoringIssue}
-                               onChangeText={(text) => {
-                                   this.props.store.nameIssue = text
-                               }}
-                               onSubmitEditing={() => {
-                                   this.props.store.storeIssue();
-                               }}
-                    />
+                    <View style={styles.containerInput}>
+                        <TextInput style={styles.createIssue}
+                                   placeholder={"Thêm vấn đề"}
+                                   value={this.props.store.nameIssue}
+                                   editable={!this.props.store.isStoringIssue}
+                                   onChangeText={(text) => {
+                                       this.props.store.nameIssue = text
+                                   }}
+                                   onSubmitEditing={() => {
+                                       this.props.store.storeIssue();
+                                   }}
+                        />
+                    </View>
                 </KeyboardAvoidingView>
             </SafeAreaView>
 
@@ -147,9 +148,13 @@ class MeetingDetailComponent extends React.Component {
 
 const styles = StyleSheet.create({
     containerInput: {
+        alignItems: 'center',
+        backgroundColor: 'white',
+        width: Dimensions.get('window').width,
         position: 'absolute',
         bottom: 0,
-        width: width - 40
+        paddingTop: 4,
+        paddingBottom: 4
     },
     createIssue: {
         borderRadius: 20,
@@ -158,6 +163,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#ececec',
         paddingHorizontal: 20,
         color: "#363636",
+        width: width - 40,
+        right: 20
     },
 });
 

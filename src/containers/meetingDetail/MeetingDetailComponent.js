@@ -57,50 +57,53 @@ class MeetingDetailComponent extends React.Component {
             });
             console.log(this.indexDefault);
         }
+
+        const carouselProps = (
+             isLoadingMeetings ?
+                    <Loading/>
+                    :
+                    <Section>
+                        <HeaderSection title={"Nội dung"} subtitle={"Buổi họp"}/>
+                        <Carousel
+                            ref={(c) => {
+                                this._carousel = c;
+                            }}
+                            activeAnimationType={"decay"}
+                            // activeSlideAlignment={this.state.currentIndex == 0 ? "start" : (this.state.currentIndex == meetings.length - 1 ? "end" : "center")}
+                            activeSlideAlignment={"center"}
+                            inactiveSlideScale={0.8}
+                            data={meetings}
+                            firstItem={this.indexDefault}
+                            onBeforeSnapToItem={(slideIndex) => this.setState({currentIndex: slideIndex})}
+                            renderItem={({item, index}) => {
+                                const date = moment(item.date, FORMAT_TIME_MYSQL);
+                                return (
+                                    <MeetingItem
+                                        keyIndex={index}
+                                        store={this.props.store}
+                                        name={item.name}
+                                        meetingId={item.id}
+                                        total_issues={item.total_issues}
+                                        date={date.format("D")}
+                                        month={date.format("M")}
+                                        hour={date.format("HH:mm")}
+                                        datetime={item.date}
+                                        onClick={this.onClickItem}
+                                    />
+                                )
+                            }
+                            }
+                            sliderWidth={this.state.currentIndex == meetings.length - 1 ? width - 40 : width}
+                            itemWidth={width / 3}
+                            keyExtractor={(item, index) => index.toString()}
+                        />
+
+                    </Section>
+        );
+
         return (
-            <SafeAreaView style={{flex: 1}}>
+            <SafeAreaView style={{flexGrow: 1}}>
                 <View style={{flex: 1}}>
-                    {isLoadingMeetings ? <Loading/>
-                        :
-                        <Section>
-                            <HeaderSection title={"Nội dung"} subtitle={"Buổi họp"}/>
-                            <Carousel
-                                ref={(c) => {
-                                    this._carousel = c;
-                                }}
-                                activeAnimationType={"decay"}
-                                // activeSlideAlignment={this.state.currentIndex == 0 ? "start" : (this.state.currentIndex == meetings.length - 1 ? "end" : "center")}
-                                activeSlideAlignment={"center"}
-                                inactiveSlideScale={0.8}
-                                data={meetings}
-                                firstItem={this.indexDefault}
-                                onBeforeSnapToItem={(slideIndex) => this.setState({currentIndex: slideIndex})}
-                                renderItem={({item, index}) => {
-                                    const date = moment(item.date, FORMAT_TIME_MYSQL);
-                                    return (
-                                        <MeetingItem
-                                            keyIndex={index}
-                                            store={this.props.store}
-                                            name={item.name}
-                                            meetingId={item.id}
-                                            total_issues={item.total_issues}
-                                            date={date.format("D")}
-                                            month={date.format("M")}
-                                            hour={date.format("HH:mm")}
-                                            datetime={item.date}
-                                            onClick={this.onClickItem}
-                                        />
-                                    )
-                                }
-                                }
-                                sliderWidth={this.state.currentIndex == meetings.length - 1 ? width - 40 : width}
-                                itemWidth={width / 3}
-                                keyExtractor={(item, index) => index.toString()}
-                            />
-
-                        </Section>
-                    }
-
 
                     {(isLoading ?
                             <View style={{flex: 1}}>
@@ -115,9 +118,9 @@ class MeetingDetailComponent extends React.Component {
                                 datetime={meeting.date}
                                 participates={meeting.participates ? meeting.participates : []}
                                 joined={meeting.joined}
+                                carouselProps={carouselProps}
                             />
-                    )
-                    }
+                    )}
                 </View>
                 <KeyboardAvoidingView style={styles.containerInput}
                                       behavior="padding"

@@ -76,8 +76,9 @@ class MeetingDetailItem extends React.Component {
 
         console.log(issues);
 
-        return (
+        const headerComponent = (
             <View style={styles.container}>
+                {this.props.carouselProps}
                 <View style={styles.containerAction}>
                     {
                         joined ?
@@ -172,29 +173,38 @@ class MeetingDetailItem extends React.Component {
                 </View>
                 <View style={styles.containerParticipates}>
                     <Text style={styles.titleParticipates}>Các vấn đề cần xử lý</Text>
-
-                    <FlatList
-                        style={styles.listIssue}
-                        data={issues}
-                        renderItem={({item}) => {
-                            return (
-                                <View style={styles.itemIssue}>
-                                    <Image style={styles.avatarIssue}
-                                           source={{uri: item.creator.avatar_url}}/>
-                                    <View>
-                                        <Text style={styles.titleIssue}>{item.issue}</Text>
-                                        <Text
-                                            style={styles.subTitleIssue}>{item.creator.name} - {item.created_at}</Text>
-                                    </View>
-                                </View>
-                            )
-                        }}
-                        keyExtractor={(item, index) => index.toString()}
-                    />
-
                 </View>
-
             </View>
+        );
+
+        const footerComponent = (
+            <View style={{height: 50}} />
+        );
+
+        return (
+
+            <FlatList
+                style={styles.listIssue}
+                data={issues}
+                ListHeaderComponent={headerComponent}
+                ListFooterComponent={footerComponent}
+                showsVerticalScrollIndicator={false}
+                renderItem={({item}) => {
+                    return (
+                        <View style={styles.itemIssue}>
+                            <Image style={styles.avatarIssue}
+                                   source={{uri: item.creator.avatar_url}}/>
+                            <View>
+                                <Text style={styles.titleIssue}>{item.issue}</Text>
+                                <Text
+                                    style={styles.subTitleIssue}>{item.creator.name} - {item.created_at}</Text>
+                            </View>
+                        </View>
+                    )
+                }}
+                keyExtractor={(item, index) => index.toString()}
+            />
+
         );
     }
 }

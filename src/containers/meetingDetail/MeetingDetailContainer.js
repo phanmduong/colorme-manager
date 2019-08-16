@@ -16,6 +16,10 @@ class MeetingDetailContainer extends React.Component {
         this.store = new MeetingDetailStore(props.token, meetingId);
     }
 
+    static navigationOptions = ({navigation}) => ({
+        title: 'Chi tiết buổi họp'
+    });
+
     componentDidMount() {
         this.store.loadList();
     }

@@ -14,6 +14,10 @@ class MeetingContainer extends React.Component {
         this.store = new MeetingStore(props.token);
     }
 
+    static navigationOptions = ({navigation}) => ({
+        title: 'Họp'
+    });
+
     componentDidMount() {
         this.store.loadList();
     }

@@ -103,7 +103,8 @@ class MeetingDetailComponent extends React.Component {
 
         return (
             <SafeAreaView style={{flexGrow: 1}}>
-                <View style={{flex: 1}}>
+                <KeyboardAvoidingView style={{flex: 1}} behavior="position"
+                                      enabled keyboardVerticalOffset={Dimensions.get('window').height* 0.11}>
 
                     {(isLoading ?
                             <View style={{flex: 1}}>
@@ -121,11 +122,11 @@ class MeetingDetailComponent extends React.Component {
                                 carouselProps={carouselProps}
                             />
                     )}
-                </View>
+                </KeyboardAvoidingView>
                 <KeyboardAvoidingView style={styles.containerInput}
                                       behavior="padding"
                                       enabled
-                                      keyboardVerticalOffset={Dimensions.get('window').height* 0.15}>
+                                      keyboardVerticalOffset={Dimensions.get('window').height* 0.11}>
                     <TextInput style={styles.createIssue}
                                placeholder={"Thêm vấn đề"}
                                value={this.props.store.nameIssue}

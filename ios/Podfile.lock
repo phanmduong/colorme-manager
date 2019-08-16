@@ -105,6 +105,8 @@ PODS:
     - React (< 1.0.0, >= 0.13.0)
   - react-native-spinkit (1.0.2):
     - React
+  - react-native-splash-screen (3.2.0):
+    - React
   - React-RCTActionSheet (0.60.4):
     - React-Core (= 0.60.4)
   - React-RCTAnimation (0.60.4):
@@ -161,6 +163,7 @@ DEPENDENCIES:
   - react-native-network-info (from `../node_modules/react-native-network-info`)
   - react-native-onesignal (from `../node_modules/react-native-onesignal`)
   - react-native-spinkit (from `../node_modules/react-native-spinkit`)
+  - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
   - React-RCTBlob (from `../node_modules/react-native/Libraries/Blob`)
@@ -231,6 +234,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-onesignal"
   react-native-spinkit:
     :path: "../node_modules/react-native-spinkit"
+  react-native-splash-screen:
+    :path: "../node_modules/react-native-splash-screen"
   React-RCTActionSheet:
     :path: "../node_modules/react-native/Libraries/ActionSheetIOS"
   React-RCTAnimation:
@@ -289,6 +294,7 @@ SPEC CHECKSUMS:
   react-native-network-info: f327b8c73bced5dc08b4da313d96a5e33e9a6dac
   react-native-onesignal: d5497ae1e9b85e4c20836f7fb98df5945736f6b9
   react-native-spinkit: 9a5d2f95aa975d5660fd3e76b7eac38e7329e46c
+  react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   React-RCTActionSheet: 9f71d7ae3e8fb10e08d162cbf14c621349dbfab3
   React-RCTAnimation: 981d8c95b0e30918a9832ccac32af83562a27fae
   React-RCTBlob: 21e73d1020a302a75fed30dbaee9f15287b80baa
@@ -305,6 +311,6 @@ SPEC CHECKSUMS:
   SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
   yoga: c2c050f6ae6e222534760cc82f559b89214b67e2
 
-PODFILE CHECKSUM: 58ffab20aba97790b85e10b1751271ea3162ccd0
+PODFILE CHECKSUM: 314ac377a4947550885aea78cc7f601033308c67
 
 COCOAPODS: 1.7.5

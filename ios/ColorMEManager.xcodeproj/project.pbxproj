@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		0073BD25EF8B431996FDE080 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66BEFAA81B3947B594DC4C30 /* Feather.ttf */; };
 		00E356F31AD99517003FC87E /* ColorMEManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ColorMEManagerTests.m */; };
@@ -325,6 +324,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNCGeolocation;
 		};
+		AC6D5DC12306B47300AC847A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AC6D5DBD2306B47300AC847A /* SplashScreen.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D7682761D8E76B80014119E;
+			remoteInfo = SplashScreen;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -386,6 +392,7 @@
 		9C45CAA9AC1E45DFA5D36AF8 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		9CDFC82C80D24139A4520258 /* Georgia.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Georgia.ttf; path = "../node_modules/native-base/Fonts/Georgia.ttf"; sourceTree = "<group>"; };
 		9DF4815D22F063720033A6E8 /* RNCGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCGeolocation.xcodeproj; path = "../node_modules/@react-native-community/geolocation/ios/RNCGeolocation.xcodeproj"; sourceTree = "<group>"; };
+		AC6D5DBD2306B47300AC847A /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SplashScreen.xcodeproj; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; };
 		B1A4B9089D1F4D5FAC21C753 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		B8C759ED2AC04A7DAB0AB551 /* SF-UI-Text-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-UI-Text-Regular.otf"; path = "../node_modules/native-base/Fonts/SF-UI-Text-Regular.otf"; sourceTree = "<group>"; };
 		BB31833E55444CB48DF061C3 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
@@ -642,6 +649,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				AC6D5DBD2306B47300AC847A /* SplashScreen.xcodeproj */,
 				9DF4815D22F063720033A6E8 /* RNCGeolocation.xcodeproj */,
 				17157B481EFEC3C900B712CE /* ART.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
@@ -700,6 +708,14 @@
 			isa = PBXGroup;
 			children = (
 				9DF4818622F063720033A6E8 /* libRNCGeolocation.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AC6D5DBE2306B47300AC847A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AC6D5DC22306B47300AC847A /* libSplashScreen.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -938,6 +954,10 @@
 				{
 					ProductGroup = 9DF4815E22F063720033A6E8 /* Products */;
 					ProjectRef = 9DF4815D22F063720033A6E8 /* RNCGeolocation.xcodeproj */;
+				},
+				{
+					ProductGroup = AC6D5DBE2306B47300AC847A /* Products */;
+					ProjectRef = AC6D5DBD2306B47300AC847A /* SplashScreen.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1208,6 +1228,13 @@
 			fileType = archive.ar;
 			path = libRNCGeolocation.a;
 			remoteRef = 9DF4818522F063720033A6E8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AC6D5DC22306B47300AC847A /* libSplashScreen.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSplashScreen.a;
+			remoteRef = AC6D5DC12306B47300AC847A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1521,6 +1548,7 @@
 					"$(SRCROOT)/../node_modules/mobile-center/ios/RNMobileCenter",
 					"$(SRCROOT)/../node_modules/react-native-onesignal/ios/RCTOneSignal/**",
 					"$(SRCROOT)/../node_modules/react-native/Libraries/ART",
+					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 				);
 				INFOPLIST_FILE = ColorMEManager/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1555,6 +1583,7 @@
 					"$(SRCROOT)/../node_modules/mobile-center/ios/RNMobileCenter",
 					"$(SRCROOT)/../node_modules/react-native-onesignal/ios/RCTOneSignal/**",
 					"$(SRCROOT)/../node_modules/react-native/Libraries/ART",
+					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 				);
 				INFOPLIST_FILE = ColorMEManager/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1627,6 +1656,7 @@
 					"$(SRCROOT)/../node_modules/mobile-center/ios/RNMobileCenter",
 					"$(SRCROOT)/../node_modules/react-native-onesignal/ios/RCTOneSignal/**",
 					"$(SRCROOT)/../node_modules/react-native/Libraries/ART",
+					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 				);
 				INFOPLIST_FILE = ColorMEManager/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

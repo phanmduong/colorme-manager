@@ -10,6 +10,7 @@ import * as alert from '../constants/alert';
 import LoginComponent from '../components/LoginComponent';
 import * as loginActions from '../actions/loginActions';
 import * as autoLoginActions from '../actions/autoLoginActions';
+import SplashScreen from 'react-native-splash-screen'
 
 class LoginContainer extends React.Component {
     constructor(props) {
@@ -21,6 +22,7 @@ class LoginContainer extends React.Component {
     }
 
     componentWillMount() {
+        SplashScreen.hide();
         this.props.loginActions.getDataLogin();
     }
 

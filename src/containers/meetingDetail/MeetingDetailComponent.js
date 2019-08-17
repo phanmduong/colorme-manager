@@ -2,7 +2,7 @@
  * Created by phanmduong on 9/29/18.
  */
 import React from 'react';
-import {Dimensions, FlatList, ScrollView, KeyboardAvoidingView, StyleSheet, SafeAreaView, TextInput, View} from 'react-native';
+import {Dimensions, Platform, KeyboardAvoidingView, StyleSheet, SafeAreaView, TextInput, View} from 'react-native';
 import {observer} from "mobx-react";
 import Loading from "../../components/common/Loading";
 import moment from "moment";
@@ -101,12 +101,14 @@ class MeetingDetailComponent extends React.Component {
                     </Section>
         );
 
+        const keyboardVerticalOffset = Platform.OS === 'ios' ? Dimensions.get('window').height* 0.11 : 0;
+
         return (
             <SafeAreaView style={{flexGrow: 1}}>
                 <KeyboardAvoidingView style={{flex: 1}}
-                                      behavior="position"
+                                      behavior={(Platform.OS === 'ios')? "position" : null}
                                       enabled
-                                      keyboardVerticalOffset={Dimensions.get('window').height* 0.11}>
+                                      keyboardVerticalOffset={keyboardVerticalOffset}>
 
                     {(isLoading ?
                             <View style={{flex: 1}}>
@@ -125,9 +127,9 @@ class MeetingDetailComponent extends React.Component {
                             />
                     )}
                 </KeyboardAvoidingView>
-                <KeyboardAvoidingView behavior="position"
+                <KeyboardAvoidingView behavior={(Platform.OS === 'ios')? "position" : null}
                                       enabled
-                                      keyboardVerticalOffset={Dimensions.get('window').height* 0.11}>
+                                      keyboardVerticalOffset={keyboardVerticalOffset}>
                     <View style={styles.containerInput}>
                         <TextInput style={styles.createIssue}
                                    placeholder={"Thêm vấn đề"}
@@ -153,20 +155,19 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'white',
         width: Dimensions.get('window').width,
-        position: 'absolute',
-        bottom: 0,
-        paddingTop: 4,
-        paddingBottom: 4
+        right: 20,
+        height: 44
     },
     createIssue: {
         borderRadius: 20,
         height: 40,
+        position: 'absolute',
+        bottom: 0,
         flex: 1,
         backgroundColor: '#ececec',
         paddingHorizontal: 20,
         color: "#363636",
         width: width - 40,
-        right: 20
     },
 });
 

@@ -111,7 +111,7 @@ class MeetingDetailComponent extends React.Component {
                                       keyboardVerticalOffset={keyboardVerticalOffset}>
 
                     {(isLoading ?
-                            <View style={{flex: 1}}>
+                            <View style={{marginTop: Dimensions.get('window').height* 0.35}}>
                                 <Loading/>
                             </View>
                             :

@@ -23,6 +23,7 @@ export default class ColorMEManager extends Component {
             codePushInstalling: false,
             downloadProgress: 0
         };
+        OneSignal.init("ceea18e8-322a-4748-b18b-fdf066d9a5ff");
         OneSignal.sendTags({device_type: 'mobile_manage'});
     }
 

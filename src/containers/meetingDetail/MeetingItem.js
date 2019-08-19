@@ -2,13 +2,11 @@
  * Created by phanmduong on 9/29/18.
  */
 import React from 'react';
-import {View, Text, ImageBackground, Image, TouchableOpacity, Alert, Dimensions} from 'react-native';
+import {View, Text, ImageBackground, Image, TouchableOpacity, Alert} from 'react-native';
 import {observer} from "mobx-react";
 import moment from "moment";
 import {FORMAT_TIME_MYSQL} from "../../constants/constant";
 import {getMeetingStatus} from "../../helper";
-
-var {height, width} = Dimensions.get('window');
 
 @observer
 class MeetingItem extends React.Component {
@@ -52,52 +50,134 @@ class MeetingItem extends React.Component {
         }
     };
 
-    isCheckIn = () => {
-        const {joined} = this.props;
-        const date = moment(joined.check_in_time, FORMAT_TIME_MYSQL);
-        if (joined) {
-            console.log(date.isValid())
-            return date.isValid();
-        }
-        return false;
-    }
-
     render() {
-        const {name, total_issues, date, month, hour, keyIndex, meetingId, isNow} = this.props;
+        const {name, total_issues, date, month, hour, joined, participates, isNow, meetingId} = this.props;
         return (
-            <TouchableOpacity onPress={() => {
-                this.props.onClick(meetingId, keyIndex)
-            }}>
                 <View style={style.container}>
                     <ImageBackground
                         source={require('../../../assets/meeting/background.png')}
                         style={style.containerContent}
-                        imageStyle={{borderRadius: 20}}
+                        imageStyle={{borderRadius: 10}}
                     >
-                        <Text style={style.timeDate}>
-                            {date}
-                        </Text>
-                        <Text style={style.timeMonth}>
-                            Tháng {month}
-                        </Text>
-                        <Text style={style.timeHour}>
-                            {hour}
-                        </Text>
-                        <View style={{
-                            flexDirection: 'row'
-                        }}>
-                            <Text style={style.issue}>
-                                {total_issues} vấn đề
-                            </Text>
+                        <View style={style.row}>
+                            <View style={style.flex1}>
+                                <Text style={style.timeDate}>
+                                    {date}
+                                </Text>
+                            </View>
+                            <View style={style.flex1}>
+                                <Text style={style.title}>
+                                    {name}
+                                </Text>
+                            </View>
                         </View>
-
-                        <Text style={style.title}>
-                            {name} {keyIndex}
-                        </Text>
+                        <View style={style.row}>
+                            <View style={style.flex1}>
+                                <Text style={style.timeMonth}>
+                                    Tháng {month}
+                                </Text>
+                            </View>
+                            <View style={style.flex1}>
+                                <View style={style.row}>
+                                    <Text style={style.issue}>
+                                        {total_issues} vấn đề
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={style.row}>
+                            <View style={style.flex1}>
+                                <Text style={style.timeHour}>
+                                    {hour}
+                                </Text>
+                            </View>
+                            <View style={style.flex1}>
+                                <TouchableOpacity onPress={() => this.props.openModalParticipate(participates)}>
+                                    <View style={style.row}>
+                                        {participates.slice(0, 3).map((participate, index) => {
+                                            return (
+                                                <Image
+                                                    key={index}
+                                                    style={style.avatar}
+                                                    source={{uri: participate.user.avatar_url}}
+                                                >
+                                                </Image>
+                                            )
+                                        })}
+                                        {participates.length > 3 &&
+                                        <Text style={style.numberParticipate}>
+                                            +{participates.length - 3}
+                                        </Text>
+                                        }
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
                     </ImageBackground>
-                </View>
-            </TouchableOpacity>
+                    <View style={style.containerAction}>
+                        {
+                            joined ?
+                                <View>
+                                    {
+                                        joined.status != "reject" ?
+                                            (
+                                                isNow ?
+                                                    (
+                                                        joined.status == "check_in" ?
+                                                            <View style={style.contentAction}>
+                                                                <Image style={style.iconAction2}
+                                                                       source={getMeetingStatus('check_in').icon}/>
+                                                                <Text style={style.textAction}>
+                                                                    {getMeetingStatus('check_in').text}
+                                                                </Text>
+                                                            </View>
+                                                            :
+                                                            <TouchableOpacity onPress={this.onCheckin}>
+                                                                <View style={style.contentAction}>
+                                                                    <Image style={style.iconAction}
+                                                                           source={getMeetingStatus('check_in').icon}/>
+                                                                    <Text style={style.textAction}>
+                                                                        Check in
+                                                                    </Text>
+                                                                </View>
+                                                            </TouchableOpacity>
+                                                    )
+                                                    :
+                                                    <View style={style.contentAction}>
+                                                        <Image style={style.iconAction2}
+                                                               source={getMeetingStatus('accept').icon}/>
+                                                        <Text style={style.textAction}>
+                                                            {getMeetingStatus('accept').text}
+                                                        </Text>
+                                                    </View>
+                                            )
 
+
+                                            :
+                                            <View style={style.contentAction}>
+                                                <Image style={[style.iconAction2, {marginTop: 20}]}
+                                                       source={getMeetingStatus('reject').icon}/>
+                                                <Text style={style.textAction}>
+                                                    {getMeetingStatus('reject').text}
+                                                </Text>
+                                            </View>
+
+                                    }
+                                </View>
+                                :
+                                <View>
+                                    <TouchableOpacity onPress={this.onAccept}>
+                                        <Image style={style.iconAction}
+                                               source={getMeetingStatus('accept').icon}/>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={this.onReject}>
+                                        <Image style={[style.iconAction, {marginTop: 20}]}
+                                               source={getMeetingStatus('reject').icon}/>
+                                    </TouchableOpacity>
+                                </View>
+                        }
+                    </View>
+                </View>
         );
     }
 }
@@ -105,16 +185,23 @@ class MeetingItem extends React.Component {
 const style = {
     container: {
         flexDirection: 'row',
-        marginBottom: 10,
-        width: (width - 20) / 3,
-        marginRight: 20
+        marginBottom: 10
     },
     containerContent: {
         flex: 2,
         flexDirection: "column",
         padding: 10,
-        borderRadius: 20,
+        borderRadius: 10,
         marginTop: 10
+    },
+    containerAction: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    contentTime: {
+        flexDirection: "column",
+        flex: 1
     },
     timeDate: {
         fontSize: 45,
@@ -124,26 +211,70 @@ const style = {
     timeMonth: {
         fontWeight: "bold",
         color: "white",
-        fontSize: 16
+        fontSize: 18
     },
     timeHour: {
         color: "white",
         fontSize: 12,
+        marginVertical: 5
+    },
+    contentTitle: {
+        flexDirection: "column",
+        flex: 1,
     },
     title: {
+        textTransform: "uppercase",
         flexWrap: "wrap",
         flexDirection: 'row',
         color: "white",
-        fontSize: 12,
+        fontWeight: "bold",
+        fontSize: 16,
     },
     issue: {
         backgroundColor: "white",
-        flexWrap: "wrap",
         borderRadius: 10,
         paddingHorizontal: 10,
         paddingVertical: 2,
-        fontSize: 10,
+        fontSize: 12,
         marginVertical: 5,
+    },
+    row: {
+        flexDirection: "row",
+        alignItems: "center"
+    },
+    flex1: {
+        flex: 1,
+    },
+    avatar: {
+        width: 14,
+        height: 14,
+        marginRight: 5,
+        borderRadius: 7
+    },
+    numberParticipate: {
+        borderRadius: 7,
+        height: 14,
+        alignItems: "center",
+        backgroundColor: "white",
+        fontSize: 12,
+        paddingHorizontal: 5
+    },
+    iconAction: {
+        width: 35,
+        height: 35,
+    },
+    textAction: {
+        marginTop: 20,
+        fontSize: 12,
+        textAlign: 'center'
+    },
+    iconAction2: {
+        width: 50,
+        height: 50,
+    },
+    contentAction: {
+        justifyContent: "center",
+        alignItems: "center",
     },
 }
 

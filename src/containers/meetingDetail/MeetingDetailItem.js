@@ -80,68 +80,6 @@ class MeetingDetailItem extends React.Component {
         const headerComponent = (
             <View style={styles.container}>
                 {this.props.carouselProps}
-                <View style={styles.containerAction}>
-                    {
-                        joined ?
-                            <View>
-                                {
-                                    joined.status != "reject" ?
-                                        (
-                                            isNow ?
-                                                (
-                                                    joined.status == "check_in" ?
-                                                        <View style={styles.buttonAction}>
-                                                            <Image style={styles.iconAction}
-                                                                   source={getMeetingStatus('check_in').icon}/>
-                                                            <Text style={styles.textAction}>
-                                                                {getMeetingStatus('check_in').text}
-                                                            </Text>
-                                                        </View>
-                                                        :
-                                                        <TouchableOpacity onPress={this.onCheckin}
-                                                                          style={styles.buttonAction}>
-                                                            <Image style={styles.iconAction}
-                                                                   source={getMeetingStatus('check_in').icon}/>
-                                                            <Text style={styles.textAction}>
-                                                                Đã đến
-                                                            </Text>
-                                                        </TouchableOpacity>
-                                                )
-                                                :
-                                                <View style={styles.buttonAction}>
-                                                    <Image style={styles.iconAction}
-                                                           source={getMeetingStatus('accept').icon}/>
-                                                    <Text
-                                                        style={styles.textAction}>{getMeetingStatus('accept').text}</Text>
-                                                </View>
-                                        )
-
-
-                                        :
-                                        <View style={styles.buttonAction}>
-                                            <Image style={[styles.iconAction]}
-                                                   source={getMeetingStatus('reject').icon}/>
-                                            <Text style={styles.textAction}>{getMeetingStatus('reject').text}</Text>
-                                        </View>
-
-                                }
-                            </View>
-                            :
-                            <View style={styles.containerAction}>
-                                <TouchableOpacity onPress={this.onAccept} style={styles.buttonAction}>
-                                    <Image style={styles.iconAction}
-                                           source={getMeetingStatus('accept').icon}/>
-                                    <Text style={styles.textAction}>{getMeetingStatus('accept').text}</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={this.onReject}
-                                                  style={[styles.buttonAction, {marginLeft: 20}]}>
-                                    <Image style={[styles.iconAction]}
-                                           source={getMeetingStatus('reject').icon}/>
-                                    <Text style={styles.textAction}>{getMeetingStatus('reject').text}</Text>
-                                </TouchableOpacity>
-                            </View>
-                    }
-                </View>
                 <View style={styles.containerParticipates}>
                     <Text style={styles.titleParticipates}>Thành phần tham gia ({participates.length})</Text>
                     <TouchableOpacity onPress={() => {this.props.openModalParticipate(participates)}}>

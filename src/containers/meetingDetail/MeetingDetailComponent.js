@@ -2,7 +2,7 @@
  * Created by phanmduong on 9/29/18.
  */
 import React from 'react';
-import {Dimensions, Platform, KeyboardAvoidingView, StyleSheet, SafeAreaView, TextInput, View} from 'react-native';
+import {Dimensions, Platform, KeyboardAvoidingView, StyleSheet, SafeAreaView, TextInput, View, TouchableOpacity} from 'react-native';
 import {observer} from "mobx-react";
 import Loading from "../../components/common/Loading";
 import moment from "moment";
@@ -42,12 +42,6 @@ class MeetingDetailComponent extends React.Component {
         this.props.store.loadMeetingDetail();
     }
 
-    onClickItem = (meetingId, index) => {
-        this._carousel.snapToItem(index);
-        this.props.store.selectedMeetingId = meetingId;
-        this.props.store.loadMeetingDetail();
-    }
-
     render() {
         const {isLoading, meetings, meeting, isLoadingMeetings} = this.props.store;
         if (meetings.length > 0 && this.indexDefault == -1) {
@@ -59,44 +53,33 @@ class MeetingDetailComponent extends React.Component {
             console.log(this.indexDefault);
         }
 
+        const date = moment(meeting.date, FORMAT_TIME_MYSQL);
+
+        const meetingDate = moment(meeting.date, FORMAT_TIME_MYSQL).format("X");
+        const now = moment().unix();
+        const isNow = meetingDate - 1800 <= now && now <= parseInt(meetingDate) + 3600;
+
+        const total_issues = meeting.issues ? meeting.issues.length : 0;
+
         const carouselProps = (
              isLoadingMeetings ?
                     <Loading/>
                     :
                     <Section>
                         <HeaderSection title={"Nội dung"} subtitle={"Buổi họp"}/>
-                        <Carousel
-                            ref={(c) => {
-                                this._carousel = c;
-                            }}
-                            activeAnimationType={"decay"}
-                            // activeSlideAlignment={this.state.currentIndex == 0 ? "start" : (this.state.currentIndex == meetings.length - 1 ? "end" : "center")}
-                            activeSlideAlignment={"center"}
-                            inactiveSlideScale={0.8}
-                            data={meetings}
-                            firstItem={this.indexDefault}
-                            onBeforeSnapToItem={(slideIndex) => this.setState({currentIndex: slideIndex})}
-                            renderItem={({item, index}) => {
-                                const date = moment(item.date, FORMAT_TIME_MYSQL);
-                                return (
-                                    <MeetingItem
-                                        keyIndex={index}
-                                        store={this.props.store}
-                                        name={item.name}
-                                        meetingId={item.id}
-                                        total_issues={item.total_issues}
-                                        date={date.format("D")}
-                                        month={date.format("M")}
-                                        hour={date.format("HH:mm")}
-                                        datetime={item.date}
-                                        onClick={this.onClickItem}
-                                    />
-                                )
-                            }
-                            }
-                            sliderWidth={this.state.currentIndex == meetings.length - 1 ? width - 40 : width}
-                            itemWidth={width / 3}
-                            keyExtractor={(item, index) => index.toString()}
+                        <MeetingItem
+                            store={this.props.store}
+                            joined={meeting.joined}
+                            name={meeting.name}
+                            meetingId={meeting.id}
+                            total_issues={total_issues}
+                            participates={meeting.participates ? meeting.participates : []}
+                            date={date.format("D")}
+                            month={date.format("M")}
+                            hour={date.format("HH:mm")}
+                            isNow={isNow}
+                            datetime={meeting.date}
+                            openModalParticipate={this.openModalParticipate}
                         />
 
                     </Section>

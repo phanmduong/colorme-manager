@@ -18,6 +18,7 @@ import {observer} from "mobx-react";
 import moment from "moment";
 import {FORMAT_TIME_MYSQL} from "../../constants/constant";
 import {getMeetingStatus} from "../../helper";
+import _ from "lodash";
 
 var {height, width} = Dimensions.get('window');
 
@@ -143,33 +144,35 @@ class MeetingDetailItem extends React.Component {
                 </View>
                 <View style={styles.containerParticipates}>
                     <Text style={styles.titleParticipates}>Thành phần tham gia ({participates.length})</Text>
-                    <View style={styles.contentParticipates}>
-                        <View style={styles.statusParticipates}>
-                            <Text style={styles.textStatus}>
-                                <Text style={{fontWeight: 'bold'}}>{totalCheckIn} </Text>
-                                Check in
-                            </Text>
-                            <Image style={[styles.iconStatus]}
-                                   source={getMeetingStatus('check_in').icon}/>
-                        </View>
-                        <View style={styles.statusParticipates}>
-                            <Text style={styles.textStatus}>
-                                <Text style={{fontWeight: 'bold'}}>{totalAccept} </Text>
-                                Tham gia
-                            </Text>
-                            <Image style={[styles.iconStatus]}
-                                   source={getMeetingStatus('accept').icon}/>
-                        </View>
-                        <View style={styles.statusParticipates}>
-                            <Text style={styles.textStatus}>
-                                <Text style={{fontWeight: 'bold'}}>{totalReject} </Text>
-                                Ko tham gia
-                            </Text>
-                            <Image style={[styles.iconStatus]}
-                                   source={getMeetingStatus('reject').icon}/>
-                        </View>
+                    <TouchableOpacity onPress={() => {this.props.openModalParticipate(participates)}}>
+                        <View style={styles.contentParticipates}>
+                            <View style={styles.statusParticipates}>
+                                <Text style={styles.textStatus}>
+                                    <Text style={{fontWeight: 'bold'}}>{totalCheckIn} </Text>
+                                    check in
+                                </Text>
+                                <Image style={[styles.iconStatus]}
+                                       source={getMeetingStatus('check_in').icon}/>
+                            </View>
+                            <View style={styles.statusParticipates}>
+                                <Text style={styles.textStatus}>
+                                    <Text style={{fontWeight: 'bold'}}>{totalAccept} </Text>
+                                    tham gia
+                                </Text>
+                                <Image style={[styles.iconStatus]}
+                                       source={getMeetingStatus('accept').icon}/>
+                            </View>
+                            <View style={styles.statusParticipates}>
+                                <Text style={styles.textStatus}>
+                                    <Text style={{fontWeight: 'bold'}}>{totalReject} </Text>
+                                    nghỉ
+                                </Text>
+                                <Image style={[styles.iconStatus]}
+                                       source={getMeetingStatus('reject').icon}/>
+                            </View>
 
-                    </View>
+                        </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.containerParticipates}>
                     <Text style={styles.titleParticipates}>Các vấn đề cần xử lý</Text>
@@ -314,10 +317,9 @@ const styles = StyleSheet.create({
     },
     contentParticipates: {
         borderRadius: 25,
-        borderWidth: 0.5,
-        borderColor: '#d6d7da',
+        backgroundColor: '#ececec',
         padding: 5,
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
         alignItems: 'center',
         flexDirection: 'row',
         height: 50,

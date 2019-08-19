@@ -15,6 +15,7 @@ import _ from 'lodash';
 import {getMeetingStatus} from "../../helper";
 import Carousel from 'react-native-snap-carousel';
 import MeetingDetailItem from "./MeetingDetailItem";
+import ModalMeetingParticipate from "./ModalMeetingParticipate";
 
 var {height, width} = Dimensions.get('window');
 
@@ -124,6 +125,7 @@ class MeetingDetailComponent extends React.Component {
                                 participates={meeting.participates ? meeting.participates : []}
                                 joined={meeting.joined}
                                 carouselProps={carouselProps}
+                                openModalParticipate={this.openModalParticipate}
                             />
                     )}
                 </KeyboardAvoidingView>
@@ -144,6 +146,7 @@ class MeetingDetailComponent extends React.Component {
                         />
                     </View>
                 </KeyboardAvoidingView>
+                <ModalMeetingParticipate store={this.props.store}/>
             </SafeAreaView>
 
         );

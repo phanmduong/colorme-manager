@@ -2,7 +2,7 @@
  * Created by phanmduong on 9/29/18.
  */
 import React from 'react';
-import {SafeAreaView, View} from 'react-native';
+import {SafeAreaView, RefreshControl, View, ScrollView} from 'react-native';
 import {observer} from "mobx-react";
 import Loading from "../../components/common/Loading";
 import moment from "moment";
@@ -34,11 +34,20 @@ class MeetingComponent extends React.Component {
         this.props.navigation.navigate('MeetingDetail', {meetingId})
     };
 
+    handleRefresh = () => {
+        this.props.store.refreshMeetingDetail();
+    };
+
     render() {
-        const {isLoading, meetingsNow, meetingsSoon} = this.props.store;
+        const {isLoading, meetingsNow, meetingsSoon, refreshing} = this.props.store;
         return (
-            <SafeAreaView style={{flex: 1}}>
-                {isLoading ? <Loading/> :
+            <ScrollView contentContainerStyle={{flexGrow: 1}}
+                        refreshControl={
+                            <RefreshControl refreshing={refreshing} onRefresh={this.handleRefresh}/>
+                        }>
+                {isLoading ?
+                    <Loading/>
+                    :
                     <View>
                         {meetingsNow.length > 0 &&
                         <Section>
@@ -90,7 +99,7 @@ class MeetingComponent extends React.Component {
                     </View>
                 }
                 <ModalMeetingParticipate store={this.props.store}/>
-            </SafeAreaView>
+            </ScrollView>
 
         );
     }

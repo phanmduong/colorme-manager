@@ -21,6 +21,7 @@ class MeetingDetailStore {
     @observable nameIssue = '';
     @observable isStoringIssue = false;
     @observable errorStoringIssue = false;
+    @observable refreshing = false;
 
     constructor(token, meetingId) {
         this.token = token;
@@ -43,6 +44,25 @@ class MeetingDetailStore {
             })
             .finally(() => {
                 this.isLoadingMeetings = false;
+            })
+    }
+
+    @action
+    refreshMeetingDetail = () => {
+        this.refreshing = true;
+        this.error = false;
+        console.log(this.selectedMeetingId);
+        loadMeetingDetail(this.token, this.selectedMeetingId)
+            .then((res) => {
+                this.meeting = res.data.data.meeting;
+                console.log(this.meeting);
+            })
+            .catch((error) => {
+                console.log(error)
+                this.error = true;
+            })
+            .finally(() => {
+                this.refreshing = false;
             })
     }
 

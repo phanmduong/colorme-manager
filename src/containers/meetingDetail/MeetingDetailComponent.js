@@ -42,6 +42,10 @@ class MeetingDetailComponent extends React.Component {
         this.props.store.loadMeetingDetail();
     }
 
+    refreshMeetingDetail = () => {
+        this.props.store.refreshMeetingDetail();
+    };
+
     render() {
         const {isLoading, meetings, meeting, isLoadingMeetings} = this.props.store;
         if (meetings.length > 0 && this.indexDefault == -1) {
@@ -103,12 +107,10 @@ class MeetingDetailComponent extends React.Component {
                                 store={this.props.store}
                                 name={meeting.name}
                                 issues={meeting.issues}
-                                meetingId={meeting.id}
-                                datetime={meeting.date}
                                 participates={meeting.participates ? meeting.participates : []}
-                                joined={meeting.joined}
                                 carouselProps={carouselProps}
                                 openModalParticipate={this.openModalParticipate}
+                                refreshMeetingDetail={this.refreshMeetingDetail}
                             />
                     )}
                 </KeyboardAvoidingView>

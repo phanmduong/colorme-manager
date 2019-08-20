@@ -1,5 +1,5 @@
 import {observable, action, computed} from "mobx";
-import {checkInMeeting, joinMeeting, loadMeetings} from "../../apis/meetingApi";
+import {checkInMeeting, joinMeeting, loadMeetingDetail, loadMeetings} from "../../apis/meetingApi";
 import moment from "moment";
 import {FORMAT_TIME_MYSQL} from "../../constants/constant";
 
@@ -14,6 +14,7 @@ class MeetingStore {
     @observable token = "";
     @observable isVisibleModalParticipate = false;
     @observable participates = [];
+    @observable refreshing = false;
 
     constructor(token) {
         this.token = token
@@ -35,6 +36,25 @@ class MeetingStore {
             })
             .finally(() => {
                 this.isLoading = false;
+            })
+    }
+
+    @action
+    refreshMeetingDetail = () => {
+        this.refreshing = true;
+        this.error = false;
+
+        loadMeetings(this.token)
+            .then((res) => {
+                this.meetings = res.data.data.meetings;
+                console.log(this.meetings);
+            })
+            .catch((error) => {
+                console.log(error)
+                this.error = true;
+            })
+            .finally(() => {
+                this.refreshing = false;
             })
     }
 

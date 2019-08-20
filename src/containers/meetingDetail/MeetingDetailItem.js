@@ -28,48 +28,8 @@ class MeetingDetailItem extends React.Component {
         super(props, context);
     }
 
-    checkCanJoin = () => {
-        const date = moment(this.props.datetime, FORMAT_TIME_MYSQL).format("X");
-        const now = moment().unix();
-        if (now <= date - 3600) {
-            return true
-        }
-        return false;
-    }
-
-    onAccept = () => {
-        const {meetingId, store} = this.props;
-        const {joinMeeting} = store;
-        if (this.checkCanJoin()) {
-            joinMeeting(meetingId, "accept", "");
-        } else {
-            Alert.alert('Thông báo', "Bạn phải đăng kí trước 1 tiếng");
-        }
-
-    };
-
-    onCheckin = () => {
-        const {meetingId, store} = this.props;
-        const {checkInMeeting} = store;
-        checkInMeeting(meetingId)
-    };
-
-    onReject = () => {
-        const {meetingId, store} = this.props;
-        const {joinMeeting} = store;
-        if (this.checkCanJoin()) {
-            joinMeeting(meetingId, "reject", "");
-        } else {
-            Alert.alert('Thông báo', "Bạn phải đăng kí trước 5 tiếng");
-        }
-    };
-
     render() {
-        const {name, issues, datetime, joined, participates} = this.props;
-        const meetingDate = moment(datetime, FORMAT_TIME_MYSQL).format("X");
-        const now = moment().unix();
-
-        const isNow = meetingDate - 1800 <= now && now <= parseInt(meetingDate) + 3600;
+        const {issues, participates, store} = this.props;
 
         const totalCheckIn = participates.filter((item) => item.status == "check_in").length;
         const totalAccept = participates.filter((item) => item.status == "accept").length;
@@ -129,6 +89,8 @@ class MeetingDetailItem extends React.Component {
                 ListHeaderComponent={headerComponent}
                 ListFooterComponent={footerComponent}
                 showsVerticalScrollIndicator={false}
+                refreshing={store.refreshing}
+                onRefresh={() => {this.props.refreshMeetingDetail()}}
                 renderItem={({item}) => {
                     return (
                         <View style={styles.itemIssue}>

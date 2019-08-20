@@ -36,13 +36,15 @@ import MeetingDetailContainer from "../containers/meetingDetail/MeetingDetailCon
 import HistoryContainer from "../containers/HistoryContainer";
 import HistoryAttendanceWorkShiftContainer
     from "../containers/historyAttendanceShift/HistoryAttendanceWorkShiftContainer";
+import StoreMeetingContainer from "../containers/storeMeeting/StoreMeetingContainer";
 
 const navigationOptionsDefault = {
     navigationOptions: ({navigation}) => ({
         headerBackTitle: null,
         headerTintColor: 'white',
         headerStyle: {
-            backgroundColor: theme.mainColor
+            backgroundColor: theme.mainColor,
+            borderWidth: 0
         },
         headerPressColorAndroid: '#ffffff80',
         headerRight: (<MenuButton onOpenMenu={() => navigation.navigate('DrawerOpen')}/>)
@@ -118,6 +120,9 @@ const TabDashboard = createStackNavigator({
     },
     MeetingDetail: {
         screen: MeetingDetailContainer
+    },
+    StoreMeeting: {
+        screen: StoreMeetingContainer
     }
 }, navigationOptionsDefault);
 
@@ -333,20 +338,21 @@ const DashboardMain = createBottomTabNavigator({
 //     contentComponent: props => (<SidebarContainer {...props}/>)
 // });
 
-// const Main = StackNavigator({
-//     Drawer: {
-//         screen: Drawer
-//     }
-// }, {
-//     headerMode: 'none'
-// });
+
+const Main = createStackNavigator({
+    DashboardMain: {
+        screen: DashboardMain
+    },
+
+}, {headerMode: "none"});
+
 
 export const routeConfigs = {
     Login: {
         screen: LoginContainer,
     },
     Main: {
-        screen: DashboardMain
+        screen: Main
         // screen: MeetingDetailContainer
     }
 };

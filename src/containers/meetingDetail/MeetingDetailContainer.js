@@ -26,7 +26,7 @@ class MeetingDetailContainer extends React.Component {
 
     render() {
         return (
-            <MeetingDetailComponent store={this.store}/>
+            <MeetingDetailComponent store={this.store} {...this.props}/>
         );
     }
 }

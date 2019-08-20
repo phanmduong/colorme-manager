@@ -1,5 +1,5 @@
 import {observable, action, computed} from "mobx";
-import {checkInMeeting, joinMeeting, loadMeetingDetail, loadMeetings} from "../../apis/meetingApi";
+import {checkInMeeting, joinMeeting, loadMeetings} from "../../apis/meetingApi";
 import moment from "moment";
 import {FORMAT_TIME_MYSQL} from "../../constants/constant";
 

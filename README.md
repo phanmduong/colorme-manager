@@ -11,6 +11,8 @@
     ndk.dir=/Users/phanminhduong/Library/Android/sdk/ndk-bundle
     sdk.dir=/Users/phanminhduong/Library/Android/sdk
 
+lib custom: https://github.com/toystars/react-native-multiple-select
+
 
 MYAPP_RELEASE_STORE_FILE=my-release-key.keystore
 MYAPP_RELEASE_KEY_ALIAS=my-key-alias

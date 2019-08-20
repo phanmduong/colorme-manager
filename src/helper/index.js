@@ -199,3 +199,10 @@ export function calculatorAttendance(
 export function getMeetingStatus(status) {
     return MEETING_STATUS[status] ? MEETING_STATUS[status] : {};
 }
+
+export function getShortName(name) {
+    if (isEmptyInput(name)) return null;
+    let n = name.trim().split(' ');
+    if (n.length > 1) return n[n.length - 2] + ' ' + n[n.length - 1];
+    return name;
+}

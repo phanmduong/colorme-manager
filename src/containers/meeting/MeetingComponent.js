@@ -2,7 +2,7 @@
  * Created by phanmduong on 9/29/18.
  */
 import React from 'react';
-import {SafeAreaView, RefreshControl, View, ScrollView} from 'react-native';
+import {SafeAreaView, RefreshControl, View, ScrollView, TouchableOpacity, Text} from 'react-native';
 import {observer} from "mobx-react";
 import Loading from "../../components/common/Loading";
 import moment from "moment";
@@ -14,6 +14,9 @@ import withStyle from "../../components/HOC/withStyle";
 import MeetingItem from "./MeetingItem";
 import _ from 'lodash';
 import {getMeetingStatus} from "../../helper";
+import LinearGradient from "react-native-linear-gradient";
+import Icon from "../../components/common/Icon";
+import theme from "../../styles";
 
 @observer
 class MeetingComponent extends React.Component {
@@ -38,17 +41,37 @@ class MeetingComponent extends React.Component {
         this.props.store.refreshMeetingDetail();
     };
 
+    openStoreMeeting = () => {
+        this.props.navigation.navigate("StoreMeeting");
+    }
+
     render() {
         const {isLoading, meetingsNow, meetingsSoon, refreshing} = this.props.store;
         return (
-            <ScrollView contentContainerStyle={{flexGrow: 1}}
-                        refreshControl={
-                            <RefreshControl refreshing={refreshing} onRefresh={this.handleRefresh}/>
-                        }>
+            <SafeAreaView style={{flex: 1}}>
+                <View style={styles.container}>
+                    <TouchableOpacity style={styles.containerContent}
+                                      onPress={this.openStoreMeeting}>
+                        <LinearGradient colors={['#E26800', '#E00000']}
+                                        start={{x: 0, y: 0}} end={{x: 1, y: 0}}
+                                        style={styles.content}>
+                            <Text style={styles.title}>TẠO CUỘC HỌP</Text>
+                            <Icon name="entypo|circle-with-plus" color={"white"} size={25}/>
+                        </LinearGradient>
+                    </TouchableOpacity>
+                    <View style={styles.containerAction}/>
+                </View>
                 {isLoading ?
                     <Loading/>
                     :
-                    <View>
+                    <ScrollView contentContainerStyle={{flexGrow: 1}}
+                                refreshControl={
+                                    <RefreshControl refreshing={refreshing} onRefresh={this.handleRefresh}
+                                                    titleColor={theme.mainColor}
+                                                    title="Đang tải..."
+                                                    tintColor='#d9534f'
+                                                    colors={['#d9534f']}/>
+                                }>
                         {meetingsNow.length > 0 &&
                         <Section>
                             <HeaderSection title={"Cuộc họp"} subtitle={"Đang diễn ra"}/>
@@ -96,13 +119,40 @@ class MeetingComponent extends React.Component {
                             })}
                         </Section>
                         }
-                    </View>
+                    </ScrollView>
                 }
                 <ModalMeetingParticipate store={this.props.store}/>
-            </ScrollView>
+            </SafeAreaView>
 
         );
     }
+}
+
+
+const styles = {
+    container: {
+        flexDirection: 'row',
+        marginBottom: 10
+    },
+    containerContent: {
+        flex: 2,
+        flexDirection: "column",
+    },
+    containerAction: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    content: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        alignItems: "center",
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        borderRadius: 10
+    },
+    title: {color: 'white', fontSize: 17, fontWeight: "bold"},
 }
 
 export default withStyle()(MeetingComponent);

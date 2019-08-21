@@ -15,6 +15,7 @@ class MeetingStore {
     @observable isVisibleModalParticipate = false;
     @observable participates = [];
     @observable refreshing = false;
+    @observable reason = '';
 
     constructor(token) {
         this.token = token

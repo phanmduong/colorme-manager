@@ -2,16 +2,20 @@
  * Created by phanmduong on 9/29/18.
  */
 import React from 'react';
-import {View, Text, ImageBackground, Image, TouchableOpacity, Alert} from 'react-native';
+import {View, Text, ImageBackground, Image, TouchableOpacity, Alert, SafeAreaView, StyleSheet} from 'react-native';
 import {observer} from "mobx-react";
 import moment from "moment";
 import {FORMAT_TIME_MYSQL} from "../../constants/constant";
 import {getMeetingStatus} from "../../helper";
+import ModalAbsentReason from "./ModalAbsentReason";
 
 @observer
 class MeetingItem extends React.Component {
     constructor(props, context) {
         super(props, context);
+        this.state = {
+            isModalReasonVisible: false
+        }
     }
 
     checkCanJoin = () => {
@@ -41,13 +45,17 @@ class MeetingItem extends React.Component {
     };
 
     onReject = () => {
-        const {meetingId, store} = this.props;
-        const {joinMeeting} = store;
         if (this.checkCanJoin()) {
-            joinMeeting(meetingId, "reject", "");
+            this.toggle();
         } else {
             Alert.alert('Thông báo', "Bạn phải đăng kí trước 5 tiếng");
         }
+    };
+
+    toggle = () => {
+        this.setState({
+           isModalReasonVisible: !this.state.isModalReasonVisible
+        });
     };
 
     render() {
@@ -178,13 +186,18 @@ class MeetingItem extends React.Component {
                                 </View>
                         }
                     </View>
+                    <ModalAbsentReason store={this.props.store}
+                                       isVisible={this.state.isModalReasonVisible}
+                                       closeModal={() => {this.toggle()}}
+                                       meetingId={meetingId}/>
                 </View>
+
             </TouchableOpacity>
         );
     }
 }
 
-const style = {
+const style = StyleSheet.create({
     container: {
         flexDirection: 'row',
         marginBottom: 10
@@ -278,6 +291,6 @@ const style = {
         justifyContent: "center",
         alignItems: "center",
     },
-}
+});
 
 export default (MeetingItem);

@@ -22,6 +22,7 @@ class MeetingDetailStore {
     @observable isStoringIssue = false;
     @observable errorStoringIssue = false;
     @observable refreshing = false;
+    @observable reason = '';
 
     constructor(token, meetingId) {
         this.token = token;

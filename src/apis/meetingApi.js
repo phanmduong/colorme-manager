@@ -45,7 +45,7 @@ export function storeIssue(token, meeting_id, issue, description = '', status = 
     });
 }
 
-export function storeMeeting(token, name,room_id, date, description = '', status = "available", filter = {}, meeting_id = "") {
+export function storeMeeting(token, name, room_id, date, description = '', status = "available", filter = {}, meeting_id = "") {
     let url = env.MANAGE_API_URL_V3 + `/meeting/store-meeting?token=` + token;
     console.log({
         meeting_id,
@@ -65,4 +65,31 @@ export function storeMeeting(token, name,room_id, date, description = '', status
         date,
         room_id
     });
+}
+
+export function storeMeeting(token, name, room_id, date, description = '', status = "available", filter = {}, meeting_id = "") {
+    let url = env.MANAGE_API_URL_V3 + `/meeting/store-meeting?token=` + token;
+    console.log({
+        meeting_id,
+        name,
+        description,
+        status,
+        filter,
+        date,
+        room_id
+    })
+    return axios.post(url, {
+        meeting_id,
+        name,
+        description,
+        status,
+        filter,
+        date,
+        room_id
+    });
+}
+
+export function deleteMeetingParicipate(token, meetingParticipateId) {
+    let url = env.MANAGE_API_URL_V3 + `/meeting/delete-meeting-participate/${meetingParticipateId}?token=` + token;
+    return axios.delete(url);
 }

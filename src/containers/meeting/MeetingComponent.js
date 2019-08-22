@@ -49,18 +49,6 @@ class MeetingComponent extends React.Component {
         const {isLoading, meetingsNow, meetingsSoon, refreshing} = this.props.store;
         return (
             <SafeAreaView style={{flex: 1}}>
-                <View style={styles.container}>
-                    <TouchableOpacity style={styles.containerContent}
-                                      onPress={this.openStoreMeeting}>
-                        <LinearGradient colors={['#E26800', '#E00000']}
-                                        start={{x: 0, y: 0}} end={{x: 1, y: 0}}
-                                        style={styles.content}>
-                            <Text style={styles.title}>TẠO CUỘC HỌP</Text>
-                            <Icon name="entypo|circle-with-plus" color={"white"} size={25}/>
-                        </LinearGradient>
-                    </TouchableOpacity>
-                    <View style={styles.containerAction}/>
-                </View>
                 {isLoading ?
                     <Loading/>
                     :

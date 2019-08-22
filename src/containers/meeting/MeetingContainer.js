@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import MeetingStore from "./MeetingStore";
 import {observer} from "mobx-react";
 import MeetingComponent from "./MeetingComponent";
+import {Image, TouchableOpacity} from "react-native";
 
 @observer
 class MeetingContainer extends React.Component {
@@ -15,7 +16,12 @@ class MeetingContainer extends React.Component {
     }
 
     static navigationOptions = ({navigation}) => ({
-        title: 'Họp'
+        title: "Họp",
+        headerRight: (
+            <TouchableOpacity onPress={() => navigation.navigate("StoreMeeting")}>
+                <Image source={require('../../../assets/img/icons8-plus-96.png')} style={{width: 20, height: 20, right: 20}}/>
+            </TouchableOpacity>
+        )
     });
 
     componentDidMount() {

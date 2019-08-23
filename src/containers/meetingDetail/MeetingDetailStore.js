@@ -1,7 +1,15 @@
 import {observable, action, computed} from "mobx";
-import {checkInMeeting, joinMeeting, loadMeetingDetail, loadMeetings, storeIssue} from "../../apis/meetingApi";
+import {
+    checkInMeeting,
+    deleteMeetingIssue,
+    joinMeeting,
+    loadMeetingDetail,
+    loadMeetings,
+    storeIssue
+} from "../../apis/meetingApi";
 import moment from "moment";
 import {FORMAT_TIME_MYSQL} from "../../constants/constant";
+import {Alert} from "react-native";
 
 class MeetingDetailStore {
     @observable isLoading = false;
@@ -23,6 +31,8 @@ class MeetingDetailStore {
     @observable errorStoringIssue = false;
     @observable refreshing = false;
     @observable reason = '';
+    @observable isDeletingIssue = false;
+    @observable errorDeletingIssue = false;
 
     constructor(token, meetingId) {
         this.token = token;
@@ -103,6 +113,29 @@ class MeetingDetailStore {
             })
             .finally(() => {
                 this.isStoringIssue = false;
+            })
+    }
+
+    @action
+    deleteMeetingIssue = (issueId) => {
+        this.isDeletingIssue = true;
+        this.errorDeletingIssue = false;
+        deleteMeetingIssue(this.token, issueId)
+            .then((res) => {
+                if (res.data.status === 0) {
+                    Alert.alert("Thông báo", res.data.message)
+                } else {
+                    let array = [...this.meeting.issues];
+                    let index = array.findIndex(x => x.id === issueId);
+                    if (index !== -1) {
+                        array.splice(index, 1);
+                        this.meeting.issues = array;
+                    }
+                }
+            }).catch((error) => {
+                this.errorDeletingIssue = true;
+            }).finally(() => {
+                this.isDeletingIssue = false;
             })
     }
 

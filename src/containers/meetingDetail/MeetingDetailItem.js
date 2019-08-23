@@ -5,20 +5,15 @@ import React from 'react';
 import {
     View,
     Text,
-    TextInput,
     Image,
     TouchableOpacity,
-    Alert,
     StyleSheet,
     Dimensions,
     FlatList,
-    KeyboardAvoidingView
 } from 'react-native';
 import {observer} from "mobx-react";
-import moment from "moment";
-import {FORMAT_TIME_MYSQL} from "../../constants/constant";
 import {getMeetingStatus} from "../../helper";
-import _ from "lodash";
+import SwipeOut from "react-native-swipeout";
 
 var {height, width} = Dimensions.get('window');
 
@@ -26,6 +21,21 @@ var {height, width} = Dimensions.get('window');
 class MeetingDetailItem extends React.Component {
     constructor(props, context) {
         super(props, context);
+        this.state = {
+            rowIndex: null
+        }
+    }
+
+    onSwipeOpen = (rowIndex) => {
+        this.setState({
+            rowIndex: rowIndex
+        })
+    }
+
+    onSwipeClose(rowIndex) {
+        if (rowIndex === this.state.rowIndex) {
+            this.setState({ rowIndex: null });
+        }
     }
 
     render() {
@@ -82,6 +92,8 @@ class MeetingDetailItem extends React.Component {
             <View style={{height: 50}} />
         );
 
+
+
         return (
 
             <FlatList
@@ -91,17 +103,32 @@ class MeetingDetailItem extends React.Component {
                 showsVerticalScrollIndicator={false}
                 refreshing={store.refreshing}
                 onRefresh={() => {this.props.refreshMeetingDetail()}}
-                renderItem={({item}) => {
+                renderItem={({item, index}) => {
+                    const rightButton = [
+                        {
+                            onPress: () => {
+                                this.props.store.deleteMeetingIssue(item.id);
+                            },
+                            text: 'Delete',
+                            type: 'delete'
+                        }
+                    ];
                     return (
-                        <View style={styles.itemIssue}>
-                            <Image style={styles.avatarIssue}
-                                   source={{uri: item.creator.avatar_url}}/>
-                            <View>
-                                <Text style={styles.titleIssue}>{item.issue}</Text>
-                                <Text
-                                    style={styles.subTitleIssue}>{item.creator.name} - {item.created_at}</Text>
+                        <SwipeOut autoClose={true}
+                                  backgroundColor={"white"}
+                                  right={rightButton}
+                                  onOpen={()=>(this.onSwipeOpen(index))}
+                                  close={this.state.rowIndex !== index}
+                                  onClose={()=>(this.onSwipeClose(index))}>
+                            <View style={styles.itemIssue}>
+                                <Image style={styles.avatarIssue}
+                                       source={{uri: item.creator.avatar_url}}/>
+                                <View>
+                                    <Text style={styles.titleIssue}>{item.issue}</Text>
+                                    <Text style={styles.subTitleIssue}>{item.creator.name} - {item.created_at}</Text>
+                                </View>
                             </View>
-                        </View>
+                        </SwipeOut>
                     )
                 }}
                 keyExtractor={(item, index) => index.toString()}

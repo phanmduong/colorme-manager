@@ -92,10 +92,7 @@ class MeetingDetailItem extends React.Component {
             <View style={{height: 50}} />
         );
 
-
-
         return (
-
             <FlatList
                 data={issues}
                 ListHeaderComponent={headerComponent}

@@ -151,24 +151,34 @@ class MeetingItem extends React.Component {
                                                             </TouchableOpacity>
                                                     )
                                                     :
-                                                    <View style={style.contentAction}>
-                                                        <Image style={style.iconAction2}
-                                                               source={getMeetingStatus('accept').icon}/>
-                                                        <Text style={style.textAction}>
-                                                            {getMeetingStatus('accept').text}
-                                                        </Text>
-                                                    </View>
+                                                    <TouchableOpacity onPress={this.onReject}>
+                                                        <View style={style.contentAction}>
+                                                            <Image style={style.iconAction2}
+                                                                   source={getMeetingStatus('accept').icon}/>
+                                                            <Text style={style.textAction}>
+                                                                {getMeetingStatus('accept').text}
+                                                            </Text>
+                                                            <Text style={style.changeTextAction}>
+                                                                Bấm lại để đổi
+                                                            </Text>
+                                                        </View>
+                                                    </TouchableOpacity>
                                             )
 
 
                                             :
-                                            <View style={style.contentAction}>
-                                                <Image style={[style.iconAction2, {marginTop: 20}]}
-                                                       source={getMeetingStatus('reject').icon}/>
-                                                <Text style={style.textAction}>
-                                                    {getMeetingStatus('reject').text}
-                                                </Text>
-                                            </View>
+                                            <TouchableOpacity onPress={this.onAccept}>
+                                                <View style={style.contentAction}>
+                                                    <Image style={[style.iconAction2, {marginTop: 20}]}
+                                                           source={getMeetingStatus('reject').icon}/>
+                                                    <Text style={style.textAction}>
+                                                        {getMeetingStatus('reject').text}
+                                                    </Text>
+                                                    <Text style={style.changeTextAction}>
+                                                        Bấm lại để đổi
+                                                    </Text>
+                                                </View>
+                                            </TouchableOpacity>
 
                                     }
                                 </View>
@@ -287,6 +297,12 @@ const style = {
     contentAction: {
         justifyContent: "center",
         alignItems: "center",
+    },
+    changeTextAction: {
+        marginTop: 3,
+        fontSize: 12,
+        textAlign: 'center',
+        fontWeight: '600'
     },
 }
 

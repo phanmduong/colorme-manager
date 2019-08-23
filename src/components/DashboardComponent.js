@@ -61,8 +61,8 @@ class DashboardComponent extends React.Component {
                               colorTwo={'#E2DC50'}
                               checkInOutStyle={styles.checkInContainer}
                               standOutFontSize={{fontSize: 17}}
-                              imageSource={require('../../assets/img/walle.png')}
-                              imageWidth={(Dimensions.get('window').width - 32) * 0.40}
+                              imageSource={require('../../assets/img/MiM-check-in.png')}
+                              imageWidth={(Dimensions.get('window').width - 32) * 0.38}
                               title={'Check in'}
                               characterImgPosition={styles.checkInCharacterImgPosition}
                               onPress={() => {
@@ -74,8 +74,8 @@ class DashboardComponent extends React.Component {
                     <CardMenu colorOne={'#6800E2'}
                               colorTwo={'#2F94EB'}
                               checkInOutStyle={styles.checkOutContainer}
-                              imageSource={require('../../assets/img/buzzLightyear.png')}
-                              imageWidth={(Dimensions.get('window').width - 32) * 0.26 * 0.7}
+                              imageSource={require('../../assets/img/MiM-check-out.png')}
+                              imageWidth={(Dimensions.get('window').width - 32) * 0.30 * 0.7}
                               title={'Check out'}
                               characterImgPosition={styles.checkOutCharacterImgPosition}
                               onPress={() => {
@@ -87,7 +87,7 @@ class DashboardComponent extends React.Component {
                     <CardMenu colorOne={'#E20000'}
                               colorTwo={'#E29950'}
                               checkInOutStyle={styles.checkOutContainer}
-                              imageSource={require('../../assets/img/bunny.png')}
+                              imageSource={require('../../assets/img/MiM-history.png')}
                               imageWidth={(Dimensions.get('window').width - 32) * 0.26 * 0.9}
                               title={'Lịch sử'}
                               characterImgPosition={styles.historyCharacterImgPosition}
@@ -128,11 +128,17 @@ const styles = {
         justifyContent: 'space-between',
         marginTop: 16
     },
+    // 32 is the total left, right margin,
+    // 0.40 is the relative ratio of container to screen width,
+    // (178/139) is the ratio between height and width
     checkInContainer: {
         height: (Dimensions.get('window').width - 32) * 0.40 * (178 / 139),
         width: (Dimensions.get('window').width - 32) * 0.40,
         borderRadius: 10
     },
+    // 32 is the total left, right margin,
+    // 0.26 is the relative ratio of container to screen width,
+    // (178/139) is the ratio between height and width
     checkOutContainer: {
         height: (Dimensions.get('window').width - 32) * 0.26 * (178 / 139),
         width: (Dimensions.get('window').width - 32) * 0.26,
@@ -144,20 +150,26 @@ const styles = {
         fontWeight: 'bold',
         color: 'white',
     },
+    // 32 is the total left, right margin,
+    // 0.18, 0.08 is the relative ratio of image to screen width
     checkInCharacterImgPosition: {
         position: 'absolute',
-        top: (Dimensions.get('window').width - 32) * 0.18,
-        left: (Dimensions.get('window').width - 32) * 0.08
+        top: (Dimensions.get('window').width - 32) * 0.19,
+        left: (Dimensions.get('window').width - 32) * 0.06
     },
+    // 32 is the total left, right margin,
+    // 0.15, 0.09 is the relative ratio of image to screen width
     checkOutCharacterImgPosition: {
         position: 'absolute',
         top: (Dimensions.get('window').width - 32) * 0.15,
-        left: (Dimensions.get('window').width - 32) * 0.09
+        left: (Dimensions.get('window').width - 32) * 0.07
     },
+    // 32 is the total left, right margin,
+    // 0.14, 0.06 is the relative ratio of image to screen width
     historyCharacterImgPosition: {
         position: 'absolute',
-        top: (Dimensions.get('window').width - 32) * 0.14,
-        left: (Dimensions.get('window').width - 32) * 0.06
+        top: (Dimensions.get('window').width - 32) * 0.15,
+        left: (Dimensions.get('window').width - 32) * 0.05
     },
     circleTab: {
         width: 52,

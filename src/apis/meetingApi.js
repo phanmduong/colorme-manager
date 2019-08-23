@@ -67,7 +67,7 @@ export function storeMeeting(token, name, room_id, date, description = '', statu
     });
 }
 
-export function deleteMeetingParicipate(token, meetingParticipateId) {
-    let url = env.MANAGE_API_URL_V3 + `/meeting/delete-meeting-participate/${meetingParticipateId}?token=` + token;
+export function deleteMeetingIssue(token, meetingIssueId) {
+    let url = env.MANAGE_API_URL_V3 + `/meeting/delete-meeting-issue/${meetingIssueId}?token=` + token;
     return axios.delete(url);
 }

@@ -2,7 +2,7 @@
  * Created by phanmduong on 9/29/18.
  */
 import React from 'react';
-import {Dimensions, Platform, KeyboardAvoidingView, StyleSheet, SafeAreaView, TextInput, View, TouchableOpacity} from 'react-native';
+import {Dimensions, Platform, KeyboardAvoidingView, StyleSheet, SafeAreaView, TextInput, View, Image, TouchableOpacity} from 'react-native';
 import {observer} from "mobx-react";
 import Loading from "../../components/common/Loading";
 import moment from "moment";
@@ -129,6 +129,17 @@ class MeetingDetailComponent extends React.Component {
                                        this.props.store.storeIssue();
                                    }}
                         />
+                        { this.props.store.nameIssue !== "" ?
+                            <TouchableOpacity onPress={() => this.props.store.storeIssue()} style={styles.sendPosition}>
+                                <Image source={require('../../../assets/img/icons8-email-send-96-enabled.png')}
+                                       style={styles.sendButton}/>
+                            </TouchableOpacity>
+                            :
+                            <View style={styles.sendPosition}>
+                                <Image source={require('../../../assets/img/icons8-email-send-96-disabled.png')}
+                                       style={styles.sendButton}/>
+                            </View>
+                        }
                     </View>
                 </KeyboardAvoidingView>
                 <ModalMeetingParticipate store={this.props.store}/>
@@ -143,7 +154,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'white',
         width: Dimensions.get('window').width,
-        right: 20,
         height: 44
     },
     createIssue: {
@@ -155,8 +165,18 @@ const styles = StyleSheet.create({
         backgroundColor: '#ececec',
         paddingHorizontal: 20,
         color: "#363636",
-        width: width - 40,
+        width: width - 75,
+        right: 75,
     },
+    sendPosition: {
+        position: 'absolute',
+        right: 40,
+        bottom: 5
+    },
+    sendButton: {
+        width: 28,
+        height: 28,
+    }
 });
 
 export default withStyle()(MeetingDetailComponent);

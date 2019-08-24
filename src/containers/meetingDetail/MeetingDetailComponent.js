@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     sendPosition: {
         position: 'absolute',
         right: 40,
-        bottom: 5
+        bottom: 6
     },
     sendButton: {
         width: 28,

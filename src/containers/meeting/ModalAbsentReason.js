@@ -1,5 +1,15 @@
 import React from 'react';
-import {TextInput, Text, View, StyleSheet, Dimensions, TouchableWithoutFeedback, Image, Alert} from 'react-native';
+import {
+    TextInput,
+    Text,
+    View,
+    StyleSheet,
+    Dimensions,
+    TouchableWithoutFeedback,
+    Image,
+    Alert,
+    TouchableOpacity
+} from 'react-native';
 import Modal from 'react-native-modal';
 import {observer} from "mobx-react";
 
@@ -14,6 +24,7 @@ class ModalAbsentReason extends React.Component {
         const {joinMeeting, reason} = store;
         if (reason !== "") {
             joinMeeting(meetingId, "reject", reason);
+            this.props.store.reason = "";
             this.props.closeModal();
         } else {
             Alert.alert('Thông báo', "Bạn phải nhập lý do không tham gia");
@@ -26,18 +37,32 @@ class ModalAbsentReason extends React.Component {
                    animationIn={'slideInLeft'}
                    animationOut={'slideOutLeft'}>
                 <View style={styles.content}>
-                    <TouchableWithoutFeedback onPress={() => {this.props.closeModal()}}>
+                    <TouchableWithoutFeedback onPress={() => {this.props.store.reason = ""; this.props.closeModal()}}>
                         <View style={styles.closeIconPosition}>
                             <Image source={require('../../../assets/img/icons8-delete-96.png')}
                                    style={styles.closeIcon}/>
                         </View>
                     </TouchableWithoutFeedback>
                     <Text style={styles.contentTitle}>Lý do không tham gia</Text>
-                    <TextInput style={styles.createReason}
-                               placeholder={"Nhập lý do"}
-                               value={this.props.store.reason.value}
-                               onChangeText={(text) => {this.props.store.reason = text}}
-                               onSubmitEditing={() => {this.storeReason()}}/>
+                    <View style={styles.reasonContainer}>
+                        <TextInput style={styles.createReason}
+                                   placeholder={"Nhập lý do"}
+                                   value={this.props.store.reason.value}
+                                   onChangeText={(text) => {this.props.store.reason = text}}
+                                   onSubmitEditing={() => {this.storeReason()}}
+                        />
+                        { this.props.store.reason !== ""?
+                            <TouchableOpacity onPress={() => this.storeReason()}>
+                                <Image source={require('../../../assets/img/icons8-email-send-96-enabled.png')}
+                                       style={styles.sendIcon}/>
+                            </TouchableOpacity>
+                            :
+                            <View>
+                                <Image source={require('../../../assets/img/icons8-email-send-96-disabled.png')}
+                                       style={styles.sendIcon}/>
+                            </View>
+                        }
+                    </View>
                 </View>
             </Modal>
         )
@@ -63,8 +88,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#ececec',
         paddingHorizontal: 20,
         color: "#363636",
-        marginTop: 20,
-        width: Dimensions.get('window').width - 80,
+        width: Dimensions.get('window').width - 110,
     },
     closeIconPosition: {
         position: 'absolute',
@@ -74,6 +98,16 @@ const styles = StyleSheet.create({
     closeIcon: {
         width: 20,
         height: 20
+    },
+    sendIcon: {
+        width: 28,
+        height: 28,
+        marginLeft: 6
+    },
+    reasonContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 20
     }
 });
 

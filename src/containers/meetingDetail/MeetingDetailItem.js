@@ -99,6 +99,7 @@ class MeetingDetailItem extends React.Component {
                 ListFooterComponent={footerComponent}
                 showsVerticalScrollIndicator={false}
                 refreshing={store.refreshing}
+                keyboardShouldPersistTaps={'handled'}
                 onRefresh={() => {this.props.refreshMeetingDetail()}}
                 renderItem={({item, index}) => {
                     const rightButton = [

@@ -7,7 +7,7 @@ import {observer} from "mobx-react";
 import moment from "moment";
 import {FORMAT_TIME_MYSQL} from "../../constants/constant";
 import {getMeetingStatus} from "../../helper";
-import ModalAbsentReason from "../meeting/ModalAbsentReason";
+import ModalAbsentReason from "./ModalAbsentReason";
 
 @observer
 class MeetingItem extends React.Component {

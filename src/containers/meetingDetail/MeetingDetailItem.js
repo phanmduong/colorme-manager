@@ -126,8 +126,8 @@ class MeetingDetailItem extends React.Component {
                                 <Image style={styles.avatarIssue}
                                        source={{uri: item.creator.avatar_url}}/>
                                 <View>
-                                    <Text style={styles.titleIssue}>{item.issue}</Text>
-                                    <Text style={styles.subTitleIssue}>{item.creator.name} - {item.created_at}</Text>
+                                    <Text numberOfLines={2} style={styles.titleIssue}>{item.issue}</Text>
+                                    <Text style={styles.subTitleIssue}>{item.creator.name}</Text>
                                 </View>
                             </View>
                         </SwipeOut>
@@ -277,6 +277,7 @@ const styles = StyleSheet.create({
     titleIssue: {
         fontSize: 16,
         fontWeight: 'bold',
+        marginRight: 60
     },
     subTitleIssue: {
         color: '#828282',

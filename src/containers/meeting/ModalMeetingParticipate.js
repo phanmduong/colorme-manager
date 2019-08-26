@@ -59,7 +59,7 @@ class ModalMeetingParticipate extends React.Component {
                                         <View>
                                             <Text style={styles.name}>{participate.user.name}</Text>
                                             { (participate.note !== "" && participate.note !== null) ?
-                                                <Text style={styles.titleStatus}>{participate.note}</Text>
+                                                <Text numberOfLines={2} style={styles.titleStatus}>{participate.note}</Text>
                                                 :
                                                 <Text style={styles.titleStatus}>{status.text}</Text>
                                             }
@@ -105,9 +105,13 @@ const styles = {
     titleStatus: {
         fontSize: 12,
         color: '#858585',
-        marginTop: 2
+        marginTop: 2,
+        marginRight: 60
     },
-    status: {},
+    status: {
+        position: 'absolute',
+        right: 20
+    },
     iconStatus: {
         width: 36,
         height: 36,

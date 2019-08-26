@@ -105,9 +105,13 @@ const styles = {
     titleStatus: {
         fontSize: 12,
         color: '#858585',
-        marginTop: 2
+        marginTop: 2,
+        marginRight: 60
     },
-    status: {},
+    status: {
+        position: 'absolute',
+        right: 20
+    },
     iconStatus: {
         width: 36,
         height: 36,

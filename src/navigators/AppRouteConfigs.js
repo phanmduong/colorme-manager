@@ -39,16 +39,11 @@ import HistoryAttendanceWorkShiftContainer
 import StoreMeetingContainer from "../containers/storeMeeting/StoreMeetingContainer";
 
 const navigationOptionsDefault = {
-    navigationOptions: ({navigation}) => ({
-        headerBackTitle: null,
-        headerTintColor: 'white',
+    defaultNavigationOptions: {
         headerStyle: {
-            backgroundColor: theme.mainColor,
-            borderWidth: 0
+            borderBottomWidth: 0
         },
-        headerPressColorAndroid: '#ffffff80',
-        headerRight: (<MenuButton onOpenMenu={() => navigation.navigate('DrawerOpen')}/>)
-    }),
+    }
 };
 
 const TabAttendance = createStackNavigator({
@@ -124,7 +119,13 @@ const TabDashboard = createStackNavigator({
     StoreMeeting: {
         screen: StoreMeetingContainer
     }
-}, navigationOptionsDefault);
+}, {
+    defaultNavigationOptions: {
+        headerStyle: {
+            borderBottomWidth: 0
+        },
+    }
+});
 
 const TabCollectMoney = createStackNavigator({
     CollectMoney: {

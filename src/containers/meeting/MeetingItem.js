@@ -159,9 +159,6 @@ class MeetingItem extends React.Component {
                                                             <Text style={style.textAction}>
                                                                 {getMeetingStatus('accept').text}
                                                             </Text>
-                                                            <Text style={style.changeTextAction}>
-                                                                Bấm lại để đổi
-                                                            </Text>
                                                         </View>
                                                     </TouchableOpacity>
                                             )
@@ -174,9 +171,6 @@ class MeetingItem extends React.Component {
                                                            source={getMeetingStatus('reject').icon}/>
                                                     <Text style={style.textAction}>
                                                         {getMeetingStatus('reject').text}
-                                                    </Text>
-                                                    <Text style={style.changeTextAction}>
-                                                        Bấm lại để đổi
                                                     </Text>
                                                 </View>
                                             </TouchableOpacity>
@@ -292,12 +286,6 @@ const style = StyleSheet.create({
         marginTop: 20,
         fontSize: 12,
         textAlign: 'center'
-    },
-    changeTextAction: {
-        marginTop: 3,
-        fontSize: 12,
-        textAlign: 'center',
-        fontWeight: '600'
     },
     iconAction2: {
         width: 50,

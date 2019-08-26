@@ -158,9 +158,6 @@ class MeetingItem extends React.Component {
                                                             <Text style={style.textAction}>
                                                                 {getMeetingStatus('accept').text}
                                                             </Text>
-                                                            <Text style={style.changeTextAction}>
-                                                                Bấm lại để đổi
-                                                            </Text>
                                                         </View>
                                                     </TouchableOpacity>
                                             )
@@ -173,9 +170,6 @@ class MeetingItem extends React.Component {
                                                            source={getMeetingStatus('reject').icon}/>
                                                     <Text style={style.textAction}>
                                                         {getMeetingStatus('reject').text}
-                                                    </Text>
-                                                    <Text style={style.changeTextAction}>
-                                                        Bấm lại để đổi
                                                     </Text>
                                                 </View>
                                             </TouchableOpacity>
@@ -297,13 +291,7 @@ const style = {
     contentAction: {
         justifyContent: "center",
         alignItems: "center",
-    },
-    changeTextAction: {
-        marginTop: 3,
-        fontSize: 12,
-        textAlign: 'center',
-        fontWeight: '600'
-    },
+    }
 }
 
 export default (MeetingItem);

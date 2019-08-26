@@ -16,4 +16,8 @@ export const MEETING_STATUS = {
         icon: require('../../assets/meeting/heart.png'),
         order: 0
     },
+    "pending": {
+        text: "Chưa trả lời",
+        order: 3
+    }
 };

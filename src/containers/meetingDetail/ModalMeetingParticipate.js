@@ -58,7 +58,7 @@ class ModalMeetingParticipate extends React.Component {
                                                style={styles.avatar}/>
                                         <View>
                                             <Text style={styles.name}>{participate.user.name}</Text>
-                                            { participate.note !== "" ?
+                                            { (participate.note !== "" && participate.note !== null) ?
                                                 <Text style={styles.titleStatus}>{participate.note}</Text>
                                                 :
                                                 <Text style={styles.titleStatus}>{status.text}</Text>

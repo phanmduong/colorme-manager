@@ -38,7 +38,12 @@ class ModalMeetingParticipate extends React.Component {
                                         <Image source={{uri: participate.user.avatar_url}}
                                                style={styles.avatar}/>
                                         <View>
-                                            <Text style={styles.name}>{participate.user.name}</Text>
+                                            <View style={{flexDirection: 'row'}}>
+                                                <Text style={styles.name}>{participate.user.name}  </Text>
+                                                <View style={styles.status}>
+                                                    <Image style={styles.iconStatus} source={status.icon}/>
+                                                </View>
+                                            </View>
                                             { (participate.note !== "" && participate.note !== null) ?
                                                 <Text numberOfLines={2} style={styles.titleStatus}>{participate.note}</Text>
                                                 :
@@ -46,9 +51,7 @@ class ModalMeetingParticipate extends React.Component {
                                             }
                                         </View>
                                     </View>
-                                    <View style={styles.status}>
-                                        <Image style={styles.iconStatus} source={status.icon}/>
-                                    </View>
+
                                 </View>
                             )
                         })
@@ -62,7 +65,7 @@ class ModalMeetingParticipate extends React.Component {
 const styles = {
     containerItem: {
         flexDirection: 'row',
-        justifyContent: "space-between",
+        justifyContent: "flex-start",
         alignItems: "center",
         width: width,
         marginVertical: 15,
@@ -87,15 +90,13 @@ const styles = {
         fontSize: 12,
         color: '#858585',
         marginTop: 2,
-        marginRight: 60
     },
     status: {
-        position: 'absolute',
-        right: 20
+        marginTop: 2
     },
     iconStatus: {
-        width: 36,
-        height: 36,
+        width: 13,
+        height: 13,
     },
     titleContainer: {
         justifyContent: 'center',

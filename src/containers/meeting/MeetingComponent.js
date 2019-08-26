@@ -49,6 +49,7 @@ class MeetingComponent extends React.Component {
                     <Loading/>
                     :
                     <ScrollView contentContainerStyle={{flexGrow: 1}}
+                                showsVerticalScrollIndicator={false}
                                 keyboardShouldPersistTaps={'handled'}
                                 refreshControl={
                                     <RefreshControl refreshing={refreshing} onRefresh={this.handleRefresh}

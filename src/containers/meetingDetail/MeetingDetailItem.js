@@ -44,6 +44,7 @@ class MeetingDetailItem extends React.Component {
         const totalCheckIn = participates.filter((item) => item.status == "check_in").length;
         const totalAccept = participates.filter((item) => item.status == "accept").length;
         const totalReject = participates.filter((item) => item.status == "reject").length;
+        const totalPending = participates.filter((item) => item.status == "pending").length;
 
         console.log(issues);
 
@@ -57,7 +58,6 @@ class MeetingDetailItem extends React.Component {
                             <View style={styles.statusParticipates}>
                                 <Text style={styles.textStatus}>
                                     <Text style={{fontWeight: 'bold'}}>{totalCheckIn} </Text>
-                                    check in
                                 </Text>
                                 <Image style={[styles.iconStatus]}
                                        source={getMeetingStatus('check_in').icon}/>
@@ -65,7 +65,6 @@ class MeetingDetailItem extends React.Component {
                             <View style={styles.statusParticipates}>
                                 <Text style={styles.textStatus}>
                                     <Text style={{fontWeight: 'bold'}}>{totalAccept} </Text>
-                                    tham gia
                                 </Text>
                                 <Image style={[styles.iconStatus]}
                                        source={getMeetingStatus('accept').icon}/>
@@ -73,10 +72,15 @@ class MeetingDetailItem extends React.Component {
                             <View style={styles.statusParticipates}>
                                 <Text style={styles.textStatus}>
                                     <Text style={{fontWeight: 'bold'}}>{totalReject} </Text>
-                                    nghỉ
                                 </Text>
                                 <Image style={[styles.iconStatus]}
                                        source={getMeetingStatus('reject').icon}/>
+                            </View>
+                            <View style={styles.statusParticipates}>
+                                <Text style={styles.textStatus}>
+                                    <Text style={{fontWeight: 'bold'}}>{totalPending} </Text>
+                                    chưa trả lời
+                                </Text>
                             </View>
 
                         </View>

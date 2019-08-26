@@ -41,10 +41,6 @@ class MeetingComponent extends React.Component {
         this.props.store.refreshMeetingDetail();
     };
 
-    openStoreMeeting = () => {
-        this.props.navigation.navigate("StoreMeeting");
-    }
-
     render() {
         const {isLoading, meetingsNow, meetingsSoon, refreshing} = this.props.store;
         return (

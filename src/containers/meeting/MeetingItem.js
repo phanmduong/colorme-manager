@@ -125,7 +125,7 @@ class MeetingItem extends React.Component {
                     </ImageBackground>
                     <View style={style.containerAction}>
                         {
-                            joined ?
+                            (joined && joined.status != "pending") ?
                                 <View>
                                     {
                                         joined.status != "reject" ?

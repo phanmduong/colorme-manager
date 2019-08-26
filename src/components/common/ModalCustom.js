@@ -2,10 +2,9 @@
  * Created by phanmduong on 9/29/18.
  */
 import React from 'react';
-import {Dimensions, Text, View} from 'react-native';
+import {Dimensions, Image, Text, TouchableWithoutFeedback, View} from 'react-native';
 import PropTypes from "prop-types"
 import Modal from 'react-native-modal';
-import {getStatusBarHeight} from 'react-native-iphone-x-helper'
 
 var {width} = Dimensions.get('window');
 
@@ -15,23 +14,16 @@ class ModalCustom extends React.Component {
     }
 
     render() {
-        let {height} = this.props;
-        if (!height) {
-            height = Dimensions.get('window').height / 2;
-        }
-        if (height >= Dimensions.get('window').height - getStatusBarHeight() - 30) {
-            height = Dimensions.get('window').height - getStatusBarHeight() - 30;
-        }
-
         return (
-            <Modal {...this.props} style={style.modal}
-                   swipeDirection="down"
-            >
-                <View style={style.line}/>
-                <View style={{...style.content, height}}>
-                    <Text style={style.title}>{this.props.title}</Text>
+            <Modal {...this.props} style={style.modal}>
+                <View style={style.content}>
                     {this.props.children}
                 </View>
+                <TouchableWithoutFeedback onPress={() => this.props.closeModal()}>
+                    <View style={style.closeView}>
+                        <Image source={require('../../../assets/img/closeIcon.png')} style={style.closeIcon} />
+                    </View>
+                </TouchableWithoutFeedback>
             </Modal>
         );
     }
@@ -42,28 +34,29 @@ const style = {
         justifyContent: 'flex-end',
         alignItems: "center",
         margin: 0,
-
-    },
-    line: {
-        width: width / 3,
-        height: 8,
-        borderRadius: 4,
-        backgroundColor: "white",
-        marginBottom: 8
+        flex: 1
     },
     content: {
         backgroundColor: "white",
-        borderTopLeftRadius: 8,
-        borderTopRightRadius: 8,
         width: width,
         justifyContent: "flex-start",
         alignItems: "center",
-        paddingTop: 10,
+        flex: 1
     },
-    title: {
-        fontSize: 20,
-        fontWeight: "bold",
-        marginVertical: 10
+    closeView: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#C0C0C0',
+        borderRadius: 40,
+        width: 30,
+        height: 30,
+        position: 'absolute',
+        top: 44,
+        right: 29
+    },
+    closeIcon: {
+        width: 20,
+        height: 20
     }
 }
 

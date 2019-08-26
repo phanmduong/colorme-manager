@@ -6,6 +6,7 @@ import {Dimensions, Image, Text, View, ScrollView} from 'react-native';
 import ModalCustom from "../../components/common/ModalCustom";
 import {observer} from "mobx-react";
 import {getMeetingStatus} from "../../helper";
+import {ifIphoneX} from 'react-native-iphone-x-helper'
 
 var {width} = Dimensions.get('window');
 
@@ -13,40 +14,18 @@ var {width} = Dimensions.get('window');
 class ModalMeetingParticipate extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.state = {
-            scrollOffset: 0
-        }
     }
-
-    handleOnScroll = event => {
-        this.setState({
-            scrollOffset: event.nativeEvent.contentOffset.y,
-        });
-    };
-
-    handleScrollTo = p => {
-        if (this.scrollViewRef) {
-            this.scrollViewRef.scrollTo(p);
-        }
-    };
 
     render() {
         const {isVisibleModalParticipate, participates} = this.props.store;
         return (
-            <ModalCustom title={"Thành phần tham gia (" + participates.length + ")"} height={1000}
-                         isVisible={isVisibleModalParticipate}
-                         onSwipeComplete={() =>
-                             this.props.store.isVisibleModalParticipate = false}
-                         scrollTo={this.handleScrollTo}
-                         scrollOffset={this.state.scrollOffset}
-                         scrollOffsetMax={1000} // content height - ScrollView height
-
+            <ModalCustom isVisible={isVisibleModalParticipate}
+                         closeModal={() => this.props.store.isVisibleModalParticipate = false}
             >
-                <ScrollView
-                    ref={ref => (this.scrollViewRef = ref)}
-                    onScroll={this.handleOnScroll}
-                    scrollEventThrottle={16}
-                >
+                <ScrollView scrollEventThrottle={16}>
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.title}>{"Thành phần tham gia (" + participates.length + ")"}</Text>
+                    </View>
                     {
                         participates.map((participate, index) => {
                             const status = getMeetingStatus(participate.status);
@@ -115,6 +94,20 @@ const styles = {
     iconStatus: {
         width: 36,
         height: 36,
+    },
+    titleContainer: {
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: "bold",
+        marginVertical: 10,
+        ...ifIphoneX({
+            marginTop: 44
+        }, {
+            marginTop: 34
+        })
     },
 }
 

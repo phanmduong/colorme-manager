@@ -1,7 +1,6 @@
 import React from'react';
-import {Image} from 'react-native'
+import {Image, TouchableOpacity, View, Linking} from 'react-native'
 import {
-    View,
     Text,
     Button
 } from 'native-base';
@@ -33,39 +32,47 @@ class ShiftRegisterItem extends React.Component {
         } else if (shift.user) {
             if (shift.user.id === user.id) {
                 return (
-                    <Button full style={styles.registeredByUser}
+                    <TouchableOpacity style={styles.registeredByUser}
                             onPress={() => onUnRegister(shift.id)}>
-                        <Image
-                            style={styles.avatar}
-                            source={{uri: shift.user.avatar_url}}
-                        />
-                        <Text style={styles.textRegisteredByUser}>
-                            {(shift.isLoadingUnRegisterError) ?
-                                "Hủy đăng kí thất bại. Thử lại." : shift.user.name
-                            }
-                        </Text>
-                    </Button>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <Image
+                                style={styles.avatar}
+                                source={{uri: shift.user.avatar_url}}
+                            />
+                            <Text style={styles.textRegisteredByUser}>
+                                {(shift.isLoadingUnRegisterError) ?
+                                    "Hủy đăng kí thất bại. Thử lại." : shift.user.name
+                                }
+                            </Text>
+                        </View>
+                        <Text style={{fontWeight: 'bold', color: 'white'}}>Hủy</Text>
+                    </TouchableOpacity>
                 );
             } else
                 return (
-                    <View style={styles.registered}>
-                        <Image
-                            style={styles.avatar}
-                            source={{uri: shift.user.avatar_url}}
-                        />
-                        <Text style={styles.textRegistered}>{shift.user.name}</Text>
-                    </View>
+                    <TouchableOpacity onPress={() => Linking.openURL(`tel:${shift.user.phone}`)}>
+                        <View style={styles.registered}>
+                            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                <Image
+                                    style={styles.avatar}
+                                    source={{uri: shift.user.avatar_url}}
+                                />
+                                <Text style={styles.textRegistered}>{shift.user.name}</Text>
+                            </View>
+                            <Text style={{fontWeight: 'bold'}}>Gọi</Text>
+                        </View>
+                    </TouchableOpacity>
                 )
         } else {
             return (
-                <Button full style={styles.register} onPress={() => onRegister(shift.id)}>
-                    <Text
-                        style={styles.textRegister}>
+                <TouchableOpacity style={styles.register} onPress={() => onRegister(shift.id)}>
+                    <Text style={styles.textRegister}>
                         {(shift.isLoadingRegisterError) ?
                             "Đăng kí thất bại. Thử lại." :
                             shift.name + ": " + shift.start_time + " - " + shift.end_time}
                     </Text>
-                </Button>
+                    <Text style={{fontWeight: 'bold', color: 'white'}}>Đăng kí</Text>
+                </TouchableOpacity>
             )
         }
     }
@@ -73,32 +80,32 @@ class ShiftRegisterItem extends React.Component {
 
 const styles = {
     register: {
-        backgroundColor: '#4dc151',
+        backgroundColor: '#00B241',
         marginVertical: 5,
-        padding: 5,
-        borderRadius: 3,
+        paddingHorizontal: 12,
+        borderRadius: 5,
         height: 40,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         flexDirection: 'row',
     },
     registered: {
-        backgroundColor: '#bdbdbd',
+        backgroundColor: '#F0F0F0',
         marginVertical: 5,
-        padding: 5,
-        borderRadius: 3,
+        paddingHorizontal: 12,
+        borderRadius: 5,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         flexDirection: 'row',
         height: 40,
     },
     registeredByUser: {
-        backgroundColor: '#d9534f',
+        backgroundColor: '#FF2624',
         marginVertical: 5,
-        padding: 5,
-        borderRadius: 3,
+        paddingHorizontal: 12,
+        borderRadius: 5,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         flexDirection: 'row',
         height: 40,
     },
@@ -117,8 +124,8 @@ const styles = {
         color: 'white'
     },
     avatar: {
-        width: 30,
-        height: 30,
+        width: 25,
+        height: 25,
         borderRadius: 15
     },
 };

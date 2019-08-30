@@ -304,8 +304,8 @@ const styles = ({
     gradientSize: {
         justifyContent: 'center',
         alignItems: 'center',
-        width: 104,
-        height: 42,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
         borderRadius: 24,
         marginLeft: 10
     },

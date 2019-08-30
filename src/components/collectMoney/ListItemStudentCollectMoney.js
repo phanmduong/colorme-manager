@@ -34,7 +34,7 @@ class ListItemStudentCollectMoney extends React.Component {
                 <Thumbnail small source={{uri: avatar}}/>
                 <View style={styles.content}>
                     <View style={styles.containerTitle}>
-                        <Text style={styles.title}>{name.trim().toUpperCase()}</Text>
+                        <Text style={styles.title}>{name.trim()}</Text>
                         {(this.state.onPressed) ?
                             (
                                 <Icon
@@ -99,7 +99,7 @@ class ListItemStudentCollectMoney extends React.Component {
                             {this.renderExpand()}
                         </View>
                     </TouchableOpacity>
-                    <View style={styles.line}/>
+                    {/*<View style={styles.line}/>*/}
                 </View>
             );
         } else {
@@ -111,7 +111,7 @@ class ListItemStudentCollectMoney extends React.Component {
                             {this.renderExpand()}
                         </View>
                     </TouchableNativeFeedback>
-                    <View style={styles.line}/>
+                    {/*<View style={styles.line}/>*/}
                 </View>
             );
         }
@@ -140,13 +140,14 @@ const styles = ({
         justifyContent: 'space-between'
     },
     title: {
-        color: '#555555',
+        color: '#000000',
         fontWeight: '900',
         fontSize: (Platform.isPad) ? 18 : 13
     },
     subTitle: {
         color: theme.colorSubTitle,
-        fontSize: 12
+        fontSize: 12,
+        paddingBottom: 5
     },
     icon: {
         fontSize: 20,
@@ -180,7 +181,7 @@ const styles = ({
     },
     textProcess: {
         color: theme.colorTitle,
-        fontSize: 12
+        fontSize: 13
     },
     containerSubTitle: {
         flexDirection: 'column'

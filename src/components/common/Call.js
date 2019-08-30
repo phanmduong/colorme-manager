@@ -28,7 +28,7 @@ class Call extends React.Component {
     renderTextPhone() {
         return (
             <View>
-                <Text style={styles.phone}>{formatPhone(this.props.phone)}</Text>
+                <Text style={[styles.phone, this.props.extraPadding]}>{formatPhone(this.props.phone)}</Text>
             </View>
         )
     }

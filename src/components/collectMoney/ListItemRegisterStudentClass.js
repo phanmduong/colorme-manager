@@ -21,7 +21,7 @@ class ListItemStudentCollectMoney extends React.Component {
         const {className, isPaid} = this.props;
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>{className.trim().toUpperCase()}</Text>
+                <Text style={styles.title}>{className.trim()}</Text>
                 {(Boolean(isPaid)) ?
                     (
                         <View style={styles.isPaid}>

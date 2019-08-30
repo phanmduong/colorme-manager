@@ -68,6 +68,7 @@ class ClassComponent extends React.Component {
                                     onLongPress={() => {
                                     }}
                                     button
+                                    style={{borderBottomWidth: 0}}
                                 >
                                     <Thumbnail small source={{uri: item.avatar_url}}/>
                                     <Body>
@@ -88,7 +89,7 @@ class ClassComponent extends React.Component {
                                         }
 
                                     </View>
-                                    <Text note>{item.study_time}</Text>
+                                    <Text note style={{paddingTop: 5}}>{item.study_time}</Text>
                                     </Body>
                                     <Right>
                                         <TouchableOpacity

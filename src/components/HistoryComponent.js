@@ -24,19 +24,25 @@ class HistoryComponent extends React.Component {
             <View style={{flex: 1}}>
                 <View style={styles.tabContainer}>
                     <LinearGradient colors={this.props.teachingShiftGradient}
-                                    style={styles.gradientSize}>
+                                    style={styles.gradientSize}
+                                    start={{ x: 0, y: 0 }}
+                                    end={{ x: 1, y: 0 }}>
                         <TouchableOpacity onPress={this.tabTeaching}>
                             <Text style={[styles.tabText, this.props.teachingShiftTextColor]}>Giảng dạy</Text>
                         </TouchableOpacity>
                     </LinearGradient>
                     <LinearGradient colors={this.props.workShiftGradient}
-                                    style={styles.gradientSize}>
+                                    style={styles.gradientSize}
+                                    start={{ x: 0, y: 0 }}
+                                    end={{ x: 1, y: 0 }}>
                         <TouchableOpacity onPress={this.tabWork}>
                             <Text style={[styles.tabText, this.props.workShiftTextColor]}>Làm việc</Text>
                         </TouchableOpacity>
                     </LinearGradient>
                     <LinearGradient colors={this.props.dutyShiftGradient}
-                                    style={styles.gradientSize}>
+                                    style={styles.gradientSize}
+                                    start={{ x: 0, y: 0 }}
+                                    end={{ x: 1, y: 0 }}>
                         <TouchableOpacity onPress={this.tabDuty}>
                             <Text style={[styles.tabText, this.props.dutyShiftTextColor]}>Trực</Text>
                         </TouchableOpacity>

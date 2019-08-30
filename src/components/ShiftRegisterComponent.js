@@ -112,7 +112,9 @@ class ShiftRegisterComponent extends React.Component {
         const { selectedItem, defaultText, getLabel } = settings
         return (
             <LinearGradient colors={['#E26800', '#E00000']}
-                            style={styles.gradientSize}>
+                            style={styles.gradientSize}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 0 }}>
                 {!selectedItem &&
                     (<Text style={{color: 'white'}}>Khóa {getLabel(defaultText)}</Text>)
                 }
@@ -163,7 +165,9 @@ class ShiftRegisterComponent extends React.Component {
         const { selectedItem, defaultText, getLabel } = settings
         return (
             <LinearGradient colors={['#E26800', '#E00000']}
-                            style={styles.gradientSize}>
+                            style={styles.gradientSize}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 0 }}>
                 {!selectedItem &&
                 (<Text style={{color: 'white'}}>{getLabel(defaultText)}</Text>)
                 }

@@ -17,8 +17,12 @@ import ShiftRegisterWeek from './shiftRegister/ShiftRegisterWeek';
 import * as alert from '../constants/alert';
 import { CustomPicker } from 'react-native-custom-picker'
 import LinearGradient from "react-native-linear-gradient";
+import {isIphoneX} from 'react-native-iphone-x-helper';
 
-const heightSwiper = (Platform.OS === 'ios') ? height - 250 : height - 180;
+const heightSwiper = (Platform.OS === 'ios') ? height - 165 : height - 180;
+
+
+
 let self;
 class ShiftRegisterComponent extends React.Component {
     constructor(props, context) {
@@ -71,10 +75,10 @@ class ShiftRegisterComponent extends React.Component {
 
     showShiftRegister() {
         if (this.props.shiftRegisterData.weeks) {
-            if (Platform.OS === 'ios') {
+            if (isIphoneX()) {
                 return (
                     <Swiper
-                        height={heightSwiper}
+                        height={height - 250}
                         loop={false}
                         showsPagination={false}
                     >
@@ -93,7 +97,7 @@ class ShiftRegisterComponent extends React.Component {
 
             return (
                 <Swiper
-                    height={height - 250}
+                    height={heightSwiper}
                     loop={false}
                     showsPagination={false}
                 >
@@ -212,11 +216,6 @@ class ShiftRegisterComponent extends React.Component {
                             defaultValue={courseOptions[0]}
                             getLabel={item => item.name}
                             modalAnimationType={'fade'}
-                            style={
-                                {
-                                    marginBottom: 10
-                                }
-                            }
                             optionTemplate={this.renderCoursePickerOption}
                             fieldTemplate={this.renderCoursePickerField}
                             headerTemplate={this.renderCoursePickerHeader}
@@ -233,11 +232,6 @@ class ShiftRegisterComponent extends React.Component {
                             defaultValue={baseOptions[0]}
                             getLabel={item => item.name}
                             modalAnimationType={'fade'}
-                            style={
-                                {
-                                    marginBottom: 10
-                                }
-                            }
                             optionTemplate={this.renderBasePickerOption}
                             fieldTemplate={this.renderBasePickerField}
                             headerTemplate={this.renderBasePickerHeader}

@@ -20,8 +20,8 @@ class ModalMeetingParticipate extends React.Component {
         const {isVisibleModalParticipate, participates} = this.props.store;
         return (
             <ModalCustom isVisible={isVisibleModalParticipate}
-                         animationInTiming={800}
-                         animationOutTiming={800}
+                         animationInTiming={500}
+                         animationOutTiming={500}
                          closeModal={() => this.props.store.isVisibleModalParticipate = false}
             >
                 <ScrollView scrollEventThrottle={16}>

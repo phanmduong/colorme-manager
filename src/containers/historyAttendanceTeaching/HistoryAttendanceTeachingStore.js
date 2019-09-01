@@ -1,61 +1,60 @@
-import {observable, action, computed} from "mobx";
-import {
-    historyAttendanceTeacherApi,
-} from "../../apis/checkInCheckOutApi";
-import {groupBy} from "../../helper";
-import {loadGenApi} from "../../apis/genApi";
+import {observable, action, computed} from 'mobx';
+import {historyAttendanceTeacherApi} from '../../apis/checkInCheckOutApi';
+import {groupBy} from '../../helper';
+import {loadGenApi} from '../../apis/genApi';
 
 class HistoryAttendanceTeachingStore {
-    @observable isLoading = false;
-    @observable attendances = [];
-    @observable error = false;
-    @observable isLoadingGen = false;
-    @observable gens = [];
-    @observable errorGen = false;
-    @observable selectedGenId = '';
+  @observable isLoading = false;
+  @observable attendances = [];
+  @observable error = false;
+  @observable isLoadingGen = false;
+  @observable gens = [];
+  @observable errorGen = false;
+  @observable selectedGenId = '';
 
-    @action
-    loadHistoryTeaching = (token) => {
-        this.isLoading = true;
-        this.error = false;
+  @action
+  loadHistoryTeaching = token => {
+    this.isLoading = true;
+    this.error = false;
 
-        historyAttendanceTeacherApi(this.selectedGenId, token)
-            .then((res) => {
-                this.attendances = res.data.data.teaching;
-            })
-            .catch(() => {
-                this.error = true;
-            })
-            .finally(() => {
-                this.isLoading = false;
-            })
-    }
+    historyAttendanceTeacherApi(this.selectedGenId, token)
+      .then(res => {
+        this.attendances = res.data.data.teaching;
+      })
+      .catch(() => {
+        this.error = true;
+      })
+      .finally(() => {
+        this.isLoading = false;
+      });
+  };
 
-    @action
-    loadGens = (token) => {
-        this.isLoadingGen = true;
-        this.errorGen = false;
+  @action
+  loadGens = token => {
+    this.isLoadingGen = true;
+    this.errorGen = false;
 
-        loadGenApi(token)
-            .then((res) => {
-                this.gens = res.data.data.gens;
-                this.selectedGenId = res.data.data.teaching_gen.id;
-                // this.selectedGenId = 33;
-            })
-            .catch(() => {
-                this.errorGen = true;
-            })
-            .finally(() => {
-                this.isLoadingGen = false;
-            })
-    }
+    loadGenApi(token)
+      .then(res => {
+        this.gens = res.data.data.gens;
+        this.selectedGenId = res.data.data.teaching_gen.id;
+        // this.selectedGenId = 33;
+      })
+      .catch(() => {
+        this.errorGen = true;
+      })
+      .finally(() => {
+        this.isLoadingGen = false;
+      });
+  };
 
-    @computed
-    get listAttendance() {
-        return groupBy(this.attendances, attendance => attendance.class_id, ["class", "lessons"]);
-
-    }
-
-};
+  @computed
+  get listAttendance() {
+    return groupBy(this.attendances, attendance => attendance.class_id, [
+      'class',
+      'lessons',
+    ]);
+  }
+}
 
 export default HistoryAttendanceTeachingStore;

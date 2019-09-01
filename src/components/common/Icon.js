@@ -13,55 +13,55 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const ICON_SET_MAP = {
-    ant: AntDesign,
-    fontawesome: FontAwesome,
-    foundation: Foundation,
-    ion: Ionicons,
-    material: MaterialIcons,
-    zocial: Zocial,
-    simpleline: SimpleLineIcons,
-    materialCommunity: MaterialCommunityIcons,
-    entypo: Entypo,
+  ant: AntDesign,
+  fontawesome: FontAwesome,
+  foundation: Foundation,
+  ion: Ionicons,
+  material: MaterialIcons,
+  zocial: Zocial,
+  simpleline: SimpleLineIcons,
+  materialCommunity: MaterialCommunityIcons,
+  entypo: Entypo,
 };
 
 // This is a composition is a drop in replacement for users migrating from the
 // react-native-icons module. Please don't use this component for new apps/views.
 export default class Icon extends React.Component {
-    // static propTypes = {
-    //     name: React.PropTypes.string.isRequired,
-    //     size: React.PropTypes.number,
-    //     color: React.PropTypes.string,
-    // };
+  // static propTypes = {
+  //     name: React.PropTypes.string.isRequired,
+  //     size: React.PropTypes.number,
+  //     color: React.PropTypes.string,
+  // };
 
-    setNativeProps(nativeProps) {
-        if (this.iconRef) {
-            this.iconRef.setNativeProps(nativeProps);
-        }
+  setNativeProps(nativeProps) {
+    if (this.iconRef) {
+      this.iconRef.setNativeProps(nativeProps);
+    }
+  }
+
+  iconRef = null;
+
+  handleComponentRef = ref => {
+    this.iconRef = ref;
+  };
+
+  render() {
+    const nameParts = this.props.name.split('|');
+    const setName = nameParts[0];
+    const name = nameParts[1];
+
+    const IconSet = ICON_SET_MAP[setName];
+    if (!IconSet) {
+      throw new Error(`Invalid icon set "${setName}"`);
     }
 
-    iconRef = null;
-
-    handleComponentRef = (ref) => {
-        this.iconRef = ref;
-    };
-
-    render() {
-        const nameParts = this.props.name.split('|');
-        const setName = nameParts[0];
-        const name = nameParts[1];
-
-        const IconSet = ICON_SET_MAP[setName];
-        if (!IconSet) {
-            throw new Error(`Invalid icon set "${setName}"`);
-        }
-
-        return (
-            <IconSet
-                allowFontScaling={false}
-                ref={this.handleComponentRef}
-                {...this.props}
-                name={name}
-            />
-        );
-    }
+    return (
+      <IconSet
+        allowFontScaling={false}
+        ref={this.handleComponentRef}
+        {...this.props}
+        name={name}
+      />
+    );
+  }
 }

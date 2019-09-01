@@ -5,52 +5,55 @@ import * as types from '../constants/actionTypes';
 import * as analyticsApi from '../apis/analyticsApi';
 
 export function beginDataDashboardLoad() {
-    return {
-        type: types.BEGIN_DATA_ANALYTICS_LOAD,
-        isLoading: true,
-        error: false
-    }
+  return {
+    type: types.BEGIN_DATA_ANALYTICS_LOAD,
+    isLoading: true,
+    error: false,
+  };
 }
 
 export function loadDataDashboard(baseId, genId, token) {
-    return function (dispatch) {
-        dispatch(beginDataDashboardLoad());
-        analyticsApi.loadDashboard(baseId, genId, token).then(function (res) {
-            dispatch(loadDataDashboardSuccessful(res));
-        }).catch(error => {
-            dispatch(loadDataDashboardError());
-            throw (error);
-        })
-    }
+  return function(dispatch) {
+    dispatch(beginDataDashboardLoad());
+    analyticsApi
+      .loadDashboard(baseId, genId, token)
+      .then(function(res) {
+        dispatch(loadDataDashboardSuccessful(res));
+      })
+      .catch(error => {
+        dispatch(loadDataDashboardError());
+        throw error;
+      });
+  };
 }
 
 export function loadDataDashboardSuccessful(res) {
-    return ({
-        type: types.LOAD_DATA_ANALYTICS_SUCCESSFUL,
-        dashboardData: res.data,
-        isLoading: false,
-        error: false
-    })
+  return {
+    type: types.LOAD_DATA_ANALYTICS_SUCCESSFUL,
+    dashboardData: res.data,
+    isLoading: false,
+    error: false,
+  };
 }
 
 export function loadDataDashboardError() {
-    return {
-        type: types.LOAD_DATA_ANALYTICS_ERROR,
-        isLoading: false,
-        error: true
-    }
+  return {
+    type: types.LOAD_DATA_ANALYTICS_ERROR,
+    isLoading: false,
+    error: true,
+  };
 }
 
 export function selectedBaseId(baseId) {
-    return {
-        type: types.SELECTED_BASE_ID_ANALYTICS,
-        selectedBaseId: baseId
-    }
+  return {
+    type: types.SELECTED_BASE_ID_ANALYTICS,
+    selectedBaseId: baseId,
+  };
 }
 
 export function selectedGenId(genId) {
-    return {
-        type: types.SELECTED_GEN_ID_ANALYTICS,
-        selectedGenId: genId
-    }
+  return {
+    type: types.SELECTED_GEN_ID_ANALYTICS,
+    selectedGenId: genId,
+  };
 }

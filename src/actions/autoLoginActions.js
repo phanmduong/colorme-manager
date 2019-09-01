@@ -4,8 +4,8 @@
 import * as types from '../constants/actionTypes';
 
 export function setAutoLogin(status) {
-    return {
-        type: types.SET_AUTO_LOGIN,
-        isAutoLogin: status
-    };
+  return {
+    type: types.SET_AUTO_LOGIN,
+    isAutoLogin: status,
+  };
 }

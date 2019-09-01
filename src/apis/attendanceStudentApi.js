@@ -5,15 +5,14 @@ import axios from 'axios';
 import * as env from '../constants/env';
 
 export function getInfoStudentApi(studentCode, token) {
-    let url = env.API_URL + "/studentcode/" + studentCode + "?token=" + token;
-    return axios.get(url);
+  let url = env.API_URL + '/studentcode/' + studentCode + '?token=' + token;
+  return axios.get(url);
 }
 
 export function postAttendanceStudentApi(attendanceId, token) {
-    let url = env.API_URL + "/attendances/" + attendanceId + "?token=" + token;
-    return axios.post(url,{
-        status : 1,
-        hw_status : 1
-    });
+  let url = env.API_URL + '/attendances/' + attendanceId + '?token=' + token;
+  return axios.post(url, {
+    status: 1,
+    hw_status: 1,
+  });
 }
-

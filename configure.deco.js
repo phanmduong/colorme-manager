@@ -1,17 +1,17 @@
-'use strict'
+'use strict';
 
-var child_process = require('child_process')
-var path = require('path')
+var child_process = require('child_process');
+var path = require('path');
 
 // You must use require for deco-tool, import/export is not supported
-var Deco = require('deco-tool')
+var Deco = require('deco-tool');
 
 // These are settings from the local projects .deco/.settings JSON file
-const iosTarget = Deco.setting.iosTarget
-const iosProject = Deco.setting.iosProject
-const iosBuildScheme = Deco.setting.iosBuildScheme
-const androidManifest = Deco.setting.androidManifest
-const packagerPort = Deco.setting.packagerPort
+const iosTarget = Deco.setting.iosTarget;
+const iosProject = Deco.setting.iosProject;
+const iosBuildScheme = Deco.setting.iosBuildScheme;
+const androidManifest = Deco.setting.androidManifest;
+const packagerPort = Deco.setting.packagerPort;
 
 /**
  *

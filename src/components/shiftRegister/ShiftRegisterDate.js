@@ -30,16 +30,14 @@ class ShiftRegisterDate extends React.Component {
   render() {
     return (
       <View style={styles.card}>
-        <Card>
-          <CardItem>
-            <Body style={styles.container}>
-              <View style={styles.date}>
-                <Text style={styles.textDate}>{this.props.dateData.date}</Text>
-              </View>
-              {this.renderShiftItem()}
-            </Body>
-          </CardItem>
-        </Card>
+        <View>
+          <View style={styles.container}>
+            <View style={styles.date}>
+              <Text style={styles.textDate}>{this.props.dateData.date}</Text>
+            </View>
+            {this.renderShiftItem()}
+          </View>
+        </View>
       </View>
     );
   }
@@ -54,11 +52,14 @@ const styles = {
   },
   card: {
     marginHorizontal: 10,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    backgroundColor: '#F7F8F7',
+    marginVertical: 10,
+    borderRadius: 5,
   },
   date: {
     padding: 5,
-    borderBottomColor: '#d3d3d3',
-    borderBottomWidth: 1,
     marginBottom: 5,
   },
   register: {

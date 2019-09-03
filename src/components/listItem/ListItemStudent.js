@@ -48,9 +48,7 @@ class ListItemStudent extends React.Component {
         <Thumbnail small source={{uri: avatar}} />
         <View style={styles.content}>
           <View style={styles.containerTitle}>
-            <Text style={styles.title}>
-              {name ? name.trim().toUpperCase() : ''}
-            </Text>
+            <Text style={styles.title}>{name ? name.trim() : ''}</Text>
             {this.state.onPressed ? (
               <Icon
                 style={styles.icon}
@@ -169,7 +167,11 @@ class ListItemStudent extends React.Component {
       return (
         <View style={styles.containerExpand}>
           <Text style={styles.email}>{email}</Text>
-          <Call url={'tel:' + phone} phone={phone} />
+          <Call
+            url={'tel:' + phone}
+            phone={phone}
+            extraPadding={{paddingTop: 5}}
+          />
         </View>
       );
     }
@@ -185,7 +187,6 @@ class ListItemStudent extends React.Component {
               {this.renderExpand()}
             </View>
           </TouchableOpacity>
-          <View style={styles.line} />
         </View>
       );
     } else {
@@ -197,7 +198,6 @@ class ListItemStudent extends React.Component {
               {this.renderExpand()}
             </View>
           </TouchableNativeFeedback>
-          <View style={styles.line} />
         </View>
       );
     }
@@ -225,13 +225,14 @@ const styles = {
     justifyContent: 'space-between',
   },
   title: {
-    color: '#555555',
+    color: 'black',
     fontWeight: '900',
     fontSize: Platform.isPad ? 18 : 13,
   },
   subTitle: {
     color: '#7d7d7d',
-    fontSize: 12,
+    fontSize: 13,
+    paddingTop: 5,
   },
   icon: {
     fontSize: 20,

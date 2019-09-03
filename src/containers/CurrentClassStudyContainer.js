@@ -16,8 +16,9 @@ class CurrentClassStudyContainer extends React.Component {
   }
 
   componentWillMount() {
-    // this.props.currentClassStudyActions
-    //     .loadDataCurrentClassStudy(this.props.token);
+    this.props.currentClassStudyActions.loadDataCurrentClassStudy(
+      this.props.token,
+    );
   }
 
   onSelectedItem(classItem) {

@@ -18,7 +18,7 @@ class ListItemStudentCollectMoney extends React.Component {
     const {className, isPaid} = this.props;
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>{className.trim().toUpperCase()}</Text>
+        <Text style={styles.title}>{className.trim()}</Text>
         {isPaid ? (
           <View style={styles.isPaid}>
             <Text style={styles.textIsPaid}>Đã nộp tiền</Text>
@@ -60,7 +60,7 @@ const styles = {
     paddingVertical: 10,
   },
   title: {
-    color: '#555555',
+    color: 'black',
     fontWeight: '900',
     fontSize: Platform.isPad ? 18 : 13,
     width: width / 2 - 50,

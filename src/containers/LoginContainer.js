@@ -22,7 +22,6 @@ class LoginContainer extends React.Component {
   }
 
   componentWillMount() {
-    SplashScreen.hide();
     this.props.loginActions.getDataLogin();
   }
 

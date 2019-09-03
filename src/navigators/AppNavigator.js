@@ -1,17 +1,39 @@
 /**
  * Created by phanmduong on 6/7/17.
  */
-import React, {PropTypes} from 'react';
-import {connect} from 'react-redux';
+import React from 'react';
 import {StatusBar, View, BackHandler} from 'react-native';
-import {createAppContainer} from 'react-navigation';
+import {
+  createAppContainer,
+  createSwitchNavigator,
+  NavigationActions,
+} from 'react-navigation';
 import {routeConfigs, navigationOptions} from './AppRouteConfigs';
 import material from '../native-base-theme/variables/material';
-import {createStackNavigator} from 'react-navigation-stack';
 
-export const AppNavigator = createAppContainer(
-  createStackNavigator(routeConfigs, navigationOptions),
-);
+const MainNavigation = createSwitchNavigator(routeConfigs, navigationOptions);
+
+const previousGetActionForPathAndParams =
+  MainNavigation.router.getActionForPathAndParams;
+
+Object.assign(MainNavigation.router, {
+  getActionForPathAndParams(path: string, params: any) {
+    const isAuthLink = path.startsWith('auth-link');
+
+    if (isAuthLink) {
+      return NavigationActions.navigate({
+        routeName: 'AuthLoading',
+        params: {...params, path},
+      });
+    }
+
+    return previousGetActionForPathAndParams(path, params);
+  },
+});
+
+export const AppNavigator = createAppContainer(MainNavigation);
+
+const prefix = 'colorme-manager://';
 
 class AppWithNavigationState extends React.Component {
   constructor(props) {
@@ -29,7 +51,6 @@ class AppWithNavigationState extends React.Component {
 
   handleBack() {
     const {dispatch, nav} = this.props;
-    console.log(nav);
     if (this.shouldCloseApp(nav)) {
       return false;
     }
@@ -44,23 +65,16 @@ class AppWithNavigationState extends React.Component {
   }
 
   render() {
-    const {dispatch, nav, statusBar} = this.props;
     return (
       <View style={{flex: 1}}>
         <StatusBar
           backgroundColor={material.statusBarColor}
-          barStyle={statusBar.color}
+          barStyle={material.iosStatusbar}
         />
-        {/*<AppNavigator navigation={addNavigationHelpers({dispatch, state: nav})}/>*/}
-        <AppNavigator />
+        <AppNavigator uriPrefix={prefix} />
       </View>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  nav: state.nav,
-  statusBar: state.statusBar,
-});
-
-export default connect(mapStateToProps)(AppWithNavigationState);
+export default AppWithNavigationState;

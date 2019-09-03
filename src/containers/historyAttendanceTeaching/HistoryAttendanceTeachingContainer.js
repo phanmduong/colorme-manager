@@ -4,128 +4,129 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Dimensions} from 'react-native';
-import {observer} from "mobx-react";
-import HistoryAttendanceTeachingStore from "./HistoryAttendanceTeachingStore";
-import Spinkit from "react-native-spinkit";
-import theme from "../../styles";
-import {Button, Container, Item, Picker, Text, View} from "native-base";
-import ListHistoryAttendanceTeaching from "./ListHistoryAttendanceTeaching";
-import * as alert from "../../constants/alert";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import {observer} from 'mobx-react';
+import HistoryAttendanceTeachingStore from './HistoryAttendanceTeachingStore';
+import Spinkit from 'react-native-spinkit';
+import theme from '../../styles';
+import {Button, Container, Item, Picker, Text, View} from 'native-base';
+import ListHistoryAttendanceTeaching from './ListHistoryAttendanceTeaching';
+import * as alert from '../../constants/alert';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 var {height, width} = Dimensions.get('window');
 
 @observer
 class HistoryAttendanceTeachingContainer extends React.Component {
-    constructor(props, context) {
-        super(props, context);
-        this.store = new HistoryAttendanceTeachingStore();
-    }
+  constructor(props, context) {
+    super(props, context);
+    this.store = new HistoryAttendanceTeachingStore();
+  }
 
+  static navigationOptions = ({navigation}) => ({
+    title: 'Lịch sử lịch giảng dạy',
+  });
 
-    static navigationOptions = ({navigation}) => ({
-        title: "Lịch sử lịch giảng dạy"
-    });
+  componentWillMount() {
+    this.loadData();
+    this.store.loadGens(this.props.token);
+  }
 
-    componentWillMount() {
-        this.loadData();
-        this.store.loadGens(this.props.token);
-    };
+  loadData = () => {
+    this.store.loadHistoryTeaching(this.props.token);
+  };
 
-    loadData = () => {
-        this.store.loadHistoryTeaching(this.props.token)
-    };
+  errorData() {
+    const {error} = this.store;
+    return (
+      <View style={styles.container}>
+        <Text style={styles.textError}>
+          {error ? alert.LOAD_DATA_ERROR : alert.NO_DATA_CLASS}
+        </Text>
+        <Button
+          iconLeft
+          danger
+          small
+          onPress={this.loadData}
+          style={{marginTop: 10, alignSelf: null}}>
+          <MaterialCommunityIcons name="reload" color="white" size={20} />
+          <Text>Thử lại</Text>
+        </Button>
+      </View>
+    );
+  }
 
-    errorData() {
-        const {error} = this.store;
-        return (
-            <View style={styles.container}>
-                <Text
-                    style={styles.textError}>{(error) ? alert.LOAD_DATA_ERROR : alert.NO_DATA_CLASS}</Text>
-                <Button iconLeft danger small onPress={this.loadData}
-                        style={{marginTop: 10, alignSelf: null}}>
-                    <MaterialCommunityIcons name='reload' color='white' size={20}/>
-                    <Text>Thử lại</Text>
-                </Button>
-            </View>
-        )
-    }
+  onSelectGenId = genId => {
+    this.store.selectedGenId = genId;
+    this.loadData();
+  };
 
-    onSelectGenId = (genId) => {
-        this.store.selectedGenId = genId;
-        this.loadData();
-    };
-
-    render() {
-        const {isLoading, error, attendances, gens, selectedGenId} = this.store;
-        return (
-            <Container>
-                <View style={styles.containerPicker}>
-                    <Picker
-                        style={{width: width / 2, padding: 0, margin: 0}}
-                        iosHeader="Chọn khóa học"
-                        mode="dialog"
-                        defaultLabel={"Chọn khóa"}
-                        selectedValue={selectedGenId}
-                        onValueChange={this.onSelectGenId}>
-                        {gens.map(function (gen, index) {
-                            return (<Item label={"Khóa " + gen.name} value={gen.id} key={index}/>)
-                        })}
-                    </Picker>
-                </View>
-                {
-                    isLoading ?
-                        <View style={styles.container}>
-                            <Spinkit
-                                isVisible
-                                color={theme.mainColor}
-                                type='Wave'
-                                size={width / 8}
-                            />
-                        </View> :
-                        (
-                            (error || (attendances && attendances.length <= 0)) ?
-                                this.errorData() :
-                                <ListHistoryAttendanceTeaching store={this.store}/>
-                        )
-                }
-
-            </Container>
-        )
-    }
+  render() {
+    const {isLoading, error, attendances, gens, selectedGenId} = this.store;
+    return (
+      <Container>
+        <View style={styles.containerPicker}>
+          <Picker
+            style={{width: width / 2, padding: 0, margin: 0}}
+            iosHeader="Chọn khóa học"
+            mode="dialog"
+            defaultLabel={'Chọn khóa'}
+            selectedValue={selectedGenId}
+            onValueChange={this.onSelectGenId}>
+            {gens.map(function(gen, index) {
+              return (
+                <Item label={'Khóa ' + gen.name} value={gen.id} key={index} />
+              );
+            })}
+          </Picker>
+        </View>
+        {isLoading ? (
+          <View style={styles.container}>
+            <Spinkit
+              isVisible
+              color={theme.mainColor}
+              type="Wave"
+              size={width / 8}
+            />
+          </View>
+        ) : error || (attendances && attendances.length <= 0) ? (
+          this.errorData()
+        ) : (
+          <ListHistoryAttendanceTeaching store={this.store} />
+        )}
+      </Container>
+    );
+  }
 }
 
-const styles = ({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+const styles = {
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textError: {
+    color: '#d9534f',
+    textAlign: 'center',
+  },
+  containerPicker: {
+    flexDirection: 'row',
+    borderBottomColor: theme.borderColor,
+    borderBottomWidth: 1,
+    shadowColor: '#b4b4b4',
+    shadowOffset: {
+      width: 0,
+      height: 0,
     },
-    textError: {
-        color: '#d9534f',
-        textAlign: 'center'
-    },
-    containerPicker: {
-        flexDirection: 'row',
-        borderBottomColor: theme.borderColor,
-        borderBottomWidth: 1,
-        shadowColor: '#b4b4b4',
-        shadowOffset: {
-            width: 0,
-            height: 0
-        },
-        elevation: 0.5,
-        shadowOpacity: 0.5
-    },
-});
-
+    elevation: 0.5,
+    shadowOpacity: 0.5,
+  },
+};
 
 function mapStateToProps(state) {
-    return {
-        token: state.login.token,
-        user: state.login.user
-    };
+  return {
+    token: state.login.token,
+    user: state.login.user,
+  };
 }
-
 
 export default connect(mapStateToProps)(HistoryAttendanceTeachingContainer);

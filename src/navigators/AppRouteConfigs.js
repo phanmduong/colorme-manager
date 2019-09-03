@@ -1,8 +1,8 @@
 /**
  * Created by phanmduong on 6/7/17.
  */
-import * as React from "react";
-import {createBottomTabNavigator, createStackNavigator} from 'react-navigation';
+import * as React from 'react';
+import {createBottomTabNavigator} from 'react-navigation-tabs';
 import theme from '../styles';
 import LoginContainer from '../containers/LoginContainer';
 import ClassContainer from '../containers/ClassContainer';
@@ -22,177 +22,204 @@ import SidebarContainer from '../containers/SidebarContainer';
 import TabIcon from '../components/common/TabIcon';
 import MenuButton from '../components/common/MenuButton';
 import CheckInContainer from '../containers/CheckInContainer';
-import ListStudentAttendanceContainer from "../containers/ListStudentAttendanceContainer";
-import HistoryAttendanceShiftContainer from "../containers/historyAttendanceShift/HistoryAttendanceShiftContainer";
-import HistoryAttendanceTeachingContainer
-    from "../containers/historyAttendanceTeaching/HistoryAttendanceTeachingContainer";
-import QRCodeContainer from "../containers/QRCodeContainer";
-import AttendanceStudentContainer from "../containers/AttendanceStudentContainer";
-import AccurateStudentContainer from "../containers/accurateStudent/AccurateStudentContainer";
-import TabBar from "../components/common/TabBar";
-import DashboardContainer from "../containers/DashboardContainer";
-import MeetingContainer from "../containers/meeting/MeetingContainer";
-import MeetingDetailContainer from "../containers/meetingDetail/MeetingDetailContainer";
-import HistoryContainer from "../containers/HistoryContainer";
-import HistoryAttendanceWorkShiftContainer
-    from "../containers/historyAttendanceShift/HistoryAttendanceWorkShiftContainer";
-import StoreMeetingContainer from "../containers/storeMeeting/StoreMeetingContainer";
+import ListStudentAttendanceContainer from '../containers/ListStudentAttendanceContainer';
+import HistoryAttendanceShiftContainer from '../containers/historyAttendanceShift/HistoryAttendanceShiftContainer';
+import HistoryAttendanceTeachingContainer from '../containers/historyAttendanceTeaching/HistoryAttendanceTeachingContainer';
+import QRCodeContainer from '../containers/QRCodeContainer';
+import AttendanceStudentContainer from '../containers/AttendanceStudentContainer';
+import AccurateStudentContainer from '../containers/accurateStudent/AccurateStudentContainer';
+import TabBar from '../components/common/TabBar';
+import DashboardContainer from '../containers/DashboardContainer';
+import MeetingContainer from '../containers/meeting/MeetingContainer';
+import MeetingDetailContainer from '../containers/meetingDetail/MeetingDetailContainer';
+import HistoryContainer from '../containers/HistoryContainer';
+import HistoryAttendanceWorkShiftContainer from '../containers/historyAttendanceShift/HistoryAttendanceWorkShiftContainer';
+import StoreMeetingContainer from '../containers/storeMeeting/StoreMeetingContainer';
+import {createStackNavigator} from 'react-navigation-stack';
 
 const navigationOptionsDefault = {
-    defaultNavigationOptions: {
-        headerStyle: {
-            borderBottomWidth: 0
-        },
-    }
+  defaultNavigationOptions: {
+    headerStyle: {
+      borderBottomWidth: 0,
+    },
+  },
 };
 
-const TabAttendance = createStackNavigator({
+const TabAttendance = createStackNavigator(
+  {
     CurrentClassStudy: {
-        screen: CurrentClassStudyContainer
+      screen: CurrentClassStudyContainer,
     },
     ListStudentAttendance: {
-        screen: ListStudentAttendanceContainer
+      screen: ListStudentAttendanceContainer,
     },
     QRCode: {
-        screen: QRCodeContainer
+      screen: QRCodeContainer,
     },
     AttendanceStudent: {
-        screen: AttendanceStudentContainer
-    }
-}, navigationOptionsDefault);
+      screen: AttendanceStudentContainer,
+    },
+  },
+  navigationOptionsDefault,
+);
 
-const TabShiftRegister = createStackNavigator({
+const TabShiftRegister = createStackNavigator(
+  {
     ShiftRegister: {
-        screen: ShiftRegisterContainer
-    }
-}, navigationOptionsDefault);
+      screen: ShiftRegisterContainer,
+    },
+  },
+  navigationOptionsDefault,
+);
 
-const TabDashboard = createStackNavigator({
+const TabDashboard = createStackNavigator(
+  {
     Dashboard: {
-        screen: DashboardContainer
+      screen: DashboardContainer,
     },
     Analytics: {
-        screen: AnalyticsContainer
+      screen: AnalyticsContainer,
     },
     Class: {
-        screen: ClassContainer
+      screen: ClassContainer,
     },
     ListStudentClass: {
-        screen: ListStudentClassContainer
+      screen: ListStudentClassContainer,
     },
     ListStudentPaid: {
-        screen: ListStudentPaidContainer
+      screen: ListStudentPaidContainer,
     },
     ListStudentZero: {
-        screen: ListStudentZeroContainer
+      screen: ListStudentZeroContainer,
     },
     RegisterList: {
-        screen: RegisterListContainer
+      screen: RegisterListContainer,
     },
     CheckIn: {
-        screen: CheckInContainer,
+      screen: CheckInContainer,
     },
     CheckOut: {
-        screen: CheckInContainer
+      screen: CheckInContainer,
     },
     HistoryAllAttendance: {
-        screen: HistoryContainer
+      screen: HistoryContainer,
     },
     HistoryAttendanceShift: {
-        screen: HistoryAttendanceShiftContainer
+      screen: HistoryAttendanceShiftContainer,
     },
     HistoryAttendanceWorkShift: {
-        screen: HistoryAttendanceWorkShiftContainer
+      screen: HistoryAttendanceWorkShiftContainer,
     },
     HistoryAttendanceTeaching: {
-        screen: HistoryAttendanceTeachingContainer
+      screen: HistoryAttendanceTeachingContainer,
     },
     AccurateStudent: {
-        screen: AccurateStudentContainer
+      screen: AccurateStudentContainer,
     },
     Meeting: {
-        screen: MeetingContainer,
+      screen: MeetingContainer,
     },
     MeetingDetail: {
-        screen: MeetingDetailContainer
+      screen: MeetingDetailContainer,
     },
     StoreMeeting: {
-        screen: StoreMeetingContainer
-    }
-}, {
+      screen: StoreMeetingContainer,
+    },
+  },
+  {
     defaultNavigationOptions: {
-        headerStyle: {
-            borderBottomWidth: 0
-        },
-    }
-});
+      headerStyle: {
+        borderBottomWidth: 0,
+      },
+    },
+  },
+);
 
-const TabCollectMoney = createStackNavigator({
+const TabCollectMoney = createStackNavigator(
+  {
     CollectMoney: {
-        screen: CollectMoneyContainer
+      screen: CollectMoneyContainer,
     },
     StudentRegisterClass: {
-        screen: StudentRegisterClassContainer
-    }
-}, navigationOptionsDefault);
+      screen: StudentRegisterClassContainer,
+    },
+  },
+  navigationOptionsDefault,
+);
 
-const TabMoneyTransfer = createStackNavigator({
+const TabMoneyTransfer = createStackNavigator(
+  {
     MoneyTransfer: {
-        screen: MoneyTransferContainer
-    }
-}, navigationOptionsDefault);
+      screen: MoneyTransferContainer,
+    },
+  },
+  navigationOptionsDefault,
+);
 
-const DashboardMain = createBottomTabNavigator({
+const DashboardMain = createBottomTabNavigator(
+  {
     TabAttendance: {
-        screen: TabAttendance,
-        navigationOptions: ({navigation}) => ({
-            tabBarLabel: 'Điểm danh',
-            tabBarIcon: ({tintColor}) => <TabIcon nameIcon="fontawesome|qrcode" color={tintColor}/>
-        }),
+      screen: TabAttendance,
+      navigationOptions: ({navigation}) => ({
+        tabBarLabel: 'Điểm danh',
+        tabBarIcon: ({tintColor}) => (
+          <TabIcon nameIcon="fontawesome|qrcode" color={tintColor} />
+        ),
+      }),
     },
     TabShiftRegister: {
-        screen: TabShiftRegister,
-        navigationOptions: ({navigation}) => ({
-            tabBarLabel: 'Lịch trực',
-            tabBarIcon: ({tintColor}) => <TabIcon nameIcon="fontawesome|edit" color={tintColor}/>
-        }),
+      screen: TabShiftRegister,
+      navigationOptions: ({navigation}) => ({
+        tabBarLabel: 'Lịch trực',
+        tabBarIcon: ({tintColor}) => (
+          <TabIcon nameIcon="fontawesome|edit" color={tintColor} />
+        ),
+      }),
     },
     TabDashboard: {
-        screen: TabDashboard,
-        navigationOptions: ({navigation}) => ({
-            tabBarLabel: 'Quản lý',
-            tabBarIcon: ({tintColor}) => <TabIcon nameIcon="material|apps" color={tintColor}/>,
-        }),
+      screen: TabDashboard,
+      navigationOptions: ({navigation}) => ({
+        tabBarLabel: 'Quản lý',
+        tabBarIcon: ({tintColor}) => (
+          <TabIcon nameIcon="material|apps" color={tintColor} />
+        ),
+      }),
     },
     TabCollectMoney: {
-        screen: TabCollectMoney,
-        navigationOptions: ({navigation}) => ({
-            tabBarLabel: 'Nộp tiền',
-            tabBarIcon: ({tintColor}) => <TabIcon nameIcon="material|attach-money" color={tintColor}/>
-        }),
+      screen: TabCollectMoney,
+      navigationOptions: ({navigation}) => ({
+        tabBarLabel: 'Nộp tiền',
+        tabBarIcon: ({tintColor}) => (
+          <TabIcon nameIcon="material|attach-money" color={tintColor} />
+        ),
+      }),
     },
     TabMoneyTransfer: {
-        screen: TabMoneyTransfer,
-        navigationOptions: ({navigation}) => ({
-            tabBarLabel: 'Chuyển tiền',
-            tabBarIcon: ({tintColor}) => <TabIcon nameIcon="entypo|wallet" color={tintColor}/>
-        }),
-    }
-}, {
+      screen: TabMoneyTransfer,
+      navigationOptions: ({navigation}) => ({
+        tabBarLabel: 'Chuyển tiền',
+        tabBarIcon: ({tintColor}) => (
+          <TabIcon nameIcon="entypo|wallet" color={tintColor} />
+        ),
+      }),
+    },
+  },
+  {
     // tabBarComponent: TabBarTop,
     tabBarComponent: TabBar,
     swipeEnabled: false,
     animationEnabled: true,
     tabBarOptions: {
-        showIcon: true,
-        showLabel: false,
-        activeTintColor: 'white',
-        inactiveTintColor: '#a8a8a8',
+      showIcon: true,
+      showLabel: false,
+      activeTintColor: 'white',
+      inactiveTintColor: '#a8a8a8',
     },
     initialRouteName: 'TabDashboard',
     tabBarPosition: 'bottom',
     backBehavior: 'none',
-});
+  },
+);
 //
 // const CheckIn = StackNavigator({
 //     CheckIn: {
@@ -339,25 +366,25 @@ const DashboardMain = createBottomTabNavigator({
 //     contentComponent: props => (<SidebarContainer {...props}/>)
 // });
 
-
-const Main = createStackNavigator({
+const Main = createStackNavigator(
+  {
     DashboardMain: {
-        screen: DashboardMain
+      screen: DashboardMain,
     },
-
-}, {headerMode: "none"});
-
+  },
+  {headerMode: 'none'},
+);
 
 export const routeConfigs = {
-    Login: {
-        screen: LoginContainer,
-    },
-    Main: {
-        screen: Main
-        // screen: MeetingDetailContainer
-    }
+  Login: {
+    screen: LoginContainer,
+  },
+  Main: {
+    screen: Main,
+    // screen: MeetingDetailContainer
+  },
 };
 
 export const navigationOptions = {
-    headerMode: 'none'
+  headerMode: 'none',
 };

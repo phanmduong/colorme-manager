@@ -3,42 +3,43 @@
  */
 import React from 'react';
 import {connect} from 'react-redux';
-import MeetingDetailStore from "./MeetingDetailStore";
-import {observer} from "mobx-react";
-import MeetingDetailComponent from "./MeetingDetailComponent";
+import MeetingDetailStore from './MeetingDetailStore';
+import {observer} from 'mobx-react';
+import MeetingDetailComponent from './MeetingDetailComponent';
 
 @observer
 class MeetingDetailContainer extends React.Component {
-    constructor(props) {
-        super(props);
-        const {navigation} = this.props;
-        const meetingId = navigation.getParam('meetingId', 0);
-        this.store = new MeetingDetailStore(props.token, meetingId);
-    }
+  constructor(props) {
+    super(props);
+    const {navigation} = this.props;
+    const meetingId = navigation.getParam('meetingId', 0);
+    this.store = new MeetingDetailStore(props.token, meetingId);
+  }
 
-    static navigationOptions = ({navigation}) => ({
-        title: 'Chi tiết buổi họp'
-    });
+  static navigationOptions = ({navigation}) => ({
+    title: 'Chi tiết buổi họp',
+  });
 
-    componentDidMount() {
-        this.store.loadList();
-    }
+  componentDidMount() {
+    this.store.loadList();
+  }
 
-    render() {
-        return (
-            <MeetingDetailComponent store={this.store} {...this.props}/>
-        );
-    }
+  render() {
+    return <MeetingDetailComponent store={this.store} {...this.props} />;
+  }
 }
 
 function mapStateToProps(state) {
-    return {
-        token: state.login.token,
-    };
+  return {
+    token: state.login.token,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-    return {};
+  return {};
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MeetingDetailContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(MeetingDetailContainer);

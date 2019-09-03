@@ -143,12 +143,14 @@ android {
         applicationId "vn.colorme.phanminhduong.colormemanager"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 34
+        versionCode 35
         versionName "2.0"
         missingDimensionStrategy 'react-native-camera', 'general'
 
         manifestPlaceholders = [onesignal_app_id               : "ceea18e8-322a-4748-b18b-fdf066d9a5ff",
                                 onesignal_google_project_number: "71360044341"]
+
+        multiDexEnabled true
 
     }
     splits {
@@ -221,6 +223,7 @@ dependencies {
     }
 
     implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'com.android.support:multidex:1.0.3'
 }
 
 // Run this once to be able to run the application with BUCK

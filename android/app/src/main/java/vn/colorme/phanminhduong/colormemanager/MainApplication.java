@@ -1,6 +1,6 @@
 package vn.colorme.phanminhduong.colormemanager;
 
-import android.app.Application;
+import androidx.multidex.MultiDexApplication;
 import android.util.Log;
 
 import com.facebook.react.PackageList;
@@ -15,7 +15,7 @@ import java.util.List;
 
 import vn.colorme.phanminhduong.colormemanager.modules.LocationPackage;
 
-public class MainApplication extends Application implements ReactApplication {
+public class MainApplication extends MultiDexApplication implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override

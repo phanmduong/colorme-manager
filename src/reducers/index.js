@@ -25,45 +25,44 @@ import collectMoneyReducer from './collectMoneyReducer';
 import moneyTransferReducer from './moneyTransferReducer';
 import checkInCheckOutReducer from './checkInCheckOutReducer';
 import listStudentAttendanceReducer from './listStudentAttendanceReducer';
-import {historyTabReducer} from "./historyTabReducer";
-
+import {historyTabReducer} from './historyTabReducer';
 
 const appReducer = combineReducers({
-    login: loginReducer,
-    autoLogin: autoLoginReducer,
-    base: baseReducer,
-    course: courseReducer,
-    gen: genReducer,
-    lessonCourse: lessonCourseReducer,
-    class: classReducer,
-    qrCode: QRCodeReducer,
-    attendanceStudent: attendanceStudentReducer,
-    currentClassStudy: currentClassStudyReducer,
-    shiftRegister: shiftRegisterReducer,
-    analytics: analyticsReducer,
-    listStudentClass: listStudentClassReducer,
-    registerList: registerListReducer,
-    nav: statusbarReducer,
-    statusBar: statusbarReducer,
-    collectMoney: collectMoneyReducer,
-    moneyTransfer: moneyTransferReducer,
-    listStudentPaid: listStudentPaidReducer,
-    listStudentZero: listStudentZeroReducer,
-    checkInCheckOut: checkInCheckOutReducer,
-    listStudentAttendance: listStudentAttendanceReducer,
-    historyTab: historyTabReducer
+  login: loginReducer,
+  autoLogin: autoLoginReducer,
+  base: baseReducer,
+  course: courseReducer,
+  gen: genReducer,
+  lessonCourse: lessonCourseReducer,
+  class: classReducer,
+  qrCode: QRCodeReducer,
+  attendanceStudent: attendanceStudentReducer,
+  currentClassStudy: currentClassStudyReducer,
+  shiftRegister: shiftRegisterReducer,
+  analytics: analyticsReducer,
+  listStudentClass: listStudentClassReducer,
+  registerList: registerListReducer,
+  nav: statusbarReducer,
+  statusBar: statusbarReducer,
+  collectMoney: collectMoneyReducer,
+  moneyTransfer: moneyTransferReducer,
+  listStudentPaid: listStudentPaidReducer,
+  listStudentZero: listStudentZeroReducer,
+  checkInCheckOut: checkInCheckOutReducer,
+  listStudentAttendance: listStudentAttendanceReducer,
+  historyTab: historyTabReducer,
 });
 
 const rootReducer = (state, action) => {
-    if (action.type === types.LOGOUT) {
-        state = {
-            autoLogin: {
-                isAutoLogin: false
-            }
-        }
-    }
+  if (action.type === types.LOGOUT) {
+    state = {
+      autoLogin: {
+        isAutoLogin: false,
+      },
+    };
+  }
 
-    return appReducer(state, action)
-}
+  return appReducer(state, action);
+};
 
 export default rootReducer;

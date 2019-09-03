@@ -1,6 +1,6 @@
 import color from 'color';
 
-import { Platform, Dimensions, PixelRatio } from 'react-native';
+import {Platform, Dimensions, PixelRatio} from 'react-native';
 
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
@@ -10,30 +10,30 @@ const platformStyle = undefined;
 export default {
   platformStyle,
   platform,
-    // AndroidRipple
+  // AndroidRipple
   androidRipple: true,
   androidRippleColor: 'rgba(256, 256, 256, 0.3)',
   androidRippleColorDark: 'rgba(0, 0, 0, 0.15)',
 
-    // Badge
+  // Badge
   badgeBg: '#ED1727',
   badgeColor: '#fff',
-    // New Variable
-  badgePadding: (platform === 'ios') ? 3 : 0,
+  // New Variable
+  badgePadding: platform === 'ios' ? 3 : 0,
 
-    // Button
-  btnFontFamily: (platform === 'ios') ? 'System' : 'Roboto_medium',
+  // Button
+  btnFontFamily: platform === 'ios' ? 'System' : 'Roboto_medium',
   btnDisabledBg: '#b5b5b5',
   btnDisabledClr: '#f1f1f1',
 
-    // CheckBox
-  CheckboxRadius: (platform === 'ios') ? 13 : 0,
-  CheckboxBorderWidth: (platform === 'ios') ? 1 : 2,
-  CheckboxPaddingLeft: (platform === 'ios') ? 4 : 2,
-  CheckboxPaddingBottom: (platform === 'ios') ? 0 : 5,
-  CheckboxIconSize: (platform === 'ios') ? 21 : 14,
-  CheckboxIconMarginTop: (platform === 'ios') ? undefined : 1,
-  CheckboxFontSize: (platform === 'ios') ? (23 / 0.9) : 18,
+  // CheckBox
+  CheckboxRadius: platform === 'ios' ? 13 : 0,
+  CheckboxBorderWidth: platform === 'ios' ? 1 : 2,
+  CheckboxPaddingLeft: platform === 'ios' ? 4 : 2,
+  CheckboxPaddingBottom: platform === 'ios' ? 0 : 5,
+  CheckboxIconSize: platform === 'ios' ? 21 : 14,
+  CheckboxIconMarginTop: platform === 'ios' ? undefined : 1,
+  CheckboxFontSize: platform === 'ios' ? 23 / 0.9 : 18,
   DefaultFontSize: 17,
   checkboxBgColor: '#039BE5',
   checkboxSize: 20,
@@ -46,12 +46,11 @@ export default {
   segmentActiveTextColor: '#3F51B5',
   segmentBorderColor: '#fff',
   segmentBorderColorMain: '#3F51B5',
-  
-    // New Variable
+
+  // New Variable
   get defaultTextColor() {
     return this.textColor;
   },
-
 
   get btnPrimaryBg() {
     return this.brandPrimary;
@@ -84,8 +83,7 @@ export default {
     return this.inverseTextColor;
   },
   get btnTextSize() {
-    return (platform === 'ios') ? this.fontSizeBase * 1.1 :
-        this.fontSizeBase - 1;
+    return platform === 'ios' ? this.fontSizeBase * 1.1 : this.fontSizeBase - 1;
   },
   get btnTextSizeLarge() {
     return this.fontSizeBase * 1.5;
@@ -106,12 +104,10 @@ export default {
     return this.iconFontSize * 0.6;
   },
 
-
-    // Card
+  // Card
   cardDefaultBg: '#fff',
 
-
-      // Color
+  // Color
   brandPrimary: '#2874F0',
   brandInfo: '#62B1F6',
   brandSuccess: '#5cb85c',
@@ -119,9 +115,8 @@ export default {
   brandWarning: '#f0ad4e',
   brandSidebar: '#252932',
 
-
-    // Font
-  fontFamily: (platform === 'ios') ? 'System' : 'Roboto',
+  // Font
+  fontFamily: platform === 'ios' ? 'System' : 'Roboto',
   fontSizeBase: 15,
 
   get fontSizeH1() {
@@ -134,54 +129,51 @@ export default {
     return this.fontSizeBase * 1.4;
   },
 
-
-    // Footer
+  // Footer
   footerHeight: 55,
   footerDefaultBg: '#2874F0',
 
-
-    // FooterTab
+  // FooterTab
   tabBarTextColor: '#8bb3f4',
-  tabBarTextSize: (platform === 'ios') ? 14 : 11,
-  activeTab: (platform === 'ios') ? '#007aff' : '#fff',
+  tabBarTextSize: platform === 'ios' ? 14 : 11,
+  activeTab: platform === 'ios' ? '#007aff' : '#fff',
   sTabBarActiveTextColor: '#007aff',
   tabBarActiveTextColor: '#fff',
-  tabActiveBgColor: (platform === 'ios') ? '#1569f4' : undefined,
+  tabActiveBgColor: platform === 'ios' ? '#1569f4' : undefined,
 
-    // Tab
+  // Tab
   tabDefaultBg: '#2874F0',
   topTabBarTextColor: '#b3c7f9',
   topTabBarActiveTextColor: '#fff',
-  topTabActiveBgColor: (platform === 'ios') ? '#1569f4' : undefined,
+  topTabActiveBgColor: platform === 'ios' ? '#1569f4' : undefined,
   topTabBarBorderColor: '#fff',
   topTabBarActiveBorderColor: '#fff',
 
-
-    // Header
+  // Header
   toolbarBtnColor: '#fff',
   toolbarDefaultBg: '#2874F0',
-  toolbarHeight: (platform === 'ios') ? 64 : 56,
-  toolbarIconSize: (platform === 'ios') ? 20 : 22,
-  toolbarSearchIconSize: (platform === 'ios') ? 20 : 23,
-  toolbarInputColor: (platform === 'ios') ? '#CECDD2' : '#fff',
-  searchBarHeight: (platform === 'ios') ? 30 : 40,
+  toolbarHeight: platform === 'ios' ? 64 : 56,
+  toolbarIconSize: platform === 'ios' ? 20 : 22,
+  toolbarSearchIconSize: platform === 'ios' ? 20 : 23,
+  toolbarInputColor: platform === 'ios' ? '#CECDD2' : '#fff',
+  searchBarHeight: platform === 'ios' ? 30 : 40,
   toolbarInverseBg: '#222',
   toolbarTextColor: '#fff',
   iosStatusbar: 'light-content',
   toolbarDefaultBorder: '#2874F0',
   get statusBarColor() {
-    return color(this.toolbarDefaultBg).darken(0.2).hexString();
+    return color(this.toolbarDefaultBg)
+      .darken(0.2)
+      .hexString();
   },
 
-
-    // Icon
+  // Icon
   iconFamily: 'Ionicons',
-  iconFontSize: (platform === 'ios') ? 30 : 28,
+  iconFontSize: platform === 'ios' ? 30 : 28,
   iconMargin: 7,
-  iconHeaderSize: (platform === 'ios') ? 33 : 24,
+  iconHeaderSize: platform === 'ios' ? 33 : 24,
 
-
-    // InputGroup
+  // InputGroup
   inputFontSize: 17,
   inputBorderColor: '#D9D5DC',
   inputSuccessBorderColor: '#2b8339',
@@ -202,85 +194,80 @@ export default {
     return this.inputPaddingLeft * 8;
   },
 
-
-    // Line Height
+  // Line Height
   btnLineHeight: 19,
   lineHeightH1: 32,
   lineHeightH2: 27,
   lineHeightH3: 22,
-  iconLineHeight: (platform === 'ios') ? 37 : 30,
-  lineHeight: (platform === 'ios') ? 20 : 24,
+  iconLineHeight: platform === 'ios' ? 37 : 30,
+  lineHeight: platform === 'ios' ? 20 : 24,
 
-
-    // List
+  // List
   listBorderColor: '#c9c9c9',
   listDividerBg: '#f4f4f4',
   listItemHeight: 45,
   listBtnUnderlayColor: '#DDD',
 
-    // Card
+  // Card
   cardBorderColor: '#ccc',
 
-    // Changed Variable
-  listItemPadding: (platform === 'ios') ? 10 : 12,
+  // Changed Variable
+  listItemPadding: platform === 'ios' ? 10 : 12,
 
   listNoteColor: '#808080',
   listNoteSize: 13,
 
-
-    // Progress Bar
+  // Progress Bar
   defaultProgressColor: '#E4202D',
   inverseProgressColor: '#1A191B',
 
-
-    // Radio Button
-  radioBtnSize: (platform === 'ios') ? 25 : 23,
+  // Radio Button
+  radioBtnSize: platform === 'ios' ? 25 : 23,
   radioSelectedColorAndroid: '#5067FF',
 
-    // New Variable
-  radioBtnLineHeight: (platform === 'ios') ? 29 : 24,
+  // New Variable
+  radioBtnLineHeight: platform === 'ios' ? 29 : 24,
 
   radioColor: '#7e7e7e',
 
   get radioSelectedColor() {
-    return color(this.radioColor).darken(0.2).hexString();
+    return color(this.radioColor)
+      .darken(0.2)
+      .hexString();
   },
 
-
-    // Spinner
+  // Spinner
   defaultSpinnerColor: '#45D56E',
   inverseSpinnerColor: '#1A191B',
 
-
-    // Tabs
+  // Tabs
   tabBgColor: '#F8F8F8',
   tabFontSize: 15,
   tabTextColor: '#222222',
 
-
-    // Text
+  // Text
   textColor: '#000',
   inverseTextColor: '#fff',
   noteFontSize: 14,
 
-
-    // Title
-  titleFontfamily: (platform === 'ios') ? 'System' : 'Roboto_medium',
-  titleFontSize: (platform === 'ios') ? 17 : 19,
-  subTitleFontSize: (platform === 'ios') ? 12 : 14,
+  // Title
+  titleFontfamily: platform === 'ios' ? 'System' : 'Roboto_medium',
+  titleFontSize: platform === 'ios' ? 17 : 19,
+  subTitleFontSize: platform === 'ios' ? 12 : 14,
   subtitleColor: '#FFF',
 
-    // New Variable
+  // New Variable
   titleFontColor: '#FFF',
 
-
-    // Other
-  borderRadiusBase: (platform === 'ios') ? 5 : 2,
-  borderWidth: (1/PixelRatio.getPixelSizeForLayoutSize(1)),
+  // Other
+  borderRadiusBase: platform === 'ios' ? 5 : 2,
+  borderWidth: 1 / PixelRatio.getPixelSizeForLayoutSize(1),
   contentPadding: 10,
 
   get darkenHeader() {
-    return color(this.tabBgColor).darken(0.03).hexString();
+    return color(this.tabBgColor)
+      .darken(0.03)
+      .hexString();
   },
 
   dropdownBg: '#000',
@@ -291,6 +278,6 @@ export default {
   deviceWidth,
   deviceHeight,
 
-    // New Variable
+  // New Variable
   inputGroupRoundedBorderRadius: 30,
 };

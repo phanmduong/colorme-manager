@@ -1,4 +1,4 @@
-import { Platform } from 'react-native';
+import {Platform} from 'react-native';
 import _ from 'lodash';
 
 import variable from './../variables/platform';
@@ -31,7 +31,7 @@ export default (variables = variable) => {
     backgroundColor: '#F0EFF5',
     flex: 1,
     justifyContent: 'center',
-    paddingLeft: variables.listItemPadding + 5
+    paddingLeft: variables.listItemPadding + 5,
   };
 
   return theme;

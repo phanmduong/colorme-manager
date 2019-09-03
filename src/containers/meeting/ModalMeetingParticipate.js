@@ -3,115 +3,121 @@
  */
 import React from 'react';
 import {Dimensions, Image, Text, View, ScrollView} from 'react-native';
-import ModalCustom from "../../components/common/ModalCustom";
-import {observer} from "mobx-react";
-import {getMeetingStatus} from "../../helper";
-import {ifIphoneX} from 'react-native-iphone-x-helper'
+import ModalCustom from '../../components/common/ModalCustom';
+import {observer} from 'mobx-react';
+import {getMeetingStatus} from '../../helper';
+import {ifIphoneX} from 'react-native-iphone-x-helper';
 
 var {width} = Dimensions.get('window');
 
 @observer
 class ModalMeetingParticipate extends React.Component {
-    constructor(props, context) {
-        super(props, context);
-    }
+  constructor(props, context) {
+    super(props, context);
+  }
 
-    render() {
-        const {isVisibleModalParticipate, participates} = this.props.store;
-        return (
-            <ModalCustom isVisible={isVisibleModalParticipate}
-                         animationInTiming={500}
-                         animationOutTiming={500}
-                         closeModal={() => this.props.store.isVisibleModalParticipate = false}
-            >
-                <ScrollView scrollEventThrottle={16}>
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.title}>{"Thành phần tham gia (" + participates.length + ")"}</Text>
+  render() {
+    const {isVisibleModalParticipate, participates} = this.props.store;
+    return (
+      <ModalCustom
+        isVisible={isVisibleModalParticipate}
+        animationInTiming={800}
+        animationOutTiming={800}
+        closeModal={() => (this.props.store.isVisibleModalParticipate = false)}>
+        <ScrollView scrollEventThrottle={16}>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>
+              {'Thành phần tham gia (' + participates.length + ')'}
+            </Text>
+          </View>
+          {participates.map((participate, index) => {
+            const status = getMeetingStatus(participate.status);
+            console.log(status);
+            return (
+              <View style={styles.containerItem} key={index}>
+                <View style={styles.containerPerson}>
+                  <Image
+                    source={{uri: participate.user.avatar_url}}
+                    style={styles.avatar}
+                  />
+                  <View>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text style={styles.name}>{participate.user.name} </Text>
+                      <View style={styles.status}>
+                        <Image style={styles.iconStatus} source={status.icon} />
+                      </View>
                     </View>
-                    {
-                        participates.map((participate, index) => {
-                            const status = getMeetingStatus(participate.status);
-                            console.log(status)
-                            return (
-                                <View style={styles.containerItem} key={index}>
-                                    <View style={styles.containerPerson}>
-                                        <Image source={{uri: participate.user.avatar_url}}
-                                               style={styles.avatar}/>
-                                        <View>
-                                            <View style={{flexDirection: 'row'}}>
-                                                <Text style={styles.name}>{participate.user.name}  </Text>
-                                                <View style={styles.status}>
-                                                    <Image style={styles.iconStatus} source={status.icon}/>
-                                                </View>
-                                            </View>
-                                            { (participate.note !== "" && participate.note !== null) ?
-                                                <Text numberOfLines={2} style={styles.titleStatus}>{participate.note}</Text>
-                                                :
-                                                <Text style={styles.titleStatus}>{status.text}</Text>
-                                            }
-                                        </View>
-                                    </View>
-
-                                </View>
-                            )
-                        })
-                    }
-                </ScrollView>
-            </ModalCustom>
-        );
-    }
+                    {participate.note !== '' && participate.note !== null ? (
+                      <Text numberOfLines={2} style={styles.titleStatus}>
+                        {participate.note}
+                      </Text>
+                    ) : (
+                      <Text style={styles.titleStatus}>{status.text}</Text>
+                    )}
+                  </View>
+                </View>
+              </View>
+            );
+          })}
+        </ScrollView>
+      </ModalCustom>
+    );
+  }
 }
 
 const styles = {
-    containerItem: {
-        flexDirection: 'row',
-        justifyContent: "flex-start",
-        alignItems: "center",
-        width: width,
-        marginVertical: 15,
-        paddingHorizontal: 20
-    },
-    containerPerson: {
-        flexDirection: 'row',
-        alignItems: "center",
-        justifyContent: "center"
-    },
-    person: {},
-    avatar: {
-        height: 36,
-        width: 36,
-        borderRadius: 18,
-        marginRight: 10
-    },
-    name: {
-        fontWeight: 'bold',
-    },
-    titleStatus: {
-        fontSize: 12,
-        color: '#858585',
-        marginTop: 2,
-    },
-    status: {
-        marginTop: 2
-    },
-    iconStatus: {
-        width: 13,
-        height: 13,
-    },
-    titleContainer: {
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: "bold",
-        marginVertical: 10,
-        ...ifIphoneX({
-            marginTop: 44
-        }, {
-            marginTop: 34
-        })
-    },
-}
+  containerItem: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: width,
+    marginVertical: 15,
+    paddingHorizontal: 20,
+  },
+  containerPerson: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  person: {},
+  avatar: {
+    height: 36,
+    width: 36,
+    borderRadius: 18,
+    marginRight: 10,
+  },
+  name: {
+    fontWeight: 'bold',
+  },
+  titleStatus: {
+    fontSize: 12,
+    color: '#858585',
+    marginTop: 2,
+  },
+  status: {
+    marginTop: 2,
+  },
+  iconStatus: {
+    width: 13,
+    height: 13,
+  },
+  titleContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginVertical: 10,
+    ...ifIphoneX(
+      {
+        marginTop: 44,
+      },
+      {
+        marginTop: 34,
+      },
+    ),
+  },
+};
 
-export default (ModalMeetingParticipate);
+export default ModalMeetingParticipate;

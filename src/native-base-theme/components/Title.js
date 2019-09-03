@@ -1,4 +1,4 @@
-import { Platform } from 'react-native';
+import {Platform} from 'react-native';
 import _ from 'lodash';
 
 import variable from './../variables/platform';
@@ -8,10 +8,9 @@ export default (variables = variable) => {
     fontSize: variables.titleFontSize,
     fontFamily: variables.titleFontfamily,
     color: variables.titleFontColor,
-    fontWeight: (Platform.OS==='ios') ? '600' : undefined,
-    textAlign: 'center'
+    fontWeight: Platform.OS === 'ios' ? '600' : undefined,
+    textAlign: 'center',
   };
-
 
   return titleTheme;
 };

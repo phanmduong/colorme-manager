@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform, Dimensions} from 'react-native';
+import {Platform, Dimensions, TouchableOpacity} from 'react-native';
 import {Container, Button, View, Text, Picker, Item} from 'native-base';
 var {height, width} = Dimensions.get('window');
 import Spinkit from 'react-native-spinkit';
@@ -8,6 +8,9 @@ import Swiper from 'react-native-swiper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ShiftRegisterWeek from './shiftRegister/ShiftRegisterWeek';
 import * as alert from '../constants/alert';
+import {isIphoneX} from 'react-native-iphone-x-helper';
+import {CustomPicker} from 'react-native-custom-picker';
+import LinearGradient from 'react-native-linear-gradient';
 
 const heightSwiper = Platform.OS === 'ios' ? height - 165 : height - 180;
 let self;
@@ -70,9 +73,9 @@ class ShiftRegisterComponent extends React.Component {
 
   showShiftRegister() {
     if (this.props.shiftRegisterData.weeks) {
-      if (Platform.OS === 'ios') {
+      if (isIphoneX()) {
         return (
-          <Swiper height={heightSwiper} loop={false} showsPagination={false}>
+          <Swiper height={height - 250} loop={false} showsPagination={false}>
             {this.renderShiftRegister()}
           </Swiper>
         );
@@ -89,13 +92,91 @@ class ShiftRegisterComponent extends React.Component {
       }
 
       return (
-        <Swiper height={height - 250} loop={false} showsPagination={false}>
+        <Swiper height={heightSwiper} loop={false} showsPagination={false}>
           {this.renderShiftRegister()}
         </Swiper>
       );
     }
     return <View />;
   }
+
+  renderCoursePickerField = settings => {
+    const {selectedItem, defaultText, getLabel} = settings;
+    return (
+      <LinearGradient
+        colors={['#E26800', '#E00000']}
+        style={styles.gradientSize}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 0}}>
+        {!selectedItem && (
+          <Text style={{color: 'white'}}>Khóa {getLabel(defaultText)}</Text>
+        )}
+        {selectedItem && (
+          <Text style={{color: 'white'}}>Khóa {getLabel(selectedItem)}</Text>
+        )}
+      </LinearGradient>
+    );
+  };
+
+  renderCoursePickerOption = settings => {
+    const {item, getLabel} = settings;
+    return (
+      <View style={styles.options}>
+        <Text style={{fontSize: 16}}>Khóa {getLabel(item)}</Text>
+      </View>
+    );
+  };
+
+  renderCoursePickerHeader = () => {
+    return (
+      <View style={styles.headerFooterContainer}>
+        <Text style={styles.headerFooterText}>Chọn khóa học</Text>
+      </View>
+    );
+  };
+
+  renderCoursePickerFooter(action) {
+    return (
+      <TouchableOpacity
+        style={styles.headerFooterContainer}
+        onPress={action.close.bind(this)}>
+        <Text style={{color: '#C50000', fontSize: 19}}>Hủy</Text>
+      </TouchableOpacity>
+    );
+  }
+
+  renderBasePickerHeader = () => {
+    return (
+      <View style={styles.headerFooterContainer}>
+        <Text style={styles.headerFooterText}>Chọn cơ sở</Text>
+      </View>
+    );
+  };
+
+  renderBasePickerField = settings => {
+    const {selectedItem, defaultText, getLabel} = settings;
+    return (
+      <LinearGradient
+        colors={['#E26800', '#E00000']}
+        style={styles.gradientSize}>
+        {!selectedItem && (
+          <Text style={{color: 'white'}}>{getLabel(defaultText)}</Text>
+        )}
+        {selectedItem && (
+          <Text style={{color: 'white'}}>{getLabel(selectedItem)}</Text>
+        )}
+      </LinearGradient>
+    );
+  };
+
+  renderBasePickerOption = settings => {
+    const {item, getLabel} = settings;
+    return (
+      <View style={styles.options}>
+        <Text style={{fontSize: 16}}>{getLabel(item)}</Text>
+      </View>
+    );
+  };
 
   render() {
     if (
@@ -115,33 +196,51 @@ class ShiftRegisterComponent extends React.Component {
         </Container>
       );
     } else {
+      let courseOptions = [];
+      for (let i = 0; i < this.props.genData.length; i++) {
+        courseOptions.push(this.props.genData[i]);
+      }
+
+      let baseOptions = [];
+      for (let i = 0; i < this.props.baseData.length; i++) {
+        baseOptions.push(this.props.baseData[i]);
+      }
+
       return (
         <Container>
           <View style={styles.containerPicker}>
-            <Picker
-              style={{width: width / 2, padding: 0, margin: 0}}
-              iosHeader="Chọn khóa học"
-              mode="dialog"
-              defaultLabel={'Chọn khóa'}
-              selectedValue={this.props.selectedGenId}
-              onValueChange={this.props.onSelectGenId}>
-              {this.props.genData.map(function(gen, index) {
-                return (
-                  <Item label={'Khóa ' + gen.name} value={gen.id} key={index} />
-                );
-              })}
-            </Picker>
-            <Picker
-              style={{width: width / 2, padding: 0, margin: 0}}
-              iosHeader="Chọn cơ sở"
-              mode="dialog"
-              defaultLabel={'Chọn cơ sở'}
-              selectedValue={this.props.selectedBaseId}
-              onValueChange={this.props.onSelectBaseId}>
-              {this.props.baseData.map(function(base, index) {
-                return <Item label={base.name} value={base.id} key={index} />;
-              })}
-            </Picker>
+            <CustomPicker
+              options={courseOptions}
+              defaultValue={courseOptions[0]}
+              getLabel={item => item.name}
+              modalAnimationType={'fade'}
+              optionTemplate={this.renderCoursePickerOption}
+              fieldTemplate={this.renderCoursePickerField}
+              headerTemplate={this.renderCoursePickerHeader}
+              footerTemplate={this.renderCoursePickerFooter}
+              modalStyle={{
+                borderRadius: 6,
+              }}
+              onValueChange={value => {
+                this.props.onSelectGenId(value.id);
+              }}
+            />
+            <CustomPicker
+              options={baseOptions}
+              defaultValue={baseOptions[0]}
+              getLabel={item => item.name}
+              modalAnimationType={'fade'}
+              optionTemplate={this.renderBasePickerOption}
+              fieldTemplate={this.renderBasePickerField}
+              headerTemplate={this.renderBasePickerHeader}
+              footerTemplate={this.renderCoursePickerFooter}
+              modalStyle={{
+                borderRadius: 6,
+              }}
+              onValueChange={value => {
+                this.props.onSelectBaseId(value.id);
+              }}
+            />
           </View>
           {!this.props.isLoadingShiftRegister &&
           (this.props.errorShiftRegister ||
@@ -191,19 +290,34 @@ const styles = {
   },
   containerPicker: {
     flexDirection: 'row',
-    borderBottomColor: theme.borderColor,
-    borderBottomWidth: 1,
-    shadowColor: '#b4b4b4',
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    elevation: 0.5,
-    shadowOpacity: 0.5,
   },
   containerList: {
     borderTopColor: theme.borderColor,
     borderTopWidth: 1,
+  },
+  gradientSize: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 24,
+    marginLeft: 10,
+  },
+  headerFooterContainer: {
+    padding: 10,
+    alignItems: 'center',
+  },
+  headerFooterText: {
+    fontSize: 19,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  options: {
+    marginVertical: 10,
+    paddingVertical: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F0F0F0',
+    marginHorizontal: 20,
   },
 };
 

@@ -36,6 +36,7 @@ import HistoryContainer from '../containers/HistoryContainer';
 import HistoryAttendanceWorkShiftContainer from '../containers/historyAttendanceShift/HistoryAttendanceWorkShiftContainer';
 import StoreMeetingContainer from '../containers/storeMeeting/StoreMeetingContainer';
 import {createStackNavigator} from 'react-navigation-stack';
+import AuthLoadingContainer from '../containers/AuthLoadingContainer';
 
 const navigationOptionsDefault = {
   defaultNavigationOptions: {
@@ -379,12 +380,15 @@ export const routeConfigs = {
   Login: {
     screen: LoginContainer,
   },
+  AuthLoading: {
+    screen: AuthLoadingContainer,
+  },
   Main: {
     screen: Main,
-    // screen: MeetingDetailContainer
   },
 };
 
 export const navigationOptions = {
   headerMode: 'none',
+  initialRouteName: 'AuthLoading',
 };

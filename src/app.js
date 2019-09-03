@@ -14,7 +14,7 @@ import material from './native-base-theme/variables/material';
 // import {composeWithDevTools} from 'remote-redux-devtools';
 
 const store = createStore(reducers, {}, compose(applyMiddleware(thunk)));
-console.ignoredYellowBox = ['Warning: Each', 'Warning: Failed'];
+// console.ignoredYellowBox = ['Warning: Each', 'Warning: Failed'];
 
 console.disableYellowBox = true;
 

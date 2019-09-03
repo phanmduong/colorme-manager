@@ -2,13 +2,21 @@
  * Created by phanmduong on 4/5/17.
  */
 import React from 'react';
-import {Dimensions, Keyboard, Text, View, Platform} from 'react-native';
+import {
+  Dimensions,
+  Keyboard,
+  Text,
+  View,
+  Platform,
+  StatusBar,
+} from 'react-native';
 import {Form, InputGroup, Input, Button} from 'native-base';
 
 var {height, width} = Dimensions.get('window');
 import Spinkit from 'react-native-spinkit';
 import theme from '../styles';
 import LinearGradient from 'react-native-linear-gradient';
+import material from '../native-base-theme/variables/material';
 
 let self;
 

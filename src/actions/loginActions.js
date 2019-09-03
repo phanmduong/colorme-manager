@@ -3,7 +3,7 @@
  */
 import * as types from '../constants/actionTypes';
 import * as loadLoginApi from '../apis/loginApi';
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import DeviceInfo from 'react-native-device-info';
 import OneSignal from 'react-native-onesignal';
 
@@ -23,7 +23,7 @@ export function beginLogin() {
   };
 }
 
-export function loginUser(login, openMainScreen) {
+export function loginUser(login, openMainScreen, logout) {
   let device = {
     device_id: DeviceInfo.getUniqueID(),
     name: DeviceInfo.getModel(),
@@ -50,11 +50,14 @@ export function loginUser(login, openMainScreen) {
             }
             openMainScreen();
             // dispatch(openMainScreen(res));
-            dispatch(changeStatusBarColor('default'));
+            // dispatch(changeStatusBarColor('default'));
             dispatch(changeStatusTransaction(res.data.user));
           });
       })
       .catch(error => {
+        if (logout) {
+          logout();
+        }
         dispatch(loginError());
       });
   };

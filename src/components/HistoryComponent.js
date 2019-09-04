@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: 104,
-    height: 42,
+    height: 35,
     borderRadius: 24,
   },
   tabText: {

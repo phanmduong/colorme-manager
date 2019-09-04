@@ -81,11 +81,17 @@ class HistoryAttendanceShiftContainer extends React.Component {
       <Container>
         <View style={styles.containerPicker}>
           <Picker
-            style={{width: width / 2, padding: 0, margin: 0}}
             iosHeader="Chọn khóa học"
+            style={{marginLeft: -5}}
             mode="dialog"
             defaultLabel={'Chọn khóa'}
             selectedValue={selectedGenId}
+            textStyle={{
+              paddingHorizontal: 20,
+              paddingVertical: 10,
+              backgroundColor: '#F6F7F6',
+              borderRadius: 16,
+            }}
             onValueChange={this.onSelectGenId}>
             {gens.map(function(gen, index) {
               return (
@@ -94,11 +100,17 @@ class HistoryAttendanceShiftContainer extends React.Component {
             })}
           </Picker>
           <Picker
-            style={{width: width / 2, padding: 0, margin: 0}}
+            style={{marginLeft: -20}}
             iosHeader="Chọn cơ sở"
             mode="dialog"
             defaultLabel={'Chọn cơ sở'}
             selectedValue={selectedBaseId}
+            textStyle={{
+              paddingHorizontal: 20,
+              paddingVertical: 10,
+              backgroundColor: '#F6F7F6',
+              borderRadius: 16,
+            }}
             onValueChange={this.onSelectBaseId}>
             {bases.map(function(base, index) {
               return <Item label={base.name} value={base.id} key={index} />;
@@ -136,15 +148,6 @@ const styles = {
   },
   containerPicker: {
     flexDirection: 'row',
-    borderBottomColor: theme.borderColor,
-    borderBottomWidth: 1,
-    shadowColor: '#b4b4b4',
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    elevation: 0.5,
-    shadowOpacity: 0.5,
   },
 };
 

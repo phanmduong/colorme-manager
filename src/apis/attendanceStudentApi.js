@@ -16,3 +16,8 @@ export function postAttendanceStudentApi(attendanceId, token) {
     hw_status: 1,
   });
 }
+
+export function studentChangeStatusBlock(studentId, token, status) {
+  let url = env.API_URL + '/student-change-status-block/' + studentId + '?token=' + token;
+  return axios.put(url, {status});
+}

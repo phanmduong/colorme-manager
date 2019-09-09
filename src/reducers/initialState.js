@@ -357,6 +357,7 @@ export default {
     errorUpdate: false,
     statusRequestUpdated: -1,
     messageError: undefined,
+    isChangeStatusBlocking: false,
   },
   shiftRegister: {
     isLoading: false,

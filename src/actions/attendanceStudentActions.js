@@ -76,6 +76,10 @@ export function uploadImageStudent(file, studentId, imageField, token) {
       studentId,
       imageField,
       token,
+        (error)=>{
+        Alert.alert("Thông báo", "Tải ảnh lỗi");
+        console.log(error);
+        }
     );
   };
 }

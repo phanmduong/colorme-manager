@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, Dimensions, TouchableOpacity} from 'react-native';
+import {Image, Dimensions, TouchableOpacity, Alert} from 'react-native';
 import {Container, Button, List, View, Text} from 'native-base';
 
 var {height, width} = Dimensions.get('window');
@@ -9,6 +9,7 @@ import Loading from '../components/common/Loading';
 import * as alert from '../constants/alert';
 import ImageView from 'react-native-image-view';
 import ImagePicker from 'react-native-image-picker';
+import ImageResizer from 'react-native-image-resizer';
 
 const options = {
   title: 'Chọn ảnh',
@@ -46,13 +47,19 @@ class AttendanceStudentComponent extends React.Component {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        let source = {
-          uri: response.uri,
-          name: response.fileName ? response.fileName : 'image.png',
-          type: 'image/*',
-        };
-
-        this.props.uploadImage(source, imageField);
+        ImageResizer.createResizedImage(response.uri, 2000, 2000, 'JPEG', 100, 0)
+          .then(response => {
+            let source = {
+              uri: response.uri,
+              name: response.name ? response.name : 'image.png',
+              type: 'image/*',
+            };
+            this.props.uploadImage(source, imageField);
+          })
+          .catch(err => {
+            console.log(err)
+            Alert.alert('Thông báo', 'Nén thất bại');
+          });
 
         // You can also display the image using data:
         // const source = { uri: 'data:image/jpeg;base64,' + response.data };

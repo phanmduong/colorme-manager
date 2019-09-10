@@ -384,7 +384,7 @@ export const routeConfigs = {
     screen: AuthLoadingContainer,
   },
   Main: {
-    screen: AttendanceStudentContainer,
+    screen: Main,
   },
 };
 

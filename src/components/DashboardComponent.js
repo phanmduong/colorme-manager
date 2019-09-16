@@ -139,7 +139,7 @@ class DashboardComponent extends React.Component {
             // the 1 or 2 tab icons available will still line up vertically with the
             // above ones. The usage of 'height' to get correct proportions is very weird,
             // but it works, so I don't know why
-            marginLeft: height * 0.024,
+            marginLeft: height * 0.025,
           }}>
           <CircleTab
             iconImage={require('../../assets/img/icons8-time-card-90.png')}

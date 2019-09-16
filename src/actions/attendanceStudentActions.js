@@ -3,6 +3,9 @@
  */
 import * as types from '../constants/actionTypes';
 import * as attendanceStudentApi from '../apis/attendanceStudentApi';
+import {Alert} from 'react-native';
+import * as alert from '../constants/alert';
+import {uploadImage} from '../apis/studentApi';
 
 export function beginGetInforStudent() {
   return {
@@ -25,6 +28,59 @@ export function loadInfoStudent(studentCode, token) {
         dispatch(loadedInforStudentError(error.response.data));
         throw error;
       });
+  };
+}
+
+export function studentChangeStatusBlock(studentID, token, status) {
+  return function(dispatch) {
+    dispatch({
+      type: types.BEGIN_UNBLOCK_STUDENT,
+      isChangeStatusBlocking: true,
+    });
+    attendanceStudentApi
+      .studentChangeStatusBlock(studentID, token, status)
+      .then(function(res) {
+        dispatch({
+          type: types.LOAD_UNBLOCKING_STUDENT,
+          isChangeStatusBlocking: false,
+          student: res.data.student,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: types.ERROR_UNBLOCKING_STUDENT,
+          isChangeStatusBlocking: false,
+        });
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
+        throw error;
+      });
+  };
+}
+
+export function uploadImageStudent(file, studentId, imageField, token) {
+  return function(dispatch) {
+    dispatch({
+      type: types.BEGIN_UPLOAD_IMAGE_STUDENT,
+      imageField: imageField,
+    });
+    uploadImage(
+      file,
+      event => {
+        let data = JSON.parse(event.currentTarget.response);
+        dispatch({
+          type: types.UPLOAD_IMAGE_STUDENT,
+          imageField: imageField,
+          image_url: data.image_url,
+        });
+      },
+      studentId,
+      imageField,
+      token,
+        (error)=>{
+        Alert.alert("Thông báo", "Tải ảnh lỗi");
+        console.log(error);
+        }
+    );
   };
 }
 

@@ -48,7 +48,9 @@ export function loginUser(login, openMainScreen, logout) {
             } else {
               dispatch(loginSuccess(res, true));
             }
-            openMainScreen();
+            if (res.data.user.role > 0) {
+              openMainScreen();
+            }
             // dispatch(openMainScreen(res));
             // dispatch(changeStatusBarColor('default'));
             dispatch(changeStatusTransaction(res.data.user));

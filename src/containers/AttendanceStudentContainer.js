@@ -36,6 +36,10 @@ class AttendanceStudentContainer extends React.Component {
   }
 
   onLoadDataStudent() {
+    // this.props.attendanceStudentActions.loadInfoStudent(
+    //   'CM34132',
+    //   this.props.token,
+    // );
     this.props.attendanceStudentActions.loadInfoStudent(
       this.props.studentCode,
       this.props.token,
@@ -94,6 +98,31 @@ class AttendanceStudentContainer extends React.Component {
     );
   }
 
+  studentUnblock = () => {
+    this.props.attendanceStudentActions.studentChangeStatusBlock(
+      this.props.student.id,
+      this.props.token,
+      false,
+    );
+  };
+
+  studentBlock = () => {
+    this.props.attendanceStudentActions.studentChangeStatusBlock(
+      this.props.student.id,
+      this.props.token,
+      true,
+    );
+  };
+
+  uploadImage = (file, imageField) => {
+    this.props.attendanceStudentActions.uploadImageStudent(
+      file,
+      this.props.student.id,
+      imageField,
+      this.props.token,
+    );
+  };
+
   render() {
     return (
       <AttendanceStudentComponent
@@ -105,7 +134,12 @@ class AttendanceStudentContainer extends React.Component {
         orderLessonCourse={this.props.orderLessonCourse}
         messageError={this.props.messageError}
         onReload={this.onLoadDataStudent}
+        studentUnblock={this.studentUnblock}
+        studentBlock={this.studentBlock}
         error={this.props.errorLoad}
+        isChangeStatusBlocking={this.props.isChangeStatusBlocking}
+        goBack={this.popRouter}
+        uploadImage={this.uploadImage}
       />
     );
   }
@@ -120,6 +154,7 @@ function mapStateToProps(state) {
     student: state.attendanceStudent.student,
     attendance: state.attendanceStudent.attendance,
     errorLoad: state.attendanceStudent.errorLoad,
+    isChangeStatusBlocking: state.attendanceStudent.isChangeStatusBlocking,
     errorUpdate: state.attendanceStudent.errorUpdate,
     studentCode: state.attendanceStudent.studentCode,
     orderLessonCourse:

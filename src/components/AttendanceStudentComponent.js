@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, Dimensions, TouchableOpacity} from 'react-native';
+import {Image, Dimensions, TouchableOpacity, Alert} from 'react-native';
 import {Container, Button, List, View, Text} from 'native-base';
 
 var {height, width} = Dimensions.get('window');
@@ -8,7 +8,16 @@ import theme from '../styles';
 import Loading from '../components/common/Loading';
 import * as alert from '../constants/alert';
 import ImageView from 'react-native-image-view';
+import ImagePicker from 'react-native-image-picker';
+import ImageResizer from 'react-native-image-resizer';
 
+const options = {
+  title: 'Chọn ảnh',
+  storageOptions: {
+    skipBackup: true,
+    path: 'images',
+  },
+};
 class AttendanceStudentComponent extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -26,6 +35,37 @@ class AttendanceStudentComponent extends React.Component {
     })[0].id;
     this.props.onUpdateAttendance(attendanceId);
   }
+
+  uploadImage = imageField => {
+    ImagePicker.showImagePicker(options, response => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        ImageResizer.createResizedImage(response.uri, 2000, 2000, 'JPEG', 100, 0)
+          .then(response => {
+            let source = {
+              uri: response.uri,
+              name: response.name ? response.name : 'image.png',
+              type: 'image/*',
+            };
+            this.props.uploadImage(source, imageField);
+          })
+          .catch(err => {
+            console.log(err)
+            Alert.alert('Thông báo', 'Nén thất bại');
+          });
+
+        // You can also display the image using data:
+        // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+      }
+    });
+  };
 
   render() {
     if (this.props.isLoadingInfoStudent) {
@@ -55,6 +95,8 @@ class AttendanceStudentComponent extends React.Component {
         );
       } else {
         const images = this.getImages(this.props.student);
+        const hasEnoughImage =
+          this.props.student.image1 && this.props.student.image2;
         return (
           <View style={styles.container}>
             <View style={styles.containerFlex1}>
@@ -77,20 +119,36 @@ class AttendanceStudentComponent extends React.Component {
             <View style={styles.containerFlexImage}>
               {images.map((image, index) => {
                 return (
-                  <TouchableOpacity
-                    key={index}
-                    onPress={() =>
-                      this.setState({
-                        imageIndex: index,
-                        isImageViewVisible: true,
-                      })
-                    }>
-                    <Image
-                      style={styles.imageStudent}
-                      source={image.source}
-                      resizeMode="cover"
-                    />
-                  </TouchableOpacity>
+                  <View style={styles.viewImage}>
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() =>
+                        this.setState({
+                          imageIndex: index,
+                          isImageViewVisible: true,
+                        })
+                      }>
+                      <Image
+                        style={styles.imageStudent}
+                        source={image.source}
+                        resizeMode="cover"
+                      />
+                    </TouchableOpacity>
+                    <Button
+                      rounded
+                      small
+                      block
+                      style={[
+                        image.isUploading
+                          ? styles.disableButton
+                          : styles.button,
+                        {marginTop: 10},
+                      ]}
+                      onPress={() => this.uploadImage(image.name)}
+                      disabled={image.isUploading}>
+                      <Text>{image.isUploading ? 'Đang tải' : 'Đăng'}</Text>
+                    </Button>
+                  </View>
                 );
               })}
             </View>
@@ -104,24 +162,74 @@ class AttendanceStudentComponent extends React.Component {
               />
             </View>
             <View style={styles.viewButton}>
-              <Button
-                disabled={this.props.isUpdatingAttendanceStudent}
-                block
-                rounded
-                style={
-                  this.props.isUpdatingAttendanceStudent
-                    ? styles.disableButton
-                    : styles.button
-                }
-                onPress={this.updateAttendance}>
-                {this.props.isUpdatingAttendanceStudent ? (
-                  <Text>Đang cập nhật dữ liệu...</Text>
-                ) : (
-                  <Text>
-                    {'Điểm danh buổi ' + parseInt(this.props.orderLessonCourse)}
-                  </Text>
-                )}
-              </Button>
+              {this.props.student.is_blocked ? (
+                <View style={styles.viewButton}>
+                  <Button
+                    disabled={
+                      !hasEnoughImage || this.props.isChangeStatusBlocking
+                    }
+                    block
+                    rounded
+                    style={
+                      !hasEnoughImage || this.props.isChangeStatusBlocking
+                        ? styles.disableButton
+                        : styles.button
+                    }
+                    onPress={this.props.studentUnblock}>
+                    {this.props.isChangeStatusBlocking ? (
+                      <Text>Đang cập nhật dữ liệu...</Text>
+                    ) : (
+                      <Text>{'Mở khoá'}</Text>
+                    )}
+                  </Button>
+                  <Button
+                    bordered
+                    danger
+                    full
+                    rounded
+                    style={{marginTop: 10}}
+                    onPress={this.props.goBack}>
+                    <Text>Mời học viên ra về</Text>
+                  </Button>
+                </View>
+              ) : hasEnoughImage ? (
+                <Button
+                  disabled={this.props.isUpdatingAttendanceStudent}
+                  block
+                  rounded
+                  style={
+                    this.props.isUpdatingAttendanceStudent
+                      ? styles.disableButton
+                      : styles.button
+                  }
+                  onPress={this.updateAttendance}>
+                  {this.props.isUpdatingAttendanceStudent ? (
+                    <Text>Đang cập nhật dữ liệu...</Text>
+                  ) : (
+                    <Text>
+                      {'Điểm danh buổi ' +
+                        parseInt(this.props.orderLessonCourse)}
+                    </Text>
+                  )}
+                </Button>
+              ) : (
+                <Button
+                  disabled={this.props.isChangeStatusBlocking}
+                  block
+                  rounded
+                  style={
+                    this.props.isChangeStatusBlocking
+                      ? styles.disableButton
+                      : styles.button
+                  }
+                  onPress={this.props.studentBlock}>
+                  {this.props.isChangeStatusBlocking ? (
+                    <Text>Đang cập nhật dữ liệu...</Text>
+                  ) : (
+                    <Text>{'Khoá tài khoản'}</Text>
+                  )}
+                </Button>
+              )}
             </View>
             <ImageView
               glideAlways
@@ -179,6 +287,8 @@ class AttendanceStudentComponent extends React.Component {
         title: 'Ảnh 1',
         width: 1280,
         height: 960,
+        name: 'image1',
+        isUploading: student.isUploading_image1,
       },
       {
         source:
@@ -190,6 +300,8 @@ class AttendanceStudentComponent extends React.Component {
         title: 'Ảnh 2',
         width: 1280,
         height: 960,
+        name: 'image2',
+        isUploading: student.isUploading_image2,
       },
     ];
   }
@@ -276,6 +388,7 @@ const styles = {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'column',
     width: width - width / 8,
   },
   textName: {
@@ -289,6 +402,12 @@ const styles = {
   textError: {
     color: '#d9534f',
     textAlign: 'center',
+  },
+  viewImage: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    marginHorizontal: 10,
   },
 };
 

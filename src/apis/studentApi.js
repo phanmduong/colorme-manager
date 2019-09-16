@@ -63,7 +63,7 @@ export function searchStudentRegisterApi(sourceCancel = {}, search, token) {
   return axios.get(url, {cancelToken: sourceCancel.token});
 }
 
-export function uploadImage(file, completeHandler, id, imageField, token) {
+export function uploadImage(file, completeHandler, id, imageField, token, error) {
   let url = env.MANAGE_API_URL + '/upload-image-user';
   if (token) {
     url += '?token=' + token;
@@ -74,6 +74,7 @@ export function uploadImage(file, completeHandler, id, imageField, token) {
   formdata.append('image', imageField);
   let ajax = new XMLHttpRequest();
   ajax.addEventListener('load', completeHandler, false);
+  ajax.addEventListener('error', error);
   ajax.open('POST', url);
   ajax.send(formdata);
 }

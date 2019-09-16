@@ -102,7 +102,7 @@ const styles = {
     height: 40,
   },
   registeredByUser: {
-    backgroundColor: '#FF2624',
+    backgroundColor: '#F44336',
     marginVertical: 5,
     paddingHorizontal: 12,
     borderRadius: 5,

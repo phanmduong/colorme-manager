@@ -37,6 +37,7 @@ import HistoryAttendanceWorkShiftContainer from '../containers/historyAttendance
 import StoreMeetingContainer from '../containers/storeMeeting/StoreMeetingContainer';
 import {createStackNavigator} from 'react-navigation-stack';
 import AuthLoadingContainer from '../containers/AuthLoadingContainer';
+import WorkShiftRegisterContainer from '../containers/WorkShiftRegisterContainer';
 
 const navigationOptionsDefault = {
   defaultNavigationOptions: {
@@ -125,6 +126,9 @@ const TabDashboard = createStackNavigator(
     },
     StoreMeeting: {
       screen: StoreMeetingContainer,
+    },
+    WorkShiftRegister: {
+      screen: WorkShiftRegisterContainer,
     },
   },
   {

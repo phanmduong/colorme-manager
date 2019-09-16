@@ -472,4 +472,11 @@ export default {
     },
     tabComponent: <HistoryAttendanceTeachingContainer />,
   },
+  workShiftRegister: {
+    isLoading: false,
+    error: false,
+    workShiftRegisterData: {},
+    selectedBaseId: -1,
+    selectedGenId: -1,
+  },
 };

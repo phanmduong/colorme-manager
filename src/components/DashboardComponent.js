@@ -5,6 +5,7 @@ import React from 'react';
 import {Text, View, TouchableOpacity, Dimensions, Image} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import ScalableImage from 'react-native-scalable-image';
+var {height, width} = Dimensions.get('window');
 
 class CardMenu extends React.Component {
   constructor(props) {
@@ -126,6 +127,25 @@ class DashboardComponent extends React.Component {
             title={'Họp'}
             onPress={() => {
               this.props.navigation.navigate('Meeting');
+            }}
+          />
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            marginTop: 40,
+            justifyContent: 'flex-start',
+            // the margin left here is only here so that when there are not 3 tab icons,
+            // the 1 or 2 tab icons available will still line up vertically with the
+            // above ones. The usage of 'height' to get correct proportions is very weird,
+            // but it works, so I don't know why
+            marginLeft: height * 0.024,
+          }}>
+          <CircleTab
+            iconImage={require('../../assets/img/icons8-time-card-90.png')}
+            title={'ĐK làm việc'}
+            onPress={() => {
+              this.props.navigation.navigate('WorkShiftRegister');
             }}
           />
         </View>

@@ -66,16 +66,16 @@ class HistoryAttendanceTeachingContainer extends React.Component {
       <Container>
         <View style={styles.containerPicker}>
           <Picker
-            style={{marginLeft: -6}}
+            // style={{marginLeft: -6}}
             iosHeader="Chọn khóa học"
             mode="dialog"
             defaultLabel={'Chọn khóa'}
-            textStyle={{
-              paddingHorizontal: 20,
-              paddingVertical: 10,
-              backgroundColor: '#F6F7F6',
-              borderRadius: 16,
-            }}
+            // textStyle={{
+            //   paddingHorizontal: 20,
+            //   paddingVertical: 10,
+            //   backgroundColor: '#F6F7F6',
+            //   borderRadius: 16,
+            // }}
             selectedValue={selectedGenId}
             onValueChange={this.onSelectGenId}>
             {gens.map(function(gen, index) {

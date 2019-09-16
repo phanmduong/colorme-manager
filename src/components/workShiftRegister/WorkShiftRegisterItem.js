@@ -37,6 +37,15 @@ class WorkShiftRegisterItem extends React.Component {
     return false;
   };
 
+  processAuthorName = name => {
+    let processed = name.replace('\t\t', '');
+    processed = processed
+      .split(' ')
+      .splice(-2)
+      .join(' ');
+    return processed;
+  };
+
   render() {
     if (this.props.isRegistering) {
       return (
@@ -68,7 +77,7 @@ class WorkShiftRegisterItem extends React.Component {
               <Text style={styles.textRegisteredByUser}>
                 {this.props.errorUnregistering
                   ? 'Hủy đăng ký thất bất. Thử lại?'
-                  : this.props.user.name}
+                  : this.processAuthorName(this.props.user.name)}
               </Text>
             </View>
             <TouchableOpacity onPress={this.toggleModal}>

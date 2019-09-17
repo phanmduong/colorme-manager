@@ -32,7 +32,7 @@ class MeetingContainer extends React.Component {
   }
 
   render() {
-    return <MeetingComponent store={this.store} {...this.props} />;
+    return <MeetingComponent store={this.store} {...this.props} mainScreen={false}/>;
   }
 }
 

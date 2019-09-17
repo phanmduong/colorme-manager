@@ -2,99 +2,123 @@
  * Created by phanmduong on 9/29/18.
  */
 import React from 'react';
-import {View, Dimensions} from 'react-native';
+import {View, Dimensions, ScrollView, RefreshControl} from 'react-native';
 var {height, width} = Dimensions.get('window');
 import CardMenu from '../containers/dashboard/CardMenu';
 import CircleTab from '../containers/dashboard/CircleTab';
+import MeetingComponent from '../containers/meeting/MeetingComponent';
+import theme from '../styles';
 
 class DashboardComponent extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
 
+  handleRefresh = () => {
+    this.props.store.refreshMeetingDetail();
+  };
+
   render() {
+    const {refreshing} = this.props.store;
     return (
-      <View style={styles.container}>
-        <View style={styles.mainFeatureLine}>
-          <CardMenu
-            colorOne={'#E26800'}
-            colorTwo={'#E2DC50'}
-            checkInOutStyle={styles.checkInContainer}
-            standOutFontSize={{fontSize: 17}}
-            imageSource={require('../../assets/img/MiM-check-in.png')}
-            imageWidth={(Dimensions.get('window').width - 32) * 0.38}
-            title={'Check in'}
-            characterImgPosition={styles.checkInCharacterImgPosition}
-            onPress={() => {
-              this.props.navigation.navigate('CheckIn', {
-                title: 'Check in',
-                type: 'checkin',
-              });
-            }}
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={this.handleRefresh}
+            titleColor={theme.mainColor}
+            title="Đang tải..."
+            tintColor="#d9534f"
+            colors={['#d9534f']}
           />
-          <CardMenu
-            colorOne={'#6800E2'}
-            colorTwo={'#2F94EB'}
-            checkInOutStyle={styles.checkOutContainer}
-            imageSource={require('../../assets/img/MiM-check-out.png')}
-            imageWidth={(Dimensions.get('window').width - 32) * 0.3 * 0.7}
-            title={'Check out'}
-            characterImgPosition={styles.checkOutCharacterImgPosition}
-            onPress={() => {
-              this.props.navigation.navigate('CheckOut', {
-                title: 'Check out',
-                type: 'checkout',
-              });
-            }}
-          />
-          <CardMenu
-            colorOne={'#E20000'}
-            colorTwo={'#E29950'}
-            checkInOutStyle={styles.checkOutContainer}
-            imageSource={require('../../assets/img/MiM-history.png')}
-            imageWidth={(Dimensions.get('window').width - 32) * 0.26 * 0.9}
-            title={'Lịch sử'}
-            characterImgPosition={styles.historyCharacterImgPosition}
-            onPress={() => {
-              this.props.navigation.navigate('HistoryAllAttendance');
-            }}
+        }>
+        <View style={styles.container}>
+          <View style={styles.mainFeatureLine}>
+            <CardMenu
+              colorOne={'#E26800'}
+              colorTwo={'#E2DC50'}
+              checkInOutStyle={styles.checkInContainer}
+              standOutFontSize={{fontSize: 17}}
+              imageSource={require('../../assets/img/MiM-check-in.png')}
+              imageWidth={(Dimensions.get('window').width - 32) * 0.38}
+              title={'Check in'}
+              characterImgPosition={styles.checkInCharacterImgPosition}
+              onPress={() => {
+                this.props.navigation.navigate('CheckIn', {
+                  title: 'Check in',
+                  type: 'checkin',
+                });
+              }}
+            />
+            <CardMenu
+              colorOne={'#6800E2'}
+              colorTwo={'#2F94EB'}
+              checkInOutStyle={styles.checkOutContainer}
+              imageSource={require('../../assets/img/MiM-check-out.png')}
+              imageWidth={(Dimensions.get('window').width - 32) * 0.3 * 0.7}
+              title={'Check out'}
+              characterImgPosition={styles.checkOutCharacterImgPosition}
+              onPress={() => {
+                this.props.navigation.navigate('CheckOut', {
+                  title: 'Check out',
+                  type: 'checkout',
+                });
+              }}
+            />
+            <CardMenu
+              colorOne={'#E20000'}
+              colorTwo={'#E29950'}
+              checkInOutStyle={styles.checkOutContainer}
+              imageSource={require('../../assets/img/MiM-history.png')}
+              imageWidth={(Dimensions.get('window').width - 32) * 0.26 * 0.9}
+              title={'Lịch sử'}
+              characterImgPosition={styles.historyCharacterImgPosition}
+              onPress={() => {
+                this.props.navigation.navigate('HistoryAllAttendance');
+              }}
+            />
+          </View>
+          <View style={styles.otherFeatureLine}>
+            <CircleTab
+              iconImage={require('../../assets/img/icons8-ratings-90.png')}
+              title={'Thống kê'}
+              onPress={() => {
+                this.props.navigation.navigate('Analytics');
+              }}
+            />
+            <CircleTab
+              iconImage={require('../../assets/img/icons8-contact-100.png')}
+              title={'Xác thực'}
+              onPress={() => {
+                this.props.navigation.navigate('AccurateStudent');
+              }}
+            />
+            <CircleTab
+              iconImage={require('../../assets/img/icons8-idea-96-2.png')}
+              title={'Họp'}
+              onPress={() => {
+                this.props.navigation.navigate('Meeting');
+              }}
+            />
+          </View>
+          <View style={[styles.otherFeatureLine, {marginBottom: 20}]}>
+            <CircleTab
+              iconImage={require('../../assets/img/icons8-time-card-90.png')}
+              title={'ĐK làm việc'}
+              onPress={() => {
+                this.props.navigation.navigate('WorkShiftRegister');
+              }}
+            />
+            <View style={{width: 50}} />
+            <View style={{width: 50}} />
+          </View>
+          <MeetingComponent
+            store={this.props.store}
+            {...this.props}
+            mainScreen={true}
           />
         </View>
-        <View style={styles.otherFeatureLine}>
-          <CircleTab
-            iconImage={require('../../assets/img/icons8-ratings-90.png')}
-            title={'Thống kê'}
-            onPress={() => {
-              this.props.navigation.navigate('Analytics');
-            }}
-          />
-          <CircleTab
-            iconImage={require('../../assets/img/icons8-contact-100.png')}
-            title={'Xác thực'}
-            onPress={() => {
-              this.props.navigation.navigate('AccurateStudent');
-            }}
-          />
-          <CircleTab
-            iconImage={require('../../assets/img/icons8-idea-96-2.png')}
-            title={'Họp'}
-            onPress={() => {
-              this.props.navigation.navigate('Meeting');
-            }}
-          />
-        </View>
-        <View style={styles.otherFeatureLine}>
-          <CircleTab
-            iconImage={require('../../assets/img/icons8-time-card-90.png')}
-            title={'ĐK làm việc'}
-            onPress={() => {
-              this.props.navigation.navigate('WorkShiftRegister');
-            }}
-          />
-          <View style={{width: 50}} />
-          <View style={{width: 50}} />
-        </View>
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -102,13 +126,13 @@ class DashboardComponent extends React.Component {
 const styles = {
   container: {
     flex: 1,
-    marginLeft: 16,
-    marginRight: 16,
   },
   mainFeatureLine: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 16,
+    marginLeft: 16,
+    marginRight: 16,
   },
   // 32 is the total left, right margin,
   // 0.40 is the relative ratio of container to screen width,

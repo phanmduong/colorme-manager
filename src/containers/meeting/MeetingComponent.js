@@ -56,7 +56,7 @@ class MeetingComponent extends React.Component {
       <SafeAreaView style={{flex: 1}}>
         {isLoading ? (
           <Loading />
-        ) : (
+        ) : !this.props.mainScreen ? (
           <ScrollView
             contentContainerStyle={{flexGrow: 1}}
             showsVerticalScrollIndicator={false}
@@ -123,6 +123,35 @@ class MeetingComponent extends React.Component {
               </Section>
             )}
           </ScrollView>
+        ) : (
+          <View>
+            {meetingsNow.length > 0 && (
+              <Section>
+                <HeaderSection title={'Cuộc họp'} subtitle={'Đang diễn ra'} />
+                {meetingsNow.map((meeting, index) => {
+                  const date = moment(meeting.date, FORMAT_TIME_MYSQL);
+                  return (
+                    <MeetingItem
+                      key={index}
+                      store={this.props.store}
+                      joined={meeting.joined}
+                      name={meeting.name}
+                      meetingId={meeting.id}
+                      total_issues={meeting.total_issues}
+                      participates={meeting.participates}
+                      date={date.format('D')}
+                      month={date.format('M')}
+                      hour={date.format('HH:mm')}
+                      isNow={true}
+                      datetime={meeting.date}
+                      openModalParticipate={this.openModalParticipate}
+                      onClickDetail={this.onClickDetail}
+                    />
+                  );
+                })}
+              </Section>
+            )}
+          </View>
         )}
         <ModalMeetingParticipate store={this.props.store} />
       </SafeAreaView>

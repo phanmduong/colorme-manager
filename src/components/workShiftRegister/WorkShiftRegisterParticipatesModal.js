@@ -6,6 +6,8 @@ import {
   Image,
   Text,
   Dimensions,
+  TouchableOpacity,
+  Linking,
 } from 'react-native';
 import Modal from 'react-native-modal';
 var {height, width} = Dimensions.get('window');
@@ -43,17 +45,21 @@ class WorkShiftRegisterParticipatesModal extends React.Component {
           <ScrollView>
             {this.props.participates.map(participate => {
               return (
-                <View style={styles.containerItem}>
-                  <View style={styles.containerPerson}>
-                    <Image
-                      source={{uri: participate.avatar_url}}
-                      style={styles.avatar}
-                    />
-                    <View>
-                      <Text style={styles.name}>{participate.name}</Text>
+                <TouchableOpacity
+                  onPress={() => Linking.openURL(`tel:${participate.phone}`)}>
+                  <View style={styles.containerItem}>
+                    <View style={styles.containerPerson}>
+                      <Image
+                        source={{uri: participate.avatar_url}}
+                        style={styles.avatar}
+                      />
+                      <View>
+                        <Text>{participate.name}</Text>
+                      </View>
                     </View>
+                    <Text style={{fontWeight: 'bold'}}>Gọi</Text>
                   </View>
-                </View>
+                </TouchableOpacity>
               );
             })}
           </ScrollView>
@@ -87,11 +93,14 @@ const styles = {
   },
   containerItem: {
     flexDirection: 'row',
+    backgroundColor: '#F0F0F0',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: width,
-    marginVertical: 15,
-    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginVertical: 10,
+    marginHorizontal: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
   },
   containerPerson: {
     flexDirection: 'row',
@@ -99,14 +108,10 @@ const styles = {
     justifyContent: 'center',
   },
   avatar: {
-    height: 36,
-    width: 36,
+    height: 25,
+    width: 25,
     borderRadius: 18,
     marginRight: 10,
-  },
-  name: {
-    fontWeight: '600',
-    fontSize: 15,
   },
 };
 

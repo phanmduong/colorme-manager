@@ -2,59 +2,10 @@
  * Created by phanmduong on 9/29/18.
  */
 import React from 'react';
-import {Text, View, TouchableOpacity, Dimensions, Image} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import ScalableImage from 'react-native-scalable-image';
+import {View, Dimensions} from 'react-native';
 var {height, width} = Dimensions.get('window');
-
-class CardMenu extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <TouchableOpacity onPress={this.props.onPress}>
-        <LinearGradient
-          colors={[this.props.colorOne, this.props.colorTwo]}
-          style={this.props.checkInOutStyle}>
-          <Text style={[styles.featureTitle, this.props.standOutFontSize]}>
-            {this.props.title}
-          </Text>
-        </LinearGradient>
-        <View style={this.props.characterImgPosition}>
-          <ScalableImage
-            source={this.props.imageSource}
-            width={this.props.imageWidth}
-          />
-        </View>
-      </TouchableOpacity>
-    );
-  }
-}
-
-class CircleTab extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <TouchableOpacity onPress={this.props.onPress}>
-        <View style={{alignItems: 'center', width: 50}}>
-          <LinearGradient
-            colors={['#E26800', '#E00000']}
-            style={styles.circleTab}>
-            <Image source={this.props.iconImage} style={styles.iconTab} />
-          </LinearGradient>
-          <Text numberOfLines={2} style={styles.otherFeatureTitle}>
-            {this.props.title}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    );
-  }
-}
+import CardMenu from '../containers/dashboard/CardMenu';
+import CircleTab from '../containers/dashboard/CircleTab';
 
 class DashboardComponent extends React.Component {
   constructor(props, context) {
@@ -175,12 +126,6 @@ const styles = {
     width: (Dimensions.get('window').width - 32) * 0.26,
     borderRadius: 10,
   },
-  featureTitle: {
-    marginLeft: 8,
-    marginTop: 12,
-    fontWeight: 'bold',
-    color: 'white',
-  },
   // 32 is the total left, right margin,
   // 0.18, 0.08 is the relative ratio of image to screen width
   checkInCharacterImgPosition: {
@@ -202,26 +147,10 @@ const styles = {
     top: (Dimensions.get('window').width - 32) * 0.15,
     left: (Dimensions.get('window').width - 32) * 0.05,
   },
-  circleTab: {
-    width: 52,
-    height: 52,
-    borderRadius: 26,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  iconTab: {
-    width: 29,
-    height: 29,
-  },
   otherFeatureLine: {
     flexDirection: 'row',
     marginTop: 30,
     justifyContent: 'space-around',
-  },
-  otherFeatureTitle: {
-    color: 'black',
-    marginTop: 15,
-    textAlign: 'center',
   },
 };
 

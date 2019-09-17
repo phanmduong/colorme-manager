@@ -41,13 +41,15 @@ class CircleTab extends React.Component {
   render() {
     return (
       <TouchableOpacity onPress={this.props.onPress}>
-        <View style={{alignItems: 'center'}}>
+        <View style={{alignItems: 'center', width: 50}}>
           <LinearGradient
             colors={['#E26800', '#E00000']}
             style={styles.circleTab}>
             <Image source={this.props.iconImage} style={styles.iconTab} />
           </LinearGradient>
-          <Text style={styles.otherFeatureTitle}>{this.props.title}</Text>
+          <Text numberOfLines={2} style={styles.otherFeatureTitle}>
+            {this.props.title}
+          </Text>
         </View>
       </TouchableOpacity>
     );
@@ -130,17 +132,7 @@ class DashboardComponent extends React.Component {
             }}
           />
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            marginTop: 40,
-            justifyContent: 'flex-start',
-            // the margin left here is only here so that when there are not 3 tab icons,
-            // the 1 or 2 tab icons available will still line up vertically with the
-            // above ones. The usage of 'height' to get correct proportions is very weird,
-            // but it works, so I don't know why
-            marginLeft: height * 0.025,
-          }}>
+        <View style={styles.otherFeatureLine}>
           <CircleTab
             iconImage={require('../../assets/img/icons8-time-card-90.png')}
             title={'ĐK làm việc'}
@@ -148,6 +140,8 @@ class DashboardComponent extends React.Component {
               this.props.navigation.navigate('WorkShiftRegister');
             }}
           />
+          <View style={{width: 50}} />
+          <View style={{width: 50}} />
         </View>
       </View>
     );
@@ -221,12 +215,13 @@ const styles = {
   },
   otherFeatureLine: {
     flexDirection: 'row',
-    marginTop: 40,
+    marginTop: 30,
     justifyContent: 'space-around',
   },
   otherFeatureTitle: {
     color: 'black',
     marginTop: 15,
+    textAlign: 'center',
   },
 };
 

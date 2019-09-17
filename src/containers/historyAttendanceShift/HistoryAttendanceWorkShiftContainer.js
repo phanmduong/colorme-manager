@@ -83,6 +83,7 @@ class HistoryAttendanceShiftContainer extends React.Component {
           <Picker
             iosHeader="Chọn khóa học"
             // style={{marginLeft: -5}}
+            style={{width: width / 2}}
             mode="dialog"
             defaultLabel={'Chọn khóa'}
             selectedValue={selectedGenId}
@@ -102,6 +103,7 @@ class HistoryAttendanceShiftContainer extends React.Component {
           <Picker
             // style={{marginLeft: -20}}
             iosHeader="Chọn cơ sở"
+            style={{width: width / 2}}
             mode="dialog"
             defaultLabel={'Chọn cơ sở'}
             selectedValue={selectedBaseId}

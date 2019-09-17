@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import MeetingDetailStore from './MeetingDetailStore';
 import {observer} from 'mobx-react';
 import MeetingDetailComponent from './MeetingDetailComponent';
+import {TouchableOpacity, Image} from 'react-native';
 
 @observer
 class MeetingDetailContainer extends React.Component {
@@ -18,6 +19,14 @@ class MeetingDetailContainer extends React.Component {
 
   static navigationOptions = ({navigation}) => ({
     title: 'Chi tiết buổi họp',
+    headerRight: (
+      <TouchableOpacity>
+        <Image
+          source={require('../../../assets/img/icons8-edit-96.png')}
+          style={{width: 20, height: 20, right: 20}}
+        />
+      </TouchableOpacity>
+    ),
   });
 
   componentDidMount() {

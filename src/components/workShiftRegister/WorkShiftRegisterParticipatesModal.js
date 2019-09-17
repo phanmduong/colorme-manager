@@ -45,21 +45,23 @@ class WorkShiftRegisterParticipatesModal extends React.Component {
           <ScrollView>
             {this.props.participates.map(participate => {
               return (
-                <TouchableOpacity
-                  onPress={() => Linking.openURL(`tel:${participate.phone}`)}>
-                  <View style={styles.containerItem}>
-                    <View style={styles.containerPerson}>
-                      <Image
-                        source={{uri: participate.avatar_url}}
-                        style={styles.avatar}
-                      />
-                      <View>
-                        <Text>{participate.name}</Text>
-                      </View>
+                <View style={styles.containerItem}>
+                  <View style={styles.containerPerson}>
+                    <Image
+                      source={{uri: participate.avatar_url}}
+                      style={styles.avatar}
+                    />
+                    <View>
+                      <Text>{participate.name}</Text>
                     </View>
-                    <Text style={{fontWeight: 'bold'}}>Gọi</Text>
                   </View>
-                </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => Linking.openURL(`tel:${participate.phone}`)}>
+                    <View style={styles.callBorder}>
+                      <Text style={{fontWeight: 'bold'}}>Gọi</Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
               );
             })}
           </ScrollView>
@@ -93,7 +95,7 @@ const styles = {
   },
   containerItem: {
     flexDirection: 'row',
-    backgroundColor: '#F0F0F0',
+    backgroundColor: 'white',
     justifyContent: 'space-between',
     alignItems: 'center',
     borderRadius: 5,
@@ -112,6 +114,12 @@ const styles = {
     width: 25,
     borderRadius: 18,
     marginRight: 10,
+  },
+  callBorder: {
+    backgroundColor: '#F0F0F0',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 6,
   },
 };
 

@@ -75,6 +75,7 @@ class MeetingItem extends React.Component {
       participates,
       isNow,
       meetingId,
+      history,
     } = this.props;
     return (
       <View style={style.container}>
@@ -131,7 +132,7 @@ class MeetingItem extends React.Component {
           {joined && joined.status != 'pending' ? (
             <View>
               {joined.status != 'reject' ? (
-                isNow ? (
+                isNow || history ? (
                   joined.status == 'check_in' ? (
                     <View style={style.contentAction}>
                       <Image

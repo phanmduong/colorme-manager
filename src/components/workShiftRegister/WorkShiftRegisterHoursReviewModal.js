@@ -62,7 +62,9 @@ class WorkShiftRegisterHoursReviewModal extends React.Component {
           </View>
         </View>
         <View style={styles.callBorder}>
-          <Text style={{fontWeight: '600', color: 'white'}}>{value.totalHours}H/20H</Text>
+          <Text style={{fontWeight: '600', color: 'white'}}>
+            {value.totalHours}H/20H
+          </Text>
         </View>
       </View>
     ));
@@ -80,7 +82,7 @@ class WorkShiftRegisterHoursReviewModal extends React.Component {
             <View>
               <Text
                 style={[styles.headerTitle, {fontWeight: '600', fontSize: 17}]}>
-                Lịch làm việc tuần {this.props.weekIndex}
+                Thống kê lịch làm việc tuần {this.props.weekIndex}
               </Text>
             </View>
             <TouchableWithoutFeedback onPress={this.props.closeModal}>

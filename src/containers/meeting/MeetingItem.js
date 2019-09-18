@@ -78,6 +78,13 @@ class MeetingItem extends React.Component {
       isNow,
       meetingId,
     } = this.props;
+
+    const meetingDate = moment(this.props.datetime, FORMAT_TIME_MYSQL).format(
+      'X',
+    );
+    const now = moment().unix();
+    const history = now > parseInt(meetingDate) + 3600;
+
     return (
       <TouchableOpacity onPress={() => this.props.onClickDetail(meetingId)}>
         <View style={style.container}>
@@ -134,7 +141,7 @@ class MeetingItem extends React.Component {
             {joined && joined.status != 'pending' ? (
               <View>
                 {joined.status != 'reject' ? (
-                  isNow ? (
+                  isNow || history ? (
                     joined.status == 'check_in' ? (
                       <View style={style.contentAction}>
                         <Image

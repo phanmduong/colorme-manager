@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import MeetingStore from './MeetingStore';
 import {observer} from 'mobx-react';
 import MeetingComponent from './MeetingComponent';
-import {Image, TouchableOpacity} from 'react-native';
+import {Image, TouchableOpacity, View} from 'react-native';
 
 @observer
 class MeetingContainer extends React.Component {
@@ -18,12 +18,20 @@ class MeetingContainer extends React.Component {
   static navigationOptions = ({navigation}) => ({
     title: 'Họp',
     headerRight: (
-      <TouchableOpacity onPress={() => navigation.navigate('StoreMeeting')}>
-        <Image
-          source={require('../../../assets/img/icons8-plus-96.png')}
-          style={{width: 20, height: 20, right: 20}}
-        />
-      </TouchableOpacity>
+      <View style={{flexDirection: 'row'}}>
+        <TouchableOpacity onPress={() => navigation.navigate('HistoryMeeting')}>
+          <Image
+            source={require('../../../assets/img/icons8-sand-clock-90.png')}
+            style={{width: 20, height: 20, right: 40}}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('StoreMeeting')}>
+          <Image
+            source={require('../../../assets/img/icons8-plus-96.png')}
+            style={{width: 20, height: 20, right: 20}}
+          />
+        </TouchableOpacity>
+      </View>
     ),
   });
 
@@ -32,7 +40,9 @@ class MeetingContainer extends React.Component {
   }
 
   render() {
-    return <MeetingComponent store={this.store} {...this.props} mainScreen={false}/>;
+    return (
+      <MeetingComponent store={this.store} {...this.props} mainScreen={false} />
+    );
   }
 }
 

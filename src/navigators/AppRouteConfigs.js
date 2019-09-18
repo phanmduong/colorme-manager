@@ -38,6 +38,8 @@ import StoreMeetingContainer from '../containers/storeMeeting/StoreMeetingContai
 import {createStackNavigator} from 'react-navigation-stack';
 import AuthLoadingContainer from '../containers/AuthLoadingContainer';
 import WorkShiftRegisterContainer from '../containers/WorkShiftRegisterContainer';
+import EditStoreMeetingContainer from '../containers/storeMeeting/EditStoreMeetingContainer';
+import HistoryMeetingContainer from '../containers/meeting/HistoryMeetingContainer';
 
 const navigationOptionsDefault = {
   defaultNavigationOptions: {
@@ -129,6 +131,12 @@ const TabDashboard = createStackNavigator(
     },
     WorkShiftRegister: {
       screen: WorkShiftRegisterContainer,
+    },
+    EditStoreMeeting: {
+      screen: EditStoreMeetingContainer,
+    },
+    HistoryMeeting: {
+      screen: HistoryMeetingContainer,
     },
   },
   {

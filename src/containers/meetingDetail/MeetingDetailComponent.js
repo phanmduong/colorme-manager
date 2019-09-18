@@ -75,6 +75,7 @@ class MeetingDetailComponent extends React.Component {
     const now = moment().unix();
     const isNow =
       meetingDate - 1800 <= now && now <= parseInt(meetingDate) + 3600;
+    const history = now > parseInt(meetingDate) + 3600;
 
     const total_issues = meeting.issues ? meeting.issues.length : 0;
 
@@ -94,6 +95,7 @@ class MeetingDetailComponent extends React.Component {
           month={date.format('M')}
           hour={date.format('HH:mm')}
           isNow={isNow}
+          history={history}
           datetime={meeting.date}
           openModalParticipate={this.openModalParticipate}
         />

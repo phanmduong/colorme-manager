@@ -41,11 +41,49 @@ class MeetingStore {
   };
 
   @action
+  loadHistoryList = () => {
+    this.isLoading = true;
+    this.error = false;
+
+    loadMeetings(this.token, 'closed')
+      .then(res => {
+        this.meetings = res.data.data.meetings;
+        console.log(this.meetings);
+      })
+      .catch(error => {
+        console.log(error);
+        this.error = true;
+      })
+      .finally(() => {
+        this.isLoading = false;
+      });
+  };
+
+  @action
   refreshMeetingDetail = () => {
     this.refreshing = true;
     this.error = false;
 
     loadMeetings(this.token)
+      .then(res => {
+        this.meetings = res.data.data.meetings;
+        console.log(this.meetings);
+      })
+      .catch(error => {
+        console.log(error);
+        this.error = true;
+      })
+      .finally(() => {
+        this.refreshing = false;
+      });
+  };
+
+  @action
+  refreshHistoryMeetingDetail = () => {
+    this.refreshing = true;
+    this.error = false;
+
+    loadMeetings(this.token, 'closed')
       .then(res => {
         this.meetings = res.data.data.meetings;
         console.log(this.meetings);
@@ -130,6 +168,11 @@ class MeetingStore {
       const now = moment().unix();
       return now < date - 1800;
     });
+  }
+
+  @computed
+  get meetingsHistory() {
+    return this.meetings;
   }
 }
 

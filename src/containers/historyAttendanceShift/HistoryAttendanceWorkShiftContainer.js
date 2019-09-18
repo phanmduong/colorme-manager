@@ -82,17 +82,10 @@ class HistoryAttendanceShiftContainer extends React.Component {
         <View style={styles.containerPicker}>
           <Picker
             iosHeader="Chọn khóa học"
-            // style={{marginLeft: -5}}
             style={{width: width / 2}}
             mode="dialog"
             defaultLabel={'Chọn khóa'}
             selectedValue={selectedGenId}
-            // textStyle={{
-            //   paddingHorizontal: 20,
-            //   paddingVertical: 10,
-            //   backgroundColor: '#F6F7F6',
-            //   borderRadius: 16,
-            // }}
             onValueChange={this.onSelectGenId}>
             {gens.map(function(gen, index) {
               return (
@@ -101,18 +94,11 @@ class HistoryAttendanceShiftContainer extends React.Component {
             })}
           </Picker>
           <Picker
-            // style={{marginLeft: -20}}
             iosHeader="Chọn cơ sở"
             style={{width: width / 2}}
             mode="dialog"
             defaultLabel={'Chọn cơ sở'}
             selectedValue={selectedBaseId}
-            // textStyle={{
-            //   paddingHorizontal: 20,
-            //   paddingVertical: 10,
-            //   backgroundColor: '#F6F7F6',
-            //   borderRadius: 16,
-            // }}
             onValueChange={this.onSelectBaseId}>
             {bases.map(function(base, index) {
               return <Item label={base.name} value={base.id} key={index} />;

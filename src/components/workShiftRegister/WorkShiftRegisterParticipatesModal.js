@@ -52,13 +52,15 @@ class WorkShiftRegisterParticipatesModal extends React.Component {
                       style={styles.avatar}
                     />
                     <View>
-                      <Text>{participate.name}</Text>
+                      <Text style={{fontWeight: '600'}}>
+                        {participate.name}
+                      </Text>
                     </View>
                   </View>
                   <TouchableOpacity
                     onPress={() => Linking.openURL(`tel:${participate.phone}`)}>
                     <View style={styles.callBorder}>
-                      <Text style={{fontWeight: 'bold'}}>Gọi</Text>
+                      <Text style={{fontWeight: '600'}}>Gọi</Text>
                     </View>
                   </TouchableOpacity>
                 </View>

@@ -16,6 +16,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {Button, Text} from 'native-base';
 import * as alert from '../constants/alert';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import WorkShiftRegisterHoursReviewModal from './workShiftRegister/WorkShiftRegisterHoursReviewModal';
 var {height, width} = Dimensions.get('window');
 
 class WorkShiftRegisterComponent extends React.Component {
@@ -23,6 +24,7 @@ class WorkShiftRegisterComponent extends React.Component {
     super(props, context);
     this.state = {
       index: 0,
+      isVisible: false,
     };
   }
 
@@ -50,7 +52,7 @@ class WorkShiftRegisterComponent extends React.Component {
     );
   };
 
-  totalHours = index => {
+  totalHours = (index, user) => {
     let total = 0;
     for (
       let i = 0;
@@ -72,7 +74,7 @@ class WorkShiftRegisterComponent extends React.Component {
         ) {
           if (
             this.props.workShiftRegisterData.weeks[index].dates[i].shifts[j]
-              .users[k].id === this.props.user.id
+              .users[k].id === user.id
           ) {
             total++;
           }
@@ -185,7 +187,7 @@ class WorkShiftRegisterComponent extends React.Component {
 
   greenBarLength = index => {
     let barLen = 0;
-    let totalHours = this.totalHours(index);
+    let totalHours = this.totalHours(index, this.props.user);
     if (totalHours > 20) {
       barLen = width - 20;
     } else {
@@ -201,6 +203,12 @@ class WorkShiftRegisterComponent extends React.Component {
       borderRadius: 6,
       backgroundColor: '#00B241',
     };
+  };
+
+  toggleModal = () => {
+    this.setState({
+      isVisible: !this.state.isVisible,
+    });
   };
 
   render() {
@@ -253,6 +261,15 @@ class WorkShiftRegisterComponent extends React.Component {
                 this.props.onSelectBaseId(value.id);
               }}
             />
+            <TouchableOpacity onPress={this.toggleModal}>
+              <LinearGradient
+                colors={['#E26800', '#E00000']}
+                style={styles.gradientSize}
+                start={{x: 0, y: 0}}
+                end={{x: 1, y: 0}}>
+                <Text style={{color: 'white'}}>Thống kê</Text>
+              </LinearGradient>
+            </TouchableOpacity>
           </View>
           {this.props.workShiftRegisterData.weeks.length > 0 &&
           !this.props.errorWorkShiftRegister ? (
@@ -276,13 +293,23 @@ class WorkShiftRegisterComponent extends React.Component {
                     Tổng thời gian
                   </Text>
                   <Text style={{fontSize: 15, fontWeight: 'bold'}}>
-                    {this.totalHours(this.state.index)}H/20H
+                    {this.totalHours(this.state.index, this.props.user)}H/20H
                   </Text>
                 </View>
                 <View style={styles.grayBar}>
                   <View style={this.greenBar()} />
                 </View>
               </View>
+              <WorkShiftRegisterHoursReviewModal
+                weekIndex={
+                  this.props.workShiftRegisterData.weeks[this.state.index].week
+                }
+                isVisible={this.state.isVisible}
+                closeModal={() => this.toggleModal()}
+                dates={
+                  this.props.workShiftRegisterData.weeks[this.state.index].dates
+                }
+              />
             </View>
           ) : (
             <View>{this.errorData()}</View>

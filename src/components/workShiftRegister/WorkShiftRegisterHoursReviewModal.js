@@ -62,7 +62,7 @@ class WorkShiftRegisterHoursReviewModal extends React.Component {
           </View>
         </View>
         <View style={styles.callBorder}>
-          <Text style={{fontWeight: '600'}}>{value.totalHours}H/20H</Text>
+          <Text style={{fontWeight: '600', color: 'white'}}>{value.totalHours}H/20H</Text>
         </View>
       </View>
     ));
@@ -142,7 +142,7 @@ const styles = {
     marginRight: 10,
   },
   callBorder: {
-    backgroundColor: '#F0F0F0',
+    backgroundColor: '#00B241',
     paddingHorizontal: 10,
     paddingVertical: 5,
     borderRadius: 6,

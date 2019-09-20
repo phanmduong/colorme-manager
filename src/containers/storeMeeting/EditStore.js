@@ -54,12 +54,15 @@ class Store {
         this.meeting.name = res.data.data.meeting.name;
         this.meeting.description = res.data.data.meeting.description;
         let meetingDate = res.data.data.meeting.date.replace(' ', 'T');
+        meetingDate = meetingDate + '+07:00';
+        console.log(meetingDate);
         meetingDate = new Date(meetingDate);
         this.meeting.date.set({
           year: meetingDate.getFullYear(),
           month: meetingDate.getMonth(),
           date: meetingDate.getDate(),
         });
+        console.log(this.meeting.date);
         this.meeting.date.set({
           hour: meetingDate.getHours(),
           minute: meetingDate.getMinutes(),

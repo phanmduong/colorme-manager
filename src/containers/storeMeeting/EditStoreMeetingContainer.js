@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import {connect} from 'react-redux';
-import Store from './Store';
+import EditStore from './EditStore';
 import {observer} from 'mobx-react';
 import EditStoreMeetingComponent from './EditStoreMeetingComponent';
 
@@ -11,7 +11,9 @@ import EditStoreMeetingComponent from './EditStoreMeetingComponent';
 class EditStoreMeetingContainer extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.store = new Store(props.token);
+    const {navigation} = this.props;
+    const meetingId = navigation.getParam('meetingId', 0);
+    this.store = new EditStore(props.token, meetingId);
   }
 
   static navigationOptions = ({navigation}) => ({
@@ -19,7 +21,12 @@ class EditStoreMeetingContainer extends React.Component {
   });
 
   render() {
-    return <EditStoreMeetingComponent store={this.store} {...this.props} />;
+    return (
+      <EditStoreMeetingComponent
+        store={this.store}
+        {...this.props}
+      />
+    );
   }
 }
 

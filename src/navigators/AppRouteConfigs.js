@@ -40,6 +40,7 @@ import AuthLoadingContainer from '../containers/AuthLoadingContainer';
 import WorkShiftRegisterContainer from '../containers/WorkShiftRegisterContainer';
 import EditStoreMeetingContainer from '../containers/storeMeeting/EditStoreMeetingContainer';
 import HistoryMeetingContainer from '../containers/meeting/HistoryMeetingContainer';
+import HistoryMeetingDetailsContainer from '../containers/meetingDetail/HistoryMeetingDetailsContainer';
 
 const navigationOptionsDefault = {
   defaultNavigationOptions: {
@@ -137,6 +138,9 @@ const TabDashboard = createStackNavigator(
     },
     HistoryMeeting: {
       screen: HistoryMeetingContainer,
+    },
+    HistoryMeetingDetails: {
+      screen: HistoryMeetingDetailsContainer,
     },
   },
   {

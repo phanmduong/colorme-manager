@@ -21,6 +21,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import MultiSelect from './MultiSelect/react-native-multi-select';
 import {isEmptyInput} from '../../helper';
 import Spinkit from 'react-native-spinkit';
+import {action} from 'mobx';
 
 var {height, width} = Dimensions.get('window');
 
@@ -37,6 +38,7 @@ class EditStoreMeetingComponent extends React.Component {
 
   componentDidMount() {
     this.props.store.getFilterMeeting();
+    this.props.store.loadMeetingDetail();
   }
 
   openDatePicker = () => {
@@ -79,13 +81,13 @@ class EditStoreMeetingComponent extends React.Component {
     const {meeting, filter} = this.props.store;
     const provinceIDs = filter.provinces
       ? filter.provinces
-          .filter(province => province.selected)
+          .filter(province => meeting.provinces.includes(province.provinceid))
           .map(province => province.provinceid)
       : [];
 
     const departmentIds = filter.departments
       ? filter.departments
-          .filter(department => department.selected)
+          .filter(department => meeting.departments.includes(department.id))
           .map(department => department.id)
       : [];
 
@@ -124,7 +126,6 @@ class EditStoreMeetingComponent extends React.Component {
     let {meeting, isLoading, filter, isStoring} = this.props.store;
     return (
       <SafeAreaView style={styles.container}>
-        {/*<Text style={styles.title}>Tạo cuộc họp</Text>*/}
         {isLoading ? (
           <View
             style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -226,11 +227,19 @@ class EditStoreMeetingComponent extends React.Component {
               <View style={styles.containerTag}>
                 {filter.provinces &&
                   filter.provinces.map(function(province, index) {
-                    if (province.selected) {
+                    if (meeting.provinces.includes(province.provinceid)) {
                       return (
                         <TouchableOpacity
                           key={index}
-                          onPress={() => (province.selected = false)}>
+                          onPress={() => {
+                            let provinceIndex = meeting.provinces.indexOf(
+                              province.provinceid,
+                            );
+                            if (provinceIndex > -1) {
+                              meeting.provinces.splice(provinceIndex, 1);
+                            }
+                            province.selected = false;
+                          }}>
                           <LinearGradient
                             colors={['#E26800', '#E00000']}
                             start={{x: 0, y: 0}}
@@ -247,7 +256,10 @@ class EditStoreMeetingComponent extends React.Component {
                         <TouchableOpacity
                           key={index}
                           style={styles.tag}
-                          onPress={() => (province.selected = true)}>
+                          onPress={() => {
+                            meeting.provinces.push(province.provinceid);
+                            province.selected = true;
+                          }}>
                           <Text>
                             {province.name} ({province.number_staff})
                           </Text>
@@ -262,11 +274,19 @@ class EditStoreMeetingComponent extends React.Component {
               <View style={styles.containerTag}>
                 {filter.departments &&
                   filter.departments.map(function(department, index) {
-                    if (department.selected) {
+                    if (meeting.departments.includes(department.id)) {
                       return (
                         <TouchableOpacity
                           key={index}
-                          onPress={() => (department.selected = false)}>
+                          onPress={() => {
+                            let departmentIndex = meeting.departments.indexOf(
+                              department.id,
+                            );
+                            if (departmentIndex > -1) {
+                              meeting.departments.splice(departmentIndex, 1);
+                            }
+                            department.selected = false;
+                          }}>
                           <LinearGradient
                             colors={['#E26800', '#E00000']}
                             start={{x: 0, y: 0}}
@@ -283,7 +303,10 @@ class EditStoreMeetingComponent extends React.Component {
                         <TouchableOpacity
                           key={index}
                           style={styles.tag}
-                          onPress={() => (department.selected = true)}>
+                          onPress={() => {
+                            meeting.departments.push(department.id);
+                            department.selected = true;
+                          }}>
                           <Text>
                             {department.name} ({department.number_staff})
                           </Text>
@@ -329,7 +352,7 @@ class EditStoreMeetingComponent extends React.Component {
                     size={40}
                   />
                 ) : (
-                  <Text style={{color: 'white'}}>Tạo cuộc họp</Text>
+                  <Text style={{color: 'white'}}>Cập nhật cuộc họp</Text>
                 )}
               </LinearGradient>
             </TouchableOpacity>

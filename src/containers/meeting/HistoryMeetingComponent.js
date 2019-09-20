@@ -2,14 +2,7 @@
  * Created by phanmduong on 9/29/18.
  */
 import React from 'react';
-import {
-  SafeAreaView,
-  RefreshControl,
-  View,
-  ScrollView,
-  TouchableOpacity,
-  Text,
-} from 'react-native';
+import {SafeAreaView, RefreshControl, ScrollView} from 'react-native';
 import {observer} from 'mobx-react';
 import Loading from '../../components/common/Loading';
 import moment from 'moment';
@@ -21,8 +14,6 @@ import withStyle from '../../components/HOC/withStyle';
 import MeetingItem from './MeetingItem';
 import _ from 'lodash';
 import {getMeetingStatus} from '../../helper';
-import LinearGradient from 'react-native-linear-gradient';
-import Icon from '../../components/common/Icon';
 import theme from '../../styles';
 
 @observer
@@ -43,7 +34,7 @@ class HistoryMeetingComponent extends React.Component {
   };
 
   onClickDetail = meetingId => {
-    this.props.navigation.navigate('MeetingDetail', {meetingId});
+    this.props.navigation.navigate('HistoryMeetingDetails', {meetingId});
   };
 
   handleRefresh = () => {

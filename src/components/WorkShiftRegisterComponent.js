@@ -228,92 +228,97 @@ class WorkShiftRegisterComponent extends React.Component {
 
       return (
         <View style={{flex: 1}}>
-          <View style={styles.containerPicker}>
-            <CustomPicker
-              options={courseOptions}
-              defaultValue={courseOptions[0]}
-              getLabel={item => item.name}
-              modalAnimationType={'fade'}
-              optionTemplate={this.renderCoursePickerOption}
-              fieldTemplate={this.renderCoursePickerField}
-              headerTemplate={this.renderCoursePickerHeader}
-              footerTemplate={this.renderCoursePickerFooter}
-              modalStyle={{
-                borderRadius: 6,
-              }}
-              onValueChange={value => {
-                this.props.onSelectGenId(value.id);
-              }}
-            />
-            <CustomPicker
-              options={baseOptions}
-              defaultValue={baseOptions[0]}
-              getLabel={item => item.name}
-              modalAnimationType={'fade'}
-              optionTemplate={this.renderBasePickerOption}
-              fieldTemplate={this.renderBasePickerField}
-              headerTemplate={this.renderBasePickerHeader}
-              footerTemplate={this.renderCoursePickerFooter}
-              modalStyle={{
-                borderRadius: 6,
-              }}
-              onValueChange={value => {
-                this.props.onSelectBaseId(value.id);
-              }}
-            />
-            <TouchableOpacity onPress={this.toggleModal}>
-              <LinearGradient
-                colors={['#E26800', '#E00000']}
-                style={styles.gradientSize}
-                start={{x: 0, y: 0}}
-                end={{x: 1, y: 0}}>
-                <Text style={{color: 'white'}}>Thống kê</Text>
-              </LinearGradient>
-            </TouchableOpacity>
-          </View>
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={this.props.isLoadingWorkShiftRegister}
+                onRefresh={this.props.onRefresh}
+                titleColor={theme.mainColor}
+                title="Đang tải..."
+                tintColor="#d9534f"
+                colors={['#d9534f']}
+              />
+            }>
+            <View style={styles.containerPicker}>
+              <CustomPicker
+                options={courseOptions}
+                defaultValue={courseOptions[0]}
+                getLabel={item => item.name}
+                modalAnimationType={'fade'}
+                optionTemplate={this.renderCoursePickerOption}
+                fieldTemplate={this.renderCoursePickerField}
+                headerTemplate={this.renderCoursePickerHeader}
+                footerTemplate={this.renderCoursePickerFooter}
+                modalStyle={{
+                  borderRadius: 6,
+                }}
+                onValueChange={value => {
+                  this.props.onSelectGenId(value.id);
+                }}
+              />
+              <CustomPicker
+                options={baseOptions}
+                defaultValue={baseOptions[0]}
+                getLabel={item => item.name}
+                modalAnimationType={'fade'}
+                optionTemplate={this.renderBasePickerOption}
+                fieldTemplate={this.renderBasePickerField}
+                headerTemplate={this.renderBasePickerHeader}
+                footerTemplate={this.renderCoursePickerFooter}
+                modalStyle={{
+                  borderRadius: 6,
+                }}
+                onValueChange={value => {
+                  this.props.onSelectBaseId(value.id);
+                }}
+              />
+              <TouchableOpacity onPress={this.toggleModal}>
+                <LinearGradient
+                  colors={['#E26800', '#E00000']}
+                  style={styles.gradientSize}
+                  start={{x: 0, y: 0}}
+                  end={{x: 1, y: 0}}>
+                  <Text style={{color: 'white'}}>Thống kê</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+            </View>
+            {this.props.workShiftRegisterData.weeks.length > 0 &&
+            !this.props.errorWorkShiftRegister ? (
+              <View style={{flex: 1}}>
+                <ScrollView>{this.showShift()}</ScrollView>
+                <WorkShiftRegisterHoursReviewModal
+                  weekIndex={
+                    this.props.workShiftRegisterData.weeks[this.state.index]
+                      .week
+                  }
+                  isVisible={this.state.isVisible}
+                  closeModal={() => this.toggleModal()}
+                  dates={
+                    this.props.workShiftRegisterData.weeks[this.state.index]
+                      .dates
+                  }
+                />
+              </View>
+            ) : (
+              <View>{this.errorData()}</View>
+            )}
+          </ScrollView>
           {this.props.workShiftRegisterData.weeks.length > 0 &&
           !this.props.errorWorkShiftRegister ? (
-            <View style={{flex: 1}}>
-              <ScrollView
-                refreshControl={
-                  <RefreshControl
-                    refreshing={this.props.isLoadingWorkShiftRegister}
-                    onRefresh={this.props.onRefresh}
-                    titleColor={theme.mainColor}
-                    title="Đang tải..."
-                    tintColor="#d9534f"
-                    colors={['#d9534f']}
-                  />
-                }>
-                {this.showShift()}
-              </ScrollView>
-              <View style={styles.hoursContainer}>
-                <View style={styles.hoursText}>
-                  <Text style={{fontWeight: 'bold', fontSize: 15}}>
-                    Tổng thời gian
-                  </Text>
-                  <Text style={{fontSize: 15, fontWeight: 'bold'}}>
-                    {this.totalHours(this.state.index, this.props.user)}H/20H
-                  </Text>
-                </View>
-                <View style={styles.grayBar}>
-                  <View style={this.greenBar()} />
-                </View>
+            <View style={styles.hoursContainer}>
+              <View style={styles.hoursText}>
+                <Text style={{fontWeight: 'bold', fontSize: 15}}>
+                  Tổng thời gian
+                </Text>
+                <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                  {this.totalHours(this.state.index, this.props.user)}H/20H
+                </Text>
               </View>
-              <WorkShiftRegisterHoursReviewModal
-                weekIndex={
-                  this.props.workShiftRegisterData.weeks[this.state.index].week
-                }
-                isVisible={this.state.isVisible}
-                closeModal={() => this.toggleModal()}
-                dates={
-                  this.props.workShiftRegisterData.weeks[this.state.index].dates
-                }
-              />
+              <View style={styles.grayBar}>
+                <View style={this.greenBar()} />
+              </View>
             </View>
-          ) : (
-            <View>{this.errorData()}</View>
-          )}
+          ) : null}
         </View>
       );
     } else {

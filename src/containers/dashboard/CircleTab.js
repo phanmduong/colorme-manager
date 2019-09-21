@@ -1,6 +1,7 @@
 import React from 'react';
 import {Dimensions, Image, Text, TouchableOpacity, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+const {height, width} = Dimensions.get('window');
 
 export default class CircleTab extends React.Component {
   constructor(props) {
@@ -10,7 +11,7 @@ export default class CircleTab extends React.Component {
   render() {
     return (
       <TouchableOpacity onPress={this.props.onPress}>
-        <View style={{alignItems: 'center', width: 50}}>
+        <View style={{alignItems: 'center', width: width / 3}}>
           <LinearGradient
             colors={['#E26800', '#E00000']}
             style={styles.circleTab}>

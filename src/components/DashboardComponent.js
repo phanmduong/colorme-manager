@@ -109,8 +109,8 @@ class DashboardComponent extends React.Component {
                 this.props.navigation.navigate('WorkShiftRegister');
               }}
             />
-            <View style={{width: 50}} />
-            <View style={{width: 50}} />
+            <View style={{width: width / 3}} />
+            <View style={{width: width / 3}} />
           </View>
           <MeetingComponent
             store={this.props.store}
@@ -174,7 +174,6 @@ const styles = {
   otherFeatureLine: {
     flexDirection: 'row',
     marginTop: 30,
-    justifyContent: 'space-around',
   },
 };
 

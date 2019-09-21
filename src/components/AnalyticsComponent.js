@@ -8,7 +8,16 @@ import {
   Platform,
   TouchableOpacity,
 } from 'react-native';
-import {Container, Button, View, Text, Picker, Item, List} from 'native-base';
+import {
+  Container,
+  Button,
+  View,
+  Text,
+  Picker,
+  Item,
+  List,
+  Content,
+} from 'native-base';
 import Swiper from 'react-native-swiper';
 import theme from '../styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -266,43 +275,45 @@ class AnalyticsComponent extends React.Component {
 
       return (
         <Container>
-          <View style={styles.containerPicker}>
-            <CustomPicker
-              options={courseOptions}
-              defaultValue={courseOptions[0]}
-              getLabel={item => item.name}
-              modalAnimationType={'fade'}
-              optionTemplate={this.renderCoursePickerOption}
-              fieldTemplate={this.renderCoursePickerField}
-              headerTemplate={this.renderCoursePickerHeader}
-              footerTemplate={this.renderCoursePickerFooter}
-              modalStyle={{
-                borderRadius: 6,
-              }}
-              onValueChange={value => {
-                this.props.onSelectGenId(value.id);
-              }}
-            />
-            <CustomPicker
-              options={baseOptions}
-              defaultValue={baseOptions[0]}
-              getLabel={item => item.name}
-              modalAnimationType={'fade'}
-              optionTemplate={this.renderBasePickerOption}
-              fieldTemplate={this.renderBasePickerField}
-              headerTemplate={this.renderBasePickerHeader}
-              footerTemplate={this.renderCoursePickerFooter}
-              modalStyle={{
-                borderRadius: 6,
-              }}
-              onValueChange={value => {
-                this.props.onSelectBaseId(value.id);
-              }}
-            />
-          </View>
-          {!this.props.isLoadingDashboard && this.props.errorDashboard
-            ? this.errorData()
-            : this.showDashboard()}
+          <Content>
+            <View style={styles.containerPicker}>
+              <CustomPicker
+                options={courseOptions}
+                defaultValue={courseOptions[0]}
+                getLabel={item => item.name}
+                modalAnimationType={'fade'}
+                optionTemplate={this.renderCoursePickerOption}
+                fieldTemplate={this.renderCoursePickerField}
+                headerTemplate={this.renderCoursePickerHeader}
+                footerTemplate={this.renderCoursePickerFooter}
+                modalStyle={{
+                  borderRadius: 6,
+                }}
+                onValueChange={value => {
+                  this.props.onSelectGenId(value.id);
+                }}
+              />
+              <CustomPicker
+                options={baseOptions}
+                defaultValue={baseOptions[0]}
+                getLabel={item => item.name}
+                modalAnimationType={'fade'}
+                optionTemplate={this.renderBasePickerOption}
+                fieldTemplate={this.renderBasePickerField}
+                headerTemplate={this.renderBasePickerHeader}
+                footerTemplate={this.renderCoursePickerFooter}
+                modalStyle={{
+                  borderRadius: 6,
+                }}
+                onValueChange={value => {
+                  this.props.onSelectBaseId(value.id);
+                }}
+              />
+            </View>
+            {!this.props.isLoadingDashboard && this.props.errorDashboard
+              ? this.errorData()
+              : this.showDashboard()}
+          </Content>
         </Container>
       );
     }

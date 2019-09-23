@@ -93,6 +93,7 @@ const styles = {
     fontSize: 12,
     color: '#858585',
     marginTop: 2,
+    marginRight: 30,
   },
   status: {
     marginTop: 2,

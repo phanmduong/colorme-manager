@@ -48,16 +48,20 @@ class ModalMeetingParticipate extends React.Component {
                     style={styles.avatar}
                   />
                   <View>
-                    <Text style={styles.name}>{participate.user.name}</Text>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text style={styles.name}>{participate.user.name} </Text>
+                      <View style={styles.status}>
+                        <Image style={styles.iconStatus} source={status.icon} />
+                      </View>
+                    </View>
                     {participate.note !== '' && participate.note !== null ? (
-                      <Text style={styles.titleStatus}>{participate.note}</Text>
+                      <Text numberOfLines={2} style={styles.titleStatus}>
+                        {participate.note}
+                      </Text>
                     ) : (
                       <Text style={styles.titleStatus}>{status.text}</Text>
                     )}
                   </View>
-                </View>
-                <View style={styles.status}>
-                  <Image style={styles.iconStatus} source={status.icon} />
                 </View>
               </View>
             );
@@ -96,15 +100,14 @@ const styles = {
     fontSize: 12,
     color: '#858585',
     marginTop: 2,
-    marginRight: 60,
+    marginRight: 30,
   },
   status: {
-    position: 'absolute',
-    right: 20,
+    marginTop: 2,
   },
   iconStatus: {
-    width: 36,
-    height: 36,
+    width: 13,
+    height: 13,
   },
   titleContainer: {
     justifyContent: 'center',

@@ -1,5 +1,5 @@
 import React from 'react';
-import {RefreshControl} from 'react-native';
+import {RefreshControl, ScrollView} from 'react-native';
 import {View, Text, List} from 'native-base';
 import ShiftRegisterDate from './ShiftRegisterDate';
 import theme from '../../styles';
@@ -31,31 +31,19 @@ class ShiftRegisterWeek extends React.Component {
     );
   }
 
-  render() {
-    return (
-      <List
-        refreshControl={
-          <RefreshControl
-            refreshing={this.props.isLoadingShiftRegister}
-            onRefresh={this.props.loadDataShiftRegister}
-            titleColor={theme.mainColor}
-            title="Đang tải..."
-            tintColor="#d9534f"
-            colors={['#d9534f']}
-          />
-        }
-        renderHeader={() => this.renderHeader()}
-        dataArray={this.props.weekData.dates}
-        renderRow={date => (
-          <ShiftRegisterDate
-            dateData={date}
-            user={this.props.user}
-            onRegister={this.props.onRegister}
-            onUnRegister={this.props.onUnRegister}
-          />
-        )}
+  renderWeek = () => {
+    return this.props.weekData.dates.map(date => (
+      <ShiftRegisterDate
+        dateData={date}
+        user={this.props.user}
+        onRegister={this.props.onRegister}
+        onUnRegister={this.props.onUnRegister}
       />
-    );
+    ));
+  };
+
+  render() {
+    return <View>{this.renderWeek()}</View>;
   }
 
   time() {

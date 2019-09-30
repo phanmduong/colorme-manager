@@ -109,7 +109,13 @@ class DashboardComponent extends React.Component {
                 this.props.navigation.navigate('WorkShiftRegister');
               }}
             />
-            <View style={{width: width / 3}} />
+            <CircleTab
+              iconImage={require('../../assets/img/icons8-rating-90.png')}
+              title={'Đánh giá'}
+              onPress={() => {
+                this.props.navigation.navigate('TeachingRating');
+              }}
+            />
             <View style={{width: width / 3}} />
           </View>
           <MeetingComponent

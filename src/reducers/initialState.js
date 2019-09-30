@@ -480,4 +480,16 @@ export default {
     selectedBaseId: -1,
     selectedGenId: -1,
   },
+  teachingRating: {
+    isLoadingTeacherRating: false,
+    errorTeacherRating: false,
+    teacherRatingData: [],
+    isLoadingAssistantRating: false,
+    errorAssistantRating: false,
+    assistantRatingData: [],
+    feedback: {},
+    isLoadingFeedback: false,
+    errorLoadingFeedback: false,
+    selectedGenId: -1,
+  },
 };

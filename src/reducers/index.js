@@ -28,6 +28,7 @@ import listStudentAttendanceReducer from './listStudentAttendanceReducer';
 import {historyTabReducer} from './historyTabReducer';
 import workShiftRegisterReducer from './workShiftRegisterReducer';
 import {teachingRatingReducer} from './teachingRatingReducer';
+import {detailShiftsReducer} from './detailShiftsReducer';
 
 const appReducer = combineReducers({
   login: loginReducer,
@@ -55,6 +56,7 @@ const appReducer = combineReducers({
   historyTab: historyTabReducer,
   workShiftRegister: workShiftRegisterReducer,
   teachingRating: teachingRatingReducer,
+  detailShifts: detailShiftsReducer,
 });
 
 const rootReducer = (state, action) => {

@@ -109,6 +109,7 @@ class WorkShiftRegisterContainer extends React.Component {
         }
         onRegister={this.onRegister}
         onUnregister={this.onUnregister}
+        {...this.props}
       />
     );
   }

@@ -17,6 +17,7 @@ export default function genReducer(state = initialState.gen, action) {
         error: action.error,
         genData: action.genData,
         currentGen: action.currentGen,
+        teachingGen: action.teachingGen,
       });
     case types.LOAD_DATA_GEN_ERROR:
       return Object.assign({}, state, {

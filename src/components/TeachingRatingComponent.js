@@ -344,9 +344,22 @@ class TeachingRatingComponent extends React.Component {
       for (let i = 0; i < props.genData.length; i++) {
         courseOptions.push(props.genData[i]);
       }
-      this.setRatingIndex(courseOptions[0], props);
+      let defaultIndex = this.getDefaultValueIndex(
+        this.props.teachingGen,
+        courseOptions,
+      );
+      this.setRatingIndex(courseOptions[defaultIndex], props);
     }
   }
+
+  getDefaultValueIndex = (value, array) => {
+    for (let i = 0; i < array.length; i++) {
+      if (value.id === array[i].id) {
+        return i;
+      }
+    }
+    return 0;
+  };
 
   render() {
     if (
@@ -359,6 +372,10 @@ class TeachingRatingComponent extends React.Component {
       for (let i = 0; i < this.props.genData.length; i++) {
         courseOptions.push(this.props.genData[i]);
       }
+      let defaultIndex = this.getDefaultValueIndex(
+        this.props.teachingGen,
+        courseOptions,
+      );
       return (
         <ScrollView
           refreshControl={
@@ -378,7 +395,7 @@ class TeachingRatingComponent extends React.Component {
           <View style={styles.containerPicker}>
             <CustomPicker
               options={courseOptions}
-              defaultValue={courseOptions[0]}
+              defaultValue={courseOptions[defaultIndex]}
               getLabel={item => item.name}
               modalAnimationType={'fade'}
               optionTemplate={this.renderCoursePickerOption}
@@ -426,13 +443,13 @@ class TeachingRatingComponent extends React.Component {
                         {this.props.teacherRatingData[
                           this.state.teacherIndex
                         ] &&
-                        this.roundRating(
-                          this.props.teacherRatingData[this.state.teacherIndex]
-                            .ratio_rating,
-                        )
-                          ? this.props.teacherRatingData[
-                              this.state.teacherIndex
-                            ].ratio_rating
+                        this.props.teacherRatingData[this.state.teacherIndex]
+                          .ratio_rating
+                          ? this.roundRating(
+                              this.props.teacherRatingData[
+                                this.state.teacherIndex
+                              ].ratio_rating,
+                            )
                           : 'N/A'}
                       </Text>
                       <Text style={styles.ratioRatingStar}>★</Text>

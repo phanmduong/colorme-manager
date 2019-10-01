@@ -39,6 +39,7 @@ export default {
     error: false,
     selectedGenId: -1,
     currentGen: 0,
+    teachingGen: 0,
   },
   lessonCourse: {
     lessonCourseData: [],
@@ -491,5 +492,10 @@ export default {
     isLoadingFeedback: false,
     errorLoadingFeedback: false,
     selectedGenId: -1,
+  },
+  detailShifts: {
+    isLoading: false,
+    error: false,
+    detailShifts: [],
   },
 };

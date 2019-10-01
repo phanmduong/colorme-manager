@@ -27,12 +27,12 @@ class TeachingRatingContainer extends React.Component {
   componentWillReceiveProps(props) {
     if (props.genData.length > 0 && !this.state.checkedDataGen) {
       this.setState({checkedDataGen: true});
-      this.props.teachingRatingActions.selectedGenId(props.currentGen.id);
+      this.props.teachingRatingActions.selectedGenId(props.teachingGen.id);
     }
 
     if (props.genData.length > 0 && !this.state.checkedFeedback) {
       this.setState({checkedFeedback: true});
-      this.loadFeedback(props.currentGen.id);
+      this.loadFeedback(props.teachingGen.id);
     }
   }
 
@@ -69,6 +69,7 @@ class TeachingRatingContainer extends React.Component {
         genData={this.props.genData}
         isLoadingGen={this.props.isLoadingGen}
         onSelectGenId={this.onSelectGenId}
+        teachingGen={this.props.teachingGen}
         onRefresh={() => {
           this.loadTeacherRatingData();
           this.loadAssistantRatingData();
@@ -93,7 +94,7 @@ function mapStateToProps(state) {
     errorLoadingFeedback: state.teachingRating.errorLoadingFeedback,
     genData: state.gen.genData,
     selectedGenId: state.teachingRating.selectedGenId,
-    currentGen: state.gen.currentGen,
+    teachingGen: state.gen.teachingGen,
     isLoadingGen: state.gen.isLoading,
   };
 }

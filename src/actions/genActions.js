@@ -32,6 +32,7 @@ export function loadDataSuccessful(res) {
     type: types.LOAD_DATA_GEN_SUCCESSFUL,
     genData: res.data.data.gens,
     currentGen: res.data.data.current_gen,
+    teachingGen: res.data.data.teaching_gen,
     isLoading: false,
     error: false,
   };

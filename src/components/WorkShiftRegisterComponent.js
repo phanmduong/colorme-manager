@@ -272,6 +272,8 @@ class WorkShiftRegisterComponent extends React.Component {
                   this.props.onSelectBaseId(value.id);
                 }}
               />
+            </View>
+            <View style={[styles.containerPicker, {marginTop: 5}]}>
               <TouchableOpacity onPress={this.toggleModal}>
                 <LinearGradient
                   colors={['#E26800', '#E00000']}
@@ -279,6 +281,25 @@ class WorkShiftRegisterComponent extends React.Component {
                   start={{x: 0, y: 0}}
                   end={{x: 1, y: 0}}>
                   <Text style={{color: 'white'}}>Thống kê</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() =>
+                  this.props.navigation.navigate('ListDetailShiftsRegistered', {
+                    week: this.props.workShiftRegisterData.weeks[
+                      this.state.index
+                    ].week,
+                    dates: this.props.workShiftRegisterData.weeks[
+                      this.state.index
+                    ].dates,
+                  })
+                }>
+                <LinearGradient
+                  colors={['#E26800', '#E00000']}
+                  style={styles.gradientSize}
+                  start={{x: 0, y: 0}}
+                  end={{x: 1, y: 0}}>
+                  <Text style={{color: 'white'}}>Chi tiết</Text>
                 </LinearGradient>
               </TouchableOpacity>
             </View>

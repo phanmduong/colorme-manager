@@ -6,12 +6,16 @@ import {
   Text,
   Dimensions,
   TouchableOpacity,
+  TextInput,
 } from 'react-native';
 var {height, width} = Dimensions.get('window');
 
 class ListDetailShiftsRegisteredComponent extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.state = {
+      search: '',
+    };
   }
 
   totalHoursReport = () => {
@@ -43,11 +47,20 @@ class ListDetailShiftsRegisteredComponent extends React.Component {
     return hoursMap;
   };
 
-  renderTotalHoursReport = () => {
+  renderTotalHoursReport = search => {
     let totalHoursReport = this.totalHoursReport();
     let sortable = [];
     for (let key in totalHoursReport) {
-      sortable.push(totalHoursReport[key]);
+      if (search === '') {
+        sortable.push(totalHoursReport[key]);
+      } else {
+        let normalizedName = totalHoursReport[key].name
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '');
+        if (normalizedName.toLowerCase().includes(search.toLowerCase())) {
+          sortable.push(totalHoursReport[key]);
+        }
+      }
     }
     sortable.sort(function(a, b) {
       if (a.name < b.name) {
@@ -87,7 +100,7 @@ class ListDetailShiftsRegisteredComponent extends React.Component {
 
   render() {
     return (
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps={'handled'}>
         <View style={styles.fullView}>
           <View style={styles.headerRow}>
             <View>
@@ -97,7 +110,19 @@ class ListDetailShiftsRegisteredComponent extends React.Component {
               </Text>
             </View>
           </View>
-          {this.renderTotalHoursReport()}
+          <View style={styles.searchContainer}>
+            <TextInput
+              placeholder="Tìm kiếm"
+              autoCapitalize="none"
+              onChangeText={search => {
+                this.setState({search});
+              }}
+              value={this.state.search.value}
+              style={styles.searchInput}
+              clearButtonMode={'while-editing'}
+            />
+          </View>
+          {this.renderTotalHoursReport(this.state.search)}
         </View>
       </ScrollView>
     );
@@ -138,6 +163,19 @@ const styles = {
     width: 25,
     borderRadius: 18,
     marginRight: 10,
+  },
+  searchContainer: {
+    backgroundColor: '#f6f6f6',
+    height: 40,
+    width: Dimensions.get('window').width - 30,
+    borderRadius: 27,
+    justifyContent: 'center',
+    marginLeft: 15,
+  },
+  searchInput: {
+    fontSize: 16,
+    color: '#707070',
+    marginLeft: 14,
   },
 };
 

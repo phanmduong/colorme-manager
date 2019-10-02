@@ -43,6 +43,7 @@ class DetailShiftsContainer extends React.Component {
         name={name}
         avatar_url={avatar_url}
         weekIndex={week}
+        isLoadingDetailShifts={this.props.isLoadingDetailShifts}
       />
     );
   }

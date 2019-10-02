@@ -2,8 +2,11 @@
  * Created by phanmduong on 4/24/17.
  */
 import React from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, Dimensions} from 'react-native';
 import ShiftRegisterWeek from '../components/detailShifts/ShiftRegisterWeek';
+import Spinkit from 'react-native-spinkit';
+import theme from '../styles';
+var {height, width} = Dimensions.get('window');
 
 class DetailShiftsComponent extends React.Component {
   constructor(props, context) {
@@ -16,7 +19,7 @@ class DetailShiftsComponent extends React.Component {
 
   render() {
     if (this.props.detailShifts.length > 0) {
-      return (
+      return !this.props.isLoadingDetailShifts ? (
         <View style={{flex: 1}}>
           <Text style={{fontSize: 17, fontWeight: '600', marginLeft: 10}}>
             Lịch làm việc tuần {this.props.weekIndex}
@@ -39,6 +42,15 @@ class DetailShiftsComponent extends React.Component {
           </View>
           {this.renderShiftRegister()}
         </View>
+      ) : (
+        <View style={styles.container}>
+          <Spinkit
+            isVisible
+            color={theme.mainColor}
+            type="Wave"
+            size={width / 8}
+          />
+        </View>
       );
     }
     return <View />;
@@ -46,6 +58,11 @@ class DetailShiftsComponent extends React.Component {
 }
 
 const styles = {
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   containerItem: {
     flexDirection: 'row',
     backgroundColor: 'white',

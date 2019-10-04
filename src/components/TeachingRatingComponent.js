@@ -187,7 +187,11 @@ class TeachingRatingComponent extends React.Component {
       <View style={styles.feedbackContainer}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Image
-            source={{uri: rating.student.avatar_url}}
+            source={
+              rating.student.avatar_url !== null
+                ? {uri: rating.student.avatar_url}
+                : require('../../assets/img/icons8-male-user-96.png')
+            }
             style={styles.studentAva}
           />
           <View style={{marginLeft: 15}}>
@@ -212,7 +216,11 @@ class TeachingRatingComponent extends React.Component {
       <View style={styles.feedbackContainer}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Image
-            source={{uri: rating.student.avatar_url}}
+            source={
+              rating.student.avatar_url !== null
+                ? {uri: rating.student.avatar_url}
+                : require('../../assets/img/icons8-male-user-96.png')
+            }
             style={styles.studentAva}
           />
           <View style={{marginLeft: 15}}>

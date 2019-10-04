@@ -18,7 +18,7 @@ export function loadTeacherRating(token, userId) {
 
 function beginLoadingTeacherRating() {
   return {
-    type: type.BEGIN_LOAD_TEACHER_RATING,
+    type: type.BEGIN_LOAD_TEACHER_RATING_DUPLICATE,
     isLoadingTeacherRating: true,
     errorTeacherRating: false,
   };
@@ -26,7 +26,7 @@ function beginLoadingTeacherRating() {
 
 function loadTeacherRatingSuccessful(res) {
   return {
-    type: type.LOAD_TEACHER_RATING_SUCCESSFUL,
+    type: type.LOAD_TEACHER_RATING_SUCCESSFUL_DUPLICATE,
     teacherRatingData: res.data,
     isLoadingTeacherRating: false,
     errorTeacherRating: false,
@@ -35,7 +35,7 @@ function loadTeacherRatingSuccessful(res) {
 
 function loadTeacherRatingError() {
   return {
-    type: type.LOAD_TEACHER_RATING_ERROR,
+    type: type.LOAD_TEACHER_RATING_ERROR_DUPLICATE,
     isLoadingTeacherRating: false,
     errorTeacherRating: true,
   };
@@ -58,7 +58,7 @@ export function loadAssistantRating(token, userId) {
 
 function beginLoadingAssistantRating() {
   return {
-    type: type.BEGIN_LOAD_ASSISTANT_RATING,
+    type: type.BEGIN_LOAD_ASSISTANT_RATING_DUPLICATE,
     isLoadingAssistantRating: true,
     errorAssistantRating: false,
   };
@@ -66,7 +66,7 @@ function beginLoadingAssistantRating() {
 
 function loadAssistantRatingSuccessful(res) {
   return {
-    type: type.LOAD_ASSISTANT_RATING_SUCCESSFUL,
+    type: type.LOAD_ASSISTANT_RATING_SUCCESSFUL_DUPLICATE,
     isLoadingAssistantRating: false,
     errorAssistantRating: false,
     assistantRatingData: res.data,
@@ -75,7 +75,7 @@ function loadAssistantRatingSuccessful(res) {
 
 function loadAssistantRatingError() {
   return {
-    type: type.LOAD_ASSISTANT_RATING_ERROR,
+    type: type.LOAD_ASSISTANT_RATING_ERROR_DUPLICATE,
     isLoadingAssistantRating: false,
     errorAssistantRating: true,
   };
@@ -83,7 +83,7 @@ function loadAssistantRatingError() {
 
 export function selectedGenId(genId) {
   return {
-    type: type.SELECTED_GEN_ID_RATING,
+    type: type.SELECTED_GEN_ID_RATING_DUPLICATE,
     selectedGenId: genId,
   };
 }
@@ -105,7 +105,7 @@ export function loadTeacherFeedback(token, genId, userId) {
 
 function beginLoadTeacherFeedback() {
   return {
-    type: type.BEGIN_LOAD_TEACHER_FEEDBACK,
+    type: type.BEGIN_LOAD_TEACHER_FEEDBACK_DUPLICATE,
     isLoadingTeacherFeedback: true,
     errorLoadingTeacherFeedback: false,
   };
@@ -113,7 +113,7 @@ function beginLoadTeacherFeedback() {
 
 function loadTeacherFeedbackSuccessful(res) {
   return {
-    type: type.LOAD_TEACHER_FEEDBACK_SUCCESSFUL,
+    type: type.LOAD_TEACHER_FEEDBACK_SUCCESSFUL_DUPLICATE,
     isLoadingTeacherFeedback: false,
     errorLoadingTeacherFeedback: false,
     teacherFeedback: res.data.data,
@@ -122,7 +122,7 @@ function loadTeacherFeedbackSuccessful(res) {
 
 function loadTeacherFeedbackError() {
   return {
-    type: type.LOAD_TEACHER_FEEDBACK_ERROR,
+    type: type.LOAD_TEACHER_FEEDBACK_ERROR_DUPLICATE,
     isLoadingTeacherFeedback: false,
     errorLoadingTeacherFeedback: false,
   };
@@ -145,7 +145,7 @@ export function loadAssistantFeedback(token, genId, userId) {
 
 function beginLoadAssistantFeedback() {
   return {
-    type: type.BEGIN_LOAD_ASSISTANT_FEEDBACK,
+    type: type.BEGIN_LOAD_ASSISTANT_FEEDBACK_DUPLICATE,
     isLoadingAssistantFeedback: true,
     errorLoadingAssistantFeedback: false,
   };
@@ -153,7 +153,7 @@ function beginLoadAssistantFeedback() {
 
 function loadAssistantFeedbackSuccessful(res) {
   return {
-    type: type.LOAD_ASSISTANT_FEEDBACK_SUCCESSFUL,
+    type: type.LOAD_ASSISTANT_FEEDBACK_SUCCESSFUL_DUPLICATE,
     isLoadingAssistantFeedback: false,
     errorLoadingAssistantFeedback: false,
     assistantFeedback: res.data.data,
@@ -162,88 +162,8 @@ function loadAssistantFeedbackSuccessful(res) {
 
 function loadAssistantFeedbackError() {
   return {
-    type: type.LOAD_ASSISTANT_FEEDBACK_ERROR,
+    type: type.LOAD_ASSISTANT_FEEDBACK_ERROR_DUPLICATE,
     isLoadingAssistantFeedback: false,
     errorLoadingAssistantFeedback: false,
-  };
-}
-
-export function loadTeacherList(token, genId) {
-  return function(dispatch) {
-    dispatch(beginLoadTeacherList());
-    teachingRatingApi
-      .getTeacherList(token, genId)
-      .then(function(res) {
-        dispatch(loadTeacherListSuccessful(res));
-      })
-      .catch(error => {
-        dispatch(loadTeacherListError());
-        throw error;
-      });
-  };
-}
-
-function beginLoadTeacherList() {
-  return {
-    type: type.BEGIN_LOAD_TEACHER_LIST,
-    isLoadingTeacherList: true,
-    errorLoadingTeacherList: false,
-  };
-}
-
-function loadTeacherListSuccessful(res) {
-  return {
-    type: type.LOAD_TEACHER_LIST_SUCCESSFUL,
-    isLoadingTeacherList: false,
-    errorLoadingTeacherList: false,
-    teacherList: res.data,
-  };
-}
-
-function loadTeacherListError() {
-  return {
-    type: type.LOAD_TEACHER_LIST_ERROR,
-    isLoadingTeacherList: false,
-    errorLoadingTeacherList: false,
-  };
-}
-
-export function loadAssistantList(token, genId) {
-  return function(dispatch) {
-    dispatch(beginLoadAssistantList());
-    teachingRatingApi
-      .getAssistantList(token, genId)
-      .then(function(res) {
-        dispatch(loadAssistantListSuccessful(res));
-      })
-      .catch(error => {
-        dispatch(loadAssistantListError());
-        throw error;
-      });
-  };
-}
-
-function beginLoadAssistantList() {
-  return {
-    type: type.BEGIN_LOAD_ASSISTANT_LIST,
-    isLoadingAssistantList: true,
-    errorLoadingAssistantList: false,
-  };
-}
-
-function loadAssistantListSuccessful(res) {
-  return {
-    type: type.LOAD_ASSISTANT_LIST_SUCCESSFUL,
-    isLoadingAssistantList: false,
-    errorLoadingAssistantList: false,
-    assistantList: res.data,
-  };
-}
-
-function loadAssistantListError() {
-  return {
-    type: type.LOAD_ASSISTANT_LIST_ERROR,
-    isLoadingAssistantList: false,
-    errorLoadingAssistantList: false,
   };
 }

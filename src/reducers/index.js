@@ -29,6 +29,7 @@ import {historyTabReducer} from './historyTabReducer';
 import workShiftRegisterReducer from './workShiftRegisterReducer';
 import {teachingRatingReducer} from './teachingRatingReducer';
 import {detailShiftsReducer} from './detailShiftsReducer';
+import {teachingRatingDuplicateReducer} from "./teachingRatingDuplicateReducer";
 
 const appReducer = combineReducers({
   login: loginReducer,
@@ -56,6 +57,7 @@ const appReducer = combineReducers({
   historyTab: historyTabReducer,
   workShiftRegister: workShiftRegisterReducer,
   teachingRating: teachingRatingReducer,
+  teachingRatingDuplicate: teachingRatingDuplicateReducer,
   detailShifts: detailShiftsReducer,
 });
 

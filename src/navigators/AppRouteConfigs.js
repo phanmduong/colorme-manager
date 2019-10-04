@@ -44,6 +44,8 @@ import HistoryMeetingDetailsContainer from '../containers/meetingDetail/HistoryM
 import TeachingRatingContainer from '../containers/TeachingRatingContainer';
 import DetailShiftsContainer from '../containers/DetailShiftsContainer';
 import ListDetailShiftsRegisteredContainer from '../containers/ListDetailShiftsRegisteredContainer';
+import ListTeacherAndAssistantContainer from '../containers/ListTeacherAndAssistantContainer';
+import TeachingRatingDuplicateContainer from '../containers/TeachingRatingDuplicateContainer';
 
 const navigationOptionsDefault = {
   defaultNavigationOptions: {
@@ -148,11 +150,17 @@ const TabDashboard = createStackNavigator(
     TeachingRating: {
       screen: TeachingRatingContainer,
     },
+    TeachingRatingDuplicate: {
+      screen: TeachingRatingDuplicateContainer,
+    },
     ListDetailShiftsRegistered: {
       screen: ListDetailShiftsRegisteredContainer,
     },
     DetailShifts: {
       screen: DetailShiftsContainer,
+    },
+    ListTeacherAndAssistant: {
+      screen: ListTeacherAndAssistantContainer,
     },
   },
   {

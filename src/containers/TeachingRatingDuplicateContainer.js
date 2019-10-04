@@ -1,12 +1,12 @@
 import React from 'react';
 import TeachingRatingComponent from '../components/TeachingRatingComponent';
 import {connect} from 'react-redux';
-import * as teachingRatingActions from '../actions/teachingRatingActions';
+import * as teachingRatingActions from '../actions/teachingRatingDuplicateActions';
 import {bindActionCreators} from 'redux';
 import * as genActions from '../actions/genActions';
 import {Image, TouchableOpacity} from 'react-native';
 
-class TeachingRatingContainer extends React.Component {
+class TeachingRatingDuplicateContainer extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -17,20 +17,13 @@ class TeachingRatingContainer extends React.Component {
 
   static navigationOptions = ({navigation}) => ({
     title: 'Đánh giá',
-    headerRight: (
-      <TouchableOpacity
-        onPress={() => navigation.navigate('ListTeacherAndAssistant')}>
-        <Image
-          source={require('../../assets/img/icons8-user-group-90.png')}
-          style={{width: 20, height: 20, right: 20}}
-        />
-      </TouchableOpacity>
-    ),
   });
 
   componentDidMount = () => {
-    this.loadTeacherRatingData(this.props.user.id);
-    this.loadAssistantRatingData(this.props.user.id);
+    const {navigation} = this.props;
+    let userId = navigation.getParam('userId', 0);
+    this.loadTeacherRatingData(userId);
+    this.loadAssistantRatingData(userId);
     this.loadGenData();
   };
 
@@ -40,10 +33,13 @@ class TeachingRatingContainer extends React.Component {
       this.props.teachingRatingActions.selectedGenId(props.teachingGen.id);
     }
 
+    const {navigation} = this.props;
+    let userId = navigation.getParam('userId', 0);
+
     if (props.genData.length > 0 && !this.state.checkedFeedback) {
       this.setState({checkedFeedback: true});
-      this.loadTeacherFeedback(props.teachingGen.id, this.props.user.id);
-      this.loadAssistantFeedback(props.teachingGen.id, this.props.user.id);
+      this.loadTeacherFeedback(props.teachingGen.id, userId);
+      this.loadAssistantFeedback(props.teachingGen.id, userId);
     }
   }
 
@@ -82,12 +78,16 @@ class TeachingRatingContainer extends React.Component {
   };
 
   onSelectGenId = genId => {
+    const {navigation} = this.props;
+    let userId = navigation.getParam('userId', 0);
     this.props.teachingRatingActions.selectedGenId(genId);
-    this.loadTeacherFeedback(genId, this.props.user.id);
-    this.loadAssistantFeedback(genId, this.props.user.id);
+    this.loadTeacherFeedback(genId, userId);
+    this.loadAssistantFeedback(genId, userId);
   };
 
   render() {
+    const {navigation} = this.props;
+    let userId = navigation.getParam('userId', 0);
     return (
       <TeachingRatingComponent
         isLoadingTeacherRating={this.props.isLoadingTeacherRating}
@@ -103,16 +103,10 @@ class TeachingRatingContainer extends React.Component {
         assistantFeedback={this.props.assistantFeedback}
         isLoadingAssistantFeedback={this.props.isLoadingAssistantFeedback}
         onRefresh={() => {
-          this.loadTeacherRatingData(this.props.user.id);
-          this.loadAssistantRatingData(this.props.user.id);
-          this.loadTeacherFeedback(
-            this.props.selectedGenId,
-            this.props.user.id,
-          );
-          this.loadAssistantFeedback(
-            this.props.selectedGenId,
-            this.props.user.id,
-          );
+          this.loadTeacherRatingData(userId);
+          this.loadAssistantRatingData(userId);
+          this.loadTeacherFeedback(this.props.selectedGenId, userId);
+          this.loadAssistantFeedback(this.props.selectedGenId, userId);
         }}
       />
     );
@@ -122,25 +116,28 @@ class TeachingRatingContainer extends React.Component {
 function mapStateToProps(state) {
   return {
     token: state.login.token,
-    user: state.login.user,
-    teacherRatingData: state.teachingRating.teacherRatingData,
-    isLoadingTeacherRating: state.teachingRating.isLoadingTeacherRating,
-    errorTeachingRating: state.teachingRating.errorTeacherRating,
-    assistantRatingData: state.teachingRating.assistantRatingData,
-    isLoadingAssistantRating: state.teachingRating.isLoadingAssistantRating,
-    errorAssistantRating: state.teachingRating.errorAssistantRating,
+    teacherRatingData: state.teachingRatingDuplicate.teacherRatingData,
+    isLoadingTeacherRating:
+      state.teachingRatingDuplicate.isLoadingTeacherRating,
+    errorTeachingRating: state.teachingRatingDuplicate.errorTeacherRating,
+    assistantRatingData: state.teachingRatingDuplicate.assistantRatingData,
+    isLoadingAssistantRating:
+      state.teachingRatingDuplicate.isLoadingAssistantRating,
+    errorAssistantRating: state.teachingRatingDuplicate.errorAssistantRating,
     genData: state.gen.genData,
-    selectedGenId: state.teachingRating.selectedGenId,
+    selectedGenId: state.teachingRatingDuplicate.selectedGenId,
     teachingGen: state.gen.teachingGen,
     isLoadingGen: state.gen.isLoading,
-    teacherFeedback: state.teachingRating.teacherFeedback,
-    isLoadingTeacherFeedback: state.teachingRating.isLoadingTeacherFeedback,
+    teacherFeedback: state.teachingRatingDuplicate.teacherFeedback,
+    isLoadingTeacherFeedback:
+      state.teachingRatingDuplicate.isLoadingTeacherFeedback,
     errorLoadingTeacherFeedback:
-      state.teachingRating.errorLoadingTeacherFeedback,
-    assistantFeedback: state.teachingRating.assistantFeedback,
-    isLoadingAssistantFeedback: state.teachingRating.isLoadingAssistantFeedback,
+      state.teachingRatingDuplicate.errorLoadingTeacherFeedback,
+    assistantFeedback: state.teachingRatingDuplicate.assistantFeedback,
+    isLoadingAssistantFeedback:
+      state.teachingRatingDuplicate.isLoadingAssistantFeedback,
     errorLoadingAssistantFeedback:
-      state.teachingRating.errorLoadingAssistantFeedback,
+      state.teachingRatingDuplicate.errorLoadingAssistantFeedback,
   };
 }
 
@@ -154,4 +151,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(TeachingRatingContainer);
+)(TeachingRatingDuplicateContainer);

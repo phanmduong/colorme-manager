@@ -22,7 +22,8 @@ class TeachingRatingComponent extends React.Component {
       role: 'Giảng viên',
       teacherIndex: -1,
       assistantIndex: -1,
-      checkedData: false,
+      checkedTeacherData: false,
+      checkedAssistantData: false,
     };
   }
 
@@ -181,8 +182,8 @@ class TeachingRatingComponent extends React.Component {
     }
   };
 
-  renderFeedback = () => {
-    return this.props.feedback.ratings.map(rating => (
+  renderTeacherFeedback = () => {
+    return this.props.teacherFeedback.ratings.map(rating => (
       <View style={styles.feedbackContainer}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Image
@@ -194,7 +195,32 @@ class TeachingRatingComponent extends React.Component {
               {rating.student.name}
             </Text>
             <Text style={{color: '#a4a4a4', fontSize: 13}}>
-              {rating.time} - {rating.class_name}
+              {rating.class_name}
+            </Text>
+            {this.renderStars(rating.rating)}
+          </View>
+        </View>
+        <View style={{marginTop: 15}}>
+          <Text style={{fontSize: 16}}>{rating.comment}</Text>
+        </View>
+      </View>
+    ));
+  };
+
+  renderAssistantFeedback = () => {
+    return this.props.assistantFeedback.ratings.map(rating => (
+      <View style={styles.feedbackContainer}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Image
+            source={{uri: rating.student.avatar_url}}
+            style={styles.studentAva}
+          />
+          <View style={{marginLeft: 15}}>
+            <Text style={{fontWeight: 'bold', fontSize: 16}}>
+              {rating.student.name}
+            </Text>
+            <Text style={{color: '#a4a4a4', fontSize: 13}}>
+              {rating.class_name}
             </Text>
             {this.renderStars(rating.rating)}
           </View>
@@ -292,14 +318,16 @@ class TeachingRatingComponent extends React.Component {
     );
   }
 
-  setRatingIndex = (value, props) => {
+  setTeacherRatingIndex = (value, props) => {
     let isTeacherGenAvailable = false;
     let prevTeacherIndex = this.state.teacherIndex;
 
     for (let i = 0; i < props.teacherRatingData.length; i++) {
       if (value.id === props.teacherRatingData[i].gen.id) {
         isTeacherGenAvailable = true;
-        this.setState({teacherIndex: i});
+        this.setState({teacherIndex: i}, function() {
+          console.log(this.state.teacherIndex);
+        });
       }
     }
 
@@ -309,7 +337,9 @@ class TeachingRatingComponent extends React.Component {
     ) {
       this.setState({teacherIndex: -1});
     }
+  };
 
+  setAssistantRatingIndex = (value, props) => {
     let isAssistantGenAvailable = false;
     let prevAssistantIndex = this.state.assistantIndex;
 
@@ -333,22 +363,39 @@ class TeachingRatingComponent extends React.Component {
   };
 
   componentWillReceiveProps(props) {
+    console.log(props);
     if (
-      props.assistantRatingData.length > 0 &&
       props.teacherRatingData.length > 0 &&
       props.genData.length > 0 &&
-      !this.state.checkedData
+      !this.state.checkedTeacherData
     ) {
-      this.setState({checkedData: true});
+      this.setState({checkedTeacherData: true});
       let courseOptions = [];
       for (let i = 0; i < props.genData.length; i++) {
         courseOptions.push(props.genData[i]);
       }
       let defaultIndex = this.getDefaultValueIndex(
-        this.props.teachingGen,
+        props.teachingGen,
         courseOptions,
       );
-      this.setRatingIndex(courseOptions[defaultIndex], props);
+      this.setTeacherRatingIndex(courseOptions[defaultIndex], props);
+    }
+
+    if (
+      props.assistantRatingData.length > 0 &&
+      props.genData.length > 0 &&
+      !this.state.checkedAssistantData
+    ) {
+      this.setState({checkedAssistantData: true});
+      let courseOptions = [];
+      for (let i = 0; i < props.genData.length; i++) {
+        courseOptions.push(props.genData[i]);
+      }
+      let defaultIndex = this.getDefaultValueIndex(
+        props.teachingGen,
+        courseOptions,
+      );
+      this.setAssistantRatingIndex(courseOptions[defaultIndex], props);
     }
   }
 
@@ -361,10 +408,34 @@ class TeachingRatingComponent extends React.Component {
     return 0;
   };
 
+  renderTeacherTags = () => {
+    return this.props.teacherFeedback.comments.map(comment => (
+      <View
+        style={comment.point === 1 ? styles.tagItemGood : styles.tagItemBad}>
+        <Text style={{fontSize: 16, color: 'white'}}>
+          {comment.word} ({comment.frequency})
+        </Text>
+      </View>
+    ));
+  };
+
+  renderAssistantTags = () => {
+    return this.props.assistantFeedback.comments.map(comment => (
+      <View
+        style={comment.point === 1 ? styles.tagItemGood : styles.tagItemBad}>
+        <Text style={{fontSize: 16, color: 'white'}}>
+          {comment.word} ({comment.frequency})
+        </Text>
+      </View>
+    ));
+  };
+
   render() {
     if (
-      this.props.feedback &&
-      this.props.feedback.ratings &&
+      this.props.teacherFeedback &&
+      this.props.teacherFeedback.ratings &&
+      this.props.assistantFeedback &&
+      this.props.assistantFeedback.ratings &&
       !this.props.isLoadingGen
     ) {
       let roles = ['Giảng viên', 'Trợ giảng'];
@@ -376,6 +447,7 @@ class TeachingRatingComponent extends React.Component {
         this.props.teachingGen,
         courseOptions,
       );
+      console.log(this.state.teacherIndex);
       return (
         <ScrollView
           refreshControl={
@@ -383,7 +455,8 @@ class TeachingRatingComponent extends React.Component {
               refreshing={
                 this.props.isLoadingTeacherRating &&
                 this.props.isLoadingAssistantRating &&
-                this.props.isLoadingFeedback
+                this.props.isLoadingTeacherFeedback &&
+                this.props.isLoadingAssistantFeedback
               }
               onRefresh={this.props.onRefresh}
               titleColor={theme.mainColor}
@@ -406,7 +479,8 @@ class TeachingRatingComponent extends React.Component {
                 borderRadius: 6,
               }}
               onValueChange={value => {
-                this.setRatingIndex(value, this.props);
+                this.setTeacherRatingIndex(value, this.props);
+                this.setAssistantRatingIndex(value, this.props);
                 this.props.onSelectGenId(value.id);
               }}
             />
@@ -543,8 +617,23 @@ class TeachingRatingComponent extends React.Component {
               />
             </View>
           )}
-          {!this.props.isLoadingFeedback ? (
-            <View>{this.renderFeedback()}</View>
+          {!this.props.isLoadingTeacherFeedback &&
+          !this.props.isLoadingAssistantFeedback ? (
+            this.state.role === 'Giảng viên' ? (
+              <View>
+                <View style={styles.tagContainer}>
+                  {this.renderTeacherTags()}
+                </View>
+                {this.renderTeacherFeedback()}
+              </View>
+            ) : (
+              <View>
+                <View style={styles.tagContainer}>
+                  {this.renderAssistantTags()}
+                </View>
+                {this.renderAssistantFeedback()}
+              </View>
+            )
           ) : (
             <View style={styles.container}>
               <Spinkit
@@ -681,6 +770,27 @@ const styles = {
     fontSize: 19,
     fontWeight: 'bold',
     color: 'black',
+  },
+  tagContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginLeft: 10,
+  },
+  tagItemGood: {
+    backgroundColor: '#00CB00',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 20,
+    marginRight: 10,
+    marginTop: 10,
+  },
+  tagItemBad: {
+    backgroundColor: '#C50000',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 20,
+    marginRight: 10,
+    marginTop: 10,
   },
 };
 

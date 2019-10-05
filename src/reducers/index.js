@@ -30,6 +30,7 @@ import workShiftRegisterReducer from './workShiftRegisterReducer';
 import {teachingRatingReducer} from './teachingRatingReducer';
 import {detailShiftsReducer} from './detailShiftsReducer';
 import {teachingRatingDuplicateReducer} from "./teachingRatingDuplicateReducer";
+import {teachingTeamReducer} from "./teachingTeamReducer";
 
 const appReducer = combineReducers({
   login: loginReducer,
@@ -58,6 +59,7 @@ const appReducer = combineReducers({
   workShiftRegister: workShiftRegisterReducer,
   teachingRating: teachingRatingReducer,
   teachingRatingDuplicate: teachingRatingDuplicateReducer,
+  teachingTeam: teachingTeamReducer,
   detailShifts: detailShiftsReducer,
 });
 

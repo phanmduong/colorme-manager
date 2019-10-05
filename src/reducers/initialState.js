@@ -495,12 +495,15 @@ export default {
     assistantFeedback: {},
     isLoadingAssistantFeedback: false,
     errorLoadingAssistantFeedback: false,
+  },
+  teachingTeam: {
     teacherList: [],
     assistantList: [],
     isLoadingTeacherList: false,
     isLoadingAssistantList: false,
     errorLoadingTeacherList: false,
     errorLoadingAssistantList: false,
+    selectedGenId: -1,
   },
   teachingRatingDuplicate: {
     isLoadingTeacherRating: false,

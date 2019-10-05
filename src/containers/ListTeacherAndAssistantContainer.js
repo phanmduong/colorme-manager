@@ -2,11 +2,16 @@ import React from 'react';
 import {connect} from 'react-redux';
 import ListTeacherAndAssistantComponent from '../components/ListTeacherAndAssistantComponent';
 import {bindActionCreators} from 'redux';
-import * as teachingRatingActions from '../actions/teachingRatingActions';
+import * as teachingTeamActions from '../actions/teachingTeamActions';
+import * as genActions from '../actions/genActions';
 
 class ListTeacherAndAssistantContainer extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.state = {
+      checkedDataGen: false,
+      checkedList: false,
+    };
   }
 
   static navigationOptions = ({navigation}) => ({
@@ -14,24 +19,44 @@ class ListTeacherAndAssistantContainer extends React.Component {
   });
 
   componentDidMount = () => {
-    this.loadTeacherList(this.props.selectedGenId);
-    this.loadAssistantList(this.props.selectedGenId);
+    if (this.props.genData.length > 0 && !this.state.checkedDataGen) {
+      this.setState({checkedDataGen: true});
+      this.props.teachingTeamActions.selectedGenId(this.props.teachingGen.id);
+    }
+
+    if (this.props.genData.length > 0 && !this.state.checkedList) {
+      this.setState({checkedList: true});
+      this.loadTeacherList(this.props.teachingGen.id);
+      this.loadAssistantList(this.props.teachingGen.id);
+    }
   };
 
   loadTeacherList = genId => {
-    this.props.teachingRatingActions.loadTeacherList(this.props.token, genId);
+    this.props.teachingTeamActions.loadTeacherList(this.props.token, genId);
   };
 
   loadAssistantList = genId => {
-    this.props.teachingRatingActions.loadAssistantList(this.props.token, genId);
+    this.props.teachingTeamActions.loadAssistantList(this.props.token, genId);
+  };
+
+  onSelectGenId = genId => {
+    this.props.teachingTeamActions.selectedGenId(genId);
+    this.loadTeacherList(genId);
+    this.loadAssistantList(genId);
   };
 
   render() {
+    console.log('hello ' + this.props.teacherList);
     return (
       <ListTeacherAndAssistantComponent
         isLoadingTeacherList={this.props.isLoadingTeacherList}
         isLoadingAssistantList={this.props.isLoadingAssistantList}
         teacherList={this.props.teacherList}
+        assistantList={this.props.assistantList}
+        isLoadingGen={this.props.isLoadingGen}
+        genData={this.props.genData}
+        teachingGen={this.props.teachingGen}
+        onSelectGenId={this.onSelectGenId}
         {...this.props}
       />
     );
@@ -41,19 +66,23 @@ class ListTeacherAndAssistantContainer extends React.Component {
 function mapStateToProps(state) {
   return {
     token: state.login.token,
-    teacherList: state.teachingRating.teacherList,
-    assistantList: state.teachingRating.assistantList,
-    isLoadingTeacherList: state.teachingRating.isLoadingTeacherList,
-    isLoadingAssistantList: state.teachingRating.isLoadingAssistantList,
-    errorLoadingTeacherList: state.teachingRating.errorLoadingTeacherList,
-    errorLoadingAssistantList: state.teachingRating.errorLoadingAssistantList,
-    selectedGenId: state.teachingRating.selectedGenId,
+    teacherList: state.teachingTeam.teacherList,
+    assistantList: state.teachingTeam.assistantList,
+    isLoadingTeacherList: state.teachingTeam.isLoadingTeacherList,
+    isLoadingAssistantList: state.teachingTeam.isLoadingAssistantList,
+    errorLoadingTeacherList: state.teachingTeam.errorLoadingTeacherList,
+    errorLoadingAssistantList: state.teachingTeam.errorLoadingAssistantList,
+    selectedGenId: state.teachingTeam.selectedGenId,
+    teachingGen: state.gen.teachingGen,
+    genData: state.gen.genData,
+    isLoadingGen: state.gen.isLoading,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    teachingRatingActions: bindActionCreators(teachingRatingActions, dispatch),
+    teachingTeamActions: bindActionCreators(teachingTeamActions, dispatch),
+    genActions: bindActionCreators(genActions, dispatch),
   };
 }
 

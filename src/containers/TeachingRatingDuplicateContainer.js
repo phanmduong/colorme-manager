@@ -24,24 +24,18 @@ class TeachingRatingDuplicateContainer extends React.Component {
     let userId = navigation.getParam('userId', 0);
     this.loadTeacherRatingData(userId);
     this.loadAssistantRatingData(userId);
-    this.loadGenData();
-  };
 
-  componentWillReceiveProps(props) {
-    if (props.genData.length > 0 && !this.state.checkedDataGen) {
+    if (this.props.genData.length > 0 && !this.state.checkedDataGen) {
       this.setState({checkedDataGen: true});
-      this.props.teachingRatingActions.selectedGenId(props.teachingGen.id);
+      this.props.teachingRatingActions.selectedGenId(this.props.teachingGen.id);
     }
 
-    const {navigation} = this.props;
-    let userId = navigation.getParam('userId', 0);
-
-    if (props.genData.length > 0 && !this.state.checkedFeedback) {
+    if (this.props.genData.length > 0 && !this.state.checkedFeedback) {
       this.setState({checkedFeedback: true});
-      this.loadTeacherFeedback(props.teachingGen.id, userId);
-      this.loadAssistantFeedback(props.teachingGen.id, userId);
+      this.loadTeacherFeedback(this.props.teachingGen.id, userId);
+      this.loadAssistantFeedback(this.props.teachingGen.id, userId);
     }
-  }
+  };
 
   loadTeacherRatingData = userId => {
     this.props.teachingRatingActions.loadTeacherRating(
@@ -71,10 +65,6 @@ class TeachingRatingDuplicateContainer extends React.Component {
       genId,
       userId,
     );
-  };
-
-  loadGenData = () => {
-    this.props.genActions.loadDataGen(this.props.token);
   };
 
   onSelectGenId = genId => {

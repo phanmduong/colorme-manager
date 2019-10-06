@@ -42,7 +42,7 @@ class WorkShiftRegisterComponent extends React.Component {
   showShift = () => {
     return (
       <Swiper
-        height={3350}
+        height={4400}
         loop={false}
         showsPagination={false}
         key={this.props.workShiftRegisterData.weeks.length}

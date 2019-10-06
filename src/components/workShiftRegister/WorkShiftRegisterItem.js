@@ -38,7 +38,7 @@ class WorkShiftRegisterItem extends React.Component {
   };
 
   processAuthorName = name => {
-    let processed = name.replace('\t\t', '');
+    let processed = name.trim().replace('\t\t', '');
     processed = processed
       .split(' ')
       .splice(-2)

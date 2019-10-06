@@ -25,7 +25,7 @@ class ListTeacherAndAssistantComponent extends React.Component {
   }
 
   processAuthorName = name => {
-    let processed = name.replace('\t\t', '');
+    let processed = name.trim().replace('\t\t', '');
     processed = processed
       .split(' ')
       .splice(-2)
@@ -46,7 +46,30 @@ class ListTeacherAndAssistantComponent extends React.Component {
     return 0;
   };
 
-  renderTeacherTeam = arrays => {
+  renderTeacherTeam = search => {
+    let arrays = [],
+      size = 3;
+
+    let deepCopiedTeacherList = this.props.teacherList.slice(0);
+    let duplicateTeacherList = [];
+
+    for (let teacher of deepCopiedTeacherList) {
+      if (search === '') {
+        duplicateTeacherList.push(teacher);
+      } else {
+        let normalizedName = teacher.user.name
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '');
+        if (normalizedName.toLowerCase().includes(search.toLowerCase())) {
+          duplicateTeacherList.push(teacher);
+        }
+      }
+    }
+
+    while (duplicateTeacherList.length > 0) {
+      arrays.push(duplicateTeacherList.splice(0, size));
+    }
+
     return arrays.map(teacherSubArray => (
       <View style={{flexDirection: 'row', marginVertical: 20}}>
         {teacherSubArray.map(teacher => (
@@ -70,7 +93,10 @@ class ListTeacherAndAssistantComponent extends React.Component {
                 />
                 <View style={styles.ratingTag}>
                   <Text style={{color: 'white'}}>
-                    {this.roundRating(teacher.ratio_rating)}★
+                    {teacher.ratio_rating
+                      ? this.roundRating(teacher.ratio_rating)
+                      : 'N/A'}
+                    ★
                   </Text>
                 </View>
               </View>
@@ -84,8 +110,31 @@ class ListTeacherAndAssistantComponent extends React.Component {
     ));
   };
 
-  renderAssistantTeam = arrays => {
-    return arrays.map(assistantSubArray => (
+  renderAssistantTeam = search => {
+    let anotherArrays = [],
+      anotherSize = 3;
+
+    let deepCopiedAssistantList = this.props.assistantList.slice(0);
+    let duplicateAssistantList = [];
+
+    for (let assistant of deepCopiedAssistantList) {
+      if (search === '') {
+        duplicateAssistantList.push(assistant);
+      } else {
+        let normalizedName = assistant.user.name
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '');
+        if (normalizedName.toLowerCase().includes(search.toLowerCase())) {
+          duplicateAssistantList.push(assistant);
+        }
+      }
+    }
+
+    while (duplicateAssistantList.length > 0) {
+      anotherArrays.push(duplicateAssistantList.splice(0, anotherSize));
+    }
+
+    return anotherArrays.map(assistantSubArray => (
       <View style={{flexDirection: 'row', marginVertical: 20}}>
         {assistantSubArray.map(assistant => (
           <TouchableOpacity
@@ -108,7 +157,10 @@ class ListTeacherAndAssistantComponent extends React.Component {
                 />
                 <View style={styles.ratingTag}>
                   <Text style={{color: 'white'}}>
-                    {this.roundRating(assistant.ratio_rating)}★
+                    {assistant.ratio_rating
+                      ? this.roundRating(assistant.ratio_rating)
+                      : 'N/A'}
+                    ★
                   </Text>
                 </View>
               </View>
@@ -126,12 +178,16 @@ class ListTeacherAndAssistantComponent extends React.Component {
     const {selectedItem, defaultText} = settings;
     return (
       <LinearGradient
-        colors={['#E26800', '#E00000']}
+        colors={['white', 'white']}
         style={styles.gradientSize}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}>
-        {!selectedItem && <Text style={{color: 'white'}}>{defaultText}</Text>}
-        {selectedItem && <Text style={{color: 'white'}}>{selectedItem}</Text>}
+        {!selectedItem && (
+          <Text style={{color: 'black', fontSize: 16}}>{defaultText} ▼</Text>
+        )}
+        {selectedItem && (
+          <Text style={{color: 'black', fontSize: 16}}>{selectedItem} ▼</Text>
+        )}
       </LinearGradient>
     );
   };
@@ -167,15 +223,19 @@ class ListTeacherAndAssistantComponent extends React.Component {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
-        colors={['#E26800', '#E00000']}
+        colors={['white', 'white']}
         style={styles.gradientSize}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}>
         {!selectedItem && (
-          <Text style={{color: 'white'}}>Khóa {getLabel(defaultText)}</Text>
+          <Text style={{color: 'black', fontSize: 16}}>
+            Khóa {getLabel(defaultText)} ▼
+          </Text>
         )}
         {selectedItem && (
-          <Text style={{color: 'white'}}>Khóa {getLabel(selectedItem)}</Text>
+          <Text style={{color: 'black', fontSize: 16}}>
+            Khóa {getLabel(selectedItem)} ▼
+          </Text>
         )}
       </LinearGradient>
     );
@@ -209,21 +269,6 @@ class ListTeacherAndAssistantComponent extends React.Component {
   }
 
   render() {
-    let arrays = [],
-      size = 3;
-
-    let duplicateTeacherList = this.props.teacherList.slice(0);
-    while (duplicateTeacherList.length > 0) {
-      arrays.push(duplicateTeacherList.splice(0, size));
-    }
-
-    let anotherArrays = [],
-      anotherSize = 3;
-    let duplicateAssistantList = this.props.assistantList.slice(0);
-    while (duplicateAssistantList.length > 0) {
-      anotherArrays.push(duplicateAssistantList.splice(0, anotherSize));
-    }
-
     let roles = ['Giảng viên', 'Trợ giảng'];
     let courseOptions = [];
     for (let i = 0; i < this.props.genData.length; i++) {
@@ -235,7 +280,7 @@ class ListTeacherAndAssistantComponent extends React.Component {
     );
 
     return (
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps={'handled'}>
         <View style={styles.containerPicker}>
           <CustomPicker
             options={courseOptions}
@@ -284,9 +329,9 @@ class ListTeacherAndAssistantComponent extends React.Component {
         {!this.props.isLoadingTeacherList &&
         !this.props.isLoadingAssistantList ? (
           this.state.role === 'Giảng viên' ? (
-            this.renderTeacherTeam(arrays)
+            this.renderTeacherTeam(this.state.search)
           ) : (
-            this.renderAssistantTeam(anotherArrays)
+            this.renderAssistantTeam(this.state.search)
           )
         ) : (
           <View style={{flex: 1}}>

@@ -244,12 +244,16 @@ class TeachingRatingComponent extends React.Component {
     const {selectedItem, defaultText} = settings;
     return (
       <LinearGradient
-        colors={['#E26800', '#E00000']}
+        colors={['white', 'white']}
         style={styles.gradientSize}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}>
-        {!selectedItem && <Text style={{color: 'white'}}>{defaultText}</Text>}
-        {selectedItem && <Text style={{color: 'white'}}>{selectedItem}</Text>}
+        {!selectedItem && (
+          <Text style={{color: 'black', fontSize: 16}}>{defaultText} ▼</Text>
+        )}
+        {selectedItem && (
+          <Text style={{color: 'black', fontSize: 16}}>{selectedItem} ▼</Text>
+        )}
       </LinearGradient>
     );
   };
@@ -285,15 +289,19 @@ class TeachingRatingComponent extends React.Component {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
-        colors={['#E26800', '#E00000']}
+        colors={['white', 'white']}
         style={styles.gradientSize}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}>
         {!selectedItem && (
-          <Text style={{color: 'white'}}>Khóa {getLabel(defaultText)}</Text>
+          <Text style={{color: 'black', fontSize: 16}}>
+            Khóa {getLabel(defaultText)} ▼
+          </Text>
         )}
         {selectedItem && (
-          <Text style={{color: 'white'}}>Khóa {getLabel(selectedItem)}</Text>
+          <Text style={{color: 'black', fontSize: 16}}>
+            Khóa {getLabel(selectedItem)} ▼
+          </Text>
         )}
       </LinearGradient>
     );
@@ -679,7 +687,7 @@ const styles = {
   },
   quickRateContainer: {
     flexDirection: 'row',
-    marginTop: 10,
+    marginTop: 20,
   },
   leftItemContainer: {
     width: width / 2,
@@ -783,6 +791,7 @@ const styles = {
     flexDirection: 'row',
     flexWrap: 'wrap',
     marginLeft: 10,
+    marginVertical: 10,
   },
   tagItemGood: {
     backgroundColor: '#00CB00',

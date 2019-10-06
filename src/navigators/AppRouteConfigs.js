@@ -86,87 +86,192 @@ const TabDashboard = createStackNavigator(
   {
     Dashboard: {
       screen: DashboardContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
     Analytics: {
       screen: AnalyticsContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
     Class: {
       screen: ClassContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
     ListStudentClass: {
       screen: ListStudentClassContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
     ListStudentPaid: {
       screen: ListStudentPaidContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
     ListStudentZero: {
       screen: ListStudentZeroContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
     RegisterList: {
       screen: RegisterListContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
     CheckIn: {
       screen: CheckInContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
     CheckOut: {
       screen: CheckInContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
     HistoryAllAttendance: {
       screen: HistoryContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
     HistoryAttendanceShift: {
       screen: HistoryAttendanceShiftContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
     HistoryAttendanceWorkShift: {
       screen: HistoryAttendanceWorkShiftContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
     HistoryAttendanceTeaching: {
       screen: HistoryAttendanceTeachingContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
     AccurateStudent: {
       screen: AccurateStudentContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
     Meeting: {
       screen: MeetingContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
     MeetingDetail: {
       screen: MeetingDetailContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
     StoreMeeting: {
       screen: StoreMeetingContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
     WorkShiftRegister: {
       screen: WorkShiftRegisterContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
     EditStoreMeeting: {
       screen: EditStoreMeetingContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
     HistoryMeeting: {
       screen: HistoryMeetingContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
     HistoryMeetingDetails: {
       screen: HistoryMeetingDetailsContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
     TeachingRating: {
       screen: TeachingRatingContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
     TeachingRatingDuplicate: {
       screen: TeachingRatingDuplicateContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
     ListDetailShiftsRegistered: {
       screen: ListDetailShiftsRegisteredContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
     DetailShifts: {
       screen: DetailShiftsContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
     ListTeacherAndAssistant: {
       screen: ListTeacherAndAssistantContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
   },
   {
     defaultNavigationOptions: {
       headerStyle: {
         borderBottomWidth: 0,
+        color: 'blue',
       },
     },
   },

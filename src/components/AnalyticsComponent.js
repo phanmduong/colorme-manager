@@ -69,17 +69,7 @@ class AnalyticsComponent extends React.Component {
   showDashboard() {
     var {dashboardData} = this.props;
     return (
-      <ScrollView
-        refreshControl={
-          <RefreshControl
-            refreshing={this.props.isLoadingDashboard}
-            onRefresh={this.loadDataDashboard}
-            titleColor={theme.mainColor}
-            title="Đang tải..."
-            tintColor="#d9534f"
-            colors={['#d9534f']}
-          />
-        }>
+      <ScrollView>
         <Swiper
           style={styles.wrapper}
           height={Platform.isPad ? height / 2.8 : height / 2}
@@ -183,15 +173,19 @@ class AnalyticsComponent extends React.Component {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
-        colors={['#E26800', '#E00000']}
+        colors={['white', 'white']}
         style={styles.gradientSize}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}>
         {!selectedItem && (
-          <Text style={{color: 'white'}}>Khóa {getLabel(defaultText)}</Text>
+          <Text style={{color: 'black', fontSize: 16}}>
+            Khóa {getLabel(defaultText)} ▼
+          </Text>
         )}
         {selectedItem && (
-          <Text style={{color: 'white'}}>Khóa {getLabel(selectedItem)}</Text>
+          <Text style={{color: 'black', fontSize: 16}}>
+            Khóa {getLabel(selectedItem)} ▼
+          </Text>
         )}
       </LinearGradient>
     );
@@ -236,15 +230,19 @@ class AnalyticsComponent extends React.Component {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
-        colors={['#E26800', '#E00000']}
+        colors={['white', 'white']}
         style={styles.gradientSize}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}>
         {!selectedItem && (
-          <Text style={{color: 'white'}}>{getLabel(defaultText)}</Text>
+          <Text style={{color: 'black', fontSize: 16}}>
+            {getLabel(defaultText)} ▼
+          </Text>
         )}
         {selectedItem && (
-          <Text style={{color: 'white'}}>{getLabel(selectedItem)}</Text>
+          <Text style={{color: 'black', fontSize: 16}}>
+            {getLabel(selectedItem)} ▼
+          </Text>
         )}
       </LinearGradient>
     );
@@ -275,7 +273,17 @@ class AnalyticsComponent extends React.Component {
 
       return (
         <Container>
-          <Content>
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={this.props.isLoadingDashboard}
+                onRefresh={this.loadDataDashboard}
+                titleColor={theme.mainColor}
+                title="Đang tải..."
+                tintColor="#d9534f"
+                colors={['#d9534f']}
+              />
+            }>
             <View style={styles.containerPicker}>
               <CustomPicker
                 options={courseOptions}
@@ -313,7 +321,7 @@ class AnalyticsComponent extends React.Component {
             {!this.props.isLoadingDashboard && this.props.errorDashboard
               ? this.errorData()
               : this.showDashboard()}
-          </Content>
+          </ScrollView>
         </Container>
       );
     }

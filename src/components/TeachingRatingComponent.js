@@ -585,7 +585,10 @@ class TeachingRatingComponent extends React.Component {
                       <Text style={styles.ratioRatingText}>
                         {this.props.assistantRatingData[
                           this.state.assistantIndex
-                        ]
+                        ] &&
+                        this.props.assistantRatingData[
+                          this.state.assistantIndex
+                        ].ratio_rating
                           ? this.roundRating(
                               this.props.assistantRatingData[
                                 this.state.assistantIndex
@@ -609,7 +612,11 @@ class TeachingRatingComponent extends React.Component {
                     end={{x: 1, y: 0}}>
                     <Text style={styles.title}>Số lượt rate</Text>
                     <Text style={styles.totalRatedText}>
-                      {this.props.assistantRatingData[this.state.assistantIndex]
+                      {this.props.assistantRatingData[
+                        this.state.assistantIndex
+                      ] &&
+                      this.props.assistantRatingData[this.state.assistantIndex]
+                        .total_rated_person
                         ? this.props.assistantRatingData[
                             this.state.assistantIndex
                           ].total_rated_person

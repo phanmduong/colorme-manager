@@ -25,30 +25,24 @@ class WorkShiftRegisterComponent extends React.Component {
     this.state = {
       index: 0,
       isVisible: false,
+      resetIndex: false,
     };
   }
 
-  renderShiftWeek = () => {
-    return this.props.workShiftRegisterData.weeks.map(week => (
+  renderShiftWeek = index => {
+    return (
       <WorkShiftRegisterWeek
-        week={week}
+        week={this.props.workShiftRegisterData.weeks[index]}
         user={this.props.user}
         onRegister={this.props.onRegister}
         onUnregister={this.props.onUnregister}
       />
-    ));
+    );
   };
 
-  showShift = () => {
+  showShift = index => {
     return (
-      <Swiper
-        height={4400}
-        loop={false}
-        showsPagination={false}
-        key={this.props.workShiftRegisterData.weeks.length}
-        onIndexChanged={index => this.setState({index: index})}>
-        {this.renderShiftWeek()}
-      </Swiper>
+      <View style={{marginBottom: 50}}>{this.renderShiftWeek(index)}</View>
     );
   };
 
@@ -104,6 +98,14 @@ class WorkShiftRegisterComponent extends React.Component {
         )}
       </LinearGradient>
     );
+  };
+
+  setWeekIndex = (value, array) => {
+    for (let i = 0; i < array.length; i++) {
+      if (value === array[i]) {
+        this.setState({index: i});
+      }
+    }
   };
 
   renderCoursePickerOption = settings => {
@@ -172,6 +174,51 @@ class WorkShiftRegisterComponent extends React.Component {
     );
   };
 
+  renderWeekPickerOption = settings => {
+    const {item} = settings;
+    return (
+      <View style={styles.options}>
+        <Text style={{fontSize: 16}}>{item}</Text>
+      </View>
+    );
+  };
+
+  renderWeekPickerHeader = () => {
+    return (
+      <View style={styles.headerFooterContainer}>
+        <Text style={styles.headerFooterText}>Chọn tuần</Text>
+      </View>
+    );
+  };
+
+  renderWeekPickerField = settings => {
+    const {selectedItem, defaultText} = settings;
+    let weekOptions = [];
+    for (
+      let i = this.props.workShiftRegisterData.weeks.length - 1;
+      i >= 0;
+      i--
+    ) {
+      weekOptions.push('Tuần ' + (i + 1));
+    }
+    return (
+      <LinearGradient
+        colors={['white', 'white']}
+        style={styles.gradientSize}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 0}}>
+        {!selectedItem && (
+          <Text style={{color: 'black', fontSize: 16}}>{defaultText} ▼</Text>
+        )}
+        {selectedItem && !this.state.resetIndex ? (
+          <Text style={{color: 'black', fontSize: 16}}>{selectedItem} ▼</Text>
+        ) : (
+          <Text style={{color: 'black', fontSize: 16}}>{weekOptions[0]} ▼</Text>
+        )}
+      </LinearGradient>
+    );
+  };
+
   errorData() {
     return (
       <View style={{marginTop: height * 0.3, alignItems: 'center'}}>
@@ -234,6 +281,15 @@ class WorkShiftRegisterComponent extends React.Component {
         baseOptions.push(this.props.baseData[i]);
       }
 
+      let weekOptions = [];
+      for (
+        let i = this.props.workShiftRegisterData.weeks.length - 1;
+        i >= 0;
+        i--
+      ) {
+        weekOptions.push('Tuần ' + (i + 1));
+      }
+
       return (
         <View style={{flex: 1}}>
           <ScrollView
@@ -262,6 +318,7 @@ class WorkShiftRegisterComponent extends React.Component {
                 }}
                 onValueChange={value => {
                   this.props.onSelectGenId(value.id);
+                  this.setState({index: 0, resetIndex: true});
                 }}
               />
               <CustomPicker
@@ -278,6 +335,23 @@ class WorkShiftRegisterComponent extends React.Component {
                 }}
                 onValueChange={value => {
                   this.props.onSelectBaseId(value.id);
+                  this.setState({index: 0, resetIndex: true});
+                }}
+              />
+              <CustomPicker
+                options={weekOptions}
+                defaultValue={weekOptions[0]}
+                modalAnimationType={'fade'}
+                optionTemplate={this.renderWeekPickerOption}
+                fieldTemplate={this.renderWeekPickerField}
+                headerTemplate={this.renderWeekPickerHeader}
+                footerTemplate={this.renderCoursePickerFooter}
+                modalStyle={{
+                  borderRadius: 6,
+                }}
+                onValueChange={value => {
+                  this.setWeekIndex(value, weekOptions);
+                  this.setState({resetIndex: false});
                 }}
               />
             </View>
@@ -314,7 +388,7 @@ class WorkShiftRegisterComponent extends React.Component {
             {this.props.workShiftRegisterData.weeks.length > 0 &&
             !this.props.errorWorkShiftRegister ? (
               <View style={{flex: 1}}>
-                <ScrollView>{this.showShift()}</ScrollView>
+                <ScrollView>{this.showShift(this.state.index)}</ScrollView>
                 <WorkShiftRegisterHoursReviewModal
                   weekIndex={
                     this.props.workShiftRegisterData.weeks[this.state.index]

@@ -340,7 +340,7 @@ class WorkShiftRegisterComponent extends React.Component {
               />
               <CustomPicker
                 options={weekOptions}
-                defaultValue={weekOptions[0]}
+                defaultValue={weekOptions[0] ? weekOptions[0] : ' '}
                 modalAnimationType={'fade'}
                 optionTemplate={this.renderWeekPickerOption}
                 fieldTemplate={this.renderWeekPickerField}
@@ -475,6 +475,7 @@ const styles = {
   },
   containerPicker: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   textError: {
     color: '#d9534f',

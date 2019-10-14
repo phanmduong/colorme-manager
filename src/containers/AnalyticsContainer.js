@@ -173,19 +173,19 @@ class AnalyticsContainer extends React.Component {
   }
 
   onClickClass() {
-    this.props.classScreen();
+    this.props.navigation.navigate('Class');
   }
 
   onClickListStudentPaid() {
-    this.props.listStudentPaidScreen();
+    this.props.navigation.navigate('ListStudentPaid');
   }
 
   onClickListStudentZero() {
-    this.props.listStudentZeroScreen();
+    this.props.navigation.navigate('ListStudentZero');
   }
 
   onClickRegisterList() {
-    this.props.registerListScreen();
+    this.props.navigation.navigate('RegisterList');
   }
 
   render() {
@@ -238,14 +238,6 @@ function mapDispatchToProps(dispatch) {
     genActions: bindActionCreators(genActions, dispatch),
     dashboardActions: bindActionCreators(dashboardActions, dispatch),
     loginActions: bindActionCreators(loginActions, dispatch),
-    classScreen: () =>
-      dispatch(NavigationActions.navigate({routeName: 'Class'})),
-    listStudentPaidScreen: () =>
-      dispatch(NavigationActions.navigate({routeName: 'ListStudentPaid'})),
-    listStudentZeroScreen: () =>
-      dispatch(NavigationActions.navigate({routeName: 'ListStudentZero'})),
-    registerListScreen: () =>
-      dispatch(NavigationActions.navigate({routeName: 'RegisterList'})),
   };
 }
 

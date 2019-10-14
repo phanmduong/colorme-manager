@@ -18,11 +18,11 @@ class MeetingContainer extends React.Component {
   static navigationOptions = ({navigation}) => ({
     title: 'Họp',
     headerRight: (
-      <View style={{flexDirection: 'row', right: 20}}>
+      <View style={{flexDirection: 'row', marginRight: 20}}>
         <TouchableOpacity onPress={() => navigation.navigate('HistoryMeeting')}>
           <Image
             source={require('../../../assets/img/icons8-sand-clock-90.png')}
-            style={{width: 20, height: 20, right: 20}}
+            style={{width: 20, height: 20, marginRight: 20}}
           />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('StoreMeeting')}>

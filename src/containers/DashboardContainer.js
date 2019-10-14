@@ -35,7 +35,7 @@ class DashboardContainer extends React.Component {
       <TouchableOpacity onPress={() => this.clearAll(navigation)}>
         <Image
           source={require('../../assets/img/icons8-logout-rounded-up-100.png')}
-          style={{width: 20, height: 20, right: 20}}
+          style={{width: 20, height: 20, marginRight: 20}}
         />
       </TouchableOpacity>
     ),

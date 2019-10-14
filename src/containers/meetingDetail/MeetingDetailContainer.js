@@ -26,7 +26,7 @@ class MeetingDetailContainer extends React.Component {
           onPress={() => navigation.navigate('EditStoreMeeting', {meetingId})}>
           <Image
             source={require('../../../assets/img/icons8-edit-96.png')}
-            style={{width: 20, height: 20, right: 20}}
+            style={{width: 20, height: 20, marginRight: 20}}
           />
         </TouchableOpacity>
       ),

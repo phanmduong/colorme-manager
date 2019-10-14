@@ -22,7 +22,7 @@ class TeachingRatingContainer extends React.Component {
         onPress={() => navigation.navigate('ListTeacherAndAssistant')}>
         <Image
           source={require('../../assets/img/icons8-user-group-90.png')}
-          style={{width: 20, height: 20, right: 20}}
+          style={{width: 20, height: 20, marginRight: 20}}
         />
       </TouchableOpacity>
     ),

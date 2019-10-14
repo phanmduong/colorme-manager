@@ -222,6 +222,7 @@ const styles = {
   row: {
     flexDirection: 'row',
     alignItems: 'center',
+    padding: 10,
   },
   participatesAvatar: {
     width: 14,

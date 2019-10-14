@@ -114,7 +114,10 @@ class ListItemStudent extends React.Component {
                       styles.process,
                       styles.bar,
                       {
-                        width: (maxWidthProcess * sumAttendance) / sumLesson,
+                        width:
+                          sumAttendance && sumLesson
+                            ? (maxWidthProcess * sumAttendance) / sumLesson
+                            : 0,
                         backgroundColor: theme.processColor1,
                       },
                     ]}
@@ -139,7 +142,10 @@ class ListItemStudent extends React.Component {
                         styles.process,
                         styles.bar,
                         {
-                          width: (maxWidthProcess * score) / maxScore,
+                          width:
+                            score && maxScore
+                              ? (maxWidthProcess * score) / maxScore
+                              : 0,
                           backgroundColor: theme.processColor2,
                         },
                       ]}

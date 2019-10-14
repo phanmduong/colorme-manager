@@ -20,7 +20,7 @@ class ClassContainer extends React.Component {
 
   onSelectedItem(classId) {
     this.props.classActions.selectedClassId(classId);
-    this.props.listStudentClassScreen();
+    this.props.navigation.navigate('ListStudentClass');
   }
 
   render() {
@@ -52,8 +52,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     classActions: bindActionCreators(classActions, dispatch),
-    listStudentClassScreen: () =>
-      dispatch(NavigationActions.navigate({routeName: 'ListStudentClass'})),
   };
 }
 

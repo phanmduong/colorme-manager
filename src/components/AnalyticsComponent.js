@@ -357,10 +357,7 @@ const styles = {
   containerPicker: {
     flexDirection: 'row',
   },
-  containerList: {
-    borderTopColor: theme.borderColor,
-    borderTopWidth: 1,
-  },
+  containerList: {},
   gradientSize: {
     justifyContent: 'center',
     alignItems: 'center',

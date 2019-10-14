@@ -19,10 +19,10 @@ class ListItem extends React.Component {
     var {title, subTitle, number, nameIcon} = this.props;
     return (
       <View style={styles.container}>
-        <Icon name={nameIcon} size={23} color="#7d7d7d" />
+        <Icon name={nameIcon} size={23} color="black" />
         <View style={styles.content}>
           <View style={styles.containerTitle}>
-            <Text style={styles.title}>{title.toUpperCase()}</Text>
+            <Text style={styles.title}>{title}</Text>
             <Text style={styles.numberTitle}>{number}</Text>
           </View>
           {!this.props.disableSubTitle && (
@@ -40,7 +40,6 @@ class ListItem extends React.Component {
           <TouchableOpacity onPress={this.props.onPress}>
             {this.content()}
           </TouchableOpacity>
-          <View style={styles.line} />
         </View>
       );
     } else {
@@ -49,7 +48,6 @@ class ListItem extends React.Component {
           <TouchableNativeFeedback onPress={this.props.onPress}>
             {this.content()}
           </TouchableNativeFeedback>
-          <View style={styles.line} />
         </View>
       );
     }
@@ -73,13 +71,14 @@ const styles = {
     justifyContent: 'space-between',
   },
   title: {
-    color: '#555555',
+    color: 'black',
     fontWeight: '900',
     fontSize: Platform.isPad ? 18 : 13,
   },
   subTitle: {
     color: '#7d7d7d',
     fontSize: 12,
+    paddingTop: 5,
   },
   numberTitle: {
     color: theme.secondColor,

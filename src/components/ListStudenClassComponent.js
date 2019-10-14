@@ -10,7 +10,7 @@ import ListItemStudent from './listItem/ListItemStudent';
 import _ from 'lodash';
 
 var {height, width} = Dimensions.get('window');
-const heightSwiper = Platform.OS === 'ios' ? height - 114 : height - 125;
+const heightSwiper = Platform.OS === 'ios' ? height - 170 : height - 125;
 class ListStudenClassComponent extends React.Component {
   constructor(props, context) {
     super(props, context);

@@ -79,15 +79,6 @@ class ClassComponent extends React.Component {
 const styles = {
   containerPicker: {
     flexDirection: 'row',
-    borderBottomColor: theme.borderColor,
-    borderBottomWidth: 1,
-    shadowColor: '#b4b4b4',
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    elevation: 0.5,
-    shadowOpacity: 0.5,
   },
 };
 

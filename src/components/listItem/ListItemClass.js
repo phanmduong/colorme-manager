@@ -36,7 +36,7 @@ class ListItemClass extends React.Component {
         <Thumbnail small source={{uri: avatar}} />
         <View style={styles.content}>
           <View style={styles.containerTitle}>
-            <Text style={styles.title}>{nameClass.toUpperCase()}</Text>
+            <Text style={styles.title}>{nameClass}</Text>
           </View>
           <Text style={styles.subTitle}>{studyTime}</Text>
           <View style={styles.containerContentProcess}>
@@ -103,7 +103,6 @@ class ListItemClass extends React.Component {
             onPress={() => this.props.onPress(this.props.classId)}>
             {this.content()}
           </TouchableOpacity>
-          <View style={styles.line} />
         </View>
       );
     } else {
@@ -113,7 +112,6 @@ class ListItemClass extends React.Component {
             onPress={() => this.props.onPress(this.props.classId)}>
             {this.content()}
           </TouchableNativeFeedback>
-          <View style={styles.line} />
         </View>
       );
     }
@@ -137,13 +135,14 @@ const styles = {
     justifyContent: 'space-between',
   },
   title: {
-    color: '#555555',
+    color: 'black',
     fontWeight: '900',
     fontSize: Platform.isPad ? 18 : 13,
   },
   subTitle: {
     color: '#7d7d7d',
     fontSize: 12,
+    paddingTop: 5,
   },
   icon: {
     fontSize: 20,
@@ -155,7 +154,9 @@ const styles = {
     marginRight: 20,
     marginLeft: 75,
   },
-  containerContentProcess: {},
+  containerContentProcess: {
+    paddingTop: 5,
+  },
   containerProcess: {
     marginVertical: 5,
     backgroundColor: theme.secondColorOpacity,

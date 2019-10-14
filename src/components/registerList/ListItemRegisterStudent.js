@@ -55,7 +55,7 @@ class ListItemStudent extends React.Component {
         <View style={styles.content}>
           <View style={styles.containerTitle}>
             <View style={styles.contentTitle}>
-              <Text style={styles.title}>{name.trim().toUpperCase()}</Text>
+              <Text style={styles.title}>{name.trim()}</Text>
               {paidStatus ? (
                 <MaterialCommunityIcons
                   name="checkbox-marked-circle"
@@ -97,9 +97,7 @@ class ListItemStudent extends React.Component {
                         : '#' + saler.color,
                   },
                 }}>
-                <Text style={styles.saler}>
-                  {saler.name.trim().toUpperCase()}
-                </Text>
+                <Text style={styles.saler}>{saler.name.trim()}</Text>
               </View>
             ) : (
               <View />
@@ -116,9 +114,7 @@ class ListItemStudent extends React.Component {
                     marginLeft: 5,
                   },
                 }}>
-                <Text style={styles.campaign}>
-                  {campaign.name.trim().toUpperCase()}
-                </Text>
+                <Text style={styles.campaign}>{campaign.name.trim()}</Text>
               </View>
             ) : (
               <View />
@@ -135,7 +131,11 @@ class ListItemStudent extends React.Component {
       return (
         <View style={styles.containerExpand}>
           <Text style={styles.email}>{email}</Text>
-          <Call url={'tel:' + phone} phone={phone} />
+          <Call
+            extraPadding={{paddingTop: 5}}
+            url={'tel:' + phone}
+            phone={phone}
+          />
         </View>
       );
     }
@@ -151,7 +151,6 @@ class ListItemStudent extends React.Component {
               {this.renderExpand()}
             </View>
           </TouchableOpacity>
-          <View style={styles.line} />
         </View>
       );
     } else {
@@ -163,7 +162,6 @@ class ListItemStudent extends React.Component {
               {this.renderExpand()}
             </View>
           </TouchableNativeFeedback>
-          <View style={styles.line} />
         </View>
       );
     }
@@ -180,6 +178,7 @@ const styles = {
   },
   containerExpand: {
     marginLeft: 55,
+    paddingTop: 5,
   },
   content: {
     flex: 1,
@@ -191,7 +190,7 @@ const styles = {
     justifyContent: 'space-between',
   },
   title: {
-    color: '#555555',
+    color: 'black',
     fontWeight: '900',
     fontSize: Platform.isPad ? 18 : 13,
     marginRight: 5,
@@ -212,6 +211,7 @@ const styles = {
   },
   containerSubTitle: {
     flexDirection: 'row',
+    paddingTop: 5,
   },
   email: {
     color: theme.colorSubTitle,

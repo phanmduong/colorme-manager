@@ -48,19 +48,20 @@ class ShiftRegisterItem extends React.Component {
         );
       } else {
         return (
-          <TouchableOpacity
-            onPress={() => Linking.openURL(`tel:${shift.user.phone}`)}>
-            <View style={styles.registered}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Image
-                  style={styles.avatar}
-                  source={{uri: shift.user.avatar_url}}
-                />
-                <Text style={styles.textRegistered}>{shift.user.name}</Text>
-              </View>
-              <Text style={{fontWeight: 'bold'}}>Gọi</Text>
+          <View style={styles.registered}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Image
+                style={styles.avatar}
+                source={{uri: shift.user.avatar_url}}
+              />
+              <Text style={styles.textRegistered}>{shift.user.name}</Text>
             </View>
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => Linking.openURL(`tel:${shift.user.phone}`)}
+              style={{padding: 5}}>
+              <Text style={{fontWeight: 'bold'}}>Gọi</Text>
+            </TouchableOpacity>
+          </View>
         );
       }
     } else {

@@ -36,10 +36,12 @@ class WorkShiftRegisterParticipatesModal extends React.Component {
               </Text>
             </View>
             <TouchableWithoutFeedback onPress={this.props.closeModal}>
-              <Image
-                source={require('../../../assets/img/closeIcon.png')}
-                style={styles.closeIcon}
-              />
+              <View style={{padding: 10}}>
+                <Image
+                  source={require('../../../assets/img/closeIcon.png')}
+                  style={styles.closeIcon}
+                />
+              </View>
             </TouchableWithoutFeedback>
           </View>
           <ScrollView>

@@ -35,12 +35,18 @@ class MakeupClassComponent extends React.Component {
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}>
         {!selectedItem && (
-          <Text style={{color: 'black', fontSize: 16}}>{defaultText} ▼</Text>
+          <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+            <Text style={{color: 'black', fontSize: 16}}>{defaultText}</Text>
+            <Text>▼</Text>
+          </View>
         )}
         {selectedItem && (
-          <Text style={{color: 'black', fontSize: 16}}>
-            {getLabel(selectedItem)} ▼
-          </Text>
+          <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+            <Text style={{color: 'black', fontSize: 16}}>
+              {getLabel(selectedItem)}
+            </Text>
+            <Text>▼</Text>
+          </View>
         )}
       </LinearGradient>
     );
@@ -101,12 +107,18 @@ class MakeupClassComponent extends React.Component {
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}>
         {!selectedItem && (
-          <Text style={{color: 'black', fontSize: 16}}>{defaultText} ▼</Text>
+          <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+            <Text style={{color: 'black', fontSize: 16}}>{defaultText}</Text>
+            <Text>▼</Text>
+          </View>
         )}
         {selectedItem && (
-          <Text style={{color: 'black', fontSize: 16}}>
-            Buổi {selectedItem.order}: {getLabel(selectedItem)} ▼
-          </Text>
+          <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+            <Text style={{color: 'black', fontSize: 16}}>
+              {getLabel(selectedItem)}
+            </Text>
+            <Text>▼</Text>
+          </View>
         )}
       </LinearGradient>
     );
@@ -170,7 +182,12 @@ class MakeupClassComponent extends React.Component {
             style={styles.courseIcon}
           />
           <View style={{marginLeft: 10}}>
-            <Text style={styles.courseName}>{schedule.class.name}</Text>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Text style={styles.courseName}>{schedule.class.name}</Text>
+              <Text style={{fontSize: 15, paddingLeft: 7}}>
+                ► {schedule.class.room.name}
+              </Text>
+            </View>
             <View style={{flexDirection: 'row'}}>
               {schedule.class.teacher ? (
                 <View style={styles.authorContainerPadding}>
@@ -373,13 +390,7 @@ class MakeupClassComponent extends React.Component {
               Object.entries(this.renderBasedOnBase()).map(([key, value]) => (
                 <View style={styles.courseContainer}>
                   <View style={styles.subCourseContainer}>
-                    <Image
-                      source={require('../../assets/img/icons8-place_marker.png')}
-                      style={{width: 30, height: 30}}
-                    />
-                    <View style={{marginRight: 30}}>
-                      <Text style={styles.courseInfoContainer}>{key}</Text>
-                    </View>
+                    <Text style={styles.courseInfoContainer}>{key}</Text>
                   </View>
                   <View>{this.renderCourses(value)}</View>
                 </View>
@@ -461,7 +472,7 @@ const styles = {
     paddingHorizontal: 20,
     borderRadius: 24,
     marginHorizontal: 10,
-    marginBottom: 10,
+    marginVertical: 10,
   },
   headerFooterContainer: {
     padding: 10,
@@ -513,8 +524,6 @@ const styles = {
     paddingHorizontal: 20,
     marginRight: 20,
     borderRadius: 20,
-    borderColor: '#D9D5DC',
-    borderWidth: 1 / 2,
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
@@ -541,7 +550,6 @@ const styles = {
   },
   subCourseContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
     marginBottom: 10,
     flex: 1,
   },

@@ -525,4 +525,12 @@ export default {
     error: false,
     detailShifts: [],
   },
+  makeupClasses: {
+    isLoadingScheduleClasses: false,
+    errorScheduleClasses: false,
+    schedule: [],
+    isLoadingAllCourses: false,
+    errorLoadingAllCourses: false,
+    courses: [],
+  },
 };

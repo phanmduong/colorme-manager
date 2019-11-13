@@ -46,6 +46,7 @@ import DetailShiftsContainer from '../containers/DetailShiftsContainer';
 import ListDetailShiftsRegisteredContainer from '../containers/ListDetailShiftsRegisteredContainer';
 import ListTeacherAndAssistantContainer from '../containers/ListTeacherAndAssistantContainer';
 import TeachingRatingDuplicateContainer from '../containers/TeachingRatingDuplicateContainer';
+import MakeupClassContainer from '../containers/MakeupClassContainer';
 
 const navigationOptionsDefault = {
   defaultNavigationOptions: {
@@ -261,6 +262,13 @@ const TabDashboard = createStackNavigator(
     },
     ListTeacherAndAssistant: {
       screen: ListTeacherAndAssistantContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    MakeupClass: {
+      screen: MakeupClassContainer,
       navigationOptions: () => ({
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},

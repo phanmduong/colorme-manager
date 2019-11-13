@@ -29,8 +29,9 @@ import {historyTabReducer} from './historyTabReducer';
 import workShiftRegisterReducer from './workShiftRegisterReducer';
 import {teachingRatingReducer} from './teachingRatingReducer';
 import {detailShiftsReducer} from './detailShiftsReducer';
-import {teachingRatingDuplicateReducer} from "./teachingRatingDuplicateReducer";
-import {teachingTeamReducer} from "./teachingTeamReducer";
+import {teachingRatingDuplicateReducer} from './teachingRatingDuplicateReducer';
+import {teachingTeamReducer} from './teachingTeamReducer';
+import {makeupClassReducer} from './makeupClassReducer';
 
 const appReducer = combineReducers({
   login: loginReducer,
@@ -61,6 +62,7 @@ const appReducer = combineReducers({
   teachingRatingDuplicate: teachingRatingDuplicateReducer,
   teachingTeam: teachingTeamReducer,
   detailShifts: detailShiftsReducer,
+  makeupClasses: makeupClassReducer,
 });
 
 const rootReducer = (state, action) => {

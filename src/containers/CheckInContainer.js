@@ -42,7 +42,7 @@ class CheckInContainer extends React.Component {
   }
 
   onExit() {
-    this.props.navigation.navigate('TabDashboard');
+    this.props.navigation.goBack();
   }
 
   render() {

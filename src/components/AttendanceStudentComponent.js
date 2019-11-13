@@ -47,7 +47,7 @@ class AttendanceStudentComponent extends React.Component {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        ImageResizer.createResizedImage(response.uri, 2000, 2000, 'JPEG', 100, 0)
+        ImageResizer.createResizedImage(response.uri, 1000, 1000, 'JPEG', 100, 0)
           .then(response => {
             let source = {
               uri: response.uri,

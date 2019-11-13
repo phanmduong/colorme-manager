@@ -188,60 +188,8 @@ class MakeupClassComponent extends React.Component {
                 ► {schedule.class.room.name}
               </Text>
             </View>
-            <View style={{flexDirection: 'row'}}>
-              {schedule.class.teacher ? (
-                <View style={styles.authorContainerPadding}>
-                  <View style={styles.avatarPadding}>
-                    {schedule.class.teacher.avatar_url ? (
-                      <Image
-                        source={{uri: schedule.class.teacher.avatar_url}}
-                        style={styles.avatarSize}
-                      />
-                    ) : (
-                      <Image
-                        source={require('../../assets/img/icons8-male-user-96.png')}
-                        style={styles.avatarSize}
-                      />
-                    )}
-                  </View>
-                  <View style={styles.authorPadding}>
-                    <Text style={styles.authorText}>
-                      {processAuthorName(schedule.class.teacher.name.trim())}
-                    </Text>
-                  </View>
-                </View>
-              ) : null}
-              {schedule.class.teacher_assistant ? (
-                <View style={[styles.authorContainerPadding, {marginLeft: 7}]}>
-                  <View style={styles.avatarPadding}>
-                    {schedule.class.teacher_assistant.avatar_url ? (
-                      <Image
-                        source={{
-                          uri: schedule.class.teacher_assistant.avatar_url,
-                        }}
-                        style={styles.avatarSize}
-                      />
-                    ) : (
-                      <Image
-                        source={require('../../assets/img/icons8-male-user-96.png')}
-                        style={styles.avatarSize}
-                      />
-                    )}
-                  </View>
-                  <View style={styles.authorPadding}>
-                    <Text style={styles.authorText}>
-                      {processAuthorName(
-                        schedule.class.teacher_assistant.name.trim(),
-                      )}
-                    </Text>
-                  </View>
-                </View>
-              ) : null}
-            </View>
             <Text style={{color: '#707070', marginTop: 7}}>
-              {getTime(schedule.start_time)}-{getTime(schedule.end_time)}
-            </Text>
-            <Text style={{color: '#707070', marginTop: 4}}>
+              ({getTime(schedule.start_time)}-{getTime(schedule.end_time)}){' '}
               {getDay(schedule.time)}, {convertDate(schedule.time)}
             </Text>
           </View>
@@ -490,36 +438,6 @@ const styles = {
     borderBottomColor: '#F0F0F0',
     marginHorizontal: 20,
   },
-  authorContainerPadding: {
-    paddingLeft: 3,
-    paddingTop: 0,
-    paddingBottom: 0,
-    paddingRight: 0,
-    backgroundColor: '#f3f4f3',
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: 10,
-    marginTop: 7,
-  },
-  avatarPadding: {
-    paddingTop: 3,
-    paddingBottom: 3,
-  },
-  avatarSize: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-  },
-  authorPadding: {
-    paddingLeft: 10,
-    paddingBottom: 3,
-    paddingTop: 3,
-    paddingRight: 10,
-  },
-  authorText: {
-    color: 'black',
-    fontSize: 13,
-  },
   tag: {
     paddingHorizontal: 20,
     marginRight: 20,
@@ -542,7 +460,7 @@ const styles = {
   },
   courseName: {
     fontWeight: '600',
-    fontSize: 24,
+    fontSize: 22,
   },
   courseContainer: {
     marginHorizontal: 10,

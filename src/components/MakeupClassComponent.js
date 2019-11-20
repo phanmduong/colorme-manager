@@ -115,7 +115,7 @@ class MakeupClassComponent extends React.Component {
         {selectedItem && (
           <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
             <Text style={{color: 'black', fontSize: 16}}>
-              {getLabel(selectedItem)}
+              Buổi {selectedItem.order}: {getLabel(selectedItem)}
             </Text>
             <Text>▼</Text>
           </View>

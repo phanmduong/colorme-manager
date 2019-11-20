@@ -17,13 +17,21 @@ class ShiftRegisterItem extends React.Component {
         <Text style={styles.titleShift}>{shift.name}</Text>
         {this.progressAttendance(data)}
         <View style={styles.timeAttendance}>
-          <Text style={styles.textTime}>
-            {shift.check_in_time ? shift.check_in_time : '--:--'}/
-            {shift.start_shift_time}
+          <Text>
+            {shift.check_in_time ? (
+              <Text style={{color: 'black'}}>{shift.check_in_time}</Text>
+            ) : (
+              <Text style={styles.textTime}>--:--</Text>
+            )}
+            <Text style={styles.textTime}>/{shift.start_shift_time}</Text>
           </Text>
-          <Text style={styles.textTime}>
-            {shift.check_out_time ? shift.check_out_time : '--:--'}/
-            {shift.end_shift_time}
+          <Text>
+            {shift.check_out_time ? (
+              <Text style={{color: 'black'}}>{shift.check_out_time}</Text>
+            ) : (
+              <Text style={styles.textTime}>--:--</Text>
+            )}
+            <Text style={styles.textTime}>/{shift.end_shift_time}</Text>
           </Text>
         </View>
       </View>

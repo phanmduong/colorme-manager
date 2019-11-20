@@ -19,13 +19,21 @@ class TeachingLesson extends React.Component {
         <Text style={styles.titleShift}>Buổi {lesson.order}</Text>
         {this.progressAttendance(data)}
         <View style={styles.timeAttendance}>
-          <Text style={styles.textTime}>
-            {lesson.check_in ? lesson.check_in.time : '--:--'}/
-            {lesson.start_time}
+          <Text>
+            {lesson.check_in ? (
+              <Text style={{color: 'black'}}>{lesson.check_in.time}</Text>
+            ) : (
+              <Text style={styles.textTime}>--:--</Text>
+            )}
+            <Text style={styles.textTime}>/{lesson.start_time}</Text>
           </Text>
-          <Text style={styles.textTime}>
-            {lesson.check_out ? lesson.check_out.time : '--:--'}/
-            {lesson.end_time}
+          <Text>
+            {lesson.check_out ? (
+              <Text style={{color: 'black'}}>{lesson.check_out.time}</Text>
+            ) : (
+              <Text style={styles.textTime}>--:--</Text>
+            )}
+            <Text style={styles.textTime}>/{lesson.end_time}</Text>
           </Text>
         </View>
       </View>

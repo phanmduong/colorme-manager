@@ -42,8 +42,8 @@ class ShiftRegisterWeek extends React.Component {
 
     return (
       <List
-        renderHeader={() => this.renderHeader()}
         dataArray={data}
+        ListHeaderComponent={() => this.renderHeader()}
         renderRow={date => <ShiftRegisterDate dateData={date} />}
       />
     );

@@ -37,7 +37,7 @@ class TeachingClass extends React.Component {
   render() {
     return (
       <List
-        renderHeader={() => this.renderHeader()}
+        ListHeaderComponent={() => this.renderHeader()}
         dataArray={[0]}
         renderRow={() => (
           <View style={styles.card}>

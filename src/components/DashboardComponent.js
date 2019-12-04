@@ -101,7 +101,7 @@ class DashboardComponent extends React.Component {
               }}
             />
           </View>
-          <View style={[styles.otherFeatureLine, {marginBottom: 20}]}>
+          <View style={styles.otherFeatureLine}>
             <CircleTab
               iconImage={require('../../assets/img/icons8-time-card-90.png')}
               title={'ĐK làm việc'}
@@ -123,6 +123,17 @@ class DashboardComponent extends React.Component {
                 this.props.navigation.navigate('MakeupClass');
               }}
             />
+          </View>
+          <View style={styles.otherFeatureLine}>
+            <CircleTab
+              iconImage={require('../../assets/img/icons8-writer_male.png')}
+              title={'Tạo đăng ký'}
+              onPress={() => {
+                this.props.navigation.navigate('SaveRegister');
+              }}
+            />
+            <View style={{width: width / 3}} />
+            <View style={{width: width / 3}} />
           </View>
           <MeetingComponent
             store={this.props.store}

@@ -32,6 +32,7 @@ import {detailShiftsReducer} from './detailShiftsReducer';
 import {teachingRatingDuplicateReducer} from './teachingRatingDuplicateReducer';
 import {teachingTeamReducer} from './teachingTeamReducer';
 import {makeupClassReducer} from './makeupClassReducer';
+import {saveRegisterReducer} from './saveRegisterReducer';
 
 const appReducer = combineReducers({
   login: loginReducer,
@@ -63,6 +64,7 @@ const appReducer = combineReducers({
   teachingTeam: teachingTeamReducer,
   detailShifts: detailShiftsReducer,
   makeupClasses: makeupClassReducer,
+  saveRegister: saveRegisterReducer,
 });
 
 const rootReducer = (state, action) => {

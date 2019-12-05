@@ -7,6 +7,9 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Alert,
+  KeyboardAvoidingView,
+  Platform,
+  Image,
 } from 'react-native';
 import {Input, InputGroup} from 'native-base';
 import theme from '../styles';
@@ -64,6 +67,7 @@ class SaveRegisterComponent extends React.Component {
       campaign_id: '',
       description: '',
       isDatePickerVisible: false,
+      expanded: false,
     };
   }
 
@@ -289,11 +293,11 @@ class SaveRegisterComponent extends React.Component {
         description: this.state.description,
       };
       this.props.register(register);
-      if (!this.props.errorLoadingRegister) {
+      if (this.props.errorLoadingRegister) {
+        Alert.alert('Thông báo', 'Có lỗi xảy !');
+      } else {
         this.reset();
         Alert.alert('Thông báo', 'Đăng ký thành công!');
-      } else {
-        Alert.alert('Thông báo', 'Có lỗi xảy !');
       }
     }
   };
@@ -318,6 +322,7 @@ class SaveRegisterComponent extends React.Component {
       selectedCampaign: false,
       selectedGender: false,
       selectedAddress: false,
+      expanded: false,
     });
   };
 
@@ -353,6 +358,12 @@ class SaveRegisterComponent extends React.Component {
     return address;
   };
 
+  toggleExpand = () => {
+    this.setState({
+      expanded: !this.state.expanded,
+    });
+  };
+
   render() {
     if (
       !this.props.isLoadingCourses &&
@@ -364,297 +375,380 @@ class SaveRegisterComponent extends React.Component {
       this.getDataAddress()
     ) {
       return (
-        <SafeAreaView style={styles.container}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={{marginTop: 30}}>
-              <Text style={styles.titleForm}>Tên học viên *</Text>
-              <InputGroup style={{width: width - 20}}>
-                <Input
-                  value={this.state.name}
-                  onChangeText={data => this.setState({name: data})}
-                  returnKeyType={'next'}
-                  placeholder="Tên học viên"
-                  blurOnSubmit={false}
-                  style={{
-                    lineHeight: 20,
-                    height: 40,
-                    fontSize: 15,
-                  }}
-                />
-              </InputGroup>
-            </View>
-            <View style={{marginTop: 30}}>
-              <Text style={styles.titleForm}>Email học viên *</Text>
-              <InputGroup style={{width: width - 20}}>
-                <Input
-                  value={this.state.email}
-                  autoCapitalize={'none'}
-                  onChangeText={data => this.setState({email: data})}
-                  returnKeyType={'next'}
-                  placeholder="Email học viên"
-                  blurOnSubmit={false}
-                  style={{
-                    lineHeight: 20,
-                    height: 40,
-                    fontSize: 15,
-                  }}
-                />
-              </InputGroup>
-            </View>
-            <View style={{marginTop: 30}}>
-              <Text style={styles.titleForm}>Số điện thoại học viên *</Text>
-              <InputGroup style={{width: width - 20}}>
-                <Input
-                  value={this.state.phone}
-                  onChangeText={data => this.setState({phone: data})}
-                  returnKeyType={'next'}
-                  placeholder="Số điện thoại học viên"
-                  blurOnSubmit={false}
-                  style={{
-                    lineHeight: 20,
-                    height: 40,
-                    fontSize: 15,
-                  }}
-                />
-              </InputGroup>
-            </View>
-            <View style={{marginTop: 30, marginBottom: 20}}>
-              <Text style={styles.titleForm}>Mã khuyến mãi</Text>
-              <InputGroup style={{width: width - 20}}>
-                <Input
-                  value={this.state.coupon}
-                  onChangeText={data => this.setState({coupon: data})}
-                  returnKeyType={'next'}
-                  placeholder="Mã khuyến mãi"
-                  blurOnSubmit={false}
-                  style={{
-                    lineHeight: 20,
-                    height: 40,
-                    fontSize: 15,
-                  }}
-                />
-              </InputGroup>
-            </View>
-            <CustomPicker
-              options={this.props.courses}
-              getLabel={item => item.name}
-              placeholder={'Chọn môn'}
-              modalAnimationType={'fade'}
-              optionTemplate={this.renderCoursePickerOption}
-              fieldTemplate={this.renderCoursePickerField}
-              headerTemplate={this.renderCoursePickerHeader}
-              footerTemplate={this.renderCoursePickerFooter}
-              modalStyle={{
-                borderRadius: 6,
-              }}
-              onValueChange={value => {
-                this.setState({
-                  selectedCourse: true,
-                });
-                this.props.onSelectCourseId(value.id);
-              }}
-            />
-            {this.state.selectedCourse && !this.props.isLoadingClasses ? (
+        <KeyboardAvoidingView
+          style={{flex: 1}}
+          behavior={Platform.OS === 'ios' ? 'padding' : ''}
+          enabled>
+          <SafeAreaView style={styles.container}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <View style={{marginTop: 30}}>
+                <Text style={styles.titleForm}>Tên học viên *</Text>
+                <InputGroup style={{width: width - 20}}>
+                  <Input
+                    {...this.props}
+                    value={this.state.name}
+                    onChangeText={data => this.setState({name: data})}
+                    returnKeyType={'next'}
+                    placeholder="Tên học viên"
+                    blurOnSubmit={false}
+                    onSubmitEditing={event => {
+                      this.refs.email._root.focus();
+                    }}
+                    style={{
+                      lineHeight: 20,
+                      height: 40,
+                      fontSize: 15,
+                    }}
+                  />
+                </InputGroup>
+              </View>
+              <View style={{marginTop: 30}}>
+                <Text style={styles.titleForm}>Email học viên *</Text>
+                <InputGroup style={{width: width - 20}}>
+                  <Input
+                    {...this.props}
+                    value={this.state.email}
+                    autoCapitalize={'none'}
+                    ref={'email'}
+                    onChangeText={data => this.setState({email: data})}
+                    returnKeyType={'next'}
+                    placeholder="Email học viên"
+                    blurOnSubmit={false}
+                    onSubmitEditing={event => {
+                      this.refs.phone._root.focus();
+                    }}
+                    style={{
+                      lineHeight: 20,
+                      height: 40,
+                      fontSize: 15,
+                    }}
+                  />
+                </InputGroup>
+              </View>
+              <View style={{marginTop: 30}}>
+                <Text style={styles.titleForm}>Số điện thoại học viên *</Text>
+                <InputGroup style={{width: width - 20}}>
+                  <Input
+                    value={this.state.phone}
+                    onChangeText={data => this.setState({phone: data})}
+                    returnKeyType={'next'}
+                    ref={'phone'}
+                    placeholder="Số điện thoại học viên"
+                    blurOnSubmit={false}
+                    onSubmitEditing={event => {
+                      this.refs.coupon._root.focus();
+                    }}
+                    style={{
+                      lineHeight: 20,
+                      height: 40,
+                      fontSize: 15,
+                    }}
+                  />
+                </InputGroup>
+              </View>
+              <View style={{marginTop: 30, marginBottom: 20}}>
+                <Text style={styles.titleForm}>Mã khuyến mãi</Text>
+                <InputGroup style={{width: width - 20}}>
+                  <Input
+                    value={this.state.coupon}
+                    onChangeText={data => this.setState({coupon: data})}
+                    returnKeyType={'next'}
+                    placeholder="Mã khuyến mãi"
+                    blurOnSubmit={false}
+                    onSubmitEditing={event => {
+                      if (this.state.expanded) {
+                        this.refs.university._root.focus();
+                      } else {
+                        this.refs.coupon._root.blur();
+                      }
+                    }}
+                    ref={'coupon'}
+                    style={{
+                      lineHeight: 20,
+                      height: 40,
+                      fontSize: 15,
+                    }}
+                  />
+                </InputGroup>
+              </View>
               <CustomPicker
-                options={this.props.classes}
+                options={this.props.courses}
                 getLabel={item => item.name}
-                placeholder={'Chọn lớp'}
+                placeholder={'Chọn môn'}
                 modalAnimationType={'fade'}
                 optionTemplate={this.renderCoursePickerOption}
                 fieldTemplate={this.renderCoursePickerField}
-                headerTemplate={this.renderClassPickerHeader}
+                headerTemplate={this.renderCoursePickerHeader}
                 footerTemplate={this.renderCoursePickerFooter}
                 modalStyle={{
                   borderRadius: 6,
                 }}
                 onValueChange={value => {
-                  this.setState({selectedClassId: value.id});
+                  this.setState({
+                    selectedCourse: true,
+                  });
+                  this.props.onSelectCourseId(value.id);
                 }}
               />
-            ) : null}
-            <CustomPicker
-              options={this.props.campaigns}
-              getLabel={item => item.name}
-              style={{marginTop: 15}}
-              placeholder={'Chọn chiến dịch'}
-              modalAnimationType={'fade'}
-              optionTemplate={this.renderCoursePickerOption}
-              fieldTemplate={this.renderCampaignPickerField}
-              headerTemplate={this.renderCampaignPickerHeader}
-              footerTemplate={this.renderCoursePickerFooter}
-              modalStyle={{
-                borderRadius: 6,
-              }}
-              onValueChange={value => {
-                this.setState({
-                  selectedCampaign: true,
-                  campaign_id: value.id,
-                });
-              }}
-            />
-            <CustomPicker
-              options={GENDER}
-              getLabel={item => item.name}
-              style={{marginTop: 15}}
-              placeholder={'Chọn giới tính'}
-              modalAnimationType={'fade'}
-              optionTemplate={this.renderCoursePickerOption}
-              fieldTemplate={this.renderGenderPickerField}
-              headerTemplate={this.renderGenderPickerHeader}
-              footerTemplate={this.renderCoursePickerFooter}
-              modalStyle={{
-                borderRadius: 6,
-              }}
-              onValueChange={value => {
-                this.setState({
-                  selectedGender: true,
-                  gender: value.id,
-                });
-              }}
-            />
-            <View style={{marginTop: 30}}>
-              <Text style={styles.titleForm}>Ngày sinh</Text>
-              <TouchableOpacity
-                style={[styles.textForm, {marginRight: 10}]}
-                onPress={this.openDatePicker}>
-                <Text
+              {this.state.selectedCourse && !this.props.isLoadingClasses ? (
+                <CustomPicker
+                  options={this.props.classes}
+                  getLabel={item => item.name}
+                  placeholder={'Chọn lớp'}
+                  modalAnimationType={'fade'}
+                  optionTemplate={this.renderCoursePickerOption}
+                  fieldTemplate={this.renderCoursePickerField}
+                  headerTemplate={this.renderClassPickerHeader}
+                  footerTemplate={this.renderCoursePickerFooter}
+                  modalStyle={{
+                    borderRadius: 6,
+                  }}
+                  onValueChange={value => {
+                    this.setState({selectedClassId: value.id});
+                  }}
+                />
+              ) : null}
+              <CustomPicker
+                options={this.props.campaigns}
+                getLabel={item => item.name}
+                style={{marginTop: 15}}
+                placeholder={'Chọn chiến dịch'}
+                modalAnimationType={'fade'}
+                optionTemplate={this.renderCoursePickerOption}
+                fieldTemplate={this.renderCampaignPickerField}
+                headerTemplate={this.renderCampaignPickerHeader}
+                footerTemplate={this.renderCoursePickerFooter}
+                modalStyle={{
+                  borderRadius: 6,
+                }}
+                onValueChange={value => {
+                  this.setState({
+                    selectedCampaign: true,
+                    campaign_id: value.id,
+                  });
+                }}
+              />
+
+              <TouchableOpacity onPress={() => this.toggleExpand()}>
+                <View
                   style={{
-                    fontSize: 15,
+                    alignItems: 'center',
+                    flex: 1,
+                    marginTop: 30,
+                    flexDirection: 'row',
+                    justifyContent: 'center',
                   }}>
-                  {this.state.dob.format('DD/MM/YYYY')}
-                </Text>
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      color: theme.secondColor,
+                    }}>
+                    Mở rộng
+                  </Text>
+                  {!this.state.expanded ? (
+                    <Image
+                      source={require('../../assets/img/expand-arrow.png')}
+                      style={{width: 20, height: 20, marginLeft: 5}}
+                    />
+                  ) : (
+                    <Image
+                      source={require('../../assets/img/collapse-arrow.png')}
+                      style={{width: 20, height: 20, marginLeft: 5}}
+                    />
+                  )}
+                </View>
               </TouchableOpacity>
-            </View>
-            <CustomPicker
-              options={this.getDataAddress()}
-              getLabel={item => item.value}
-              style={{marginTop: 15}}
-              placeholder={'Chọn địa chỉ'}
-              modalAnimationType={'fade'}
-              optionTemplate={this.renderCoursePickerOption}
-              fieldTemplate={this.renderProvincePickerField}
-              headerTemplate={this.renderProvincePickerHeader}
-              footerTemplate={this.renderCoursePickerFooter}
-              modalStyle={{
-                borderRadius: 6,
-              }}
-              onValueChange={value => {
-                this.setState({
-                  selectedAddress: true,
-                  address: value.value,
-                });
-              }}
-            />
-            <View style={{marginTop: 30}}>
-              <Text style={styles.titleForm}>Trường học</Text>
-              <InputGroup style={{width: width - 20}}>
-                <Input
-                  value={this.state.university}
-                  onChangeText={data => this.setState({university: data})}
-                  returnKeyType={'next'}
-                  placeholder="Trường học"
-                  blurOnSubmit={false}
-                  style={{
-                    lineHeight: 20,
-                    height: 40,
-                    fontSize: 15,
-                  }}
-                />
-              </InputGroup>
-            </View>
-            <View style={{marginTop: 30}}>
-              <Text style={styles.titleForm}>Nơi làm việc</Text>
-              <InputGroup style={{width: width - 20}}>
-                <Input
-                  value={this.state.work}
-                  onChangeText={data => this.setState({work: data})}
-                  returnKeyType={'next'}
-                  placeholder="Nơi làm việc"
-                  blurOnSubmit={false}
-                  style={{
-                    lineHeight: 20,
-                    height: 40,
-                    fontSize: 15,
-                  }}
-                />
-              </InputGroup>
-            </View>
-            <View style={{marginTop: 30}}>
-              <Text style={styles.titleForm}>Lý do biết đến</Text>
-              <InputGroup style={{width: width - 20}}>
-                <Input
-                  value={this.state.how_know}
-                  onChangeText={data => this.setState({how_know: data})}
-                  returnKeyType={'next'}
-                  placeholder="Lý do biết đến"
-                  blurOnSubmit={false}
-                  style={{
-                    lineHeight: 20,
-                    height: 40,
-                    fontSize: 15,
-                  }}
-                />
-              </InputGroup>
-            </View>
-            <View style={{marginTop: 30}}>
-              <Text style={styles.titleForm}>Link Facebook</Text>
-              <InputGroup style={{width: width - 20}}>
-                <Input
-                  value={this.state.facebook}
-                  onChangeText={data => this.setState({facebook: data})}
-                  returnKeyType={'next'}
-                  placeholder="Link Facebook"
-                  blurOnSubmit={false}
-                  style={{
-                    lineHeight: 20,
-                    height: 40,
-                    fontSize: 15,
-                  }}
-                />
-              </InputGroup>
-            </View>
-            <View style={{marginTop: 30, marginBottom: 20}}>
-              <Text style={styles.titleForm}>Mô tả</Text>
-              <InputGroup style={{width: width - 20}}>
-                <Input
-                  value={this.state.description}
-                  onChangeText={data => this.setState({description: data})}
-                  returnKeyType={'next'}
-                  placeholder="Mô tả"
-                  blurOnSubmit={false}
-                  style={{
-                    lineHeight: 20,
-                    height: 40,
-                    fontSize: 15,
-                  }}
-                />
-              </InputGroup>
-            </View>
-            <TouchableOpacity onPress={() => this.submitRegister()}>
-              <LinearGradient
-                colors={['#E26800', '#E00000']}
-                start={{x: 0, y: 0}}
-                end={{x: 1, y: 0}}
-                style={styles.btnSubmit}>
-                {!this.props.isLoadingRegister ? (
-                  <Text style={{color: 'white'}}>Tạo đăng ký</Text>
-                ) : (
-                  <Spinkit
-                    isVisible
-                    color="white"
-                    type="ThreeBounce"
-                    size={40}
+
+              {this.state.expanded ? (
+                <View>
+                  <CustomPicker
+                    options={GENDER}
+                    getLabel={item => item.name}
+                    style={{marginTop: 15}}
+                    placeholder={'Chọn giới tính'}
+                    modalAnimationType={'fade'}
+                    optionTemplate={this.renderCoursePickerOption}
+                    fieldTemplate={this.renderGenderPickerField}
+                    headerTemplate={this.renderGenderPickerHeader}
+                    footerTemplate={this.renderCoursePickerFooter}
+                    modalStyle={{
+                      borderRadius: 6,
+                    }}
+                    onValueChange={value => {
+                      this.setState({
+                        selectedGender: true,
+                        gender: value.id,
+                      });
+                    }}
                   />
-                )}
-              </LinearGradient>
-            </TouchableOpacity>
-          </ScrollView>
-          <DateTimePicker
-            isVisible={this.state.isDatePickerVisible}
-            onConfirm={this.handleDatePicked}
-            onCancel={() => this.setState({isDatePickerVisible: false})}
-          />
-        </SafeAreaView>
+                  <View style={{marginTop: 30}}>
+                    <Text style={styles.titleForm}>Ngày sinh</Text>
+                    <TouchableOpacity
+                      style={[styles.textForm, {marginRight: 10}]}
+                      onPress={this.openDatePicker}>
+                      <Text
+                        style={{
+                          fontSize: 15,
+                        }}>
+                        {this.state.dob.format('DD/MM/YYYY')}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  <CustomPicker
+                    options={this.getDataAddress()}
+                    getLabel={item => item.value}
+                    style={{marginTop: 15}}
+                    placeholder={'Chọn địa chỉ'}
+                    modalAnimationType={'fade'}
+                    optionTemplate={this.renderCoursePickerOption}
+                    fieldTemplate={this.renderProvincePickerField}
+                    headerTemplate={this.renderProvincePickerHeader}
+                    footerTemplate={this.renderCoursePickerFooter}
+                    modalStyle={{
+                      borderRadius: 6,
+                    }}
+                    onValueChange={value => {
+                      this.setState({
+                        selectedAddress: true,
+                        address: value.value,
+                      });
+                    }}
+                  />
+                  <View style={{marginTop: 30}}>
+                    <Text style={styles.titleForm}>Trường học</Text>
+                    <InputGroup style={{width: width - 20}}>
+                      <Input
+                        value={this.state.university}
+                        onChangeText={data => this.setState({university: data})}
+                        returnKeyType={'next'}
+                        ref={'university'}
+                        placeholder="Trường học"
+                        blurOnSubmit={false}
+                        onSubmitEditing={event => {
+                          this.refs.work._root.focus();
+                        }}
+                        style={{
+                          lineHeight: 20,
+                          height: 40,
+                          fontSize: 15,
+                        }}
+                      />
+                    </InputGroup>
+                  </View>
+                  <View style={{marginTop: 30}}>
+                    <Text style={styles.titleForm}>Nơi làm việc</Text>
+                    <InputGroup style={{width: width - 20}}>
+                      <Input
+                        value={this.state.work}
+                        onChangeText={data => this.setState({work: data})}
+                        returnKeyType={'next'}
+                        placeholder="Nơi làm việc"
+                        blurOnSubmit={false}
+                        ref={'work'}
+                        onSubmitEditing={event => {
+                          this.refs.how_know._root.focus();
+                        }}
+                        style={{
+                          lineHeight: 20,
+                          height: 40,
+                          fontSize: 15,
+                        }}
+                      />
+                    </InputGroup>
+                  </View>
+                  <View style={{marginTop: 30}}>
+                    <Text style={styles.titleForm}>Lý do biết đến</Text>
+                    <InputGroup style={{width: width - 20}}>
+                      <Input
+                        value={this.state.how_know}
+                        onChangeText={data => this.setState({how_know: data})}
+                        returnKeyType={'next'}
+                        placeholder="Lý do biết đến"
+                        blurOnSubmit={false}
+                        ref={'how_know'}
+                        onSubmitEditing={event => {
+                          this.refs.facebook._root.focus();
+                        }}
+                        style={{
+                          lineHeight: 20,
+                          height: 40,
+                          fontSize: 15,
+                        }}
+                      />
+                    </InputGroup>
+                  </View>
+                  <View style={{marginTop: 30}}>
+                    <Text style={styles.titleForm}>Link Facebook</Text>
+                    <InputGroup style={{width: width - 20}}>
+                      <Input
+                        value={this.state.facebook}
+                        onChangeText={data => this.setState({facebook: data})}
+                        returnKeyType={'next'}
+                        placeholder="Link Facebook"
+                        blurOnSubmit={false}
+                        ref={'facebook'}
+                        onSubmitEditing={event => {
+                          this.refs.description._root.focus();
+                        }}
+                        style={{
+                          lineHeight: 20,
+                          height: 40,
+                          fontSize: 15,
+                        }}
+                      />
+                    </InputGroup>
+                  </View>
+                  <View style={{marginTop: 30, marginBottom: 20}}>
+                    <Text style={styles.titleForm}>Mô tả</Text>
+                    <InputGroup style={{width: width - 20}}>
+                      <Input
+                        value={this.state.description}
+                        onChangeText={data =>
+                          this.setState({description: data})
+                        }
+                        returnKeyType={'next'}
+                        placeholder="Mô tả"
+                        blurOnSubmit={false}
+                        ref={'description'}
+                        onSubmitEditing={event => {
+                          this.refs.description._root.blur();
+                        }}
+                        style={{
+                          lineHeight: 20,
+                          height: 40,
+                          fontSize: 15,
+                        }}
+                      />
+                    </InputGroup>
+                  </View>
+                </View>
+              ) : null}
+              <TouchableOpacity onPress={() => this.submitRegister()}>
+                <LinearGradient
+                  colors={['#E26800', '#E00000']}
+                  start={{x: 0, y: 0}}
+                  end={{x: 1, y: 0}}
+                  style={styles.btnSubmit}>
+                  {!this.props.isLoadingRegister ? (
+                    <Text style={{color: 'white'}}>Tạo đăng ký</Text>
+                  ) : (
+                    <Spinkit
+                      isVisible
+                      color="white"
+                      type="ThreeBounce"
+                      size={40}
+                    />
+                  )}
+                </LinearGradient>
+              </TouchableOpacity>
+            </ScrollView>
+            <DateTimePicker
+              isVisible={this.state.isDatePickerVisible}
+              onConfirm={this.handleDatePicked}
+              onCancel={() => this.setState({isDatePickerVisible: false})}
+            />
+          </SafeAreaView>
+        </KeyboardAvoidingView>
       );
     } else {
       return (

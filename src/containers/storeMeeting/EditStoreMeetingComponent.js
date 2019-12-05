@@ -10,6 +10,8 @@ import {
   TouchableOpacity,
   Dimensions,
   Alert,
+  Platform,
+  KeyboardAvoidingView,
 } from 'react-native';
 import {observer} from 'mobx-react';
 import {Form, Input, InputGroup, Item, Picker} from 'native-base';
@@ -125,255 +127,260 @@ class EditStoreMeetingComponent extends React.Component {
   render() {
     let {meeting, isLoading, filter, isStoring} = this.props.store;
     return (
-      <SafeAreaView style={styles.container}>
-        {isLoading ? (
-          <View
-            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Loading />
-          </View>
-        ) : (
-          <ScrollView>
-            <View style={{marginTop: 20}}>
-              <Text style={styles.titleForm}>Tên cuộc họp</Text>
-              <InputGroup style={{width: width - 20}}>
-                <Input
-                  value={meeting.name}
-                  onChangeText={data => (meeting.name = data)}
-                  returnKeyType={'next'}
-                  placeholder="Tên cuộc họp"
-                  blurOnSubmit={false}
-                  editable={!this.props.isLoading}
-                  style={{
-                    lineHeight: 20,
-                    height: 40,
-                    fontSize: 15,
-                  }}
-                />
-              </InputGroup>
+      <KeyboardAvoidingView
+        style={{flex: 1}}
+        behavior={Platform.OS === 'ios' ? 'padding' : ''}
+        enabled>
+        <SafeAreaView style={styles.container}>
+          {isLoading ? (
+            <View
+              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+              <Loading />
             </View>
-            <View style={{marginTop: 40}}>
-              <Text style={styles.titleForm}>Mô tả cuộc họp</Text>
-              <InputGroup style={{width: width - 20}}>
-                <Input
-                  value={meeting.description}
-                  onChangeText={data => (meeting.description = data)}
-                  returnKeyType={'next'}
-                  placeholder="Mô tả cuộc họp"
-                  blurOnSubmit={false}
-                  editable={!this.props.isLoading}
-                  style={{
-                    lineHeight: 20,
-                    height: 40,
-                    fontSize: 15,
-                  }}
-                />
-              </InputGroup>
-            </View>
-            <View style={[{marginTop: 40}, styles.flexRow]}>
-              <View style={styles.flex1}>
-                <Text style={styles.titleForm}>Ngày diễn ra</Text>
-                <TouchableOpacity
-                  style={[styles.textForm, {marginRight: 10}]}
-                  onPress={this.openDatePicker}>
-                  <Text
+          ) : (
+            <ScrollView>
+              <View style={{marginTop: 20}}>
+                <Text style={styles.titleForm}>Tên cuộc họp</Text>
+                <InputGroup style={{width: width - 20}}>
+                  <Input
+                    value={meeting.name}
+                    onChangeText={data => (meeting.name = data)}
+                    returnKeyType={'next'}
+                    placeholder="Tên cuộc họp"
+                    blurOnSubmit={false}
+                    editable={!this.props.isLoading}
                     style={{
+                      lineHeight: 20,
+                      height: 40,
                       fontSize: 15,
-                    }}>
-                    {meeting.date.format('DD/MM/YYYY')}
-                  </Text>
-                </TouchableOpacity>
+                    }}
+                  />
+                </InputGroup>
               </View>
-              <View style={styles.flex1}>
-                <Text style={styles.titleForm}>Giờ diễn ra</Text>
-                <TouchableOpacity
-                  style={styles.textForm}
-                  onPress={this.openTimePicker}>
-                  <Text
+              <View style={{marginTop: 40}}>
+                <Text style={styles.titleForm}>Mô tả cuộc họp</Text>
+                <InputGroup style={{width: width - 20}}>
+                  <Input
+                    value={meeting.description}
+                    onChangeText={data => (meeting.description = data)}
+                    returnKeyType={'next'}
+                    placeholder="Mô tả cuộc họp"
+                    blurOnSubmit={false}
+                    editable={!this.props.isLoading}
                     style={{
+                      lineHeight: 20,
+                      height: 40,
                       fontSize: 15,
-                    }}>
-                    {meeting.date.format('HH:mm')}
-                  </Text>
-                </TouchableOpacity>
+                    }}
+                  />
+                </InputGroup>
               </View>
-            </View>
-            <View style={{marginTop: 40}}>
-              <Text style={styles.titleForm}>Địa điểm diễn ra</Text>
-              <Picker
-                style={{
-                  width: width - 40,
-                  paddingLeft: 10,
-                  paddingRight: 10,
-                  margin: 0,
-                  borderBottomColor: '#D9D5DC',
-                  borderBottomWidth: 1 / 3,
-                }}
-                iosHeader="Chọn địa điểm"
-                mode="dialog"
-                placeholder={'Chọn địa điểm'}
-                itemStyle={{padding: 10}}
-                selectedValue={meeting.room_id}
-                onValueChange={this.onChangeRoom}>
-                {filter.rooms &&
-                  filter.rooms.map(function(room, index) {
-                    return (
-                      <Item label={room.name} value={room.id} key={index} />
-                    );
-                  })}
-              </Picker>
-            </View>
-            <View style={{marginTop: 40}}>
-              <Text style={styles.titleForm}>Thành phố</Text>
-              <View style={styles.containerTag}>
-                {filter.provinces &&
-                  filter.provinces.map(function(province, index) {
-                    if (meeting.provinces.includes(province.provinceid)) {
+              <View style={[{marginTop: 40}, styles.flexRow]}>
+                <View style={styles.flex1}>
+                  <Text style={styles.titleForm}>Ngày diễn ra</Text>
+                  <TouchableOpacity
+                    style={[styles.textForm, {marginRight: 10}]}
+                    onPress={this.openDatePicker}>
+                    <Text
+                      style={{
+                        fontSize: 15,
+                      }}>
+                      {meeting.date.format('DD/MM/YYYY')}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.flex1}>
+                  <Text style={styles.titleForm}>Giờ diễn ra</Text>
+                  <TouchableOpacity
+                    style={styles.textForm}
+                    onPress={this.openTimePicker}>
+                    <Text
+                      style={{
+                        fontSize: 15,
+                      }}>
+                      {meeting.date.format('HH:mm')}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <View style={{marginTop: 40}}>
+                <Text style={styles.titleForm}>Địa điểm diễn ra</Text>
+                <Picker
+                  style={{
+                    width: width - 40,
+                    paddingLeft: 10,
+                    paddingRight: 10,
+                    margin: 0,
+                    borderBottomColor: '#D9D5DC',
+                    borderBottomWidth: 1 / 3,
+                  }}
+                  iosHeader="Chọn địa điểm"
+                  mode="dialog"
+                  placeholder={'Chọn địa điểm'}
+                  itemStyle={{padding: 10}}
+                  selectedValue={meeting.room_id}
+                  onValueChange={this.onChangeRoom}>
+                  {filter.rooms &&
+                    filter.rooms.map(function(room, index) {
                       return (
-                        <TouchableOpacity
-                          key={index}
-                          onPress={() => {
-                            let provinceIndex = meeting.provinces.indexOf(
-                              province.provinceid,
-                            );
-                            if (provinceIndex > -1) {
-                              meeting.provinces.splice(provinceIndex, 1);
-                            }
-                            province.selected = false;
-                          }}>
-                          <LinearGradient
-                            colors={['#E26800', '#E00000']}
-                            start={{x: 0, y: 0}}
-                            end={{x: 1, y: 0}}
-                            style={styles.tag}>
-                            <Text style={{color: 'white'}}>
+                        <Item label={room.name} value={room.id} key={index} />
+                      );
+                    })}
+                </Picker>
+              </View>
+              <View style={{marginTop: 40}}>
+                <Text style={styles.titleForm}>Thành phố</Text>
+                <View style={styles.containerTag}>
+                  {filter.provinces &&
+                    filter.provinces.map(function(province, index) {
+                      if (meeting.provinces.includes(province.provinceid)) {
+                        return (
+                          <TouchableOpacity
+                            key={index}
+                            onPress={() => {
+                              let provinceIndex = meeting.provinces.indexOf(
+                                province.provinceid,
+                              );
+                              if (provinceIndex > -1) {
+                                meeting.provinces.splice(provinceIndex, 1);
+                              }
+                              province.selected = false;
+                            }}>
+                            <LinearGradient
+                              colors={['#E26800', '#E00000']}
+                              start={{x: 0, y: 0}}
+                              end={{x: 1, y: 0}}
+                              style={styles.tag}>
+                              <Text style={{color: 'white'}}>
+                                {province.name} ({province.number_staff})
+                              </Text>
+                            </LinearGradient>
+                          </TouchableOpacity>
+                        );
+                      } else {
+                        return (
+                          <TouchableOpacity
+                            key={index}
+                            style={styles.tag}
+                            onPress={() => {
+                              meeting.provinces.push(province.provinceid);
+                              province.selected = true;
+                            }}>
+                            <Text>
                               {province.name} ({province.number_staff})
                             </Text>
-                          </LinearGradient>
-                        </TouchableOpacity>
-                      );
-                    } else {
-                      return (
-                        <TouchableOpacity
-                          key={index}
-                          style={styles.tag}
-                          onPress={() => {
-                            meeting.provinces.push(province.provinceid);
-                            province.selected = true;
-                          }}>
-                          <Text>
-                            {province.name} ({province.number_staff})
-                          </Text>
-                        </TouchableOpacity>
-                      );
-                    }
-                  })}
+                          </TouchableOpacity>
+                        );
+                      }
+                    })}
+                </View>
               </View>
-            </View>
-            <View style={{marginTop: 40}}>
-              <Text style={styles.titleForm}>Bộ phận</Text>
-              <View style={styles.containerTag}>
-                {filter.departments &&
-                  filter.departments.map(function(department, index) {
-                    if (meeting.departments.includes(department.id)) {
-                      return (
-                        <TouchableOpacity
-                          key={index}
-                          onPress={() => {
-                            let departmentIndex = meeting.departments.indexOf(
-                              department.id,
-                            );
-                            if (departmentIndex > -1) {
-                              meeting.departments.splice(departmentIndex, 1);
-                            }
-                            department.selected = false;
-                          }}>
-                          <LinearGradient
-                            colors={['#E26800', '#E00000']}
-                            start={{x: 0, y: 0}}
-                            end={{x: 1, y: 0}}
-                            style={styles.tag}>
-                            <Text style={{color: 'white'}}>
+              <View style={{marginTop: 40}}>
+                <Text style={styles.titleForm}>Bộ phận</Text>
+                <View style={styles.containerTag}>
+                  {filter.departments &&
+                    filter.departments.map(function(department, index) {
+                      if (meeting.departments.includes(department.id)) {
+                        return (
+                          <TouchableOpacity
+                            key={index}
+                            onPress={() => {
+                              let departmentIndex = meeting.departments.indexOf(
+                                department.id,
+                              );
+                              if (departmentIndex > -1) {
+                                meeting.departments.splice(departmentIndex, 1);
+                              }
+                              department.selected = false;
+                            }}>
+                            <LinearGradient
+                              colors={['#E26800', '#E00000']}
+                              start={{x: 0, y: 0}}
+                              end={{x: 1, y: 0}}
+                              style={styles.tag}>
+                              <Text style={{color: 'white'}}>
+                                {department.name} ({department.number_staff})
+                              </Text>
+                            </LinearGradient>
+                          </TouchableOpacity>
+                        );
+                      } else {
+                        return (
+                          <TouchableOpacity
+                            key={index}
+                            style={styles.tag}
+                            onPress={() => {
+                              meeting.departments.push(department.id);
+                              department.selected = true;
+                            }}>
+                            <Text>
                               {department.name} ({department.number_staff})
                             </Text>
-                          </LinearGradient>
-                        </TouchableOpacity>
-                      );
-                    } else {
-                      return (
-                        <TouchableOpacity
-                          key={index}
-                          style={styles.tag}
-                          onPress={() => {
-                            meeting.departments.push(department.id);
-                            department.selected = true;
-                          }}>
-                          <Text>
-                            {department.name} ({department.number_staff})
-                          </Text>
-                        </TouchableOpacity>
-                      );
-                    }
-                  })}
+                          </TouchableOpacity>
+                        );
+                      }
+                    })}
+                </View>
               </View>
-            </View>
-            <View style={{marginTop: 40, marginBottom: 40}}>
-              <Text style={styles.titleForm}>Loại trừ</Text>
-              <MultiSelect
-                styleMainWrapper={{marginTop: 10}}
-                items={this.getFilterUsers(filter.staffs)}
-                uniqueKey="id"
-                onSelectedItemsChange={this.onSelectedIgnoreUserChange}
-                selectedItems={this.props.store.ignoreUsers}
-                selectText="Chọn nhân viên"
-                searchInputPlaceholderText="Tìm nhân viên"
-                tagRemoveIconColor="#E00000"
-                tagBorderColor="#D9D5DC"
-                tagTextColor="black"
-                selectedItemTextColor="#E00000"
-                selectedItemIconColor="#E00000"
-                displayKey="name"
-                submitButtonColor="#E00000"
-                submitButtonText="Lưu"
-                avatarKey="avatar_url"
-              />
-            </View>
-            <TouchableOpacity
-              onPress={() => (isStoring ? null : this.submitStoreMeeting())}>
-              <LinearGradient
-                colors={['#E26800', '#E00000']}
-                start={{x: 0, y: 0}}
-                end={{x: 1, y: 0}}
-                style={styles.btnSubmit}>
-                {isStoring ? (
-                  <Spinkit
-                    isVisible
-                    color="white"
-                    type="ThreeBounce"
-                    size={40}
-                  />
-                ) : (
-                  <Text style={{color: 'white'}}>Cập nhật cuộc họp</Text>
-                )}
-              </LinearGradient>
-            </TouchableOpacity>
-          </ScrollView>
-        )}
+              <View style={{marginTop: 40, marginBottom: 40}}>
+                <Text style={styles.titleForm}>Loại trừ</Text>
+                <MultiSelect
+                  styleMainWrapper={{marginTop: 10}}
+                  items={this.getFilterUsers(filter.staffs)}
+                  uniqueKey="id"
+                  onSelectedItemsChange={this.onSelectedIgnoreUserChange}
+                  selectedItems={this.props.store.ignoreUsers}
+                  selectText="Chọn nhân viên"
+                  searchInputPlaceholderText="Tìm nhân viên"
+                  tagRemoveIconColor="#E00000"
+                  tagBorderColor="#D9D5DC"
+                  tagTextColor="black"
+                  selectedItemTextColor="#E00000"
+                  selectedItemIconColor="#E00000"
+                  displayKey="name"
+                  submitButtonColor="#E00000"
+                  submitButtonText="Lưu"
+                  avatarKey="avatar_url"
+                />
+              </View>
+              <TouchableOpacity
+                onPress={() => (isStoring ? null : this.submitStoreMeeting())}>
+                <LinearGradient
+                  colors={['#E26800', '#E00000']}
+                  start={{x: 0, y: 0}}
+                  end={{x: 1, y: 0}}
+                  style={styles.btnSubmit}>
+                  {isStoring ? (
+                    <Spinkit
+                      isVisible
+                      color="white"
+                      type="ThreeBounce"
+                      size={40}
+                    />
+                  ) : (
+                    <Text style={{color: 'white'}}>Cập nhật cuộc họp</Text>
+                  )}
+                </LinearGradient>
+              </TouchableOpacity>
+            </ScrollView>
+          )}
 
-        <DateTimePicker
-          isVisible={this.state.isDatePickerVisible}
-          onConfirm={this.handleDatePicked}
-          date={meeting.date.toDate()}
-          onCancel={() => this.setState({isDatePickerVisible: false})}
-        />
-        <DateTimePicker
-          mode="time"
-          locale="en_GB"
-          isVisible={this.state.isTimePickerVisible}
-          onConfirm={this.handleTimePicked}
-          date={meeting.date.toDate()}
-          onCancel={() => this.setState({isTimePickerVisible: false})}
-        />
-      </SafeAreaView>
+          <DateTimePicker
+            isVisible={this.state.isDatePickerVisible}
+            onConfirm={this.handleDatePicked}
+            date={meeting.date.toDate()}
+            onCancel={() => this.setState({isDatePickerVisible: false})}
+          />
+          <DateTimePicker
+            mode="time"
+            locale="en_GB"
+            isVisible={this.state.isTimePickerVisible}
+            onConfirm={this.handleTimePicked}
+            date={meeting.date.toDate()}
+            onCancel={() => this.setState({isTimePickerVisible: false})}
+          />
+        </SafeAreaView>
+      </KeyboardAvoidingView>
     );
   }
 }

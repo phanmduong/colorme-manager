@@ -96,7 +96,7 @@ class AttendanceStudentComponent extends React.Component {
       } else {
         const images = this.getImages(this.props.student);
         const hasEnoughImage =
-          this.props.student.image1 && this.props.student.image2;
+          this.props.student.image1 || this.props.student.image2;
         return (
           <View style={styles.container}>
             <View style={styles.containerFlex1}>

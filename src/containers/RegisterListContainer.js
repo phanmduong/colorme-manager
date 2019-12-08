@@ -21,40 +21,14 @@ class RegisterListContainer extends React.Component {
     );
   }
 
-  static navigationOptions = ({navigation}) => ({
-    headerTitle: (
-      <Segment
-        nameSeg1="Tất cả"
-        nameSeg2="Của bạn"
-        segmentActive={
-          navigation.state.params && navigation.state.params.segment
-            ? navigation.state.params.segment
-            : 1
-        }
-        changeSegmentActive={
-          navigation.state.params && navigation.state.params.changeSegmentActive
-            ? navigation.state.params.changeSegmentActive
-            : null
-        }
-      />
-    ),
-  });
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.segment !== this.props.segment) {
-      nextProps.navigation.setParams({segment: nextProps.segment});
-    }
-  }
-
   componentWillMount() {
     this.loadDataRegisterListAll();
     this.loadDataRegisterListMy();
-    this.props.navigation.setParams({segment: 1});
-    this.props.navigation.setParams({
-      changeSegmentActive: this.props.registerListActions
-        .changeSegmentRegisterList,
-    });
   }
+
+  changeSegmentRegisterList = segment => {
+    this.props.registerListActions.changeSegmentRegisterList(segment);
+  };
 
   loadDataRegisterListAll() {
     if (this.props.currentPageAll < this.props.totalPageAll) {
@@ -65,6 +39,21 @@ class RegisterListContainer extends React.Component {
       );
     }
   }
+
+  refreshRegisterListAll = () => {
+    this.props.registerListActions.refreshRegisterListAll(
+      this.props.searchAll,
+      this.props.token,
+    );
+  };
+
+  refreshRegisterListMy = () => {
+    this.props.registerListActions.refreshRegisterListMy(
+      this.props.searchMy,
+      this.props.token,
+      this.props.userId,
+    );
+  };
 
   updateFormAndLoadDataSearchAll(search) {
     this.props.registerListActions.updateFormAndLoadDataSearchAll(
@@ -100,20 +89,27 @@ class RegisterListContainer extends React.Component {
           error={this.props.errorAll}
           isLoading={this.props.isLoadingAll}
           search={this.props.searchAll}
+          refreshing={this.props.refreshingAll}
+          onRefresh={this.refreshRegisterListAll}
           loadDataRegisterList={this.loadDataRegisterListAll}
           updateFormAndLoadDataSearch={this.updateFormAndLoadDataSearchAll}
+          changeSegmentRegisterList={this.changeSegmentRegisterList}
           segmentActive={1}
         />
       );
     } else {
+      console.log(this.props.registerListDataMy);
       return (
         <RegisterListComponent
           registerList={this.props.registerListDataMy}
           error={this.props.errorMy}
           isLoading={this.props.isLoadingMy}
           search={this.props.searchMy}
+          refreshing={this.props.refreshingMy}
+          onRefresh={this.refreshRegisterListMy}
           loadDataRegisterList={this.loadDataRegisterListMy}
           updateFormAndLoadDataSearch={this.updateFormAndLoadDataSearchMy}
+          changeSegmentRegisterList={this.changeSegmentRegisterList}
           segmentActive={2}
         />
       );
@@ -138,6 +134,8 @@ function mapStateToProps(state) {
     totalPageMy: state.registerList.totalPageMy,
     searchMy: state.registerList.searchMy,
     segment: state.registerList.segment,
+    refreshingAll: state.registerList.refreshingAll,
+    refreshingMy: state.registerList.refreshingMy,
   };
 }
 

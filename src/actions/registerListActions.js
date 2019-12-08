@@ -13,6 +13,7 @@ export function beginDataRegisterListLoadAll() {
     type: types.BEGIN_DATA_REGISTER_LIST_LOAD_ALL,
     isLoadingAll: true,
     errorAll: false,
+    refreshingAll: true,
   };
 }
 
@@ -43,6 +44,7 @@ export function loadDataSuccessfulAll(res) {
     totalPageAll: res.data.paginator.total_pages,
     isLoadingAll: false,
     errorAll: false,
+    refreshingAll: false,
   };
 }
 
@@ -51,6 +53,7 @@ export function loadDataErrorAll() {
     type: types.LOAD_DATA_REGISTER_LIST_ERROR_ALL,
     isLoadingAll: false,
     errorAll: true,
+    refreshingAll: false,
   };
 }
 
@@ -60,6 +63,22 @@ export function updateFormAndLoadDataSearchAll(searchAll, token) {
   return dispatch => {
     dispatch(updateFormSearchAll(searchAll));
     dispatch(loadDataRegisterListAll(token, 1, searchAll));
+  };
+}
+
+export function refreshRegisterListAll(searchAll, token) {
+  return dispatch => {
+    dispatch(resetRegisterListAll());
+    dispatch(loadDataRegisterListAll(token, 1, searchAll));
+  };
+}
+
+function resetRegisterListAll() {
+  return {
+    type: types.RESET_PAGE_REGISTER_LIST_ALL,
+    currentPageAll: 1,
+    totalPageAll: 1,
+    registerListDataAll: [],
   };
 }
 
@@ -78,6 +97,7 @@ export function beginDataRegisterListLoadMy() {
     type: types.BEGIN_DATA_REGISTER_LIST_LOAD_MY,
     isLoadingMy: true,
     errorMy: false,
+    refreshingMy: false,
   };
 }
 
@@ -108,6 +128,7 @@ export function loadDataSuccessfulMy(res) {
     totalPageMy: res.data.paginator.total_pages,
     isLoadingMy: false,
     errorMy: false,
+    refreshingMy: false,
   };
 }
 
@@ -116,6 +137,7 @@ export function loadDataErrorMy() {
     type: types.LOAD_DATA_REGISTER_LIST_ERROR_MY,
     isLoadingMy: false,
     errorMy: true,
+    refreshingMy: false,
   };
 }
 
@@ -142,5 +164,21 @@ export function changeSegmentRegisterList(segment) {
   return {
     type: types.CHANGE_SEGMENT_REGISTER_LIST,
     segment: segment,
+  };
+}
+
+export function refreshRegisterListMy(searchMy, token, salerId) {
+  return dispatch => {
+    dispatch(resetRegisterListMy());
+    dispatch(loadDataRegisterListMy(token, 1, searchMy, salerId));
+  };
+}
+
+function resetRegisterListMy() {
+  return {
+    type: types.RESET_PAGE_REGISTER_LIST_MY,
+    currentPageMy: 1,
+    totalPageMy: 1,
+    registerListDataMy: [],
   };
 }

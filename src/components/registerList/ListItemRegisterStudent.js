@@ -8,6 +8,7 @@ import {View, Text, Thumbnail, Icon} from 'native-base';
 import theme from '../../styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Call from '../common/Call';
+import {getShortName} from "../../helper";
 
 class ListItemStudent extends React.Component {
   constructor(props, context) {
@@ -97,7 +98,7 @@ class ListItemStudent extends React.Component {
                         : '#' + saler.color,
                   },
                 }}>
-                <Text style={styles.saler}>{saler.name.trim()}</Text>
+                <Text style={styles.saler}>{getShortName(saler.name)}</Text>
               </View>
             ) : (
               <View />

@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import SaveRegisterComponent from '../components/SaveRegisterComponent';
 import {bindActionCreators} from 'redux';
 import * as saveRegisterActions from '../actions/saveRegisterActions';
+import * as registerListActions from '../actions/registerListActions';
 
 class SaveRegisterContainer extends React.Component {
   constructor(props, context) {
@@ -39,9 +40,19 @@ class SaveRegisterContainer extends React.Component {
     this.props.saveRegisterActions.register(this.props.token, register);
   };
 
+  reloadRegisterList = () => {
+    this.props.registerListActions.refreshRegisterListAll('', this.props.token);
+    this.props.registerListActions.refreshRegisterListMy(
+      '',
+      this.props.token,
+      this.props.userId,
+    );
+  };
+
   render() {
     return (
       <SaveRegisterComponent
+        {...this.props}
         isLoadingCourses={this.props.isLoadingCourses}
         courses={this.props.courses}
         isLoadingClasses={this.props.isLoadingClasses}
@@ -54,6 +65,7 @@ class SaveRegisterContainer extends React.Component {
         errorLoadingRegister={this.props.errorLoadingRegister}
         provinces={this.props.provinces}
         isLoadingProvinces={this.props.isLoadingProvinces}
+        reload={this.reloadRegisterList}
       />
     );
   }
@@ -76,12 +88,14 @@ function mapStateToProps(state) {
     isLoadingProvinces: state.saveRegister.isLoadingProvinces,
     errorLoadingProvinces: state.saveRegister.errorLoadingProvinces,
     provinces: state.saveRegister.provinces,
+    userId: state.login.user.id,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     saveRegisterActions: bindActionCreators(saveRegisterActions, dispatch),
+    registerListActions: bindActionCreators(registerListActions, dispatch),
   };
 }
 

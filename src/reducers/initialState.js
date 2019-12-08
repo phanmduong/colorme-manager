@@ -398,6 +398,8 @@ export default {
     totalPageMy: 1,
     searchMy: '',
     segment: 1,
+    refreshingAll: false,
+    refreshingMy: false,
   },
   collectMoney: {
     studentListData: [],

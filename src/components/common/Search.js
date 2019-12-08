@@ -14,6 +14,7 @@ const Search = ({onChangeText, placeholder, value}) => {
       />
       <TextInput
         placeholder={placeholder}
+        autoFocus={true}
         autoCapitalize="none"
         onChangeText={data => onChangeText(data)}
         value={value}

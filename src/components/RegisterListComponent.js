@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions} from 'react-native';
+import {Dimensions, TouchableOpacity} from 'react-native';
 import {Container, Button, View, List, Text} from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../styles';
@@ -7,6 +7,7 @@ import * as alert from '../constants/alert';
 import ListItemRegisterStudent from './registerList/ListItemRegisterStudent';
 import Loading from './common/Loading';
 import Search from './common/Search';
+import LinearGradient from 'react-native-linear-gradient';
 
 var {height, width} = Dimensions.get('window');
 class RegisterListComponent extends React.Component {
@@ -24,6 +25,45 @@ class RegisterListComponent extends React.Component {
       />
     );
   }
+
+  renderPicker = () => (
+    <View style={styles.containerTag}>
+      {this.props.segmentActive === 1 ? (
+        <TouchableOpacity>
+          <LinearGradient
+            colors={['#F6F6F6', '#F6F6F6']}
+            start={{x: 0, y: 0}}
+            end={{x: 1, y: 0}}
+            style={styles.tag}>
+            <Text style={{color: 'black'}}>Tất cả</Text>
+          </LinearGradient>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity
+          style={styles.tag}
+          onPress={() => this.props.changeSegmentRegisterList(1)}>
+          <Text>Tất cả</Text>
+        </TouchableOpacity>
+      )}
+      {this.props.segmentActive === 2 ? (
+        <TouchableOpacity>
+          <LinearGradient
+            colors={['#F6F6F6', '#F6F6F6']}
+            start={{x: 0, y: 0}}
+            end={{x: 1, y: 0}}
+            style={styles.tag}>
+            <Text style={{color: 'black'}}>Của bạn</Text>
+          </LinearGradient>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity
+          style={styles.tag}
+          onPress={() => this.props.changeSegmentRegisterList(2)}>
+          <Text>Của bạn</Text>
+        </TouchableOpacity>
+      )}
+    </View>
+  );
 
   renderContent() {
     if (this.props.isLoading && this.props.registerList.length <= 0) {
@@ -61,6 +101,8 @@ class RegisterListComponent extends React.Component {
               onEndReached={this.props.loadDataRegisterList}
               onEndReachedThreshold={height / 2}
               dataArray={this.props.registerList}
+              onRefresh={this.props.onRefresh}
+              refreshing={this.props.refreshing}
               renderRow={(item, sectionID, rowID) => (
                 <ListItemRegisterStudent
                   nameClass={item.class.name}
@@ -97,6 +139,7 @@ class RegisterListComponent extends React.Component {
     return (
       <View style={{flex: 1}}>
         {this.renderSearch()}
+        {this.renderPicker()}
         {this.renderContent()}
       </View>
     );
@@ -129,6 +172,21 @@ const styles = {
   },
   loading: {
     height: 95,
+  },
+  containerTag: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+    marginVertical: 10,
+    marginHorizontal: 20,
+  },
+  tag: {
+    paddingHorizontal: 20,
+    marginRight: 20,
+    borderRadius: 20,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 };
 

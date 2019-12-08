@@ -13,6 +13,7 @@ export default function registerListReducer(
       return Object.assign({}, state, {
         isLoadingAll: action.isLoadingAll,
         errorAll: action.errorAll,
+        refreshingAll: action.refreshingAll,
       });
     case types.LOAD_DATA_REGISTER_LIST_SUCCESSFUL_ALL:
       let registerListDataAll =
@@ -25,11 +26,13 @@ export default function registerListReducer(
         registerListDataAll: registerListDataAll,
         currentPageAll: action.currentPageAll,
         totalPageAll: action.totalPageAll,
+        refreshingAll: action.refreshingAll,
       });
     case types.LOAD_DATA_REGISTER_LIST_ERROR_ALL:
       return Object.assign({}, state, {
         isLoadingAll: action.isLoadingAll,
         errorAll: action.errorAll,
+        refreshingAll: action.refreshingAll,
       });
     case types.UPDATE_FORM_SEARCH_REGISTER_LIST_ALL:
       return Object.assign({}, state, {
@@ -70,6 +73,18 @@ export default function registerListReducer(
     case types.CHANGE_SEGMENT_REGISTER_LIST:
       return Object.assign({}, state, {
         segment: action.segment,
+      });
+    case types.RESET_PAGE_REGISTER_LIST_ALL:
+      return Object.assign({}, state, {
+        registerListDataAll: action.registerListDataAll,
+        currentPageAll: action.currentPageAll,
+        totalPageAll: action.totalPageAll,
+      });
+    case types.RESET_PAGE_REGISTER_LIST_MY:
+      return Object.assign({}, state, {
+        registerListDataMy: action.registerListDataMy,
+        currentPageMy: action.currentPageMy,
+        totalPageMy: action.totalPageMy,
       });
     default:
       return state;

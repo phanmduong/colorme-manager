@@ -85,7 +85,7 @@ class RegisterListComponent extends React.Component {
                 iconLeft
                 danger
                 small
-                onPress={this.props.loadDataRegisterList}
+                onPress={this.props.onRefresh}
                 style={{marginTop: 10, alignSelf: null}}>
                 <MaterialCommunityIcons name="reload" color="white" size={20} />
                 <Text>Thử lại</Text>

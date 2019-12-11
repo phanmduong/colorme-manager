@@ -22,6 +22,7 @@ class RegisterListComponent extends React.Component {
         placeholder="Tìm kiếm (Email, tên, số điện thoại)"
         onChangeText={updateFormAndLoadDataSearch}
         value={search}
+        autoFocus={true}
       />
     );
   }
@@ -85,7 +86,7 @@ class RegisterListComponent extends React.Component {
                 iconLeft
                 danger
                 small
-                onPress={this.props.loadDataRegisterList}
+                onPress={this.props.onRefresh}
                 style={{marginTop: 10, alignSelf: null}}>
                 <MaterialCommunityIcons name="reload" color="white" size={20} />
                 <Text>Thử lại</Text>
@@ -177,7 +178,7 @@ const styles = {
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
-    marginVertical: 10,
+    marginBottom: 10,
     marginHorizontal: 20,
   },
   tag: {

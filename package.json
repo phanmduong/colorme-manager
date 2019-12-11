@@ -47,7 +47,7 @@
     "react-native-reanimated": "^1.2.0",
     "react-native-scalable-image": "^1.0.0",
     "react-native-screens": "^1.0.0-alpha.23",
-    "react-native-snap-carousel": "^3.8.0",
+    "react-native-snap-carousel": "^3.8.4",
     "react-native-spinkit": "^1.4.1",
     "react-native-splash-screen": "^3.2.0",
     "react-native-swipeout": "^2.3.6",

@@ -142,6 +142,7 @@ class MoneyTransferContainer extends React.Component {
         postTransaction={this.postTransaction}
         isLoadingTransaction={this.props.isLoadingTransaction}
         user={this.props.user}
+        avatar_url={this.props.avatar_url}
       />
     );
 
@@ -200,6 +201,7 @@ function mapStateToProps(state) {
     errorTransaction: state.moneyTransfer.errorTransaction,
     currentMoney: state.moneyTransfer.currentMoney,
     openTabMoneyTransfer: state.moneyTransfer.openTabMoneyTransfer,
+    avatar_url: state.login.user.avatar_url,
   };
 }
 

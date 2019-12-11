@@ -97,7 +97,7 @@ PODS:
     - React
   - react-native-image-resizer (1.0.1):
     - React
-  - react-native-netinfo (4.1.5):
+  - react-native-netinfo (4.7.0):
     - React
   - react-native-network-info (5.1.0):
     - React
@@ -305,7 +305,7 @@ SPEC CHECKSUMS:
   react-native-camera: c74a970ada5fd757d8dcf51ee6beff1deaf8dee5
   react-native-image-picker: 3637d63fef7e32a230141ab4660d3ceb773c824f
   react-native-image-resizer: ecae22b577b0425cd7803eb8145243038dd4b6bd
-  react-native-netinfo: 8d8db463bcc5db66a8ac5c48a7d86beb3b92f61a
+  react-native-netinfo: 3dd993921571d01b78a8f91f1caaffcab7a1e1c7
   react-native-network-info: f327b8c73bced5dc08b4da313d96a5e33e9a6dac
   react-native-onesignal: 93d50629a3f38df9df81178280ce7e7da6c29f05
   react-native-spinkit: 9a5d2f95aa975d5660fd3e76b7eac38e7329e46c

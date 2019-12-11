@@ -5,8 +5,9 @@ import {
   TouchableOpacity,
   ScrollView,
   RefreshControl,
+  Image,
 } from 'react-native';
-import {Container, Button, View, Text, Picker, Item} from 'native-base';
+import {Container, Button, View, Picker, Item, Text} from 'native-base';
 var {height, width} = Dimensions.get('window');
 import Spinkit from 'react-native-spinkit';
 import theme from '../styles';
@@ -17,6 +18,7 @@ import * as alert from '../constants/alert';
 import {isIphoneX} from 'react-native-iphone-x-helper';
 import {CustomPicker} from 'react-native-custom-picker';
 import LinearGradient from 'react-native-linear-gradient';
+import {getStatusBarHeight} from 'react-native-iphone-x-helper';
 
 const heightSwiper = Platform.OS === 'ios' ? height - 165 : height - 180;
 let self;
@@ -223,7 +225,7 @@ class ShiftRegisterComponent extends React.Component {
       }
 
       return (
-        <Container>
+        <Container style={{flex: 1, marginTop: getStatusBarHeight() + 10}}>
           <ScrollView
             refreshControl={
               <RefreshControl
@@ -235,6 +237,27 @@ class ShiftRegisterComponent extends React.Component {
                 colors={['#d9534f']}
               />
             }>
+            <View
+              style={{
+                marginHorizontal: 16,
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginVertical: 20,
+              }}>
+              <Image
+                source={{uri: this.props.user.avatar_url}}
+                style={{width: 30, height: 30, borderRadius: 15}}
+              />
+              <Text
+                style={{
+                  color: 'black',
+                  fontSize: 23,
+                  fontWeight: 'bold',
+                  marginLeft: 10,
+                }}>
+                Đăng ký lịch trực
+              </Text>
+            </View>
             <View style={styles.containerPicker}>
               <CustomPicker
                 options={courseOptions}

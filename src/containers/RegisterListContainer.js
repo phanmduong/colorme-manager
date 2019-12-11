@@ -4,7 +4,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import Segment from '../components/common/SegmentTwo';
 import * as registerListActions from '../actions/registerListActions';
 import RegisterListComponent from '../components/RegisterListComponent';
 
@@ -20,6 +19,10 @@ class RegisterListContainer extends React.Component {
       this,
     );
   }
+
+  static navigationOptions = ({navigation}) => ({
+    title: 'Học viên',
+  });
 
   componentWillMount() {
     this.loadDataRegisterListAll();

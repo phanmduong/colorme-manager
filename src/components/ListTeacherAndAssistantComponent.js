@@ -360,7 +360,7 @@ const styles = {
     flexDirection: 'row',
   },
   searchContainer: {
-    marginTop: 20,
+    marginTop: 10,
     backgroundColor: '#f6f6f6',
     height: 40,
     width: Dimensions.get('window').width - 20,

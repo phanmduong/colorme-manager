@@ -3,7 +3,7 @@ import {Dimensions, TextInput} from 'react-native';
 import {View, Item, Input} from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const Search = ({onChangeText, placeholder, value}) => {
+const Search = ({onChangeText, placeholder, value, autoFocus}) => {
   return (
     <View style={styles.searchContainer}>
       <Icon
@@ -14,7 +14,7 @@ const Search = ({onChangeText, placeholder, value}) => {
       />
       <TextInput
         placeholder={placeholder}
-        autoFocus={true}
+        autoFocus={autoFocus}
         autoCapitalize="none"
         onChangeText={data => onChangeText(data)}
         value={value}
@@ -35,6 +35,7 @@ const styles = {
     marginLeft: 19,
     flexDirection: 'row',
     alignItems: 'center',
+    marginVertical: 10,
   },
   searchIcon: {
     marginLeft: 14,

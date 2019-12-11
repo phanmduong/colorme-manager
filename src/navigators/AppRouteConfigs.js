@@ -61,6 +61,11 @@ const TabAttendance = createStackNavigator(
   {
     CurrentClassStudy: {
       screen: CurrentClassStudyContainer,
+      navigationOptions: () => ({
+        header: null,
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
     ListStudentAttendance: {
       screen: ListStudentAttendanceContainer,
@@ -79,6 +84,11 @@ const TabShiftRegister = createStackNavigator(
   {
     ShiftRegister: {
       screen: ShiftRegisterContainer,
+      navigationOptions: () => ({
+        header: null,
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
   },
   navigationOptionsDefault,
@@ -89,6 +99,7 @@ const TabDashboard = createStackNavigator(
     Dashboard: {
       screen: DashboardContainer,
       navigationOptions: () => ({
+        header: null,
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},
       }),
@@ -297,6 +308,11 @@ const TabCollectMoney = createStackNavigator(
   {
     CollectMoney: {
       screen: CollectMoneyContainer,
+      navigationOptions: () => ({
+        header: null,
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
     StudentRegisterClass: {
       screen: StudentRegisterClassContainer,
@@ -309,6 +325,11 @@ const TabMoneyTransfer = createStackNavigator(
   {
     MoneyTransfer: {
       screen: MoneyTransferContainer,
+      navigationOptions: () => ({
+        header: null,
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
   },
   navigationOptionsDefault,

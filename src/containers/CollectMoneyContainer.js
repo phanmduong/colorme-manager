@@ -100,6 +100,7 @@ class CollectMoneyContainer extends React.Component {
         formInfoMoney={this.props.formInfoMoney}
         isUpdatingMoneyStudent={this.props.isUpdatingData}
         errorUpdate={this.props.errorUpdate}
+        avatar_url={this.props.avatar_url}
       />
     );
   }
@@ -122,6 +123,7 @@ function mapStateToProps(state) {
     nextCode: state.collectMoney.nextCode,
     nextWaitingCode: state.collectMoney.nextWaitingCode,
     formInfoMoney: state.collectMoney.formInfoMoney,
+    avatar_url: state.login.user.avatar_url,
   };
 }
 

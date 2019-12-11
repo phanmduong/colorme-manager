@@ -20,6 +20,10 @@ class RegisterListContainer extends React.Component {
     );
   }
 
+  static navigationOptions = ({navigation}) => ({
+    title: 'Học viên',
+  });
+
   componentWillMount() {
     this.loadDataRegisterListAll();
     this.loadDataRegisterListMy();

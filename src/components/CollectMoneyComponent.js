@@ -1,15 +1,15 @@
 import React from 'react';
-import {Dimensions, Keyboard, Platform, Alert} from 'react-native';
+import {Dimensions, Keyboard, Alert, Image, ScrollView} from 'react-native';
 import {
   Container,
   Button,
   View,
   List,
-  Text,
   Thumbnail,
   Input,
   CheckBox,
   InputGroup,
+  Text,
 } from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../styles';
@@ -20,6 +20,7 @@ import ListItemStudentCollectMoney from './collectMoney/ListItemStudentCollectMo
 import Modal from 'react-native-modalbox';
 import Call from './common/Call';
 import {dotNumber} from '../helper/index';
+import {getStatusBarHeight} from 'react-native-iphone-x-helper';
 
 var {height, width} = Dimensions.get('window');
 let self;
@@ -70,6 +71,7 @@ class CollectMoneyComponent extends React.Component {
         placeholder="Tìm kiếm (Email, tên, số điện thoại)"
         onChangeText={updateFormAndLoadDataSearch}
         value={search}
+        autoFocus={false}
       />
     );
   }
@@ -135,24 +137,22 @@ class CollectMoneyComponent extends React.Component {
     } else {
       if (this.props.error || this.props.studentList.length <= 0) {
         return (
-          <Container>
-            <View style={styles.container}>
-              <Text style={styles.textError}>
-                {this.props.error
-                  ? alert.LOAD_DATA_ERROR
-                  : alert.NO_DATA_STUDENT_LIST}
-              </Text>
-              <Button
-                iconLeft
-                danger
-                small
-                onPress={this.props.loadDataStudentList}
-                style={{marginTop: 10, alignSelf: null}}>
-                <MaterialCommunityIcons name="reload" color="white" size={20} />
-                <Text>Thử lại</Text>
-              </Button>
-            </View>
-          </Container>
+          <View style={styles.container}>
+            <Text style={styles.textError}>
+              {this.props.error
+                ? alert.LOAD_DATA_ERROR
+                : alert.NO_DATA_STUDENT_LIST}
+            </Text>
+            <Button
+              iconLeft
+              danger
+              small
+              onPress={this.props.loadDataStudentList}
+              style={{marginTop: 10, alignSelf: null}}>
+              <MaterialCommunityIcons name="reload" color="white" size={20} />
+              <Text>Thử lại</Text>
+            </Button>
+          </View>
         );
       } else {
         return (
@@ -178,7 +178,31 @@ class CollectMoneyComponent extends React.Component {
 
   render() {
     return (
-      <View style={{flex: 1}}>
+      <ScrollView
+        style={{flex: 1, marginTop: getStatusBarHeight() + 10}}
+        contentContainerStyle={{flexGrow: 1}}>
+        <View
+          style={{
+            marginHorizontal: 16,
+            marginTop: 20,
+            marginBottom: 10,
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+          <Image
+            source={{uri: this.props.avatar_url}}
+            style={{width: 30, height: 30, borderRadius: 15}}
+          />
+          <Text
+            style={{
+              color: 'black',
+              fontSize: 23,
+              fontWeight: 'bold',
+              marginLeft: 10,
+            }}>
+            Nộp tiền
+          </Text>
+        </View>
         {this.renderSearch()}
         {this.renderContent()}
         <Modal
@@ -343,7 +367,7 @@ class CollectMoneyComponent extends React.Component {
             </View>
           </View>
         </Modal>
-      </View>
+      </ScrollView>
     );
   }
 }

@@ -1,11 +1,12 @@
 import React from 'react';
-import {Dimensions} from 'react-native';
-import {Container, Button, View, List, Text} from 'native-base';
+import {Dimensions, Image, ScrollView} from 'react-native';
+import {Button, Text, View, List} from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as alert from '../../constants/alert';
 import Loading from '../common/Loading';
 import Search from '../common/Search';
 import ListItemStaffMoneyTransfer from './ListItemStaffMoneyTransfer';
+import {getStatusBarHeight} from 'react-native-iphone-x-helper';
 
 var {height, width} = Dimensions.get('window');
 let self;
@@ -23,6 +24,7 @@ class SearchStaffMoneyTransferComponent extends React.Component {
         placeholder="Tìm kiếm (Email, tên, số điện thoại)"
         onChangeText={updateFormAndLoadDataSearch}
         value={search}
+        autoFocus={false}
       />
     );
   }
@@ -33,24 +35,22 @@ class SearchStaffMoneyTransferComponent extends React.Component {
     } else {
       if (this.props.error || this.props.staffList.length <= 0) {
         return (
-          <Container>
-            <View style={styles.container}>
-              <Text style={styles.textError}>
-                {this.props.error
-                  ? alert.LOAD_DATA_ERROR
-                  : alert.NO_DATA_STUDENT_LIST}
-              </Text>
-              <Button
-                iconLeft
-                danger
-                small
-                onPress={this.props.loadDataStaffList}
-                style={{marginTop: 10, alignSelf: null}}>
-                <MaterialCommunityIcons name="reload" color="white" size={20} />
-                <Text>Thử lại</Text>
-              </Button>
-            </View>
-          </Container>
+          <View style={styles.container}>
+            <Text style={styles.textError}>
+              {this.props.error
+                ? alert.LOAD_DATA_ERROR
+                : alert.NO_DATA_STUDENT_LIST}
+            </Text>
+            <Button
+              iconLeft
+              danger
+              small
+              onPress={this.props.loadDataStaffList}
+              style={{marginTop: 10, alignSelf: null}}>
+              <MaterialCommunityIcons name="reload" color="white" size={20} />
+              <Text>Thử lại</Text>
+            </Button>
+          </View>
         );
       } else {
         return (
@@ -93,10 +93,34 @@ class SearchStaffMoneyTransferComponent extends React.Component {
 
   render() {
     return (
-      <View style={{flex: 1}}>
+      <ScrollView
+        style={{flex: 1, marginTop: getStatusBarHeight() + 10}}
+        contentContainerStyle={{flexGrow: 1}}>
+        <View
+          style={{
+            marginHorizontal: 16,
+            marginTop: 20,
+            marginBottom: 10,
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+          <Image
+            source={{uri: this.props.avatar_url}}
+            style={{width: 30, height: 30, borderRadius: 15}}
+          />
+          <Text
+            style={{
+              color: 'black',
+              fontSize: 23,
+              fontWeight: 'bold',
+              marginLeft: 10,
+            }}>
+            Chuyển tiền
+          </Text>
+        </View>
         {this.renderSearch()}
         {this.renderContent()}
-      </View>
+      </ScrollView>
     );
   }
 }

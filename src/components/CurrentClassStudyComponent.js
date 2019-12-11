@@ -1,5 +1,10 @@
 import React from 'react';
-import {Dimensions, RefreshControl, TouchableOpacity} from 'react-native';
+import {
+  Dimensions,
+  Image,
+  RefreshControl,
+  TouchableOpacity,
+} from 'react-native';
 import {
   Container,
   Content,
@@ -9,8 +14,8 @@ import {
   View,
   ListItem,
   List,
-  Text,
   Thumbnail,
+  Text,
 } from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -19,11 +24,36 @@ import * as alert from '../constants/alert';
 import Loading from '../components/common/Loading';
 import theme from '../styles';
 import Icon from './common/Icon';
+import {getStatusBarHeight} from 'react-native-iphone-x-helper';
 
 class ClassComponent extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
+
+  headerComponent = () => (
+    <View
+      style={{
+        marginHorizontal: 16,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 20,
+      }}>
+      <Image
+        source={{uri: this.props.avatar_url}}
+        style={{width: 30, height: 30, borderRadius: 15}}
+      />
+      <Text
+        style={{
+          color: 'black',
+          fontSize: 23,
+          fontWeight: 'bold',
+          marginLeft: 10,
+        }}>
+        Danh sách lớp học
+      </Text>
+    </View>
+  );
 
   render() {
     if (this.props.isLoading && this.props.classData.length <= 0) {
@@ -31,7 +61,28 @@ class ClassComponent extends React.Component {
     } else {
       if (this.props.error || this.props.classData.length <= 0) {
         return (
-          <Container>
+          <Container style={{flex: 1, marginTop: getStatusBarHeight() + 10}}>
+            <View
+              style={{
+                marginHorizontal: 16,
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginVertical: 20,
+              }}>
+              <Image
+                source={{uri: this.props.avatar_url}}
+                style={{width: 30, height: 30, borderRadius: 15}}
+              />
+              <Text
+                style={{
+                  color: 'black',
+                  fontSize: 23,
+                  fontWeight: 'bold',
+                  marginLeft: 10,
+                }}>
+                Danh sách lớp học
+              </Text>
+            </View>
             <View style={styles.container}>
               <Text style={styles.textError}>
                 {this.props.error
@@ -52,66 +103,69 @@ class ClassComponent extends React.Component {
         );
       } else {
         return (
-          <List
-            refreshControl={
-              <RefreshControl
-                refreshing={this.props.isLoading}
-                onRefresh={this.props.onReload}
-                titleColor={theme.mainColor}
-                title="Đang tải..."
-                tintColor="#d9534f"
-                colors={['#d9534f']}
-              />
-            }
-            dataArray={this.props.classData}
-            renderRow={(item, sectionID, rowID) => (
-              <ListItem
-                // onPress={() => this.props.onSelectedItem(item.id, item.lesson[0].order, rowID)}
-                onPress={() => this.props.onSelectedItem(item, rowID)}
-                onLongPress={() => {}}
-                button>
-                <Thumbnail small source={{uri: item.avatar_url}} />
-                <Body>
-                  <View style={styles.containerClassName}>
-                    <Text>{item.name}</Text>
-                    {item.lesson[0] && (
-                      <View
-                        style={{
-                          ...styles.card,
-                          ...{backgroundColor: theme.processColor1},
-                        }}>
-                        <Text style={styles.textCard}>
-                          BUỔI {item.lesson[0].order}
-                        </Text>
-                      </View>
-                    )}
-                    {item.lesson[0] && (
-                      <View
-                        style={{
-                          ...styles.card,
-                          ...{backgroundColor: theme.secondColor},
-                        }}>
-                        <Text style={styles.textCard}>
-                          {item.lesson[0].number_student_attendance} HỌC VIÊN
-                        </Text>
-                      </View>
-                    )}
-                  </View>
-                  <Text note>{item.study_time}</Text>
-                </Body>
-                <Right>
-                  <TouchableOpacity
-                    onPress={() => this.props.openQrCode(item, rowID)}>
-                    <Icon
-                      name="fontawesome|qrcode"
-                      size={30}
-                      color={theme.mainColor}
-                    />
-                  </TouchableOpacity>
-                </Right>
-              </ListItem>
-            )}
-          />
+          <View style={{flex: 1, marginTop: getStatusBarHeight() + 10}}>
+            <List
+              refreshControl={
+                <RefreshControl
+                  refreshing={this.props.isLoading}
+                  onRefresh={this.props.onReload}
+                  titleColor={theme.mainColor}
+                  title="Đang tải..."
+                  tintColor="#d9534f"
+                  colors={['#d9534f']}
+                />
+              }
+              ListHeaderComponent={this.headerComponent}
+              dataArray={this.props.classData}
+              renderRow={(item, sectionID, rowID) => (
+                <ListItem
+                  // onPress={() => this.props.onSelectedItem(item.id, item.lesson[0].order, rowID)}
+                  onPress={() => this.props.onSelectedItem(item, rowID)}
+                  onLongPress={() => {}}
+                  button>
+                  <Thumbnail small source={{uri: item.avatar_url}} />
+                  <Body>
+                    <View style={styles.containerClassName}>
+                      <Text>{item.name}</Text>
+                      {item.lesson[0] && (
+                        <View
+                          style={{
+                            ...styles.card,
+                            ...{backgroundColor: theme.processColor1},
+                          }}>
+                          <Text style={styles.textCard}>
+                            BUỔI {item.lesson[0].order}
+                          </Text>
+                        </View>
+                      )}
+                      {item.lesson[0] && (
+                        <View
+                          style={{
+                            ...styles.card,
+                            ...{backgroundColor: theme.secondColor},
+                          }}>
+                          <Text style={styles.textCard}>
+                            {item.lesson[0].number_student_attendance} HỌC VIÊN
+                          </Text>
+                        </View>
+                      )}
+                    </View>
+                    <Text note>{item.study_time}</Text>
+                  </Body>
+                  <Right>
+                    <TouchableOpacity
+                      onPress={() => this.props.openQrCode(item, rowID)}>
+                      <Icon
+                        name="fontawesome|qrcode"
+                        size={30}
+                        color={theme.mainColor}
+                      />
+                    </TouchableOpacity>
+                  </Right>
+                </ListItem>
+              )}
+            />
+          </View>
         );
       }
     }

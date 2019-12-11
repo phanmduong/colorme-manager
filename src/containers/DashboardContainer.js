@@ -15,31 +15,9 @@ class DashboardContainer extends React.Component {
     this.store = new MeetingStore(props.token);
   }
 
-  static async clearAll(navigation) {
-    const keys = ['@ColorME:username', '@ColorME:password'];
-    try {
-      await AsyncStorage.multiRemove(keys);
-      navigation.navigate('Login');
-    } catch (error) {
-      alert(error);
-    }
-  }
-
   componentDidMount() {
     this.store.loadList();
   }
-
-  static navigationOptions = ({navigation}) => ({
-    title: 'Quản lý',
-    headerRight: (
-      <TouchableOpacity onPress={() => this.clearAll(navigation)}>
-        <Image
-          source={require('../../assets/img/icons8-logout-rounded-up-100.png')}
-          style={{width: 20, height: 20, marginRight: 20}}
-        />
-      </TouchableOpacity>
-    ),
-  });
 
   render() {
     return <DashboardComponent store={this.store} {...this.props} />;
@@ -49,6 +27,7 @@ class DashboardContainer extends React.Component {
 function mapStateToProps(state) {
   return {
     token: state.login.token,
+    avatar_url: state.login.user.avatar_url,
   };
 }
 

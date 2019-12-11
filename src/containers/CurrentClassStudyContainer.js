@@ -49,6 +49,7 @@ class CurrentClassStudyContainer extends React.Component {
         onSelectedItem={this.onSelectedItem}
         openQrCode={this.openQrCode}
         onReload={this.reloadCurrentClassStudy}
+        avatar_url={this.props.avatar_url}
       />
     );
   }
@@ -64,6 +65,7 @@ function mapStateToProps(state) {
     classData: state.currentClassStudy.classData,
     error: state.currentClassStudy.error,
     token: state.login.token,
+    avatar_url: state.login.user.avatar_url,
   };
 }
 

@@ -32,7 +32,7 @@ class ClassComponent extends React.Component {
   }
 
   headerComponent = () => (
-    <View style={{}}>
+    <View style={styles.headerContainer}>
       <Image
         source={{uri: this.props.avatar_url}}
         style={{width: 35, height: 35, borderRadius: 18}}

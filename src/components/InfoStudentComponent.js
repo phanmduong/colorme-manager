@@ -100,7 +100,14 @@ class InfoStudentComponent extends React.Component {
               <Text style={{fontSize: 16}}>Gọi điện</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() =>
+              this.props.navigation.navigate('SaveRegister', {
+                name: this.props.navigation.getParam('name'),
+                phone: this.props.navigation.getParam('phone'),
+                email: this.props.navigation.getParam('email'),
+              })
+            }>
             <View style={styles.essentialButton}>
               <Text style={{fontSize: 16}}>Đăng ký</Text>
             </View>

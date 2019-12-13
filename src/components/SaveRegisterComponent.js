@@ -47,10 +47,13 @@ export const GENDER = [
 class SaveRegisterComponent extends React.Component {
   constructor(props, context) {
     super(props, context);
+    let name = this.props.navigation.getParam('name');
+    let phone = this.props.navigation.getParam('phone');
+    let email = this.props.navigation.getParam('email');
     this.state = {
-      name: '',
-      phone: '',
-      email: '',
+      name: isEmptyInput(name) ? '' : name,
+      phone: isEmptyInput(phone) ? '' : phone,
+      email: isEmptyInput(email) ? '' : email,
       selectedCourse: false,
       selectedCampaign: false,
       selectedGender: false,

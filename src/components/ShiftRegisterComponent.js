@@ -237,26 +237,12 @@ class ShiftRegisterComponent extends React.Component {
                 colors={['#d9534f']}
               />
             }>
-            <View
-              style={{
-                marginHorizontal: 16,
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginVertical: 20,
-              }}>
+            <View style={styles.headerContainer}>
               <Image
                 source={{uri: this.props.user.avatar_url}}
-                style={{width: 30, height: 30, borderRadius: 15}}
+                style={styles.headerAva}
               />
-              <Text
-                style={{
-                  color: 'black',
-                  fontSize: 23,
-                  fontWeight: 'bold',
-                  marginLeft: 10,
-                }}>
-                Đăng ký lịch trực
-              </Text>
+              <Text style={styles.headerTitle}>Đăng ký lịch trực</Text>
             </View>
             <View style={styles.containerPicker}>
               <CustomPicker
@@ -373,6 +359,23 @@ const styles = {
     borderBottomWidth: 1,
     borderBottomColor: '#F0F0F0',
     marginHorizontal: 20,
+  },
+  headerContainer: {
+    marginHorizontal: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+  headerAva: {
+    width: 35,
+    height: 35,
+    borderRadius: 18,
+  },
+  headerTitle: {
+    color: 'black',
+    fontSize: 23,
+    fontWeight: 'bold',
+    marginLeft: 10,
   },
 };
 

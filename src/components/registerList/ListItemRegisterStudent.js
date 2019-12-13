@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Image,
   Platform,
   TouchableNativeFeedback,
   TouchableOpacity,
@@ -8,20 +9,11 @@ import {View, Text, Thumbnail, Icon} from 'native-base';
 import theme from '../../styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Call from '../common/Call';
-import {getShortName} from "../../helper";
+import {getShortName} from '../../helper';
 
 class ListItemStudent extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.state = {
-      onPressed: false,
-    };
-  }
-
-  onChangePress() {
-    this.setState({
-      onPressed: !this.state.onPressed,
-    });
   }
 
   content() {
@@ -67,21 +59,10 @@ class ListItemStudent extends React.Component {
                 <View />
               )}
             </View>
-            {this.state.onPressed ? (
-              <Icon
-                style={styles.icon}
-                ios="ios-arrow-up"
-                android="md-arrow-dropup"
-                name="ios-arrow-up"
-              />
-            ) : (
-              <Icon
-                name="ios-arrow-up"
-                ios="ios-arrow-down"
-                android="md-arrow-dropdown"
-                style={styles.icon}
-              />
-            )}
+            <Image
+              source={require('../../../assets/img/icons8-more-than-100.png')}
+              style={{width: 15, height: 15}}
+            />
           </View>
           <View style={styles.containerSubTitle}>
             <Text style={styles.subTitle}>{nameClass}</Text>
@@ -128,25 +109,28 @@ class ListItemStudent extends React.Component {
 
   renderExpand() {
     var {phone, email} = this.props;
-    if (this.state.onPressed) {
-      return (
-        <View style={styles.containerExpand}>
-          <Text style={styles.email}>{email}</Text>
-          <Call
-            extraPadding={{paddingTop: 5}}
-            url={'tel:' + phone}
-            phone={phone}
-          />
-        </View>
-      );
-    }
+    return (
+      <View style={styles.containerExpand}>
+        <Text style={styles.email}>{email}</Text>
+        <Call
+          extraPadding={{paddingTop: 5}}
+          url={'tel:' + phone}
+          phone={phone}
+        />
+      </View>
+    );
   }
 
   render() {
+    let studentId = this.props.studentId;
     if (Platform.OS === 'ios') {
       return (
         <View>
-          <TouchableOpacity onPress={() => this.onChangePress()}>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.setStudentId(studentId);
+              this.props.navigation.navigate('InfoStudent');
+            }}>
             <View style={styles.containerAll}>
               {this.content()}
               {this.renderExpand()}
@@ -157,7 +141,11 @@ class ListItemStudent extends React.Component {
     } else {
       return (
         <View>
-          <TouchableNativeFeedback onPress={() => this.onChangePress()}>
+          <TouchableNativeFeedback
+            onPress={() => {
+              this.props.setStudentId(studentId);
+              this.props.navigation.navigate('InfoStudent');
+            }}>
             <View style={styles.containerAll}>
               {this.content()}
               {this.renderExpand()}

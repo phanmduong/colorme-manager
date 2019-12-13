@@ -33,6 +33,8 @@ import {teachingRatingDuplicateReducer} from './teachingRatingDuplicateReducer';
 import {teachingTeamReducer} from './teachingTeamReducer';
 import {makeupClassReducer} from './makeupClassReducer';
 import {saveRegisterReducer} from './saveRegisterReducer';
+import {infoStudentReducer} from "./InfoStudentReducer";
+import {infoStudentTabReducer} from "./infoStudentTabReducer";
 
 const appReducer = combineReducers({
   login: loginReducer,
@@ -65,6 +67,8 @@ const appReducer = combineReducers({
   detailShifts: detailShiftsReducer,
   makeupClasses: makeupClassReducer,
   saveRegister: saveRegisterReducer,
+  infoStudent: infoStudentReducer,
+  infoStudentTab: infoStudentTabReducer,
 });
 
 const rootReducer = (state, action) => {

@@ -106,6 +106,7 @@ class RegisterListComponent extends React.Component {
               refreshing={this.props.refreshing}
               renderRow={(item, sectionID, rowID) => (
                 <ListItemRegisterStudent
+                  {...this.props}
                   nameClass={item.class.name}
                   name={item.name}
                   avatar={item.course_avatar_url}
@@ -116,6 +117,8 @@ class RegisterListComponent extends React.Component {
                   callStatus={item.call_status}
                   paidStatus={item.paid_status}
                   money={item.money}
+                  studentId={item.student_id}
+                  setStudentId={this.props.setStudentId}
                 />
               )}
               renderFooter={() => {

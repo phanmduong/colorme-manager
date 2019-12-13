@@ -5,6 +5,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as registerListActions from '../actions/registerListActions';
+import * as infoStudentActions from '../actions/infoStudentActions';
 import RegisterListComponent from '../components/RegisterListComponent';
 
 class RegisterListContainer extends React.Component {
@@ -84,10 +85,15 @@ class RegisterListContainer extends React.Component {
     );
   }
 
+  setStudentId = studentId => {
+    this.props.infoStudentActions.setStudentId(studentId);
+  };
+
   render() {
     if (this.props.segment === 1) {
       return (
         <RegisterListComponent
+          {...this.props}
           registerList={this.props.registerListDataAll}
           error={this.props.errorAll}
           isLoading={this.props.isLoadingAll}
@@ -98,12 +104,14 @@ class RegisterListContainer extends React.Component {
           updateFormAndLoadDataSearch={this.updateFormAndLoadDataSearchAll}
           changeSegmentRegisterList={this.changeSegmentRegisterList}
           segmentActive={1}
+          setStudentId={this.setStudentId}
         />
       );
     } else {
       console.log(this.props.registerListDataMy);
       return (
         <RegisterListComponent
+          {...this.props}
           registerList={this.props.registerListDataMy}
           error={this.props.errorMy}
           isLoading={this.props.isLoadingMy}
@@ -114,6 +122,7 @@ class RegisterListContainer extends React.Component {
           updateFormAndLoadDataSearch={this.updateFormAndLoadDataSearchMy}
           changeSegmentRegisterList={this.changeSegmentRegisterList}
           segmentActive={2}
+          setStudentId={this.setStudentId}
         />
       );
     }
@@ -145,6 +154,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     registerListActions: bindActionCreators(registerListActions, dispatch),
+    infoStudentActions: bindActionCreators(infoStudentActions, dispatch),
   };
 }
 

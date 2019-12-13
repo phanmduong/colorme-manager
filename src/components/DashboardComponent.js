@@ -24,6 +24,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 class DashboardComponent extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.state = {
+      modalVisible: false,
+    };
   }
 
   handleRefresh = () => {
@@ -39,6 +42,10 @@ class DashboardComponent extends React.Component {
       alert(error);
     }
   }
+
+  toggleModal = () => {
+    this.setState({modalVisible: !this.state.modalVisible});
+  };
 
   render() {
     const {refreshing} = this.props.store;
@@ -59,7 +66,12 @@ class DashboardComponent extends React.Component {
           <View style={styles.container}>
             <View style={styles.headerContainer}>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Image source={{uri: this.props.avatar_url}} style={styles.headerAva} />
+                <TouchableOpacity onPress={() => this.toggleModal()}>
+                  <Image
+                    source={{uri: this.props.avatar_url}}
+                    style={styles.headerAva}
+                  />
+                </TouchableOpacity>
                 <Text style={styles.headerTitle}>Trang chủ</Text>
               </View>
               <TouchableOpacity onPress={() => this.clearAll(navigation)}>
@@ -284,9 +296,9 @@ const styles = {
     marginLeft: 10,
   },
   headerAva: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
+    width: 35,
+    height: 35,
+    borderRadius: 18,
   },
 };
 

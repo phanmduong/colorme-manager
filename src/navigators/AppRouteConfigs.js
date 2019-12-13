@@ -48,6 +48,8 @@ import ListTeacherAndAssistantContainer from '../containers/ListTeacherAndAssist
 import TeachingRatingDuplicateContainer from '../containers/TeachingRatingDuplicateContainer';
 import MakeupClassContainer from '../containers/MakeupClassContainer';
 import SaveRegisterContainer from '../containers/SaveRegisterContainer';
+import InfoStudentContainer from '../containers/InfoStudentContainer';
+import InfoStudentRegistersContainer from '../containers/infoStudent/InfoStudentRegistersContainer';
 
 const navigationOptionsDefault = {
   defaultNavigationOptions: {
@@ -293,6 +295,20 @@ const TabDashboard = createStackNavigator(
         headerTitleStyle: {color: 'black'},
       }),
     },
+    InfoStudent: {
+      screen: InfoStudentContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    InfoStudentRegister: {
+      screen: InfoStudentRegistersContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
   },
   {
     defaultNavigationOptions: {
@@ -399,151 +415,6 @@ const DashboardMain = createBottomTabNavigator(
     backBehavior: 'none',
   },
 );
-//
-// const CheckIn = StackNavigator({
-//     CheckIn: {
-//         screen: CheckInContainer,
-//
-//     }
-// }, {
-//     ...navigationOptionsDefault,
-//     ...{
-//         initialRouteName: 'CheckIn',
-//         initialRouteParams: {
-//             title: 'Check in',
-//             type: 'checkin'
-//         }
-//     }
-// });
-//
-// const HistoryAttendanceShift = StackNavigator({
-//     HistoryAttendanceShift: {
-//         screen: HistoryAttendanceShiftContainer,
-//     }
-// }, {
-//     ...navigationOptionsDefault,
-//     ...{
-//         initialRouteName: 'HistoryAttendanceShift',
-//         initialRouteParams: {
-//             title: 'Lịch sử lịch trực',
-//             type: 'shift'
-//         }
-//     }
-// });
-//
-// const HistoryAttendanceWorkShift = StackNavigator({
-//     HistoryAttendanceWorkShift: {
-//         screen: HistoryAttendanceShiftContainer,
-//     }
-// }, {
-//     ...navigationOptionsDefault,
-//     ...{
-//         initialRouteName: 'HistoryAttendanceWorkShift',
-//         initialRouteParams: {
-//             title: 'Lịch sử lịch làm việc',
-//             type: 'work_shift'
-//         }
-//     }
-// });
-//
-// const AccurateStudent = StackNavigator({
-//     AccurateStudent: {
-//         screen: AccurateStudentContainer,
-//     }
-// }, {
-//     ...navigationOptionsDefault,
-//     ...{
-//         initialRouteName: 'AccurateStudent',
-//         initialRouteParams: {
-//             title: 'Xác thực học viên',
-//         }
-//     }
-// });
-//
-// const HistoryAttendanceTeaching = StackNavigator({
-//     HistoryAttendanceTeaching: {
-//         screen: HistoryAttendanceTeachingContainer,
-//     }
-// }, {
-//     ...navigationOptionsDefault,
-//     ...{
-//         initialRouteName: 'HistoryAttendanceTeaching',
-//         initialRouteParams: {
-//             title: 'Lịch sử lịch giảng dạy',
-//         }
-//     }
-// });
-//
-// const CheckOut = StackNavigator({
-//     CheckOut: {
-//         screen: CheckInContainer,
-//
-//     }
-// }, {
-//     ...navigationOptionsDefault, ...{
-//         initialRouteName: 'CheckOut',
-//         initialRouteParams: {
-//             title: 'Check out',
-//             type: 'checkout'
-//         }
-//     }
-// });
-//
-//
-// const Drawer = DrawerNavigator({
-//     TabDashboard: {
-//         screen: DashboardMain,
-//         navigationOptions: ({navigation}) => ({
-//             title: 'Bảng điều khiển',
-//         })
-//     },
-//     MenuCheckIn: {
-//         screen: CheckIn,
-//         navigationOptions: ({navigation}) => ({
-//             title: 'Check in',
-//         })
-//     },
-//     MenuCheckOut: {
-//         screen: CheckOut,
-//         navigationOptions: ({navigation}) => ({
-//             title: 'Check out',
-//         })
-//     },
-//     HistoryAttendanceShift: {
-//         screen: HistoryAttendanceShift,
-//         navigationOptions: ({navigation}) => ({
-//             title: 'Lịch sử điểm danh lịch trực',
-//         })
-//     },
-//     HistoryAttendanceWorkShift: {
-//         screen: HistoryAttendanceWorkShift,
-//         navigationOptions: ({navigation}) => ({
-//             title: 'Lịch sử điểm danh lịch làm việc',
-//
-//         })
-//     },
-//     HistoryAttendanceTeaching: {
-//         screen: HistoryAttendanceTeaching,
-//         navigationOptions: ({navigation}) => ({
-//             title: 'Lịch sử điểm danh lịch giảng dạy',
-//
-//         })
-//     },
-//     AccurateStudent: {
-//         screen: AccurateStudent,
-//         navigationOptions: ({navigation}) => ({
-//             title: 'Xác thực học viên',
-//
-//         })
-//     },
-// }, {
-//     drawerPosition: 'right',
-//     // backBehavior: 'none',
-//     useNativeAnimations: 'false',
-//     disableOpenGesture: false,
-//     drawerLockMode: 'locked-closed',
-//     contentComponent: props => (<SidebarContainer {...props}/>)
-// });
 
 const Main = createStackNavigator(
   {

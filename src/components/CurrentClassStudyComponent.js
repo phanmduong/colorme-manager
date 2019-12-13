@@ -32,16 +32,10 @@ class ClassComponent extends React.Component {
   }
 
   headerComponent = () => (
-    <View
-      style={{
-        marginHorizontal: 16,
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginVertical: 20,
-      }}>
+    <View style={{}}>
       <Image
         source={{uri: this.props.avatar_url}}
-        style={{width: 30, height: 30, borderRadius: 15}}
+        style={{width: 35, height: 35, borderRadius: 18}}
       />
       <Text
         style={{
@@ -62,26 +56,12 @@ class ClassComponent extends React.Component {
       if (this.props.error || this.props.classData.length <= 0) {
         return (
           <Container style={{flex: 1, marginTop: getStatusBarHeight() + 10}}>
-            <View
-              style={{
-                marginHorizontal: 16,
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginVertical: 20,
-              }}>
+            <View style={styles.headerContainer}>
               <Image
                 source={{uri: this.props.avatar_url}}
-                style={{width: 30, height: 30, borderRadius: 15}}
+                style={styles.headerAva}
               />
-              <Text
-                style={{
-                  color: 'black',
-                  fontSize: 23,
-                  fontWeight: 'bold',
-                  marginLeft: 10,
-                }}>
-                Danh sách lớp học
-              </Text>
+              <Text style={styles.headerTitle}>Danh sách lớp học</Text>
             </View>
             <View style={styles.container}>
               <Text style={styles.textError}>
@@ -122,7 +102,8 @@ class ClassComponent extends React.Component {
                   // onPress={() => this.props.onSelectedItem(item.id, item.lesson[0].order, rowID)}
                   onPress={() => this.props.onSelectedItem(item, rowID)}
                   onLongPress={() => {}}
-                  button>
+                  button
+                  style={{borderBottomWidth: 0}}>
                   <Thumbnail small source={{uri: item.avatar_url}} />
                   <Body>
                     <View style={styles.containerClassName}>
@@ -138,29 +119,34 @@ class ClassComponent extends React.Component {
                           </Text>
                         </View>
                       )}
-                      {item.lesson[0] && (
-                        <View
-                          style={{
-                            ...styles.card,
-                            ...{backgroundColor: theme.secondColor},
-                          }}>
-                          <Text style={styles.textCard}>
-                            {item.lesson[0].number_student_attendance} HỌC VIÊN
-                          </Text>
-                        </View>
-                      )}
                     </View>
                     <Text note>{item.study_time}</Text>
+                    {item.lesson[0] && (
+                      <Text note style={{color: theme.colorSubTitle}}>
+                        {item.lesson[0].number_student_attendance}/
+                        {item.total_paid} học viên
+                      </Text>
+                    )}
                   </Body>
                   <Right>
-                    <TouchableOpacity
-                      onPress={() => this.props.openQrCode(item, rowID)}>
-                      <Icon
-                        name="fontawesome|qrcode"
-                        size={30}
-                        color={theme.mainColor}
-                      />
-                    </TouchableOpacity>
+                    <View
+                      style={{
+                        backgroundColor: '#f6f6f6',
+                        width: 40,
+                        height: 40,
+                        borderRadius: 20,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <TouchableOpacity
+                        onPress={() => this.props.openQrCode(item, rowID)}>
+                        <Icon
+                          name="fontawesome|qrcode"
+                          size={25}
+                          color={'black'}
+                        />
+                      </TouchableOpacity>
+                    </View>
                   </Right>
                 </ListItem>
               )}
@@ -200,6 +186,23 @@ const styles = {
     fontSize: 10,
     color: 'white',
     textAlign: 'center',
+  },
+  headerContainer: {
+    marginHorizontal: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+  headerTitle: {
+    color: 'black',
+    fontSize: 23,
+    fontWeight: 'bold',
+    marginLeft: 10,
+  },
+  headerAva: {
+    width: 35,
+    height: 35,
+    borderRadius: 18,
   },
 };
 

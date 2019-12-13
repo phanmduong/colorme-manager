@@ -181,27 +181,12 @@ class CollectMoneyComponent extends React.Component {
       <ScrollView
         style={{flex: 1, marginTop: getStatusBarHeight() + 10}}
         contentContainerStyle={{flexGrow: 1}}>
-        <View
-          style={{
-            marginHorizontal: 16,
-            marginTop: 20,
-            marginBottom: 10,
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
+        <View style={styles.headerContainer}>
           <Image
             source={{uri: this.props.avatar_url}}
-            style={{width: 30, height: 30, borderRadius: 15}}
+            style={styles.headerAva}
           />
-          <Text
-            style={{
-              color: 'black',
-              fontSize: 23,
-              fontWeight: 'bold',
-              marginLeft: 10,
-            }}>
-            Nộp tiền
-          </Text>
+          <Text style={styles.headerTitle}>Nộp tiền</Text>
         </View>
         {this.renderSearch()}
         {this.renderContent()}
@@ -482,6 +467,24 @@ const styles = {
     paddingLeft: 15,
     flex: 1,
     justifyContent: 'center',
+  },
+  headerContainer: {
+    marginHorizontal: 16,
+    marginTop: 20,
+    marginBottom: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerAva: {
+    width: 35,
+    height: 35,
+    borderRadius: 18,
+  },
+  headerTitle: {
+    color: 'black',
+    fontSize: 23,
+    fontWeight: 'bold',
+    marginLeft: 10,
   },
 };
 

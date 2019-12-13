@@ -96,27 +96,9 @@ class SearchStaffMoneyTransferComponent extends React.Component {
       <ScrollView
         style={{flex: 1, marginTop: getStatusBarHeight() + 10}}
         contentContainerStyle={{flexGrow: 1}}>
-        <View
-          style={{
-            marginHorizontal: 16,
-            marginTop: 20,
-            marginBottom: 10,
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
-          <Image
-            source={{uri: this.props.avatar_url}}
-            style={{width: 30, height: 30, borderRadius: 15}}
-          />
-          <Text
-            style={{
-              color: 'black',
-              fontSize: 23,
-              fontWeight: 'bold',
-              marginLeft: 10,
-            }}>
-            Chuyển tiền
-          </Text>
+        <View style={styles.headerContainer}>
+          <Image source={{uri: this.props.avatar_url}} style={styles.headerAva} />
+          <Text style={styles.headerTitle}>Chuyển tiền</Text>
         </View>
         {this.renderSearch()}
         {this.renderContent()}
@@ -138,6 +120,24 @@ const styles = {
   },
   loading: {
     height: 95,
+  },
+  headerContainer: {
+    marginHorizontal: 16,
+    marginTop: 20,
+    marginBottom: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerTitle: {
+    color: 'black',
+    fontSize: 23,
+    fontWeight: 'bold',
+    marginLeft: 10,
+  },
+  headerAva: {
+    width: 35,
+    height: 35,
+    borderRadius: 18,
   },
 };
 

@@ -10,8 +10,8 @@ import {
   KeyboardAvoidingView,
   Platform,
   Image,
+  TextInput,
 } from 'react-native';
-import {Input, InputGroup} from 'native-base';
 import theme from '../styles';
 import {CustomPicker} from 'react-native-custom-picker';
 import LinearGradient from 'react-native-linear-gradient';
@@ -78,13 +78,13 @@ class SaveRegisterComponent extends React.Component {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
-        colors={['#EDEDED', '#EDEDED']}
-        style={styles.gradientSize}
+        colors={['#F6F6F6', '#F6F6F6']}
+        style={styles.inputContainer}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}>
         {!selectedItem && (
           <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
-            <Text style={{color: 'black', fontSize: 16}}>{defaultText}</Text>
+            <Text style={{color: '#b7b7b7', fontSize: 15}}>{defaultText}</Text>
             <Text>▼</Text>
           </View>
         )}
@@ -92,7 +92,7 @@ class SaveRegisterComponent extends React.Component {
           (this.state.selectedCourse ? (
             <View
               style={{justifyContent: 'space-between', flexDirection: 'row'}}>
-              <Text style={{color: 'black', fontSize: 16}}>
+              <Text style={{color: 'black', fontSize: 15}}>
                 {getLabel(selectedItem)}
               </Text>
               <Text>▼</Text>
@@ -100,7 +100,9 @@ class SaveRegisterComponent extends React.Component {
           ) : (
             <View
               style={{justifyContent: 'space-between', flexDirection: 'row'}}>
-              <Text style={{color: 'black', fontSize: 16}}>{defaultText}</Text>
+              <Text style={{color: '#b7b7b7', fontSize: 15}}>
+                {defaultText}
+              </Text>
               <Text>▼</Text>
             </View>
           ))}
@@ -112,13 +114,13 @@ class SaveRegisterComponent extends React.Component {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
-        colors={['#EDEDED', '#EDEDED']}
-        style={styles.gradientSize}
+        colors={['#F6F6F6', '#F6F6F6']}
+        style={styles.inputContainer}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}>
         {!selectedItem && (
           <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
-            <Text style={{color: 'black', fontSize: 16}}>{defaultText}</Text>
+            <Text style={{color: '#b7b7b7', fontSize: 15}}>{defaultText}</Text>
             <Text>▼</Text>
           </View>
         )}
@@ -126,7 +128,7 @@ class SaveRegisterComponent extends React.Component {
           (this.state.selectedCampaign ? (
             <View
               style={{justifyContent: 'space-between', flexDirection: 'row'}}>
-              <Text style={{color: 'black', fontSize: 16}}>
+              <Text style={{color: 'black', fontSize: 15}}>
                 {getLabel(selectedItem)}
               </Text>
               <Text>▼</Text>
@@ -134,7 +136,9 @@ class SaveRegisterComponent extends React.Component {
           ) : (
             <View
               style={{justifyContent: 'space-between', flexDirection: 'row'}}>
-              <Text style={{color: 'black', fontSize: 16}}>{defaultText}</Text>
+              <Text style={{color: '#b7b7b7', fontSize: 15}}>
+                {defaultText}
+              </Text>
               <Text>▼</Text>
             </View>
           ))}
@@ -146,13 +150,13 @@ class SaveRegisterComponent extends React.Component {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
-        colors={['#EDEDED', '#EDEDED']}
-        style={styles.gradientSize}
+        colors={['#F6F6F6', '#F6F6F6']}
+        style={styles.inputContainer}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}>
         {!selectedItem && (
           <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
-            <Text style={{color: 'black', fontSize: 16}}>{defaultText}</Text>
+            <Text style={{color: '#b7b7b7', fontSize: 15}}>{defaultText}</Text>
             <Text>▼</Text>
           </View>
         )}
@@ -160,7 +164,7 @@ class SaveRegisterComponent extends React.Component {
           (this.state.selectedGender ? (
             <View
               style={{justifyContent: 'space-between', flexDirection: 'row'}}>
-              <Text style={{color: 'black', fontSize: 16}}>
+              <Text style={{color: 'black', fontSize: 15}}>
                 {getLabel(selectedItem)}
               </Text>
               <Text>▼</Text>
@@ -168,7 +172,9 @@ class SaveRegisterComponent extends React.Component {
           ) : (
             <View
               style={{justifyContent: 'space-between', flexDirection: 'row'}}>
-              <Text style={{color: 'black', fontSize: 16}}>{defaultText}</Text>
+              <Text style={{color: '#b7b7b7', fontSize: 15}}>
+                {defaultText}
+              </Text>
               <Text>▼</Text>
             </View>
           ))}
@@ -180,13 +186,13 @@ class SaveRegisterComponent extends React.Component {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
-        colors={['#EDEDED', '#EDEDED']}
-        style={styles.gradientSize}
+        colors={['#F6F6F6', '#F6F6F6']}
+        style={styles.inputContainer}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}>
         {!selectedItem && (
           <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
-            <Text style={{color: 'black', fontSize: 16}}>{defaultText}</Text>
+            <Text style={{color: '#b7b7b7', fontSize: 15}}>{defaultText}</Text>
             <Text>▼</Text>
           </View>
         )}
@@ -194,7 +200,7 @@ class SaveRegisterComponent extends React.Component {
           (this.state.selectedAddress ? (
             <View
               style={{justifyContent: 'space-between', flexDirection: 'row'}}>
-              <Text style={{color: 'black', fontSize: 16}}>
+              <Text style={{color: 'black', fontSize: 15}}>
                 {getLabel(selectedItem)}
               </Text>
               <Text>▼</Text>
@@ -202,7 +208,9 @@ class SaveRegisterComponent extends React.Component {
           ) : (
             <View
               style={{justifyContent: 'space-between', flexDirection: 'row'}}>
-              <Text style={{color: 'black', fontSize: 16}}>{defaultText}</Text>
+              <Text style={{color: '#b7b7b7', fontSize: 15}}>
+                {defaultText}
+              </Text>
               <Text>▼</Text>
             </View>
           ))}
@@ -387,9 +395,11 @@ class SaveRegisterComponent extends React.Component {
           <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={{marginTop: 30}}>
-                <Text style={styles.titleForm}>Tên học viên *</Text>
-                <InputGroup style={{width: width - 20}}>
-                  <Input
+                <Text style={styles.titleForm}>
+                  Tên học viên <Text style={{color: '#C50000'}}>*</Text>
+                </Text>
+                <View style={styles.inputContainer}>
+                  <TextInput
                     {...this.props}
                     value={this.state.name}
                     onChangeText={data => this.setState({name: data})}
@@ -397,20 +407,18 @@ class SaveRegisterComponent extends React.Component {
                     placeholder="Tên học viên"
                     blurOnSubmit={false}
                     onSubmitEditing={event => {
-                      this.refs.email._root.focus();
+                      this.refs.email.focus();
                     }}
-                    style={{
-                      lineHeight: 20,
-                      height: 40,
-                      fontSize: 15,
-                    }}
+                    style={{fontSize: 15}}
                   />
-                </InputGroup>
+                </View>
               </View>
               <View style={{marginTop: 30}}>
-                <Text style={styles.titleForm}>Email học viên *</Text>
-                <InputGroup style={{width: width - 20}}>
-                  <Input
+                <Text style={styles.titleForm}>
+                  Email học viên <Text style={{color: '#C50000'}}>*</Text>
+                </Text>
+                <View style={styles.inputContainer}>
+                  <TextInput
                     {...this.props}
                     value={this.state.email}
                     autoCapitalize={'none'}
@@ -420,119 +428,120 @@ class SaveRegisterComponent extends React.Component {
                     placeholder="Email học viên"
                     blurOnSubmit={false}
                     onSubmitEditing={event => {
-                      this.refs.phone._root.focus();
+                      this.refs.phone.focus();
                     }}
-                    style={{
-                      lineHeight: 20,
-                      height: 40,
-                      fontSize: 15,
-                    }}
+                    style={{fontSize: 15}}
                   />
-                </InputGroup>
+                </View>
               </View>
               <View style={{marginTop: 30}}>
-                <Text style={styles.titleForm}>Số điện thoại học viên *</Text>
-                <InputGroup style={{width: width - 20}}>
-                  <Input
+                <Text style={styles.titleForm}>
+                  Số điện thoại học viên{' '}
+                  <Text style={{color: '#C50000'}}>*</Text>
+                </Text>
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    {...this.props}
                     value={this.state.phone}
+                    ref={'phone'}
                     onChangeText={data => this.setState({phone: data})}
                     returnKeyType={'next'}
-                    ref={'phone'}
                     placeholder="Số điện thoại học viên"
                     blurOnSubmit={false}
                     onSubmitEditing={event => {
-                      this.refs.coupon._root.focus();
+                      this.refs.coupon.focus();
                     }}
-                    style={{
-                      lineHeight: 20,
-                      height: 40,
-                      fontSize: 15,
-                    }}
+                    style={{fontSize: 15}}
                   />
-                </InputGroup>
+                </View>
               </View>
-              <View style={{marginTop: 30, marginBottom: 20}}>
+              <View style={{marginTop: 30}}>
                 <Text style={styles.titleForm}>Mã khuyến mãi</Text>
-                <InputGroup style={{width: width - 20}}>
-                  <Input
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    {...this.props}
                     value={this.state.coupon}
+                    ref={'coupon'}
                     onChangeText={data => this.setState({coupon: data})}
                     returnKeyType={'next'}
                     placeholder="Mã khuyến mãi"
                     blurOnSubmit={false}
                     onSubmitEditing={event => {
                       if (this.state.expanded) {
-                        this.refs.university._root.focus();
+                        this.refs.university.focus();
                       } else {
-                        this.refs.coupon._root.blur();
+                        this.refs.coupon.blur();
                       }
                     }}
-                    ref={'coupon'}
-                    style={{
-                      lineHeight: 20,
-                      height: 40,
-                      fontSize: 15,
-                    }}
+                    style={{fontSize: 15}}
                   />
-                </InputGroup>
+                </View>
               </View>
-              <CustomPicker
-                options={this.props.courses}
-                getLabel={item => item.name}
-                placeholder={'Chọn môn'}
-                modalAnimationType={'fade'}
-                optionTemplate={this.renderCoursePickerOption}
-                fieldTemplate={this.renderCoursePickerField}
-                headerTemplate={this.renderCoursePickerHeader}
-                footerTemplate={this.renderCoursePickerFooter}
-                modalStyle={{
-                  borderRadius: 6,
-                }}
-                onValueChange={value => {
-                  this.setState({
-                    selectedCourse: true,
-                  });
-                  this.props.onSelectCourseId(value.id);
-                }}
-              />
-              {this.state.selectedCourse && !this.props.isLoadingClasses ? (
+              <View style={{marginTop: 30}}>
+                <Text style={styles.titleForm}>Chọn môn học</Text>
                 <CustomPicker
-                  options={this.props.classes}
+                  options={this.props.courses}
                   getLabel={item => item.name}
-                  placeholder={'Chọn lớp'}
+                  placeholder={'Chọn môn'}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderCoursePickerOption}
                   fieldTemplate={this.renderCoursePickerField}
-                  headerTemplate={this.renderClassPickerHeader}
+                  headerTemplate={this.renderCoursePickerHeader}
                   footerTemplate={this.renderCoursePickerFooter}
                   modalStyle={{
                     borderRadius: 6,
                   }}
                   onValueChange={value => {
-                    this.setState({selectedClassId: value.id});
+                    this.setState({
+                      selectedCourse: true,
+                    });
+                    this.props.onSelectCourseId(value.id);
                   }}
                 />
+              </View>
+              {this.state.selectedCourse && !this.props.isLoadingClasses ? (
+                <View style={{marginTop: 30}}>
+                  <Text style={styles.titleForm}>Chọn lớp học</Text>
+                  <CustomPicker
+                    options={this.props.classes}
+                    getLabel={item => item.name}
+                    placeholder={'Chọn lớp'}
+                    modalAnimationType={'fade'}
+                    optionTemplate={this.renderCoursePickerOption}
+                    fieldTemplate={this.renderCoursePickerField}
+                    headerTemplate={this.renderClassPickerHeader}
+                    footerTemplate={this.renderCoursePickerFooter}
+                    modalStyle={{
+                      borderRadius: 6,
+                    }}
+                    onValueChange={value => {
+                      this.setState({selectedClassId: value.id});
+                    }}
+                  />
+                </View>
               ) : null}
-              <CustomPicker
-                options={this.props.campaigns}
-                getLabel={item => item.name}
-                style={{marginTop: 15}}
-                placeholder={'Chọn chiến dịch'}
-                modalAnimationType={'fade'}
-                optionTemplate={this.renderCoursePickerOption}
-                fieldTemplate={this.renderCampaignPickerField}
-                headerTemplate={this.renderCampaignPickerHeader}
-                footerTemplate={this.renderCoursePickerFooter}
-                modalStyle={{
-                  borderRadius: 6,
-                }}
-                onValueChange={value => {
-                  this.setState({
-                    selectedCampaign: true,
-                    campaign_id: value.id,
-                  });
-                }}
-              />
+              <View style={{marginTop: 30}}>
+                <Text style={styles.titleForm}>Chọn chiến dịch</Text>
+                <CustomPicker
+                  options={this.props.campaigns}
+                  getLabel={item => item.name}
+                  placeholder={'Chọn chiến dịch'}
+                  modalAnimationType={'fade'}
+                  optionTemplate={this.renderCoursePickerOption}
+                  fieldTemplate={this.renderCampaignPickerField}
+                  headerTemplate={this.renderCampaignPickerHeader}
+                  footerTemplate={this.renderCoursePickerFooter}
+                  modalStyle={{
+                    borderRadius: 6,
+                  }}
+                  onValueChange={value => {
+                    this.setState({
+                      selectedCampaign: true,
+                      campaign_id: value.id,
+                    });
+                  }}
+                />
+              </View>
 
               <TouchableOpacity onPress={() => this.toggleExpand()}>
                 <View
@@ -566,30 +575,32 @@ class SaveRegisterComponent extends React.Component {
 
               {this.state.expanded ? (
                 <View>
-                  <CustomPicker
-                    options={GENDER}
-                    getLabel={item => item.name}
-                    style={{marginTop: 15}}
-                    placeholder={'Chọn giới tính'}
-                    modalAnimationType={'fade'}
-                    optionTemplate={this.renderCoursePickerOption}
-                    fieldTemplate={this.renderGenderPickerField}
-                    headerTemplate={this.renderGenderPickerHeader}
-                    footerTemplate={this.renderCoursePickerFooter}
-                    modalStyle={{
-                      borderRadius: 6,
-                    }}
-                    onValueChange={value => {
-                      this.setState({
-                        selectedGender: true,
-                        gender: value.id,
-                      });
-                    }}
-                  />
+                  <View style={{marginTop: 30}}>
+                    <Text style={styles.titleForm}>Chọn giới tính</Text>
+                    <CustomPicker
+                      options={GENDER}
+                      getLabel={item => item.name}
+                      placeholder={'Chọn giới tính'}
+                      modalAnimationType={'fade'}
+                      optionTemplate={this.renderCoursePickerOption}
+                      fieldTemplate={this.renderGenderPickerField}
+                      headerTemplate={this.renderGenderPickerHeader}
+                      footerTemplate={this.renderCoursePickerFooter}
+                      modalStyle={{
+                        borderRadius: 6,
+                      }}
+                      onValueChange={value => {
+                        this.setState({
+                          selectedGender: true,
+                          gender: value.id,
+                        });
+                      }}
+                    />
+                  </View>
                   <View style={{marginTop: 30}}>
                     <Text style={styles.titleForm}>Ngày sinh</Text>
                     <TouchableOpacity
-                      style={[styles.textForm, {marginRight: 10}]}
+                      style={[styles.inputContainer, {marginRight: 10}]}
                       onPress={this.openDatePicker}>
                       <Text
                         style={{
@@ -599,132 +610,119 @@ class SaveRegisterComponent extends React.Component {
                       </Text>
                     </TouchableOpacity>
                   </View>
-                  <CustomPicker
-                    options={this.getDataAddress()}
-                    getLabel={item => item.value}
-                    style={{marginTop: 15}}
-                    placeholder={'Chọn địa chỉ'}
-                    modalAnimationType={'fade'}
-                    optionTemplate={this.renderCoursePickerOption}
-                    fieldTemplate={this.renderProvincePickerField}
-                    headerTemplate={this.renderProvincePickerHeader}
-                    footerTemplate={this.renderCoursePickerFooter}
-                    modalStyle={{
-                      borderRadius: 6,
-                    }}
-                    onValueChange={value => {
-                      this.setState({
-                        selectedAddress: true,
-                        address: value.value,
-                      });
-                    }}
-                  />
+                  <View style={{marginTop: 30}}>
+                    <Text style={styles.titleForm}>Địa chỉ</Text>
+                    <CustomPicker
+                      options={this.getDataAddress()}
+                      getLabel={item => item.value}
+                      placeholder={'Chọn địa chỉ'}
+                      modalAnimationType={'fade'}
+                      optionTemplate={this.renderCoursePickerOption}
+                      fieldTemplate={this.renderProvincePickerField}
+                      headerTemplate={this.renderProvincePickerHeader}
+                      footerTemplate={this.renderCoursePickerFooter}
+                      modalStyle={{
+                        borderRadius: 6,
+                      }}
+                      onValueChange={value => {
+                        this.setState({
+                          selectedAddress: true,
+                          address: value.value,
+                        });
+                      }}
+                    />
+                  </View>
                   <View style={{marginTop: 30}}>
                     <Text style={styles.titleForm}>Trường học</Text>
-                    <InputGroup style={{width: width - 20}}>
-                      <Input
+                    <View style={styles.inputContainer}>
+                      <TextInput
+                        {...this.props}
                         value={this.state.university}
+                        ref={'university'}
                         onChangeText={data => this.setState({university: data})}
                         returnKeyType={'next'}
-                        ref={'university'}
                         placeholder="Trường học"
                         blurOnSubmit={false}
                         onSubmitEditing={event => {
-                          this.refs.work._root.focus();
+                          this.refs.work.focus();
                         }}
-                        style={{
-                          lineHeight: 20,
-                          height: 40,
-                          fontSize: 15,
-                        }}
+                        style={{fontSize: 15}}
                       />
-                    </InputGroup>
+                    </View>
                   </View>
                   <View style={{marginTop: 30}}>
                     <Text style={styles.titleForm}>Nơi làm việc</Text>
-                    <InputGroup style={{width: width - 20}}>
-                      <Input
+                    <View style={styles.inputContainer}>
+                      <TextInput
+                        {...this.props}
                         value={this.state.work}
+                        ref={'work'}
                         onChangeText={data => this.setState({work: data})}
                         returnKeyType={'next'}
                         placeholder="Nơi làm việc"
                         blurOnSubmit={false}
-                        ref={'work'}
                         onSubmitEditing={event => {
-                          this.refs.how_know._root.focus();
+                          this.refs.how_know.focus();
                         }}
-                        style={{
-                          lineHeight: 20,
-                          height: 40,
-                          fontSize: 15,
-                        }}
+                        style={{fontSize: 15}}
                       />
-                    </InputGroup>
+                    </View>
                   </View>
                   <View style={{marginTop: 30}}>
                     <Text style={styles.titleForm}>Lý do biết đến</Text>
-                    <InputGroup style={{width: width - 20}}>
-                      <Input
+                    <View style={styles.inputContainer}>
+                      <TextInput
+                        {...this.props}
                         value={this.state.how_know}
+                        ref={'how_know'}
                         onChangeText={data => this.setState({how_know: data})}
                         returnKeyType={'next'}
                         placeholder="Lý do biết đến"
                         blurOnSubmit={false}
-                        ref={'how_know'}
                         onSubmitEditing={event => {
-                          this.refs.facebook._root.focus();
+                          this.refs.facebook.focus();
                         }}
-                        style={{
-                          lineHeight: 20,
-                          height: 40,
-                          fontSize: 15,
-                        }}
+                        style={{fontSize: 15}}
                       />
-                    </InputGroup>
+                    </View>
                   </View>
                   <View style={{marginTop: 30}}>
                     <Text style={styles.titleForm}>Link Facebook</Text>
-                    <InputGroup style={{width: width - 20}}>
-                      <Input
+                    <View style={styles.inputContainer}>
+                      <TextInput
+                        {...this.props}
                         value={this.state.facebook}
+                        ref={'facebook'}
                         onChangeText={data => this.setState({facebook: data})}
                         returnKeyType={'next'}
                         placeholder="Link Facebook"
                         blurOnSubmit={false}
-                        ref={'facebook'}
                         onSubmitEditing={event => {
-                          this.refs.description._root.focus();
+                          this.refs.description.focus();
                         }}
-                        style={{
-                          lineHeight: 20,
-                          height: 40,
-                          fontSize: 15,
-                        }}
+                        style={{fontSize: 15}}
                       />
-                    </InputGroup>
+                    </View>
                   </View>
                   <View style={{marginTop: 30, marginBottom: 20}}>
                     <Text style={styles.titleForm}>Mô tả</Text>
-                    <InputGroup style={{width: width - 20}}>
-                      <Input
+                    <View style={styles.inputContainer}>
+                      <TextInput
+                        {...this.props}
                         value={this.state.description}
+                        ref={'description'}
                         onChangeText={data =>
                           this.setState({description: data})
                         }
                         returnKeyType={'next'}
                         placeholder="Mô tả"
                         blurOnSubmit={false}
-                        ref={'description'}
                         onSubmitEditing={event => {
-                          this.refs.description._root.blur();
+                          this.refs.description.blur();
                         }}
-                        style={{
-                          lineHeight: 20,
-                          height: 40,
-                          fontSize: 15,
-                        }}
+                        style={{fontSize: 15}}
                       />
-                    </InputGroup>
+                    </View>
                   </View>
                 </View>
               ) : null}
@@ -775,8 +773,8 @@ class SaveRegisterComponent extends React.Component {
 
 const styles = {
   titleForm: {
-    color: theme.mainColor,
-    fontSize: 12,
+    color: 'black',
+    fontSize: 14,
   },
   container: {
     paddingHorizontal: 20,
@@ -820,6 +818,14 @@ const styles = {
     borderBottomColor: '#D9D5DC',
     borderBottomWidth: 1 / 3,
     justifyContent: 'center',
+  },
+  inputContainer: {
+    marginTop: 8,
+    height: 45,
+    backgroundColor: '#F6F6F6',
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+    borderRadius: 8,
   },
 };
 

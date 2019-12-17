@@ -7,6 +7,8 @@ import {bindActionCreators} from 'redux';
 import * as registerListActions from '../actions/registerListActions';
 import * as infoStudentActions from '../actions/infoStudentActions';
 import RegisterListComponent from '../components/RegisterListComponent';
+import {isEmptyInput} from '../helper';
+import {auto} from 'async';
 
 class RegisterListContainer extends React.Component {
   constructor(props, context) {
@@ -90,6 +92,10 @@ class RegisterListContainer extends React.Component {
   };
 
   render() {
+    let autoFocus = this.props.navigation.getParam('autoFocus');
+    if (isEmptyInput(autoFocus)) {
+      autoFocus = false;
+    }
     if (this.props.segment === 1) {
       return (
         <RegisterListComponent
@@ -105,6 +111,7 @@ class RegisterListContainer extends React.Component {
           changeSegmentRegisterList={this.changeSegmentRegisterList}
           segmentActive={1}
           setStudentId={this.setStudentId}
+          autoFocus={autoFocus}
         />
       );
     } else {
@@ -123,6 +130,7 @@ class RegisterListContainer extends React.Component {
           changeSegmentRegisterList={this.changeSegmentRegisterList}
           segmentActive={2}
           setStudentId={this.setStudentId}
+          autoFocus={autoFocus}
         />
       );
     }

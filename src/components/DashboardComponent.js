@@ -82,7 +82,11 @@ class DashboardComponent extends React.Component {
               </TouchableOpacity>
             </View>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('RegisterList')}>
+              onPress={() =>
+                this.props.navigation.navigate('RegisterList', {
+                  autoFocus: true,
+                })
+              }>
               <View style={styles.searchContainer}>
                 <Icon
                   name={'ios-search'}

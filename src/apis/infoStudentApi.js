@@ -37,3 +37,27 @@ export function loadHistoryCollect(studentId, token) {
     token;
   return axios.get(url);
 }
+
+export function changeCallStatusStudent(
+  callStatus,
+  studentId,
+  telecallId,
+  genId,
+  note,
+  callerId,
+  appointmentPayment,
+  dateTest,
+  token,
+) {
+  let url = env.MANAGE_API_URL + '/change-call-status-student?token=' + token;
+  return axios.post(url, {
+    student_id: studentId,
+    telecall_id: telecallId,
+    gen_id: genId,
+    caller_id: callerId,
+    note: note,
+    status: callStatus,
+    appointment_payment: appointmentPayment,
+    date_test: dateTest,
+  });
+}

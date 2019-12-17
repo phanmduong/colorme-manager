@@ -275,6 +275,8 @@ export default {
     errorRegisters: false,
     registers: [],
     studentId: -1,
+    isLoadingChangeCallStatus: false,
+    errorChangeCallStatus: false,
   },
   infoStudentTab: {
     registers: {

@@ -6,12 +6,17 @@ import {
   StyleSheet,
   ScrollView,
   Image,
+  Linking,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import CallRegisterModal from './infoStudent/CallRegisterModal';
 
 class InfoStudentComponent extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.state = {
+      callModalVisible: false,
+    };
   }
 
   tabRegisters = () => {
@@ -30,7 +35,15 @@ class InfoStudentComponent extends React.Component {
     this.props.tabHistoryCollectMoney();
   };
 
+  toggleCallModal = () => {
+    this.setState({callModalVisible: !this.state.callModalVisible});
+  };
+
   render() {
+    let name = this.props.navigation.getParam('name');
+    let phone = this.props.navigation.getParam('phone');
+    let email = this.props.navigation.getParam('email');
+    let avatar_url = this.props.navigation.getParam('avatar_url');
     return (
       <View style={{flex: 1}}>
         <View style={{height: 50}}>
@@ -95,7 +108,11 @@ class InfoStudentComponent extends React.Component {
               style={{height: 18, width: 18}}
             />
           </View>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              Linking.openURL(`tel:${phone}`);
+              this.toggleCallModal();
+            }}>
             <View style={styles.essentialButton}>
               <Text style={{fontSize: 16}}>Gọi điện</Text>
             </View>
@@ -103,9 +120,9 @@ class InfoStudentComponent extends React.Component {
           <TouchableOpacity
             onPress={() =>
               this.props.navigation.navigate('SaveRegister', {
-                name: this.props.navigation.getParam('name'),
-                phone: this.props.navigation.getParam('phone'),
-                email: this.props.navigation.getParam('email'),
+                name: name,
+                phone: phone,
+                email: email,
               })
             }>
             <View style={styles.essentialButton}>
@@ -119,6 +136,16 @@ class InfoStudentComponent extends React.Component {
           </TouchableOpacity>
         </View>
         <View style={{flex: 1}}>{this.props.tabComponent}</View>
+        <CallRegisterModal
+          isVisible={this.state.callModalVisible}
+          onSwipeComplete={this.toggleCallModal}
+          imageSource={avatar_url}
+          email={email}
+          changeCallStatus={this.props.changeCallStatus}
+          student_id={this.props.student_id}
+          token={this.props.token}
+          errorChangeCallStatus={this.props.errorChangeCallStatus}
+        />
       </View>
     );
   }

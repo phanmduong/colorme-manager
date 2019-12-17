@@ -77,6 +77,29 @@ class InfoStudentContainer extends React.Component {
     this.props.infoStudentTabActions.tabHistoryCollectMoney();
   };
 
+  changeCallStatus = (
+    callStatus,
+    studentId,
+    telecallId,
+    genId,
+    note,
+    callerId,
+    appointmentPayment,
+    dateTest,
+  ) => {
+    this.props.infoStudentActions.changeCallStatus(
+      callStatus,
+      studentId,
+      telecallId,
+      genId,
+      note,
+      callerId,
+      appointmentPayment,
+      dateTest,
+      this.props.token,
+    );
+  };
+
   render() {
     return (
       <InfoStudentComponent
@@ -90,6 +113,10 @@ class InfoStudentContainer extends React.Component {
         historyCollectMoneyGradient={this.props.historyCollectMoney.gradient}
         historyCollectMoneyTextColor={this.props.historyCollectMoney.textColor}
         tabComponent={this.props.tabComponent}
+        token={this.props.token}
+        student_id={this.props.student_id}
+        changeCallStatus={this.changeCallStatus}
+        errorChangeCallStatus={this.props.errorChangeCallStatus}
         tabRegisters={() => {
           this.tabRegisters();
         }}
@@ -109,11 +136,14 @@ class InfoStudentContainer extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    token: state.login.token,
+    student_id: state.infoStudent.studentId,
     registers: state.infoStudentTab.registers,
     historyCalls: state.infoStudentTab.historyCalls,
     progress: state.infoStudentTab.progress,
     historyCollectMoney: state.infoStudentTab.historyCollectMoney,
     tabComponent: state.infoStudentTab.tabComponent,
+    errorChangeCallStatus: state.infoStudent.errorChangeCallStatus,
   };
 }
 

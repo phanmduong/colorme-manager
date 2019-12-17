@@ -152,8 +152,9 @@ class ListItemStudent extends React.Component {
               this.props.setStudentId(studentId);
               this.props.navigation.navigate('InfoStudent', {
                 name: name,
+                email: email,
+                phone: phone,
                 avatar_url: avatar_url,
-
               });
             }}>
             <View style={styles.containerAll}>

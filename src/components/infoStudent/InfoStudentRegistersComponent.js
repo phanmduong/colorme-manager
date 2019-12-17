@@ -6,16 +6,25 @@ import {
   Dimensions,
   Text,
   TouchableOpacity,
+  Linking,
 } from 'react-native';
 import Spinkit from 'react-native-spinkit';
 import theme from '../../styles';
 import {getShortName} from '../../helper';
+import CallRegisterModal from './CallRegisterModal';
 var {height, width} = Dimensions.get('window');
 
 class InfoStudentRegistersComponent extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.state = {
+      callModalVisible: false,
+    };
   }
+
+  toggleCallModal = () => {
+    this.setState({callModalVisible: !this.state.callModalVisible});
+  };
 
   renderRegisters = () => {
     return this.props.registers.map(register => (
@@ -80,7 +89,11 @@ class InfoStudentRegistersComponent extends React.Component {
           </Text>
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              Linking.openURL(`tel:${register.phone}`);
+              this.toggleCallModal();
+            }}>
             <View style={styles.button}>
               <Text style={{fontSize: 16}}>Gọi điện</Text>
             </View>
@@ -96,6 +109,16 @@ class InfoStudentRegistersComponent extends React.Component {
             </View>
           </TouchableOpacity>
         </View>
+        <CallRegisterModal
+          isVisible={this.state.callModalVisible}
+          onSwipeComplete={this.toggleCallModal}
+          imageSource={register.avatar_url}
+          email={register.email}
+          changeCallStatus={this.props.changeCallStatus}
+          student_id={register.student_id}
+          token={this.props.token}
+          errorChangeCallStatus={this.props.errorChangeCallStatus}
+        />
       </View>
     ));
   };

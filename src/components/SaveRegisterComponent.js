@@ -600,7 +600,7 @@ class SaveRegisterComponent extends React.Component {
                   <View style={{marginTop: 30}}>
                     <Text style={styles.titleForm}>Ngày sinh</Text>
                     <TouchableOpacity
-                      style={[styles.inputContainer, {marginRight: 10}]}
+                      style={styles.inputContainer}
                       onPress={this.openDatePicker}>
                       <Text
                         style={{

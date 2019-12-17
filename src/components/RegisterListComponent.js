@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Dimensions,
-  TouchableOpacity,
-  ScrollView,
-  Image,
-  RefreshControl,
-} from 'react-native';
+import {Dimensions, TouchableOpacity} from 'react-native';
 import {Container, Button, View, List, Text} from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../styles';
@@ -14,7 +8,6 @@ import ListItemRegisterStudent from './registerList/ListItemRegisterStudent';
 import Loading from './common/Loading';
 import Search from './common/Search';
 import LinearGradient from 'react-native-linear-gradient';
-import {getStatusBarHeight} from 'react-native-iphone-x-helper';
 
 var {height, width} = Dimensions.get('window');
 class RegisterListComponent extends React.Component {
@@ -109,6 +102,8 @@ class RegisterListComponent extends React.Component {
               onEndReached={this.props.loadDataRegisterList}
               onEndReachedThreshold={height / 2}
               dataArray={this.props.registerList}
+              onRefresh={this.props.onRefresh}
+              refreshing={this.props.refreshing}
               renderRow={(item, sectionID, rowID) => (
                 <ListItemRegisterStudent
                   {...this.props}
@@ -147,30 +142,11 @@ class RegisterListComponent extends React.Component {
 
   render() {
     return (
-      <ScrollView
-        style={{flex: 1, marginTop: getStatusBarHeight() + 10}}
-        contentContainerStyle={{flexGrow: 1}}
-        refreshControl={
-          <RefreshControl
-            refreshing={this.props.refreshing}
-            onRefresh={this.props.onRefresh}
-            titleColor={theme.mainColor}
-            title="Đang tải..."
-            tintColor="#d9534f"
-            colors={['#d9534f']}
-          />
-        }>
-        <View style={styles.headerContainer}>
-          <Image
-            source={{uri: this.props.avatar_url}}
-            style={styles.headerAva}
-          />
-          <Text style={styles.headerTitle}>Học viên</Text>
-        </View>
+      <View style={{flex: 1}}>
         {this.renderSearch()}
         {this.renderPicker()}
         {this.renderContent()}
-      </ScrollView>
+      </View>
     );
   }
 }
@@ -216,24 +192,6 @@ const styles = {
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  headerContainer: {
-    marginHorizontal: 16,
-    marginTop: 20,
-    marginBottom: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  headerTitle: {
-    color: 'black',
-    fontSize: 23,
-    fontWeight: 'bold',
-    marginLeft: 10,
-  },
-  headerAva: {
-    width: 35,
-    height: 35,
-    borderRadius: 18,
   },
 };
 

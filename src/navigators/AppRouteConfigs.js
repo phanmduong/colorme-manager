@@ -291,6 +291,7 @@ const TabDashboard = createStackNavigator(
     CollectMoney: {
       screen: CollectMoneyContainer,
       navigationOptions: () => ({
+        header: null,
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},
       }),
@@ -301,6 +302,7 @@ const TabDashboard = createStackNavigator(
     MoneyTransfer: {
       screen: MoneyTransferContainer,
       navigationOptions: () => ({
+        header: null,
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},
       }),
@@ -321,7 +323,6 @@ const TabRegisterList = createStackNavigator(
     RegisterList: {
       screen: RegisterListContainer,
       navigationOptions: () => ({
-        header: null,
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},
       }),
@@ -356,7 +357,6 @@ const TabWorkShift = createStackNavigator(
     WorkShiftRegister: {
       screen: WorkShiftRegisterContainer,
       navigationOptions: () => ({
-        header: null,
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},
       }),

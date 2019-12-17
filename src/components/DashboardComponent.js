@@ -163,13 +163,6 @@ class DashboardComponent extends React.Component {
             </View>
             <View style={styles.otherFeatureLine}>
               <CircleTab
-                iconImage={require('../../assets/img/icons8-time-card-90.png')}
-                title={'ĐK làm việc'}
-                onPress={() => {
-                  this.props.navigation.navigate('WorkShiftRegister');
-                }}
-              />
-              <CircleTab
                 iconImage={require('../../assets/img/icons8-rating-90.png')}
                 title={'Đánh giá'}
                 onPress={() => {
@@ -183,8 +176,6 @@ class DashboardComponent extends React.Component {
                   this.props.navigation.navigate('MakeupClass');
                 }}
               />
-            </View>
-            <View style={styles.otherFeatureLine}>
               <CircleTab
                 iconImage={require('../../assets/img/icons8-writer_male.png')}
                 title={'Tạo đăng ký'}
@@ -192,11 +183,20 @@ class DashboardComponent extends React.Component {
                   this.props.navigation.navigate('SaveRegister');
                 }}
               />
+            </View>
+            <View style={styles.otherFeatureLine}>
               <CircleTab
-                iconImage={require('../../assets/img/icons8-scholarship.png')}
-                title={'Học viên'}
+                iconImage={require('../../assets/img/icons8-cheap_2_filled.png')}
+                title={'Nộp tiền'}
                 onPress={() => {
-                  this.props.navigation.navigate('RegisterList');
+                  this.props.navigation.navigate('CollectMoney');
+                }}
+              />
+              <CircleTab
+                iconImage={require('../../assets/img/icons8-wallet_filled.png')}
+                title={'Chuyển tiền'}
+                onPress={() => {
+                  this.props.navigation.navigate('MoneyTransfer');
                 }}
               />
               <View style={{width: width / 3}} />

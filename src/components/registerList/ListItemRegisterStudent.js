@@ -123,13 +123,19 @@ class ListItemStudent extends React.Component {
 
   render() {
     let studentId = this.props.studentId;
+    let {name, avatar_url, email, phone} = this.props;
     if (Platform.OS === 'ios') {
       return (
         <View>
           <TouchableOpacity
             onPress={() => {
               this.props.setStudentId(studentId);
-              this.props.navigation.navigate('InfoStudent');
+              this.props.navigation.navigate('InfoStudent', {
+                name: name,
+                email: email,
+                phone: phone,
+                avatar_url: avatar_url,
+              });
             }}>
             <View style={styles.containerAll}>
               {this.content()}
@@ -144,7 +150,12 @@ class ListItemStudent extends React.Component {
           <TouchableNativeFeedback
             onPress={() => {
               this.props.setStudentId(studentId);
-              this.props.navigation.navigate('InfoStudent');
+              this.props.navigation.navigate('InfoStudent', {
+                name: name,
+                email: email,
+                phone: phone,
+                avatar_url: avatar_url,
+              });
             }}>
             <View style={styles.containerAll}>
               {this.content()}

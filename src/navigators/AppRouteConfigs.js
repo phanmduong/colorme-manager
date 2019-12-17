@@ -218,13 +218,6 @@ const TabDashboard = createStackNavigator(
         headerTitleStyle: {color: 'black'},
       }),
     },
-    WorkShiftRegister: {
-      screen: WorkShiftRegisterContainer,
-      navigationOptions: () => ({
-        headerTintColor: 'black',
-        headerTitleStyle: {color: 'black'},
-      }),
-    },
     EditStoreMeeting: {
       screen: EditStoreMeetingContainer,
       navigationOptions: () => ({
@@ -255,20 +248,6 @@ const TabDashboard = createStackNavigator(
     },
     TeachingRatingDuplicate: {
       screen: TeachingRatingDuplicateContainer,
-      navigationOptions: () => ({
-        headerTintColor: 'black',
-        headerTitleStyle: {color: 'black'},
-      }),
-    },
-    ListDetailShiftsRegistered: {
-      screen: ListDetailShiftsRegisteredContainer,
-      navigationOptions: () => ({
-        headerTintColor: 'black',
-        headerTitleStyle: {color: 'black'},
-      }),
-    },
-    DetailShifts: {
-      screen: DetailShiftsContainer,
       navigationOptions: () => ({
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},
@@ -309,19 +288,6 @@ const TabDashboard = createStackNavigator(
         headerTitleStyle: {color: 'black'},
       }),
     },
-  },
-  {
-    defaultNavigationOptions: {
-      headerStyle: {
-        borderBottomWidth: 0,
-        color: 'blue',
-      },
-    },
-  },
-);
-
-const TabCollectMoney = createStackNavigator(
-  {
     CollectMoney: {
       screen: CollectMoneyContainer,
       navigationOptions: () => ({
@@ -333,16 +299,78 @@ const TabCollectMoney = createStackNavigator(
     StudentRegisterClass: {
       screen: StudentRegisterClassContainer,
     },
-  },
-  navigationOptionsDefault,
-);
-
-const TabMoneyTransfer = createStackNavigator(
-  {
     MoneyTransfer: {
       screen: MoneyTransferContainer,
       navigationOptions: () => ({
         header: null,
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+  },
+  {
+    defaultNavigationOptions: {
+      headerStyle: {
+        borderBottomWidth: 0,
+        color: 'blue',
+      },
+    },
+  },
+);
+
+const TabRegisterList = createStackNavigator(
+  {
+    RegisterList: {
+      screen: RegisterListContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    SaveRegister: {
+      screen: SaveRegisterContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    InfoStudent: {
+      screen: InfoStudentContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    InfoStudentRegister: {
+      screen: InfoStudentRegistersContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+  },
+  navigationOptionsDefault,
+);
+
+const TabWorkShift = createStackNavigator(
+  {
+    WorkShiftRegister: {
+      screen: WorkShiftRegisterContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    ListDetailShiftsRegistered: {
+      screen: ListDetailShiftsRegisteredContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    DetailShifts: {
+      screen: DetailShiftsContainer,
+      navigationOptions: () => ({
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},
       }),
@@ -380,21 +408,21 @@ const DashboardMain = createBottomTabNavigator(
         ),
       }),
     },
-    TabCollectMoney: {
-      screen: TabCollectMoney,
+    TabRegisterList: {
+      screen: TabRegisterList,
       navigationOptions: ({navigation}) => ({
         tabBarLabel: 'Nộp tiền',
         tabBarIcon: ({tintColor}) => (
-          <TabIcon nameIcon="material|attach-money" color={tintColor} />
+          <TabIcon nameIcon="fontawesome|graduation-cap" color={tintColor} />
         ),
       }),
     },
-    TabMoneyTransfer: {
-      screen: TabMoneyTransfer,
+    TabWorkShift: {
+      screen: TabWorkShift,
       navigationOptions: ({navigation}) => ({
         tabBarLabel: 'Chuyển tiền',
         tabBarIcon: ({tintColor}) => (
-          <TabIcon nameIcon="entypo|wallet" color={tintColor} />
+          <TabIcon nameIcon="materialCommunity|calendar" color={tintColor} />
         ),
       }),
     },

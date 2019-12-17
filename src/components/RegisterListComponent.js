@@ -119,6 +119,7 @@ class RegisterListComponent extends React.Component {
                   money={item.money}
                   studentId={item.student_id}
                   setStudentId={this.props.setStudentId}
+                  avatar_url={item.avatar_url}
                 />
               )}
               renderFooter={() => {

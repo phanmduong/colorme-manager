@@ -47,3 +47,62 @@ function loadRegistersError() {
     errorRegisters: true,
   };
 }
+
+export function changeCallStatus(
+  callStatus,
+  studentId,
+  telecallId,
+  genId,
+  note,
+  callerId,
+  appointmentPayment,
+  dateTest,
+  token,
+) {
+  return function(dispatch) {
+    dispatch(beginLoadChangeCallStatus());
+    infoStudentApi
+      .changeCallStatusStudent(
+        callStatus,
+        studentId,
+        telecallId,
+        genId,
+        note,
+        callerId,
+        appointmentPayment,
+        dateTest,
+        token,
+      )
+      .then(function(res) {
+        dispatch(loadChangeCallStatusSuccessful());
+      })
+      .catch(error => {
+        dispatch(loadChangeCallStatusError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadChangeCallStatus() {
+  return {
+    type: types.BEGIN_LOAD_CHANGE_CALL_STATUS,
+    isLoadingChangeCallStatus: true,
+    errorChangeCallStatus: false,
+  };
+}
+
+function loadChangeCallStatusSuccessful() {
+  return {
+    type: types.LOAD_CHANGE_CALL_STATUS_SUCCESSFUL,
+    isLoadingChangeCallStatus: false,
+    errorChangeCallStatus: false,
+  };
+}
+
+function loadChangeCallStatusError() {
+  return {
+    type: types.LOAD_CHANGE_CALL_STATUS_ERROR,
+    isLoadingChangeCallStatus: false,
+    errorChangeCallStatus: true,
+  };
+}

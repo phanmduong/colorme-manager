@@ -113,7 +113,7 @@ class InfoStudentComponent extends React.Component {
               Linking.openURL(`tel:${phone}`);
               this.toggleCallModal();
             }}>
-            <View style={styles.essentialButton}>
+            <View style={[styles.essentialButton, {marginLeft: 15}]}>
               <Text style={{fontSize: 16}}>Gọi điện</Text>
             </View>
           </TouchableOpacity>
@@ -125,12 +125,12 @@ class InfoStudentComponent extends React.Component {
                 email: email,
               })
             }>
-            <View style={styles.essentialButton}>
+            <View style={[styles.essentialButton, {marginLeft: 10}]}>
               <Text style={{fontSize: 16}}>Đăng ký</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity>
-            <View style={styles.essentialButton}>
+            <View style={[styles.essentialButton, {marginLeft: 10}]}>
               <Text style={{fontSize: 16}}>▼</Text>
             </View>
           </TouchableOpacity>
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
   tabContainer: {
     marginTop: 5,
     flexDirection: 'row',
-    paddingHorizontal: 10,
+    paddingHorizontal: 16,
   },
   gradientSize: {
     justifyContent: 'center',
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   },
   essentialContainer: {
     flexDirection: 'row',
-    marginHorizontal: 10,
+    marginHorizontal: 16,
     marginVertical: 20,
   },
   starContainer: {
@@ -185,7 +185,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 18,
     borderRadius: 8,
-    marginLeft: 10,
   },
 });
 

@@ -38,76 +38,88 @@ class InfoStudentRegistersComponent extends React.Component {
             {register.class.name}
           </Text>
         </View>
-        <View style={styles.containerSubTitle}>
-          {register.saler ? (
-            <View
-              style={{
-                ...styles.card,
-                ...{
-                  backgroundColor:
-                    !register.saler.color || register.saler.color === ''
-                      ? theme.processColor1
-                      : '#' + register.saler.color,
-                },
-              }}>
-              <Text style={styles.saler}>
-                {getShortName(register.saler.name)}
+        <View style={{flexDirection: 'row'}}>
+          <View style={{width: 37, height: 37}} />
+          <View style={{marginLeft: 15, flex: 1}}>
+            <View style={styles.containerSubTitle}>
+              {register.saler ? (
+                <View
+                  style={{
+                    ...styles.card,
+                    ...{
+                      backgroundColor:
+                        !register.saler.color || register.saler.color === ''
+                          ? theme.processColor1
+                          : '#' + register.saler.color,
+                    },
+                  }}>
+                  <Text style={styles.saler}>
+                    {getShortName(register.saler.name)}
+                  </Text>
+                </View>
+              ) : (
+                <View />
+              )}
+              {register.campaign ? (
+                <View
+                  style={{
+                    ...styles.card,
+                    ...{
+                      backgroundColor:
+                        !register.campaign.color ||
+                        register.campaign.color === ''
+                          ? theme.processColor1
+                          : '#' + register.campaign.color,
+                      marginLeft: 5,
+                    },
+                  }}>
+                  <Text style={styles.campaign}>
+                    {register.campaign.name.trim()}
+                  </Text>
+                </View>
+              ) : (
+                <View />
+              )}
+            </View>
+            <View>
+              <Text
+                numberOfLines={1}
+                style={{paddingTop: 2, flex: 1, flexWrap: 'wrap'}}>
+                {register.class.study_time}
+              </Text>
+              <Text
+                numberOfLines={1}
+                style={{paddingTop: 2, flex: 1, flexWrap: 'wrap'}}>
+                {register.class.description}
+              </Text>
+              <Text
+                numberOfLines={1}
+                style={{paddingTop: 2, flex: 1, flexWrap: 'wrap'}}>
+                {register.class.room} - {register.class.base}
               </Text>
             </View>
-          ) : (
-            <View />
-          )}
-          {register.campaign ? (
-            <View
-              style={{
-                ...styles.card,
-                ...{
-                  backgroundColor:
-                    !register.campaign.color || register.campaign.color === ''
-                      ? theme.processColor1
-                      : '#' + register.campaign.color,
-                  marginLeft: 5,
-                },
-              }}>
-              <Text style={styles.campaign}>
-                {register.campaign.name.trim()}
-              </Text>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                onPress={() => {
+                  Linking.openURL(`tel:${register.phone}`);
+                  this.toggleCallModal();
+                }}>
+                <View style={styles.button}>
+                  <Text style={{fontSize: 16}}>Gọi điện</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <View style={[{marginLeft: 10}, styles.button]}>
+                  <Text style={{fontSize: 16}}>Nộp học phí</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <View style={[{marginLeft: 10}, styles.button]}>
+                  <Text style={{fontSize: 16}}>▼</Text>
+                </View>
+              </TouchableOpacity>
             </View>
-          ) : (
-            <View />
-          )}
-        </View>
-        <View style={{marginLeft: 55}}>
-          <Text numberOfLines={1} style={{paddingTop: 2}}>
-            {register.class.study_time}
-          </Text>
-          <Text numberOfLines={1} style={{paddingTop: 2}}>
-            {register.class.description}
-          </Text>
-          <Text numberOfLines={1} style={{paddingTop: 2}}>
-            {register.class.room} - {register.class.base}
-          </Text>
-        </View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            onPress={() => {
-              Linking.openURL(`tel:${register.phone}`);
-              this.toggleCallModal();
-            }}>
-            <View style={styles.button}>
-              <Text style={{fontSize: 16}}>Gọi điện</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <View style={[{marginLeft: 10}, styles.button]}>
-              <Text style={{fontSize: 16}}>Nộp học phí</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <View style={[{marginLeft: 10}, styles.button]}>
-              <Text style={{fontSize: 16}}>▼</Text>
-            </View>
-          </TouchableOpacity>
+          </View>
         </View>
         <CallRegisterModal
           isVisible={this.state.callModalVisible}
@@ -154,7 +166,7 @@ const styles = {
     alignItems: 'center',
   },
   listItemContainer: {
-    marginHorizontal: 10,
+    marginHorizontal: 16,
     marginVertical: 10,
   },
   classAva: {
@@ -170,7 +182,6 @@ const styles = {
   containerSubTitle: {
     flexDirection: 'row',
     marginBottom: 10,
-    marginLeft: 55,
   },
   card: {
     paddingVertical: 4,
@@ -193,7 +204,7 @@ const styles = {
   buttonContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginLeft: 55,
+    // marginLeft: 55,
     marginTop: 20,
   },
   button: {

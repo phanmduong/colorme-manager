@@ -75,7 +75,7 @@ class CallRegisterModal extends React.Component {
       } else {
         Alert.alert('Thông báo', 'Ghi nhận thành công');
       }
-    }, 800);
+    }, 600);
   };
 
   render() {

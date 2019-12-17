@@ -112,6 +112,7 @@ class RegisterListContainer extends React.Component {
           segmentActive={1}
           setStudentId={this.setStudentId}
           autoFocus={autoFocus}
+          avatar_url={this.props.user.avatar_url}
         />
       );
     } else {
@@ -131,6 +132,7 @@ class RegisterListContainer extends React.Component {
           segmentActive={2}
           setStudentId={this.setStudentId}
           autoFocus={autoFocus}
+          avatar_url={this.props.user.avatar_url}
         />
       );
     }
@@ -141,6 +143,7 @@ function mapStateToProps(state) {
   return {
     userId: state.login.user.id,
     token: state.login.token,
+    user: state.login.user,
     registerListDataAll: state.registerList.registerListDataAll,
     isLoadingAll: state.registerList.isLoadingAll,
     errorAll: state.registerList.errorAll,

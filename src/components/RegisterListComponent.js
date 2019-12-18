@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, TouchableOpacity} from 'react-native';
+import {Dimensions, TouchableOpacity, ScrollView} from 'react-native';
 import {Container, Button, View, List, Text} from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../styles';
@@ -66,6 +66,10 @@ class RegisterListComponent extends React.Component {
     </View>
   );
 
+  headerComponent = () => (
+    <View style={{height: 50, width: 50, backgroundColor: 'red'}} />
+  );
+
   renderContent() {
     if (this.props.isLoading && this.props.registerList.length <= 0) {
       return <Loading size={width / 8} />;
@@ -104,6 +108,7 @@ class RegisterListComponent extends React.Component {
               dataArray={this.props.registerList}
               onRefresh={this.props.onRefresh}
               refreshing={this.props.refreshing}
+              scrollEnabled={false}
               renderRow={(item, sectionID, rowID) => (
                 <ListItemRegisterStudent
                   {...this.props}
@@ -142,11 +147,11 @@ class RegisterListComponent extends React.Component {
 
   render() {
     return (
-      <View style={{flex: 1}}>
+      <ScrollView style={{flex: 1}} contentContainerStyle={{flexGrow: 1}}>
         {this.renderSearch()}
         {this.renderPicker()}
         {this.renderContent()}
-      </View>
+      </ScrollView>
     );
   }
 }

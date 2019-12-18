@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   RefreshControl,
   Alert,
+  Image,
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import WorkShiftRegisterWeek from './workShiftRegister/WorkShiftRegisterWeek';
@@ -17,6 +18,7 @@ import {Button, Text} from 'native-base';
 import * as alert from '../constants/alert';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import WorkShiftRegisterHoursReviewModal from './workShiftRegister/WorkShiftRegisterHoursReviewModal';
+import {getStatusBarHeight} from 'react-native-iphone-x-helper';
 var {height, width} = Dimensions.get('window');
 
 class WorkShiftRegisterComponent extends React.Component {
@@ -291,7 +293,7 @@ class WorkShiftRegisterComponent extends React.Component {
       }
 
       return (
-        <View style={{flex: 1}}>
+        <View style={{flex: 1, marginTop: getStatusBarHeight() + 10}}>
           <ScrollView
             refreshControl={
               <RefreshControl
@@ -303,6 +305,13 @@ class WorkShiftRegisterComponent extends React.Component {
                 colors={['#d9534f']}
               />
             }>
+            <View style={styles.headerContainer}>
+              <Image
+                source={{uri: this.props.avatar_url}}
+                style={styles.headerAva}
+              />
+              <Text style={styles.headerTitle}>Đăng ký làm việc</Text>
+            </View>
             <View style={styles.containerPicker}>
               <CustomPicker
                 options={courseOptions}
@@ -504,6 +513,24 @@ const styles = {
     height: 8,
     borderRadius: 6,
     width: width - 20,
+  },
+  headerContainer: {
+    marginHorizontal: 16,
+    marginTop: 20,
+    marginBottom: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerTitle: {
+    color: 'black',
+    fontSize: 23,
+    fontWeight: 'bold',
+    marginLeft: 10,
+  },
+  headerAva: {
+    width: 35,
+    height: 35,
+    borderRadius: 18,
   },
 };
 

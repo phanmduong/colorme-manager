@@ -152,7 +152,7 @@ export default {
 
   // Header
   toolbarBtnColor: '#fff',
-  toolbarDefaultBg: theme.mainColor,
+  toolbarDefaultBg: theme.colorSubTitle,
   toolbarHeight: platform === 'ios' ? 76 : 56,
   toolbarIconSize: platform === 'ios' ? 20 : 22,
   toolbarSearchIconSize: platform === 'ios' ? 20 : 23,
@@ -161,7 +161,7 @@ export default {
   toolbarInverseBg: '#222',
   toolbarTextColor: '#fff',
   toolbarDefaultBorder: theme.mainColor,
-  iosStatusbar: 'dark-content',
+  iosStatusbar: platform === 'ios' ? 'dark-content' : 'light-content',
   get statusBarColor() {
     return color(this.toolbarDefaultBg)
       .darken(0.2)

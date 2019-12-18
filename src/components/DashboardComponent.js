@@ -18,7 +18,7 @@ import MeetingComponent from '../containers/meeting/MeetingComponent';
 import theme from '../styles';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as alert from '../constants/alert';
-import {getStatusBarHeight} from 'react-native-iphone-x-helper';
+import {getStatusBarHeight, isIphoneX} from 'react-native-iphone-x-helper';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 class DashboardComponent extends React.Component {
@@ -51,7 +51,12 @@ class DashboardComponent extends React.Component {
     const {refreshing} = this.props.store;
     const {navigation} = this.props;
     return (
-      <View style={{flex: 1, marginTop: getStatusBarHeight() + 10}}>
+      <View
+        style={
+          isIphoneX()
+            ? {flex: 1, marginTop: getStatusBarHeight() + 10}
+            : {flex: 1, marginTop: 10}
+        }>
         <ScrollView
           refreshControl={
             <RefreshControl

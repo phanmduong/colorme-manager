@@ -24,7 +24,7 @@ import * as alert from '../constants/alert';
 import Loading from '../components/common/Loading';
 import theme from '../styles';
 import Icon from './common/Icon';
-import {getStatusBarHeight} from 'react-native-iphone-x-helper';
+import {getStatusBarHeight, isIphoneX} from 'react-native-iphone-x-helper';
 
 class ClassComponent extends React.Component {
   constructor(props, context) {
@@ -55,7 +55,12 @@ class ClassComponent extends React.Component {
     } else {
       if (this.props.error || this.props.classData.length <= 0) {
         return (
-          <Container style={{flex: 1, marginTop: getStatusBarHeight() + 10}}>
+          <Container
+            style={
+              isIphoneX()
+                ? {flex: 1, marginTop: getStatusBarHeight() + 10}
+                : {flex: 1, marginTop: 10}
+            }>
             <View style={styles.headerContainer}>
               <Image
                 source={{uri: this.props.avatar_url}}
@@ -83,7 +88,12 @@ class ClassComponent extends React.Component {
         );
       } else {
         return (
-          <View style={{flex: 1, marginTop: getStatusBarHeight() + 10}}>
+          <View
+            style={
+              isIphoneX()
+                ? {flex: 1, marginTop: getStatusBarHeight() + 10}
+                : {flex: 1, marginTop: 10}
+            }>
             <List
               refreshControl={
                 <RefreshControl

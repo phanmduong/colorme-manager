@@ -18,7 +18,7 @@ import {Button, Text} from 'native-base';
 import * as alert from '../constants/alert';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import WorkShiftRegisterHoursReviewModal from './workShiftRegister/WorkShiftRegisterHoursReviewModal';
-import {getStatusBarHeight} from 'react-native-iphone-x-helper';
+import {isIphoneX, getStatusBarHeight} from 'react-native-iphone-x-helper';
 var {height, width} = Dimensions.get('window');
 
 class WorkShiftRegisterComponent extends React.Component {
@@ -293,7 +293,12 @@ class WorkShiftRegisterComponent extends React.Component {
       }
 
       return (
-        <View style={{flex: 1, marginTop: getStatusBarHeight() + 10}}>
+        <View
+          style={
+            isIphoneX()
+              ? {flex: 1, marginTop: getStatusBarHeight() + 10}
+              : {flex: 1, marginTop: 10}
+          }>
           <ScrollView
             refreshControl={
               <RefreshControl

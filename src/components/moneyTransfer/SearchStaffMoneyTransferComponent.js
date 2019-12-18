@@ -93,13 +93,7 @@ class SearchStaffMoneyTransferComponent extends React.Component {
 
   render() {
     return (
-      <ScrollView
-        style={{flex: 1, marginTop: getStatusBarHeight() + 10}}
-        contentContainerStyle={{flexGrow: 1}}>
-        <View style={styles.headerContainer}>
-          <Image source={{uri: this.props.avatar_url}} style={styles.headerAva} />
-          <Text style={styles.headerTitle}>Chuyển tiền</Text>
-        </View>
+      <ScrollView style={{flex: 1}} contentContainerStyle={{flexGrow: 1}}>
         {this.renderSearch()}
         {this.renderContent()}
       </ScrollView>

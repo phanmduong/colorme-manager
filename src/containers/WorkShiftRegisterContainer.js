@@ -101,6 +101,7 @@ class WorkShiftRegisterContainer extends React.Component {
         onSelectGenId={this.onSelectGenId}
         errorWorkShiftRegister={this.props.errorWorkShiftRegister}
         user={this.props.user}
+        avatar_url={this.props.user.avatar_url}
         onRefresh={() =>
           this.loadDataWorkShiftRegister(
             this.props.selectedBaseId,

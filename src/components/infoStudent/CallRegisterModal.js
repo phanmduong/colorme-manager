@@ -82,6 +82,7 @@ class CallRegisterModal extends React.Component {
     return (
       <Modal
         isVisible={this.props.isVisible}
+        onBackdropPress={this.props.onSwipeComplete}
         onSwipeComplete={() => {
           this.reset();
           this.props.onSwipeComplete();
@@ -116,7 +117,7 @@ class CallRegisterModal extends React.Component {
                 }}>
                 {this.state.appointmentDate !== ''
                   ? this.state.appointmentDate.format('DD-MM-YYYY')
-                  : ''}
+                  : 'DD-MM-YYYY'}
               </Text>
             </TouchableOpacity>
           </View>
@@ -131,7 +132,7 @@ class CallRegisterModal extends React.Component {
                 }}>
                 {this.state.testDate !== ''
                   ? this.state.testDate.format('DD-MM-YYYY')
-                  : ''}
+                  : 'DD-MM-YYYY'}
               </Text>
             </TouchableOpacity>
           </View>

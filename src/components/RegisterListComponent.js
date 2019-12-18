@@ -22,7 +22,7 @@ class RegisterListComponent extends React.Component {
         placeholder="Tìm kiếm (Email, tên, số điện thoại)"
         onChangeText={updateFormAndLoadDataSearch}
         value={search}
-        autoFocus={true}
+        autoFocus={this.props.autoFocus}
       />
     );
   }

@@ -106,3 +106,49 @@ function loadChangeCallStatusError() {
     errorChangeCallStatus: true,
   };
 }
+
+export function submitMoney(
+  register_id,
+  money,
+  code,
+  note,
+  payment_method,
+  token,
+) {
+  return function(dispatch) {
+    dispatch(beginLoadSubmitMoney());
+    infoStudentApi
+      .submitMoney(register_id, money, code, note, payment_method, token)
+      .then(function(res) {
+        dispatch(loadSubmitMoneySuccessful());
+      })
+      .catch(error => {
+        dispatch(loadSubmitMoneyError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadSubmitMoney() {
+  return {
+    type: types.BEGIN_LOAD_SUBMIT_MONEY,
+    isLoadingSubmitMoney: true,
+    errorSubmitMoney: false,
+  };
+}
+
+function loadSubmitMoneySuccessful() {
+  return {
+    type: types.LOAD_SUBMIT_MONEY_SUCCESSFUL,
+    isLoadingSubmitMoney: false,
+    errorSubmitMoney: false,
+  };
+}
+
+function loadSubmitMoneyError() {
+  return {
+    type: types.LOAD_SUBMIT_MONEY_ERROR,
+    isLoadingSubmitMoney: false,
+    errorSubmitMoney: true,
+  };
+}

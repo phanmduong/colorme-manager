@@ -7,6 +7,7 @@ import {
   Dimensions,
   TouchableOpacity,
   Alert,
+  ScrollView,
 } from 'react-native';
 import Modal from 'react-native-modal';
 import DateTimePicker from 'react-native-modal-datetime-picker';
@@ -83,112 +84,113 @@ class CallRegisterModal extends React.Component {
       <Modal
         isVisible={this.props.isVisible}
         onBackdropPress={this.props.onSwipeComplete}
-        onSwipeComplete={() => {
-          this.reset();
-          this.props.onSwipeComplete();
-        }}
-        swipeDirection={'down'}
         style={{margin: 0, justifyContent: 'flex-end'}}>
         <View style={styles.modal}>
-          <View style={{alignItems: 'center'}}>
-            <Image
-              source={{uri: this.props.imageSource}}
-              style={{width: 100, height: 100, borderRadius: 50}}
-            />
-            <Text style={{marginTop: 25, fontSize: 16}}>
-              {this.props.email}
-            </Text>
-          </View>
-          <TextInput
-            multiline={true}
-            placeholder={'Ghi chú'}
-            style={styles.note}
-            onChangeText={note => this.setState({note})}
-            value={this.state.note}
-          />
-          <View style={{marginTop: 25, marginHorizontal: 16}}>
-            <Text style={{fontSize: 16}}>Hẹn nộp tiền</Text>
-            <TouchableOpacity
-              style={styles.dateContainer}
-              onPress={() => this.openAppointmentDatePicker()}>
-              <Text
-                style={{
-                  fontSize: 16,
-                }}>
-                {this.state.appointmentDate !== ''
-                  ? this.state.appointmentDate.format('DD-MM-YYYY')
-                  : 'DD-MM-YYYY'}
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={{alignItems: 'center', paddingTop: 30}}>
+              <Image
+                source={{uri: this.props.imageSource}}
+                style={{width: 100, height: 100, borderRadius: 50}}
+              />
+              <Text style={{marginTop: 25, fontSize: 16}}>
+                {this.props.email}
               </Text>
-            </TouchableOpacity>
-          </View>
-          <View style={{marginTop: 25, marginHorizontal: 16}}>
-            <Text style={{fontSize: 16}}>Hẹn kiểm tra</Text>
-            <TouchableOpacity
-              style={styles.dateContainer}
-              onPress={() => this.openTestDatePicker()}>
-              <Text
-                style={{
-                  fontSize: 16,
-                }}>
-                {this.state.testDate !== ''
-                  ? this.state.testDate.format('DD-MM-YYYY')
-                  : 'DD-MM-YYYY'}
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.callContainer}>
-            <TouchableOpacity onPress={() => this.changeCallStatus(0)}>
-              <View
-                style={[
-                  styles.callButton,
-                  {
-                    backgroundColor: '#F54335',
-                  },
-                ]}>
-                <Text style={{color: 'white', fontSize: 16}}>Thất bại</Text>
-                <Image
-                  source={require('../../../assets/img/icons8-missed_call_filled.png')}
-                  style={{width: 25, height: 25}}
-                />
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => this.changeCallStatus(1)}>
-              <View
-                style={[
-                  styles.callButton,
-                  {
-                    backgroundColor: '#2ACC4C',
-                  },
-                ]}>
-                <Text style={{color: 'white', fontSize: 16}}>Thành công</Text>
-                <Image
-                  source={require('../../../assets/img/icons8-phone_filled.png')}
-                  style={{width: 25, height: 25}}
-                />
-              </View>
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity
-            onPress={() => {
-              this.reset();
-              this.props.onSwipeComplete();
-            }}>
-            <View style={{marginTop: 25, alignItems: 'center'}}>
-              <Text style={{fontSize: 16}}>Hủy</Text>
             </View>
-          </TouchableOpacity>
-          <DateTimePicker
-            isVisible={this.state.isAppointmentDatePickerVisible}
-            onConfirm={this.handleAppointmentDatePicked}
-            onCancel={() =>
-              this.setState({isAppointmentDatePickerVisible: false})
-            }
-          />
-          <DateTimePicker
-            isVisible={this.state.isTestDatePickerVisible}
-            onConfirm={this.handleTestDatePicked}
-            onCancel={() => this.setState({isTestDatePickerVisible: false})}
-          />
+            <TextInput
+              multiline={true}
+              placeholder={'Ghi chú'}
+              style={styles.note}
+              onChangeText={note => this.setState({note})}
+              value={this.state.note}
+            />
+            <View style={{marginTop: 25}}>
+              <Text style={{fontSize: 16}}>Hẹn nộp tiền</Text>
+              <TouchableOpacity
+                style={styles.dateContainer}
+                onPress={() => this.openAppointmentDatePicker()}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                  }}>
+                  {this.state.appointmentDate !== ''
+                    ? this.state.appointmentDate.format('DD-MM-YYYY')
+                    : 'DD-MM-YYYY'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{marginTop: 25}}>
+              <Text style={{fontSize: 16}}>Hẹn kiểm tra</Text>
+              <TouchableOpacity
+                style={styles.dateContainer}
+                onPress={() => this.openTestDatePicker()}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                  }}>
+                  {this.state.testDate !== ''
+                    ? this.state.testDate.format('DD-MM-YYYY')
+                    : 'DD-MM-YYYY'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.callContainer}>
+              <TouchableOpacity onPress={() => this.changeCallStatus(0)}>
+                <View
+                  style={[
+                    styles.callButton,
+                    {
+                      backgroundColor: '#F54335',
+                    },
+                  ]}>
+                  <Text style={{color: 'white', fontSize: 16}}>Thất bại</Text>
+                  <Image
+                    source={require('../../../assets/img/icons8-missed_call_filled.png')}
+                    style={{width: 25, height: 25}}
+                  />
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => this.changeCallStatus(1)}>
+                <View
+                  style={[
+                    styles.callButton,
+                    {
+                      backgroundColor: '#2ACC4C',
+                    },
+                  ]}>
+                  <Text style={{color: 'white', fontSize: 16}}>Thành công</Text>
+                  <Image
+                    source={require('../../../assets/img/icons8-phone_filled.png')}
+                    style={{width: 25, height: 25}}
+                  />
+                </View>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.onSwipeComplete();
+              }}>
+              <View
+                style={{
+                  marginTop: 25,
+                  alignItems: 'center',
+                  paddingBottom: 30,
+                }}>
+                <Text style={{fontSize: 16}}>Hủy</Text>
+              </View>
+            </TouchableOpacity>
+            <DateTimePicker
+              isVisible={this.state.isAppointmentDatePickerVisible}
+              onConfirm={this.handleAppointmentDatePicked}
+              onCancel={() =>
+                this.setState({isAppointmentDatePickerVisible: false})
+              }
+            />
+            <DateTimePicker
+              isVisible={this.state.isTestDatePickerVisible}
+              onConfirm={this.handleTestDatePicked}
+              onCancel={() => this.setState({isTestDatePickerVisible: false})}
+            />
+          </ScrollView>
         </View>
       </Modal>
     );
@@ -197,11 +199,11 @@ class CallRegisterModal extends React.Component {
 
 const styles = {
   modal: {
-    paddingTop: 30,
-    paddingBottom: 50,
+    height: 600,
     backgroundColor: 'white',
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
+    paddingHorizontal: 16,
   },
   dateContainer: {
     marginTop: 8,
@@ -215,7 +217,6 @@ const styles = {
   callContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginHorizontal: 16,
     marginTop: 35,
   },
   callButton: {
@@ -230,7 +231,6 @@ const styles = {
   note: {
     fontSize: 16,
     backgroundColor: '#F6F6F6',
-    marginHorizontal: 16,
     marginTop: 25,
     height: 100,
     paddingLeft: 10,

@@ -38,6 +38,21 @@ export function infoStudentReducer(state = initialState.infoStudent, action) {
         isLoadingChangeCallStatus: action.isLoadingChangeCallStatus,
         errorChangeCallStatus: action.errorChangeCallStatus,
       });
+    case type.BEGIN_LOAD_SUBMIT_MONEY:
+      return Object.assign({}, state, {
+        isLoadingSubmitMoney: action.isLoadingSubmitMoney,
+        errorSubmitMoney: action.errorSubmitMoney,
+      });
+    case type.LOAD_SUBMIT_MONEY_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isLoadingSubmitMoney: action.isLoadingSubmitMoney,
+        errorSubmitMoney: action.errorSubmitMoney,
+      });
+    case type.LOAD_SUBMIT_MONEY_ERROR:
+      return Object.assign({}, state, {
+        isLoadingSubmitMoney: action.isLoadingSubmitMoney,
+        errorSubmitMoney: action.errorSubmitMoney,
+      });
     default:
       return state;
   }

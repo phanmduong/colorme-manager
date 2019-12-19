@@ -40,6 +40,17 @@ class InfoStudentRegistersContainer extends React.Component {
     );
   };
 
+  submitMoney = (register_id, money, code, note, payment_method, token) => {
+    this.props.infoStudentActions.submitMoney(
+      register_id,
+      money,
+      code,
+      note,
+      payment_method,
+      token,
+    );
+  };
+
   render() {
     return (
       <InfoStudentRegistersComponent
@@ -48,6 +59,8 @@ class InfoStudentRegistersContainer extends React.Component {
         changeCallStatus={this.changeCallStatus}
         token={this.props.token}
         errorChangeCallStatus={this.props.errorChangeCallStatus}
+        submitMoney={this.submitMoney}
+        errorSubmitMoney={this.props.errorSubmitMoney}
       />
     );
   }
@@ -62,6 +75,8 @@ function mapStateToProps(state) {
     studentId: state.infoStudent.studentId,
     isLoadingChangeCallStatus: state.infoStudent.isLoadingChangeCallStatus,
     errorChangeCallStatus: state.infoStudent.errorChangeCallStatus,
+    isLoadingSubmitMoney: state.infoStudent.isLoadingSubmitMoney,
+    errorSubmitMoney: state.infoStudent.errorSubmitMoney,
   };
 }
 

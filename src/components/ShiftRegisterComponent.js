@@ -225,7 +225,12 @@ class ShiftRegisterComponent extends React.Component {
       }
 
       return (
-        <Container style={{flex: 1, marginTop: getStatusBarHeight() + 10}}>
+        <Container
+          style={
+            isIphoneX()
+              ? {flex: 1, marginTop: getStatusBarHeight() + 10}
+              : {flex: 1, marginTop: 10}
+          }>
           <ScrollView
             refreshControl={
               <RefreshControl

@@ -12,6 +12,7 @@ import Spinkit from 'react-native-spinkit';
 import theme from '../../styles';
 import {getShortName} from '../../helper';
 import CallRegisterModal from './CallRegisterModal';
+import SubmitMoneyModal from './SubmitMoneyModal';
 var {height, width} = Dimensions.get('window');
 
 class InfoStudentRegistersComponent extends React.Component {
@@ -19,11 +20,16 @@ class InfoStudentRegistersComponent extends React.Component {
     super(props, context);
     this.state = {
       callModalVisible: false,
+      moneyModalVisible: false,
     };
   }
 
   toggleCallModal = () => {
     this.setState({callModalVisible: !this.state.callModalVisible});
+  };
+
+  toggleMoneyModal = () => {
+    this.setState({moneyModalVisible: !this.state.moneyModalVisible});
   };
 
   renderRegisters = () => {
@@ -108,7 +114,7 @@ class InfoStudentRegistersComponent extends React.Component {
                   <Text style={{fontSize: 16}}>Gọi điện</Text>
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => this.toggleMoneyModal()}>
                 <View style={[{marginLeft: 10}, styles.button]}>
                   <Text style={{fontSize: 16}}>Nộp học phí</Text>
                 </View>
@@ -130,6 +136,23 @@ class InfoStudentRegistersComponent extends React.Component {
           student_id={register.student_id}
           token={this.props.token}
           errorChangeCallStatus={this.props.errorChangeCallStatus}
+        />
+        <SubmitMoneyModal
+          isVisible={this.state.moneyModalVisible}
+          onSwipeComplete={this.toggleMoneyModal}
+          class_icon={register.course_avatar_url}
+          avatar_url={register.avatar_url}
+          class={register.class.name}
+          name={register.name}
+          study_time={register.class.study_time}
+          description={register.class.description}
+          room={register.class.room}
+          base={register.class.base}
+          code={register.code}
+          token={this.props.token}
+          submitMoney={this.props.submitMoney}
+          register_id={register.id}
+          errorSubmitMoney={this.props.errorSubmitMoney}
         />
       </View>
     ));
@@ -204,7 +227,6 @@ const styles = {
   buttonContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    // marginLeft: 55,
     marginTop: 20,
   },
   button: {

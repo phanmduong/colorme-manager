@@ -277,6 +277,8 @@ export default {
     studentId: -1,
     isLoadingChangeCallStatus: false,
     errorChangeCallStatus: false,
+    isLoadingSubmitMoney: false,
+    errorSubmitMoney: false,
   },
   infoStudentTab: {
     registers: {

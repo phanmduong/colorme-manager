@@ -61,3 +61,21 @@ export function changeCallStatusStudent(
     date_test: dateTest,
   });
 }
+
+export function submitMoney(
+  register_id,
+  money,
+  code,
+  note,
+  payment_method,
+  token,
+) {
+  let url = env.MANAGE_API_URL + '/collect-money/pay-money?token=' + token;
+  return axios.post(url, {
+    register_id: register_id,
+    money: '' + money,
+    code: code,
+    note: note,
+    payment_method: payment_method,
+  });
+}

@@ -11,7 +11,7 @@ import ListItemRegisterStudent from './registerList/ListItemRegisterStudent';
 import Loading from './common/Loading';
 import Search from './common/Search';
 import LinearGradient from 'react-native-linear-gradient';
-import {getStatusBarHeight} from 'react-native-iphone-x-helper';
+import {getStatusBarHeight, isIphoneX} from 'react-native-iphone-x-helper';
 
 var {height, width} = Dimensions.get('window');
 class RegisterListComponent extends React.Component {
@@ -168,7 +168,12 @@ class RegisterListComponent extends React.Component {
 
   render() {
     return (
-      <View style={{flex: 1, marginTop: getStatusBarHeight() + 10}}>
+      <View
+        style={
+          isIphoneX()
+            ? {flex: 1, marginTop: getStatusBarHeight() + 10}
+            : {flex: 1, marginTop: 10}
+        }>
         {this.renderContent()}
       </View>
     );

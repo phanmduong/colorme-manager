@@ -120,7 +120,6 @@ class ListItemStudent extends React.Component {
                         !campaign.color || campaign.color === ''
                           ? theme.processColor1
                           : '#' + campaign.color,
-                      marginLeft: 5,
                     },
                   }}>
                   <Text style={styles.campaign}>{campaign.name.trim()}</Text>

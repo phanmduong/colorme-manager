@@ -76,6 +76,7 @@ class InfoStudentRegistersComponent extends React.Component {
                         register.campaign.color === ''
                           ? theme.processColor1
                           : '#' + register.campaign.color,
+                      marginLeft: 5,
                     },
                   }}>
                   <Text style={styles.campaign}>

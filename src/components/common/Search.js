@@ -3,9 +3,16 @@ import {Dimensions, TextInput} from 'react-native';
 import {View, Item, Input} from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const Search = ({onChangeText, placeholder, value, autoFocus}) => {
+const Search = ({
+  onChangeText,
+  placeholder,
+  value,
+  autoFocus,
+  extraStyle,
+  extraInputStyle,
+}) => {
   return (
-    <View style={styles.searchContainer}>
+    <View style={[styles.searchContainer, extraStyle]}>
       <Icon
         name={'ios-search'}
         color={'black'}
@@ -18,7 +25,7 @@ const Search = ({onChangeText, placeholder, value, autoFocus}) => {
         autoCapitalize="none"
         onChangeText={data => onChangeText(data)}
         value={value}
-        style={styles.searchInput}
+        style={[styles.searchInput, extraInputStyle]}
         clearButtonMode={'while-editing'}
         returnKeyType={'done'}
       />

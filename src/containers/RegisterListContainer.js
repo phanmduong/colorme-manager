@@ -57,7 +57,7 @@ class RegisterListContainer extends React.Component {
     this.props.registerListActions.refreshRegisterListMy(
       this.props.searchMy,
       this.props.token,
-      this.props.userId,
+      this.props.user.id,
     );
   };
 
@@ -74,7 +74,7 @@ class RegisterListContainer extends React.Component {
         this.props.token,
         this.props.currentPageMy + 1,
         this.props.searchMy,
-        this.props.userId,
+        this.props.user.id,
       );
     }
   }
@@ -82,7 +82,7 @@ class RegisterListContainer extends React.Component {
   updateFormAndLoadDataSearchMy(search) {
     this.props.registerListActions.updateFormAndLoadDataSearchMy(
       search,
-      this.props.userId,
+      this.props.user.id,
       this.props.token,
     );
   }
@@ -151,6 +151,7 @@ class RegisterListContainer extends React.Component {
           errorSubmitMoney={this.props.errorSubmitMoney}
           changeCallStatus={this.changeCallStatus}
           submitMoney={this.submitMoney}
+          user={this.props.user}
         />
       );
     } else {
@@ -175,6 +176,7 @@ class RegisterListContainer extends React.Component {
           errorSubmitMoney={this.props.errorSubmitMoney}
           changeCallStatus={this.changeCallStatus}
           submitMoney={this.submitMoney}
+          user={this.props.user}
         />
       );
     }
@@ -183,7 +185,7 @@ class RegisterListContainer extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    userId: state.login.user.id,
+    user: state.login.user,
     token: state.login.token,
     registerListDataAll: state.registerList.registerListDataAll,
     isLoadingAll: state.registerList.isLoadingAll,

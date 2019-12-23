@@ -330,6 +330,7 @@ const TabRegisterList = createStackNavigator(
     RegisterList: {
       screen: RegisterListContainer,
       navigationOptions: () => ({
+        header: null,
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},
       }),

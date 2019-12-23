@@ -45,8 +45,8 @@ class InfoStudentRegistersComponent extends React.Component {
           </Text>
         </View>
         <View style={{flexDirection: 'row'}}>
-          <View style={{width: 37, height: 37}} />
-          <View style={{marginLeft: 15, flex: 1}}>
+          <View style={styles.classAva} />
+          <View style={styles.infoContainer}>
             <View style={styles.containerSubTitle}>
               {register.saler ? (
                 <View
@@ -76,7 +76,6 @@ class InfoStudentRegistersComponent extends React.Component {
                         register.campaign.color === ''
                           ? theme.processColor1
                           : '#' + register.campaign.color,
-                      marginLeft: 5,
                     },
                   }}>
                   <Text style={styles.campaign}>
@@ -88,7 +87,9 @@ class InfoStudentRegistersComponent extends React.Component {
               )}
             </View>
             <View>
-              <Text numberOfLines={1} style={styles.classInfoContainer}>
+              <Text
+                numberOfLines={1}
+                style={[styles.classInfoContainer, {paddingTop: 0}]}>
                 {register.class.study_time}
               </Text>
               <Text numberOfLines={1} style={styles.classInfoContainer}>
@@ -220,6 +221,10 @@ const styles = {
     paddingTop: 2,
     flex: 1,
     flexWrap: 'wrap',
+  },
+  infoContainer: {
+    marginLeft: 15,
+    flex: 1,
   },
 };
 

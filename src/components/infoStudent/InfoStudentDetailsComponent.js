@@ -209,7 +209,7 @@ class InfoStudentDetailsComponent extends React.Component {
 
   uploadImage = imageField => {
     const options = {};
-    ImagePicker.launchImageLibrary(options, response => {
+    ImagePicker.showImagePicker(options, response => {
       if (response.uri) {
         let imageUri = response.uri;
         this.props.uploadImage(imageField, imageUri);
@@ -263,15 +263,7 @@ class InfoStudentDetailsComponent extends React.Component {
                   student: this.props.student,
                 })
               }>
-              <View
-                style={{
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  paddingHorizontal: 18,
-                  paddingVertical: 10,
-                  backgroundColor: '#F6F6F6',
-                  borderRadius: 8,
-                }}>
+              <View style={{}}>
                 <Text style={{fontSize: 16}}>Sửa thông tin</Text>
               </View>
             </TouchableOpacity>
@@ -366,16 +358,7 @@ class InfoStudentDetailsComponent extends React.Component {
               </TouchableOpacity>
             ) : (
               <TouchableOpacity onPress={() => this.uploadImage('image1')}>
-                <View
-                  style={{
-                    height: 300,
-                    borderWidth: 1,
-                    borderColor: '#9c9c9c',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: 8,
-                    borderStyle: 'dashed',
-                  }}>
+                <View style={styles.idContainer}>
                   <ScalableImage
                     source={require('../../../assets/img/icons8-user_folder_filled.png')}
                     width={40}
@@ -401,16 +384,7 @@ class InfoStudentDetailsComponent extends React.Component {
               </TouchableOpacity>
             ) : (
               <TouchableOpacity onPress={() => this.uploadImage('image2')}>
-                <View
-                  style={{
-                    height: 300,
-                    borderWidth: 1,
-                    borderColor: '#9c9c9c',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: 8,
-                    borderStyle: 'dashed',
-                  }}>
+                <View style={styles.idContainer}>
                   <ScalableImage
                     source={require('../../../assets/img/icons8-user_folder_filled.png')}
                     width={40}
@@ -456,6 +430,23 @@ const styles = {
   rateRow: {
     flexDirection: 'row',
     marginTop: 3,
+  },
+  idContainer: {
+    height: 300,
+    borderWidth: 1,
+    borderColor: '#9c9c9c',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8,
+    borderStyle: 'dashed',
+  },
+  editButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 18,
+    paddingVertical: 10,
+    backgroundColor: '#F6F6F6',
+    borderRadius: 8,
   },
 };
 

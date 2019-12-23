@@ -1,122 +1,191 @@
 import React from 'react';
 import {
   Image,
+  Linking,
   Platform,
   TouchableNativeFeedback,
   TouchableOpacity,
+  Text,
 } from 'react-native';
-import {View, Text, Thumbnail, Icon} from 'native-base';
+import {View, Thumbnail} from 'native-base';
 import theme from '../../styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Call from '../common/Call';
 import {getShortName} from '../../helper';
+import CallRegisterModal from '../infoStudent/CallRegisterModal';
+import SubmitMoneyModal from '../infoStudent/SubmitMoneyModal';
 
 class ListItemStudent extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.state = {
+      callModalVisible: false,
+      moneyModalVisible: false,
+    };
   }
+
+  toggleCallModal = () => {
+    this.setState({callModalVisible: !this.state.callModalVisible});
+  };
+
+  toggleMoneyModal = () => {
+    this.setState({moneyModalVisible: !this.state.moneyModalVisible});
+  };
 
   content() {
     const {
       name,
       avatar,
-      nameClass,
       saler,
       campaign,
       callStatus,
+      classInfo,
       paidStatus,
       money,
+      phone,
+      email,
+      avatar_url,
+      studentId,
+      code,
+      registerId,
     } = this.props;
     return (
-      <View style={styles.container}>
-        <View style={{position: 'relative'}}>
-          <Thumbnail small source={{uri: avatar}} style={styles.avatar} />
-          <View
-            style={{
-              ...styles.dotCall,
-              ...{
-                backgroundColor:
-                  callStatus === 'uncall'
-                    ? '#bdbdbd'
-                    : callStatus === 'success'
-                    ? '#4dc151'
-                    : theme.secondColor,
-              },
-            }}
+      <View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{position: 'relative'}}>
+              <Thumbnail small source={{uri: avatar}} style={styles.avatar} />
+              <View
+                style={{
+                  ...styles.dotCall,
+                  ...{
+                    backgroundColor:
+                      callStatus === 'uncall'
+                        ? '#bdbdbd'
+                        : callStatus === 'success'
+                        ? '#4dc151'
+                        : theme.secondColor,
+                  },
+                }}
+              />
+            </View>
+            <Text numberOfLines={1} style={styles.className}>
+              {name}
+            </Text>
+            {paidStatus ? (
+              <MaterialCommunityIcons
+                name="checkbox-marked-circle"
+                color={money <= 0 ? '#bdbdbd' : '#4dc151'}
+                size={12}
+              />
+            ) : (
+              <View />
+            )}
+          </View>
+          <Image
+            source={require('../../../assets/img/icons8-more-than-100.png')}
+            style={{width: 15, height: 15}}
           />
         </View>
-        <View style={styles.content}>
-          <View style={styles.containerTitle}>
-            <View style={styles.contentTitle}>
-              <Text style={styles.title}>{name.trim()}</Text>
-              {paidStatus ? (
-                <MaterialCommunityIcons
-                  name="checkbox-marked-circle"
-                  color={money <= 0 ? '#bdbdbd' : '#4dc151'}
-                  size={12}
-                />
+        <View style={{flexDirection: 'row'}}>
+          <View style={styles.classAva} />
+          <View style={styles.infoContainer}>
+            <View style={styles.containerSubTitle}>
+              {saler ? (
+                <View
+                  style={{
+                    ...styles.card,
+                    ...{
+                      backgroundColor:
+                        !saler.color || saler.color === ''
+                          ? theme.processColor1
+                          : '#' + saler.color,
+                    },
+                  }}>
+                  <Text style={styles.saler}>{getShortName(saler.name)}</Text>
+                </View>
+              ) : (
+                <View />
+              )}
+              {campaign ? (
+                <View
+                  style={{
+                    ...styles.card,
+                    ...{
+                      backgroundColor:
+                        !campaign.color || campaign.color === ''
+                          ? theme.processColor1
+                          : '#' + campaign.color,
+                      marginLeft: 5,
+                    },
+                  }}>
+                  <Text style={styles.campaign}>{campaign.name.trim()}</Text>
+                </View>
               ) : (
                 <View />
               )}
             </View>
-            <Image
-              source={require('../../../assets/img/icons8-more-than-100.png')}
-              style={{width: 15, height: 15}}
-            />
-          </View>
-          <View style={styles.containerSubTitle}>
-            <Text style={styles.subTitle}>{nameClass}</Text>
-          </View>
-          <View style={styles.containerSubTitle}>
-            {saler ? (
-              <View
-                style={{
-                  ...styles.card,
-                  ...{
-                    backgroundColor:
-                      !saler.color || saler.color === ''
-                        ? theme.processColor1
-                        : '#' + saler.color,
-                  },
+            <View>
+              <Text
+                numberOfLines={1}
+                style={[styles.classInfoContainer, {paddingTop: 0}]}>
+                {classInfo.name}
+              </Text>
+              <Text numberOfLines={1} style={styles.classInfoContainer}>
+                {classInfo.study_time}
+              </Text>
+              <Text numberOfLines={1} style={styles.classInfoContainer}>
+                {classInfo.description}
+              </Text>
+              <Text numberOfLines={1} style={styles.classInfoContainer}>
+                {classInfo.room} - {classInfo.base}
+              </Text>
+            </View>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                onPress={() => {
+                  Linking.openURL(`tel:${phone}`);
+                  this.toggleCallModal();
                 }}>
-                <Text style={styles.saler}>{getShortName(saler.name)}</Text>
-              </View>
-            ) : (
-              <View />
-            )}
-            {campaign ? (
-              <View
-                style={{
-                  ...styles.card,
-                  ...{
-                    backgroundColor:
-                      !campaign.color || campaign.color === ''
-                        ? theme.processColor1
-                        : '#' + campaign.color,
-                    marginLeft: 5,
-                  },
-                }}>
-                <Text style={styles.campaign}>{campaign.name.trim()}</Text>
-              </View>
-            ) : (
-              <View />
-            )}
+                <View style={styles.button}>
+                  <Text style={{fontSize: 16}}>Gọi điện</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => this.toggleMoneyModal()}>
+                <View style={[{marginLeft: 10}, styles.button]}>
+                  <Text style={{fontSize: 16}}>Nộp học phí</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
           </View>
+          <CallRegisterModal
+            isVisible={this.state.callModalVisible}
+            onSwipeComplete={this.toggleCallModal}
+            imageSource={avatar_url}
+            email={email}
+            phone={phone}
+            changeCallStatus={this.props.changeCallStatus}
+            student_id={studentId}
+            token={this.props.token}
+            errorChangeCallStatus={this.props.errorChangeCallStatus}
+          />
+          <SubmitMoneyModal
+            isVisible={this.state.moneyModalVisible}
+            onSwipeComplete={this.toggleMoneyModal}
+            avatar_url={avatar_url}
+            class={classInfo}
+            name={name}
+            code={code}
+            token={this.props.token}
+            submitMoney={this.props.submitMoney}
+            register_id={registerId}
+            errorSubmitMoney={this.props.errorSubmitMoney}
+          />
         </View>
-      </View>
-    );
-  }
-
-  renderExpand() {
-    var {phone, email} = this.props;
-    return (
-      <View style={styles.containerExpand}>
-        <Text style={styles.email}>{email}</Text>
-        <Call
-          extraPadding={{paddingTop: 5}}
-          url={'tel:' + phone}
-          phone={phone}
-        />
       </View>
     );
   }
@@ -137,10 +206,7 @@ class ListItemStudent extends React.Component {
                 avatar_url: avatar_url,
               });
             }}>
-            <View style={styles.containerAll}>
-              {this.content()}
-              {this.renderExpand()}
-            </View>
+            <View style={styles.containerAll}>{this.content()}</View>
           </TouchableOpacity>
         </View>
       );
@@ -157,10 +223,7 @@ class ListItemStudent extends React.Component {
                 avatar_url: avatar_url,
               });
             }}>
-            <View style={styles.containerAll}>
-              {this.content()}
-              {this.renderExpand()}
-            </View>
+            <View style={styles.containerAll}>{this.content()}</View>
           </TouchableNativeFeedback>
         </View>
       );
@@ -170,11 +233,8 @@ class ListItemStudent extends React.Component {
 
 const styles = {
   containerAll: {
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-  },
-  container: {
-    flexDirection: 'row',
+    paddingHorizontal: 16,
+    paddingVertical: 16,
   },
   containerExpand: {
     marginLeft: 55,
@@ -209,32 +269,10 @@ const styles = {
     marginRight: 20,
     marginLeft: 75,
   },
-  containerSubTitle: {
-    flexDirection: 'row',
-    paddingTop: 5,
-  },
   email: {
     color: theme.colorSubTitle,
     marginTop: 5,
     fontSize: Platform.isPad ? 18 : 13,
-  },
-  card: {
-    height: 15,
-    paddingHorizontal: 10,
-    marginTop: 5,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  saler: {
-    fontSize: 10,
-    color: 'white',
-    textAlign: 'center',
-  },
-  campaign: {
-    fontSize: 10,
-    color: 'white',
-    textAlign: 'center',
   },
   contentTitle: {
     flexDirection: 'row',
@@ -250,6 +288,65 @@ const styles = {
     borderRadius: 20,
     borderWidth: 1.5,
     borderColor: 'white',
+  },
+
+  listItemContainer: {
+    marginHorizontal: 16,
+    marginVertical: 10,
+  },
+  classAva: {
+    width: 37,
+    height: 37,
+    borderRadius: 19,
+  },
+  className: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginLeft: 15,
+    marginRight: 5,
+  },
+  containerSubTitle: {
+    flexDirection: 'row',
+    marginBottom: 10,
+  },
+  card: {
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    marginVertical: 5,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  saler: {
+    fontSize: 10,
+    color: 'white',
+    textAlign: 'center',
+  },
+  campaign: {
+    fontSize: 10,
+    color: 'white',
+    textAlign: 'center',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginTop: 20,
+  },
+  button: {
+    backgroundColor: '#F6F6F6',
+    paddingVertical: 10,
+    paddingHorizontal: 18,
+    borderRadius: 8,
+  },
+  classInfoContainer: {
+    paddingTop: 5,
+    flex: 1,
+    flexWrap: 'wrap',
+    color: '#707070',
+  },
+  infoContainer: {
+    marginLeft: 15,
+    flex: 1,
   },
 };
 

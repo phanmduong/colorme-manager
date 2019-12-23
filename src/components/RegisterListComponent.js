@@ -107,7 +107,6 @@ class RegisterListComponent extends React.Component {
               renderRow={(item, sectionID, rowID) => (
                 <ListItemRegisterStudent
                   {...this.props}
-                  nameClass={item.class.name}
                   name={item.name}
                   avatar={item.course_avatar_url}
                   email={item.email}
@@ -120,6 +119,14 @@ class RegisterListComponent extends React.Component {
                   studentId={item.student_id}
                   setStudentId={this.props.setStudentId}
                   avatar_url={item.avatar_url}
+                  classInfo={item.class}
+                  token={this.props.token}
+                  code={item.code}
+                  registerId={item.id}
+                  errorChangeCallStatus={this.props.errorChangeCallStatus}
+                  errorSubmitMoney={this.props.errorSubmitMoney}
+                  changeCallStatus={this.props.changeCallStatus}
+                  submitMoney={this.props.submitMoney}
                 />
               )}
               renderFooter={() => {

@@ -22,6 +22,7 @@ class WorkShiftRegisterParticipatesModal extends React.Component {
       <Modal
         style={styles.fullModal}
         isVisible={this.props.isVisible}
+        onBackdropPress={this.props.closeModal}
         animationIn={'slideInLeft'}
         animationOut={'slideOutLeft'}>
         <View style={styles.fullView}>

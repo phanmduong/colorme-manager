@@ -69,7 +69,7 @@ class SubmitMoneyModal extends React.Component {
                 paddingTop: 30,
               }}>
               <Image
-                source={{uri: this.props.class_icon}}
+                source={{uri: this.props.class.avatar_url}}
                 style={styles.avatar}
               />
               <Image
@@ -81,13 +81,13 @@ class SubmitMoneyModal extends React.Component {
             <View style={{marginTop: 25}}>
               <Text style={styles.subTitle}>Học viên: {this.props.name}</Text>
               <Text style={styles.subTitle}>
-                Lớp: {this.props.class} - {this.props.study_time}
+                Lớp: {this.props.class.name} - {this.props.class.study_time}
               </Text>
               <Text style={styles.subTitle}>
-                Khai giảng: {this.props.description}
+                Khai giảng: {this.props.class.description}
               </Text>
               <Text style={styles.subTitle}>
-                Phòng học: {this.props.room} - {this.props.base}
+                Phòng học: {this.props.class.room} - {this.props.class.base}
               </Text>
             </View>
             <View style={{marginTop: 25}}>

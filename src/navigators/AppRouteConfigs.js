@@ -50,6 +50,8 @@ import MakeupClassContainer from '../containers/MakeupClassContainer';
 import SaveRegisterContainer from '../containers/SaveRegisterContainer';
 import InfoStudentContainer from '../containers/InfoStudentContainer';
 import InfoStudentRegistersContainer from '../containers/infoStudent/InfoStudentRegistersContainer';
+import InfoStudentDetailsContainer from '../containers/infoStudent/InfoStudentDetailsContainer';
+import InfoStudentEditProfileContainer from '../containers/infoStudent/InfoStudentEditProfileContainer';
 
 const navigationOptionsDefault = {
   defaultNavigationOptions: {
@@ -288,6 +290,13 @@ const TabDashboard = createStackNavigator(
         headerTitleStyle: {color: 'black'},
       }),
     },
+    InfoStudentDetails: {
+      screen: InfoStudentDetailsContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
     CollectMoney: {
       screen: CollectMoneyContainer,
       navigationOptions: () => ({
@@ -346,6 +355,20 @@ const TabRegisterList = createStackNavigator(
         headerTitleStyle: {color: 'black'},
       }),
     },
+    InfoStudentDetails: {
+      screen: InfoStudentDetailsContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    InfoStudentEditProfile: {
+      screen: InfoStudentEditProfileContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
   },
   navigationOptionsDefault,
 );
@@ -355,7 +378,7 @@ const TabWorkShift = createStackNavigator(
     WorkShiftRegister: {
       screen: WorkShiftRegisterContainer,
       navigationOptions: () => ({
-          header: null,
+        header: null,
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},
       }),

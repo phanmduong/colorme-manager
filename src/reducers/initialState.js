@@ -279,6 +279,13 @@ export default {
     errorChangeCallStatus: false,
     isLoadingSubmitMoney: false,
     errorSubmitMoney: false,
+    student: {},
+    isLoadingStudent: false,
+    errorStudent: false,
+    isUploadingImage: false,
+    errorUploadingImage: false,
+    isUpdatingProfile: false,
+    errorUpdatingProfile: false,
   },
   infoStudentTab: {
     registers: {

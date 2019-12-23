@@ -1,13 +1,17 @@
 import React from 'react';
-import {Dimensions, TouchableOpacity} from 'react-native';
-import {Container, Button, View, List, Text} from 'native-base';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {
+  Dimensions,
+  TouchableOpacity,
+  Image,
+  RefreshControl,
+} from 'react-native';
+import {View, List, Text} from 'native-base';
 import theme from '../styles';
-import * as alert from '../constants/alert';
 import ListItemRegisterStudent from './registerList/ListItemRegisterStudent';
 import Loading from './common/Loading';
 import Search from './common/Search';
 import LinearGradient from 'react-native-linear-gradient';
+import {getStatusBarHeight, isIphoneX} from 'react-native-iphone-x-helper';
 
 var {height, width} = Dimensions.get('window');
 class RegisterListComponent extends React.Component {
@@ -18,12 +22,33 @@ class RegisterListComponent extends React.Component {
   renderSearch() {
     const {updateFormAndLoadDataSearch, search} = this.props;
     return (
-      <Search
-        placeholder="Tìm kiếm (Email, tên, số điện thoại)"
-        onChangeText={updateFormAndLoadDataSearch}
-        value={search}
-        autoFocus={this.props.autoFocus}
-      />
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <Search
+          placeholder="Tìm kiếm (Email, tên, số điện thoại)"
+          onChangeText={updateFormAndLoadDataSearch}
+          value={search}
+          autoFocus={this.props.autoFocus}
+          // extraStyle={{width: width - 85}}
+          // extraInputStyle={{width: width - 85 - 48}}
+        />
+        {/*<TouchableOpacity>*/}
+        {/*  <View*/}
+        {/*    style={{*/}
+        {/*      width: 40,*/}
+        {/*      height: 40,*/}
+        {/*      backgroundColor: '#F6F6F6',*/}
+        {/*      justifyContent: 'center',*/}
+        {/*      alignItems: 'center',*/}
+        {/*      borderRadius: 20,*/}
+        {/*      marginLeft: 10,*/}
+        {/*    }}>*/}
+        {/*    <Image*/}
+        {/*      source={require('../../assets/img/icons8-sorting_options_filled.png')}*/}
+        {/*      style={{width: 18, height: 18}}*/}
+        {/*    />*/}
+        {/*  </View>*/}
+        {/*</TouchableOpacity>*/}
+      </View>
     );
   }
 
@@ -66,85 +91,89 @@ class RegisterListComponent extends React.Component {
     </View>
   );
 
+  headerComponent = () => (
+    <View style={{flex: 1}}>
+      <View style={styles.headerContainer}>
+        <Image
+          source={{uri: this.props.user.avatar_url}}
+          style={styles.headerAva}
+        />
+        <Text style={styles.headerTitle}>Học viên</Text>
+      </View>
+      {this.renderSearch()}
+      {this.renderPicker()}
+    </View>
+  );
+
   renderContent() {
-    if (this.props.isLoading && this.props.registerList.length <= 0) {
-      return <Loading size={width / 8} />;
-    } else {
-      if (
-        (this.props.error || this.props.registerList.length <= 0) &&
-        !this.props.isSearchLoading
-      ) {
-        return (
-          <Container>
-            <View style={styles.container}>
-              <Text style={styles.textError}>
-                {this.props.error
-                  ? alert.LOAD_DATA_ERROR
-                  : alert.NO_DATA_REGISTER_LIST_CLASS}
-              </Text>
-              <Button
-                iconLeft
-                danger
-                small
-                onPress={this.props.onRefresh}
-                style={{marginTop: 10, alignSelf: null}}>
-                <MaterialCommunityIcons name="reload" color="white" size={20} />
-                <Text>Thử lại</Text>
-              </Button>
-            </View>
-          </Container>
-        );
-      } else {
-        return (
-          <View style={{flex: 1}}>
-            <List
-              style={styles.list}
-              onEndReached={this.props.loadDataRegisterList}
-              onEndReachedThreshold={height / 2}
-              dataArray={this.props.registerList}
-              onRefresh={this.props.onRefresh}
+    return (
+      <View style={{flex: 1}}>
+        <List
+          style={styles.list}
+          onEndReached={this.props.loadDataRegisterList}
+          onEndReachedThreshold={height / 2}
+          dataArray={this.props.registerList}
+          contentContainerStyle={{flexGrow: 1}}
+          ListHeaderComponent={this.headerComponent}
+          ListEmptyComponent={
+            this.props.isLoading || this.props.isSearchLoading ? (
+              <Loading size={width / 8} />
+            ) : (
+              <View style={styles.container}>
+                <Text style={{color: theme.dangerColor, fontSize: 16}}>
+                  Không có kết quả
+                </Text>
+              </View>
+            )
+          }
+          refreshControl={
+            <RefreshControl
               refreshing={this.props.refreshing}
-              renderRow={(item, sectionID, rowID) => (
-                <ListItemRegisterStudent
-                  {...this.props}
-                  nameClass={item.class.name}
-                  name={item.name}
-                  avatar={item.course_avatar_url}
-                  email={item.email}
-                  phone={item.phone}
-                  saler={this.props.segmentActive === 1 ? item.saler : null}
-                  campaign={item.campaign}
-                  callStatus={item.call_status}
-                  paidStatus={item.paid_status}
-                  money={item.money}
-                  studentId={item.student_id}
-                  setStudentId={this.props.setStudentId}
-                  avatar_url={item.avatar_url}
-                />
-              )}
-              renderFooter={() => {
-                if (this.props.isLoading || this.props.isSearchLoading) {
-                  return (
-                    <View style={styles.loading}>
-                      <Loading size={width / 12} />
-                    </View>
-                  );
-                } else {
-                  <View />;
-                }
-              }}
+              onRefresh={this.props.onRefresh}
+              titleColor={theme.mainColor}
+              title="Đang tải..."
+              tintColor="#d9534f"
+              colors={['#d9534f']}
             />
-          </View>
-        );
-      }
-    }
+          }
+          renderRow={(item, sectionID, rowID) => (
+            <ListItemRegisterStudent
+              {...this.props}
+              name={item.name}
+              avatar={item.course_avatar_url}
+              email={item.email}
+              phone={item.phone}
+              saler={this.props.segmentActive === 1 ? item.saler : null}
+              campaign={item.campaign}
+              callStatus={item.call_status}
+              paidStatus={item.paid_status}
+              money={item.money}
+              studentId={item.student_id}
+              setStudentId={this.props.setStudentId}
+              avatar_url={item.avatar_url}
+              classInfo={item.class}
+              token={this.props.token}
+              code={item.code}
+              registerId={item.id}
+              errorChangeCallStatus={this.props.errorChangeCallStatus}
+              errorSubmitMoney={this.props.errorSubmitMoney}
+              changeCallStatus={this.props.changeCallStatus}
+              submitMoney={this.props.submitMoney}
+            />
+          )}
+        />
+      </View>
+    );
   }
 
   render() {
     return (
-      <View style={{flex: 1}}>
-        {this.renderSearch()}
-        {this.renderPicker()}
+      <View
+        style={
+          isIphoneX()
+            ? {flex: 1, marginTop: getStatusBarHeight() + 10}
+            : {flex: 1, marginTop: 10}
+        }>
         {this.renderContent()}
       </View>
     );
@@ -152,7 +181,6 @@ class RegisterListComponent extends React.Component {
 }
 
 const styles = {
-  list: {},
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -162,18 +190,10 @@ const styles = {
     color: '#d9534f',
     textAlign: 'center',
   },
-  wrapper: {},
   dotStyle: {
     opacity: 0.4,
     width: 5,
     height: 5,
-  },
-  titleList: {
-    paddingTop: 10,
-    width: width,
-    textAlign: 'center',
-    color: theme.colorTitle,
-    fontWeight: '900',
   },
   loading: {
     height: 95,
@@ -192,6 +212,24 @@ const styles = {
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  headerContainer: {
+    marginHorizontal: 16,
+    marginTop: 20,
+    marginBottom: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerTitle: {
+    color: 'black',
+    fontSize: 23,
+    fontWeight: 'bold',
+    marginLeft: 10,
+  },
+  headerAva: {
+    width: 35,
+    height: 35,
+    borderRadius: 18,
   },
 };
 

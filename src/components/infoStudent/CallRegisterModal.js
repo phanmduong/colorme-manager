@@ -12,6 +12,7 @@ import {
 import Modal from 'react-native-modal';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
+import Call from '../common/Call';
 var {height, width} = Dimensions.get('window');
 
 class CallRegisterModal extends React.Component {
@@ -95,6 +96,11 @@ class CallRegisterModal extends React.Component {
               <Text style={{marginTop: 25, fontSize: 16}}>
                 {this.props.email}
               </Text>
+              <Call
+                extraPadding={{paddingTop: 5, fontSize: 16}}
+                url={'tel:' + this.props.phone}
+                phone={this.props.phone}
+              />
             </View>
             <TextInput
               multiline={true}
@@ -235,6 +241,15 @@ const styles = {
     height: 100,
     paddingLeft: 10,
     borderRadius: 8,
+  },
+  rateIcon: {
+    width: 10,
+    height: 10,
+    marginRight: 2,
+  },
+  rateRow: {
+    flexDirection: 'row',
+    marginTop: 3,
   },
 };
 

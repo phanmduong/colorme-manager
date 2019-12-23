@@ -53,6 +53,52 @@ export function infoStudentReducer(state = initialState.infoStudent, action) {
         isLoadingSubmitMoney: action.isLoadingSubmitMoney,
         errorSubmitMoney: action.errorSubmitMoney,
       });
+    case type.BEGIN_LOAD_STUDENT:
+      return Object.assign({}, state, {
+        isLoadingStudent: action.isLoadingStudent,
+        errorStudent: action.errorStudent,
+      });
+    case type.LOAD_STUDENT_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isLoadingStudent: action.isLoadingStudent,
+        errorStudent: action.errorStudent,
+        student: action.student,
+      });
+    case type.LOAD_STUDENT_ERROR:
+      return Object.assign({}, state, {
+        isLoadingStudent: action.isLoadingStudent,
+        errorStudent: action.errorStudent,
+      });
+    case type.BEGIN_UPLOAD_INFO_STUDENT_IMAGE:
+      return Object.assign({}, state, {
+        isUploadingImage: action.isUploadingImage,
+        errorUploadingImage: action.errorUploadingImage,
+      });
+    case type.UPLOADING_INFO_STUDENT_IMAGE_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isUploadingImage: action.isUploadingImage,
+        errorUploadingImage: action.errorUploadingImage,
+      });
+    case type.UPLOADING_INFO_STUDENT_IMAGE_ERROR:
+      return Object.assign({}, state, {
+        isUploadingImage: action.isUploadingImage,
+        errorUploadingImage: action.errorUploadingImage,
+      });
+    case type.BEGIN_UPDATING_STUDENT_PROFILE:
+      return Object.assign({}, state, {
+        isUpdatingProfile: action.isUpdatingProfile,
+        errorUpdatingProfile: action.errorUpdatingProfile,
+      });
+    case type.UPDATING_STUDENT_PROFILE_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isUpdatingProfile: action.isUpdatingProfile,
+        errorUpdatingProfile: action.errorUpdatingProfile,
+      });
+    case type.UPDATING_STUDENT_PROFILE_ERROR:
+      return Object.assign({}, state, {
+        isUpdatingProfile: action.isUpdatingProfile,
+        errorUpdatingProfile: action.errorUpdatingProfile,
+      });
     default:
       return state;
   }

@@ -45,8 +45,8 @@ class InfoStudentRegistersComponent extends React.Component {
           </Text>
         </View>
         <View style={{flexDirection: 'row'}}>
-          <View style={{width: 37, height: 37}} />
-          <View style={{marginLeft: 15, flex: 1}}>
+          <View style={styles.classAva} />
+          <View style={styles.infoContainer}>
             <View style={styles.containerSubTitle}>
               {register.saler ? (
                 <View
@@ -90,17 +90,13 @@ class InfoStudentRegistersComponent extends React.Component {
             <View>
               <Text
                 numberOfLines={1}
-                style={{paddingTop: 2, flex: 1, flexWrap: 'wrap'}}>
+                style={[styles.classInfoContainer, {paddingTop: 0}]}>
                 {register.class.study_time}
               </Text>
-              <Text
-                numberOfLines={1}
-                style={{paddingTop: 2, flex: 1, flexWrap: 'wrap'}}>
+              <Text numberOfLines={1} style={styles.classInfoContainer}>
                 {register.class.description}
               </Text>
-              <Text
-                numberOfLines={1}
-                style={{paddingTop: 2, flex: 1, flexWrap: 'wrap'}}>
+              <Text numberOfLines={1} style={styles.classInfoContainer}>
                 {register.class.room} - {register.class.base}
               </Text>
             </View>
@@ -119,11 +115,6 @@ class InfoStudentRegistersComponent extends React.Component {
                   <Text style={{fontSize: 16}}>Nộp học phí</Text>
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity>
-                <View style={[{marginLeft: 10}, styles.button]}>
-                  <Text style={{fontSize: 16}}>▼</Text>
-                </View>
-              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -132,6 +123,7 @@ class InfoStudentRegistersComponent extends React.Component {
           onSwipeComplete={this.toggleCallModal}
           imageSource={register.avatar_url}
           email={register.email}
+          phone={register.phone}
           changeCallStatus={this.props.changeCallStatus}
           student_id={register.student_id}
           token={this.props.token}
@@ -140,14 +132,9 @@ class InfoStudentRegistersComponent extends React.Component {
         <SubmitMoneyModal
           isVisible={this.state.moneyModalVisible}
           onSwipeComplete={this.toggleMoneyModal}
-          class_icon={register.course_avatar_url}
           avatar_url={register.avatar_url}
-          class={register.class.name}
+          class={register.class}
           name={register.name}
-          study_time={register.class.study_time}
-          description={register.class.description}
-          room={register.class.room}
-          base={register.class.base}
           code={register.code}
           token={this.props.token}
           submitMoney={this.props.submitMoney}
@@ -160,11 +147,7 @@ class InfoStudentRegistersComponent extends React.Component {
 
   render() {
     if (!this.props.isLoadingRegisters) {
-      return (
-        <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
-          {this.renderRegisters()}
-        </ScrollView>
-      );
+      return <View style={{flex: 1}}>{this.renderRegisters()}</View>;
     } else {
       return (
         <View style={{flex: 1}}>
@@ -234,6 +217,15 @@ const styles = {
     paddingVertical: 10,
     paddingHorizontal: 18,
     borderRadius: 8,
+  },
+  classInfoContainer: {
+    paddingTop: 2,
+    flex: 1,
+    flexWrap: 'wrap',
+  },
+  infoContainer: {
+    marginLeft: 15,
+    flex: 1,
   },
 };
 

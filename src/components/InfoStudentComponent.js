@@ -45,7 +45,7 @@ class InfoStudentComponent extends React.Component {
     let email = this.props.navigation.getParam('email');
     let avatar_url = this.props.navigation.getParam('avatar_url');
     return (
-      <View style={{flex: 1}}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
         <View style={{height: 50}}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <View style={styles.tabContainer}>
@@ -129,11 +129,6 @@ class InfoStudentComponent extends React.Component {
               <Text style={{fontSize: 16}}>Đăng ký</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
-            <View style={[styles.essentialButton, {marginLeft: 10}]}>
-              <Text style={{fontSize: 16}}>▼</Text>
-            </View>
-          </TouchableOpacity>
         </View>
         <View style={{flex: 1}}>{this.props.tabComponent}</View>
         <CallRegisterModal
@@ -141,12 +136,13 @@ class InfoStudentComponent extends React.Component {
           onSwipeComplete={this.toggleCallModal}
           imageSource={avatar_url}
           email={email}
+          phone={phone}
           changeCallStatus={this.props.changeCallStatus}
           student_id={this.props.student_id}
           token={this.props.token}
           errorChangeCallStatus={this.props.errorChangeCallStatus}
         />
-      </View>
+      </ScrollView>
     );
   }
 }

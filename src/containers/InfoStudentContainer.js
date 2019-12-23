@@ -35,19 +35,13 @@ class InfoStudentContainer extends React.Component {
       <View
         style={{flexDirection: 'row', alignItems: 'center', marginRight: 20}}>
         <TouchableOpacity
-          style={{padding: 8, backgroundColor: '#F6F6F6', borderRadius: 18}}>
-          <Image
-            source={require('../../assets/img/icons8-attendance_mark_filled.png')}
-            style={{width: 18, height: 18}}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
           style={{
             padding: 8,
             backgroundColor: '#F6F6F6',
             marginLeft: 10,
             borderRadius: 18,
-          }}>
+          }}
+          onPress={() => navigation.navigate('InfoStudentDetails')}>
           <Image
             source={require('../../assets/img/icons8-info_filled.png')}
             style={{width: 18, height: 18}}

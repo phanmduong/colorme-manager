@@ -79,3 +79,39 @@ export function submitMoney(
     payment_method: payment_method,
   });
 }
+
+export function uploadImage(fileUri, studentId, imageField, token) {
+  let url = env.MANAGE_API_URL + '/upload-image-user?token=' + token;
+  let formData = new FormData();
+  formData.append(imageField, {
+    uri: fileUri,
+    type: 'image/jpeg',
+    name: imageField,
+  });
+  formData.append('id', studentId);
+  formData.append('image', imageField);
+  return axios({
+    method: 'post',
+    url: url,
+    data: formData,
+  });
+}
+
+export function updateProfile(register, token) {
+  let url =
+    env.MANAGE_API_URL + '/student/' + register.id + '/edit?token=' + token;
+  return axios.post(url, {
+    id: register.id,
+    name: register.name,
+    email: register.email,
+    phone: register.phone,
+    gender: register.gender,
+    dob: register.dob,
+    address: register.address,
+    university: register.university,
+    work: register.work,
+    how_know: register.how_know,
+    facebook: register.facebook,
+    description: register.description,
+  });
+}

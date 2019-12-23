@@ -24,7 +24,7 @@ class RegisterListContainer extends React.Component {
   }
 
   static navigationOptions = ({navigation}) => ({
-    title: 'Học viên',
+    title: 'Đăng ký',
   });
 
   componentWillMount() {
@@ -57,7 +57,7 @@ class RegisterListContainer extends React.Component {
     this.props.registerListActions.refreshRegisterListMy(
       this.props.searchMy,
       this.props.token,
-      this.props.userId,
+      this.props.user.id,
     );
   };
 
@@ -74,7 +74,7 @@ class RegisterListContainer extends React.Component {
         this.props.token,
         this.props.currentPageMy + 1,
         this.props.searchMy,
-        this.props.userId,
+        this.props.user.id,
       );
     }
   }
@@ -82,13 +82,47 @@ class RegisterListContainer extends React.Component {
   updateFormAndLoadDataSearchMy(search) {
     this.props.registerListActions.updateFormAndLoadDataSearchMy(
       search,
-      this.props.userId,
+      this.props.user.id,
       this.props.token,
     );
   }
 
   setStudentId = studentId => {
     this.props.infoStudentActions.setStudentId(studentId);
+  };
+
+  changeCallStatus = (
+    callStatus,
+    studentId,
+    telecallId,
+    genId,
+    note,
+    callerId,
+    appointmentPayment,
+    dateTest,
+  ) => {
+    this.props.infoStudentActions.changeCallStatus(
+      callStatus,
+      studentId,
+      telecallId,
+      genId,
+      note,
+      callerId,
+      appointmentPayment,
+      dateTest,
+      this.props.token,
+    );
+  };
+
+  submitMoney = (register_id, money, code, note, payment_method, token) => {
+    this.props.infoStudentActions.submitMoney(
+      register_id,
+      money,
+      code,
+      note,
+      payment_method,
+      token,
+    );
   };
 
   render() {
@@ -112,6 +146,12 @@ class RegisterListContainer extends React.Component {
           segmentActive={1}
           setStudentId={this.setStudentId}
           autoFocus={autoFocus}
+          token={this.props.token}
+          errorChangeCallStatus={this.props.errorChangeCallStatus}
+          errorSubmitMoney={this.props.errorSubmitMoney}
+          changeCallStatus={this.changeCallStatus}
+          submitMoney={this.submitMoney}
+          user={this.props.user}
         />
       );
     } else {
@@ -131,6 +171,12 @@ class RegisterListContainer extends React.Component {
           segmentActive={2}
           setStudentId={this.setStudentId}
           autoFocus={autoFocus}
+          token={this.props.token}
+          errorChangeCallStatus={this.props.errorChangeCallStatus}
+          errorSubmitMoney={this.props.errorSubmitMoney}
+          changeCallStatus={this.changeCallStatus}
+          submitMoney={this.submitMoney}
+          user={this.props.user}
         />
       );
     }
@@ -139,7 +185,7 @@ class RegisterListContainer extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    userId: state.login.user.id,
+    user: state.login.user,
     token: state.login.token,
     registerListDataAll: state.registerList.registerListDataAll,
     isLoadingAll: state.registerList.isLoadingAll,
@@ -156,6 +202,8 @@ function mapStateToProps(state) {
     segment: state.registerList.segment,
     refreshingAll: state.registerList.refreshingAll,
     refreshingMy: state.registerList.refreshingMy,
+    errorChangeCallStatus: state.registerList.errorChangeCallStatus,
+    errorSubmitMoney: state.registerList.errorSubmitMoney,
   };
 }
 

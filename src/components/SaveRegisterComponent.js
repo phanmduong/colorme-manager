@@ -60,7 +60,7 @@ class SaveRegisterComponent extends React.Component {
       selectedAddress: false,
       selectedClassId: -1,
       coupon: '',
-      dob: moment(),
+      dob: '',
       address: '',
       facebook: '',
       gender: '',
@@ -293,7 +293,9 @@ class SaveRegisterComponent extends React.Component {
         email: this.state.email,
         class_id: this.state.selectedClassId,
         coupon: this.state.coupon,
-        dob: this.state.dob.format(FORMAT_TIME_MYSQL),
+        dob: !isEmptyInput(this.state.dob)
+          ? this.state.dob.format(FORMAT_TIME_MYSQL)
+          : '',
         address: this.state.address,
         facebook: this.state.facebook,
         gender: this.state.gender,
@@ -322,7 +324,7 @@ class SaveRegisterComponent extends React.Component {
       email: '',
       class_id: -1,
       coupon: '',
-      dob: moment(),
+      dob: '',
       address: '',
       facebook: '',
       gender: '',
@@ -478,7 +480,9 @@ class SaveRegisterComponent extends React.Component {
                 </View>
               </View>
               <View style={{marginTop: 30}}>
-                <Text style={styles.titleForm}>Chọn môn học</Text>
+                <Text style={styles.titleForm}>
+                  Chọn môn học <Text style={{color: '#C50000'}}>*</Text>
+                </Text>
                 <CustomPicker
                   options={this.props.courses}
                   getLabel={item => item.name}
@@ -501,7 +505,9 @@ class SaveRegisterComponent extends React.Component {
               </View>
               {this.state.selectedCourse && !this.props.isLoadingClasses ? (
                 <View style={{marginTop: 30}}>
-                  <Text style={styles.titleForm}>Chọn lớp học</Text>
+                  <Text style={styles.titleForm}>
+                    Chọn lớp học <Text style={{color: '#C50000'}}>*</Text>
+                  </Text>
                   <CustomPicker
                     options={this.props.classes}
                     getLabel={item => item.name}
@@ -602,12 +608,21 @@ class SaveRegisterComponent extends React.Component {
                     <TouchableOpacity
                       style={styles.inputContainer}
                       onPress={this.openDatePicker}>
-                      <Text
+                      <View
                         style={{
-                          fontSize: 15,
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
                         }}>
-                        {this.state.dob.format('DD/MM/YYYY')}
-                      </Text>
+                        <Text
+                          style={{
+                            fontSize: 15,
+                          }}>
+                          {!isEmptyInput(this.state.dob)
+                            ? this.state.dob.format('DD/MM/YYYY')
+                            : 'DD/MM/YYYY'}
+                        </Text>
+                        <Text>▼</Text>
+                      </View>
                     </TouchableOpacity>
                   </View>
                   <View style={{marginTop: 30}}>
@@ -777,7 +792,7 @@ const styles = {
     fontSize: 14,
   },
   container: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
     marginBottom: 10,
     flex: 1,
   },

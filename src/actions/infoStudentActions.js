@@ -152,3 +152,123 @@ function loadSubmitMoneyError() {
     errorSubmitMoney: true,
   };
 }
+
+export function loadStudent(studentId, token) {
+  return function(dispatch) {
+    dispatch(beginLoadStudent());
+    infoStudentApi
+      .loadInfoStudent(studentId, token)
+      .then(function(res) {
+        dispatch(loadStudentSuccessful(res));
+      })
+      .catch(error => {
+        dispatch(loadStudentError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadStudent() {
+  return {
+    type: types.BEGIN_LOAD_STUDENT,
+    isLoadingStudent: true,
+    errorStudent: false,
+  };
+}
+
+function loadStudentSuccessful(res) {
+  return {
+    type: types.LOAD_STUDENT_SUCCESSFUL,
+    isLoadingStudent: false,
+    errorStudent: false,
+    student: res.data.data.student,
+  };
+}
+
+function loadStudentError() {
+  return {
+    type: types.LOAD_STUDENT_SUCCESSFUL,
+    isLoadingStudent: false,
+    errorStudent: true,
+  };
+}
+
+export function uploadImage(fileUri, studentId, imageField, token) {
+  return function(dispatch) {
+    dispatch(beginUploadingImage());
+    infoStudentApi
+      .uploadImage(fileUri, studentId, imageField, token)
+      .then(function(res) {
+        dispatch(uploadImageSuccessful());
+        dispatch(loadStudent(studentId, token));
+      })
+      .catch(error => {
+        dispatch(uploadImageError());
+        throw error;
+      });
+  };
+}
+
+function beginUploadingImage() {
+  return {
+    type: types.BEGIN_UPLOAD_INFO_STUDENT_IMAGE,
+    isUploadingImage: true,
+    errorUploadingImage: false,
+  };
+}
+
+function uploadImageSuccessful() {
+  return {
+    type: types.UPLOADING_INFO_STUDENT_IMAGE_SUCCESSFUL,
+    isUploadingImage: false,
+    errorUploadingImage: false,
+  };
+}
+
+function uploadImageError() {
+  return {
+    type: types.UPLOADING_INFO_STUDENT_IMAGE_ERROR,
+    isUploadingImage: false,
+    errorUploadingImage: true,
+  };
+}
+
+export function updateProfile(register, token) {
+  return function(dispatch) {
+    dispatch(beginUpdatingProfile());
+    infoStudentApi
+      .updateProfile(register, token)
+      .then(function(res) {
+        dispatch(updateProfileSuccessful());
+        dispatch(loadStudent(register.id, token));
+      })
+      .catch(error => {
+        dispatch(updateProfileError());
+        throw error;
+      });
+  };
+}
+
+function beginUpdatingProfile() {
+  return {
+    type: types.BEGIN_UPDATING_STUDENT_PROFILE,
+    isUpdatingProfile: true,
+    errorUpdatingProfile: false,
+  };
+}
+
+function updateProfileSuccessful() {
+  return {
+    type: types.UPDATING_STUDENT_PROFILE_SUCCESSFUL,
+    isUpdatingProfile: false,
+    errorUpdatingProfile: false,
+  };
+}
+
+function updateProfileError() {
+  return {
+    type: types.UPDATING_STUDENT_PROFILE_ERROR,
+    isUpdatingProfile: false,
+    errorUpdatingProfile: true,
+  };
+}

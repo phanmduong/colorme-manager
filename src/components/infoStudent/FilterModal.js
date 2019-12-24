@@ -18,10 +18,11 @@ class FilterModal extends React.Component {
     super(props, context);
     this.state = {
       segment: 1,
+      selectedCourse: false,
     };
   }
 
-  renderCoursePickerField = settings => {
+  renderSegmentPickerField = settings => {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
@@ -59,6 +60,32 @@ class FilterModal extends React.Component {
     );
   };
 
+  renderCoursePickerField = settings => {
+    const {selectedItem, defaultText, getLabel} = settings;
+    return (
+      <LinearGradient
+        colors={['#EDEDED', '#EDEDED']}
+        style={styles.gradientSize}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 0}}>
+        {!selectedItem && (
+          <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+            <Text style={{color: 'black', fontSize: 16}}>{defaultText}</Text>
+            <Text>▼</Text>
+          </View>
+        )}
+        {selectedItem && (
+          <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+            <Text style={{color: 'black', fontSize: 16}}>
+              {getLabel(selectedItem)}
+            </Text>
+            <Text>▼</Text>
+          </View>
+        )}
+      </LinearGradient>
+    );
+  };
+
   renderCoursePickerOption = settings => {
     const {item, getLabel} = settings;
     return (
@@ -68,10 +95,10 @@ class FilterModal extends React.Component {
     );
   };
 
-  renderCoursePickerHeader = () => {
+  renderPickerHeader = title => {
     return (
       <View style={styles.headerFooterContainer}>
-        <Text style={styles.headerFooterText}>Chọn đơn</Text>
+        <Text style={styles.headerFooterText}>{title}</Text>
       </View>
     );
   };
@@ -98,15 +125,17 @@ class FilterModal extends React.Component {
               <Text style={styles.title}>Lọc đăng ký</Text>
             </View>
             <View style={styles.filterTitle}>
-              <Text style={{fontSize: 16}}>Đơn của</Text>
+              <Text style={{fontSize: 16}}>Ngày đăng ký</Text>
               <CustomPicker
                 options={segments}
                 defaultValue={segments[0]}
                 getLabel={item => item.name}
                 modalAnimationType={'fade'}
                 optionTemplate={this.renderCoursePickerOption}
-                fieldTemplate={this.renderCoursePickerField}
-                headerTemplate={this.renderCoursePickerHeader}
+                fieldTemplate={this.renderSegmentPickerField}
+                headerTemplate={() =>
+                  this.renderPickerHeader('Chọn ngày đăng ký')
+                }
                 footerTemplate={this.renderCoursePickerFooter}
                 modalStyle={{
                   borderRadius: 6,
@@ -118,6 +147,147 @@ class FilterModal extends React.Component {
                 }}
               />
             </View>
+            <View style={styles.filterTitle}>
+              <Text style={{fontSize: 16}}>Đơn của</Text>
+              <CustomPicker
+                options={segments}
+                defaultValue={segments[0]}
+                getLabel={item => item.name}
+                modalAnimationType={'fade'}
+                optionTemplate={this.renderCoursePickerOption}
+                fieldTemplate={this.renderSegmentPickerField}
+                headerTemplate={() => this.renderPickerHeader('Chọn đơn')}
+                footerTemplate={this.renderCoursePickerFooter}
+                modalStyle={{
+                  borderRadius: 6,
+                }}
+                onValueChange={value => {
+                  this.setState({
+                    segment: value.value,
+                  });
+                }}
+              />
+            </View>
+            <View style={styles.filterTitle}>
+              <Text style={{fontSize: 16}}>Thành phố</Text>
+              <CustomPicker
+                options={segments}
+                defaultValue={segments[0]}
+                getLabel={item => item.name}
+                modalAnimationType={'fade'}
+                optionTemplate={this.renderCoursePickerOption}
+                fieldTemplate={this.renderSegmentPickerField}
+                headerTemplate={() => this.renderPickerHeader('Chọn thành phố')}
+                footerTemplate={this.renderCoursePickerFooter}
+                modalStyle={{
+                  borderRadius: 6,
+                }}
+                onValueChange={value => {
+                  this.setState({
+                    segment: value.value,
+                  });
+                }}
+              />
+            </View>
+            <View style={styles.filterTitle}>
+              <Text style={{fontSize: 16}}>Trạng thái</Text>
+              <CustomPicker
+                options={segments}
+                defaultValue={segments[0]}
+                getLabel={item => item.name}
+                modalAnimationType={'fade'}
+                optionTemplate={this.renderCoursePickerOption}
+                fieldTemplate={this.renderSegmentPickerField}
+                headerTemplate={() =>
+                  this.renderPickerHeader('Chọn trạng thái')
+                }
+                footerTemplate={this.renderCoursePickerFooter}
+                modalStyle={{
+                  borderRadius: 6,
+                }}
+                onValueChange={value => {
+                  this.setState({
+                    segment: value.value,
+                  });
+                }}
+              />
+            </View>
+            <View style={styles.filterTitle}>
+              <Text style={{fontSize: 16}}>Nguồn</Text>
+              <CustomPicker
+                options={segments}
+                defaultValue={segments[0]}
+                getLabel={item => item.name}
+                modalAnimationType={'fade'}
+                optionTemplate={this.renderCoursePickerOption}
+                fieldTemplate={this.renderSegmentPickerField}
+                headerTemplate={() => this.renderPickerHeader('Chọn nguồn')}
+                footerTemplate={this.renderCoursePickerFooter}
+                modalStyle={{
+                  borderRadius: 6,
+                }}
+                onValueChange={value => {
+                  this.setState({
+                    segment: value.value,
+                  });
+                }}
+              />
+            </View>
+            <View style={styles.filterTitle}>
+              <Text style={{fontSize: 16}}>Chiến dịch</Text>
+              <CustomPicker
+                options={segments}
+                defaultValue={segments[0]}
+                getLabel={item => item.name}
+                modalAnimationType={'fade'}
+                optionTemplate={this.renderCoursePickerOption}
+                fieldTemplate={this.renderSegmentPickerField}
+                headerTemplate={() =>
+                  this.renderPickerHeader('Chọn chiến dịch')
+                }
+                footerTemplate={this.renderCoursePickerFooter}
+                modalStyle={{
+                  borderRadius: 6,
+                }}
+                onValueChange={value => {
+                  this.setState({
+                    segment: value.value,
+                  });
+                }}
+              />
+            </View>
+            <CustomPicker
+              options={segments}
+              getLabel={item => item.name}
+              placeholder={'Chọn môn'}
+              modalAnimationType={'fade'}
+              optionTemplate={this.renderCoursePickerOption}
+              fieldTemplate={this.renderCoursePickerField}
+              headerTemplate={() => this.renderPickerHeader('Chọn môn')}
+              footerTemplate={this.renderCoursePickerFooter}
+              modalStyle={{
+                borderRadius: 6,
+              }}
+              onValueChange={value => {
+                this.setState({selectedCourse: true});
+              }}
+            />
+            {this.state.selectedCourse ? (
+              <CustomPicker
+                options={segments}
+                getLabel={item => item.name}
+                placeholder={'Chọn lớp'}
+                modalAnimationType={'fade'}
+                optionTemplate={this.renderCoursePickerOption}
+                fieldTemplate={this.renderCoursePickerField}
+                headerTemplate={() => this.renderPickerHeader('Chọn lớp')}
+                footerTemplate={this.renderCoursePickerFooter}
+                modalStyle={{
+                  borderRadius: 6,
+                }}
+                onValueChange={value => {}}
+              />
+            ) : null}
             <TouchableOpacity
               onPress={() => {
                 this.props.changeSegmentRegisterList(this.state.segment);
@@ -210,6 +380,13 @@ const styles = {
     borderBottomWidth: 1,
     borderBottomColor: '#F0F0F0',
     marginHorizontal: 20,
+  },
+  gradientSize: {
+    justifyContent: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 24,
+    marginTop: 20,
   },
 };
 

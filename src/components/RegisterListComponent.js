@@ -95,7 +95,7 @@ class RegisterListComponent extends React.Component {
           ListHeaderComponent={this.headerComponent}
           ListEmptyComponent={
             this.props.isLoading || this.props.isSearchLoading ? (
-              <Loading size={width / 8} />
+              <View />
             ) : (
               <View style={styles.container}>
                 <Text style={{color: theme.dangerColor, fontSize: 16}}>

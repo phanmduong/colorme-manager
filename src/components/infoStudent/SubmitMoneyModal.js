@@ -7,8 +7,10 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+    Dimensions
 } from 'react-native';
 import Modal from 'react-native-modal';
+var {width, height} = Dimensions.get('window');
 
 const CHUYEN_KHOAN = 'internet_banking';
 const TIEN_MAT = 'cash';
@@ -250,10 +252,8 @@ const styles = {
     backgroundColor: 'white',
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
-    // paddingTop: 30,
-    // paddingBottom: 50,
     paddingHorizontal: 16,
-    height: 600,
+    height: height - 140,
   },
   avatar: {
     width: 35,

@@ -131,6 +131,7 @@ class RegisterListContainer extends React.Component {
       autoFocus = false;
     }
     if (this.props.segment === 1) {
+      console.log(this.props.registerListDataAll);
       return (
         <RegisterListComponent
           {...this.props}

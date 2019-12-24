@@ -311,7 +311,9 @@ class SaveRegisterComponent extends React.Component {
       } else {
         this.reset();
         Alert.alert('Thông báo', 'Đăng ký thành công!');
-        this.props.navigation.navigate('RegisterList');
+        this.props.navigation.navigate('RegisterList', {
+          isSubScreen: true,
+        });
         this.props.reload();
       }
     }

@@ -12,12 +12,20 @@ import Loading from './common/Loading';
 import Search from './common/Search';
 import LinearGradient from 'react-native-linear-gradient';
 import {getStatusBarHeight, isIphoneX} from 'react-native-iphone-x-helper';
+import FilterModal from './infoStudent/FilterModal';
 
 var {height, width} = Dimensions.get('window');
 class RegisterListComponent extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.state = {
+      filterModalVisible: false,
+    };
   }
+
+  toggleFilterModal = () => {
+    this.setState({filterModalVisible: !this.state.filterModalVisible});
+  };
 
   renderSearch() {
     const {updateFormAndLoadDataSearch, search} = this.props;
@@ -28,82 +36,52 @@ class RegisterListComponent extends React.Component {
           onChangeText={updateFormAndLoadDataSearch}
           value={search}
           autoFocus={this.props.autoFocus}
-          // extraStyle={{width: width - 85}}
-          // extraInputStyle={{width: width - 85 - 48}}
+          extraStyle={{width: width - 85}}
+          extraInputStyle={{width: width - 85 - 48}}
         />
-        {/*<TouchableOpacity>*/}
-        {/*  <View*/}
-        {/*    style={{*/}
-        {/*      width: 40,*/}
-        {/*      height: 40,*/}
-        {/*      backgroundColor: '#F6F6F6',*/}
-        {/*      justifyContent: 'center',*/}
-        {/*      alignItems: 'center',*/}
-        {/*      borderRadius: 20,*/}
-        {/*      marginLeft: 10,*/}
-        {/*    }}>*/}
-        {/*    <Image*/}
-        {/*      source={require('../../assets/img/icons8-sorting_options_filled.png')}*/}
-        {/*      style={{width: 18, height: 18}}*/}
-        {/*    />*/}
-        {/*  </View>*/}
-        {/*</TouchableOpacity>*/}
+        <TouchableOpacity onPress={this.toggleFilterModal}>
+          <View
+            style={{
+              width: 40,
+              height: 40,
+              backgroundColor: '#F6F6F6',
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 20,
+              marginLeft: 10,
+            }}>
+            <Image
+              source={require('../../assets/img/icons8-sorting_options_filled.png')}
+              style={{width: 18, height: 18}}
+            />
+          </View>
+        </TouchableOpacity>
+        <FilterModal
+          isVisible={this.state.filterModalVisible}
+          closeModal={this.toggleFilterModal}
+          changeSegmentRegisterList={this.props.changeSegmentRegisterList}
+        />
       </View>
     );
   }
 
-  renderPicker = () => (
-    <View style={styles.containerTag}>
-      {this.props.segmentActive === 1 ? (
-        <TouchableOpacity>
-          <LinearGradient
-            colors={['#F6F6F6', '#F6F6F6']}
-            start={{x: 0, y: 0}}
-            end={{x: 1, y: 0}}
-            style={styles.tag}>
-            <Text style={{color: 'black'}}>Tất cả</Text>
-          </LinearGradient>
-        </TouchableOpacity>
-      ) : (
-        <TouchableOpacity
-          style={styles.tag}
-          onPress={() => this.props.changeSegmentRegisterList(1)}>
-          <Text>Tất cả</Text>
-        </TouchableOpacity>
-      )}
-      {this.props.segmentActive === 2 ? (
-        <TouchableOpacity>
-          <LinearGradient
-            colors={['#F6F6F6', '#F6F6F6']}
-            start={{x: 0, y: 0}}
-            end={{x: 1, y: 0}}
-            style={styles.tag}>
-            <Text style={{color: 'black'}}>Của bạn</Text>
-          </LinearGradient>
-        </TouchableOpacity>
-      ) : (
-        <TouchableOpacity
-          style={styles.tag}
-          onPress={() => this.props.changeSegmentRegisterList(2)}>
-          <Text>Của bạn</Text>
-        </TouchableOpacity>
-      )}
-    </View>
-  );
-
-  headerComponent = () => (
-    <View style={{flex: 1}}>
-      <View style={styles.headerContainer}>
-        <Image
-          source={{uri: this.props.user.avatar_url}}
-          style={styles.headerAva}
-        />
-        <Text style={styles.headerTitle}>Học viên</Text>
+  headerComponent = () => {
+    let isSubScreen = this.props.navigation.getParam('isSubScreen');
+    return (
+      <View style={{flex: 1}}>
+        {!isSubScreen ? (
+          <View style={styles.headerContainer}>
+            <Image
+              source={{uri: this.props.user.avatar_url}}
+              style={styles.headerAva}
+            />
+            <Text style={styles.headerTitle}>Học viên</Text>
+          </View>
+        ) : null}
+        {this.renderSearch()}
       </View>
-      {this.renderSearch()}
-      {this.renderPicker()}
-    </View>
-  );
+    );
+  };
 
   renderContent() {
     return (
@@ -167,10 +145,11 @@ class RegisterListComponent extends React.Component {
   }
 
   render() {
+    let isSubScreen = this.props.navigation.getParam('isSubScreen');
     return (
       <View
         style={
-          isIphoneX()
+          isIphoneX() && !isSubScreen
             ? {flex: 1, marginTop: getStatusBarHeight() + 10}
             : {flex: 1, marginTop: 10}
         }>

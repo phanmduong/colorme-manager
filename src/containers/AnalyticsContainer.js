@@ -187,6 +187,7 @@ class AnalyticsContainer extends React.Component {
   onClickRegisterList() {
     this.props.navigation.navigate('RegisterList', {
       autoFocus: false,
+      isSubScreen: true,
     });
   }
 

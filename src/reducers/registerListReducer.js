@@ -9,38 +9,6 @@ export default function registerListReducer(
   action,
 ) {
   switch (action.type) {
-    case types.BEGIN_DATA_REGISTER_LIST_LOAD_ALL:
-      return Object.assign({}, state, {
-        isLoadingAll: action.isLoadingAll,
-        errorAll: action.errorAll,
-        refreshingAll: action.refreshingAll,
-      });
-    case types.LOAD_DATA_REGISTER_LIST_SUCCESSFUL_ALL:
-      let registerListDataAll =
-        action.currentPageAll === 1
-          ? action.registerListDataAll
-          : [...state.registerListDataAll, ...action.registerListDataAll];
-      return Object.assign({}, state, {
-        isLoadingAll: action.isLoadingAll,
-        errorAll: action.errorAll,
-        registerListDataAll: registerListDataAll,
-        currentPageAll: action.currentPageAll,
-        totalPageAll: action.totalPageAll,
-        refreshingAll: action.refreshingAll,
-      });
-    case types.LOAD_DATA_REGISTER_LIST_ERROR_ALL:
-      return Object.assign({}, state, {
-        isLoadingAll: action.isLoadingAll,
-        errorAll: action.errorAll,
-        refreshingAll: action.refreshingAll,
-      });
-    case types.UPDATE_FORM_SEARCH_REGISTER_LIST_ALL:
-      return Object.assign({}, state, {
-        searchAll: action.searchAll,
-        registerListDataAll: action.registerListDataAll,
-        currentPageAll: action.currentPageAll,
-        totalPageAll: action.totalPageAll,
-      });
     case types.BEGIN_DATA_REGISTER_LIST_LOAD_MY:
       return Object.assign({}, state, {
         isLoadingMy: action.isLoadingMy,
@@ -57,6 +25,7 @@ export default function registerListReducer(
         registerListDataMy: registerListDataMy,
         currentPageMy: action.currentPageMy,
         totalPageMy: action.totalPageMy,
+        salerId: action.salerId,
       });
     case types.LOAD_DATA_REGISTER_LIST_ERROR_MY:
       return Object.assign({}, state, {
@@ -69,16 +38,6 @@ export default function registerListReducer(
         registerListDataMy: action.registerListDataMy,
         currentPageMy: action.currentPageMy,
         totalPageMy: action.totalPageMy,
-      });
-    case types.CHANGE_SEGMENT_REGISTER_LIST:
-      return Object.assign({}, state, {
-        segment: action.segment,
-      });
-    case types.RESET_PAGE_REGISTER_LIST_ALL:
-      return Object.assign({}, state, {
-        registerListDataAll: action.registerListDataAll,
-        currentPageAll: action.currentPageAll,
-        totalPageAll: action.totalPageAll,
       });
     case types.RESET_PAGE_REGISTER_LIST_MY:
       return Object.assign({}, state, {

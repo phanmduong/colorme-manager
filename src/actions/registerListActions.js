@@ -8,96 +8,11 @@ let CancelToken = axios.CancelToken;
 let sourceCancelAll = CancelToken.source();
 let sourceCancelMy = CancelToken.source();
 
-export function beginDataRegisterListLoadAll() {
-  return {
-    type: types.BEGIN_DATA_REGISTER_LIST_LOAD_ALL,
-    isLoadingAll: true,
-    errorAll: false,
-    refreshingAll: true,
-  };
-}
-
-export function loadDataRegisterListAll(token, page, search) {
-  return function(dispatch) {
-    dispatch(beginDataRegisterListLoadAll());
-    studentApi
-      .loadRegisterListApi(token, page, search, '', sourceCancelAll)
-      .then(function(res) {
-        dispatch(loadDataSuccessfulAll(res));
-      })
-      .catch(error => {
-        if (axios.isCancel(error)) {
-          console.log('Request canceled', error.message);
-        } else {
-          dispatch(loadDataErrorAll());
-          throw error;
-        }
-      });
-  };
-}
-
-export function loadDataSuccessfulAll(res) {
-  return {
-    type: types.LOAD_DATA_REGISTER_LIST_SUCCESSFUL_ALL,
-    registerListDataAll: res.data.registers,
-    currentPageAll: res.data.paginator.current_page,
-    totalPageAll: res.data.paginator.total_pages,
-    isLoadingAll: false,
-    errorAll: false,
-    refreshingAll: false,
-  };
-}
-
-export function loadDataErrorAll() {
-  return {
-    type: types.LOAD_DATA_REGISTER_LIST_ERROR_ALL,
-    isLoadingAll: false,
-    errorAll: true,
-    refreshingAll: false,
-  };
-}
-
-export function updateFormAndLoadDataSearchAll(searchAll, token) {
-  sourceCancelAll.cancel('Canceled by api register list (all).');
-  sourceCancelAll = CancelToken.source();
-  return dispatch => {
-    dispatch(updateFormSearchAll(searchAll));
-    dispatch(loadDataRegisterListAll(token, 1, searchAll));
-  };
-}
-
-export function refreshRegisterListAll(searchAll, token) {
-  return dispatch => {
-    dispatch(resetRegisterListAll());
-    dispatch(loadDataRegisterListAll(token, 1, searchAll));
-  };
-}
-
-function resetRegisterListAll() {
-  return {
-    type: types.RESET_PAGE_REGISTER_LIST_ALL,
-    currentPageAll: 1,
-    totalPageAll: 1,
-    registerListDataAll: [],
-  };
-}
-
-export function updateFormSearchAll(searchAll) {
-  return {
-    type: types.UPDATE_FORM_SEARCH_REGISTER_LIST_ALL,
-    searchAll: searchAll,
-    currentPageAll: 1,
-    totalPageAll: 1,
-    registerListDataAll: [],
-  };
-}
-
 export function beginDataRegisterListLoadMy() {
   return {
     type: types.BEGIN_DATA_REGISTER_LIST_LOAD_MY,
     isLoadingMy: true,
     errorMy: false,
-    refreshingMy: false,
   };
 }
 
@@ -107,7 +22,7 @@ export function loadDataRegisterListMy(token, page, search, salerId) {
     studentApi
       .loadRegisterListApi(token, page, search, salerId, sourceCancelMy)
       .then(function(res) {
-        dispatch(loadDataSuccessfulMy(res));
+        dispatch(loadDataSuccessfulMy(res, salerId));
       })
       .catch(error => {
         if (axios.isCancel(error)) {
@@ -120,7 +35,7 @@ export function loadDataRegisterListMy(token, page, search, salerId) {
   };
 }
 
-export function loadDataSuccessfulMy(res) {
+export function loadDataSuccessfulMy(res, salerId) {
   return {
     type: types.LOAD_DATA_REGISTER_LIST_SUCCESSFUL_MY,
     registerListDataMy: res.data.registers,
@@ -129,6 +44,7 @@ export function loadDataSuccessfulMy(res) {
     isLoadingMy: false,
     errorMy: false,
     refreshingMy: false,
+    salerId: salerId,
   };
 }
 
@@ -160,13 +76,6 @@ export function updateFormSearchMy(searchMy) {
   };
 }
 
-export function changeSegmentRegisterList(segment) {
-  return {
-    type: types.CHANGE_SEGMENT_REGISTER_LIST,
-    segment: segment,
-  };
-}
-
 export function refreshRegisterListMy(searchMy, token, salerId) {
   return dispatch => {
     dispatch(resetRegisterListMy());
@@ -180,5 +89,6 @@ function resetRegisterListMy() {
     currentPageMy: 1,
     totalPageMy: 1,
     registerListDataMy: [],
+    refreshingMy: true,
   };
 }

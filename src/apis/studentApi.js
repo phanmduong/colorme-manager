@@ -10,6 +10,16 @@ export function loadRegisterListApi(
   search = '',
   salerId = '',
   sourceCancel,
+  genId = '',
+  campaignId = '',
+  classId = '',
+  paid_status = '',
+  baseId = '',
+  appointmentPayment = '',
+  class_status = '',
+  search_coupon = '',
+  bookmark = '',
+  tele_call_status = '',
 ) {
   let url =
     env.API_URL +
@@ -19,6 +29,26 @@ export function loadRegisterListApi(
     search +
     '&saler_id=' +
     salerId +
+    '&gen_id=' +
+    genId +
+    '&campaign_id=' +
+    campaignId +
+    '&class_id=' +
+    classId +
+    '&status=' +
+    paid_status +
+    '&base_id=' +
+    baseId +
+    '&appointment_payment=' +
+    appointmentPayment +
+    '&type=' +
+    class_status +
+    '&search_coupon=' +
+    search_coupon +
+    '&bookmark=' +
+    bookmark +
+    '&tele_call_status=' +
+    tele_call_status +
     '&token=' +
     token;
   return axios.get(url, {cancelToken: sourceCancel.token});
@@ -63,7 +93,14 @@ export function searchStudentRegisterApi(sourceCancel = {}, search, token) {
   return axios.get(url, {cancelToken: sourceCancel.token});
 }
 
-export function uploadImage(file, completeHandler, id, imageField, token, error) {
+export function uploadImage(
+  file,
+  completeHandler,
+  id,
+  imageField,
+  token,
+  error,
+) {
   let url = env.MANAGE_API_URL + '/upload-image-user';
   if (token) {
     url += '?token=' + token;

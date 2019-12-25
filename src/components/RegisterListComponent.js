@@ -59,7 +59,8 @@ class RegisterListComponent extends React.Component {
         <FilterModal
           isVisible={this.state.filterModalVisible}
           closeModal={this.toggleFilterModal}
-          changeSegmentRegisterList={this.props.changeSegmentRegisterList}
+          onRefresh={this.props.onRefresh}
+          user={this.props.user}
         />
       </View>
     );
@@ -94,8 +95,12 @@ class RegisterListComponent extends React.Component {
           contentContainerStyle={{flexGrow: 1}}
           ListHeaderComponent={this.headerComponent}
           ListEmptyComponent={
-            this.props.isLoading || this.props.isSearchLoading ? (
-              <View />
+            this.props.isLoading ? (
+              this.props.refreshing ? (
+                <View />
+              ) : (
+                <Loading size={width / 8} />
+              )
             ) : (
               <View style={styles.container}>
                 <Text style={{color: theme.dangerColor, fontSize: 16}}>
@@ -107,7 +112,7 @@ class RegisterListComponent extends React.Component {
           refreshControl={
             <RefreshControl
               refreshing={this.props.refreshing}
-              onRefresh={this.props.onRefresh}
+              onRefresh={() => this.props.onRefresh(this.props.salerId)}
               titleColor={theme.mainColor}
               title="Đang tải..."
               tintColor="#d9534f"

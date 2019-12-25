@@ -16,11 +16,27 @@ export function beginDataRegisterListLoadMy() {
   };
 }
 
-export function loadDataRegisterListMy(token, page, search, salerId) {
+export function loadDataRegisterListMy(token, page, search, salerId, baseId) {
   return function(dispatch) {
     dispatch(beginDataRegisterListLoadMy());
     studentApi
-      .loadRegisterListApi(token, page, search, salerId, sourceCancelMy)
+      .loadRegisterListApi(
+        token,
+        page,
+        search,
+        salerId,
+        sourceCancelMy,
+        '',
+        '',
+        '',
+        '',
+        baseId,
+        '',
+        '',
+        '',
+        '',
+        '',
+      )
       .then(function(res) {
         dispatch(loadDataSuccessfulMy(res, salerId));
       })
@@ -76,10 +92,10 @@ export function updateFormSearchMy(searchMy) {
   };
 }
 
-export function refreshRegisterListMy(searchMy, token, salerId) {
+export function refreshRegisterListMy(searchMy, token, salerId, baseId) {
   return dispatch => {
     dispatch(resetRegisterListMy());
-    dispatch(loadDataRegisterListMy(token, 1, searchMy, salerId));
+    dispatch(loadDataRegisterListMy(token, 1, searchMy, salerId, baseId));
   };
 }
 
@@ -90,5 +106,12 @@ function resetRegisterListMy() {
     totalPageMy: 1,
     registerListDataMy: [],
     refreshingMy: true,
+  };
+}
+
+export function onSelectSalerId(salerId) {
+  return {
+    type: types.SELECT_REGISTER_LIST_SALER,
+    salerId: salerId,
   };
 }

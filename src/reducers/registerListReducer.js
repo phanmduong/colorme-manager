@@ -45,6 +45,10 @@ export default function registerListReducer(
         currentPageMy: action.currentPageMy,
         totalPageMy: action.totalPageMy,
       });
+    case types.SELECT_REGISTER_LIST_SALER:
+      return Object.assign({}, state, {
+        salerId: action.salerId,
+      });
     default:
       return state;
   }

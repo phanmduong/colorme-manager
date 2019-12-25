@@ -111,7 +111,7 @@ export default {
     totalPageMy: 1,
     searchMy: '',
     refreshingMy: false,
-    salerId: '',
+    salerId: -1,
   },
   collectMoney: {
     studentListData: [],

@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as registerListActions from '../actions/registerListActions';
 import * as infoStudentActions from '../actions/infoStudentActions';
+import * as baseActions from '../actions/baseActions';
 import RegisterListComponent from '../components/RegisterListComponent';
 import {isEmptyInput} from '../helper';
 
@@ -24,28 +25,42 @@ class RegisterListContainer extends React.Component {
 
   componentWillMount() {
     this.loadDataRegisterListMy();
+    this.loadBases();
   }
 
-  refreshRegisterListMy = (salerId = '') => {
-    this.props.registerListActions.refreshRegisterListMy(
-      this.props.searchMy,
-      this.props.token,
-      salerId,
-    );
+  loadBases = () => {
+    this.props.baseActions.loadDataBase(this.props.token);
   };
 
-  loadDataRegisterListMy(salerId = '') {
+  loadDataRegisterListMy() {
+    let baseId =
+      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
+    let salerId = this.props.salerId === -1 ? '' : this.props.salerId;
     if (this.props.currentPageMy < this.props.totalPageMy) {
       this.props.registerListActions.loadDataRegisterListMy(
         this.props.token,
         this.props.currentPageMy + 1,
         this.props.searchMy,
         salerId,
+        baseId,
       );
     }
   }
 
-  updateFormAndLoadDataSearchMy(search, salerId = '') {
+  refreshRegisterListMy = () => {
+    let baseId =
+      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
+    let salerId = this.props.salerId === -1 ? '' : this.props.salerId;
+    this.props.registerListActions.refreshRegisterListMy(
+      this.props.searchMy,
+      this.props.token,
+      salerId,
+      baseId,
+    );
+  };
+
+  updateFormAndLoadDataSearchMy(search) {
+    let salerId = this.props.salerId === -1 ? '' : this.props.salerId;
     this.props.registerListActions.updateFormAndLoadDataSearchMy(
       search,
       salerId,
@@ -91,6 +106,14 @@ class RegisterListContainer extends React.Component {
     );
   };
 
+  onSelectBaseId = baseId => {
+    this.props.baseActions.selectedBaseId(baseId);
+  };
+
+  onSelectSalerId = salerId => {
+    this.props.registerListActions.onSelectSalerId(salerId);
+  };
+
   render() {
     let autoFocus = this.props.navigation.getParam('autoFocus');
     if (isEmptyInput(autoFocus)) {
@@ -116,6 +139,10 @@ class RegisterListContainer extends React.Component {
         submitMoney={this.submitMoney}
         user={this.props.user}
         salerId={this.props.salerId}
+        baseData={this.props.baseData}
+        onSelectBaseId={this.onSelectBaseId}
+        onSelectSalerId={this.onSelectSalerId}
+        selectedBaseId={this.props.selectedBaseId}
       />
     );
   }
@@ -135,6 +162,8 @@ function mapStateToProps(state) {
     salerId: state.registerList.salerId,
     errorChangeCallStatus: state.registerList.errorChangeCallStatus,
     errorSubmitMoney: state.registerList.errorSubmitMoney,
+    baseData: state.base.baseData,
+    selectedBaseId: state.base.selectedBaseId,
   };
 }
 
@@ -142,6 +171,7 @@ function mapDispatchToProps(dispatch) {
   return {
     registerListActions: bindActionCreators(registerListActions, dispatch),
     infoStudentActions: bindActionCreators(infoStudentActions, dispatch),
+    baseActions: bindActionCreators(baseActions, dispatch),
   };
 }
 

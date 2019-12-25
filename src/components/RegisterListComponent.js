@@ -40,16 +40,7 @@ class RegisterListComponent extends React.Component {
           extraInputStyle={{width: width - 85 - 48}}
         />
         <TouchableOpacity onPress={this.toggleFilterModal}>
-          <View
-            style={{
-              width: 40,
-              height: 40,
-              backgroundColor: '#F6F6F6',
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 20,
-              marginLeft: 10,
-            }}>
+          <View style={styles.fitlerContainer}>
             <Image
               source={require('../../assets/img/icons8-sorting_options_filled.png')}
               style={{width: 18, height: 18}}
@@ -61,6 +52,11 @@ class RegisterListComponent extends React.Component {
           closeModal={this.toggleFilterModal}
           onRefresh={this.props.onRefresh}
           user={this.props.user}
+          baseData={this.props.baseData}
+          onSelectBaseId={this.props.onSelectBaseId}
+          onSelectSalerId={this.props.onSelectSalerId}
+          selectedBaseId={this.props.selectedBaseId}
+          salerId={this.props.salerId}
         />
       </View>
     );
@@ -214,6 +210,15 @@ const styles = {
     width: 35,
     height: 35,
     borderRadius: 18,
+  },
+  fitlerContainer: {
+    width: 40,
+    height: 40,
+    backgroundColor: '#F6F6F6',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 20,
+    marginLeft: 10,
   },
 };
 

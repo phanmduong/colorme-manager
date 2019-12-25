@@ -5,15 +5,24 @@ import {
   Dimensions,
   ScrollView,
   TouchableOpacity,
+  TextInput,
 } from 'react-native';
 import Modal from 'react-native-modal';
 import {CustomPicker} from 'react-native-custom-picker';
 import LinearGradient from 'react-native-linear-gradient';
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import moment from 'moment';
 var {width, height} = Dimensions.get('window');
 
 class FilterModal extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.state = {
+      search_coupon: '',
+      isStartDateVisible: false,
+      isEndDateVisible: false,
+      isAppointmentPaymentVisible: false,
+    };
   }
 
   renderSegmentPickerField = settings => {
@@ -44,32 +53,6 @@ class FilterModal extends React.Component {
               justifyContent: 'space-between',
               flexDirection: 'row',
             }}>
-            <Text style={{color: 'black', fontSize: 16}}>
-              {getLabel(selectedItem)}
-            </Text>
-            <Text>▼</Text>
-          </View>
-        )}
-      </LinearGradient>
-    );
-  };
-
-  renderCoursePickerField = settings => {
-    const {selectedItem, defaultText, getLabel} = settings;
-    return (
-      <LinearGradient
-        colors={['#EDEDED', '#EDEDED']}
-        style={styles.gradientSize}
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 0}}>
-        {!selectedItem && (
-          <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
-            <Text style={{color: 'black', fontSize: 16}}>{defaultText}</Text>
-            <Text>▼</Text>
-          </View>
-        )}
-        {selectedItem && (
-          <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
             <Text style={{color: 'black', fontSize: 16}}>
               {getLabel(selectedItem)}
             </Text>
@@ -180,6 +163,39 @@ class FilterModal extends React.Component {
       }
     }
     return array[0];
+  };
+
+  handleStartDatePicked = date => {
+    this.props.onSelectStartTime(moment(date).format('YYYY-MM-DD'));
+    this.setState({
+      isStartDateVisible: false,
+    });
+  };
+
+  handleEndDatePicked = date => {
+    this.props.onSelectEndTime(moment(date).format('YYYY-MM-DD'));
+    this.setState({
+      isEndDateVisible: false,
+    });
+  };
+
+  handleAppointmentPaymentPicked = date => {
+    this.props.onSelectAppointmentPayment(moment(date).format('YYYY-MM-DD'));
+    this.setState({
+      isAppointmentPaymentVisible: false,
+    });
+  };
+
+  openStartDatePicker = () => {
+    this.setState({isStartDateVisible: true});
+  };
+
+  openEndDatePicker = () => {
+    this.setState({isEndDateVisible: true});
+  };
+
+  openAppointmentPaymentPicker = () => {
+    this.setState({isAppointmentPaymentVisible: true});
   };
 
   render() {
@@ -297,6 +313,36 @@ class FilterModal extends React.Component {
               />
             </View>
             <View style={styles.filterTitle}>
+              <Text style={{fontSize: 16}}>Từ ngày</Text>
+              <TouchableOpacity
+                style={styles.filterContainer}
+                onPress={() => this.openStartDatePicker()}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                  }}>
+                  {this.props.start_time !== ''
+                    ? this.props.start_time
+                    : 'YYYY-MM-DD'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.filterTitle}>
+              <Text style={{fontSize: 16}}>Đến ngày</Text>
+              <TouchableOpacity
+                style={styles.filterContainer}
+                onPress={() => this.openEndDatePicker()}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                  }}>
+                  {this.props.end_time !== ''
+                    ? this.props.end_time
+                    : 'YYYY-MM-DD'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.filterTitle}>
               <Text style={{fontSize: 16}}>Trạng thái lớp</Text>
               <CustomPicker
                 options={classStatusFilter}
@@ -339,6 +385,34 @@ class FilterModal extends React.Component {
               />
             </View>
             <View style={styles.filterTitle}>
+              <Text style={{fontSize: 16}}>Hẹn ngày nộp tiền</Text>
+              <TouchableOpacity
+                style={styles.filterContainer}
+                onPress={() => this.openAppointmentPaymentPicker()}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                  }}>
+                  {this.props.appointmentPayment !== ''
+                    ? this.props.appointmentPayment
+                    : 'YYYY-MM-DD'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.filterTitle}>
+              <Text style={{fontSize: 16}}>Coupon</Text>
+              <View style={styles.filterContainer}>
+                <TextInput
+                  placeholder={'Nhập coupon'}
+                  autoCapitalize={false}
+                  onChangeText={text => this.setState({search_coupon: text})}
+                  value={this.state.search_coupon}
+                  clearButtonMode={true}
+                  style={{width: 120, fontSize: 16}}
+                />
+              </View>
+            </View>
+            <View style={styles.filterTitle}>
               <Text style={{fontSize: 16}}>Đánh dấu</Text>
               <CustomPicker
                 options={bookmarkFilter}
@@ -357,41 +431,9 @@ class FilterModal extends React.Component {
                 }}
               />
             </View>
-            {/*<CustomPicker*/}
-            {/*  options={segments}*/}
-            {/*  getLabel={item => item.name}*/}
-            {/*  placeholder={'Chọn môn'}*/}
-            {/*  modalAnimationType={'fade'}*/}
-            {/*  optionTemplate={this.renderCoursePickerOption}*/}
-            {/*  fieldTemplate={this.renderCoursePickerField}*/}
-            {/*  headerTemplate={() => this.renderPickerHeader('Chọn môn')}*/}
-            {/*  footerTemplate={this.renderCoursePickerFooter}*/}
-            {/*  modalStyle={{*/}
-            {/*    borderRadius: 6,*/}
-            {/*  }}*/}
-            {/*  onValueChange={value => {*/}
-            {/*    this.setState({selectedCourse: true});*/}
-            {/*  }}*/}
-            {/*/>*/}
-            {/*{this.state.selectedCourse ? (*/}
-            {/*  <CustomPicker*/}
-            {/*    options={segments}*/}
-            {/*    getLabel={item => item.name}*/}
-            {/*    placeholder={'Chọn lớp'}*/}
-            {/*    modalAnimationType={'fade'}*/}
-            {/*    optionTemplate={this.renderCoursePickerOption}*/}
-            {/*    fieldTemplate={this.renderCoursePickerField}*/}
-            {/*    headerTemplate={() => this.renderPickerHeader('Chọn lớp')}*/}
-            {/*    footerTemplate={this.renderCoursePickerFooter}*/}
-            {/*    modalStyle={{*/}
-            {/*      borderRadius: 6,*/}
-            {/*    }}*/}
-            {/*    onValueChange={value => {}}*/}
-            {/*  />*/}
-            {/*) : null}*/}
             <TouchableOpacity
               onPress={() => {
-                this.props.onRefresh();
+                this.props.onRefresh(this.state.search_coupon);
                 this.props.closeModal();
               }}>
               <View style={styles.submit}>
@@ -411,6 +453,23 @@ class FilterModal extends React.Component {
                 <Text style={{fontSize: 16}}>Hủy</Text>
               </View>
             </TouchableOpacity>
+            <DateTimePicker
+              isVisible={this.state.isStartDateVisible}
+              onConfirm={this.handleStartDatePicked}
+              onCancel={() => this.setState({isStartDateVisible: false})}
+            />
+            <DateTimePicker
+              isVisible={this.state.isEndDateVisible}
+              onConfirm={this.handleEndDatePicked}
+              onCancel={() => this.setState({isEndDateVisible: false})}
+            />
+            <DateTimePicker
+              isVisible={this.state.isAppointmentPaymentVisible}
+              onConfirm={this.handleAppointmentPaymentPicked}
+              onCancel={() =>
+                this.setState({isAppointmentPaymentVisible: false})
+              }
+            />
           </ScrollView>
         </View>
       </Modal>
@@ -481,13 +540,6 @@ const styles = {
     borderBottomWidth: 1,
     borderBottomColor: '#F0F0F0',
     marginHorizontal: 20,
-  },
-  gradientSize: {
-    justifyContent: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 24,
-    marginTop: 20,
   },
 };
 

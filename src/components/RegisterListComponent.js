@@ -68,6 +68,12 @@ class RegisterListComponent extends React.Component {
           callStatus={this.props.callStatus}
           onSelectBookmark={this.props.onSelectBookmark}
           bookmark={this.props.bookmark}
+          onSelectStartTime={this.props.onSelectStartTime}
+          start_time={this.props.start_time}
+          onSelectEndTime={this.props.onSelectEndTime}
+          end_time={this.props.end_time}
+          appointmentPayment={this.props.appointmentPayment}
+          onSelectAppointmentPayment={this.props.onSelectAppointmentPayment}
         />
       </View>
     );
@@ -119,7 +125,7 @@ class RegisterListComponent extends React.Component {
           refreshControl={
             <RefreshControl
               refreshing={this.props.refreshing}
-              onRefresh={() => this.props.onRefresh(this.props.salerId)}
+              onRefresh={() => this.props.onRefresh(this.props.search_coupon)}
               titleColor={theme.mainColor}
               title="Đang tải..."
               tintColor="#d9534f"

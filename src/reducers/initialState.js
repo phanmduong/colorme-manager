@@ -117,6 +117,10 @@ export default {
     classStatus: '',
     callStatus: -1,
     bookmark: -1,
+    search_coupon: '',
+    start_time: '',
+    end_time: '',
+    appointmentPayment: '',
   },
   collectMoney: {
     studentListData: [],

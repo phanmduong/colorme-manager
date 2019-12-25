@@ -26,6 +26,7 @@ export default function registerListReducer(
         currentPageMy: action.currentPageMy,
         totalPageMy: action.totalPageMy,
         salerId: action.salerId,
+        search_coupon: action.search_coupon,
       });
     case types.LOAD_DATA_REGISTER_LIST_ERROR_MY:
       return Object.assign({}, state, {
@@ -69,6 +70,18 @@ export default function registerListReducer(
     case types.SELECT_REGISTER_LIST_BOOKMARK:
       return Object.assign({}, state, {
         bookmark: action.bookmark,
+      });
+    case types.SELECT_REGISTER_LIST_START_TIME:
+      return Object.assign({}, state, {
+        start_time: action.start_time,
+      });
+    case types.SELECT_REGISTER_LIST_END_TIME:
+      return Object.assign({}, state, {
+        end_time: action.end_time,
+      });
+    case types.SELECT_REGISTER_LIST_APPOINTMENT_PAYMENT:
+      return Object.assign({}, state, {
+        appointmentPayment: action.appointmentPayment,
       });
     default:
       return state;

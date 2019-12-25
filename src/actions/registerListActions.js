@@ -27,6 +27,10 @@ export function loadDataRegisterListMy(
   classStatus,
   callStatus,
   bookmark,
+  search_coupon,
+  start_time,
+  end_time,
+  appointmentPayment,
 ) {
   return function(dispatch) {
     dispatch(beginDataRegisterListLoadMy());
@@ -42,14 +46,16 @@ export function loadDataRegisterListMy(
         '',
         paidStatus,
         baseId,
-        '',
+        appointmentPayment,
         classStatus,
-        '',
+        search_coupon,
         bookmark,
         callStatus,
+        start_time,
+        end_time,
       )
       .then(function(res) {
-        dispatch(loadDataSuccessfulMy(res, salerId));
+        dispatch(loadDataSuccessfulMy(res, salerId, search_coupon));
       })
       .catch(error => {
         if (axios.isCancel(error)) {
@@ -62,7 +68,7 @@ export function loadDataRegisterListMy(
   };
 }
 
-export function loadDataSuccessfulMy(res, salerId) {
+export function loadDataSuccessfulMy(res, salerId, search_coupon) {
   return {
     type: types.LOAD_DATA_REGISTER_LIST_SUCCESSFUL_MY,
     registerListDataMy: res.data.registers,
@@ -72,6 +78,7 @@ export function loadDataSuccessfulMy(res, salerId) {
     errorMy: false,
     refreshingMy: false,
     salerId: salerId,
+    search_coupon: search_coupon,
   };
 }
 
@@ -93,6 +100,10 @@ export function updateFormAndLoadDataSearchMy(
   classStatus,
   callStatus,
   bookmark,
+  search_coupon,
+  start_time,
+  end_time,
+  appointmentPayment,
   token,
 ) {
   sourceCancelMy.cancel('Canceled by api register list (my).');
@@ -111,6 +122,10 @@ export function updateFormAndLoadDataSearchMy(
         classStatus,
         callStatus,
         bookmark,
+        search_coupon,
+        start_time,
+        end_time,
+        appointmentPayment,
       ),
     );
   };
@@ -136,6 +151,10 @@ export function refreshRegisterListMy(
   classStatus,
   callStatus,
   bookmark,
+  search_coupon,
+  start_time,
+  end_time,
+  appointmentPayment,
 ) {
   return dispatch => {
     dispatch(resetRegisterListMy());
@@ -151,6 +170,10 @@ export function refreshRegisterListMy(
         classStatus,
         callStatus,
         bookmark,
+        search_coupon,
+        start_time,
+        end_time,
+        appointmentPayment,
       ),
     );
   };
@@ -205,5 +228,26 @@ export function onSelectBookmark(bookmark) {
   return {
     type: types.SELECT_REGISTER_LIST_BOOKMARK,
     bookmark: bookmark,
+  };
+}
+
+export function onSelectStartTime(start_time) {
+  return {
+    type: types.SELECT_REGISTER_LIST_START_TIME,
+    start_time: start_time,
+  };
+}
+
+export function onSelectEndTime(end_time) {
+  return {
+    type: types.SELECT_REGISTER_LIST_END_TIME,
+    end_time: end_time,
+  };
+}
+
+export function onSelectAppointmentPayment(appointmentPayment) {
+  return {
+    type: types.SELECT_REGISTER_LIST_APPOINTMENT_PAYMENT,
+    appointmentPayment: appointmentPayment,
   };
 }

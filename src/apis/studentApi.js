@@ -3,6 +3,7 @@
  */
 import axios from 'axios';
 import * as env from '../constants/env';
+import {isEmptyInput} from '../helper';
 
 export function loadRegisterListApi(
   token,
@@ -20,6 +21,8 @@ export function loadRegisterListApi(
   search_coupon = '',
   bookmark = '',
   tele_call_status = '',
+  start_time = '',
+  end_time = '',
 ) {
   let url =
     env.API_URL +
@@ -49,6 +52,10 @@ export function loadRegisterListApi(
     bookmark +
     '&tele_call_status=' +
     tele_call_status +
+    '&start_time=' +
+    start_time +
+    '&end_time=' +
+    end_time +
     '&token=' +
     token;
   return axios.get(url, {cancelToken: sourceCancel.token});
@@ -114,4 +121,10 @@ export function uploadImage(
   ajax.addEventListener('error', error);
   ajax.open('POST', url);
   ajax.send(formdata);
+}
+
+export function loadStatuses(ref, token) {
+  let url =
+    env.MANAGE_API_URL + '/v4/statuses/all?token=' + token + '&ref=' + ref;
+  return axios.get(url);
 }

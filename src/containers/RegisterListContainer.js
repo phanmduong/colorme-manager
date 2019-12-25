@@ -58,11 +58,15 @@ class RegisterListContainer extends React.Component {
         this.props.classStatus,
         callStatus,
         bookmark,
+        this.props.search_coupon,
+        this.props.start_time,
+        this.props.end_time,
+        this.props.appointmentPayment,
       );
     }
   }
 
-  refreshRegisterListMy = () => {
+  refreshRegisterListMy = search_coupon => {
     let baseId =
       this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
     let salerId = this.props.salerId === -1 ? '' : this.props.salerId;
@@ -80,6 +84,10 @@ class RegisterListContainer extends React.Component {
       this.props.classStatus,
       callStatus,
       bookmark,
+      search_coupon,
+      this.props.start_time,
+      this.props.end_time,
+      this.props.appointmentPayment,
     );
   };
 
@@ -100,6 +108,10 @@ class RegisterListContainer extends React.Component {
       this.props.classStatus,
       callStatus,
       bookmark,
+      this.props.search_coupon,
+      this.props.start_time,
+      this.props.end_time,
+      this.props.appointmentPayment,
       this.props.token,
     );
   }
@@ -170,11 +182,24 @@ class RegisterListContainer extends React.Component {
     this.props.registerListActions.onSelectBookmark(bookmark);
   };
 
+  onSelectStartTime = date => {
+    this.props.registerListActions.onSelectStartTime(date);
+  };
+
+  onSelectEndTime = date => {
+    this.props.registerListActions.onSelectEndTime(date);
+  };
+
+  onSelectAppointmentPayment = date => {
+    this.props.registerListActions.onSelectAppointmentPayment(date);
+  };
+
   render() {
     let autoFocus = this.props.navigation.getParam('autoFocus');
     if (isEmptyInput(autoFocus)) {
       autoFocus = false;
     }
+    console.log(this.props.start_time);
     return (
       <RegisterListComponent
         {...this.props}
@@ -210,6 +235,12 @@ class RegisterListContainer extends React.Component {
         callStatus={this.props.callStatus}
         onSelectBookmark={this.onSelectBookmark}
         bookmark={this.props.bookmark}
+        onSelectStartTime={this.onSelectStartTime}
+        start_time={this.props.start_time}
+        onSelectEndTime={this.onSelectEndTime}
+        end_time={this.props.end_time}
+        onSelectAppointmentPayment={this.onSelectAppointmentPayment}
+        appointmentPayment={this.props.appointmentPayment}
       />
     );
   }
@@ -237,6 +268,10 @@ function mapStateToProps(state) {
     classStatus: state.registerList.classStatus,
     callStatus: state.registerList.callStatus,
     bookmark: state.registerList.bookmark,
+    search_coupon: state.registerList.search_coupon,
+    start_time: state.registerList.start_time,
+    end_time: state.registerList.end_time,
+    appointmentPayment: state.registerList.appointmentPayment,
   };
 }
 

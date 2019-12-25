@@ -57,6 +57,17 @@ class RegisterListComponent extends React.Component {
           onSelectSalerId={this.props.onSelectSalerId}
           selectedBaseId={this.props.selectedBaseId}
           salerId={this.props.salerId}
+          campaigns={this.props.campaigns}
+          onSelectCampaignId={this.props.onSelectCampaignId}
+          campaignId={this.props.campaignId}
+          onSelectPaidStatus={this.props.onSelectPaidStatus}
+          paidStatus={this.props.paidStatus}
+          onSelectClassStatus={this.props.onSelectClassStatus}
+          classStatus={this.props.classStatus}
+          onSelectCallStatus={this.props.onSelectCallStatus}
+          callStatus={this.props.callStatus}
+          onSelectBookmark={this.props.onSelectBookmark}
+          bookmark={this.props.bookmark}
         />
       </View>
     );

@@ -104,6 +104,7 @@ class ListItemStudent extends React.Component {
                         !saler.color || saler.color === ''
                           ? theme.processColor1
                           : '#' + saler.color,
+                      marginRight: 5,
                     },
                   }}>
                   <Text style={styles.saler}>{getShortName(saler.name)}</Text>
@@ -120,7 +121,6 @@ class ListItemStudent extends React.Component {
                         !campaign.color || campaign.color === ''
                           ? theme.processColor1
                           : '#' + campaign.color,
-                      marginLeft: 5,
                     },
                   }}>
                   <Text style={styles.campaign}>{campaign.name.trim()}</Text>

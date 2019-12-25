@@ -126,15 +126,87 @@ class FilterModal extends React.Component {
   };
 
   getBaseData = () => {
-    let allBase = {id: -1, name: 'Tất cả'};
-    let baseData = [allBase].concat(this.props.baseData);
+    let defaultBase = {id: -1, name: 'Tất cả'};
+    let baseData = [defaultBase].concat(this.props.baseData);
     return baseData;
+  };
+
+  getCampaigns = () => {
+    let defaultCampaign = {id: -1, name: 'Tất cả'};
+    let campaigns = [defaultCampaign].concat(this.props.campaigns);
+    return campaigns;
+  };
+
+  getDefaultCampaign = array => {
+    for (let campaign of array) {
+      if (campaign.id === this.props.campaignId) {
+        return campaign;
+      }
+    }
+    return array[0];
+  };
+
+  getDefaultPaidStatus = array => {
+    for (let moneyFilter of array) {
+      if (moneyFilter.id === this.props.paidStatus) {
+        return moneyFilter;
+      }
+    }
+    return array[0];
+  };
+
+  getDefaultClassStatus = array => {
+    for (let classStatus of array) {
+      if (classStatus.value === this.props.classStatus) {
+        return classStatus;
+      }
+    }
+    return array[0];
+  };
+
+  getDefaultCallStatus = array => {
+    for (let callStatus of array) {
+      if (callStatus.id === this.props.callStatus) {
+        return callStatus;
+      }
+    }
+    return array[0];
+  };
+
+  getDefaultBookmark = array => {
+    for (let bookmark of array) {
+      if (bookmark.id === this.props.bookmark) {
+        return bookmark;
+      }
+    }
+    return array[0];
   };
 
   render() {
     const segments = [
       {name: 'Tất cả', id: -1},
       {name: 'Của bạn', id: this.props.user.id},
+    ];
+    const moneyFilter = [
+      {id: -1, name: 'Tất cả'},
+      {id: 1, name: 'Đã nộp'},
+      {id: 0, name: 'Chưa nộp'},
+    ];
+    const classStatusFilter = [
+      {value: '', name: 'Tất cả'},
+      {value: 'active', name: 'Hoạt động'},
+      {value: 'waiting', name: 'Chờ'},
+    ];
+    const teleCallStatus = [
+      {id: -1, name: 'Tất cả̉'},
+      {id: 0, name: 'Chưa gọi'},
+      {id: 1, name: 'Thành công'},
+      {id: 2, name: 'Thất bại'},
+    ];
+    const bookmarkFilter = [
+      {id: -1, name: 'Tất cả'},
+      {id: 1, name: 'Đã đánh dấu'},
+      {id: 0, name: 'Chưa đánh dấu'},
     ];
     return (
       <Modal
@@ -184,94 +256,107 @@ class FilterModal extends React.Component {
                 }}
               />
             </View>
-            {/*<View style={styles.filterTitle}>*/}
-            {/*  <Text style={{fontSize: 16}}>Thành phố</Text>*/}
-            {/*  <CustomPicker*/}
-            {/*    options={segments}*/}
-            {/*    defaultValue={segments[0]}*/}
-            {/*    getLabel={item => item.name}*/}
-            {/*    modalAnimationType={'fade'}*/}
-            {/*    optionTemplate={this.renderCoursePickerOption}*/}
-            {/*    fieldTemplate={this.renderSegmentPickerField}*/}
-            {/*    headerTemplate={() => this.renderPickerHeader('Chọn thành phố')}*/}
-            {/*    footerTemplate={this.renderCoursePickerFooter}*/}
-            {/*    modalStyle={{*/}
-            {/*      borderRadius: 6,*/}
-            {/*    }}*/}
-            {/*    onValueChange={value => {*/}
-            {/*      this.setState({*/}
-            {/*        segment: value.value,*/}
-            {/*      });*/}
-            {/*    }}*/}
-            {/*  />*/}
-            {/*</View>*/}
-            {/*<View style={styles.filterTitle}>*/}
-            {/*  <Text style={{fontSize: 16}}>Trạng thái</Text>*/}
-            {/*  <CustomPicker*/}
-            {/*    options={segments}*/}
-            {/*    defaultValue={segments[0]}*/}
-            {/*    getLabel={item => item.name}*/}
-            {/*    modalAnimationType={'fade'}*/}
-            {/*    optionTemplate={this.renderCoursePickerOption}*/}
-            {/*    fieldTemplate={this.renderSegmentPickerField}*/}
-            {/*    headerTemplate={() =>*/}
-            {/*      this.renderPickerHeader('Chọn trạng thái')*/}
-            {/*    }*/}
-            {/*    footerTemplate={this.renderCoursePickerFooter}*/}
-            {/*    modalStyle={{*/}
-            {/*      borderRadius: 6,*/}
-            {/*    }}*/}
-            {/*    onValueChange={value => {*/}
-            {/*      this.setState({*/}
-            {/*        segment: value.value,*/}
-            {/*      });*/}
-            {/*    }}*/}
-            {/*  />*/}
-            {/*</View>*/}
-            {/*<View style={styles.filterTitle}>*/}
-            {/*  <Text style={{fontSize: 16}}>Nguồn</Text>*/}
-            {/*  <CustomPicker*/}
-            {/*    options={segments}*/}
-            {/*    defaultValue={segments[0]}*/}
-            {/*    getLabel={item => item.name}*/}
-            {/*    modalAnimationType={'fade'}*/}
-            {/*    optionTemplate={this.renderCoursePickerOption}*/}
-            {/*    fieldTemplate={this.renderSegmentPickerField}*/}
-            {/*    headerTemplate={() => this.renderPickerHeader('Chọn nguồn')}*/}
-            {/*    footerTemplate={this.renderCoursePickerFooter}*/}
-            {/*    modalStyle={{*/}
-            {/*      borderRadius: 6,*/}
-            {/*    }}*/}
-            {/*    onValueChange={value => {*/}
-            {/*      this.setState({*/}
-            {/*        segment: value.value,*/}
-            {/*      });*/}
-            {/*    }}*/}
-            {/*  />*/}
-            {/*</View>*/}
-            {/*<View style={styles.filterTitle}>*/}
-            {/*  <Text style={{fontSize: 16}}>Chiến dịch</Text>*/}
-            {/*  <CustomPicker*/}
-            {/*    options={segments}*/}
-            {/*    defaultValue={segments[0]}*/}
-            {/*    getLabel={item => item.name}*/}
-            {/*    modalAnimationType={'fade'}*/}
-            {/*    optionTemplate={this.renderCoursePickerOption}*/}
-            {/*    fieldTemplate={this.renderSegmentPickerField}*/}
-            {/*    headerTemplate={() =>*/}
-            {/*      this.renderPickerHeader('Chọn chiến dịch')*/}
-            {/*    }*/}
-            {/*    footerTemplate={this.renderCoursePickerFooter}*/}
-            {/*    modalStyle={{*/}
-            {/*      borderRadius: 6,*/}
-            {/*    }}*/}
-            {/*    onValueChange={value => {*/}
-            {/*      this.setState({*/}
-            {/*        segment: value.value,*/}
-            {/*      });*/}
-            {/*    }}*/}
-            {/*  />*/}
-            {/*</View>*/}
+            <View style={styles.filterTitle}>
+              <Text style={{fontSize: 16}}>Theo chiến dịch</Text>
+              <CustomPicker
+                options={this.getCampaigns()}
+                defaultValue={this.getDefaultCampaign(this.getCampaigns())}
+                getLabel={item => item.name}
+                modalAnimationType={'fade'}
+                optionTemplate={this.renderCoursePickerOption}
+                fieldTemplate={this.renderSegmentPickerField}
+                headerTemplate={() =>
+                  this.renderPickerHeader('Chọn chiến dịch')
+                }
+                footerTemplate={this.renderCoursePickerFooter}
+                modalStyle={{
+                  borderRadius: 6,
+                }}
+                onValueChange={value => {
+                  this.props.onSelectCampaignId(value.id);
+                }}
+              />
+            </View>
+            <View style={styles.filterTitle}>
+              <Text style={{fontSize: 16}}>Học phí</Text>
+              <CustomPicker
+                options={moneyFilter}
+                defaultValue={this.getDefaultPaidStatus(moneyFilter)}
+                getLabel={item => item.name}
+                modalAnimationType={'fade'}
+                optionTemplate={this.renderCoursePickerOption}
+                fieldTemplate={this.renderSegmentPickerField}
+                headerTemplate={() => this.renderPickerHeader('Chọn học phí')}
+                footerTemplate={this.renderCoursePickerFooter}
+                modalStyle={{
+                  borderRadius: 6,
+                }}
+                onValueChange={value => {
+                  this.props.onSelectPaidStatus(value.id);
+                }}
+              />
+            </View>
+            <View style={styles.filterTitle}>
+              <Text style={{fontSize: 16}}>Trạng thái lớp</Text>
+              <CustomPicker
+                options={classStatusFilter}
+                defaultValue={this.getDefaultClassStatus(classStatusFilter)}
+                getLabel={item => item.name}
+                modalAnimationType={'fade'}
+                optionTemplate={this.renderCoursePickerOption}
+                fieldTemplate={this.renderSegmentPickerField}
+                headerTemplate={() =>
+                  this.renderPickerHeader('Chọn trạng thái lớp')
+                }
+                footerTemplate={this.renderCoursePickerFooter}
+                modalStyle={{
+                  borderRadius: 6,
+                }}
+                onValueChange={value => {
+                  this.props.onSelectClassStatus(value.value);
+                }}
+              />
+            </View>
+            <View style={styles.filterTitle}>
+              <Text style={{fontSize: 16}}>Trạng thái cuộc gọi</Text>
+              <CustomPicker
+                options={teleCallStatus}
+                defaultValue={this.getDefaultCallStatus(teleCallStatus)}
+                getLabel={item => item.name}
+                modalAnimationType={'fade'}
+                optionTemplate={this.renderCoursePickerOption}
+                fieldTemplate={this.renderSegmentPickerField}
+                headerTemplate={() =>
+                  this.renderPickerHeader('Chọn trạng thái cuộc gọi')
+                }
+                footerTemplate={this.renderCoursePickerFooter}
+                modalStyle={{
+                  borderRadius: 6,
+                }}
+                onValueChange={value => {
+                  this.props.onSelectCallStatus(value.id);
+                }}
+              />
+            </View>
+            <View style={styles.filterTitle}>
+              <Text style={{fontSize: 16}}>Đánh dấu</Text>
+              <CustomPicker
+                options={bookmarkFilter}
+                defaultValue={this.getDefaultBookmark(bookmarkFilter)}
+                getLabel={item => item.name}
+                modalAnimationType={'fade'}
+                optionTemplate={this.renderCoursePickerOption}
+                fieldTemplate={this.renderSegmentPickerField}
+                headerTemplate={() => this.renderPickerHeader('Đánh dấu')}
+                footerTemplate={this.renderCoursePickerFooter}
+                modalStyle={{
+                  borderRadius: 6,
+                }}
+                onValueChange={value => {
+                  this.props.onSelectBookmark(value.id);
+                }}
+              />
+            </View>
             {/*<CustomPicker*/}
             {/*  options={segments}*/}
             {/*  getLabel={item => item.name}*/}

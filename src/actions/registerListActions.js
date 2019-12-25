@@ -16,7 +16,18 @@ export function beginDataRegisterListLoadMy() {
   };
 }
 
-export function loadDataRegisterListMy(token, page, search, salerId, baseId) {
+export function loadDataRegisterListMy(
+  token,
+  page,
+  search,
+  salerId,
+  baseId,
+  campaignId,
+  paidStatus,
+  classStatus,
+  callStatus,
+  bookmark,
+) {
   return function(dispatch) {
     dispatch(beginDataRegisterListLoadMy());
     studentApi
@@ -27,15 +38,15 @@ export function loadDataRegisterListMy(token, page, search, salerId, baseId) {
         salerId,
         sourceCancelMy,
         '',
+        campaignId,
         '',
-        '',
-        '',
+        paidStatus,
         baseId,
         '',
+        classStatus,
         '',
-        '',
-        '',
-        '',
+        bookmark,
+        callStatus,
       )
       .then(function(res) {
         dispatch(loadDataSuccessfulMy(res, salerId));
@@ -73,12 +84,35 @@ export function loadDataErrorMy() {
   };
 }
 
-export function updateFormAndLoadDataSearchMy(searchMy, salerId, token) {
+export function updateFormAndLoadDataSearchMy(
+  searchMy,
+  salerId,
+  baseId,
+  campaignId,
+  paidStatus,
+  classStatus,
+  callStatus,
+  bookmark,
+  token,
+) {
   sourceCancelMy.cancel('Canceled by api register list (my).');
   sourceCancelMy = CancelToken.source();
   return dispatch => {
     dispatch(updateFormSearchMy(searchMy));
-    dispatch(loadDataRegisterListMy(token, 1, searchMy, salerId));
+    dispatch(
+      loadDataRegisterListMy(
+        token,
+        1,
+        searchMy,
+        salerId,
+        baseId,
+        campaignId,
+        paidStatus,
+        classStatus,
+        callStatus,
+        bookmark,
+      ),
+    );
   };
 }
 
@@ -92,10 +126,33 @@ export function updateFormSearchMy(searchMy) {
   };
 }
 
-export function refreshRegisterListMy(searchMy, token, salerId, baseId) {
+export function refreshRegisterListMy(
+  searchMy,
+  token,
+  salerId,
+  baseId,
+  campaignId,
+  paidStatus,
+  classStatus,
+  callStatus,
+  bookmark,
+) {
   return dispatch => {
     dispatch(resetRegisterListMy());
-    dispatch(loadDataRegisterListMy(token, 1, searchMy, salerId, baseId));
+    dispatch(
+      loadDataRegisterListMy(
+        token,
+        1,
+        searchMy,
+        salerId,
+        baseId,
+        campaignId,
+        paidStatus,
+        classStatus,
+        callStatus,
+        bookmark,
+      ),
+    );
   };
 }
 
@@ -113,5 +170,40 @@ export function onSelectSalerId(salerId) {
   return {
     type: types.SELECT_REGISTER_LIST_SALER,
     salerId: salerId,
+  };
+}
+
+export function onSelectCampaignId(campaignId) {
+  return {
+    type: types.SELECT_REGISTER_LIST_CAMPAIGN,
+    campaignId: campaignId,
+  };
+}
+
+export function onSelectPaidStatus(paidStatus) {
+  return {
+    type: types.SELECT_REGISTER_LIST_PAID_STATUS,
+    paidStatus: paidStatus,
+  };
+}
+
+export function onSelectClassStatus(classStatus) {
+  return {
+    type: types.SELECT_REGISTER_LIST_CLASS_STATUS,
+    classStatus: classStatus,
+  };
+}
+
+export function onSelectCallStatus(callStatus) {
+  return {
+    type: types.SELECT_REGISTER_LIST_CALL_STATUS,
+    callStatus: callStatus,
+  };
+}
+
+export function onSelectBookmark(bookmark) {
+  return {
+    type: types.SELECT_REGISTER_LIST_BOOKMARK,
+    bookmark: bookmark,
   };
 }

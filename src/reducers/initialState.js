@@ -112,6 +112,11 @@ export default {
     searchMy: '',
     refreshingMy: false,
     salerId: -1,
+    campaignId: -1,
+    paidStatus: -1,
+    classStatus: '',
+    callStatus: -1,
+    bookmark: -1,
   },
   collectMoney: {
     studentListData: [],

@@ -49,6 +49,27 @@ export default function registerListReducer(
       return Object.assign({}, state, {
         salerId: action.salerId,
       });
+    case types.SELECT_REGISTER_LIST_CAMPAIGN:
+      return Object.assign({}, state, {
+        campaignId: action.campaignId,
+      });
+    case types.SELECT_REGISTER_LIST_PAID_STATUS:
+      return Object.assign({}, state, {
+        paidStatus: action.paidStatus,
+      });
+    case types.SELECT_REGISTER_LIST_CLASS_STATUS: {
+      return Object.assign({}, state, {
+        classStatus: action.classStatus,
+      });
+    }
+    case types.SELECT_REGISTER_LIST_CALL_STATUS:
+      return Object.assign({}, state, {
+        callStatus: action.callStatus,
+      });
+    case types.SELECT_REGISTER_LIST_BOOKMARK:
+      return Object.assign({}, state, {
+        bookmark: action.bookmark,
+      });
     default:
       return state;
   }

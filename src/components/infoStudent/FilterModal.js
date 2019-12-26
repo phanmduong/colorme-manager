@@ -258,6 +258,7 @@ class FilterModal extends React.Component {
     return (
       <Modal
         isVisible={this.props.isVisible}
+        avoidKeyboard={true}
         onBackdropPress={this.props.closeModal}
         style={styles.modalContainer}>
         <View style={styles.modal}>

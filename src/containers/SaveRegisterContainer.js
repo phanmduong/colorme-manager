@@ -18,6 +18,8 @@ class SaveRegisterContainer extends React.Component {
     this.loadCourses();
     this.loadCampaigns();
     this.loadProvinces();
+    this.loadSources();
+    this.loadStatuses();
   };
 
   loadCourses = () => {
@@ -34,6 +36,14 @@ class SaveRegisterContainer extends React.Component {
 
   loadProvinces = () => {
     this.props.saveRegisterActions.loadProvinces(this.props.token);
+  };
+
+  loadSources = () => {
+    this.props.saveRegisterActions.loadSources(this.props.token);
+  };
+
+  loadStatuses = () => {
+    this.props.saveRegisterActions.loadStatuses('registers', this.props.token);
   };
 
   register = register => {
@@ -66,6 +76,10 @@ class SaveRegisterContainer extends React.Component {
         isLoadingProvinces={this.props.isLoadingProvinces}
         reload={this.reloadRegisterList}
         saler_id={this.props.user.id}
+        isLoadingSources={this.props.isLoadingSources}
+        sources={this.props.sources}
+        isLoadingStatuses={this.props.isLoadingStatuses}
+        statuses={this.props.statuses}
       />
     );
   }
@@ -90,6 +104,12 @@ function mapStateToProps(state) {
     provinces: state.saveRegister.provinces,
     user: state.login.user,
     saler_id: state.registerList.saler_id,
+    isLoadingSources: state.saveRegister.isLoadingSources,
+    errorLoadingSources: state.saveRegister.errorLoadingSources,
+    sources: state.saveRegister.sources,
+    isLoadingStatuses: state.saveRegister.isLoadingStatuses,
+    errorLoadingStatuses: state.saveRegister.errorLoadingStatuses,
+    statuses: state.saveRegister.statuses,
   };
 }
 

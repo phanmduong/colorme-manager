@@ -271,6 +271,12 @@ export default {
     isLoadingProvinces: false,
     errorLoadingProvinces: false,
     provinces: [],
+    isLoadingSources: false,
+    errorLoadingSources: false,
+    sources: [],
+    isLoadingStatuses: false,
+    errorLoadingStatuses: false,
+    statuses: [],
   },
   infoStudent: {
     isLoadingRegisters: false,

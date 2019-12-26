@@ -21,6 +21,8 @@ export function saveRegisterApi(token, register) {
     father_name: register.father_name,
     saler_id: register.saler_id,
     course_id: register.course_id,
+    status_id: register.status_id,
+    source_id: register.source_id,
   });
 }
 
@@ -43,5 +45,16 @@ export function loadCampaigns(token) {
 
 export function loadProvinces(token) {
   let url = env.MANAGE_API_URL + '/province/all?token=' + token;
+  return axios.get(url);
+}
+
+export function loadSources(token) {
+  let url = env.MANAGE_API_URL + '/source/all?token=' + token;
+  return axios.get(url);
+}
+
+export function loadStatuses(ref, token) {
+  let url =
+    env.MANAGE_API_URL + '/v4/statuses/all?ref=' + ref + '&token=' + token;
   return axios.get(url);
 }

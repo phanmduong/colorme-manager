@@ -57,10 +57,11 @@ class SaveRegisterContainer extends React.Component {
   };
 
   reloadRegisterList = () => {
+    let salerId = this.props.salerId === -1 ? '' : this.props.salerId;
     this.props.registerListActions.refreshRegisterListMy(
       '',
       this.props.token,
-      '',
+      salerId,
     );
   };
 
@@ -121,6 +122,7 @@ function mapStateToProps(state) {
     isLoadingBase: state.base.isLoading,
     errorLoadingBase: state.base.error,
     baseData: state.base.baseData,
+    salerId: state.registerList.salerId,
   };
 }
 

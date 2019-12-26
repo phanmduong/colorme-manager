@@ -41,11 +41,10 @@ class SaveRegisterContainer extends React.Component {
   };
 
   reloadRegisterList = () => {
-    this.props.registerListActions.refreshRegisterListAll('', this.props.token);
     this.props.registerListActions.refreshRegisterListMy(
       '',
       this.props.token,
-      this.props.userId,
+      '',
     );
   };
 
@@ -66,6 +65,7 @@ class SaveRegisterContainer extends React.Component {
         provinces={this.props.provinces}
         isLoadingProvinces={this.props.isLoadingProvinces}
         reload={this.reloadRegisterList}
+        saler_id={this.props.user.id}
       />
     );
   }
@@ -88,7 +88,8 @@ function mapStateToProps(state) {
     isLoadingProvinces: state.saveRegister.isLoadingProvinces,
     errorLoadingProvinces: state.saveRegister.errorLoadingProvinces,
     provinces: state.saveRegister.provinces,
-    userId: state.login.user.id,
+    user: state.login.user,
+    saler_id: state.registerList.saler_id,
   };
 }
 

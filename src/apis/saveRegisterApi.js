@@ -18,6 +18,9 @@ export function saveRegisterApi(token, register) {
     work: register.work,
     campaign_id: register.campaign_id,
     description: register.description,
+    father_name: register.father_name,
+    saler_id: register.saler_id,
+    course_id: register.course_id,
   });
 }
 

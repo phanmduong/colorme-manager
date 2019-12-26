@@ -59,6 +59,7 @@ class SaveRegisterComponent extends React.Component {
       selectedGender: false,
       selectedAddress: false,
       selectedClassId: -1,
+      selectedCourseId: -1,
       coupon: '',
       dob: '',
       address: '',
@@ -69,6 +70,8 @@ class SaveRegisterComponent extends React.Component {
       work: '',
       campaign_id: '',
       description: '',
+      father_name: '',
+      saler_id: this.props.saler_id,
       isDatePickerVisible: false,
       expanded: false,
     };
@@ -304,6 +307,9 @@ class SaveRegisterComponent extends React.Component {
         work: this.state.work,
         campaign_id: this.state.campaign_id,
         description: this.state.description,
+        course_id: this.state.selectedCourseId,
+        saler_id: this.state.saler_id,
+        father_name: this.state.father_name,
       };
       this.props.register(register);
       if (this.props.errorLoadingRegister) {
@@ -324,7 +330,7 @@ class SaveRegisterComponent extends React.Component {
       name: '',
       phone: '',
       email: '',
-      class_id: -1,
+      selectedClassId: -1,
       coupon: '',
       dob: '',
       address: '',
@@ -335,6 +341,9 @@ class SaveRegisterComponent extends React.Component {
       work: '',
       campaign_id: '',
       description: '',
+      father_name: '',
+      saler_id: this.props.saler_id,
+      selectedCourseId: -1,
       selectedCourse: false,
       selectedCampaign: false,
       selectedGender: false,
@@ -409,6 +418,24 @@ class SaveRegisterComponent extends React.Component {
                     onChangeText={data => this.setState({name: data})}
                     returnKeyType={'next'}
                     placeholder="Tên học viên"
+                    blurOnSubmit={false}
+                    onSubmitEditing={event => {
+                      this.refs.father_name.focus();
+                    }}
+                    style={{fontSize: 15}}
+                  />
+                </View>
+              </View>
+              <View style={{marginTop: 30}}>
+                <Text style={styles.titleForm}>Tên phụ huynh</Text>
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    {...this.props}
+                    value={this.state.father_name}
+                    onChangeText={data => this.setState({father_name: data})}
+                    returnKeyType={'next'}
+                    ref={'father_name'}
+                    placeholder="Tên phụ huynh"
                     blurOnSubmit={false}
                     onSubmitEditing={event => {
                       this.refs.email.focus();
@@ -500,6 +527,7 @@ class SaveRegisterComponent extends React.Component {
                   onValueChange={value => {
                     this.setState({
                       selectedCourse: true,
+                      selectedCourseId: value.id,
                     });
                     this.props.onSelectCourseId(value.id);
                   }}

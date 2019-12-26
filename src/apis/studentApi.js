@@ -23,6 +23,8 @@ export function loadRegisterListApi(
   tele_call_status = '',
   start_time = '',
   end_time = '',
+  source_id = '',
+  status_id = '',
 ) {
   let url =
     env.API_URL +
@@ -56,6 +58,10 @@ export function loadRegisterListApi(
     start_time +
     '&end_time=' +
     end_time +
+    '&registerStatusId=' +
+    status_id +
+    '&registerSourceId=' +
+    source_id +
     '&token=' +
     token;
   return axios.get(url, {cancelToken: sourceCancel.token});

@@ -83,6 +83,14 @@ export default function registerListReducer(
       return Object.assign({}, state, {
         appointmentPayment: action.appointmentPayment,
       });
+    case types.SELECT_REGISTER_LIST_SOURCE:
+      return Object.assign({}, state, {
+        source_id: action.source_id,
+      });
+    case types.SELECT_REGISTER_LIST_STATUS:
+      return Object.assign({}, state, {
+        status_id: action.status_id,
+      });
     default:
       return state;
   }

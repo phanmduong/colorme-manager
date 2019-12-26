@@ -121,6 +121,8 @@ export default {
     start_time: '',
     end_time: '',
     appointmentPayment: '',
+    source_id: -1,
+    status_id: -1,
   },
   collectMoney: {
     studentListData: [],

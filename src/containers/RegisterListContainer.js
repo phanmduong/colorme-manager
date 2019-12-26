@@ -28,6 +28,8 @@ class RegisterListContainer extends React.Component {
     this.loadDataRegisterListMy();
     this.loadBases();
     this.loadCampaigns();
+    this.loadStatuses();
+    this.loadSources();
   }
 
   loadBases = () => {
@@ -38,6 +40,14 @@ class RegisterListContainer extends React.Component {
     this.props.saveRegisterActions.loadCampaigns(this.props.token);
   };
 
+  loadSources = () => {
+    this.props.saveRegisterActions.loadSources(this.props.token);
+  };
+
+  loadStatuses = () => {
+    this.props.saveRegisterActions.loadStatuses('registers', this.props.token);
+  };
+
   loadDataRegisterListMy() {
     let baseId =
       this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
@@ -46,6 +56,8 @@ class RegisterListContainer extends React.Component {
     let paidStatus = this.props.paidStatus === -1 ? '' : this.props.paidStatus;
     let callStatus = this.props.callStatus === -1 ? '' : this.props.callStatus;
     let bookmark = this.props.bookmark === -1 ? '' : this.props.bookmark;
+    let statusId = this.props.status_id === -1 ? '' : this.props.status_id;
+    let sourceId = this.props.source_id === -1 ? '' : this.props.source_id;
     if (this.props.currentPageMy < this.props.totalPageMy) {
       this.props.registerListActions.loadDataRegisterListMy(
         this.props.token,
@@ -62,6 +74,8 @@ class RegisterListContainer extends React.Component {
         this.props.start_time,
         this.props.end_time,
         this.props.appointmentPayment,
+        statusId,
+        sourceId,
       );
     }
   }
@@ -74,6 +88,8 @@ class RegisterListContainer extends React.Component {
     let paidStatus = this.props.paidStatus === -1 ? '' : this.props.paidStatus;
     let callStatus = this.props.callStatus === -1 ? '' : this.props.callStatus;
     let bookmark = this.props.bookmark === -1 ? '' : this.props.bookmark;
+    let statusId = this.props.status_id === -1 ? '' : this.props.status_id;
+    let sourceId = this.props.source_id === -1 ? '' : this.props.source_id;
     this.props.registerListActions.refreshRegisterListMy(
       this.props.searchMy,
       this.props.token,
@@ -88,6 +104,8 @@ class RegisterListContainer extends React.Component {
       this.props.start_time,
       this.props.end_time,
       this.props.appointmentPayment,
+      statusId,
+      sourceId,
     );
   };
 
@@ -99,6 +117,8 @@ class RegisterListContainer extends React.Component {
     let paidStatus = this.props.paidStatus === -1 ? '' : this.props.paidStatus;
     let callStatus = this.props.callStatus === -1 ? '' : this.props.callStatus;
     let bookmark = this.props.bookmark === -1 ? '' : this.props.bookmark;
+    let statusId = this.props.status_id === -1 ? '' : this.props.status_id;
+    let sourceId = this.props.source_id === -1 ? '' : this.props.source_id;
     this.props.registerListActions.updateFormAndLoadDataSearchMy(
       search,
       salerId,
@@ -112,6 +132,8 @@ class RegisterListContainer extends React.Component {
       this.props.start_time,
       this.props.end_time,
       this.props.appointmentPayment,
+      statusId,
+      sourceId,
       this.props.token,
     );
   }
@@ -194,6 +216,14 @@ class RegisterListContainer extends React.Component {
     this.props.registerListActions.onSelectAppointmentPayment(date);
   };
 
+  onSelectStatus = statusId => {
+    this.props.registerListActions.onSelectStatus(statusId);
+  };
+
+  onSelectSource = sourceId => {
+    this.props.registerListActions.onSelectSource(sourceId);
+  };
+
   render() {
     let autoFocus = this.props.navigation.getParam('autoFocus');
     if (isEmptyInput(autoFocus)) {
@@ -241,6 +271,12 @@ class RegisterListContainer extends React.Component {
         end_time={this.props.end_time}
         onSelectAppointmentPayment={this.onSelectAppointmentPayment}
         appointmentPayment={this.props.appointmentPayment}
+        onSelectStatus={this.onSelectStatus}
+        statuses={this.props.statuses}
+        statusId={this.props.status_id}
+        onSelectSource={this.onSelectSource}
+        sources={this.props.sources}
+        sourceId={this.props.source_id}
       />
     );
   }
@@ -272,6 +308,10 @@ function mapStateToProps(state) {
     start_time: state.registerList.start_time,
     end_time: state.registerList.end_time,
     appointmentPayment: state.registerList.appointmentPayment,
+    statuses: state.saveRegister.statuses,
+    sources: state.saveRegister.sources,
+    status_id: state.registerList.status_id,
+    source_id: state.registerList.source_id,
   };
 }
 

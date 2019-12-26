@@ -74,6 +74,12 @@ class RegisterListComponent extends React.Component {
           end_time={this.props.end_time}
           appointmentPayment={this.props.appointmentPayment}
           onSelectAppointmentPayment={this.props.onSelectAppointmentPayment}
+          onSelectStatus={this.props.onSelectStatus}
+          statuses={this.props.statuses}
+          statusId={this.props.statusId}
+          onSelectSource={this.props.onSelectSource}
+          sources={this.props.sources}
+          sourceId={this.props.sourceId}
         />
       </View>
     );

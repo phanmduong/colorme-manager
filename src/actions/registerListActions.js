@@ -31,6 +31,8 @@ export function loadDataRegisterListMy(
   start_time,
   end_time,
   appointmentPayment,
+  statusId,
+  sourceId,
 ) {
   return function(dispatch) {
     dispatch(beginDataRegisterListLoadMy());
@@ -53,6 +55,8 @@ export function loadDataRegisterListMy(
         callStatus,
         start_time,
         end_time,
+        sourceId,
+        statusId,
       )
       .then(function(res) {
         dispatch(loadDataSuccessfulMy(res, salerId, search_coupon));
@@ -104,6 +108,8 @@ export function updateFormAndLoadDataSearchMy(
   start_time,
   end_time,
   appointmentPayment,
+  statusId,
+  sourceId,
   token,
 ) {
   sourceCancelMy.cancel('Canceled by api register list (my).');
@@ -126,6 +132,8 @@ export function updateFormAndLoadDataSearchMy(
         start_time,
         end_time,
         appointmentPayment,
+        statusId,
+        sourceId,
       ),
     );
   };
@@ -155,6 +163,8 @@ export function refreshRegisterListMy(
   start_time,
   end_time,
   appointmentPayment,
+  statusId,
+  sourceId,
 ) {
   return dispatch => {
     dispatch(resetRegisterListMy());
@@ -174,6 +184,8 @@ export function refreshRegisterListMy(
         start_time,
         end_time,
         appointmentPayment,
+        statusId,
+        sourceId,
       ),
     );
   };
@@ -249,5 +261,19 @@ export function onSelectAppointmentPayment(appointmentPayment) {
   return {
     type: types.SELECT_REGISTER_LIST_APPOINTMENT_PAYMENT,
     appointmentPayment: appointmentPayment,
+  };
+}
+
+export function onSelectSource(sourceId) {
+  return {
+    type: types.SELECT_REGISTER_LIST_SOURCE,
+    source_id: sourceId,
+  };
+}
+
+export function onSelectStatus(statusId) {
+  return {
+    type: types.SELECT_REGISTER_LIST_STATUS,
+    status_id: statusId,
   };
 }

@@ -165,6 +165,36 @@ class FilterModal extends React.Component {
     return array[0];
   };
 
+  getStatuses = () => {
+    let defaultStatus = {id: -1, name: 'Tất cả'};
+    let statuses = [defaultStatus].concat(this.props.statuses);
+    return statuses;
+  };
+
+  getDefaultStatus = array => {
+    for (let status of array) {
+      if (status.id === this.props.statusId) {
+        return status;
+      }
+    }
+    return array[0];
+  };
+
+  getSources = () => {
+    let defaultSource = {id: -1, name: 'Tất cả'};
+    let sources = [defaultSource].concat(this.props.sources);
+    return sources;
+  };
+
+  getDefaultSource = array => {
+    for (let source of array) {
+      if (source.id === this.props.sourceId) {
+        return source;
+      }
+    }
+    return array[0];
+  };
+
   handleStartDatePicked = date => {
     this.props.onSelectStartTime(moment(date).format('YYYY-MM-DD'));
     this.setState({
@@ -421,13 +451,53 @@ class FilterModal extends React.Component {
                 modalAnimationType={'fade'}
                 optionTemplate={this.renderCoursePickerOption}
                 fieldTemplate={this.renderSegmentPickerField}
-                headerTemplate={() => this.renderPickerHeader('Đánh dấu')}
+                headerTemplate={() => this.renderPickerHeader('Chọn đánh dấu')}
                 footerTemplate={this.renderCoursePickerFooter}
                 modalStyle={{
                   borderRadius: 6,
                 }}
                 onValueChange={value => {
                   this.props.onSelectBookmark(value.id);
+                }}
+              />
+            </View>
+            <View style={styles.filterTitle}>
+              <Text style={{fontSize: 16}}>Trạng thái</Text>
+              <CustomPicker
+                options={this.getStatuses()}
+                defaultValue={this.getDefaultStatus(this.getStatuses())}
+                getLabel={item => item.name}
+                modalAnimationType={'fade'}
+                optionTemplate={this.renderCoursePickerOption}
+                fieldTemplate={this.renderSegmentPickerField}
+                headerTemplate={() =>
+                  this.renderPickerHeader('Chọn trạng thái')
+                }
+                footerTemplate={this.renderCoursePickerFooter}
+                modalStyle={{
+                  borderRadius: 6,
+                }}
+                onValueChange={value => {
+                  this.props.onSelectStatus(value.id);
+                }}
+              />
+            </View>
+            <View style={styles.filterTitle}>
+              <Text style={{fontSize: 16}}>Nguồn</Text>
+              <CustomPicker
+                options={this.getSources()}
+                defaultValue={this.getDefaultSource(this.getSources())}
+                getLabel={item => item.name}
+                modalAnimationType={'fade'}
+                optionTemplate={this.renderCoursePickerOption}
+                fieldTemplate={this.renderSegmentPickerField}
+                headerTemplate={() => this.renderPickerHeader('Chọn nguồn')}
+                footerTemplate={this.renderCoursePickerFooter}
+                modalStyle={{
+                  borderRadius: 6,
+                }}
+                onValueChange={value => {
+                  this.props.onSelectSource(value.id);
                 }}
               />
             </View>

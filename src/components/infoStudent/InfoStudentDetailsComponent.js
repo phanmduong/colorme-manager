@@ -263,7 +263,7 @@ class InfoStudentDetailsComponent extends React.Component {
                   student: this.props.student,
                 })
               }>
-              <View style={{}}>
+              <View style={styles.editButton}>
                 <Text style={{fontSize: 16}}>Sửa thông tin</Text>
               </View>
             </TouchableOpacity>

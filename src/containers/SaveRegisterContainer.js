@@ -4,6 +4,7 @@ import SaveRegisterComponent from '../components/SaveRegisterComponent';
 import {bindActionCreators} from 'redux';
 import * as saveRegisterActions from '../actions/saveRegisterActions';
 import * as registerListActions from '../actions/registerListActions';
+import * as baseActions from '../actions/baseActions';
 
 class SaveRegisterContainer extends React.Component {
   constructor(props, context) {
@@ -18,6 +19,9 @@ class SaveRegisterContainer extends React.Component {
     this.loadCourses();
     this.loadCampaigns();
     this.loadProvinces();
+    this.loadSources();
+    this.loadStatuses();
+    this.loadDataBase();
   };
 
   loadCourses = () => {
@@ -36,16 +40,28 @@ class SaveRegisterContainer extends React.Component {
     this.props.saveRegisterActions.loadProvinces(this.props.token);
   };
 
+  loadSources = () => {
+    this.props.saveRegisterActions.loadSources(this.props.token);
+  };
+
+  loadStatuses = () => {
+    this.props.saveRegisterActions.loadStatuses('registers', this.props.token);
+  };
+
+  loadDataBase = () => {
+    this.props.baseActions.loadDataBase(this.props.token);
+  };
+
   register = register => {
     this.props.saveRegisterActions.register(this.props.token, register);
   };
 
   reloadRegisterList = () => {
-    this.props.registerListActions.refreshRegisterListAll('', this.props.token);
+    let salerId = this.props.salerId === -1 ? '' : this.props.salerId;
     this.props.registerListActions.refreshRegisterListMy(
       '',
       this.props.token,
-      this.props.userId,
+      salerId,
     );
   };
 
@@ -66,6 +82,13 @@ class SaveRegisterContainer extends React.Component {
         provinces={this.props.provinces}
         isLoadingProvinces={this.props.isLoadingProvinces}
         reload={this.reloadRegisterList}
+        saler_id={this.props.user.id}
+        isLoadingSources={this.props.isLoadingSources}
+        sources={this.props.sources}
+        isLoadingStatuses={this.props.isLoadingStatuses}
+        statuses={this.props.statuses}
+        isLoadingBase={this.props.isLoadingBase}
+        baseData={this.props.baseData}
       />
     );
   }
@@ -88,7 +111,18 @@ function mapStateToProps(state) {
     isLoadingProvinces: state.saveRegister.isLoadingProvinces,
     errorLoadingProvinces: state.saveRegister.errorLoadingProvinces,
     provinces: state.saveRegister.provinces,
-    userId: state.login.user.id,
+    user: state.login.user,
+    saler_id: state.registerList.saler_id,
+    isLoadingSources: state.saveRegister.isLoadingSources,
+    errorLoadingSources: state.saveRegister.errorLoadingSources,
+    sources: state.saveRegister.sources,
+    isLoadingStatuses: state.saveRegister.isLoadingStatuses,
+    errorLoadingStatuses: state.saveRegister.errorLoadingStatuses,
+    statuses: state.saveRegister.statuses,
+    isLoadingBase: state.base.isLoading,
+    errorLoadingBase: state.base.error,
+    baseData: state.base.baseData,
+    salerId: state.registerList.salerId,
   };
 }
 
@@ -96,6 +130,7 @@ function mapDispatchToProps(dispatch) {
   return {
     saveRegisterActions: bindActionCreators(saveRegisterActions, dispatch),
     registerListActions: bindActionCreators(registerListActions, dispatch),
+    baseActions: bindActionCreators(baseActions, dispatch),
   };
 }
 

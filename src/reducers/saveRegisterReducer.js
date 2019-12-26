@@ -82,6 +82,38 @@ export function saveRegisterReducer(state = initialState.saveRegister, action) {
         isLoadingProvinces: action.isLoadingProvinces,
         errorLoadingProvinces: action.errorLoadingProvinces,
       });
+    case type.BEGIN_LOAD_SOURCES:
+      return Object.assign({}, state, {
+        isLoadingSources: action.isLoadingSources,
+        errorLoadingSources: action.errorLoadingSources,
+      });
+    case type.LOAD_SOURCES_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isLoadingSources: action.isLoadingSources,
+        errorLoadingSources: action.errorLoadingSources,
+        sources: action.sources,
+      });
+    case type.LOAD_SOURCES_ERROR:
+      return Object.assign({}, state, {
+        isLoadingSources: action.isLoadingSources,
+        errorLoadingSources: action.errorLoadingSources,
+      });
+    case type.BEGIN_LOAD_STATUSES:
+      return Object.assign({}, state, {
+        isLoadingStatuses: action.isLoadingStatuses,
+        errorLoadingStatuses: action.errorLoadingStatuses,
+      });
+    case type.LOAD_STATUSES_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isLoadingStatuses: action.isLoadingStatuses,
+        errorLoadingStatuses: action.errorLoadingStatuses,
+        statuses: action.statuses,
+      });
+    case type.LOAD_STATUSES_ERROR:
+      return Object.assign({}, state, {
+        isLoadingStatuses: action.isLoadingStatuses,
+        errorLoadingStatuses: action.errorLoadingStatuses,
+      });
     default:
       return state;
   }

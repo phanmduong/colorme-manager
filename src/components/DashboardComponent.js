@@ -90,6 +90,7 @@ class DashboardComponent extends React.Component {
               onPress={() =>
                 this.props.navigation.navigate('RegisterList', {
                   autoFocus: true,
+                  isSubScreen: true,
                 })
               }>
               <View style={styles.searchContainer}>

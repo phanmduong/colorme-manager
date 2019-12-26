@@ -58,7 +58,13 @@ class SaveRegisterComponent extends React.Component {
       selectedCampaign: false,
       selectedGender: false,
       selectedAddress: false,
+      selectedSource: false,
+      selectedStatus: false,
       selectedClassId: -1,
+      selectedCourseId: -1,
+      source_id: '',
+      status_id: '',
+      base_id: '',
       coupon: '',
       dob: '',
       address: '',
@@ -69,6 +75,8 @@ class SaveRegisterComponent extends React.Component {
       work: '',
       campaign_id: '',
       description: '',
+      father_name: '',
+      saler_id: this.props.saler_id,
       isDatePickerVisible: false,
       expanded: false,
     };
@@ -218,6 +226,78 @@ class SaveRegisterComponent extends React.Component {
     );
   };
 
+  renderSourcePickerField = settings => {
+    const {selectedItem, defaultText, getLabel} = settings;
+    return (
+      <LinearGradient
+        colors={['#F6F6F6', '#F6F6F6']}
+        style={styles.inputContainer}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 0}}>
+        {!selectedItem && (
+          <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+            <Text style={{color: '#b7b7b7', fontSize: 15}}>{defaultText}</Text>
+            <Text>▼</Text>
+          </View>
+        )}
+        {selectedItem &&
+          (this.state.selectedSource ? (
+            <View
+              style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+              <Text style={{color: 'black', fontSize: 15}}>
+                {getLabel(selectedItem)}
+              </Text>
+              <Text>▼</Text>
+            </View>
+          ) : (
+            <View
+              style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+              <Text style={{color: '#b7b7b7', fontSize: 15}}>
+                {defaultText}
+              </Text>
+              <Text>▼</Text>
+            </View>
+          ))}
+      </LinearGradient>
+    );
+  };
+
+  renderStatusPickerField = settings => {
+    const {selectedItem, defaultText, getLabel} = settings;
+    return (
+      <LinearGradient
+        colors={['#F6F6F6', '#F6F6F6']}
+        style={styles.inputContainer}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 0}}>
+        {!selectedItem && (
+          <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+            <Text style={{color: '#b7b7b7', fontSize: 15}}>{defaultText}</Text>
+            <Text>▼</Text>
+          </View>
+        )}
+        {selectedItem &&
+          (this.state.selectedStatus ? (
+            <View
+              style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+              <Text style={{color: 'black', fontSize: 15}}>
+                {getLabel(selectedItem)}
+              </Text>
+              <Text>▼</Text>
+            </View>
+          ) : (
+            <View
+              style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+              <Text style={{color: '#b7b7b7', fontSize: 15}}>
+                {defaultText}
+              </Text>
+              <Text>▼</Text>
+            </View>
+          ))}
+      </LinearGradient>
+    );
+  };
+
   renderCoursePickerOption = settings => {
     const {item, getLabel} = settings;
     return (
@@ -227,42 +307,10 @@ class SaveRegisterComponent extends React.Component {
     );
   };
 
-  renderCoursePickerHeader = () => {
+  renderPickerHeader = title => {
     return (
       <View style={styles.headerFooterContainer}>
-        <Text style={styles.headerFooterText}>Chọn môn</Text>
-      </View>
-    );
-  };
-
-  renderClassPickerHeader = () => {
-    return (
-      <View style={styles.headerFooterContainer}>
-        <Text style={styles.headerFooterText}>Chọn lớp</Text>
-      </View>
-    );
-  };
-
-  renderCampaignPickerHeader = () => {
-    return (
-      <View style={styles.headerFooterContainer}>
-        <Text style={styles.headerFooterText}>Chọn chiến dịch</Text>
-      </View>
-    );
-  };
-
-  renderProvincePickerHeader = () => {
-    return (
-      <View style={styles.headerFooterContainer}>
-        <Text style={styles.headerFooterText}>Chọn địa chỉ</Text>
-      </View>
-    );
-  };
-
-  renderGenderPickerHeader = () => {
-    return (
-      <View style={styles.headerFooterContainer}>
-        <Text style={styles.headerFooterText}>Chọn giới tính</Text>
+        <Text style={styles.headerFooterText}>{title}</Text>
       </View>
     );
   };
@@ -304,6 +352,12 @@ class SaveRegisterComponent extends React.Component {
         work: this.state.work,
         campaign_id: this.state.campaign_id,
         description: this.state.description,
+        course_id: this.state.selectedCourseId,
+        saler_id: this.state.saler_id,
+        father_name: this.state.father_name,
+        source_id: this.state.source_id,
+        status_id: this.state.status_id,
+        base_id: this.state.base_id,
       };
       this.props.register(register);
       if (this.props.errorLoadingRegister) {
@@ -311,7 +365,9 @@ class SaveRegisterComponent extends React.Component {
       } else {
         this.reset();
         Alert.alert('Thông báo', 'Đăng ký thành công!');
-        this.props.navigation.navigate('RegisterList');
+        this.props.navigation.navigate('RegisterList', {
+          isSubScreen: true,
+        });
         this.props.reload();
       }
     }
@@ -322,7 +378,7 @@ class SaveRegisterComponent extends React.Component {
       name: '',
       phone: '',
       email: '',
-      class_id: -1,
+      selectedClassId: -1,
       coupon: '',
       dob: '',
       address: '',
@@ -333,6 +389,12 @@ class SaveRegisterComponent extends React.Component {
       work: '',
       campaign_id: '',
       description: '',
+      father_name: '',
+      source_id: '',
+      status_id: '',
+      base_id: '',
+      saler_id: this.props.saler_id,
+      selectedCourseId: -1,
       selectedCourse: false,
       selectedCampaign: false,
       selectedGender: false,
@@ -373,6 +435,19 @@ class SaveRegisterComponent extends React.Component {
     return address;
   };
 
+  getSelectBase = (items, studyClasses) => {
+    return (
+      items &&
+      items.map(item => {
+        const count = studyClasses.filter(sc => sc.base.id == item.id).length;
+        return {
+          id: item.id,
+          name: `${item.name} - (${count} lớp) - ${item.address}`,
+        };
+      })
+    );
+  };
+
   toggleExpand = () => {
     this.setState({
       expanded: !this.state.expanded,
@@ -382,12 +457,18 @@ class SaveRegisterComponent extends React.Component {
   render() {
     if (
       !this.props.isLoadingCourses &&
-      this.props.courses &&
+      !isEmptyInput(this.props.courses) &&
       !this.props.isLoadingCampaigns &&
-      this.props.campaigns &&
+      !isEmptyInput(this.props.campaigns) &&
       !this.props.isLoadingProvinces &&
-      this.props.provinces &&
-      this.getDataAddress()
+      !isEmptyInput(this.props.provinces) &&
+      !isEmptyInput(this.getDataAddress()) &&
+      !this.props.isLoadingSources &&
+      !isEmptyInput(this.props.sources) &&
+      !this.props.isLoadingStatuses &&
+      !isEmptyInput(this.props.statuses) &&
+      !this.props.isLoadingBase &&
+      !isEmptyInput(this.props.baseData)
     ) {
       return (
         <KeyboardAvoidingView
@@ -407,6 +488,24 @@ class SaveRegisterComponent extends React.Component {
                     onChangeText={data => this.setState({name: data})}
                     returnKeyType={'next'}
                     placeholder="Tên học viên"
+                    blurOnSubmit={false}
+                    onSubmitEditing={event => {
+                      this.refs.father_name.focus();
+                    }}
+                    style={{fontSize: 15}}
+                  />
+                </View>
+              </View>
+              <View style={{marginTop: 30}}>
+                <Text style={styles.titleForm}>Tên phụ huynh</Text>
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    {...this.props}
+                    value={this.state.father_name}
+                    onChangeText={data => this.setState({father_name: data})}
+                    returnKeyType={'next'}
+                    ref={'father_name'}
+                    placeholder="Tên phụ huynh"
                     blurOnSubmit={false}
                     onSubmitEditing={event => {
                       this.refs.email.focus();
@@ -490,7 +589,7 @@ class SaveRegisterComponent extends React.Component {
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderCoursePickerOption}
                   fieldTemplate={this.renderCoursePickerField}
-                  headerTemplate={this.renderCoursePickerHeader}
+                  headerTemplate={() => this.renderPickerHeader('Chọn môn')}
                   footerTemplate={this.renderCoursePickerFooter}
                   modalStyle={{
                     borderRadius: 6,
@@ -498,11 +597,36 @@ class SaveRegisterComponent extends React.Component {
                   onValueChange={value => {
                     this.setState({
                       selectedCourse: true,
+                      selectedCourseId: value.id,
                     });
                     this.props.onSelectCourseId(value.id);
                   }}
                 />
               </View>
+              {this.state.selectedCourse && !this.props.isLoadingClasses ? (
+                <View style={{marginTop: 30}}>
+                  <Text style={styles.titleForm}>Chọn cơ sở</Text>
+                  <CustomPicker
+                    options={this.getSelectBase(
+                      this.props.baseData,
+                      this.props.classes,
+                    )}
+                    getLabel={item => item.name}
+                    placeholder={'Chọn cơ sở'}
+                    modalAnimationType={'fade'}
+                    optionTemplate={this.renderCoursePickerOption}
+                    fieldTemplate={this.renderCoursePickerField}
+                    headerTemplate={() => this.renderPickerHeader('Chọn cơ sở')}
+                    footerTemplate={this.renderCoursePickerFooter}
+                    modalStyle={{
+                      borderRadius: 6,
+                    }}
+                    onValueChange={value => {
+                      this.setState({base_id: value.id});
+                    }}
+                  />
+                </View>
+              ) : null}
               {this.state.selectedCourse && !this.props.isLoadingClasses ? (
                 <View style={{marginTop: 30}}>
                   <Text style={styles.titleForm}>
@@ -515,7 +639,7 @@ class SaveRegisterComponent extends React.Component {
                     modalAnimationType={'fade'}
                     optionTemplate={this.renderCoursePickerOption}
                     fieldTemplate={this.renderCoursePickerField}
-                    headerTemplate={this.renderClassPickerHeader}
+                    headerTemplate={() => this.renderPickerHeader('Chọn lớp')}
                     footerTemplate={this.renderCoursePickerFooter}
                     modalStyle={{
                       borderRadius: 6,
@@ -527,6 +651,52 @@ class SaveRegisterComponent extends React.Component {
                 </View>
               ) : null}
               <View style={{marginTop: 30}}>
+                <Text style={styles.titleForm}>Chọn trạng thái</Text>
+                <CustomPicker
+                  options={this.props.statuses}
+                  getLabel={item => item.name}
+                  placeholder={'Chọn trạng thái'}
+                  modalAnimationType={'fade'}
+                  optionTemplate={this.renderCoursePickerOption}
+                  fieldTemplate={this.renderStatusPickerField}
+                  headerTemplate={() =>
+                    this.renderPickerHeader('Chọn trạng thái')
+                  }
+                  footerTemplate={this.renderCoursePickerFooter}
+                  modalStyle={{
+                    borderRadius: 6,
+                  }}
+                  onValueChange={value => {
+                    this.setState({
+                      selectedStatus: true,
+                      status_id: value.id,
+                    });
+                  }}
+                />
+              </View>
+              <View style={{marginTop: 30}}>
+                <Text style={styles.titleForm}>Chọn nguồn</Text>
+                <CustomPicker
+                  options={this.props.sources}
+                  getLabel={item => item.name}
+                  placeholder={'Chọn nguồn'}
+                  modalAnimationType={'fade'}
+                  optionTemplate={this.renderCoursePickerOption}
+                  fieldTemplate={this.renderSourcePickerField}
+                  headerTemplate={() => this.renderPickerHeader('Chọn nguồn')}
+                  footerTemplate={this.renderCoursePickerFooter}
+                  modalStyle={{
+                    borderRadius: 6,
+                  }}
+                  onValueChange={value => {
+                    this.setState({
+                      selectedSource: true,
+                      source_id: value.id,
+                    });
+                  }}
+                />
+              </View>
+              <View style={{marginTop: 30}}>
                 <Text style={styles.titleForm}>Chọn chiến dịch</Text>
                 <CustomPicker
                   options={this.props.campaigns}
@@ -535,7 +705,9 @@ class SaveRegisterComponent extends React.Component {
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderCoursePickerOption}
                   fieldTemplate={this.renderCampaignPickerField}
-                  headerTemplate={this.renderCampaignPickerHeader}
+                  headerTemplate={() =>
+                    this.renderPickerHeader('Chọn chiến dịch')
+                  }
                   footerTemplate={this.renderCoursePickerFooter}
                   modalStyle={{
                     borderRadius: 6,
@@ -590,7 +762,9 @@ class SaveRegisterComponent extends React.Component {
                       modalAnimationType={'fade'}
                       optionTemplate={this.renderCoursePickerOption}
                       fieldTemplate={this.renderGenderPickerField}
-                      headerTemplate={this.renderGenderPickerHeader}
+                      headerTemplate={() =>
+                        this.renderPickerHeader('Chọn giới tính')
+                      }
                       footerTemplate={this.renderCoursePickerFooter}
                       modalStyle={{
                         borderRadius: 6,
@@ -634,7 +808,9 @@ class SaveRegisterComponent extends React.Component {
                       modalAnimationType={'fade'}
                       optionTemplate={this.renderCoursePickerOption}
                       fieldTemplate={this.renderProvincePickerField}
-                      headerTemplate={this.renderProvincePickerHeader}
+                      headerTemplate={() =>
+                        this.renderPickerHeader('Chọn địa chỉ')
+                      }
                       footerTemplate={this.renderCoursePickerFooter}
                       modalStyle={{
                         borderRadius: 6,

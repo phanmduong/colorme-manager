@@ -199,3 +199,83 @@ function loadProvincesError() {
     errorLoadingProvinces: true,
   };
 }
+
+export function loadSources(token) {
+  return function(dispatch) {
+    dispatch(beginLoadSources());
+    saveRegisterApi
+      .loadSources(token)
+      .then(function(res) {
+        dispatch(loadSourcesSuccessful(res));
+      })
+      .catch(error => {
+        dispatch(loadSourcesError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadSources() {
+  return {
+    type: types.BEGIN_LOAD_SOURCES,
+    isLoadingSources: true,
+    errorLoadingSources: false,
+  };
+}
+
+function loadSourcesSuccessful(res) {
+  return {
+    type: types.LOAD_SOURCES_SUCCESSFUL,
+    isLoadingSources: false,
+    errorLoadingSources: false,
+    sources: res.data.sources,
+  };
+}
+
+function loadSourcesError() {
+  return {
+    type: types.LOAD_SOURCES_ERROR,
+    isLoadingSources: false,
+    errorLoadingSources: true,
+  };
+}
+
+export function loadStatuses(ref, token) {
+  return function(dispatch) {
+    dispatch(beginLoadStatuses());
+    saveRegisterApi
+      .loadStatuses(ref, token)
+      .then(function(res) {
+        dispatch(loadStatusesSuccessful(res));
+      })
+      .catch(error => {
+        dispatch(loadStatusesError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadStatuses() {
+  return {
+    type: types.BEGIN_LOAD_STATUSES,
+    isLoadingStatuses: true,
+    errorLoadingStatuses: false,
+  };
+}
+
+function loadStatusesSuccessful(res) {
+  return {
+    type: types.LOAD_STATUSES_SUCCESSFUL,
+    isLoadingStatuses: false,
+    errorLoadingStatuses: false,
+    statuses: res.data.statuses,
+  };
+}
+
+function loadStatusesError() {
+  return {
+    type: types.LOAD_STATUSES_ERROR,
+    isLoadingStatuses: false,
+    errorLoadingStatuses: true,
+  };
+}

@@ -6,17 +6,14 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as registerListActions from '../actions/registerListActions';
 import * as infoStudentActions from '../actions/infoStudentActions';
+import * as baseActions from '../actions/baseActions';
+import * as saveRegisterActions from '../actions/saveRegisterActions';
 import RegisterListComponent from '../components/RegisterListComponent';
 import {isEmptyInput} from '../helper';
-import {auto} from 'async';
 
 class RegisterListContainer extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.loadDataRegisterListAll = this.loadDataRegisterListAll.bind(this);
-    this.updateFormAndLoadDataSearchAll = this.updateFormAndLoadDataSearchAll.bind(
-      this,
-    );
     this.loadDataRegisterListMy = this.loadDataRegisterListMy.bind(this);
     this.updateFormAndLoadDataSearchMy = this.updateFormAndLoadDataSearchMy.bind(
       this,
@@ -28,61 +25,115 @@ class RegisterListContainer extends React.Component {
   });
 
   componentWillMount() {
-    this.loadDataRegisterListAll();
     this.loadDataRegisterListMy();
+    this.loadBases();
+    this.loadCampaigns();
+    this.loadStatuses();
+    this.loadSources();
   }
 
-  changeSegmentRegisterList = segment => {
-    this.props.registerListActions.changeSegmentRegisterList(segment);
+  loadBases = () => {
+    this.props.baseActions.loadDataBase(this.props.token);
   };
 
-  loadDataRegisterListAll() {
-    if (this.props.currentPageAll < this.props.totalPageAll) {
-      this.props.registerListActions.loadDataRegisterListAll(
-        this.props.token,
-        this.props.currentPageAll + 1,
-        this.props.searchAll,
-      );
-    }
-  }
-
-  refreshRegisterListAll = () => {
-    this.props.registerListActions.refreshRegisterListAll(
-      this.props.searchAll,
-      this.props.token,
-    );
+  loadCampaigns = () => {
+    this.props.saveRegisterActions.loadCampaigns(this.props.token);
   };
 
-  refreshRegisterListMy = () => {
-    this.props.registerListActions.refreshRegisterListMy(
-      this.props.searchMy,
-      this.props.token,
-      this.props.user.id,
-    );
+  loadSources = () => {
+    this.props.saveRegisterActions.loadSources(this.props.token);
   };
 
-  updateFormAndLoadDataSearchAll(search) {
-    this.props.registerListActions.updateFormAndLoadDataSearchAll(
-      search,
-      this.props.token,
-    );
-  }
+  loadStatuses = () => {
+    this.props.saveRegisterActions.loadStatuses('registers', this.props.token);
+  };
 
   loadDataRegisterListMy() {
+    let baseId =
+      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
+    let salerId = this.props.salerId === -1 ? '' : this.props.salerId;
+    let campaignId = this.props.campaignId === -1 ? '' : this.props.campaignId;
+    let paidStatus = this.props.paidStatus === -1 ? '' : this.props.paidStatus;
+    let callStatus = this.props.callStatus === -1 ? '' : this.props.callStatus;
+    let bookmark = this.props.bookmark === -1 ? '' : this.props.bookmark;
+    let statusId = this.props.status_id === -1 ? '' : this.props.status_id;
+    let sourceId = this.props.source_id === -1 ? '' : this.props.source_id;
     if (this.props.currentPageMy < this.props.totalPageMy) {
       this.props.registerListActions.loadDataRegisterListMy(
         this.props.token,
         this.props.currentPageMy + 1,
         this.props.searchMy,
-        this.props.user.id,
+        salerId,
+        baseId,
+        campaignId,
+        paidStatus,
+        this.props.classStatus,
+        callStatus,
+        bookmark,
+        this.props.search_coupon,
+        this.props.start_time,
+        this.props.end_time,
+        this.props.appointmentPayment,
+        statusId,
+        sourceId,
       );
     }
   }
 
+  refreshRegisterListMy = search_coupon => {
+    let baseId =
+      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
+    let salerId = this.props.salerId === -1 ? '' : this.props.salerId;
+    let campaignId = this.props.campaignId === -1 ? '' : this.props.campaignId;
+    let paidStatus = this.props.paidStatus === -1 ? '' : this.props.paidStatus;
+    let callStatus = this.props.callStatus === -1 ? '' : this.props.callStatus;
+    let bookmark = this.props.bookmark === -1 ? '' : this.props.bookmark;
+    let statusId = this.props.status_id === -1 ? '' : this.props.status_id;
+    let sourceId = this.props.source_id === -1 ? '' : this.props.source_id;
+    this.props.registerListActions.refreshRegisterListMy(
+      this.props.searchMy,
+      this.props.token,
+      salerId,
+      baseId,
+      campaignId,
+      paidStatus,
+      this.props.classStatus,
+      callStatus,
+      bookmark,
+      search_coupon,
+      this.props.start_time,
+      this.props.end_time,
+      this.props.appointmentPayment,
+      statusId,
+      sourceId,
+    );
+  };
+
   updateFormAndLoadDataSearchMy(search) {
+    let salerId = this.props.salerId === -1 ? '' : this.props.salerId;
+    let baseId =
+      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
+    let campaignId = this.props.campaignId === -1 ? '' : this.props.campaignId;
+    let paidStatus = this.props.paidStatus === -1 ? '' : this.props.paidStatus;
+    let callStatus = this.props.callStatus === -1 ? '' : this.props.callStatus;
+    let bookmark = this.props.bookmark === -1 ? '' : this.props.bookmark;
+    let statusId = this.props.status_id === -1 ? '' : this.props.status_id;
+    let sourceId = this.props.source_id === -1 ? '' : this.props.source_id;
     this.props.registerListActions.updateFormAndLoadDataSearchMy(
       search,
-      this.props.user.id,
+      salerId,
+      baseId,
+      campaignId,
+      paidStatus,
+      this.props.classStatus,
+      callStatus,
+      bookmark,
+      this.props.search_coupon,
+      this.props.start_time,
+      this.props.end_time,
+      this.props.appointmentPayment,
+      statusId,
+      sourceId,
       this.props.token,
     );
   }
@@ -125,61 +176,113 @@ class RegisterListContainer extends React.Component {
     );
   };
 
+  onSelectBaseId = baseId => {
+    this.props.baseActions.selectedBaseId(baseId);
+  };
+
+  onSelectSalerId = salerId => {
+    this.props.registerListActions.onSelectSalerId(salerId);
+  };
+
+  onSelectCampaignId = campaignId => {
+    this.props.registerListActions.onSelectCampaignId(campaignId);
+  };
+
+  onSelectPaidStatus = paidStatus => {
+    this.props.registerListActions.onSelectPaidStatus(paidStatus);
+  };
+
+  onSelectClassStatus = classStatus => {
+    this.props.registerListActions.onSelectClassStatus(classStatus);
+  };
+
+  onSelectCallStatus = callStatus => {
+    this.props.registerListActions.onSelectCallStatus(callStatus);
+  };
+
+  onSelectBookmark = bookmark => {
+    this.props.registerListActions.onSelectBookmark(bookmark);
+  };
+
+  onSelectStartTime = date => {
+    this.props.registerListActions.onSelectStartTime(date);
+  };
+
+  onSelectEndTime = date => {
+    this.props.registerListActions.onSelectEndTime(date);
+  };
+
+  onSelectAppointmentPayment = date => {
+    this.props.registerListActions.onSelectAppointmentPayment(date);
+  };
+
+  onSelectStatus = statusId => {
+    this.props.registerListActions.onSelectStatus(statusId);
+  };
+
+  onSelectSource = sourceId => {
+    this.props.registerListActions.onSelectSource(sourceId);
+  };
+
   render() {
     let autoFocus = this.props.navigation.getParam('autoFocus');
     if (isEmptyInput(autoFocus)) {
       autoFocus = false;
     }
-    if (this.props.segment === 1) {
-      return (
-        <RegisterListComponent
-          {...this.props}
-          registerList={this.props.registerListDataAll}
-          error={this.props.errorAll}
-          isLoading={this.props.isLoadingAll}
-          search={this.props.searchAll}
-          refreshing={this.props.refreshingAll}
-          onRefresh={this.refreshRegisterListAll}
-          loadDataRegisterList={this.loadDataRegisterListAll}
-          updateFormAndLoadDataSearch={this.updateFormAndLoadDataSearchAll}
-          changeSegmentRegisterList={this.changeSegmentRegisterList}
-          segmentActive={1}
-          setStudentId={this.setStudentId}
-          autoFocus={autoFocus}
-          token={this.props.token}
-          errorChangeCallStatus={this.props.errorChangeCallStatus}
-          errorSubmitMoney={this.props.errorSubmitMoney}
-          changeCallStatus={this.changeCallStatus}
-          submitMoney={this.submitMoney}
-          user={this.props.user}
-        />
-      );
-    } else {
-      console.log(this.props.registerListDataMy);
-      return (
-        <RegisterListComponent
-          {...this.props}
-          registerList={this.props.registerListDataMy}
-          error={this.props.errorMy}
-          isLoading={this.props.isLoadingMy}
-          search={this.props.searchMy}
-          refreshing={this.props.refreshingMy}
-          onRefresh={this.refreshRegisterListMy}
-          loadDataRegisterList={this.loadDataRegisterListMy}
-          updateFormAndLoadDataSearch={this.updateFormAndLoadDataSearchMy}
-          changeSegmentRegisterList={this.changeSegmentRegisterList}
-          segmentActive={2}
-          setStudentId={this.setStudentId}
-          autoFocus={autoFocus}
-          token={this.props.token}
-          errorChangeCallStatus={this.props.errorChangeCallStatus}
-          errorSubmitMoney={this.props.errorSubmitMoney}
-          changeCallStatus={this.changeCallStatus}
-          submitMoney={this.submitMoney}
-          user={this.props.user}
-        />
-      );
-    }
+    console.log(this.props.start_time);
+    return (
+      <RegisterListComponent
+        {...this.props}
+        registerList={this.props.registerListDataMy}
+        error={this.props.errorMy}
+        isLoading={this.props.isLoadingMy}
+        search={this.props.searchMy}
+        refreshing={this.props.refreshingMy}
+        onRefresh={this.refreshRegisterListMy}
+        loadDataRegisterList={this.loadDataRegisterListMy}
+        updateFormAndLoadDataSearch={this.updateFormAndLoadDataSearchMy}
+        setStudentId={this.setStudentId}
+        autoFocus={autoFocus}
+        token={this.props.token}
+        errorChangeCallStatus={this.props.errorChangeCallStatus}
+        errorSubmitMoney={this.props.errorSubmitMoney}
+        changeCallStatus={this.changeCallStatus}
+        submitMoney={this.submitMoney}
+        user={this.props.user}
+        salerId={this.props.salerId}
+        baseData={this.props.baseData}
+        onSelectBaseId={this.onSelectBaseId}
+        onSelectSalerId={this.onSelectSalerId}
+        selectedBaseId={this.props.selectedBaseId}
+        campaigns={this.props.campaigns}
+        onSelectCampaignId={this.onSelectCampaignId}
+        campaignId={this.props.campaignId}
+        onSelectPaidStatus={this.onSelectPaidStatus}
+        paidStatus={this.props.paidStatus}
+        onSelectClassStatus={this.onSelectClassStatus}
+        classStatus={this.props.classStatus}
+        onSelectCallStatus={this.onSelectCallStatus}
+        callStatus={this.props.callStatus}
+        onSelectBookmark={this.onSelectBookmark}
+        bookmark={this.props.bookmark}
+        onSelectStartTime={this.onSelectStartTime}
+        start_time={this.props.start_time}
+        onSelectEndTime={this.onSelectEndTime}
+        end_time={this.props.end_time}
+        onSelectAppointmentPayment={this.onSelectAppointmentPayment}
+        appointmentPayment={this.props.appointmentPayment}
+        onSelectStatus={this.onSelectStatus}
+        statuses={this.props.statuses}
+        statusId={this.props.status_id}
+        onSelectSource={this.onSelectSource}
+        sources={this.props.sources}
+        sourceId={this.props.source_id}
+        isLoadingBase={this.props.isLoadingBase}
+        isLoadingSources={this.props.isLoadingSources}
+        isLoadingStatuses={this.props.isLoadingStatuses}
+        isLoadingCampaigns={this.props.isLoadingCampaigns}
+      />
+    );
   }
 }
 
@@ -187,23 +290,36 @@ function mapStateToProps(state) {
   return {
     user: state.login.user,
     token: state.login.token,
-    registerListDataAll: state.registerList.registerListDataAll,
-    isLoadingAll: state.registerList.isLoadingAll,
-    errorAll: state.registerList.errorAll,
-    currentPageAll: state.registerList.currentPageAll,
-    totalPageAll: state.registerList.totalPageAll,
-    searchAll: state.registerList.searchAll,
     registerListDataMy: state.registerList.registerListDataMy,
     isLoadingMy: state.registerList.isLoadingMy,
     errorMy: state.registerList.errorMy,
     currentPageMy: state.registerList.currentPageMy,
     totalPageMy: state.registerList.totalPageMy,
     searchMy: state.registerList.searchMy,
-    segment: state.registerList.segment,
-    refreshingAll: state.registerList.refreshingAll,
     refreshingMy: state.registerList.refreshingMy,
+    salerId: state.registerList.salerId,
     errorChangeCallStatus: state.registerList.errorChangeCallStatus,
     errorSubmitMoney: state.registerList.errorSubmitMoney,
+    baseData: state.base.baseData,
+    selectedBaseId: state.base.selectedBaseId,
+    campaigns: state.saveRegister.campaigns,
+    campaignId: state.registerList.campaignId,
+    paidStatus: state.registerList.paidStatus,
+    classStatus: state.registerList.classStatus,
+    callStatus: state.registerList.callStatus,
+    bookmark: state.registerList.bookmark,
+    search_coupon: state.registerList.search_coupon,
+    start_time: state.registerList.start_time,
+    end_time: state.registerList.end_time,
+    appointmentPayment: state.registerList.appointmentPayment,
+    statuses: state.saveRegister.statuses,
+    sources: state.saveRegister.sources,
+    status_id: state.registerList.status_id,
+    source_id: state.registerList.source_id,
+    isLoadingBase: state.base.isLoading,
+    isLoadingSources: state.saveRegister.isLoadingSources,
+    isLoadingStatuses: state.saveRegister.isLoadingStatuses,
+    isLoadingCampaigns: state.saveRegister.isLoadingCampaigns,
   };
 }
 
@@ -211,6 +327,8 @@ function mapDispatchToProps(dispatch) {
   return {
     registerListActions: bindActionCreators(registerListActions, dispatch),
     infoStudentActions: bindActionCreators(infoStudentActions, dispatch),
+    baseActions: bindActionCreators(baseActions, dispatch),
+    saveRegisterActions: bindActionCreators(saveRegisterActions, dispatch),
   };
 }
 

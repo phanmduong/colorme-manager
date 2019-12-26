@@ -9,38 +9,6 @@ export default function registerListReducer(
   action,
 ) {
   switch (action.type) {
-    case types.BEGIN_DATA_REGISTER_LIST_LOAD_ALL:
-      return Object.assign({}, state, {
-        isLoadingAll: action.isLoadingAll,
-        errorAll: action.errorAll,
-        refreshingAll: action.refreshingAll,
-      });
-    case types.LOAD_DATA_REGISTER_LIST_SUCCESSFUL_ALL:
-      let registerListDataAll =
-        action.currentPageAll === 1
-          ? action.registerListDataAll
-          : [...state.registerListDataAll, ...action.registerListDataAll];
-      return Object.assign({}, state, {
-        isLoadingAll: action.isLoadingAll,
-        errorAll: action.errorAll,
-        registerListDataAll: registerListDataAll,
-        currentPageAll: action.currentPageAll,
-        totalPageAll: action.totalPageAll,
-        refreshingAll: action.refreshingAll,
-      });
-    case types.LOAD_DATA_REGISTER_LIST_ERROR_ALL:
-      return Object.assign({}, state, {
-        isLoadingAll: action.isLoadingAll,
-        errorAll: action.errorAll,
-        refreshingAll: action.refreshingAll,
-      });
-    case types.UPDATE_FORM_SEARCH_REGISTER_LIST_ALL:
-      return Object.assign({}, state, {
-        searchAll: action.searchAll,
-        registerListDataAll: action.registerListDataAll,
-        currentPageAll: action.currentPageAll,
-        totalPageAll: action.totalPageAll,
-      });
     case types.BEGIN_DATA_REGISTER_LIST_LOAD_MY:
       return Object.assign({}, state, {
         isLoadingMy: action.isLoadingMy,
@@ -57,6 +25,8 @@ export default function registerListReducer(
         registerListDataMy: registerListDataMy,
         currentPageMy: action.currentPageMy,
         totalPageMy: action.totalPageMy,
+        salerId: action.salerId,
+        search_coupon: action.search_coupon,
       });
     case types.LOAD_DATA_REGISTER_LIST_ERROR_MY:
       return Object.assign({}, state, {
@@ -70,21 +40,56 @@ export default function registerListReducer(
         currentPageMy: action.currentPageMy,
         totalPageMy: action.totalPageMy,
       });
-    case types.CHANGE_SEGMENT_REGISTER_LIST:
-      return Object.assign({}, state, {
-        segment: action.segment,
-      });
-    case types.RESET_PAGE_REGISTER_LIST_ALL:
-      return Object.assign({}, state, {
-        registerListDataAll: action.registerListDataAll,
-        currentPageAll: action.currentPageAll,
-        totalPageAll: action.totalPageAll,
-      });
     case types.RESET_PAGE_REGISTER_LIST_MY:
       return Object.assign({}, state, {
         registerListDataMy: action.registerListDataMy,
         currentPageMy: action.currentPageMy,
         totalPageMy: action.totalPageMy,
+      });
+    case types.SELECT_REGISTER_LIST_SALER:
+      return Object.assign({}, state, {
+        salerId: action.salerId,
+      });
+    case types.SELECT_REGISTER_LIST_CAMPAIGN:
+      return Object.assign({}, state, {
+        campaignId: action.campaignId,
+      });
+    case types.SELECT_REGISTER_LIST_PAID_STATUS:
+      return Object.assign({}, state, {
+        paidStatus: action.paidStatus,
+      });
+    case types.SELECT_REGISTER_LIST_CLASS_STATUS: {
+      return Object.assign({}, state, {
+        classStatus: action.classStatus,
+      });
+    }
+    case types.SELECT_REGISTER_LIST_CALL_STATUS:
+      return Object.assign({}, state, {
+        callStatus: action.callStatus,
+      });
+    case types.SELECT_REGISTER_LIST_BOOKMARK:
+      return Object.assign({}, state, {
+        bookmark: action.bookmark,
+      });
+    case types.SELECT_REGISTER_LIST_START_TIME:
+      return Object.assign({}, state, {
+        start_time: action.start_time,
+      });
+    case types.SELECT_REGISTER_LIST_END_TIME:
+      return Object.assign({}, state, {
+        end_time: action.end_time,
+      });
+    case types.SELECT_REGISTER_LIST_APPOINTMENT_PAYMENT:
+      return Object.assign({}, state, {
+        appointmentPayment: action.appointmentPayment,
+      });
+    case types.SELECT_REGISTER_LIST_SOURCE:
+      return Object.assign({}, state, {
+        source_id: action.source_id,
+      });
+    case types.SELECT_REGISTER_LIST_STATUS:
+      return Object.assign({}, state, {
+        status_id: action.status_id,
       });
     default:
       return state;

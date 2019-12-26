@@ -4,6 +4,7 @@ import SaveRegisterComponent from '../components/SaveRegisterComponent';
 import {bindActionCreators} from 'redux';
 import * as saveRegisterActions from '../actions/saveRegisterActions';
 import * as registerListActions from '../actions/registerListActions';
+import * as baseActions from '../actions/baseActions';
 
 class SaveRegisterContainer extends React.Component {
   constructor(props, context) {
@@ -20,6 +21,7 @@ class SaveRegisterContainer extends React.Component {
     this.loadProvinces();
     this.loadSources();
     this.loadStatuses();
+    this.loadDataBase();
   };
 
   loadCourses = () => {
@@ -44,6 +46,10 @@ class SaveRegisterContainer extends React.Component {
 
   loadStatuses = () => {
     this.props.saveRegisterActions.loadStatuses('registers', this.props.token);
+  };
+
+  loadDataBase = () => {
+    this.props.baseActions.loadDataBase(this.props.token);
   };
 
   register = register => {
@@ -80,6 +86,8 @@ class SaveRegisterContainer extends React.Component {
         sources={this.props.sources}
         isLoadingStatuses={this.props.isLoadingStatuses}
         statuses={this.props.statuses}
+        isLoadingBase={this.props.isLoadingBase}
+        baseData={this.props.baseData}
       />
     );
   }
@@ -110,6 +118,9 @@ function mapStateToProps(state) {
     isLoadingStatuses: state.saveRegister.isLoadingStatuses,
     errorLoadingStatuses: state.saveRegister.errorLoadingStatuses,
     statuses: state.saveRegister.statuses,
+    isLoadingBase: state.base.isLoading,
+    errorLoadingBase: state.base.error,
+    baseData: state.base.baseData,
   };
 }
 
@@ -117,6 +128,7 @@ function mapDispatchToProps(dispatch) {
   return {
     saveRegisterActions: bindActionCreators(saveRegisterActions, dispatch),
     registerListActions: bindActionCreators(registerListActions, dispatch),
+    baseActions: bindActionCreators(baseActions, dispatch),
   };
 }
 

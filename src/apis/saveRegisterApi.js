@@ -23,6 +23,7 @@ export function saveRegisterApi(token, register) {
     course_id: register.course_id,
     status_id: register.status_id,
     source_id: register.source_id,
+    base_id: register.base_id,
   });
 }
 

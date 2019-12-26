@@ -64,6 +64,7 @@ class SaveRegisterComponent extends React.Component {
       selectedCourseId: -1,
       source_id: '',
       status_id: '',
+      base_id: '',
       coupon: '',
       dob: '',
       address: '',
@@ -356,6 +357,7 @@ class SaveRegisterComponent extends React.Component {
         father_name: this.state.father_name,
         source_id: this.state.source_id,
         status_id: this.state.status_id,
+        base_id: this.state.base_id,
       };
       this.props.register(register);
       if (this.props.errorLoadingRegister) {
@@ -390,6 +392,7 @@ class SaveRegisterComponent extends React.Component {
       father_name: '',
       source_id: '',
       status_id: '',
+      base_id: '',
       saler_id: this.props.saler_id,
       selectedCourseId: -1,
       selectedCourse: false,
@@ -432,6 +435,19 @@ class SaveRegisterComponent extends React.Component {
     return address;
   };
 
+  getSelectBase = (items, studyClasses) => {
+    return (
+      items &&
+      items.map(item => {
+        const count = studyClasses.filter(sc => sc.base.id == item.id).length;
+        return {
+          id: item.id,
+          name: `${item.name} - (${count} lớp) - ${item.address}`,
+        };
+      })
+    );
+  };
+
   toggleExpand = () => {
     this.setState({
       expanded: !this.state.expanded,
@@ -450,7 +466,9 @@ class SaveRegisterComponent extends React.Component {
       !this.props.isLoadingSources &&
       !isEmptyInput(this.props.sources) &&
       !this.props.isLoadingStatuses &&
-      !isEmptyInput(this.props.statuses)
+      !isEmptyInput(this.props.statuses) &&
+      !this.props.isLoadingBase &&
+      !isEmptyInput(this.props.baseData)
     ) {
       return (
         <KeyboardAvoidingView
@@ -585,6 +603,30 @@ class SaveRegisterComponent extends React.Component {
                   }}
                 />
               </View>
+              {this.state.selectedCourse && !this.props.isLoadingClasses ? (
+                <View style={{marginTop: 30}}>
+                  <Text style={styles.titleForm}>Chọn cơ sở</Text>
+                  <CustomPicker
+                    options={this.getSelectBase(
+                      this.props.baseData,
+                      this.props.classes,
+                    )}
+                    getLabel={item => item.name}
+                    placeholder={'Chọn cơ sở'}
+                    modalAnimationType={'fade'}
+                    optionTemplate={this.renderCoursePickerOption}
+                    fieldTemplate={this.renderCoursePickerField}
+                    headerTemplate={() => this.renderPickerHeader('Chọn cơ sở')}
+                    footerTemplate={this.renderCoursePickerFooter}
+                    modalStyle={{
+                      borderRadius: 6,
+                    }}
+                    onValueChange={value => {
+                      this.setState({base_id: value.id});
+                    }}
+                  />
+                </View>
+              ) : null}
               {this.state.selectedCourse && !this.props.isLoadingClasses ? (
                 <View style={{marginTop: 30}}>
                   <Text style={styles.titleForm}>

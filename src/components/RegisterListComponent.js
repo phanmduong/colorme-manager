@@ -10,7 +10,6 @@ import theme from '../styles';
 import ListItemRegisterStudent from './registerList/ListItemRegisterStudent';
 import Loading from './common/Loading';
 import Search from './common/Search';
-import LinearGradient from 'react-native-linear-gradient';
 import {getStatusBarHeight, isIphoneX} from 'react-native-iphone-x-helper';
 import FilterModal from './infoStudent/FilterModal';
 

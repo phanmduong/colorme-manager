@@ -277,6 +277,10 @@ class RegisterListContainer extends React.Component {
         onSelectSource={this.onSelectSource}
         sources={this.props.sources}
         sourceId={this.props.source_id}
+        isLoadingBase={this.props.isLoadingBase}
+        isLoadingSources={this.props.isLoadingSources}
+        isLoadingStatuses={this.props.isLoadingStatuses}
+        isLoadingCampaigns={this.props.isLoadingCampaigns}
       />
     );
   }
@@ -312,6 +316,10 @@ function mapStateToProps(state) {
     sources: state.saveRegister.sources,
     status_id: state.registerList.status_id,
     source_id: state.registerList.source_id,
+    isLoadingBase: state.base.isLoading,
+    isLoadingSources: state.saveRegister.isLoadingSources,
+    isLoadingStatuses: state.saveRegister.isLoadingStatuses,
+    isLoadingCampaigns: state.saveRegister.isLoadingCampaigns,
   };
 }
 

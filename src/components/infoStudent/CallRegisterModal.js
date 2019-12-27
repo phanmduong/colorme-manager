@@ -101,13 +101,18 @@ class CallRegisterModal extends React.Component {
                 phone={this.props.phone}
               />
             </View>
-            <TextInput
-              multiline={true}
-              placeholder={'Ghi chú'}
-              style={styles.note}
-              onChangeText={note => this.setState({note})}
-              value={this.state.note}
-            />
+            <View style={{marginTop: 25}}>
+              <Text style={styles.titleForm}>Ghi chú</Text>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  value={this.state.note}
+                  onChangeText={data => this.setState({note: data})}
+                  placeholder="Ghi chú"
+                  blurOnSubmit={false}
+                  style={{fontSize: 16}}
+                />
+              </View>
+            </View>
             <View style={{marginTop: 25}}>
               <Text style={{fontSize: 16}}>Hẹn nộp tiền</Text>
               <TouchableOpacity
@@ -231,7 +236,6 @@ const styles = {
   note: {
     fontSize: 16,
     backgroundColor: '#F6F6F6',
-    marginTop: 25,
     height: 100,
     paddingLeft: 10,
     borderRadius: 8,
@@ -273,6 +277,18 @@ const styles = {
   },
   confirm: {
     color: 'white',
+    fontSize: 16,
+  },
+  inputContainer: {
+    marginTop: 8,
+    height: 45,
+    backgroundColor: '#F6F6F6',
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+    borderRadius: 8,
+  },
+  titleForm: {
+    color: 'black',
     fontSize: 16,
   },
 };

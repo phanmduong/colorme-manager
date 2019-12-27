@@ -233,7 +233,6 @@ class RegisterListContainer extends React.Component {
     if (isEmptyInput(autoFocus)) {
       autoFocus = false;
     }
-    console.log(this.props.start_time);
     return (
       <RegisterListComponent
         {...this.props}

@@ -22,7 +22,10 @@ class SubmitMoneyModal extends React.Component {
     this.state = {
       money: '0',
       note: '',
-      code: this.props.code,
+      code:
+        this.props.class.type === 'active'
+          ? this.props.next_code
+          : this.props.next_waiting_code,
       payment_method: CHUYEN_KHOAN,
     };
   }

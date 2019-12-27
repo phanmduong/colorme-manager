@@ -224,6 +224,10 @@ class RegisterListContainer extends React.Component {
     this.props.registerListActions.onSelectSource(sourceId);
   };
 
+  reset = () => {
+    this.props.registerListActions.reset();
+  };
+
   render() {
     let autoFocus = this.props.navigation.getParam('autoFocus');
     if (isEmptyInput(autoFocus)) {
@@ -281,6 +285,7 @@ class RegisterListContainer extends React.Component {
         isLoadingSources={this.props.isLoadingSources}
         isLoadingStatuses={this.props.isLoadingStatuses}
         isLoadingCampaigns={this.props.isLoadingCampaigns}
+        reset={this.reset}
       />
     );
   }

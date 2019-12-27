@@ -14,6 +14,7 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import Loading from '../common/Loading';
 var {width, height} = Dimensions.get('window');
+import theme from '../../styles';
 
 class FilterModal extends React.Component {
   constructor(props, context) {
@@ -515,20 +516,25 @@ class FilterModal extends React.Component {
                   this.props.closeModal();
                 }}>
                 <View style={styles.submit}>
-                  <Text style={styles.submitTitle}>Hoàn tất</Text>
+                  <Text style={styles.submitTitle}>Áp dụng</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  this.setState({search_coupon: ''});
+                  this.props.reset();
+                  this.props.resetModal();
+                }}>
+                <View style={styles.reset}>
+                  <Text style={styles.resetTitle}>Đặt lại</Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
                   this.props.closeModal();
                 }}>
-                <View
-                  style={{
-                    marginTop: 25,
-                    alignItems: 'center',
-                    paddingBottom: 30,
-                  }}>
-                  <Text style={{fontSize: 16}}>Hủy</Text>
+                <View style={styles.cancelContainer}>
+                  <Text style={styles.cancelTitle}>Hủy</Text>
                 </View>
               </TouchableOpacity>
               <DateTimePicker
@@ -592,6 +598,14 @@ const styles = {
     alignItems: 'center',
     marginTop: 20,
   },
+  reset: {
+    height: 45,
+    borderRadius: 24,
+    backgroundColor: '#F6F6F6',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+  },
   title: {
     fontSize: 23,
     fontWeight: '600',
@@ -602,6 +616,10 @@ const styles = {
   },
   submitTitle: {
     color: 'white',
+    fontSize: 16,
+  },
+  resetTitle: {
+    color: 'black',
     fontSize: 16,
   },
   modalContainer: {
@@ -623,6 +641,15 @@ const styles = {
     borderBottomWidth: 1,
     borderBottomColor: '#F0F0F0',
     marginHorizontal: 20,
+  },
+  cancelContainer: {
+    marginTop: 25,
+    alignItems: 'center',
+    paddingBottom: 30,
+  },
+  cancelTitle: {
+    fontSize: 16,
+    color: theme.mainColor,
   },
 };
 

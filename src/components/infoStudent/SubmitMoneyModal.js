@@ -7,10 +7,11 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
-    Dimensions
+  Dimensions,
 } from 'react-native';
 import Modal from 'react-native-modal';
 var {width, height} = Dimensions.get('window');
+import theme from '../../styles';
 
 const CHUYEN_KHOAN = 'internet_banking';
 const TIEN_MAT = 'cash';
@@ -200,13 +201,8 @@ class SubmitMoneyModal extends React.Component {
               </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={this.props.onSwipeComplete}>
-              <View
-                style={{
-                  marginTop: 25,
-                  alignItems: 'center',
-                  paddingBottom: 30,
-                }}>
-                <Text>Hủy</Text>
+              <View style={styles.cancelContainer}>
+                <Text style={{color: theme.mainColor}}>Hủy</Text>
               </View>
             </TouchableOpacity>
           </ScrollView>
@@ -276,6 +272,11 @@ const styles = {
     backgroundColor: '#2ACC4C',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  cancelContainer: {
+    marginTop: 25,
+    alignItems: 'center',
+    paddingBottom: 30,
   },
 };
 

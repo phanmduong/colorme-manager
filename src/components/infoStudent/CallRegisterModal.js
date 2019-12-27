@@ -14,6 +14,7 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import Call from '../common/Call';
 var {height, width} = Dimensions.get('window');
+import theme from '../../styles';
 
 class CallRegisterModal extends React.Component {
   constructor(props, context) {
@@ -175,13 +176,8 @@ class CallRegisterModal extends React.Component {
               onPress={() => {
                 this.props.onSwipeComplete();
               }}>
-              <View
-                style={{
-                  marginTop: 25,
-                  alignItems: 'center',
-                  paddingBottom: 30,
-                }}>
-                <Text style={{fontSize: 16}}>Hủy</Text>
+              <View style={styles.cancelContainer}>
+                <Text style={styles.cancelTitle}>Hủy</Text>
               </View>
             </TouchableOpacity>
             <DateTimePicker
@@ -250,6 +246,15 @@ const styles = {
   rateRow: {
     flexDirection: 'row',
     marginTop: 3,
+  },
+  cancelContainer: {
+    marginTop: 25,
+    alignItems: 'center',
+    paddingBottom: 30,
+  },
+  cancelTitle: {
+    fontSize: 16,
+    color: theme.mainColor,
   },
 };
 

@@ -163,7 +163,8 @@ class RegisterListComponent extends React.Component {
               avatar_url={item.avatar_url}
               classInfo={item.class}
               token={this.props.token}
-              code={item.code}
+              next_code={item.next_code}
+              next_waiting_code={item.next_waiting_code}
               registerId={item.id}
               errorChangeCallStatus={this.props.errorChangeCallStatus}
               errorSubmitMoney={this.props.errorSubmitMoney}

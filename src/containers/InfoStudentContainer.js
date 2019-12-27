@@ -24,9 +24,9 @@ class InfoStudentContainer extends React.Component {
         />
         <Image
           source={{uri: navigation.getParam('avatar_url')}}
-          style={{width: 30, height: 30, borderRadius: 15, marginLeft: 5}}
+          style={{width: 35, height: 35, borderRadius: 18, marginLeft: 5}}
         />
-        <Text style={{fontWeight: 'bold', fontSize: 18, marginLeft: 10}}>
+        <Text style={{fontWeight: '600', fontSize: 23, marginLeft: 10}}>
           {getShortName(navigation.getParam('name'))}
         </Text>
       </View>

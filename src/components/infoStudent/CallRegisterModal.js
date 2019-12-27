@@ -89,14 +89,12 @@ class CallRegisterModal extends React.Component {
         style={{margin: 0, justifyContent: 'flex-end'}}>
         <View style={styles.modal}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={{alignItems: 'center', paddingTop: 30}}>
+            <View style={styles.mainInfoContainer}>
               <Image
                 source={{uri: this.props.imageSource}}
-                style={{width: 100, height: 100, borderRadius: 50}}
+                style={styles.ava}
               />
-              <Text style={{marginTop: 25, fontSize: 16}}>
-                {this.props.email}
-              </Text>
+              <Text style={styles.email}>{this.props.email}</Text>
               <Call
                 extraPadding={{paddingTop: 5, fontSize: 16}}
                 url={'tel:' + this.props.phone}
@@ -149,10 +147,10 @@ class CallRegisterModal extends React.Component {
                       backgroundColor: '#F54335',
                     },
                   ]}>
-                  <Text style={{color: 'white', fontSize: 16}}>Thất bại</Text>
+                  <Text style={styles.confirm}>Thất bại</Text>
                   <Image
                     source={require('../../../assets/img/icons8-missed_call_filled.png')}
-                    style={{width: 25, height: 25}}
+                    style={styles.icon}
                   />
                 </View>
               </TouchableOpacity>
@@ -164,10 +162,10 @@ class CallRegisterModal extends React.Component {
                       backgroundColor: '#2ACC4C',
                     },
                   ]}>
-                  <Text style={{color: 'white', fontSize: 16}}>Thành công</Text>
+                  <Text style={styles.confirm}>Thành công</Text>
                   <Image
                     source={require('../../../assets/img/icons8-phone_filled.png')}
-                    style={{width: 25, height: 25}}
+                    style={styles.icon}
                   />
                 </View>
               </TouchableOpacity>
@@ -255,6 +253,27 @@ const styles = {
   cancelTitle: {
     fontSize: 16,
     color: theme.mainColor,
+  },
+  mainInfoContainer: {
+    alignItems: 'center',
+    paddingTop: 30,
+  },
+  ava: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+  },
+  email: {
+    marginTop: 25,
+    fontSize: 16,
+  },
+  icon: {
+    width: 25,
+    height: 25,
+  },
+  confirm: {
+    color: 'white',
+    fontSize: 16,
   },
 };
 

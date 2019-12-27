@@ -110,7 +110,7 @@ class DashboardComponent extends React.Component {
                 checkInOutStyle={styles.checkInContainer}
                 standOutFontSize={{fontSize: 17}}
                 imageSource={require('../../assets/img/MiM-check-in.png')}
-                imageWidth={(Dimensions.get('window').width - 32) * 0.38}
+                imageWidth={(width - 32) * 0.38}
                 title={'Check in'}
                 characterImgPosition={styles.checkInCharacterImgPosition}
                 onPress={() => {
@@ -125,7 +125,7 @@ class DashboardComponent extends React.Component {
                 colorTwo={'#2F94EB'}
                 checkInOutStyle={styles.checkOutContainer}
                 imageSource={require('../../assets/img/MiM-check-out.png')}
-                imageWidth={(Dimensions.get('window').width - 32) * 0.3 * 0.7}
+                imageWidth={(width - 32) * 0.3 * 0.7}
                 title={'Check out'}
                 characterImgPosition={styles.checkOutCharacterImgPosition}
                 onPress={() => {
@@ -140,7 +140,7 @@ class DashboardComponent extends React.Component {
                 colorTwo={'#E29950'}
                 checkInOutStyle={styles.checkOutContainer}
                 imageSource={require('../../assets/img/MiM-history.png')}
-                imageWidth={(Dimensions.get('window').width - 32) * 0.26 * 0.9}
+                imageWidth={(width - 32) * 0.26 * 0.9}
                 title={'Lịch sử'}
                 characterImgPosition={styles.historyCharacterImgPosition}
                 onPress={() => {

@@ -24,27 +24,21 @@ class InfoStudentContainer extends React.Component {
         />
         <Image
           source={{uri: navigation.getParam('avatar_url')}}
-          style={{width: 35, height: 35, borderRadius: 18, marginLeft: 5}}
+          style={styles.ava}
         />
-        <Text style={{fontWeight: '600', fontSize: 23, marginLeft: 10}}>
+        <Text style={styles.name}>
           {getShortName(navigation.getParam('name'))}
         </Text>
       </View>
     ),
     headerRight: (
-      <View
-        style={{flexDirection: 'row', alignItems: 'center', marginRight: 20}}>
+      <View style={styles.actionContainer}>
         <TouchableOpacity
-          style={{
-            padding: 8,
-            backgroundColor: '#F6F6F6',
-            marginLeft: 10,
-            borderRadius: 18,
-          }}
+          style={styles.btnContainer}
           onPress={() => navigation.navigate('InfoStudentDetails')}>
           <Image
             source={require('../../assets/img/icons8-info_filled.png')}
-            style={{width: 18, height: 18}}
+            style={styles.icon}
           />
         </TouchableOpacity>
       </View>
@@ -127,6 +121,35 @@ class InfoStudentContainer extends React.Component {
     );
   }
 }
+
+const styles = {
+  ava: {
+    width: 35,
+    height: 35,
+    borderRadius: 18,
+    marginLeft: 5,
+  },
+  actionContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 20,
+  },
+  btnContainer: {
+    padding: 8,
+    backgroundColor: '#F6F6F6',
+    marginLeft: 10,
+    borderRadius: 18,
+  },
+  icon: {
+    width: 18,
+    height: 18,
+  },
+  name: {
+    fontWeight: '600',
+    fontSize: 23,
+    marginLeft: 10,
+  },
+};
 
 function mapStateToProps(state) {
   return {

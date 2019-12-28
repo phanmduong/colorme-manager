@@ -92,7 +92,7 @@ class ClassComponent extends React.Component {
             style={
               isIphoneX()
                 ? {flex: 1, marginTop: getStatusBarHeight() + 10}
-                : {flex: 1, marginTop: 10}
+                : {flex: 1, marginTop: 20}
             }>
             <List
               refreshControl={

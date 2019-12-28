@@ -184,7 +184,7 @@ class RegisterListComponent extends React.Component {
         style={
           isIphoneX() && !isSubScreen
             ? {flex: 1, marginTop: getStatusBarHeight() + 10}
-            : {flex: 1, marginTop: 10}
+            : {flex: 1, marginTop: 20}
         }>
         {this.renderContent()}
       </View>

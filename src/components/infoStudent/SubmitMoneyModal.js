@@ -136,7 +136,9 @@ class SubmitMoneyModal extends React.Component {
               </View>
             </View>
             <View style={{marginTop: 8}}>
-              <Text style={styles.titleForm}>Mã học viên</Text>
+              <Text style={styles.titleForm}>
+                Mã học viên <Text style={{color: '#C50000'}}>*</Text>
+              </Text>
               <View style={styles.inputContainer}>
                 <TextInput
                   {...this.props}

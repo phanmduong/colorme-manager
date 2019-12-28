@@ -166,13 +166,37 @@ class RegisterListContainer extends React.Component {
   };
 
   submitMoney = (register_id, money, code, note, payment_method, token) => {
+    let baseId =
+      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
+    let salerId = this.props.salerId === -1 ? '' : this.props.salerId;
+    let campaignId = this.props.campaignId === -1 ? '' : this.props.campaignId;
+    let paidStatus = this.props.paidStatus === -1 ? '' : this.props.paidStatus;
+    let callStatus = this.props.callStatus === -1 ? '' : this.props.callStatus;
+    let bookmark = this.props.bookmark === -1 ? '' : this.props.bookmark;
+    let statusId = this.props.status_id === -1 ? '' : this.props.status_id;
+    let sourceId = this.props.source_id === -1 ? '' : this.props.source_id;
     this.props.infoStudentActions.submitMoney(
       register_id,
       money,
       code,
       note,
       payment_method,
+      '',
       token,
+      this.props.searchMy,
+      salerId,
+      baseId,
+      campaignId,
+      paidStatus,
+      this.props.classStatus,
+      callStatus,
+      bookmark,
+      this.props.search_coupon,
+      this.props.start_time,
+      this.props.end_time,
+      this.props.appointmentPayment,
+      statusId,
+      sourceId,
     );
   };
 

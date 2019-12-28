@@ -41,6 +41,15 @@ class InfoStudentRegistersContainer extends React.Component {
   };
 
   submitMoney = (register_id, money, code, note, payment_method, token) => {
+    let baseId =
+      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
+    let salerId = this.props.salerId === -1 ? '' : this.props.salerId;
+    let campaignId = this.props.campaignId === -1 ? '' : this.props.campaignId;
+    let paidStatus = this.props.paidStatus === -1 ? '' : this.props.paidStatus;
+    let callStatus = this.props.callStatus === -1 ? '' : this.props.callStatus;
+    let bookmark = this.props.bookmark === -1 ? '' : this.props.bookmark;
+    let statusId = this.props.status_id === -1 ? '' : this.props.status_id;
+    let sourceId = this.props.source_id === -1 ? '' : this.props.source_id;
     this.props.infoStudentActions.submitMoney(
       register_id,
       money,
@@ -49,6 +58,20 @@ class InfoStudentRegistersContainer extends React.Component {
       payment_method,
       this.props.studentId,
       token,
+      this.props.searchMy,
+      salerId,
+      baseId,
+      campaignId,
+      paidStatus,
+      this.props.classStatus,
+      callStatus,
+      bookmark,
+      this.props.search_coupon,
+      this.props.start_time,
+      this.props.end_time,
+      this.props.appointmentPayment,
+      statusId,
+      sourceId,
     );
   };
 
@@ -78,6 +101,16 @@ function mapStateToProps(state) {
     errorChangeCallStatus: state.infoStudent.errorChangeCallStatus,
     isLoadingSubmitMoney: state.infoStudent.isLoadingSubmitMoney,
     errorSubmitMoney: state.infoStudent.errorSubmitMoney,
+    selectedBaseId: state.base.selectedBaseId,
+    salerId: state.infoStudent.salerId,
+    campaignId: state.infoStudent.campaignId,
+    paidStatus: state.infoStudent.paidStatus,
+    callStatus: state.infoStudent.callStatus,
+    bookmark: state.infoStudent.bookmark,
+    status_id: state.infoStudent.status_id,
+    source_id: state.infoStudent.source_id,
+    search_coupon: state.infoStudent.search_coupon,
+    classStatus: state.registerList.classStatus,
   };
 }
 

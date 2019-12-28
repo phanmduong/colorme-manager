@@ -190,7 +190,9 @@ class DashboardComponent extends React.Component {
                 iconImage={require('../../assets/img/icons8-writer_male.png')}
                 title={'Tạo đăng ký'}
                 onPress={() => {
-                  this.props.navigation.navigate('SaveRegister');
+                  this.props.navigation.navigate('SaveRegister', {
+                    isSubScreen: true,
+                  });
                 }}
               />
             </View>

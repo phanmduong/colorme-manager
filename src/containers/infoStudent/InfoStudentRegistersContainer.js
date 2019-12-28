@@ -47,6 +47,7 @@ class InfoStudentRegistersContainer extends React.Component {
       code,
       note,
       payment_method,
+      this.props.studentId,
       token,
     );
   };

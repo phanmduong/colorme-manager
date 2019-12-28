@@ -113,6 +113,7 @@ export function submitMoney(
   code,
   note,
   payment_method,
+  studentId,
   token,
 ) {
   return function(dispatch) {
@@ -121,6 +122,7 @@ export function submitMoney(
       .submitMoney(register_id, money, code, note, payment_method, token)
       .then(function(res) {
         dispatch(loadSubmitMoneySuccessful());
+        dispatch(loadRegisters(studentId, token));
       })
       .catch(error => {
         dispatch(loadSubmitMoneyError());

@@ -123,6 +123,7 @@ class InfoStudentComponent extends React.Component {
                 name: name,
                 phone: phone,
                 email: email,
+                isSubScreen: false,
               })
             }>
             <View style={[styles.essentialButton, {marginLeft: 10}]}>

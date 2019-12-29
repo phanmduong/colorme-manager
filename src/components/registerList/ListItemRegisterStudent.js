@@ -45,7 +45,8 @@ class ListItemStudent extends React.Component {
       email,
       avatar_url,
       studentId,
-      code,
+      next_code,
+      next_waiting_code,
       registerId,
     } = this.props;
     return (
@@ -179,7 +180,8 @@ class ListItemStudent extends React.Component {
             avatar_url={avatar_url}
             class={classInfo}
             name={name}
-            code={code}
+            next_code={next_code}
+            next_waiting_code={next_waiting_code}
             token={this.props.token}
             submitMoney={this.props.submitMoney}
             register_id={registerId}

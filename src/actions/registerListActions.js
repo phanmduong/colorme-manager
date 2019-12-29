@@ -277,3 +277,21 @@ export function onSelectStatus(statusId) {
     status_id: statusId,
   };
 }
+
+export function reset() {
+  return {
+    type: types.RESET_REGISTER_LIST_FILTER,
+    salerId: -1,
+    campaignId: -1,
+    paidStatus: -1,
+    classStatus: '',
+    callStatus: -1,
+    bookmark: -1,
+    search_coupon: '',
+    start_time: '',
+    end_time: '',
+    appointmentPayment: '',
+    source_id: -1,
+    status_id: -1,
+  }
+}

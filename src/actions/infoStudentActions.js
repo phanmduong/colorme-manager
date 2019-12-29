@@ -1,5 +1,6 @@
 import * as types from '../constants/actionTypes';
 import * as infoStudentApi from '../apis/infoStudentApi';
+import {refreshRegisterListMy} from './registerListActions';
 
 export function setStudentId(studentId) {
   return {
@@ -113,7 +114,22 @@ export function submitMoney(
   code,
   note,
   payment_method,
+  studentId,
   token,
+  searchMy,
+  salerId,
+  baseId,
+  campaignId,
+  paidStatus,
+  classStatus,
+  callStatus,
+  bookmark,
+  search_coupon,
+  start_time,
+  end_time,
+  appointmentPayment,
+  statusId,
+  sourceId,
 ) {
   return function(dispatch) {
     dispatch(beginLoadSubmitMoney());
@@ -121,6 +137,26 @@ export function submitMoney(
       .submitMoney(register_id, money, code, note, payment_method, token)
       .then(function(res) {
         dispatch(loadSubmitMoneySuccessful());
+        dispatch(loadRegisters(studentId, token));
+        dispatch(
+          refreshRegisterListMy(
+            searchMy,
+            token,
+            salerId,
+            baseId,
+            campaignId,
+            paidStatus,
+            classStatus,
+            callStatus,
+            bookmark,
+            search_coupon,
+            start_time,
+            end_time,
+            appointmentPayment,
+            statusId,
+            sourceId,
+          ),
+        );
       })
       .catch(error => {
         dispatch(loadSubmitMoneyError());

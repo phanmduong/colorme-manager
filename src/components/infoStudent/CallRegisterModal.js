@@ -14,6 +14,7 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import Call from '../common/Call';
 var {height, width} = Dimensions.get('window');
+import theme from '../../styles';
 
 class CallRegisterModal extends React.Component {
   constructor(props, context) {
@@ -88,27 +89,30 @@ class CallRegisterModal extends React.Component {
         style={{margin: 0, justifyContent: 'flex-end'}}>
         <View style={styles.modal}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={{alignItems: 'center', paddingTop: 30}}>
+            <View style={styles.mainInfoContainer}>
               <Image
                 source={{uri: this.props.imageSource}}
-                style={{width: 100, height: 100, borderRadius: 50}}
+                style={styles.ava}
               />
-              <Text style={{marginTop: 25, fontSize: 16}}>
-                {this.props.email}
-              </Text>
+              <Text style={styles.email}>{this.props.email}</Text>
               <Call
                 extraPadding={{paddingTop: 5, fontSize: 16}}
                 url={'tel:' + this.props.phone}
                 phone={this.props.phone}
               />
             </View>
-            <TextInput
-              multiline={true}
-              placeholder={'Ghi chú'}
-              style={styles.note}
-              onChangeText={note => this.setState({note})}
-              value={this.state.note}
-            />
+            <View style={{marginTop: 25}}>
+              <Text style={styles.titleForm}>Ghi chú</Text>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  value={this.state.note}
+                  onChangeText={data => this.setState({note: data})}
+                  placeholder="Ghi chú"
+                  blurOnSubmit={false}
+                  style={{fontSize: 16}}
+                />
+              </View>
+            </View>
             <View style={{marginTop: 25}}>
               <Text style={{fontSize: 16}}>Hẹn nộp tiền</Text>
               <TouchableOpacity
@@ -148,10 +152,10 @@ class CallRegisterModal extends React.Component {
                       backgroundColor: '#F54335',
                     },
                   ]}>
-                  <Text style={{color: 'white', fontSize: 16}}>Thất bại</Text>
+                  <Text style={styles.confirm}>Thất bại</Text>
                   <Image
                     source={require('../../../assets/img/icons8-missed_call_filled.png')}
-                    style={{width: 25, height: 25}}
+                    style={styles.icon}
                   />
                 </View>
               </TouchableOpacity>
@@ -163,10 +167,10 @@ class CallRegisterModal extends React.Component {
                       backgroundColor: '#2ACC4C',
                     },
                   ]}>
-                  <Text style={{color: 'white', fontSize: 16}}>Thành công</Text>
+                  <Text style={styles.confirm}>Thành công</Text>
                   <Image
                     source={require('../../../assets/img/icons8-phone_filled.png')}
-                    style={{width: 25, height: 25}}
+                    style={styles.icon}
                   />
                 </View>
               </TouchableOpacity>
@@ -175,13 +179,8 @@ class CallRegisterModal extends React.Component {
               onPress={() => {
                 this.props.onSwipeComplete();
               }}>
-              <View
-                style={{
-                  marginTop: 25,
-                  alignItems: 'center',
-                  paddingBottom: 30,
-                }}>
-                <Text style={{fontSize: 16}}>Hủy</Text>
+              <View style={styles.cancelContainer}>
+                <Text style={styles.cancelTitle}>Hủy</Text>
               </View>
             </TouchableOpacity>
             <DateTimePicker
@@ -237,7 +236,6 @@ const styles = {
   note: {
     fontSize: 16,
     backgroundColor: '#F6F6F6',
-    marginTop: 25,
     height: 100,
     paddingLeft: 10,
     borderRadius: 8,
@@ -250,6 +248,48 @@ const styles = {
   rateRow: {
     flexDirection: 'row',
     marginTop: 3,
+  },
+  cancelContainer: {
+    marginTop: 25,
+    alignItems: 'center',
+    paddingBottom: 30,
+  },
+  cancelTitle: {
+    fontSize: 16,
+    color: theme.mainColor,
+  },
+  mainInfoContainer: {
+    alignItems: 'center',
+    paddingTop: 30,
+  },
+  ava: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+  },
+  email: {
+    marginTop: 25,
+    fontSize: 16,
+  },
+  icon: {
+    width: 25,
+    height: 25,
+  },
+  confirm: {
+    color: 'white',
+    fontSize: 16,
+  },
+  inputContainer: {
+    marginTop: 8,
+    height: 45,
+    backgroundColor: '#F6F6F6',
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+    borderRadius: 8,
+  },
+  titleForm: {
+    color: 'black',
+    fontSize: 16,
   },
 };
 

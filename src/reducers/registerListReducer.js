@@ -91,6 +91,21 @@ export default function registerListReducer(
       return Object.assign({}, state, {
         status_id: action.status_id,
       });
+    case types.RESET_REGISTER_LIST_FILTER:
+      return Object.assign({}, state, {
+        salerId: action.salerId,
+        campaignId: action.campaignId,
+        paidStatus: action.paidStatus,
+        classStatus: action.classStatus,
+        callStatus: action.callStatus,
+        bookmark: action.bookmark,
+        search_coupon: action.search_coupon,
+        start_time: action.start_time,
+        end_time: action.end_time,
+        appointmentPayment: action.appointmentPayment,
+        source_id: action.source_id,
+        status_id: action.status_id,
+      });
     default:
       return state;
   }

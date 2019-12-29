@@ -26,6 +26,13 @@ class RegisterListComponent extends React.Component {
     this.setState({filterModalVisible: !this.state.filterModalVisible});
   };
 
+  resetModal = () => {
+    this.setState({filterModalVisible: false});
+    setTimeout(() => {
+      this.setState({filterModalVisible: true});
+    }, 700);
+  };
+
   renderSearch() {
     const {updateFormAndLoadDataSearch, search} = this.props;
     return (
@@ -79,6 +86,8 @@ class RegisterListComponent extends React.Component {
           onSelectSource={this.props.onSelectSource}
           sources={this.props.sources}
           sourceId={this.props.sourceId}
+          reset={this.props.reset}
+          resetModal={this.resetModal}
         />
       </View>
     );
@@ -144,7 +153,7 @@ class RegisterListComponent extends React.Component {
               avatar={item.course_avatar_url}
               email={item.email}
               phone={item.phone}
-              saler={this.props.segmentActive === 1 ? item.saler : null}
+              saler={item.saler}
               campaign={item.campaign}
               callStatus={item.call_status}
               paidStatus={item.paid_status}
@@ -154,7 +163,8 @@ class RegisterListComponent extends React.Component {
               avatar_url={item.avatar_url}
               classInfo={item.class}
               token={this.props.token}
-              code={item.code}
+              next_code={item.next_code}
+              next_waiting_code={item.next_waiting_code}
               registerId={item.id}
               errorChangeCallStatus={this.props.errorChangeCallStatus}
               errorSubmitMoney={this.props.errorSubmitMoney}
@@ -174,7 +184,7 @@ class RegisterListComponent extends React.Component {
         style={
           isIphoneX() && !isSubScreen
             ? {flex: 1, marginTop: getStatusBarHeight() + 10}
-            : {flex: 1, marginTop: 10}
+            : {flex: 1, marginTop: 20}
         }>
         {this.renderContent()}
       </View>

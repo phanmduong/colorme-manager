@@ -30,6 +30,7 @@ class RegisterListContainer extends React.Component {
     this.loadCampaigns();
     this.loadStatuses();
     this.loadSources();
+    this.loadSalers();
   }
 
   loadBases = () => {
@@ -46,6 +47,10 @@ class RegisterListContainer extends React.Component {
 
   loadStatuses = () => {
     this.props.saveRegisterActions.loadStatuses('registers', this.props.token);
+  };
+
+  loadSalers = () => {
+    this.props.saveRegisterActions.loadSalers(this.props.token);
   };
 
   loadDataRegisterListMy() {
@@ -308,7 +313,9 @@ class RegisterListContainer extends React.Component {
         isLoadingSources={this.props.isLoadingSources}
         isLoadingStatuses={this.props.isLoadingStatuses}
         isLoadingCampaigns={this.props.isLoadingCampaigns}
+        isLoadingSalers={this.props.isLoadingSalers}
         reset={this.reset}
+        salers={this.props.salers}
       />
     );
   }
@@ -348,6 +355,8 @@ function mapStateToProps(state) {
     isLoadingSources: state.saveRegister.isLoadingSources,
     isLoadingStatuses: state.saveRegister.isLoadingStatuses,
     isLoadingCampaigns: state.saveRegister.isLoadingCampaigns,
+    salers: state.saveRegister.salers,
+    isLoadingSalers: state.saveRegister.isLoadingSalers,
   };
 }
 

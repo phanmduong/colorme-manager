@@ -15,6 +15,7 @@ import moment from 'moment';
 import Loading from '../common/Loading';
 var {width, height} = Dimensions.get('window');
 import theme from '../../styles';
+import {convertVietText} from '../../helper';
 
 class FilterModal extends React.Component {
   constructor(props, context) {
@@ -24,6 +25,7 @@ class FilterModal extends React.Component {
       isStartDateVisible: false,
       isEndDateVisible: false,
       isAppointmentPaymentVisible: false,
+      search: '',
     };
   }
 
@@ -65,7 +67,7 @@ class FilterModal extends React.Component {
     );
   };
 
-  renderCoursePickerOption = settings => {
+  renderPickerOption = settings => {
     const {item, getLabel} = settings;
     return (
       <View style={styles.options}>
@@ -78,11 +80,23 @@ class FilterModal extends React.Component {
     return (
       <View style={styles.headerFooterContainer}>
         <Text style={styles.headerFooterText}>{title}</Text>
+        <View style={styles.searchContainer}>
+          <TextInput
+            placeholder="Tìm kiếm"
+            autoCapitalize="none"
+            onChangeText={search => {
+              this.setState({search});
+            }}
+            value={this.state.search}
+            style={styles.searchInput}
+            clearButtonMode={'while-editing'}
+          />
+        </View>
       </View>
     );
   };
 
-  renderCoursePickerFooter(action) {
+  renderPickerFooter(action) {
     return (
       <TouchableOpacity
         style={styles.headerFooterContainer}
@@ -99,15 +113,6 @@ class FilterModal extends React.Component {
       }
     }
     return bases[0];
-  };
-
-  getDefaultSegment = array => {
-    for (let segment of array) {
-      if (segment.id === this.props.salerId) {
-        return segment;
-      }
-    }
-    return array[0];
   };
 
   getBaseData = () => {
@@ -197,6 +202,40 @@ class FilterModal extends React.Component {
     return array[0];
   };
 
+  getSalers = () => {
+    let defaultSaler = {id: -1, name: 'Tất cả'};
+    let salers = [defaultSaler].concat(this.props.salers);
+    return salers;
+  };
+
+  getDefaultSaler = array => {
+    for (let saler of array) {
+      if (saler.id === this.props.salerId) {
+        return saler;
+      }
+    }
+    return array[0];
+  };
+
+  getSearchedResults = array => {
+    let list = [];
+    if (this.state.search === '') {
+      return array;
+    } else {
+      for (let item of array) {
+        let normalizedName = item.name;
+        if (
+          convertVietText(normalizedName).includes(
+            convertVietText(this.state.search),
+          )
+        ) {
+          list.push(item);
+        }
+      }
+      return list;
+    }
+  };
+
   handleStartDatePicked = date => {
     this.props.onSelectStartTime(moment(date).format('YYYY-MM-DD'));
     this.setState({
@@ -231,28 +270,24 @@ class FilterModal extends React.Component {
   };
 
   render() {
-    const segments = [
-      {name: 'Tất cả', id: -1},
-      {name: 'Của bạn', id: this.props.user.id},
-    ];
     const moneyFilter = [
-      {id: -1, name: 'Tất cả'},
-      {id: 1, name: 'Đã nộp'},
-      {id: 0, name: 'Chưa nộp'},
+      {id: -1, name: 'Tất cả'},
+      {id: 1, name: 'Đã nộp'},
+      {id: 0, name: 'Chưa nộp'},
     ];
     const classStatusFilter = [
-      {value: '', name: 'Tất cả'},
+      {value: '', name: 'Tất cả'},
       {value: 'active', name: 'Hoạt động'},
       {value: 'waiting', name: 'Chờ'},
     ];
     const teleCallStatus = [
-      {id: -1, name: 'Tất cả̉'},
+      {id: -1, name: 'Tất cả̉'},
       {id: 0, name: 'Chưa gọi'},
       {id: 1, name: 'Thành công'},
       {id: 2, name: 'Thất bại'},
     ];
     const bookmarkFilter = [
-      {id: -1, name: 'Tất cả'},
+      {id: -1, name: 'Tất cả'},
       {id: 1, name: 'Đã đánh dấu'},
       {id: 0, name: 'Chưa đánh dấu'},
     ];
@@ -266,66 +301,73 @@ class FilterModal extends React.Component {
           {!this.props.isLoadingBase &&
           !this.props.isLoadingCampaigns &&
           !this.props.isLoadingSources &&
-          !this.props.isLoadingStatuses ? (
+          !this.props.isLoadingStatuses &&
+          !this.props.isLoadingSalers ? (
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.titleContainer}>
                 <Text style={styles.title}>Lọc đăng ký</Text>
               </View>
               <View style={styles.filterTitle}>
-                <Text style={{fontSize: 16}}>Đơn của</Text>
+                <Text style={{fontSize: 16}}>Cơ sở</Text>
                 <CustomPicker
-                  options={segments}
-                  defaultValue={this.getDefaultSegment(segments)}
-                  getLabel={item => item.name}
-                  modalAnimationType={'fade'}
-                  optionTemplate={this.renderCoursePickerOption}
-                  fieldTemplate={this.renderSegmentPickerField}
-                  headerTemplate={() => this.renderPickerHeader('Chọn đơn')}
-                  footerTemplate={this.renderCoursePickerFooter}
-                  modalStyle={{
-                    borderRadius: 6,
-                  }}
-                  onValueChange={value => {
-                    this.props.onSelectSalerId(value.id);
-                  }}
-                />
-              </View>
-              <View style={styles.filterTitle}>
-                <Text style={{fontSize: 16}}>Theo cơ sở</Text>
-                <CustomPicker
-                  options={this.getBaseData()}
+                  options={this.getSearchedResults(this.getBaseData())}
                   defaultValue={this.getDefaultBase(this.getBaseData())}
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
-                  optionTemplate={this.renderCoursePickerOption}
+                  optionTemplate={this.renderPickerOption}
                   fieldTemplate={this.renderSegmentPickerField}
                   headerTemplate={() => this.renderPickerHeader('Chọn cơ sở')}
-                  footerTemplate={this.renderCoursePickerFooter}
+                  footerTemplate={this.renderPickerFooter}
+                  onBlur={() => this.setState({search: ''})}
                   modalStyle={{
                     borderRadius: 6,
                   }}
                   onValueChange={value => {
+                    this.setState({search: ''});
                     this.props.onSelectBaseId(value.id);
                   }}
                 />
               </View>
               <View style={styles.filterTitle}>
-                <Text style={{fontSize: 16}}>Theo chiến dịch</Text>
+                <Text style={{fontSize: 16}}>Saler</Text>
                 <CustomPicker
-                  options={this.getCampaigns()}
-                  defaultValue={this.getDefaultCampaign(this.getCampaigns())}
+                  options={this.getSearchedResults(this.getSalers())}
+                  defaultValue={this.getDefaultSaler(this.getSalers())}
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
-                  optionTemplate={this.renderCoursePickerOption}
+                  optionTemplate={this.renderPickerOption}
                   fieldTemplate={this.renderSegmentPickerField}
-                  headerTemplate={() =>
-                    this.renderPickerHeader('Chọn chiến dịch')
-                  }
-                  footerTemplate={this.renderCoursePickerFooter}
+                  headerTemplate={() => this.renderPickerHeader('Chọn saler')}
+                  footerTemplate={this.renderPickerFooter}
+                  onBlur={() => this.setState({search: ''})}
                   modalStyle={{
                     borderRadius: 6,
                   }}
                   onValueChange={value => {
+                    this.setState({search: ''});
+                    this.props.onSelectSalerId(value.id);
+                  }}
+                />
+              </View>
+              <View style={styles.filterTitle}>
+                <Text style={{fontSize: 16}}>Chiến dịch</Text>
+                <CustomPicker
+                  options={this.getSearchedResults(this.getCampaigns())}
+                  defaultValue={this.getDefaultCampaign(this.getCampaigns())}
+                  getLabel={item => item.name}
+                  modalAnimationType={'fade'}
+                  optionTemplate={this.renderPickerOption}
+                  fieldTemplate={this.renderSegmentPickerField}
+                  headerTemplate={() =>
+                    this.renderPickerHeader('Chọn chiến dịch')
+                  }
+                  footerTemplate={this.renderPickerFooter}
+                  onBlur={() => this.setState({search: ''})}
+                  modalStyle={{
+                    borderRadius: 6,
+                  }}
+                  onValueChange={value => {
+                    this.setState({search: ''});
                     this.props.onSelectCampaignId(value.id);
                   }}
                 />
@@ -333,18 +375,20 @@ class FilterModal extends React.Component {
               <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Học phí</Text>
                 <CustomPicker
-                  options={moneyFilter}
+                  options={this.getSearchedResults(moneyFilter)}
                   defaultValue={this.getDefaultPaidStatus(moneyFilter)}
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
-                  optionTemplate={this.renderCoursePickerOption}
+                  optionTemplate={this.renderPickerOption}
                   fieldTemplate={this.renderSegmentPickerField}
                   headerTemplate={() => this.renderPickerHeader('Chọn học phí')}
-                  footerTemplate={this.renderCoursePickerFooter}
+                  footerTemplate={this.renderPickerFooter}
+                  onBlur={() => this.setState({search: ''})}
                   modalStyle={{
                     borderRadius: 6,
                   }}
                   onValueChange={value => {
+                    this.setState({search: ''});
                     this.props.onSelectPaidStatus(value.id);
                   }}
                 />
@@ -382,20 +426,22 @@ class FilterModal extends React.Component {
               <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Trạng thái lớp</Text>
                 <CustomPicker
-                  options={classStatusFilter}
+                  options={this.getSearchedResults(classStatusFilter)}
                   defaultValue={this.getDefaultClassStatus(classStatusFilter)}
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
-                  optionTemplate={this.renderCoursePickerOption}
+                  optionTemplate={this.renderPickerOption}
                   fieldTemplate={this.renderSegmentPickerField}
                   headerTemplate={() =>
                     this.renderPickerHeader('Chọn trạng thái lớp')
                   }
-                  footerTemplate={this.renderCoursePickerFooter}
+                  footerTemplate={this.renderPickerFooter}
+                  onBlur={() => this.setState({search: ''})}
                   modalStyle={{
                     borderRadius: 6,
                   }}
                   onValueChange={value => {
+                    this.setState({search: ''});
                     this.props.onSelectClassStatus(value.value);
                   }}
                 />
@@ -403,20 +449,22 @@ class FilterModal extends React.Component {
               <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Trạng thái cuộc gọi</Text>
                 <CustomPicker
-                  options={teleCallStatus}
+                  options={this.getSearchedResults(teleCallStatus)}
                   defaultValue={this.getDefaultCallStatus(teleCallStatus)}
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
-                  optionTemplate={this.renderCoursePickerOption}
+                  optionTemplate={this.renderPickerOption}
                   fieldTemplate={this.renderSegmentPickerField}
                   headerTemplate={() =>
                     this.renderPickerHeader('Chọn trạng thái cuộc gọi')
                   }
-                  footerTemplate={this.renderCoursePickerFooter}
+                  footerTemplate={this.renderPickerFooter}
+                  onBlur={() => this.setState({search: ''})}
                   modalStyle={{
                     borderRadius: 6,
                   }}
                   onValueChange={value => {
+                    this.setState({search: ''});
                     this.props.onSelectCallStatus(value.id);
                   }}
                 />
@@ -452,20 +500,22 @@ class FilterModal extends React.Component {
               <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Đánh dấu</Text>
                 <CustomPicker
-                  options={bookmarkFilter}
+                  options={this.getSearchedResults(bookmarkFilter)}
                   defaultValue={this.getDefaultBookmark(bookmarkFilter)}
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
-                  optionTemplate={this.renderCoursePickerOption}
+                  optionTemplate={this.renderPickerOption}
                   fieldTemplate={this.renderSegmentPickerField}
                   headerTemplate={() =>
                     this.renderPickerHeader('Chọn đánh dấu')
                   }
-                  footerTemplate={this.renderCoursePickerFooter}
+                  footerTemplate={this.renderPickerFooter}
+                  onBlur={() => this.setState({search: ''})}
                   modalStyle={{
                     borderRadius: 6,
                   }}
                   onValueChange={value => {
+                    this.setState({search: ''});
                     this.props.onSelectBookmark(value.id);
                   }}
                 />
@@ -473,20 +523,22 @@ class FilterModal extends React.Component {
               <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Trạng thái</Text>
                 <CustomPicker
-                  options={this.getStatuses()}
+                  options={this.getSearchedResults(this.getStatuses())}
                   defaultValue={this.getDefaultStatus(this.getStatuses())}
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
-                  optionTemplate={this.renderCoursePickerOption}
+                  optionTemplate={this.renderPickerOption}
                   fieldTemplate={this.renderSegmentPickerField}
                   headerTemplate={() =>
                     this.renderPickerHeader('Chọn trạng thái')
                   }
-                  footerTemplate={this.renderCoursePickerFooter}
+                  footerTemplate={this.renderPickerFooter}
+                  onBlur={() => this.setState({search: ''})}
                   modalStyle={{
                     borderRadius: 6,
                   }}
                   onValueChange={value => {
+                    this.setState({search: ''});
                     this.props.onSelectStatus(value.id);
                   }}
                 />
@@ -494,18 +546,20 @@ class FilterModal extends React.Component {
               <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Nguồn</Text>
                 <CustomPicker
-                  options={this.getSources()}
+                  options={this.getSearchedResults(this.getSources())}
                   defaultValue={this.getDefaultSource(this.getSources())}
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
-                  optionTemplate={this.renderCoursePickerOption}
+                  optionTemplate={this.renderPickerOption}
                   fieldTemplate={this.renderSegmentPickerField}
                   headerTemplate={() => this.renderPickerHeader('Chọn nguồn')}
-                  footerTemplate={this.renderCoursePickerFooter}
+                  footerTemplate={this.renderPickerFooter}
+                  onBlur={() => this.setState({search: ''})}
                   modalStyle={{
                     borderRadius: 6,
                   }}
                   onValueChange={value => {
+                    this.setState({search: ''});
                     this.props.onSelectSource(value.id);
                   }}
                 />
@@ -650,6 +704,20 @@ const styles = {
   cancelTitle: {
     fontSize: 16,
     color: theme.mainColor,
+  },
+  searchContainer: {
+    marginTop: 10,
+    backgroundColor: '#f6f6f6',
+    height: 40,
+    width: width - 70,
+    borderRadius: 27,
+    justifyContent: 'center',
+    marginHorizontal: 10,
+  },
+  searchInput: {
+    fontSize: 16,
+    color: '#707070',
+    marginLeft: 10,
   },
 };
 

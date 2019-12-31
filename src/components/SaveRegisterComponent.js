@@ -511,6 +511,22 @@ class SaveRegisterComponent extends React.Component {
     );
   };
 
+  getClasses = items => {
+    return (
+      items &&
+      items.map(item => {
+        let label = item.name;
+        if (item.date_start) {
+          label += ' - ' + item.date_start;
+        }
+        if (item.study_time) {
+          label += ' - ' + item.study_time;
+        }
+        return {id: item.id, base_id: item.base.id, name: label};
+      })
+    );
+  };
+
   getDefaultSaler = () => {
     return {id: this.props.user.id, name: this.props.user.name};
   };
@@ -519,6 +535,19 @@ class SaveRegisterComponent extends React.Component {
     this.setState({
       expanded: !this.state.expanded,
     });
+  };
+
+  filterBase = classes => {
+    if (this.state.base_id !== '') {
+      let filterClasses = [];
+      for (let _class of classes) {
+        if (_class.base_id === parseInt(this.state.base_id)) {
+          filterClasses.push(_class);
+        }
+      }
+      return filterClasses;
+    }
+    return classes;
   };
 
   render() {
@@ -704,7 +733,9 @@ class SaveRegisterComponent extends React.Component {
                     Chọn lớp học <Text style={{color: '#C50000'}}>*</Text>
                   </Text>
                   <CustomPicker
-                    options={this.getSearchedResults(this.props.classes)}
+                    options={this.getSearchedResults(
+                      this.filterBase(this.getClasses(this.props.classes)),
+                    )}
                     getLabel={item => item.name}
                     placeholder={'Chọn lớp'}
                     modalAnimationType={'fade'}

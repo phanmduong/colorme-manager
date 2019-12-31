@@ -16,7 +16,7 @@ import theme from '../styles';
 import {CustomPicker} from 'react-native-custom-picker';
 import LinearGradient from 'react-native-linear-gradient';
 import Spinkit from 'react-native-spinkit';
-import {isEmptyInput} from '../helper';
+import {convertVietText, isEmptyInput} from '../helper';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import {FORMAT_TIME_MYSQL} from '../constants/constant';
@@ -79,6 +79,7 @@ class SaveRegisterComponent extends React.Component {
       saler_id: this.props.saler_id,
       isDatePickerVisible: false,
       expanded: false,
+      search: '',
     };
   }
 
@@ -298,7 +299,7 @@ class SaveRegisterComponent extends React.Component {
     );
   };
 
-  renderCoursePickerOption = settings => {
+  renderPickerOption = settings => {
     const {item, getLabel} = settings;
     return (
       <View style={styles.options}>
@@ -311,11 +312,42 @@ class SaveRegisterComponent extends React.Component {
     return (
       <View style={styles.headerFooterContainer}>
         <Text style={styles.headerFooterText}>{title}</Text>
+        <View style={styles.searchContainer}>
+          <TextInput
+            placeholder="Tìm kiếm"
+            autoCapitalize="none"
+            onChangeText={search => {
+              this.setState({search});
+            }}
+            value={this.state.search}
+            style={styles.searchInput}
+            clearButtonMode={'while-editing'}
+          />
+        </View>
       </View>
     );
   };
 
-  renderCoursePickerFooter(action) {
+  getSearchedResults = array => {
+    let list = [];
+    if (this.state.search === '') {
+      return array;
+    } else {
+      for (let item of array) {
+        let normalizedName = item.name;
+        if (
+          convertVietText(normalizedName).includes(
+            convertVietText(this.state.search),
+          )
+        ) {
+          list.push(item);
+        }
+      }
+      return list;
+    }
+  };
+
+  renderPickerFooter(action) {
     return (
       <TouchableOpacity
         style={styles.headerFooterContainer}
@@ -401,6 +433,7 @@ class SaveRegisterComponent extends React.Component {
       selectedGender: false,
       selectedAddress: false,
       expanded: false,
+      search: '',
     });
   };
 
@@ -423,10 +456,10 @@ class SaveRegisterComponent extends React.Component {
         address = [
           ...address,
           {
-            value: `${district.type} ${district.name}, ${province.type} ${
+            id: `${district.type} ${district.name}, ${province.type} ${
               province.name
             }`,
-            label: `${district.type} ${district.name}, ${province.type} ${
+            name: `${district.type} ${district.name}, ${province.type} ${
               province.name
             }`,
           },
@@ -490,9 +523,6 @@ class SaveRegisterComponent extends React.Component {
                     returnKeyType={'next'}
                     placeholder="Tên học viên"
                     blurOnSubmit={false}
-                    onSubmitEditing={event => {
-                      this.refs.father_name.focus();
-                    }}
                     style={{fontSize: 15}}
                   />
                 </View>
@@ -584,14 +614,15 @@ class SaveRegisterComponent extends React.Component {
                   Chọn môn học <Text style={{color: '#C50000'}}>*</Text>
                 </Text>
                 <CustomPicker
-                  options={this.props.courses}
+                  options={this.getSearchedResults(this.props.courses)}
                   getLabel={item => item.name}
                   placeholder={'Chọn môn'}
                   modalAnimationType={'fade'}
-                  optionTemplate={this.renderCoursePickerOption}
+                  onBlur={() => this.setState({search: ''})}
+                  optionTemplate={this.renderPickerOption}
                   fieldTemplate={this.renderCoursePickerField}
                   headerTemplate={() => this.renderPickerHeader('Chọn môn')}
-                  footerTemplate={this.renderCoursePickerFooter}
+                  footerTemplate={this.renderPickerFooter}
                   modalStyle={{
                     borderRadius: 6,
                   }}
@@ -599,6 +630,7 @@ class SaveRegisterComponent extends React.Component {
                     this.setState({
                       selectedCourse: true,
                       selectedCourseId: value.id,
+                      search: '',
                     });
                     this.props.onSelectCourseId(value.id);
                   }}
@@ -608,22 +640,25 @@ class SaveRegisterComponent extends React.Component {
                 <View style={{marginTop: 30}}>
                   <Text style={styles.titleForm}>Chọn cơ sở</Text>
                   <CustomPicker
-                    options={this.getSelectBase(
-                      this.props.baseData,
-                      this.props.classes,
+                    options={this.getSearchedResults(
+                      this.getSelectBase(
+                        this.props.baseData,
+                        this.props.classes,
+                      ),
                     )}
                     getLabel={item => item.name}
                     placeholder={'Chọn cơ sở'}
                     modalAnimationType={'fade'}
-                    optionTemplate={this.renderCoursePickerOption}
+                    onBlur={() => this.setState({search: ''})}
+                    optionTemplate={this.renderPickerOption}
                     fieldTemplate={this.renderCoursePickerField}
                     headerTemplate={() => this.renderPickerHeader('Chọn cơ sở')}
-                    footerTemplate={this.renderCoursePickerFooter}
+                    footerTemplate={this.renderPickerFooter}
                     modalStyle={{
                       borderRadius: 6,
                     }}
                     onValueChange={value => {
-                      this.setState({base_id: value.id});
+                      this.setState({base_id: value.id, search: ''});
                     }}
                   />
                 </View>
@@ -634,19 +669,20 @@ class SaveRegisterComponent extends React.Component {
                     Chọn lớp học <Text style={{color: '#C50000'}}>*</Text>
                   </Text>
                   <CustomPicker
-                    options={this.props.classes}
+                    options={this.getSearchedResults(this.props.classes)}
                     getLabel={item => item.name}
                     placeholder={'Chọn lớp'}
                     modalAnimationType={'fade'}
-                    optionTemplate={this.renderCoursePickerOption}
+                    onBlur={() => this.setState({search: ''})}
+                    optionTemplate={this.renderPickerOption}
                     fieldTemplate={this.renderCoursePickerField}
                     headerTemplate={() => this.renderPickerHeader('Chọn lớp')}
-                    footerTemplate={this.renderCoursePickerFooter}
+                    footerTemplate={this.renderPickerFooter}
                     modalStyle={{
                       borderRadius: 6,
                     }}
                     onValueChange={value => {
-                      this.setState({selectedClassId: value.id});
+                      this.setState({selectedClassId: value.id, search: ''});
                     }}
                   />
                 </View>
@@ -654,16 +690,17 @@ class SaveRegisterComponent extends React.Component {
               <View style={{marginTop: 30}}>
                 <Text style={styles.titleForm}>Chọn trạng thái</Text>
                 <CustomPicker
-                  options={this.props.statuses}
+                  options={this.getSearchedResults(this.props.statuses)}
                   getLabel={item => item.name}
                   placeholder={'Chọn trạng thái'}
                   modalAnimationType={'fade'}
-                  optionTemplate={this.renderCoursePickerOption}
+                  onBlur={() => this.setState({search: ''})}
+                  optionTemplate={this.renderPickerOption}
                   fieldTemplate={this.renderStatusPickerField}
                   headerTemplate={() =>
                     this.renderPickerHeader('Chọn trạng thái')
                   }
-                  footerTemplate={this.renderCoursePickerFooter}
+                  footerTemplate={this.renderPickerFooter}
                   modalStyle={{
                     borderRadius: 6,
                   }}
@@ -671,6 +708,7 @@ class SaveRegisterComponent extends React.Component {
                     this.setState({
                       selectedStatus: true,
                       status_id: value.id,
+                      search: '',
                     });
                   }}
                 />
@@ -678,14 +716,15 @@ class SaveRegisterComponent extends React.Component {
               <View style={{marginTop: 30}}>
                 <Text style={styles.titleForm}>Chọn nguồn</Text>
                 <CustomPicker
-                  options={this.props.sources}
+                  options={this.getSearchedResults(this.props.sources)}
                   getLabel={item => item.name}
                   placeholder={'Chọn nguồn'}
                   modalAnimationType={'fade'}
-                  optionTemplate={this.renderCoursePickerOption}
+                  onBlur={() => this.setState({search: ''})}
+                  optionTemplate={this.renderPickerOption}
                   fieldTemplate={this.renderSourcePickerField}
                   headerTemplate={() => this.renderPickerHeader('Chọn nguồn')}
-                  footerTemplate={this.renderCoursePickerFooter}
+                  footerTemplate={this.renderPickerFooter}
                   modalStyle={{
                     borderRadius: 6,
                   }}
@@ -693,6 +732,7 @@ class SaveRegisterComponent extends React.Component {
                     this.setState({
                       selectedSource: true,
                       source_id: value.id,
+                      search: '',
                     });
                   }}
                 />
@@ -700,16 +740,17 @@ class SaveRegisterComponent extends React.Component {
               <View style={{marginTop: 30}}>
                 <Text style={styles.titleForm}>Chọn chiến dịch</Text>
                 <CustomPicker
-                  options={this.props.campaigns}
+                  options={this.getSearchedResults(this.props.campaigns)}
                   getLabel={item => item.name}
                   placeholder={'Chọn chiến dịch'}
                   modalAnimationType={'fade'}
-                  optionTemplate={this.renderCoursePickerOption}
+                  onBlur={() => this.setState({search: ''})}
+                  optionTemplate={this.renderPickerOption}
                   fieldTemplate={this.renderCampaignPickerField}
                   headerTemplate={() =>
                     this.renderPickerHeader('Chọn chiến dịch')
                   }
-                  footerTemplate={this.renderCoursePickerFooter}
+                  footerTemplate={this.renderPickerFooter}
                   modalStyle={{
                     borderRadius: 6,
                   }}
@@ -717,36 +758,24 @@ class SaveRegisterComponent extends React.Component {
                     this.setState({
                       selectedCampaign: true,
                       campaign_id: value.id,
+                      search: '',
                     });
                   }}
                 />
               </View>
 
               <TouchableOpacity onPress={() => this.toggleExpand()}>
-                <View
-                  style={{
-                    alignItems: 'center',
-                    flex: 1,
-                    marginTop: 30,
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                  }}>
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      color: theme.secondColor,
-                    }}>
-                    Mở rộng
-                  </Text>
+                <View style={styles.expandContainer}>
+                  <Text style={styles.expandTitle}>Mở rộng</Text>
                   {!this.state.expanded ? (
                     <Image
                       source={require('../../assets/img/expand-arrow.png')}
-                      style={{width: 20, height: 20, marginLeft: 5}}
+                      style={styles.expandIcon}
                     />
                   ) : (
                     <Image
                       source={require('../../assets/img/collapse-arrow.png')}
-                      style={{width: 20, height: 20, marginLeft: 5}}
+                      style={styles.expandIcon}
                     />
                   )}
                 </View>
@@ -757,16 +786,17 @@ class SaveRegisterComponent extends React.Component {
                   <View style={{marginTop: 30}}>
                     <Text style={styles.titleForm}>Chọn giới tính</Text>
                     <CustomPicker
-                      options={GENDER}
+                      options={this.getSearchedResults(GENDER)}
                       getLabel={item => item.name}
                       placeholder={'Chọn giới tính'}
                       modalAnimationType={'fade'}
-                      optionTemplate={this.renderCoursePickerOption}
+                      onBlur={() => this.setState({search: ''})}
+                      optionTemplate={this.renderPickerOption}
                       fieldTemplate={this.renderGenderPickerField}
                       headerTemplate={() =>
                         this.renderPickerHeader('Chọn giới tính')
                       }
-                      footerTemplate={this.renderCoursePickerFooter}
+                      footerTemplate={this.renderPickerFooter}
                       modalStyle={{
                         borderRadius: 6,
                       }}
@@ -774,6 +804,7 @@ class SaveRegisterComponent extends React.Component {
                         this.setState({
                           selectedGender: true,
                           gender: value.id,
+                          search: '',
                         });
                       }}
                     />
@@ -803,23 +834,25 @@ class SaveRegisterComponent extends React.Component {
                   <View style={{marginTop: 30}}>
                     <Text style={styles.titleForm}>Địa chỉ</Text>
                     <CustomPicker
-                      options={this.getDataAddress()}
-                      getLabel={item => item.value}
+                      options={this.getSearchedResults(this.getDataAddress())}
+                      getLabel={item => item.name}
                       placeholder={'Chọn địa chỉ'}
                       modalAnimationType={'fade'}
-                      optionTemplate={this.renderCoursePickerOption}
+                      onBlur={() => this.setState({search: ''})}
+                      optionTemplate={this.renderPickerOption}
                       fieldTemplate={this.renderProvincePickerField}
                       headerTemplate={() =>
                         this.renderPickerHeader('Chọn địa chỉ')
                       }
-                      footerTemplate={this.renderCoursePickerFooter}
+                      footerTemplate={this.renderPickerFooter}
                       modalStyle={{
                         borderRadius: 6,
                       }}
                       onValueChange={value => {
                         this.setState({
                           selectedAddress: true,
-                          address: value.value,
+                          address: value.id,
+                          search: '',
                         });
                       }}
                     />
@@ -1018,6 +1051,36 @@ const styles = {
     justifyContent: 'center',
     paddingHorizontal: 10,
     borderRadius: 8,
+  },
+  searchContainer: {
+    marginTop: 10,
+    backgroundColor: '#f6f6f6',
+    height: 40,
+    width: width - 70,
+    borderRadius: 27,
+    justifyContent: 'center',
+    marginHorizontal: 10,
+  },
+  searchInput: {
+    fontSize: 16,
+    color: '#707070',
+    marginLeft: 10,
+  },
+  expandContainer: {
+    alignItems: 'center',
+    flex: 1,
+    marginTop: 30,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  expandIcon: {
+    width: 20,
+    height: 20,
+    marginLeft: 5,
+  },
+  expandTitle: {
+    fontSize: 18,
+    color: theme.secondColor,
   },
 };
 

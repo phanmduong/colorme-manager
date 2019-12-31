@@ -13,6 +13,7 @@ import Spinkit from 'react-native-spinkit';
 import theme from '../styles';
 import {CustomPicker} from 'react-native-custom-picker';
 import LinearGradient from 'react-native-linear-gradient';
+import {convertVietText} from '../helper';
 var {height, width} = Dimensions.get('window');
 
 class ListTeacherAndAssistantComponent extends React.Component {
@@ -57,10 +58,8 @@ class ListTeacherAndAssistantComponent extends React.Component {
       if (search === '') {
         duplicateTeacherList.push(teacher);
       } else {
-        let normalizedName = teacher.user.name
-          .normalize('NFD')
-          .replace(/[\u0300-\u036f]/g, '');
-        if (normalizedName.toLowerCase().includes(search.toLowerCase())) {
+        let normalizedName = teacher.user.name;
+        if (convertVietText(normalizedName).includes(convertVietText(search))) {
           duplicateTeacherList.push(teacher);
         }
       }
@@ -363,10 +362,10 @@ const styles = {
     marginTop: 10,
     backgroundColor: '#f6f6f6',
     height: 40,
-    width: Dimensions.get('window').width - 20,
+    width: width - 32,
     borderRadius: 27,
     justifyContent: 'center',
-    marginLeft: 10,
+    marginHorizontal: 16,
   },
   searchInput: {
     fontSize: 16,

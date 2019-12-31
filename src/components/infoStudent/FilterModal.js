@@ -121,6 +121,21 @@ class FilterModal extends React.Component {
     return baseData;
   };
 
+  getDefaultGen = gens => {
+    for (let gen of gens) {
+      if (gen.id === this.props.selectedGenId) {
+        return gen;
+      }
+    }
+    return gens[0];
+  };
+
+  getGenData = () => {
+    let defaultGen = {id: -1, name: 'Tất cả'};
+    let genData = [defaultGen].concat(this.props.genData);
+    return genData;
+  };
+
   getCampaigns = () => {
     let defaultCampaign = {id: -1, name: 'Tất cả'};
     let campaigns = [defaultCampaign].concat(this.props.campaigns);
@@ -302,10 +317,34 @@ class FilterModal extends React.Component {
           !this.props.isLoadingCampaigns &&
           !this.props.isLoadingSources &&
           !this.props.isLoadingStatuses &&
-          !this.props.isLoadingSalers ? (
+          !this.props.isLoadingSalers &&
+          !this.props.isLoadingGen ? (
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.titleContainer}>
                 <Text style={styles.title}>Lọc đăng ký</Text>
+              </View>
+              <View style={styles.filterTitle}>
+                <Text style={{fontSize: 16}}>Khóa học</Text>
+                <CustomPicker
+                  options={this.getSearchedResults(this.getGenData())}
+                  defaultValue={this.getDefaultGen(this.getGenData())}
+                  getLabel={item => item.name}
+                  modalAnimationType={'fade'}
+                  optionTemplate={this.renderPickerOption}
+                  fieldTemplate={this.renderSegmentPickerField}
+                  headerTemplate={() =>
+                    this.renderPickerHeader('Chọn khóa học')
+                  }
+                  footerTemplate={this.renderPickerFooter}
+                  onBlur={() => this.setState({search: ''})}
+                  modalStyle={{
+                    borderRadius: 6,
+                  }}
+                  onValueChange={value => {
+                    this.setState({search: ''});
+                    this.props.onSelectGenId(value.id);
+                  }}
+                />
               </View>
               <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Cơ sở</Text>

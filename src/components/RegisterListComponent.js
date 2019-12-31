@@ -94,6 +94,10 @@ class RegisterListComponent extends React.Component {
           isLoadingSources={this.props.isLoadingSources}
           isLoadingStatuses={this.props.isLoadingStatuses}
           isLoadingSalers={this.props.isLoadingSalers}
+          genData={this.props.genData}
+          selectedGenId={this.props.selectedGenId}
+          isLoadingGen={this.props.isLoadingGen}
+          onSelectGenId={this.props.onSelectGenId}
         />
       </View>
     );

@@ -4,6 +4,8 @@
 import * as types from '../constants/actionTypes';
 import * as studentApi from '../apis/studentApi';
 import axios from 'axios';
+import {selectedGenId} from './genActions';
+import {selectedBaseId} from './baseActions';
 let CancelToken = axios.CancelToken;
 let sourceCancelAll = CancelToken.source();
 let sourceCancelMy = CancelToken.source();
@@ -33,6 +35,7 @@ export function loadDataRegisterListMy(
   appointmentPayment,
   statusId,
   sourceId,
+  genId,
 ) {
   return function(dispatch) {
     dispatch(beginDataRegisterListLoadMy());
@@ -43,7 +46,7 @@ export function loadDataRegisterListMy(
         search,
         salerId,
         sourceCancelMy,
-        '',
+        genId,
         campaignId,
         '',
         paidStatus,
@@ -110,6 +113,7 @@ export function updateFormAndLoadDataSearchMy(
   appointmentPayment,
   statusId,
   sourceId,
+  genId,
   token,
 ) {
   sourceCancelMy.cancel('Canceled by api register list (my).');
@@ -134,6 +138,7 @@ export function updateFormAndLoadDataSearchMy(
         appointmentPayment,
         statusId,
         sourceId,
+        genId,
       ),
     );
   };
@@ -165,6 +170,7 @@ export function refreshRegisterListMy(
   appointmentPayment,
   statusId,
   sourceId,
+  genId,
 ) {
   return dispatch => {
     dispatch(resetRegisterListMy());
@@ -186,6 +192,7 @@ export function refreshRegisterListMy(
         appointmentPayment,
         statusId,
         sourceId,
+        genId,
       ),
     );
   };
@@ -279,6 +286,14 @@ export function onSelectStatus(statusId) {
 }
 
 export function reset() {
+  return function(dispatch) {
+    dispatch(resetRegisterListProps());
+    dispatch(selectedGenId(-1));
+    dispatch(selectedBaseId(-1));
+  };
+}
+
+function resetRegisterListProps() {
   return {
     type: types.RESET_REGISTER_LIST_FILTER,
     salerId: -1,
@@ -293,5 +308,5 @@ export function reset() {
     appointmentPayment: '',
     source_id: -1,
     status_id: -1,
-  }
+  };
 }

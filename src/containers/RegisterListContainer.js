@@ -7,6 +7,7 @@ import {bindActionCreators} from 'redux';
 import * as registerListActions from '../actions/registerListActions';
 import * as infoStudentActions from '../actions/infoStudentActions';
 import * as baseActions from '../actions/baseActions';
+import * as genActions from '../actions/genActions';
 import * as saveRegisterActions from '../actions/saveRegisterActions';
 import RegisterListComponent from '../components/RegisterListComponent';
 import {isEmptyInput} from '../helper';
@@ -31,6 +32,7 @@ class RegisterListContainer extends React.Component {
     this.loadStatuses();
     this.loadSources();
     this.loadSalers();
+    this.loadGens();
   }
 
   loadBases = () => {
@@ -53,6 +55,10 @@ class RegisterListContainer extends React.Component {
     this.props.saveRegisterActions.loadSalers(this.props.token);
   };
 
+  loadGens = () => {
+    this.props.genActions.loadDataGen(this.props.token);
+  };
+
   loadDataRegisterListMy() {
     let baseId =
       this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
@@ -63,6 +69,7 @@ class RegisterListContainer extends React.Component {
     let bookmark = this.props.bookmark === -1 ? '' : this.props.bookmark;
     let statusId = this.props.status_id === -1 ? '' : this.props.status_id;
     let sourceId = this.props.source_id === -1 ? '' : this.props.source_id;
+    let genId = this.props.selectedGenId === -1 ? '' : this.props.selectedGenId;
     if (this.props.currentPageMy < this.props.totalPageMy) {
       this.props.registerListActions.loadDataRegisterListMy(
         this.props.token,
@@ -81,6 +88,7 @@ class RegisterListContainer extends React.Component {
         this.props.appointmentPayment,
         statusId,
         sourceId,
+        genId,
       );
     }
   }
@@ -95,6 +103,7 @@ class RegisterListContainer extends React.Component {
     let bookmark = this.props.bookmark === -1 ? '' : this.props.bookmark;
     let statusId = this.props.status_id === -1 ? '' : this.props.status_id;
     let sourceId = this.props.source_id === -1 ? '' : this.props.source_id;
+    let genId = this.props.selectedGenId === -1 ? '' : this.props.selectedGenId;
     this.props.registerListActions.refreshRegisterListMy(
       this.props.searchMy,
       this.props.token,
@@ -111,6 +120,7 @@ class RegisterListContainer extends React.Component {
       this.props.appointmentPayment,
       statusId,
       sourceId,
+      genId,
     );
   };
 
@@ -124,6 +134,7 @@ class RegisterListContainer extends React.Component {
     let bookmark = this.props.bookmark === -1 ? '' : this.props.bookmark;
     let statusId = this.props.status_id === -1 ? '' : this.props.status_id;
     let sourceId = this.props.source_id === -1 ? '' : this.props.source_id;
+    let genId = this.props.selectedGenId === -1 ? '' : this.props.selectedGenId;
     this.props.registerListActions.updateFormAndLoadDataSearchMy(
       search,
       salerId,
@@ -139,6 +150,7 @@ class RegisterListContainer extends React.Component {
       this.props.appointmentPayment,
       statusId,
       sourceId,
+      genId,
       this.props.token,
     );
   }
@@ -253,6 +265,10 @@ class RegisterListContainer extends React.Component {
     this.props.registerListActions.onSelectSource(sourceId);
   };
 
+  onSelectGenId = genId => {
+    this.props.genActions.selectedGenId(genId);
+  };
+
   reset = () => {
     this.props.registerListActions.reset();
   };
@@ -316,6 +332,10 @@ class RegisterListContainer extends React.Component {
         isLoadingSalers={this.props.isLoadingSalers}
         reset={this.reset}
         salers={this.props.salers}
+        genData={this.props.genData}
+        selectedGenId={this.props.selectedGenId}
+        isLoadingGen={this.props.isLoadingGen}
+        onSelectGenId={this.onSelectGenId}
       />
     );
   }
@@ -357,6 +377,9 @@ function mapStateToProps(state) {
     isLoadingCampaigns: state.saveRegister.isLoadingCampaigns,
     salers: state.saveRegister.salers,
     isLoadingSalers: state.saveRegister.isLoadingSalers,
+    genData: state.gen.genData,
+    isLoadingGen: state.gen.isLoading,
+    selectedGenId: state.gen.selectedGenId,
   };
 }
 
@@ -366,6 +389,7 @@ function mapDispatchToProps(dispatch) {
     infoStudentActions: bindActionCreators(infoStudentActions, dispatch),
     baseActions: bindActionCreators(baseActions, dispatch),
     saveRegisterActions: bindActionCreators(saveRegisterActions, dispatch),
+    genActions: bindActionCreators(genActions, dispatch),
   };
 }
 

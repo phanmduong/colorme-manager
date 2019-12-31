@@ -22,6 +22,7 @@ class SaveRegisterContainer extends React.Component {
     this.loadSources();
     this.loadStatuses();
     this.loadDataBase();
+    this.loadSalers();
   };
 
   loadCourses = () => {
@@ -50,6 +51,10 @@ class SaveRegisterContainer extends React.Component {
 
   loadDataBase = () => {
     this.props.baseActions.loadDataBase(this.props.token);
+  };
+
+  loadSalers = () => {
+    this.props.saveRegisterActions.loadSalers(this.props.token);
   };
 
   register = register => {
@@ -82,13 +87,15 @@ class SaveRegisterContainer extends React.Component {
         provinces={this.props.provinces}
         isLoadingProvinces={this.props.isLoadingProvinces}
         reload={this.reloadRegisterList}
-        saler_id={this.props.user.id}
+        user={this.props.user}
         isLoadingSources={this.props.isLoadingSources}
         sources={this.props.sources}
         isLoadingStatuses={this.props.isLoadingStatuses}
         statuses={this.props.statuses}
         isLoadingBase={this.props.isLoadingBase}
         baseData={this.props.baseData}
+        isLoadingSalers={this.props.isLoadingSalers}
+        salers={this.props.salers}
       />
     );
   }
@@ -123,6 +130,9 @@ function mapStateToProps(state) {
     errorLoadingBase: state.base.error,
     baseData: state.base.baseData,
     salerId: state.registerList.salerId,
+    isLoadingSalers: state.saveRegister.isLoadingSalers,
+    errorLoadingSalers: state.saveRegister.errorLoadingSalers,
+    salers: state.saveRegister.salers,
   };
 }
 

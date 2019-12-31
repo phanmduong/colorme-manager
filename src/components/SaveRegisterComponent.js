@@ -62,6 +62,7 @@ class SaveRegisterComponent extends React.Component {
       selectedStatus: false,
       selectedClassId: -1,
       selectedCourseId: -1,
+      selectedSaler: false,
       source_id: '',
       status_id: '',
       base_id: '',
@@ -76,7 +77,7 @@ class SaveRegisterComponent extends React.Component {
       campaign_id: '',
       description: '',
       father_name: '',
-      saler_id: this.props.saler_id,
+      saler_id: this.props.user.id,
       isDatePickerVisible: false,
       expanded: false,
       search: '',
@@ -263,6 +264,34 @@ class SaveRegisterComponent extends React.Component {
     );
   };
 
+  renderSalerPickerField = settings => {
+    const {selectedItem, defaultText, getLabel} = settings;
+    return (
+      <LinearGradient
+        colors={['#F6F6F6', '#F6F6F6']}
+        style={styles.inputContainer}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 0}}>
+        {!selectedItem && (
+          <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+            <Text style={{color: '#b7b7b7', fontSize: 15}}>
+              {getLabel(defaultText)}
+            </Text>
+            <Text>▼</Text>
+          </View>
+        )}
+        {selectedItem && (
+          <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+            <Text style={{color: 'black', fontSize: 15}}>
+              {getLabel(selectedItem)}
+            </Text>
+            <Text>▼</Text>
+          </View>
+        )}
+      </LinearGradient>
+    );
+  };
+
   renderStatusPickerField = settings => {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
@@ -426,7 +455,7 @@ class SaveRegisterComponent extends React.Component {
       source_id: '',
       status_id: '',
       base_id: '',
-      saler_id: this.props.saler_id,
+      saler_id: this.props.user.id,
       selectedCourseId: -1,
       selectedCourse: false,
       selectedCampaign: false,
@@ -482,6 +511,10 @@ class SaveRegisterComponent extends React.Component {
     );
   };
 
+  getDefaultSaler = () => {
+    return {id: this.props.user.id, name: this.props.user.name};
+  };
+
   toggleExpand = () => {
     this.setState({
       expanded: !this.state.expanded,
@@ -502,7 +535,9 @@ class SaveRegisterComponent extends React.Component {
       !this.props.isLoadingStatuses &&
       !isEmptyInput(this.props.statuses) &&
       !this.props.isLoadingBase &&
-      !isEmptyInput(this.props.baseData)
+      !isEmptyInput(this.props.baseData) &&
+      !this.props.isLoadingSalers &&
+      !isEmptyInput(this.props.salers)
     ) {
       return (
         <KeyboardAvoidingView
@@ -732,6 +767,31 @@ class SaveRegisterComponent extends React.Component {
                     this.setState({
                       selectedSource: true,
                       source_id: value.id,
+                      search: '',
+                    });
+                  }}
+                />
+              </View>
+              <View style={{marginTop: 30}}>
+                <Text style={styles.titleForm}>Chọn saler</Text>
+                <CustomPicker
+                  options={this.getSearchedResults(this.props.salers)}
+                  defaultValue={this.getDefaultSaler()}
+                  getLabel={item => item.name}
+                  placeholder={'Chọn saler'}
+                  modalAnimationType={'fade'}
+                  onBlur={() => this.setState({search: ''})}
+                  optionTemplate={this.renderPickerOption}
+                  fieldTemplate={this.renderSalerPickerField}
+                  headerTemplate={() => this.renderPickerHeader('Chọn saler')}
+                  footerTemplate={this.renderPickerFooter}
+                  modalStyle={{
+                    borderRadius: 6,
+                  }}
+                  onValueChange={value => {
+                    this.setState({
+                      selectedSaler: true,
+                      saler_id: value.id,
                       search: '',
                     });
                   }}

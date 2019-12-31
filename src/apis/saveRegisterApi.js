@@ -59,3 +59,8 @@ export function loadStatuses(ref, token) {
     env.MANAGE_API_URL + '/v4/statuses/all?ref=' + ref + '&token=' + token;
   return axios.get(url);
 }
+
+export function loadSalers(token) {
+  let url = env.API_URL + '/all-saler?token=' + token;
+  return axios.get(url);
+}

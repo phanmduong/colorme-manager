@@ -279,3 +279,43 @@ function loadStatusesError() {
     errorLoadingStatuses: true,
   };
 }
+
+export function loadSalers(token) {
+  return function(dispatch) {
+    dispatch(beginLoadSalers());
+    saveRegisterApi
+      .loadSalers(token)
+      .then(function(res) {
+        dispatch(loadSalersSuccessful(res));
+      })
+      .catch(error => {
+        dispatch(loadSalersError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadSalers() {
+  return {
+    type: types.BEGIN_LOAD_SALERS,
+    isLoadingSalers: true,
+    errorLoadingSalers: false,
+  };
+}
+
+function loadSalersSuccessful(res) {
+  return {
+    type: types.LOAD_SALERS_SUCCESSFUL,
+    isLoadingSalers: false,
+    errorLoadingSalers: false,
+    salers: res.data.data.salers,
+  };
+}
+
+function loadSalersError() {
+  return {
+    type: types.LOAD_SALERS_ERROR,
+    isLoadingSalers: false,
+    errorLoadingSalers: true,
+  };
+}

@@ -279,6 +279,9 @@ export default {
     isLoadingStatuses: false,
     errorLoadingStatuses: false,
     statuses: [],
+    isLoadingSalers: false,
+    errorLoadingSalers: false,
+    salers: [],
   },
   infoStudent: {
     isLoadingRegisters: false,

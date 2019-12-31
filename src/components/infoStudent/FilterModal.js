@@ -29,7 +29,7 @@ class FilterModal extends React.Component {
     };
   }
 
-  renderSegmentPickerField = settings => {
+  renderPickerField = settings => {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
@@ -132,7 +132,12 @@ class FilterModal extends React.Component {
 
   getGenData = () => {
     let defaultGen = {id: -1, name: 'Tất cả'};
-    let genData = [defaultGen].concat(this.props.genData);
+    let genData = [];
+    genData.push(defaultGen);
+    for (let gen of this.props.genData) {
+      let pushedGen = {id: gen.id, name: 'Khóa ' + gen.name};
+      genData.push(pushedGen);
+    }
     return genData;
   };
 
@@ -331,7 +336,7 @@ class FilterModal extends React.Component {
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
-                  fieldTemplate={this.renderSegmentPickerField}
+                  fieldTemplate={this.renderPickerField}
                   headerTemplate={() =>
                     this.renderPickerHeader('Chọn khóa học')
                   }
@@ -354,7 +359,7 @@ class FilterModal extends React.Component {
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
-                  fieldTemplate={this.renderSegmentPickerField}
+                  fieldTemplate={this.renderPickerField}
                   headerTemplate={() => this.renderPickerHeader('Chọn cơ sở')}
                   footerTemplate={this.renderPickerFooter}
                   onBlur={() => this.setState({search: ''})}
@@ -375,7 +380,7 @@ class FilterModal extends React.Component {
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
-                  fieldTemplate={this.renderSegmentPickerField}
+                  fieldTemplate={this.renderPickerField}
                   headerTemplate={() => this.renderPickerHeader('Chọn saler')}
                   footerTemplate={this.renderPickerFooter}
                   onBlur={() => this.setState({search: ''})}
@@ -396,7 +401,7 @@ class FilterModal extends React.Component {
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
-                  fieldTemplate={this.renderSegmentPickerField}
+                  fieldTemplate={this.renderPickerField}
                   headerTemplate={() =>
                     this.renderPickerHeader('Chọn chiến dịch')
                   }
@@ -419,7 +424,7 @@ class FilterModal extends React.Component {
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
-                  fieldTemplate={this.renderSegmentPickerField}
+                  fieldTemplate={this.renderPickerField}
                   headerTemplate={() => this.renderPickerHeader('Chọn học phí')}
                   footerTemplate={this.renderPickerFooter}
                   onBlur={() => this.setState({search: ''})}
@@ -470,7 +475,7 @@ class FilterModal extends React.Component {
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
-                  fieldTemplate={this.renderSegmentPickerField}
+                  fieldTemplate={this.renderPickerField}
                   headerTemplate={() =>
                     this.renderPickerHeader('Chọn trạng thái lớp')
                   }
@@ -493,7 +498,7 @@ class FilterModal extends React.Component {
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
-                  fieldTemplate={this.renderSegmentPickerField}
+                  fieldTemplate={this.renderPickerField}
                   headerTemplate={() =>
                     this.renderPickerHeader('Chọn trạng thái cuộc gọi')
                   }
@@ -544,7 +549,7 @@ class FilterModal extends React.Component {
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
-                  fieldTemplate={this.renderSegmentPickerField}
+                  fieldTemplate={this.renderPickerField}
                   headerTemplate={() =>
                     this.renderPickerHeader('Chọn đánh dấu')
                   }
@@ -567,7 +572,7 @@ class FilterModal extends React.Component {
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
-                  fieldTemplate={this.renderSegmentPickerField}
+                  fieldTemplate={this.renderPickerField}
                   headerTemplate={() =>
                     this.renderPickerHeader('Chọn trạng thái')
                   }
@@ -590,7 +595,7 @@ class FilterModal extends React.Component {
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
-                  fieldTemplate={this.renderSegmentPickerField}
+                  fieldTemplate={this.renderPickerField}
                   headerTemplate={() => this.renderPickerHeader('Chọn nguồn')}
                   footerTemplate={this.renderPickerFooter}
                   onBlur={() => this.setState({search: ''})}

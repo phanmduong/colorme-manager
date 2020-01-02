@@ -103,7 +103,15 @@ class RegisterListContainer extends React.Component {
     let bookmark = this.props.bookmark === -1 ? '' : this.props.bookmark;
     let statusId = this.props.status_id === -1 ? '' : this.props.status_id;
     let sourceId = this.props.source_id === -1 ? '' : this.props.source_id;
-    let genId = this.props.selectedGenId === -1 ? '' : this.props.selectedGenId;
+    let genId = '';
+    if (this.props.selectedGenId === -1) {
+      genId = this.props.currentGen.id;
+    } else if (
+      this.props.selectedGenId !== -1 &&
+      this.props.selectedGenId !== 2
+    ) {
+      genId = this.props.selectedGenId;
+    }
     this.props.registerListActions.refreshRegisterListMy(
       this.props.searchMy,
       this.props.token,
@@ -336,6 +344,7 @@ class RegisterListContainer extends React.Component {
         selectedGenId={this.props.selectedGenId}
         isLoadingGen={this.props.isLoadingGen}
         onSelectGenId={this.onSelectGenId}
+        currentGen={this.props.currentGen}
       />
     );
   }
@@ -380,6 +389,7 @@ function mapStateToProps(state) {
     genData: state.gen.genData,
     isLoadingGen: state.gen.isLoading,
     selectedGenId: state.gen.selectedGenId,
+    currentGen: state.gen.currentGen,
   };
 }
 

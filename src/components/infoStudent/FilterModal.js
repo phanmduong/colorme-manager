@@ -127,11 +127,16 @@ class FilterModal extends React.Component {
         return gen;
       }
     }
+    for (let gen of gens) {
+      if (gen.id === this.props.currentGen.id) {
+        return gen;
+      }
+    }
     return gens[0];
   };
 
   getGenData = () => {
-    let defaultGen = {id: -1, name: 'Tất cả'};
+    let defaultGen = {id: -2, name: 'Tất cả'};
     let genData = [];
     genData.push(defaultGen);
     for (let gen of this.props.genData) {
@@ -654,7 +659,7 @@ class FilterModal extends React.Component {
               />
             </ScrollView>
           ) : (
-            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <View style={{flex: 1}}>
               <Loading size={width / 8} />
             </View>
           )}

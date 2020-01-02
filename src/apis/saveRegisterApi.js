@@ -64,3 +64,9 @@ export function loadSalers(token) {
   let url = env.API_URL + '/all-saler?token=' + token;
   return axios.get(url);
 }
+
+export function loadFilterClasses(genId, token) {
+  let url = env.API_URL + '/apiv2/gens/' + genId + '/classes?token=' + token;
+  console.log(url);
+  return axios.get(url);
+}

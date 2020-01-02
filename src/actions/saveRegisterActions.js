@@ -1,5 +1,6 @@
 import * as types from '../constants/actionTypes';
 import * as saveRegisterApi from '../apis/saveRegisterApi';
+import {selectedGenId} from './genActions';
 
 export function loadCourses(token) {
   return function(dispatch) {
@@ -317,5 +318,52 @@ function loadSalersError() {
     type: types.LOAD_SALERS_ERROR,
     isLoadingSalers: false,
     errorLoadingSalers: true,
+  };
+}
+
+export function loadFilterClasses(genId, token) {
+  return function(dispatch) {
+    dispatch(beginLoadFilterClasses());
+    saveRegisterApi
+      .loadFilterClasses(genId, token)
+      .then(function(res) {
+        dispatch(loadFilterClassesSuccessful(res));
+      })
+      .catch(error => {
+        dispatch(loadFilterClassesError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadFilterClasses() {
+  return {
+    type: types.BEGIN_LOAD_FILTER_CLASSES,
+    isLoadingFilterClasses: true,
+    errorLoadingFilterClasses: false,
+  };
+}
+
+function loadFilterClassesSuccessful(res) {
+  return {
+    type: types.LOAD_FILTER_CLASSES_SUCCESSFUL,
+    isLoadingFilterClasses: false,
+    errorLoadingFilterClasses: false,
+    filterClasses: res.data.data.classes,
+  };
+}
+
+function loadFilterClassesError() {
+  return {
+    type: types.LOAD_FILTER_CLASSES_ERROR,
+    isLoadingFilterClasses: false,
+    errorLoadingFilterClasses: true,
+  };
+}
+
+export function reloadFilterClasses(genId, token) {
+  return function(dispatch) {
+    dispatch(selectedGenId(genId));
+    dispatch(loadFilterClasses(genId, token));
   };
 }

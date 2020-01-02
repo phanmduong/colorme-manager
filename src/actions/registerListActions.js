@@ -36,6 +36,7 @@ export function loadDataRegisterListMy(
   statusId,
   sourceId,
   genId,
+  classId,
 ) {
   return function(dispatch) {
     dispatch(beginDataRegisterListLoadMy());
@@ -48,7 +49,7 @@ export function loadDataRegisterListMy(
         sourceCancelMy,
         genId,
         campaignId,
-        '',
+        classId,
         paidStatus,
         baseId,
         appointmentPayment,
@@ -114,6 +115,7 @@ export function updateFormAndLoadDataSearchMy(
   statusId,
   sourceId,
   genId,
+  classId,
   token,
 ) {
   sourceCancelMy.cancel('Canceled by api register list (my).');
@@ -139,6 +141,7 @@ export function updateFormAndLoadDataSearchMy(
         statusId,
         sourceId,
         genId,
+        classId,
       ),
     );
   };
@@ -171,6 +174,7 @@ export function refreshRegisterListMy(
   statusId,
   sourceId,
   genId,
+  classId,
 ) {
   return dispatch => {
     dispatch(resetRegisterListMy());
@@ -193,6 +197,7 @@ export function refreshRegisterListMy(
         statusId,
         sourceId,
         genId,
+        classId,
       ),
     );
   };
@@ -282,6 +287,13 @@ export function onSelectStatus(statusId) {
   return {
     type: types.SELECT_REGISTER_LIST_STATUS,
     status_id: statusId,
+  };
+}
+
+export function onSelectClassId(classId) {
+  return {
+    type: types.SELECT_REGISTER_LIST_CLASS,
+    classId: classId,
   };
 }
 

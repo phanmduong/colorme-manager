@@ -91,6 +91,10 @@ export default function registerListReducer(
       return Object.assign({}, state, {
         status_id: action.status_id,
       });
+    case types.SELECT_REGISTER_LIST_CLASS:
+      return Object.assign({}, state, {
+        classId: action.classId,
+      });
     case types.RESET_REGISTER_LIST_FILTER:
       return Object.assign({}, state, {
         salerId: action.salerId,

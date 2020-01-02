@@ -130,6 +130,22 @@ export function saveRegisterReducer(state = initialState.saveRegister, action) {
         isLoadingSalers: action.isLoadingSalers,
         errorLoadingSalers: action.errorLoadingSalers,
       });
+    case type.BEGIN_LOAD_FILTER_CLASSES:
+      return Object.assign({}, state, {
+        isLoadingFilterClasses: action.isLoadingFilterClasses,
+        errorLoadingFilterClasses: action.errorLoadingFilterClasses,
+      });
+    case type.LOAD_FILTER_CLASSES_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isLoadingFilterClasses: action.isLoadingFilterClasses,
+        errorLoadingFilterClasses: action.errorLoadingFilterClasses,
+        filterClasses: action.filterClasses,
+      });
+    case type.LOAD_FILTER_CLASSES_ERROR:
+      return Object.assign({}, state, {
+        isLoadingFilterClasses: action.isLoadingFilterClasses,
+        errorLoadingFilterClasses: action.errorLoadingFilterClasses,
+      });
     default:
       return state;
   }

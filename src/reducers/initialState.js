@@ -123,6 +123,7 @@ export default {
     appointmentPayment: '',
     source_id: -1,
     status_id: -1,
+    classId: -1,
   },
   collectMoney: {
     studentListData: [],
@@ -282,6 +283,9 @@ export default {
     isLoadingSalers: false,
     errorLoadingSalers: false,
     salers: [],
+    isLoadingFilterClasses: false,
+    errorLoadingFilterClasses: false,
+    filterClasses: [],
   },
   infoStudent: {
     isLoadingRegisters: false,

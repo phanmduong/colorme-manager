@@ -99,6 +99,11 @@ class RegisterListComponent extends React.Component {
           isLoadingGen={this.props.isLoadingGen}
           onSelectGenId={this.props.onSelectGenId}
           currentGen={this.props.currentGen}
+          classId={this.props.classId}
+          isLoadingFilterClasses={this.props.isLoadingFilterClasses}
+          filterClasses={this.props.filterClasses}
+          onSelectClassId={this.props.onSelectClassId}
+          reloadFilterClasses={this.props.reloadFilterClasses}
         />
       </View>
     );

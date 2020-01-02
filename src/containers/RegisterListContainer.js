@@ -19,6 +19,9 @@ class RegisterListContainer extends React.Component {
     this.updateFormAndLoadDataSearchMy = this.updateFormAndLoadDataSearchMy.bind(
       this,
     );
+    this.state = {
+      checkedCurrentGen: false,
+    };
   }
 
   static navigationOptions = ({navigation}) => ({
@@ -34,6 +37,22 @@ class RegisterListContainer extends React.Component {
     this.loadSalers();
     this.loadGens();
   }
+
+  componentWillReceiveProps = nextProps => {
+    console.log(nextProps);
+    this.checkCurrentGen(nextProps);
+  };
+
+  checkCurrentGen = props => {
+    if (
+      !isEmptyInput(props.currentGen.id) &&
+      !isEmptyInput(this.props.currentGen.id) &&
+      !this.state.checkedCurrentGen
+    ) {
+      this.setState({checkedCurrentGen: true});
+      this.loadFilterClasses();
+    }
+  };
 
   loadBases = () => {
     this.props.baseActions.loadDataBase(this.props.token);
@@ -59,6 +78,24 @@ class RegisterListContainer extends React.Component {
     this.props.genActions.loadDataGen(this.props.token);
   };
 
+  loadFilterClasses = () => {
+    if (this.props.selectedGenId === -1 || this.props.selectedGenId === -2) {
+      this.props.saveRegisterActions.loadFilterClasses(
+        this.props.currentGen.id,
+        this.props.token,
+      );
+    } else {
+      this.props.saveRegisterActions.loadFilterClasses(
+        this.props.selectedGenId,
+        this.props.token,
+      );
+    }
+  };
+
+  reloadFilterClasses = genId => {
+    this.props.saveRegisterActions.reloadFilterClasses(genId, this.props.token);
+  };
+
   loadDataRegisterListMy() {
     let baseId =
       this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
@@ -70,6 +107,7 @@ class RegisterListContainer extends React.Component {
     let statusId = this.props.status_id === -1 ? '' : this.props.status_id;
     let sourceId = this.props.source_id === -1 ? '' : this.props.source_id;
     let genId = this.props.selectedGenId === -1 ? '' : this.props.selectedGenId;
+    let classId = this.props.classId === -1 ? '' : this.props.classId;
     if (this.props.currentPageMy < this.props.totalPageMy) {
       this.props.registerListActions.loadDataRegisterListMy(
         this.props.token,
@@ -89,6 +127,7 @@ class RegisterListContainer extends React.Component {
         statusId,
         sourceId,
         genId,
+        classId,
       );
     }
   }
@@ -112,6 +151,7 @@ class RegisterListContainer extends React.Component {
     ) {
       genId = this.props.selectedGenId;
     }
+    let classId = this.props.classId === -1 ? '' : this.props.classId;
     this.props.registerListActions.refreshRegisterListMy(
       this.props.searchMy,
       this.props.token,
@@ -129,6 +169,7 @@ class RegisterListContainer extends React.Component {
       statusId,
       sourceId,
       genId,
+      classId,
     );
   };
 
@@ -143,6 +184,7 @@ class RegisterListContainer extends React.Component {
     let statusId = this.props.status_id === -1 ? '' : this.props.status_id;
     let sourceId = this.props.source_id === -1 ? '' : this.props.source_id;
     let genId = this.props.selectedGenId === -1 ? '' : this.props.selectedGenId;
+    let classId = this.props.classId === -1 ? '' : this.props.classId;
     this.props.registerListActions.updateFormAndLoadDataSearchMy(
       search,
       salerId,
@@ -159,6 +201,7 @@ class RegisterListContainer extends React.Component {
       statusId,
       sourceId,
       genId,
+      classId,
       this.props.token,
     );
   }
@@ -277,6 +320,10 @@ class RegisterListContainer extends React.Component {
     this.props.genActions.selectedGenId(genId);
   };
 
+  onSelectClassId = classId => {
+    this.props.registerListActions.onSelectClassId(classId);
+  };
+
   reset = () => {
     this.props.registerListActions.reset();
   };
@@ -345,6 +392,11 @@ class RegisterListContainer extends React.Component {
         isLoadingGen={this.props.isLoadingGen}
         onSelectGenId={this.onSelectGenId}
         currentGen={this.props.currentGen}
+        classId={this.props.classId}
+        isLoadingFilterClasses={this.props.isLoadingFilterClasses}
+        filterClasses={this.props.filterClasses}
+        onSelectClassId={this.onSelectClassId}
+        reloadFilterClasses={this.reloadFilterClasses}
       />
     );
   }
@@ -390,6 +442,9 @@ function mapStateToProps(state) {
     isLoadingGen: state.gen.isLoading,
     selectedGenId: state.gen.selectedGenId,
     currentGen: state.gen.currentGen,
+    isLoadingFilterClasses: state.saveRegister.isLoadingFilterClasses,
+    filterClasses: state.saveRegister.filterClasses,
+    classId: state.registerList.classId,
   };
 }
 

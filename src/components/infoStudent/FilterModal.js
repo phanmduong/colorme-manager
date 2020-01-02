@@ -242,6 +242,21 @@ class FilterModal extends React.Component {
     return array[0];
   };
 
+  getFilterClasses = () => {
+    let defaultClass = {id: -1, name: 'Tất cả'};
+    let filterClasses = [defaultClass].concat(this.props.filterClasses);
+    return filterClasses;
+  };
+
+  getDefaultClass = array => {
+    for (let classItem of array) {
+      if (classItem.id === this.props.classId) {
+        return classItem;
+      }
+    }
+    return array[0];
+  };
+
   getSearchedResults = array => {
     let list = [];
     if (this.state.search === '') {
@@ -328,7 +343,8 @@ class FilterModal extends React.Component {
           !this.props.isLoadingSources &&
           !this.props.isLoadingStatuses &&
           !this.props.isLoadingSalers &&
-          !this.props.isLoadingGen ? (
+          !this.props.isLoadingGen &&
+          !this.props.isLoadingFilterClasses ? (
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.titleContainer}>
                 <Text style={styles.title}>Lọc đăng ký</Text>
@@ -352,7 +368,8 @@ class FilterModal extends React.Component {
                   }}
                   onValueChange={value => {
                     this.setState({search: ''});
-                    this.props.onSelectGenId(value.id);
+                    // this.props.onSelectGenId(value.id);
+                    this.props.reloadFilterClasses(value.id);
                   }}
                 />
               </View>
@@ -374,6 +391,27 @@ class FilterModal extends React.Component {
                   onValueChange={value => {
                     this.setState({search: ''});
                     this.props.onSelectBaseId(value.id);
+                  }}
+                />
+              </View>
+              <View style={styles.filterTitle}>
+                <Text style={{fontSize: 16}}>Lớp học</Text>
+                <CustomPicker
+                  options={this.getSearchedResults(this.getFilterClasses())}
+                  defaultValue={this.getDefaultClass(this.getFilterClasses())}
+                  getLabel={item => item.name}
+                  modalAnimationType={'fade'}
+                  optionTemplate={this.renderPickerOption}
+                  fieldTemplate={this.renderPickerField}
+                  headerTemplate={() => this.renderPickerHeader('Chọn lớp học')}
+                  footerTemplate={this.renderPickerFooter}
+                  onBlur={() => this.setState({search: ''})}
+                  modalStyle={{
+                    borderRadius: 6,
+                  }}
+                  onValueChange={value => {
+                    this.setState({search: ''});
+                    this.props.onSelectClassId(value.id);
                   }}
                 />
               </View>

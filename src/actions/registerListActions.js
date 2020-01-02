@@ -320,5 +320,6 @@ function resetRegisterListProps() {
     appointmentPayment: '',
     source_id: -1,
     status_id: -1,
+    classId: -1,
   };
 }

@@ -109,6 +109,7 @@ export default function registerListReducer(
         appointmentPayment: action.appointmentPayment,
         source_id: action.source_id,
         status_id: action.status_id,
+        classId: action.classId,
       });
     default:
       return state;

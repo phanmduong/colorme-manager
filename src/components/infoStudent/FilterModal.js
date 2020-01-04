@@ -106,19 +106,19 @@ class FilterModal extends React.Component {
     );
   }
 
-  getDefaultBase = bases => {
-    for (let base of bases) {
-      if (base.id === this.props.selectedBaseId) {
-        return base;
-      }
-    }
-    return bases[0];
+  getData = array => {
+    let defaultOption = {id: -1, name: 'Tất cả'};
+    let data = [defaultOption].concat(array);
+    return data;
   };
 
-  getBaseData = () => {
-    let defaultBase = {id: -1, name: 'Tất cả'};
-    let baseData = [defaultBase].concat(this.props.baseData);
-    return baseData;
+  getDefault = (array, comparedId) => {
+    for (let item of array) {
+      if (item.id === comparedId) {
+        return item;
+      }
+    }
+    return array[0];
   };
 
   getDefaultGen = gens => {
@@ -144,117 +144,6 @@ class FilterModal extends React.Component {
       genData.push(pushedGen);
     }
     return genData;
-  };
-
-  getCampaigns = () => {
-    let defaultCampaign = {id: -1, name: 'Tất cả'};
-    let campaigns = [defaultCampaign].concat(this.props.campaigns);
-    return campaigns;
-  };
-
-  getDefaultCampaign = array => {
-    for (let campaign of array) {
-      if (campaign.id === this.props.campaignId) {
-        return campaign;
-      }
-    }
-    return array[0];
-  };
-
-  getDefaultPaidStatus = array => {
-    for (let moneyFilter of array) {
-      if (moneyFilter.id === this.props.paidStatus) {
-        return moneyFilter;
-      }
-    }
-    return array[0];
-  };
-
-  getDefaultClassStatus = array => {
-    for (let classStatus of array) {
-      if (classStatus.value === this.props.classStatus) {
-        return classStatus;
-      }
-    }
-    return array[0];
-  };
-
-  getDefaultCallStatus = array => {
-    for (let callStatus of array) {
-      if (callStatus.id === this.props.callStatus) {
-        return callStatus;
-      }
-    }
-    return array[0];
-  };
-
-  getDefaultBookmark = array => {
-    for (let bookmark of array) {
-      if (bookmark.id === this.props.bookmark) {
-        return bookmark;
-      }
-    }
-    return array[0];
-  };
-
-  getStatuses = () => {
-    let defaultStatus = {id: -1, name: 'Tất cả'};
-    let statuses = [defaultStatus].concat(this.props.statuses);
-    return statuses;
-  };
-
-  getDefaultStatus = array => {
-    for (let status of array) {
-      if (status.id === this.props.statusId) {
-        return status;
-      }
-    }
-    return array[0];
-  };
-
-  getSources = () => {
-    let defaultSource = {id: -1, name: 'Tất cả'};
-    let sources = [defaultSource].concat(this.props.sources);
-    return sources;
-  };
-
-  getDefaultSource = array => {
-    for (let source of array) {
-      if (source.id === this.props.sourceId) {
-        return source;
-      }
-    }
-    return array[0];
-  };
-
-  getSalers = () => {
-    let defaultSaler = {id: -1, name: 'Tất cả'};
-    let salers = [defaultSaler].concat(this.props.salers);
-    return salers;
-  };
-
-  getDefaultSaler = array => {
-    for (let saler of array) {
-      if (saler.id === this.props.salerId) {
-        return saler;
-      }
-    }
-    return array[0];
-  };
-
-  getFilterClasses = () => {
-    let defaultClass = {id: -1, name: 'Tất cả'};
-    let filterClasses = [defaultClass].concat(this.props.filterClasses);
-    return filterClasses;
-  };
-
-  getDefaultClass = array => {
-    for (let classItem of array) {
-      if (classItem.id === this.props.classId) {
-        return classItem;
-      }
-    }
-    return array[0];
   };
 
   getSearchedResults = array => {
@@ -388,8 +277,13 @@ class FilterModal extends React.Component {
               <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Cơ sở</Text>
                 <CustomPicker
-                  options={this.getSearchedResults(this.getBaseData())}
-                  defaultValue={this.getDefaultBase(this.getBaseData())}
+                  options={this.getSearchedResults(
+                    this.getData(this.props.baseData),
+                  )}
+                  defaultValue={this.getDefault(
+                    this.getData(this.props.baseData),
+                    this.props.selectedBaseId,
+                  )}
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
@@ -410,9 +304,12 @@ class FilterModal extends React.Component {
                 <Text style={{fontSize: 16}}>Lớp học</Text>
                 <CustomPicker
                   options={this.getSearchedResults(
-                    this.filterBase(this.getFilterClasses()),
+                    this.filterBase(this.getData(this.props.filterClasses)),
                   )}
-                  defaultValue={this.getDefaultClass(this.getFilterClasses())}
+                  defaultValue={this.getDefault(
+                    this.getData(this.props.filterClasses),
+                    this.props.classId,
+                  )}
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
@@ -432,8 +329,13 @@ class FilterModal extends React.Component {
               <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Saler</Text>
                 <CustomPicker
-                  options={this.getSearchedResults(this.getSalers())}
-                  defaultValue={this.getDefaultSaler(this.getSalers())}
+                  options={this.getSearchedResults(
+                    this.getData(this.props.salers),
+                  )}
+                  defaultValue={this.getDefault(
+                    this.getData(this.props.salers),
+                    this.props.salerId,
+                  )}
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
@@ -453,8 +355,13 @@ class FilterModal extends React.Component {
               <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Chiến dịch</Text>
                 <CustomPicker
-                  options={this.getSearchedResults(this.getCampaigns())}
-                  defaultValue={this.getDefaultCampaign(this.getCampaigns())}
+                  options={this.getSearchedResults(
+                    this.getData(this.props.campaigns),
+                  )}
+                  defaultValue={this.getDefault(
+                    this.getData(this.props.campaigns),
+                    this.props.campaignId,
+                  )}
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
@@ -477,7 +384,10 @@ class FilterModal extends React.Component {
                 <Text style={{fontSize: 16}}>Học phí</Text>
                 <CustomPicker
                   options={this.getSearchedResults(moneyFilter)}
-                  defaultValue={this.getDefaultPaidStatus(moneyFilter)}
+                  defaultValue={this.getDefault(
+                    moneyFilter,
+                    this.props.paidStatus,
+                  )}
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
@@ -528,7 +438,10 @@ class FilterModal extends React.Component {
                 <Text style={{fontSize: 16}}>Trạng thái lớp</Text>
                 <CustomPicker
                   options={this.getSearchedResults(classStatusFilter)}
-                  defaultValue={this.getDefaultClassStatus(classStatusFilter)}
+                  defaultValue={this.getDefault(
+                    classStatusFilter,
+                    this.props.classStatus,
+                  )}
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
@@ -551,7 +464,10 @@ class FilterModal extends React.Component {
                 <Text style={{fontSize: 16}}>Trạng thái cuộc gọi</Text>
                 <CustomPicker
                   options={this.getSearchedResults(teleCallStatus)}
-                  defaultValue={this.getDefaultCallStatus(teleCallStatus)}
+                  defaultValue={this.getDefault(
+                    teleCallStatus,
+                    this.props.callStatus,
+                  )}
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
@@ -602,7 +518,10 @@ class FilterModal extends React.Component {
                 <Text style={{fontSize: 16}}>Đánh dấu</Text>
                 <CustomPicker
                   options={this.getSearchedResults(bookmarkFilter)}
-                  defaultValue={this.getDefaultBookmark(bookmarkFilter)}
+                  defaultValue={this.getDefault(
+                    bookmarkFilter,
+                    this.props.bookmark,
+                  )}
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
@@ -624,8 +543,13 @@ class FilterModal extends React.Component {
               <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Trạng thái</Text>
                 <CustomPicker
-                  options={this.getSearchedResults(this.getStatuses())}
-                  defaultValue={this.getDefaultStatus(this.getStatuses())}
+                  options={this.getSearchedResults(
+                    this.getData(this.props.statuses),
+                  )}
+                  defaultValue={this.getDefault(
+                    this.getData(this.props.statuses),
+                    this.props.statusId,
+                  )}
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
@@ -647,8 +571,13 @@ class FilterModal extends React.Component {
               <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Nguồn</Text>
                 <CustomPicker
-                  options={this.getSearchedResults(this.getSources())}
-                  defaultValue={this.getDefaultSource(this.getSources())}
+                  options={this.getSearchedResults(
+                    this.getData(this.props.sources),
+                  )}
+                  defaultValue={this.getDefault(
+                    this.getData(this.props.sources),
+                    this.props.sourceId,
+                  )}
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}

@@ -6,6 +6,15 @@ import _ from 'lodash';
 import {MEETING_STATUS} from '../constants/constant';
 
 export function dotNumber(number) {
+  if (!isFinite(number)) {
+    return '0';
+  }
+  if (number == 0) {
+    return '0';
+  }
+  if (isEmptyInput(number)) {
+    return 0;
+  }
   if (number) {
     return number
       .toString()

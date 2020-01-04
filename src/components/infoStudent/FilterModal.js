@@ -276,6 +276,19 @@ class FilterModal extends React.Component {
     }
   };
 
+  filterBase = classes => {
+    if (this.props.selectedBaseId !== -1) {
+      let filterClasses = [];
+      for (let _class of classes) {
+        if (_class.base_id === this.props.selectedBaseId) {
+          filterClasses.push(_class);
+        }
+      }
+      return filterClasses;
+    }
+    return classes;
+  };
+
   handleStartDatePicked = date => {
     this.props.onSelectStartTime(moment(date).format('YYYY-MM-DD'));
     this.setState({
@@ -368,7 +381,6 @@ class FilterModal extends React.Component {
                   }}
                   onValueChange={value => {
                     this.setState({search: ''});
-                    // this.props.onSelectGenId(value.id);
                     this.props.reloadFilterClasses(value.id);
                   }}
                 />
@@ -389,7 +401,7 @@ class FilterModal extends React.Component {
                     borderRadius: 6,
                   }}
                   onValueChange={value => {
-                    this.setState({search: ''});
+                    this.setState({search: '', base_id: value.id});
                     this.props.onSelectBaseId(value.id);
                   }}
                 />
@@ -397,7 +409,9 @@ class FilterModal extends React.Component {
               <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Lớp học</Text>
                 <CustomPicker
-                  options={this.getSearchedResults(this.getFilterClasses())}
+                  options={this.getSearchedResults(
+                    this.filterBase(this.getFilterClasses()),
+                  )}
                   defaultValue={this.getDefaultClass(this.getFilterClasses())}
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}

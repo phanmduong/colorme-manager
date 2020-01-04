@@ -10,7 +10,7 @@ import {
 import {View, Thumbnail} from 'native-base';
 import theme from '../../styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {getShortName} from '../../helper';
+import {dotNumber, getShortName} from '../../helper';
 import CallRegisterModal from '../infoStudent/CallRegisterModal';
 import SubmitMoneyModal from '../infoStudent/SubmitMoneyModal';
 
@@ -156,11 +156,21 @@ class ListItemStudent extends React.Component {
                   <Text style={{fontSize: 16}}>Gọi điện</Text>
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => this.toggleMoneyModal()}>
-                <View style={[{marginLeft: 10}, styles.button]}>
-                  <Text style={{fontSize: 16}}>Nộp học phí</Text>
-                </View>
-              </TouchableOpacity>
+              {!paidStatus ? (
+                <TouchableOpacity onPress={() => this.toggleMoneyModal()}>
+                  <View style={[{marginLeft: 10}, styles.button]}>
+                    <Text style={{fontSize: 16}}>Nộp học phí</Text>
+                  </View>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity onPress={() => this.toggleMoneyModal()}>
+                  <View style={[{marginLeft: 10}, styles.collectedButton]}>
+                    <Text style={{fontSize: 16, color: 'white'}}>
+                      {dotNumber(money)} vnđ
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              )}
             </View>
           </View>
           <CallRegisterModal
@@ -336,6 +346,12 @@ const styles = {
   },
   button: {
     backgroundColor: '#F6F6F6',
+    paddingVertical: 10,
+    paddingHorizontal: 18,
+    borderRadius: 8,
+  },
+  collectedButton: {
+    backgroundColor: '#C50000',
     paddingVertical: 10,
     paddingHorizontal: 18,
     borderRadius: 8,

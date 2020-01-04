@@ -49,62 +49,6 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  listItemContainer: {
-    marginHorizontal: 16,
-    marginVertical: 10,
-  },
-  classAva: {
-    width: 37,
-    height: 37,
-    borderRadius: 19,
-  },
-  className: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginLeft: 15,
-  },
-  containerSubTitle: {
-    flexDirection: 'row',
-    marginBottom: 10,
-  },
-  card: {
-    paddingVertical: 4,
-    paddingHorizontal: 10,
-    marginTop: 5,
-    borderRadius: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  saler: {
-    fontSize: 10,
-    color: 'white',
-    textAlign: 'center',
-  },
-  campaign: {
-    fontSize: 10,
-    color: 'white',
-    textAlign: 'center',
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginTop: 20,
-  },
-  button: {
-    backgroundColor: '#F6F6F6',
-    paddingVertical: 10,
-    paddingHorizontal: 18,
-    borderRadius: 8,
-  },
-  classInfoContainer: {
-    paddingTop: 2,
-    flex: 1,
-    flexWrap: 'wrap',
-  },
-  infoContainer: {
-    marginLeft: 15,
-    flex: 1,
-  },
 };
 
 export default InfoStudentRegistersComponent;

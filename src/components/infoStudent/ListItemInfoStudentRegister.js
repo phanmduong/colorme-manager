@@ -48,6 +48,7 @@ class ListItemInfoStudentRegister extends React.Component {
                         this.props.register.saler.color === ''
                           ? theme.processColor1
                           : '#' + this.props.register.saler.color,
+                      marginRight: 5,
                     },
                   }}>
                   <Text style={styles.saler}>
@@ -67,7 +68,6 @@ class ListItemInfoStudentRegister extends React.Component {
                         this.props.register.campaign.color === ''
                           ? theme.processColor1
                           : '#' + this.props.register.campaign.color,
-                      marginLeft: 5,
                     },
                   }}>
                   <Text style={styles.campaign}>

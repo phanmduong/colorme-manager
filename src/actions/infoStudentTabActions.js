@@ -7,6 +7,7 @@ import {
 import React from 'react';
 import {View} from 'react-native';
 import InfoStudentRegistersContainer from '../containers/infoStudent/InfoStudentRegistersContainer';
+import InfoStudentHistoryCallsContainer from '../containers/infoStudent/InfoStudentHistoryCallsContainer';
 
 export function tabRegisters() {
   return {
@@ -71,7 +72,7 @@ export function tabHistoryCalls() {
           color: 'black',
         },
       },
-      tabComponent: <View />,
+      tabComponent: <InfoStudentHistoryCallsContainer />,
     },
   };
 }

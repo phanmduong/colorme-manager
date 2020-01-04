@@ -308,3 +308,43 @@ function updateProfileError() {
     errorUpdatingProfile: true,
   };
 }
+
+export function loadHistoryCalls(studentId, token) {
+  return function(dispatch) {
+    dispatch(beginLoadHistoryCalls());
+    infoStudentApi
+      .loadHistoryCalls(studentId, token)
+      .then(function(res) {
+        dispatch(loadHistoryCallsSuccessful(res));
+      })
+      .catch(error => {
+        dispatch(loadHistoryCallsError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadHistoryCalls() {
+  return {
+    type: types.BEGIN_LOAD_HISTORY_CALLS,
+    isLoadingHistoryCalls: true,
+    errorLoadingHistoryCalls: false,
+  };
+}
+
+function loadHistoryCallsSuccessful(res) {
+  return {
+    type: types.LOAD_HISTORY_CALLS_SUCCESSFUL,
+    isLoadingHistoryCalls: false,
+    errorLoadingHistoryCalls: false,
+    historyCalls: res.data.data.history_calls,
+  };
+}
+
+function loadHistoryCallsError() {
+  return {
+    type: types.LOAD_HISTORY_CALLS_ERROR,
+    isLoadingHistoryCalls: false,
+    errorLoadingHistoryCalls: true,
+  };
+}

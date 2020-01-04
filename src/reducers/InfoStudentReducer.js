@@ -99,6 +99,22 @@ export function infoStudentReducer(state = initialState.infoStudent, action) {
         isUpdatingProfile: action.isUpdatingProfile,
         errorUpdatingProfile: action.errorUpdatingProfile,
       });
+    case type.BEGIN_LOAD_HISTORY_CALLS:
+      return Object.assign({}, state, {
+        isLoadingHistoryCalls: action.isLoadingHistoryCalls,
+        errorLoadingHistoryCalls: action.errorLoadingHistoryCalls,
+      });
+    case type.LOAD_HISTORY_CALLS_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isLoadingHistoryCalls: action.isLoadingHistoryCalls,
+        errorLoadingHistoryCalls: action.errorLoadingHistoryCalls,
+        historyCalls: action.historyCalls,
+      });
+    case type.LOAD_HISTORY_CALLS_ERROR:
+      return Object.assign({}, state, {
+        isLoadingHistoryCalls: action.isLoadingHistoryCalls,
+        errorLoadingHistoryCalls: action.errorLoadingHistoryCalls,
+      });
     default:
       return state;
   }

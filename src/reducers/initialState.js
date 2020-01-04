@@ -303,6 +303,9 @@ export default {
     errorUploadingImage: false,
     isUpdatingProfile: false,
     errorUpdatingProfile: false,
+    historyCalls: [],
+    isLoadingHistoryCalls: false,
+    errorLoadingHistoryCalls: false,
   },
   infoStudentTab: {
     registers: {

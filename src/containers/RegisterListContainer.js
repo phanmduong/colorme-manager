@@ -39,7 +39,6 @@ class RegisterListContainer extends React.Component {
   }
 
   componentWillReceiveProps = nextProps => {
-    console.log(nextProps);
     this.checkCurrentGen(nextProps);
   };
 

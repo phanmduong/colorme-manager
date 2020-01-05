@@ -348,3 +348,43 @@ function loadHistoryCallsError() {
     errorLoadingHistoryCalls: true,
   };
 }
+
+export function loadHistoryCollect(studentId, token) {
+  return function(dispatch) {
+    dispatch(beginLoadHistoryCollect());
+    infoStudentApi
+      .loadHistoryCollect(studentId, token)
+      .then(function(res) {
+        dispatch(loadHistoryCollectSuccessful(res));
+      })
+      .catch(error => {
+        dispatch(loadHistoryCollectError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadHistoryCollect() {
+  return {
+    type: types.BEGIN_LOAD_HISTORY_COLLECT,
+    isLoadingHistoryCollect: true,
+    errorLoadingHistoryCollect: false,
+  };
+}
+
+function loadHistoryCollectSuccessful(res) {
+  return {
+    type: types.LOAD_HISTORY_COLLECT_SUCCESSFUL,
+    historyCollect: res.data.data,
+    isLoadingHistoryCollect: false,
+    errorLoadingHistoryCollect: false,
+  };
+}
+
+function loadHistoryCollectError() {
+  return {
+    type: types.LOAD_HISTORY_COLLECT_ERROR,
+    isLoadingHistoryCollect: false,
+    errorLoadingHistoryCollect: true,
+  };
+}

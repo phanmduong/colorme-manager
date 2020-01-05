@@ -8,6 +8,7 @@ import React from 'react';
 import {View} from 'react-native';
 import InfoStudentRegistersContainer from '../containers/infoStudent/InfoStudentRegistersContainer';
 import InfoStudentHistoryCallsContainer from '../containers/infoStudent/InfoStudentHistoryCallsContainer';
+import InfoStudentHistoryCollectContainer from '../containers/infoStudent/InfoStudentHistoryCollectContainer';
 
 export function tabRegisters() {
   return {
@@ -140,7 +141,7 @@ export function tabHistoryCollectMoney() {
           fontWeight: '600',
         },
       },
-      tabComponent: <View />,
+      tabComponent: <InfoStudentHistoryCollectContainer />,
     },
   };
 }

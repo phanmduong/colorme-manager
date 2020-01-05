@@ -115,6 +115,22 @@ export function infoStudentReducer(state = initialState.infoStudent, action) {
         isLoadingHistoryCalls: action.isLoadingHistoryCalls,
         errorLoadingHistoryCalls: action.errorLoadingHistoryCalls,
       });
+    case type.BEGIN_LOAD_HISTORY_COLLECT:
+      return Object.assign({}, state, {
+        isLoadingHistoryCollect: action.isLoadingHistoryCollect,
+        errorLoadingHistoryCollect: action.errorLoadingHistoryCollect,
+      });
+    case type.LOAD_HISTORY_COLLECT_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isLoadingHistoryCollect: action.isLoadingHistoryCollect,
+        errorLoadingHistoryCollect: action.errorLoadingHistoryCollect,
+        historyCollect: action.historyCollect,
+      });
+    case type.LOAD_HISTORY_COLLECT_ERROR:
+      return Object.assign({}, state, {
+        isLoadingHistoryCollect: action.isLoadingHistoryCollect,
+        errorLoadingHistoryCollect: action.errorLoadingHistoryCollect,
+      });
     default:
       return state;
   }

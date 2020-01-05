@@ -181,7 +181,7 @@ class DashboardComponent extends React.Component {
               />
               <CircleTab
                 iconImage={require('../../assets/img/icons8-calendar.png')}
-                title={'Lịch học bù'}
+                title={'Lịch dạy'}
                 onPress={() => {
                   this.props.navigation.navigate('MakeupClass');
                 }}

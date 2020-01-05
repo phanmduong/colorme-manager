@@ -388,3 +388,43 @@ function loadHistoryCollectError() {
     errorLoadingHistoryCollect: true,
   };
 }
+
+export function loadProgress(studentId, token) {
+  return function(dispatch) {
+    dispatch(beginLoadProgress());
+    infoStudentApi
+      .loadProgress(studentId, token)
+      .then(function(res) {
+        dispatch(loadProgressSuccessful(res));
+      })
+      .catch(error => {
+        dispatch(loadProgressError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadProgress() {
+  return {
+    type: types.BEGIN_LOAD_INFO_STUDENT_PROGRESS,
+    isLoadingProgress: true,
+    errorLoadingProgress: false,
+  };
+}
+
+function loadProgressSuccessful(res) {
+  return {
+    type: types.LOAD_INFO_STUDENT_PROGRESS_SUCCESSFUL,
+    isLoadingProgress: false,
+    errorLoadingProgress: false,
+    progress: res.data.data.progress,
+  };
+}
+
+function loadProgressError() {
+  return {
+    type: types.LOAD_INFO_STUDENT_PROGRESS_ERROR,
+    isLoadingProgress: false,
+    errorLoadingProgress: true,
+  };
+}

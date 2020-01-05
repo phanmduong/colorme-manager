@@ -131,6 +131,22 @@ export function infoStudentReducer(state = initialState.infoStudent, action) {
         isLoadingHistoryCollect: action.isLoadingHistoryCollect,
         errorLoadingHistoryCollect: action.errorLoadingHistoryCollect,
       });
+    case type.BEGIN_LOAD_INFO_STUDENT_PROGRESS:
+      return Object.assign({}, state, {
+        isLoadingProgress: action.isLoadingProgress,
+        errorLoadingProgress: action.errorLoadingProgress,
+      });
+    case type.LOAD_INFO_STUDENT_PROGRESS_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isLoadingProgress: action.isLoadingProgress,
+        errorLoadingProgress: action.errorLoadingProgress,
+        progress: action.progress,
+      });
+    case type.LOAD_INFO_STUDENT_PROGRESS_ERROR:
+      return Object.assign({}, state, {
+        isLoadingProgress: action.isLoadingProgress,
+        errorLoadingProgress: action.errorLoadingProgress,
+      });
     default:
       return state;
   }

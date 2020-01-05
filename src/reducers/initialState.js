@@ -309,6 +309,9 @@ export default {
     historyCollect: [],
     isLoadingHistoryCollect: false,
     errorLoadingHistoryCollect: false,
+    progress: [],
+    isLoadingProgress: false,
+    errorLoadingProgress: false,
   },
   infoStudentTab: {
     registers: {

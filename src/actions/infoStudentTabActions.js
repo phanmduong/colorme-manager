@@ -5,10 +5,10 @@ import {
   INFO_STUDENT_HISTORY_COLLECT_MONEY_TAB,
 } from '../constants/actionTypes';
 import React from 'react';
-import {View} from 'react-native';
 import InfoStudentRegistersContainer from '../containers/infoStudent/InfoStudentRegistersContainer';
 import InfoStudentHistoryCallsContainer from '../containers/infoStudent/InfoStudentHistoryCallsContainer';
 import InfoStudentHistoryCollectContainer from '../containers/infoStudent/InfoStudentHistoryCollectContainer';
+import InfoStudentProgressContainer from '../containers/infoStudent/InfoStudentProgressContainer';
 
 export function tabRegisters() {
   return {
@@ -107,7 +107,7 @@ export function tabProgress() {
           color: 'black',
         },
       },
-      tabComponent: <View />,
+      tabComponent: <InfoStudentProgressContainer />,
     },
   };
 }

@@ -181,6 +181,7 @@ class RegisterListComponent extends React.Component {
               token={this.props.token}
               next_code={item.next_code}
               next_waiting_code={item.next_waiting_code}
+              created_at_cal={item.created_at_cal}
               registerId={item.id}
               errorChangeCallStatus={this.props.errorChangeCallStatus}
               errorSubmitMoney={this.props.errorSubmitMoney}

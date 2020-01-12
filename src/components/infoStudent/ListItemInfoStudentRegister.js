@@ -82,6 +82,9 @@ class ListItemInfoStudentRegister extends React.Component {
               <Text
                 numberOfLines={1}
                 style={[styles.classInfoContainer, {paddingTop: 0}]}>
+                Đăng kí {this.props.register.created_at_cal}
+              </Text>
+              <Text numberOfLines={1} style={styles.classInfoContainer}>
                 {this.props.register.class.study_time}
               </Text>
               <Text numberOfLines={1} style={styles.classInfoContainer}>

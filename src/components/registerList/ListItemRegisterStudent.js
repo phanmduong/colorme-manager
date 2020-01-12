@@ -48,6 +48,7 @@ class ListItemStudent extends React.Component {
       next_code,
       next_waiting_code,
       registerId,
+      created_at_cal,
     } = this.props;
     return (
       <View>
@@ -134,6 +135,9 @@ class ListItemStudent extends React.Component {
               <Text
                 numberOfLines={1}
                 style={[styles.classInfoContainer, {paddingTop: 0}]}>
+                Đăng kí {created_at_cal}
+              </Text>
+              <Text numberOfLines={1} style={styles.classInfoContainer}>
                 {classInfo.name}
               </Text>
               <Text numberOfLines={1} style={styles.classInfoContainer}>

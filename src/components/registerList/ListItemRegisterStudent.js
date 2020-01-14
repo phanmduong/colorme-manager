@@ -49,6 +49,7 @@ class ListItemStudent extends React.Component {
       next_waiting_code,
       registerId,
       created_at_cal,
+      paidTime,
     } = this.props;
     return (
       <View>
@@ -137,18 +138,31 @@ class ListItemStudent extends React.Component {
                 style={[styles.classInfoContainer, {paddingTop: 0}]}>
                 Đăng kí {created_at_cal}
               </Text>
-              <Text numberOfLines={1} style={styles.classInfoContainer}>
-                {classInfo.name}
-              </Text>
-              <Text numberOfLines={1} style={styles.classInfoContainer}>
-                {classInfo.study_time}
-              </Text>
-              <Text numberOfLines={1} style={styles.classInfoContainer}>
-                {classInfo.description}
-              </Text>
-              <Text numberOfLines={1} style={styles.classInfoContainer}>
-                {classInfo.room} - {classInfo.base}
-              </Text>
+              {paidStatus ? (
+                <Text numberOfLines={1} style={styles.classInfoContainer}>
+                  Đã nộp tiền {paidTime}
+                </Text>
+              ) : null}
+              {classInfo.name ? (
+                <Text numberOfLines={1} style={styles.classInfoContainer}>
+                  {classInfo.name}
+                </Text>
+              ) : null}
+              {classInfo.study_time ? (
+                <Text numberOfLines={1} style={styles.classInfoContainer}>
+                  {classInfo.study_time}
+                </Text>
+              ) : null}
+              {classInfo.base ? (
+                <Text numberOfLines={1} style={styles.classInfoContainer}>
+                  {classInfo.room} - {classInfo.base}
+                </Text>
+              ) : null}
+              {classInfo.description ? (
+                <Text numberOfLines={1} style={styles.classInfoContainer}>
+                  {classInfo.description}
+                </Text>
+              ) : null}
             </View>
             <View style={styles.buttonContainer}>
               <TouchableOpacity

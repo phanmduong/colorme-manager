@@ -84,16 +84,32 @@ class ListItemInfoStudentRegister extends React.Component {
                 style={[styles.classInfoContainer, {paddingTop: 0}]}>
                 Đăng kí {this.props.register.created_at_cal}
               </Text>
-              <Text numberOfLines={1} style={styles.classInfoContainer}>
-                {this.props.register.class.study_time}
-              </Text>
-              <Text numberOfLines={1} style={styles.classInfoContainer}>
-                {this.props.register.class.description}
-              </Text>
-              <Text numberOfLines={1} style={styles.classInfoContainer}>
-                {this.props.register.class.room} -{' '}
-                {this.props.register.class.base}
-              </Text>
+              {this.props.register.paid_status ? (
+                <Text numberOfLines={1} style={styles.classInfoContainer}>
+                  Đã nộp tiền {this.props.register.paid_time}
+                </Text>
+              ) : null}
+              {this.props.register.class.study_time ? (
+                <Text numberOfLines={1} style={styles.classInfoContainer}>
+                  {this.props.register.class.study_time}
+                </Text>
+              ) : null}
+              {this.props.register.class.base ? (
+                <Text numberOfLines={1} style={styles.classInfoContainer}>
+                  {this.props.register.class.room} -{' '}
+                  {this.props.register.class.base}
+                </Text>
+              ) : null}
+              {this.props.register.class.description ? (
+                <Text numberOfLines={1} style={styles.classInfoContainer}>
+                  {this.props.register.class.description}
+                </Text>
+              ) : null}
+              {this.props.register.note ? (
+                <Text numberOfLines={1} style={styles.classInfoContainer}>
+                  {this.props.register.note}
+                </Text>
+              ) : null}
             </View>
             <View style={styles.buttonContainer}>
               <TouchableOpacity

@@ -187,6 +187,7 @@ class RegisterListComponent extends React.Component {
               errorSubmitMoney={this.props.errorSubmitMoney}
               changeCallStatus={this.props.changeCallStatus}
               submitMoney={this.props.submitMoney}
+              paidTime={item.paid_time}
             />
           )}
         />

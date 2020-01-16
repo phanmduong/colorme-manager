@@ -12,6 +12,7 @@ import {
 import Modal from 'react-native-modal';
 var {width, height} = Dimensions.get('window');
 import theme from '../../styles';
+import {dotNumber} from "../../helper";
 
 const CHUYEN_KHOAN = 'internet_banking';
 const TIEN_MAT = 'cash';
@@ -104,7 +105,7 @@ class SubmitMoneyModal extends React.Component {
                 <TextInput
                   {...this.props}
                   keyboardType={'number-pad'}
-                  value={this.state.money}
+                  value={dotNumber(this.state.money)}
                   ref={'money'}
                   onChangeText={data => this.setState({money: data})}
                   returnKeyType={'next'}

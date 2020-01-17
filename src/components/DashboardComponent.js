@@ -181,7 +181,7 @@ class DashboardComponent extends React.Component {
               />
               <CircleTab
                 iconImage={require('../../assets/img/icons8-calendar.png')}
-                title={'Lịch dạy'}
+                title={'Lịch học bù'}
                 onPress={() => {
                   this.props.navigation.navigate('MakeupClass');
                 }}
@@ -212,6 +212,13 @@ class DashboardComponent extends React.Component {
                 }}
               />
               <View style={{width: width / 3}} />
+              {/*<CircleTab*/}
+              {/*  iconImage={require('../../assets/img/icons8-todo_list.png')}*/}
+              {/*  title={'Việc cần làm'}*/}
+              {/*  onPress={() => {*/}
+              {/*    this.props.navigation.navigate('Task');*/}
+              {/*  }}*/}
+              {/*/>*/}
             </View>
             <MeetingComponent
               store={this.props.store}

@@ -7,9 +7,16 @@ import {
   ScrollView,
   Image,
   Linking,
+  Dimensions,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import CallRegisterModal from './infoStudent/CallRegisterModal';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {getShortName, isEmptyInput} from '../helper';
+import {getStatusBarHeight} from 'react-native-iphone-x-helper';
+import Spinkit from 'react-native-spinkit';
+import theme from '../styles';
+var {height, width} = Dimensions.get('window');
 
 class InfoStudentComponent extends React.Component {
   constructor(props, context) {
@@ -40,111 +47,171 @@ class InfoStudentComponent extends React.Component {
   };
 
   render() {
-    let name = this.props.navigation.getParam('name');
-    let phone = this.props.navigation.getParam('phone');
-    let email = this.props.navigation.getParam('email');
-    let avatar_url = this.props.navigation.getParam('avatar_url');
-    return (
-      <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
-        <View style={{height: 50}}>
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            <View style={styles.tabContainer}>
-              <LinearGradient
-                colors={this.props.registersGradient}
-                style={styles.gradientSize}
-                start={{x: 0, y: 0}}
-                end={{x: 1, y: 0}}>
-                <TouchableOpacity onPress={this.tabRegisters}>
-                  <Text style={[styles.tabText, this.props.registersTextColor]}>
-                    Đăng ký
-                  </Text>
-                </TouchableOpacity>
-              </LinearGradient>
-              <LinearGradient
-                colors={this.props.historyCallsGradient}
-                style={styles.gradientSize}
-                start={{x: 0, y: 0}}
-                end={{x: 1, y: 0}}>
-                <TouchableOpacity onPress={this.tabHistoryCalls}>
-                  <Text
-                    style={[styles.tabText, this.props.historyCallsTextColor]}>
-                    Cuộc gọi
-                  </Text>
-                </TouchableOpacity>
-              </LinearGradient>
-              <LinearGradient
-                colors={this.props.progressGradient}
-                style={styles.gradientSize}
-                start={{x: 0, y: 0}}
-                end={{x: 1, y: 0}}>
-                <TouchableOpacity onPress={this.tabProgress}>
-                  <Text style={[styles.tabText, this.props.progressTextColor]}>
-                    Học tập
-                  </Text>
-                </TouchableOpacity>
-              </LinearGradient>
-              <LinearGradient
-                colors={this.props.historyCollectMoneyGradient}
-                style={styles.gradientSize}
-                start={{x: 0, y: 0}}
-                end={{x: 1, y: 0}}>
-                <TouchableOpacity onPress={this.tabHistoryCollectMoney}>
-                  <Text
-                    style={[
-                      styles.tabText,
-                      this.props.historyCollectMoneyTextColor,
-                    ]}>
-                    Nộp tiền
-                  </Text>
-                </TouchableOpacity>
-              </LinearGradient>
+    if (!this.props.isLoadingStudent) {
+      let name = this.props.student.name;
+      let phone = this.props.student.phone;
+      let email = this.props.student.email;
+      let avatar_url = this.props.student.avatar_url;
+      return (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={{flex: 1, marginTop: getStatusBarHeight() + 10}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginVertical: 5,
+            }}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Icon
+                name={'chevron-left'}
+                size={33}
+                color={'black'}
+                onPress={() => this.props.navigation.goBack()}
+              />
+              {!isEmptyInput(avatar_url) ? (
+                <Image source={{uri: avatar_url}} style={styles.ava} />
+              ) : (
+                <Image
+                  source={require('../../assets/img/icons8-male-user-96.png')}
+                  style={styles.ava}
+                />
+              )}
+              <Text style={styles.name}>{getShortName(name)}</Text>
             </View>
-          </ScrollView>
-        </View>
-        <View style={styles.essentialContainer}>
-          <View style={styles.starContainer}>
-            <Image
-              source={require('../../assets/img/icons8-star-90.png')}
-              style={{height: 18, width: 18}}
+            <View style={styles.actionContainer}>
+              <TouchableOpacity
+                style={styles.btnContainer}
+                onPress={() =>
+                  this.props.navigation.navigate('InfoStudentDetails')
+                }>
+                <Image
+                  source={require('../../assets/img/icons8-info_filled.png')}
+                  style={styles.icon}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={{height: 50}}>
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}>
+              <View style={styles.tabContainer}>
+                <LinearGradient
+                  colors={this.props.registersGradient}
+                  style={styles.gradientSize}
+                  start={{x: 0, y: 0}}
+                  end={{x: 1, y: 0}}>
+                  <TouchableOpacity onPress={this.tabRegisters}>
+                    <Text
+                      style={[styles.tabText, this.props.registersTextColor]}>
+                      Đăng ký
+                    </Text>
+                  </TouchableOpacity>
+                </LinearGradient>
+                <LinearGradient
+                  colors={this.props.historyCallsGradient}
+                  style={styles.gradientSize}
+                  start={{x: 0, y: 0}}
+                  end={{x: 1, y: 0}}>
+                  <TouchableOpacity onPress={this.tabHistoryCalls}>
+                    <Text
+                      style={[
+                        styles.tabText,
+                        this.props.historyCallsTextColor,
+                      ]}>
+                      Cuộc gọi
+                    </Text>
+                  </TouchableOpacity>
+                </LinearGradient>
+                <LinearGradient
+                  colors={this.props.progressGradient}
+                  style={styles.gradientSize}
+                  start={{x: 0, y: 0}}
+                  end={{x: 1, y: 0}}>
+                  <TouchableOpacity onPress={this.tabProgress}>
+                    <Text
+                      style={[styles.tabText, this.props.progressTextColor]}>
+                      Học tập
+                    </Text>
+                  </TouchableOpacity>
+                </LinearGradient>
+                <LinearGradient
+                  colors={this.props.historyCollectMoneyGradient}
+                  style={styles.gradientSize}
+                  start={{x: 0, y: 0}}
+                  end={{x: 1, y: 0}}>
+                  <TouchableOpacity onPress={this.tabHistoryCollectMoney}>
+                    <Text
+                      style={[
+                        styles.tabText,
+                        this.props.historyCollectMoneyTextColor,
+                      ]}>
+                      Nộp tiền
+                    </Text>
+                  </TouchableOpacity>
+                </LinearGradient>
+              </View>
+            </ScrollView>
+          </View>
+          <View style={styles.essentialContainer}>
+            <View style={styles.starContainer}>
+              <Image
+                source={require('../../assets/img/icons8-star-90.png')}
+                style={{height: 18, width: 18}}
+              />
+            </View>
+            <TouchableOpacity
+              onPress={() => {
+                Linking.openURL(`tel:${phone}`);
+                this.toggleCallModal();
+              }}>
+              <View style={[styles.essentialButton, {marginLeft: 15}]}>
+                <Text style={{fontSize: 16}}>Gọi điện</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                this.props.navigation.navigate('SaveRegister', {
+                  name: name,
+                  phone: phone,
+                  email: email,
+                  isSubScreen: false,
+                })
+              }>
+              <View style={[styles.essentialButton, {marginLeft: 10}]}>
+                <Text style={{fontSize: 16}}>Đăng ký</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View style={{flex: 1}}>{this.props.tabComponent}</View>
+          <CallRegisterModal
+            isVisible={this.state.callModalVisible}
+            onSwipeComplete={this.toggleCallModal}
+            imageSource={avatar_url}
+            email={email}
+            phone={phone}
+            changeCallStatus={this.props.changeCallStatus}
+            student_id={this.props.student_id}
+            token={this.props.token}
+            errorChangeCallStatus={this.props.errorChangeCallStatus}
+          />
+        </ScrollView>
+      );
+    } else {
+      return (
+        <View style={{flex: 1}}>
+          <View style={styles.container}>
+            <Spinkit
+              isVisible
+              color={theme.mainColor}
+              type="Wave"
+              size={width / 8}
             />
           </View>
-          <TouchableOpacity
-            onPress={() => {
-              Linking.openURL(`tel:${phone}`);
-              this.toggleCallModal();
-            }}>
-            <View style={[styles.essentialButton, {marginLeft: 15}]}>
-              <Text style={{fontSize: 16}}>Gọi điện</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() =>
-              this.props.navigation.navigate('SaveRegister', {
-                name: name,
-                phone: phone,
-                email: email,
-                isSubScreen: false,
-              })
-            }>
-            <View style={[styles.essentialButton, {marginLeft: 10}]}>
-              <Text style={{fontSize: 16}}>Đăng ký</Text>
-            </View>
-          </TouchableOpacity>
         </View>
-        <View style={{flex: 1}}>{this.props.tabComponent}</View>
-        <CallRegisterModal
-          isVisible={this.state.callModalVisible}
-          onSwipeComplete={this.toggleCallModal}
-          imageSource={avatar_url}
-          email={email}
-          phone={phone}
-          changeCallStatus={this.props.changeCallStatus}
-          student_id={this.props.student_id}
-          token={this.props.token}
-          errorChangeCallStatus={this.props.errorChangeCallStatus}
-        />
-      </ScrollView>
-    );
+      );
+    }
   }
 }
 
@@ -182,6 +249,37 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 18,
     borderRadius: 8,
+  },
+  ava: {
+    width: 35,
+    height: 35,
+    borderRadius: 18,
+    marginLeft: 5,
+  },
+  actionContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 20,
+  },
+  btnContainer: {
+    padding: 8,
+    backgroundColor: '#F6F6F6',
+    marginLeft: 10,
+    borderRadius: 18,
+  },
+  icon: {
+    width: 18,
+    height: 18,
+  },
+  name: {
+    fontWeight: '600',
+    fontSize: 23,
+    marginLeft: 10,
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

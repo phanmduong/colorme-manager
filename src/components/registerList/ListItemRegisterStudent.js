@@ -222,7 +222,6 @@ class ListItemStudent extends React.Component {
 
   render() {
     let studentId = this.props.studentId;
-    let {name, avatar_url, email, phone} = this.props;
     if (Platform.OS === 'ios') {
       return (
         <View>
@@ -230,10 +229,7 @@ class ListItemStudent extends React.Component {
             onPress={() => {
               this.props.setStudentId(studentId);
               this.props.navigation.navigate('InfoStudent', {
-                name: name,
-                email: email,
-                phone: phone,
-                avatar_url: avatar_url,
+                studentId: studentId,
               });
             }}>
             <View style={styles.containerAll}>{this.content()}</View>
@@ -247,10 +243,7 @@ class ListItemStudent extends React.Component {
             onPress={() => {
               this.props.setStudentId(studentId);
               this.props.navigation.navigate('InfoStudent', {
-                name: name,
-                email: email,
-                phone: phone,
-                avatar_url: avatar_url,
+                studentId: studentId,
               });
             }}>
             <View style={styles.containerAll}>{this.content()}</View>

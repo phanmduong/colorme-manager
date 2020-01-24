@@ -1,6 +1,7 @@
 import HistoryAttendanceTeachingContainer from '../containers/historyAttendanceTeaching/HistoryAttendanceTeachingContainer';
 import React from 'react';
 import InfoStudentRegistersContainer from '../containers/infoStudent/InfoStudentRegistersContainer';
+import moment from "moment";
 /**
  * Created by phanmduong on 4/5/17.
  */
@@ -340,5 +341,17 @@ export default {
       },
     },
     tabComponent: <InfoStudentRegistersContainer />,
+  },
+  task: {
+    selectedDate: moment(new Date()).format('YYYY-MM-DD'),
+    taskAnalytics: [],
+    isLoadingTaskAnalytics: false,
+    errorLoadingTaskAnalytics: false,
+    taskView: [],
+    isLoadingTaskView: false,
+    errorLoadingTaskView: false,
+    employees: [],
+    isLoadingTaskEmployees: false,
+    errorLoadingTaskEmployees: false,
   },
 };

@@ -4,46 +4,16 @@ import * as infoStudentTabActions from '../actions/infoStudentTabActions';
 import * as infoStudentActions from '../actions/infoStudentActions';
 import InfoStudentComponent from '../components/InfoStudentComponent';
 import {bindActionCreators} from 'redux';
-import {View, Text, Image, TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {getShortName} from '../helper';
 
 class InfoStudentContainer extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
 
-  static navigationOptions = ({navigation}) => ({
-    headerLeft: (
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Icon
-          name={'chevron-left'}
-          size={33}
-          color={'black'}
-          onPress={() => navigation.goBack()}
-        />
-        <Image
-          source={{uri: navigation.getParam('avatar_url')}}
-          style={styles.ava}
-        />
-        <Text style={styles.name}>
-          {getShortName(navigation.getParam('name'))}
-        </Text>
-      </View>
-    ),
-    headerRight: (
-      <View style={styles.actionContainer}>
-        <TouchableOpacity
-          style={styles.btnContainer}
-          onPress={() => navigation.navigate('InfoStudentDetails')}>
-          <Image
-            source={require('../../assets/img/icons8-info_filled.png')}
-            style={styles.icon}
-          />
-        </TouchableOpacity>
-      </View>
-    ),
-  });
+  componentDidMount(): void {
+    let studentId = this.props.navigation.getParam('studentId');
+    this.props.infoStudentActions.loadStudent(studentId);
+  }
 
   setStudentId = studentId => {
     this.props.infoStudentActions.setStudentId(studentId);
@@ -103,6 +73,8 @@ class InfoStudentContainer extends React.Component {
         tabComponent={this.props.tabComponent}
         token={this.props.token}
         student_id={this.props.student_id}
+        student={this.props.student}
+        isLoadingStudent={this.props.isLoadingStudent}
         changeCallStatus={this.changeCallStatus}
         errorChangeCallStatus={this.props.errorChangeCallStatus}
         tabRegisters={() => {
@@ -122,35 +94,6 @@ class InfoStudentContainer extends React.Component {
   }
 }
 
-const styles = {
-  ava: {
-    width: 35,
-    height: 35,
-    borderRadius: 18,
-    marginLeft: 5,
-  },
-  actionContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginRight: 20,
-  },
-  btnContainer: {
-    padding: 8,
-    backgroundColor: '#F6F6F6',
-    marginLeft: 10,
-    borderRadius: 18,
-  },
-  icon: {
-    width: 18,
-    height: 18,
-  },
-  name: {
-    fontWeight: '600',
-    fontSize: 23,
-    marginLeft: 10,
-  },
-};
-
 function mapStateToProps(state) {
   return {
     token: state.login.token,
@@ -161,6 +104,8 @@ function mapStateToProps(state) {
     historyCollectMoney: state.infoStudentTab.historyCollectMoney,
     tabComponent: state.infoStudentTab.tabComponent,
     errorChangeCallStatus: state.infoStudent.errorChangeCallStatus,
+    student: state.infoStudent.student,
+    isLoadingStudent: state.infoStudent.isLoadingStudent,
   };
 }
 

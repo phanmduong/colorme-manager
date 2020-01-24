@@ -35,6 +35,7 @@ import {makeupClassReducer} from './makeupClassReducer';
 import {saveRegisterReducer} from './saveRegisterReducer';
 import {infoStudentReducer} from "./InfoStudentReducer";
 import {infoStudentTabReducer} from "./infoStudentTabReducer";
+import taskReducer from "./taskReducer";
 
 const appReducer = combineReducers({
   login: loginReducer,
@@ -69,6 +70,7 @@ const appReducer = combineReducers({
   saveRegister: saveRegisterReducer,
   infoStudent: infoStudentReducer,
   infoStudentTab: infoStudentTabReducer,
+  task: taskReducer,
 });
 
 const rootReducer = (state, action) => {

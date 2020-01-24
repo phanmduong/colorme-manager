@@ -52,6 +52,7 @@ import InfoStudentContainer from '../containers/InfoStudentContainer';
 import InfoStudentRegistersContainer from '../containers/infoStudent/InfoStudentRegistersContainer';
 import InfoStudentDetailsContainer from '../containers/infoStudent/InfoStudentDetailsContainer';
 import InfoStudentEditProfileContainer from '../containers/infoStudent/InfoStudentEditProfileContainer';
+import TaskContainer from '../containers/TaskContainer';
 
 const navigationOptionsDefault = {
   defaultNavigationOptions: {
@@ -279,6 +280,7 @@ const TabDashboard = createStackNavigator(
     InfoStudent: {
       screen: InfoStudentContainer,
       navigationOptions: () => ({
+        header: null,
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},
       }),
@@ -314,6 +316,14 @@ const TabDashboard = createStackNavigator(
         headerTitleStyle: {color: 'black'},
       }),
     },
+    Task: {
+      screen: TaskContainer,
+      navigationOptions: () => ({
+        header: null,
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
   },
   {
     defaultNavigationOptions: {
@@ -345,6 +355,7 @@ const TabRegisterList = createStackNavigator(
     InfoStudent: {
       screen: InfoStudentContainer,
       navigationOptions: () => ({
+        header: null,
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},
       }),

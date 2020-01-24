@@ -131,6 +131,7 @@ class ClassComponent extends React.Component {
                       )}
                     </View>
                     <Text note>{item.study_time}</Text>
+                    <Text note>{item.address}</Text>
                     {item.lesson[0] && (
                       <Text note style={{color: theme.colorSubTitle}}>
                         {item.lesson[0].number_student_attendance}/

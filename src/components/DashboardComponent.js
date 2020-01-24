@@ -211,7 +211,6 @@ class DashboardComponent extends React.Component {
                   this.props.navigation.navigate('MoneyTransfer');
                 }}
               />
-              {/*<View style={{width: width / 3}} />*/}
               <CircleTab
                 iconImage={require('../../assets/img/icons8-todo_list.png')}
                 title={'Việc cần làm'}

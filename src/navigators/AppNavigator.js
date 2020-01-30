@@ -10,6 +10,7 @@ import {
 } from 'react-navigation';
 import {routeConfigs, navigationOptions} from './AppRouteConfigs';
 import material from '../native-base-theme/variables/material';
+import {connect} from 'react-redux';
 
 const MainNavigation = createSwitchNavigator(routeConfigs, navigationOptions);
 
@@ -41,23 +42,14 @@ class AppWithNavigationState extends React.Component {
     this.handleBack = this.handleBack.bind(this);
   }
 
-  shouldCloseApp(nav) {
-    return nav.index === 0;
-  }
-
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBack);
   }
 
   handleBack() {
     const {dispatch, nav} = this.props;
-    if (this.shouldCloseApp(nav)) {
-      return false;
-    }
-    dispatch({
-      type: 'Navigation/BACK',
-    });
-    return true;
+    dispatch(NavigationActions.back());
+    return nav !== this.props.nav;
   }
 
   componentWillUnmount() {
@@ -77,4 +69,8 @@ class AppWithNavigationState extends React.Component {
   }
 }
 
-export default AppWithNavigationState;
+const mapStateToProps = (state: RootState) => ({
+  nav: state.nav,
+});
+
+export default connect(mapStateToProps)(AppWithNavigationState);

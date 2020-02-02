@@ -12,7 +12,7 @@ import {
 import Modal from 'react-native-modal';
 var {width, height} = Dimensions.get('window');
 import theme from '../../styles';
-import {dotNumber} from "../../helper";
+import {dotNumber, isEmptyInput} from '../../helper';
 
 const CHUYEN_KHOAN = 'internet_banking';
 const TIEN_MAT = 'cash';
@@ -21,7 +21,7 @@ class SubmitMoneyModal extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      money: '0',
+      money: '',
       note: '',
       code:
         this.props.class.type === 'active'
@@ -33,7 +33,7 @@ class SubmitMoneyModal extends React.Component {
 
   reset = () => {
     this.setState({
-      money: '0',
+      money: '',
       note: '',
       code: this.props.code,
       payment_method: CHUYEN_KHOAN,
@@ -41,23 +41,27 @@ class SubmitMoneyModal extends React.Component {
   };
 
   submitMoney = () => {
-    this.props.submitMoney(
-      this.props.register_id,
-      this.state.money,
-      this.state.code,
-      this.state.note,
-      this.state.payment_method,
-      this.props.token,
-    );
-    this.reset();
-    this.props.onSwipeComplete();
-    setTimeout(() => {
-      if (this.props.errorSubmitMoney) {
-        Alert.alert('Thông báo', 'Có lỗi xảy ra');
-      } else {
-        Alert.alert('Thông báo', 'Ghi nhận thành công');
-      }
-    }, 600);
+    if (!isEmptyInput(this.state.money) && !isEmptyInput(this.state.code)) {
+      this.props.submitMoney(
+        this.props.register_id,
+        this.state.money,
+        this.state.code,
+        this.state.note,
+        this.state.payment_method,
+        this.props.token,
+      );
+      this.reset();
+      this.props.onSwipeComplete();
+      setTimeout(() => {
+        if (this.props.errorSubmitMoney) {
+          Alert.alert('Thông báo', 'Có lỗi xảy ra');
+        } else {
+          Alert.alert('Thông báo', 'Ghi nhận thành công');
+        }
+      }, 600);
+    } else {
+      Alert.alert('Thông báo', 'Bạn cần nhập đủ thông tin bắt buộc');
+    }
   };
 
   render() {
@@ -105,6 +109,7 @@ class SubmitMoneyModal extends React.Component {
                 <TextInput
                   {...this.props}
                   keyboardType={'number-pad'}
+                  autoFocus={true}
                   value={dotNumber(this.state.money)}
                   ref={'money'}
                   onChangeText={data => this.setState({money: data})}

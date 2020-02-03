@@ -28,7 +28,7 @@ class ListItemStaffMoneyTransfer extends React.Component {
   }
 
   content() {
-    const {name, avatar, email, phone} = this.props;
+    const {name, avatar, email, phone, role, money} = this.props;
     return (
       <View style={styles.container}>
         <Thumbnail small source={{uri: avatar}} />
@@ -39,18 +39,14 @@ class ListItemStaffMoneyTransfer extends React.Component {
             </View>
             <View style={styles.containerSubTitle}>
               <Text style={styles.subTitle}>{email}</Text>
-              {isEmptyInput(this.props.role) ? (
+              {role !== 2 ? (
                 <Call
                   url={'tel:' + phone}
                   phone={phone}
                   extraPadding={{paddingTop: 5}}
                 />
-              ) : this.props.role === 2 ? (
-                <Text style={styles.subTitle}>
-                  Số tiền: {dotNumber(this.props.money)} vnđ
-                </Text>
               ) : (
-                <Text style={styles.subTitle}>Số tiền: N/A </Text>
+                <Text style={styles.subTitle}>{dotNumber(money)} vnđ</Text>
               )}
             </View>
           </View>

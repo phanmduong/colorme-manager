@@ -53,22 +53,12 @@ class SearchStaffMoneyTransferComponent extends React.Component {
           </View>
         );
       } else {
-        let currentUser = {
-          id: this.props.user.id,
-          avatar_url: this.props.user.avatar_url,
-          name: this.props.user.name,
-          email: this.props.user.email,
-          phone: this.props.user.phone,
-          role: this.props.user.role,
-          money: this.props.user.money,
-        };
-        let staffList = [currentUser].concat(this.props.staffList);
         return (
           <List
             style={styles.list}
             onEndReached={this.props.loadDataStaffList}
             onEndReachedThreshold={height / 2}
-            dataArray={staffList}
+            dataArray={this.props.staffList}
             renderRow={(item, sectionID, rowID) => {
               return (
                 <ListItemStaffMoneyTransfer
@@ -78,7 +68,7 @@ class SearchStaffMoneyTransferComponent extends React.Component {
                   avatar={item.avatar_url}
                   email={item.email}
                   phone={item.phone}
-                  role={item.role}
+                  role={this.props.user.role}
                   money={item.money}
                   isTransaction={
                     item.isTransaction || this.props.user.status == 2

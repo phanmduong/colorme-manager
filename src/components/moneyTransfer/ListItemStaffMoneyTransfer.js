@@ -9,6 +9,7 @@ import {View, Text, Thumbnail, Icon, List, Button} from 'native-base';
 import theme from '../../styles';
 import Call from '../common/Call';
 import Spinkit from 'react-native-spinkit';
+import {dotNumber, isEmptyInput} from '../../helper';
 
 var {height, width} = Dimensions.get('window');
 var maxWidthProcess = width / 2;
@@ -38,11 +39,19 @@ class ListItemStaffMoneyTransfer extends React.Component {
             </View>
             <View style={styles.containerSubTitle}>
               <Text style={styles.subTitle}>{email}</Text>
-              <Call
-                url={'tel:' + phone}
-                phone={phone}
-                extraPadding={{paddingTop: 5}}
-              />
+              {isEmptyInput(this.props.role) ? (
+                <Call
+                  url={'tel:' + phone}
+                  phone={phone}
+                  extraPadding={{paddingTop: 5}}
+                />
+              ) : this.props.role === 2 ? (
+                <Text style={styles.subTitle}>
+                  Số tiền: {dotNumber(this.props.money)} vnđ
+                </Text>
+              ) : (
+                <Text style={styles.subTitle}>Số tiền: N/A </Text>
+              )}
             </View>
           </View>
           <TouchableOpacity

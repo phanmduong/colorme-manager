@@ -31,9 +31,9 @@ class DashboardComponent extends React.Component {
   }
 
   handleRefresh = () => {
+    this.props.store.refreshMeetingDetail();
     this.props.refreshNotifications();
     this.props.refreshTasks();
-    this.props.store.refreshMeetingDetail();
   };
 
   async clearAll(navigation) {
@@ -59,6 +59,7 @@ class DashboardComponent extends React.Component {
 
   render() {
     const {refreshing} = this.props.store;
+    console.log(refreshing);
     const {isRefreshingNotifications, isLoadingTaskView} = this.props;
     return (
       <View

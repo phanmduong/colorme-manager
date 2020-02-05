@@ -16,7 +16,7 @@ class NotificationContainer extends React.Component {
   };
 
   componentWillUnmount = () => {
-    this.props.notificationActions.loadNotifications(1, this.props.token);
+    this.loadNotifications(1);
   };
 
   loadNotifications = page => {

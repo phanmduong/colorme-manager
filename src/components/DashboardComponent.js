@@ -21,7 +21,9 @@ import * as alert from '../constants/alert';
 import {getStatusBarHeight, isIphoneX} from 'react-native-iphone-x-helper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
+import {observer} from 'mobx-react';
 
+@observer
 class DashboardComponent extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -72,7 +74,7 @@ class DashboardComponent extends React.Component {
           refreshControl={
             <RefreshControl
               refreshing={
-                isRefreshingNotifications || isLoadingTaskView
+                refreshing || isRefreshingNotifications || isLoadingTaskView
               }
               onRefresh={this.handleRefresh}
               titleColor={theme.mainColor}

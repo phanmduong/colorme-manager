@@ -30,13 +30,23 @@ class DashboardContainer extends React.Component {
     );
   };
 
+  refreshNotifications = () => {
+    this.props.notificationActions.refreshNotifications(1, this.props.token);
+  };
+
   loadNotifications = () => {
     this.props.notificationActions.loadNotifications(1, this.props.token);
   };
 
   render() {
-    console.log(this.props.unread);
-    return <DashboardComponent store={this.store} {...this.props} />;
+    return (
+      <DashboardComponent
+        store={this.store}
+        {...this.props}
+        refreshNotifications={this.refreshNotifications}
+        refreshTasks={this.loadTasks}
+      />
+    );
   }
 }
 
@@ -52,6 +62,11 @@ function mapStateToProps(state) {
     unread: state.notification.unread,
     isLoadingNotifications: state.notification.isLoadingNotifications,
     errorLoadingNotifications: state.notification.errorLoadingNotifications,
+    isRefreshingNotifications: state.notification.isRefreshingNotifications,
+    errorRefreshingNotifications:
+      state.notification.errorRefreshingNotifications,
+    isReadingNotifications: state.notification.isReadingNotifications,
+    errorReadingNotifications: state.notification.errorReadingNotifications,
   };
 }
 

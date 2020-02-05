@@ -53,6 +53,7 @@ import InfoStudentRegistersContainer from '../containers/infoStudent/InfoStudent
 import InfoStudentDetailsContainer from '../containers/infoStudent/InfoStudentDetailsContainer';
 import InfoStudentEditProfileContainer from '../containers/infoStudent/InfoStudentEditProfileContainer';
 import TaskContainer from '../containers/TaskContainer';
+import NotificationContainer from '../containers/NotificationContainer';
 
 const navigationOptionsDefault = {
   defaultNavigationOptions: {
@@ -320,6 +321,13 @@ const TabDashboard = createStackNavigator(
       screen: TaskContainer,
       navigationOptions: () => ({
         header: null,
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    Notification: {
+      screen: NotificationContainer,
+      navigationOptions: () => ({
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},
       }),

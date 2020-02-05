@@ -359,5 +359,11 @@ export default {
     isLoadingNotifications: false,
     errorLoadingNotifications: false,
     unread: -1,
+    isLoadingMoreNotifications: false,
+    errorLoadingMoreNotifications: false,
+    isRefreshingNotifications: false,
+    errorRefreshingNotifications: false,
+    isReadingNotifications: false,
+    errorReadingNotifications: false,
   },
 };

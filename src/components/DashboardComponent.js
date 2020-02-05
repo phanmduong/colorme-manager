@@ -31,6 +31,8 @@ class DashboardComponent extends React.Component {
   }
 
   handleRefresh = () => {
+    this.props.refreshNotifications();
+    this.props.refreshTasks();
     this.props.store.refreshMeetingDetail();
   };
 
@@ -57,6 +59,7 @@ class DashboardComponent extends React.Component {
 
   render() {
     const {refreshing} = this.props.store;
+    const {isRefreshingNotifications, isLoadingTaskView} = this.props;
     return (
       <View
         style={
@@ -67,7 +70,9 @@ class DashboardComponent extends React.Component {
         <ScrollView
           refreshControl={
             <RefreshControl
-              refreshing={refreshing}
+              refreshing={
+                refreshing || isRefreshingNotifications || isLoadingTaskView
+              }
               onRefresh={this.handleRefresh}
               titleColor={theme.mainColor}
               title="Đang tải..."
@@ -96,7 +101,7 @@ class DashboardComponent extends React.Component {
                       color={'black'}
                     />
                   </View>
-                  {this.getTotalNotCompletedTasks() !== 0 ? (
+                  {this.getTotalNotCompletedTasks() > 0 ? (
                     <View style={styles.notificationBadge}>
                       <Text style={styles.notificationNumber}>
                         {this.getTotalNotCompletedTasks()}
@@ -104,11 +109,14 @@ class DashboardComponent extends React.Component {
                     </View>
                   ) : null}
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.props.navigation.navigate('Notification')
+                  }>
                   <View style={styles.headerIconContainer}>
                     <MatIcon name={'notifications'} size={20} color={'black'} />
                   </View>
-                  {this.props.unread !== 0 ? (
+                  {this.props.unread > 0 ? (
                     <View style={styles.notificationBadge}>
                       <Text style={styles.notificationNumber}>
                         {this.props.unread}

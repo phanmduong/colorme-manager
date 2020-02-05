@@ -72,7 +72,7 @@ class DashboardComponent extends React.Component {
           refreshControl={
             <RefreshControl
               refreshing={
-                refreshing || isRefreshingNotifications || isLoadingTaskView
+                isRefreshingNotifications || isLoadingTaskView
               }
               onRefresh={this.handleRefresh}
               titleColor={theme.mainColor}

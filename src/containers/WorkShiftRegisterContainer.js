@@ -91,8 +91,6 @@ class WorkShiftRegisterContainer extends React.Component {
   };
 
   render() {
-    console.log('loading work shift: ' + this.props.isLoadingWorkShiftRegister);
-    console.log('error work shift: ' + this.props.errorWorkShiftRegister);
     return (
       <WorkShiftRegisterComponent
         workShiftRegisterData={this.props.workShiftRegisterData}

@@ -20,6 +20,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import * as alert from '../constants/alert';
 import {getStatusBarHeight, isIphoneX} from 'react-native-iphone-x-helper';
 import Icon from 'react-native-vector-icons/Ionicons';
+import MatIcon from 'react-native-vector-icons/MaterialIcons';
 
 class DashboardComponent extends React.Component {
   constructor(props, context) {
@@ -47,9 +48,15 @@ class DashboardComponent extends React.Component {
     this.setState({modalVisible: !this.state.modalVisible});
   };
 
+  getTotalNotCompletedTasks = () => {
+    let totalNotCompleted = this.props.taskView.filter(
+      task => task.status === 0,
+    );
+    return totalNotCompleted.length;
+  };
+
   render() {
     const {refreshing} = this.props.store;
-    const {navigation} = this.props;
     return (
       <View
         style={
@@ -79,12 +86,37 @@ class DashboardComponent extends React.Component {
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>Trang chủ</Text>
               </View>
-              <TouchableOpacity onPress={() => this.clearAll(navigation)}>
-                <Image
-                  source={require('../../assets/img/icons8-logout-rounded-up-100.png')}
-                  style={{width: 20, height: 20}}
-                />
-              </TouchableOpacity>
+              <View style={{flexDirection: 'row'}}>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate('Task')}>
+                  <View style={[styles.headerIconContainer, {marginRight: 10}]}>
+                    <MatIcon
+                      name={'chrome-reader-mode'}
+                      size={20}
+                      color={'black'}
+                    />
+                  </View>
+                  {this.getTotalNotCompletedTasks() !== 0 ? (
+                    <View style={styles.notificationBadge}>
+                      <Text style={styles.notificationNumber}>
+                        {this.getTotalNotCompletedTasks()}
+                      </Text>
+                    </View>
+                  ) : null}
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <View style={styles.headerIconContainer}>
+                    <MatIcon name={'notifications'} size={20} color={'black'} />
+                  </View>
+                  {this.props.unread !== 0 ? (
+                    <View style={styles.notificationBadge}>
+                      <Text style={styles.notificationNumber}>
+                        {this.props.unread}
+                      </Text>
+                    </View>
+                  ) : null}
+                </TouchableOpacity>
+              </View>
             </View>
             <TouchableOpacity
               onPress={() =>
@@ -211,13 +243,7 @@ class DashboardComponent extends React.Component {
                   this.props.navigation.navigate('MoneyTransfer');
                 }}
               />
-              <CircleTab
-                iconImage={require('../../assets/img/icons8-todo_list.png')}
-                title={'Việc cần làm'}
-                onPress={() => {
-                  this.props.navigation.navigate('Task');
-                }}
-              />
+              <View style={{width: width / 3}} />
             </View>
             <MeetingComponent
               store={this.props.store}
@@ -317,6 +343,25 @@ const styles = {
     width: 35,
     height: 35,
     borderRadius: 18,
+  },
+  notificationBadge: {
+    position: 'absolute',
+    top: -8,
+    left: 20,
+    paddingHorizontal: 7,
+    paddingVertical: 3,
+    borderRadius: 20,
+    backgroundColor: theme.secondColor,
+  },
+  notificationNumber: {
+    fontSize: 9,
+    color: 'white',
+    fontWeight: '600',
+  },
+  headerIconContainer: {
+    padding: 8,
+    backgroundColor: '#f6f6f6',
+    borderRadius: 20,
   },
 };
 

@@ -1,7 +1,7 @@
 import HistoryAttendanceTeachingContainer from '../containers/historyAttendanceTeaching/HistoryAttendanceTeachingContainer';
 import React from 'react';
 import InfoStudentRegistersContainer from '../containers/infoStudent/InfoStudentRegistersContainer';
-import moment from "moment";
+import moment from 'moment';
 /**
  * Created by phanmduong on 4/5/17.
  */
@@ -353,5 +353,11 @@ export default {
     employees: [],
     isLoadingTaskEmployees: false,
     errorLoadingTaskEmployees: false,
+  },
+  notification: {
+    notifications: [],
+    isLoadingNotifications: false,
+    errorLoadingNotifications: false,
+    unread: -1,
   },
 };

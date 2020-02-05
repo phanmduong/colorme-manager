@@ -61,7 +61,6 @@ class DashboardComponent extends React.Component {
 
   render() {
     const {refreshing} = this.props.store;
-    console.log(refreshing);
     const {isRefreshingNotifications, isLoadingTaskView} = this.props;
     return (
       <View

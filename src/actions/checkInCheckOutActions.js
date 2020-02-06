@@ -11,7 +11,7 @@ import Geolocation from 'react-native-geolocation-service';
 
 let watchID;
 
-const ignoreDevices = ['104cd46e55b546c6', '40f8929c0eb03dfe'];
+const ignoreDevices = ['104cd46e55b546c6', '40f8929c0eb03dfe','44757c666c8d846b'];
 const LONGITUDE = 105.801194;
 const LATITUDE = 21.022909;
 

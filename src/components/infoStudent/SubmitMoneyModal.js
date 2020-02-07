@@ -70,6 +70,7 @@ class SubmitMoneyModal extends React.Component {
         isVisible={this.props.isVisible}
         avoidKeyboard={true}
         onBackdropPress={this.props.onSwipeComplete}
+        onBackButtonPress={this.props.onSwipeComplete}
         style={{margin: 0, justifyContent: 'flex-end'}}>
         <View style={styles.modal}>
           <ScrollView showsVerticalScrollIndicator={false}>

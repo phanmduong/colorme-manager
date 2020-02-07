@@ -86,6 +86,7 @@ class CallRegisterModal extends React.Component {
       <Modal
         isVisible={this.props.isVisible}
         onBackdropPress={this.props.onSwipeComplete}
+        onBackButtonPress={this.props.onSwipeComplete}
         style={{margin: 0, justifyContent: 'flex-end'}}>
         <View style={styles.modal}>
           <ScrollView showsVerticalScrollIndicator={false}>

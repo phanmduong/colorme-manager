@@ -35,6 +35,7 @@ class ModalAbsentReason extends React.Component {
     return (
       <Modal
         isVisible={this.props.isVisible}
+        onBackButtonPress={this.props.closeModal}
         animationIn={'slideInLeft'}
         animationOut={'slideOutLeft'}>
         <View style={styles.content}>

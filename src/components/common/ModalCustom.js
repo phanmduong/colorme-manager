@@ -21,7 +21,10 @@ class ModalCustom extends React.Component {
 
   render() {
     return (
-      <Modal {...this.props} style={style.modal}>
+      <Modal
+        {...this.props}
+        style={style.modal}
+        onBackButtonPress={this.props.closeModal}>
         <View style={style.content}>{this.props.children}</View>
         <TouchableWithoutFeedback onPress={() => this.props.closeModal()}>
           <View style={style.closeView}>

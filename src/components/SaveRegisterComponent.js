@@ -531,6 +531,12 @@ class SaveRegisterComponent extends React.Component {
     return {id: this.props.user.id, name: this.props.user.name};
   };
 
+  getSalerData = salerList => {
+    let emptySaler = {id: '', name: ''};
+    let data = [emptySaler].concat(salerList);
+    return data;
+  };
+
   toggleExpand = () => {
     this.setState({
       expanded: !this.state.expanded,
@@ -806,7 +812,9 @@ class SaveRegisterComponent extends React.Component {
               <View style={{marginTop: 30}}>
                 <Text style={styles.titleForm}>Chọn saler</Text>
                 <CustomPicker
-                  options={this.getSearchedResults(this.props.salers)}
+                  options={this.getSearchedResults(
+                    this.getSalerData(this.props.salers),
+                  )}
                   defaultValue={this.getDefaultSaler()}
                   getLabel={item => item.name}
                   placeholder={'Chọn saler'}

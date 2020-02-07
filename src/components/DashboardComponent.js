@@ -16,8 +16,6 @@ import CardMenu from '../containers/dashboard/CardMenu';
 import CircleTab from '../containers/dashboard/CircleTab';
 import MeetingComponent from '../containers/meeting/MeetingComponent';
 import theme from '../styles';
-import AsyncStorage from '@react-native-community/async-storage';
-import * as alert from '../constants/alert';
 import {getStatusBarHeight, isIphoneX} from 'react-native-iphone-x-helper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
@@ -27,29 +25,12 @@ import {observer} from 'mobx-react';
 class DashboardComponent extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.state = {
-      modalVisible: false,
-    };
   }
 
   handleRefresh = () => {
     this.props.store.refreshMeetingDetail();
     this.props.refreshNotifications();
     this.props.refreshTasks();
-  };
-
-  async clearAll(navigation) {
-    const keys = ['@ColorME:username', '@ColorME:password'];
-    try {
-      await AsyncStorage.multiRemove(keys);
-      navigation.navigate('Login');
-    } catch (error) {
-      alert(error);
-    }
-  }
-
-  toggleModal = () => {
-    this.setState({modalVisible: !this.state.modalVisible});
   };
 
   getTotalNotCompletedTasks = () => {
@@ -85,7 +66,8 @@ class DashboardComponent extends React.Component {
           <View style={styles.container}>
             <View style={styles.headerContainer}>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <TouchableOpacity onPress={() => this.toggleModal()}>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate('Profile')}>
                   <Image
                     source={{uri: this.props.avatar_url}}
                     style={styles.headerAva}

@@ -37,6 +37,7 @@ import {infoStudentReducer} from './InfoStudentReducer';
 import {infoStudentTabReducer} from './infoStudentTabReducer';
 import taskReducer from './taskReducer';
 import notificationReducer from './notificationReducer';
+import profileReducer from "./profileReducer";
 
 const appReducer = combineReducers({
   login: loginReducer,
@@ -73,6 +74,7 @@ const appReducer = combineReducers({
   infoStudentTab: infoStudentTabReducer,
   task: taskReducer,
   notification: notificationReducer,
+  profile: profileReducer,
 });
 
 const rootReducer = (state, action) => {

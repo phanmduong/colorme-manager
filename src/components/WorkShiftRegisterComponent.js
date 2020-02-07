@@ -311,10 +311,13 @@ class WorkShiftRegisterComponent extends React.Component {
               />
             }>
             <View style={styles.headerContainer}>
-              <Image
-                source={{uri: this.props.avatar_url}}
-                style={styles.headerAva}
-              />
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Profile')}>
+                <Image
+                  source={{uri: this.props.avatar_url}}
+                  style={styles.headerAva}
+                />
+              </TouchableOpacity>
               <Text style={styles.headerTitle}>Đăng ký làm việc</Text>
             </View>
             <View style={styles.containerPicker}>

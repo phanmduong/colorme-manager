@@ -50,6 +50,7 @@ class CurrentClassStudyContainer extends React.Component {
         openQrCode={this.openQrCode}
         onReload={this.reloadCurrentClassStudy}
         avatar_url={this.props.avatar_url}
+        {...this.props}
       />
     );
   }

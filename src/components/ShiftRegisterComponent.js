@@ -243,10 +243,13 @@ class ShiftRegisterComponent extends React.Component {
               />
             }>
             <View style={styles.headerContainer}>
-              <Image
-                source={{uri: this.props.user.avatar_url}}
-                style={styles.headerAva}
-              />
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Profile')}>
+                <Image
+                  source={{uri: this.props.user.avatar_url}}
+                  style={styles.headerAva}
+                />
+              </TouchableOpacity>
               <Text style={styles.headerTitle}>Đăng ký lịch trực</Text>
             </View>
             <View style={styles.containerPicker}>

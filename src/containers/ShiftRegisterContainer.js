@@ -172,6 +172,7 @@ class ShiftRegisterContainer extends React.Component {
         onRegister={this.onRegister}
         onUnRegister={this.onUnRegister}
         errorShiftRegister={this.props.errorShiftRegister}
+        {...this.props}
       />
     );
   }

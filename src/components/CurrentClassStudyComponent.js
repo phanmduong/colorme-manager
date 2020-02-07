@@ -33,10 +33,13 @@ class ClassComponent extends React.Component {
 
   headerComponent = () => (
     <View style={styles.headerContainer}>
-      <Image
-        source={{uri: this.props.avatar_url}}
-        style={{width: 35, height: 35, borderRadius: 18}}
-      />
+      <TouchableOpacity
+        onPress={() => this.props.navigation.navigate('Profile')}>
+        <Image
+          source={{uri: this.props.avatar_url}}
+          style={{width: 35, height: 35, borderRadius: 18}}
+        />
+      </TouchableOpacity>
       <Text
         style={{
           color: 'black',
@@ -62,10 +65,13 @@ class ClassComponent extends React.Component {
                 : {flex: 1, marginTop: 10}
             }>
             <View style={styles.headerContainer}>
-              <Image
-                source={{uri: this.props.avatar_url}}
-                style={styles.headerAva}
-              />
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Profile')}>
+                <Image
+                  source={{uri: this.props.avatar_url}}
+                  style={styles.headerAva}
+                />
+              </TouchableOpacity>
               <Text style={styles.headerTitle}>Danh sách lớp học</Text>
             </View>
             <View style={styles.container}>

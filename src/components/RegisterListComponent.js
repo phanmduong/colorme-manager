@@ -115,10 +115,13 @@ class RegisterListComponent extends React.Component {
       <View style={{flex: 1}}>
         {!isSubScreen ? (
           <View style={styles.headerContainer}>
-            <Image
-              source={{uri: this.props.user.avatar_url}}
-              style={styles.headerAva}
-            />
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Profile')}>
+              <Image
+                source={{uri: this.props.user.avatar_url}}
+                style={styles.headerAva}
+              />
+            </TouchableOpacity>
             <Text style={styles.headerTitle}>Học viên</Text>
           </View>
         ) : null}

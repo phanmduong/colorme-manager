@@ -54,6 +54,7 @@ import InfoStudentDetailsContainer from '../containers/infoStudent/InfoStudentDe
 import InfoStudentEditProfileContainer from '../containers/infoStudent/InfoStudentEditProfileContainer';
 import TaskContainer from '../containers/TaskContainer';
 import NotificationContainer from '../containers/NotificationContainer';
+import ProfileContainer from '../containers/ProfileContainer';
 
 const navigationOptionsDefault = {
   defaultNavigationOptions: {
@@ -82,6 +83,13 @@ const TabAttendance = createStackNavigator(
     AttendanceStudent: {
       screen: AttendanceStudentContainer,
     },
+    Profile: {
+      screen: ProfileContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
   },
   navigationOptionsDefault,
 );
@@ -92,6 +100,13 @@ const TabShiftRegister = createStackNavigator(
       screen: ShiftRegisterContainer,
       navigationOptions: () => ({
         header: null,
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    Profile: {
+      screen: ProfileContainer,
+      navigationOptions: () => ({
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},
       }),
@@ -332,6 +347,13 @@ const TabDashboard = createStackNavigator(
         headerTitleStyle: {color: 'black'},
       }),
     },
+    Profile: {
+      screen: ProfileContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
   },
   {
     defaultNavigationOptions: {
@@ -389,6 +411,13 @@ const TabRegisterList = createStackNavigator(
         headerTitleStyle: {color: 'black'},
       }),
     },
+    Profile: {
+      screen: ProfileContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
   },
   navigationOptionsDefault,
 );
@@ -412,6 +441,13 @@ const TabWorkShift = createStackNavigator(
     },
     DetailShifts: {
       screen: DetailShiftsContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    Profile: {
+      screen: ProfileContainer,
       navigationOptions: () => ({
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},

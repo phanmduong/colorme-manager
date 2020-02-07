@@ -366,4 +366,12 @@ export default {
     isReadingNotifications: false,
     errorReadingNotifications: false,
   },
+  profile: {
+    user: {},
+    isLoadingProfile: false,
+    errorLoadingProfile: false,
+    avatar_url: null,
+    isChangingAvatar: false,
+    errorChangingAvatar: false,
+  },
 };

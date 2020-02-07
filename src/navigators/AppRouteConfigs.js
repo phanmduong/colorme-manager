@@ -55,6 +55,7 @@ import InfoStudentEditProfileContainer from '../containers/infoStudent/InfoStude
 import TaskContainer from '../containers/TaskContainer';
 import NotificationContainer from '../containers/NotificationContainer';
 import ProfileContainer from '../containers/ProfileContainer';
+import EditProfileContainer from '../containers/EditProfileContainer';
 
 const navigationOptionsDefault = {
   defaultNavigationOptions: {
@@ -90,6 +91,13 @@ const TabAttendance = createStackNavigator(
         headerTitleStyle: {color: 'black'},
       }),
     },
+    EditProfile: {
+      screen: EditProfileContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
   },
   navigationOptionsDefault,
 );
@@ -106,6 +114,13 @@ const TabShiftRegister = createStackNavigator(
     },
     Profile: {
       screen: ProfileContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    EditProfile: {
+      screen: EditProfileContainer,
       navigationOptions: () => ({
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},
@@ -354,6 +369,13 @@ const TabDashboard = createStackNavigator(
         headerTitleStyle: {color: 'black'},
       }),
     },
+    EditProfile: {
+      screen: EditProfileContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
   },
   {
     defaultNavigationOptions: {
@@ -418,6 +440,13 @@ const TabRegisterList = createStackNavigator(
         headerTitleStyle: {color: 'black'},
       }),
     },
+    EditProfile: {
+      screen: EditProfileContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
   },
   navigationOptionsDefault,
 );
@@ -452,6 +481,13 @@ const TabWorkShift = createStackNavigator(
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},
       }),
+      EditProfile: {
+        screen: EditProfileContainer,
+        navigationOptions: () => ({
+          headerTintColor: 'black',
+          headerTitleStyle: {color: 'black'},
+        }),
+      },
     },
   },
   navigationOptionsDefault,

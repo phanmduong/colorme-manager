@@ -132,7 +132,8 @@ class ProfileComponent extends React.Component {
               flexDirection: 'row',
               marginTop: 25,
             }}>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('EditProfile')}>
               <View style={[styles.editButton, {marginRight: 10}]}>
                 <Text style={{fontSize: 16}}>Chỉnh sửa</Text>
               </View>

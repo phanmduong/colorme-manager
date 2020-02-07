@@ -373,5 +373,7 @@ export default {
     avatar_url: null,
     isChangingAvatar: false,
     errorChangingAvatar: false,
+    isUpdatingProfile: false,
+    errorUpdatingProfile: false,
   },
 };

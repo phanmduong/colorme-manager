@@ -90,3 +90,43 @@ function changeAvatarError() {
     errorChangingAvatar: true,
   };
 }
+
+export function updateProfile(profile, token) {
+  return function(dispatch) {
+    dispatch(beginUpdateProfile());
+    profileApi
+      .updateProfile(profile, token)
+      .then(function(res) {
+        dispatch(updateProfileSuccessful());
+        dispatch(loadProfile(token));
+      })
+      .catch(error => {
+        dispatch(updateProfileError());
+        throw error;
+      });
+  };
+}
+
+function beginUpdateProfile() {
+  return {
+    type: types.BEGIN_UPDATE_PROFILE,
+    isUpdatingProfile: true,
+    errorUpdatingProfile: false,
+  };
+}
+
+function updateProfileSuccessful() {
+  return {
+    type: types.UPDATE_PROFILE_SUCCESSFUL,
+    isUpdatingProfile: false,
+    errorUpdatingProfile: false,
+  };
+}
+
+function updateProfileError() {
+  return {
+    type: types.UPDATE_PROFILE_ERROR,
+    isUpdatingProfile: false,
+    errorUpdatingProfile: true,
+  };
+}

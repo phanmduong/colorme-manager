@@ -40,6 +40,21 @@ export default function profileReducer(state = initialState.profile, action) {
       return Object.assign({}, initialState.login, {
         user: action.user,
       });
+    case types.BEGIN_UPDATE_PROFILE:
+      return Object.assign({}, state, {
+        isUpdatingProfile: action.isUpdatingProfile,
+        errorUpdatingProfile: action.errorUpdatingProfile,
+      });
+    case types.UPDATE_PROFILE_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isUpdatingProfile: action.isUpdatingProfile,
+        errorUpdatingProfile: action.errorUpdatingProfile,
+      });
+    case types.UPDATE_PROFILE_ERROR:
+      return Object.assign({}, state, {
+        isUpdatingProfile: action.isUpdatingProfile,
+        errorUpdatingProfile: action.errorUpdatingProfile,
+      });
     default:
       return state;
   }

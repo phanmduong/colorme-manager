@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, FlatList, Text, Dimensions, RefreshControl} from 'react-native';
+import {
+  View,
+  FlatList,
+  Text,
+  Dimensions,
+  RefreshControl,
+  Image,
+} from 'react-native';
 import Spinkit from 'react-native-spinkit';
 import theme from '../styles';
 var {width, height} = Dimensions.get('window');
@@ -15,8 +22,16 @@ class NotificationComponent extends React.Component {
 
   renderItem = ({item}) => (
     <View style={styles.itemContainer}>
-      <HTML html={item.message} baseFontStyle={{fontSize: 16}} />
-      <Text style={styles.itemText}>{item.created_at}</Text>
+      <View style={{flexDirection: 'row'}}>
+        <Image
+          source={{uri: item.image_url}}
+          style={{height: 50, width: 50, borderRadius: 30}}
+        />
+        <View style={{flex: 1, flexWrap: 'wrap', marginLeft: 15}}>
+          <HTML html={item.message} baseFontStyle={{fontSize: 16}} />
+          <Text style={styles.itemText}>{item.created_at}</Text>
+        </View>
+      </View>
     </View>
   );
 
@@ -97,6 +112,7 @@ const styles = {
     fontSize: 16,
   },
   itemContainer: {
+    flex: 1,
     marginVertical: 10,
     marginHorizontal: 16,
   },

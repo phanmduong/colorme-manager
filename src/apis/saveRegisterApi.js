@@ -66,6 +66,6 @@ export function loadSalers(token) {
 }
 
 export function loadFilterClasses(genId, token) {
-  let url = env.API_URL + '/apiv2/gens/' + genId + '/classes?token=' + token;
+  let url = env.API_URL + '/apiv2/gens/' + genId + '/class?token=' + token;
   return axios.get(url);
 }

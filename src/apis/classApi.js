@@ -13,13 +13,13 @@ export function loadClassApi(baseId, courseId, genId, token) {
     baseId +
     '/courses/' +
     courseId +
-    '/classes?token=' +
+    '/class?token=' +
     token;
   return axios.get(url);
 }
 
 export function loadCourseApi(token) {
-  let url = env.API_URL + '/courses?token=' + token;
+  let url = env.API_URL + '/paid-courses?token=' + token;
   return axios.get(url);
 }
 

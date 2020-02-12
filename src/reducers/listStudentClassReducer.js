@@ -19,6 +19,7 @@ export default function listStudentClassReducer(
         isLoading: action.isLoading,
         error: action.error,
         listStudentClassData: action.listStudentClassData,
+        classInfo: action.classInfo,
       });
     case types.LOAD_DATA_LIST_STUDENT_CLASS_ERROR:
       return Object.assign({}, state, {

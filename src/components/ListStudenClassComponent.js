@@ -8,13 +8,50 @@ import theme from '../styles';
 import * as alert from '../constants/alert';
 import ListItemStudent from './listItem/ListItemStudent';
 import _ from 'lodash';
+import Search from './common/Search';
+import {convertVietText} from '../helper';
+import SubmitMoneyModal from "./infoStudent/SubmitMoneyModal";
 
 var {height, width} = Dimensions.get('window');
 const heightSwiper = Platform.OS === 'ios' ? height - 170 : height - 125;
 class ListStudenClassComponent extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.state = {
+      search: '',
+    };
   }
+
+  headerComponent = () => {
+    return (
+      <Search
+        placeholder="Tìm kiếm (Email, tên, số điện thoại)"
+        onChangeText={search => this.setState({search})}
+        value={this.state.search}
+        autoFocus={false}
+      />
+    );
+  };
+
+  searchStudent = stdLst => {
+    if (this.state.search === '') {
+      return stdLst;
+    } else {
+      let searchStdLst = [];
+      for (let student of stdLst) {
+        if (
+          convertVietText(student.name).includes(
+            convertVietText(this.state.search),
+          ) ||
+          student.phone.includes(this.state.search) ||
+          student.email.includes(this.state.search)
+        ) {
+          searchStdLst.push(student);
+        }
+      }
+      return searchStdLst;
+    }
+  };
 
   render() {
     if (this.props.isLoading) {
@@ -54,57 +91,35 @@ class ListStudenClassComponent extends React.Component {
         );
       } else {
         return (
-          <Swiper
-            height={heightSwiper}
-            style={styles.wrapper}
-            dotColor={theme.secondColor}
-            dotStyle={styles.dotStyle}
-            activeDotColor={theme.secondColor}
-            index={0}
-            paginationStyle={{
-              top: Platform.OS === 'ios' ? -(height - 220) : -(height - 230),
-            }}>
-            <View style={styles.slide}>
-              <Text style={styles.titleList}>ĐÃ NỘP TIỀN</Text>
-              <List
-                style={styles.list}
-                dataArray={_.filter(this.props.listStudentClass, {status: 1})}
-                renderRow={(item, sectionID, rowID) => (
-                  <ListItemStudent
-                    name={item.name}
-                    avatar={item.avatar_url}
-                    code={item.code}
-                    attendances={item.attendances}
-                    phone={item.phone}
-                    email={item.email}
-                    money={item.money}
-                    receivedIdCard={item.received_id_card}
-                    status={item.status}
-                    score={item.score}
-                    maxScore={item.max_score}
-                  />
-                )}
+          <List
+            style={styles.list}
+            dataArray={this.searchStudent(this.props.listStudentClass)}
+            ListHeaderComponent={this.headerComponent}
+            renderRow={(item, sectionID, rowID) => (
+              <ListItemStudent
+                {...this.props}
+                name={item.name}
+                avatar={item.avatar_url}
+                phone={item.phone}
+                email={item.email}
+                status={item.status}
+                money={item.money}
+                saler={item.saler}
+                campaign={item.campaign}
+                classInfo={this.props.classInfo}
+                studentId={item.id}
+                next_code={this.props.classInfo.next_code}
+                next_waiting_code={this.props.classInfo.next_waiting_code}
+                registerId={item.register_id}
+                changeCallStatus={this.props.changeCallStatus}
+                token={this.props.token}
+                errorChangeCallStatus={this.props.errorChangeCallStatus}
+                errorSubmitMoney={this.props.errorSubmitMoney}
+                submitMoney={this.props.submitMoney}
+                setStudentId={this.props.setStudentId}
               />
-            </View>
-            <View style={styles.slide}>
-              <Text style={styles.titleList}>CHƯA NỘP TIỀN</Text>
-              <List
-                style={styles.list}
-                dataArray={_.filter(this.props.listStudentClass, {status: 0})}
-                renderRow={(item, sectionID, rowID) => (
-                  <ListItemStudent
-                    name={item.name}
-                    avatar={item.avatar_url}
-                    code={item.code}
-                    attendances={item.attendances}
-                    phone={item.phone}
-                    email={item.email}
-                    status={item.status}
-                  />
-                )}
-              />
-            </View>
-          </Swiper>
+            )}
+          />
         );
       }
     }
@@ -113,7 +128,7 @@ class ListStudenClassComponent extends React.Component {
 
 const styles = {
   list: {
-    marginTop: 30,
+    marginTop: 5,
   },
   container: {
     flex: 1,

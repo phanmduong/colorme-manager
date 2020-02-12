@@ -154,7 +154,7 @@ class ListItemInfoStudentRegister extends React.Component {
           isVisible={this.state.moneyModalVisible}
           onSwipeComplete={this.toggleMoneyModal}
           avatar_url={this.props.register.avatar_url}
-          class={this.props.register.class}
+          classAva={this.props.register.class.avatar_url}
           name={this.props.register.name}
           next_code={this.props.register.next_code}
           next_waiting_code={this.props.register.next_waiting_code}
@@ -162,6 +162,12 @@ class ListItemInfoStudentRegister extends React.Component {
           submitMoney={this.props.submitMoney}
           register_id={this.props.register.id}
           errorSubmitMoney={this.props.errorSubmitMoney}
+          room={this.props.register.class.room}
+          base={this.props.register.class.base}
+          className={this.props.register.class.name}
+          study_time={this.props.register.class.study_time}
+          description={this.props.register.class.description}
+          type={this.props.register.class.type}
         />
       </View>
     );

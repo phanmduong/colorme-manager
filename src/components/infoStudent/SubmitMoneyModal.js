@@ -24,7 +24,7 @@ class SubmitMoneyModal extends React.Component {
       money: '',
       note: '',
       code:
-        this.props.class.type === 'active'
+        this.props.type === 'active'
           ? this.props.next_code
           : this.props.next_waiting_code,
       payment_method: CHUYEN_KHOAN,
@@ -81,7 +81,7 @@ class SubmitMoneyModal extends React.Component {
                 paddingTop: 30,
               }}>
               <Image
-                source={{uri: this.props.class.avatar_url}}
+                source={{uri: this.props.classAva}}
                 style={styles.avatar}
               />
               <Image
@@ -93,13 +93,13 @@ class SubmitMoneyModal extends React.Component {
             <View style={{marginTop: 25}}>
               <Text style={styles.subTitle}>Học viên: {this.props.name}</Text>
               <Text style={styles.subTitle}>
-                Lớp: {this.props.class.name} - {this.props.class.study_time}
+                Lớp: {this.props.className} - {this.props.study_time}
               </Text>
               <Text style={styles.subTitle}>
-                Khai giảng: {this.props.class.description}
+                Khai giảng: {this.props.description}
               </Text>
               <Text style={styles.subTitle}>
-                Phòng học: {this.props.class.room} - {this.props.class.base}
+                Phòng học: {this.props.room} - {this.props.base}
               </Text>
             </View>
             <View style={{marginTop: 25}}>

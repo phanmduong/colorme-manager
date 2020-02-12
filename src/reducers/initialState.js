@@ -98,6 +98,7 @@ export default {
     listStudentClassData: [],
     isLoading: false,
     error: false,
+    classInfo: {},
   },
   listStudentAttendance: {
     listStudentAttendanceData: [],

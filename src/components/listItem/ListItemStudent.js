@@ -4,205 +4,207 @@ import {
   Platform,
   TouchableNativeFeedback,
   TouchableOpacity,
-  Animated,
+  View,
+  Text,
+  Image,
+  Linking,
 } from 'react-native';
-import {View, Text, Thumbnail, Icon} from 'native-base';
 import theme from '../../styles';
-import _ from 'lodash';
-import {formatPhone, dotNumber} from '../../helper/index';
 import Call from '../common/Call';
-
+import {Thumbnail} from 'native-base';
+import {dotNumber, getShortName} from '../../helper';
+import CallRegisterModal from '../infoStudent/CallRegisterModal';
+import SubmitMoneyModal from '../infoStudent/SubmitMoneyModal';
 var {height, width} = Dimensions.get('window');
-var maxWidthProcess = width / 2;
 
 class ListItemStudent extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      onPressed: false,
+      callModalVisible: false,
+      moneyModalVisible: false,
     };
   }
 
-  onChangePress() {
-    this.setState({
-      onPressed: !this.state.onPressed,
-    });
-  }
+  toggleCallModal = () => {
+    this.setState({callModalVisible: !this.state.callModalVisible});
+  };
+
+  toggleMoneyModal = () => {
+    this.setState({moneyModalVisible: !this.state.moneyModalVisible});
+  };
 
   content() {
     const {
       name,
       avatar,
-      code,
-      status,
       money,
-      receivedIdCard,
-      attendances,
-      score,
-      maxScore,
+      phone,
+      saler,
+      campaign,
+      status,
+      email,
+      classInfo,
+      studentId,
+      next_code,
+      next_waiting_code,
+      registerId,
     } = this.props;
-    const sumLesson = attendances.length;
-    const sumAttendance = _.filter(attendances, {status: 1}).length;
     return (
-      <View style={styles.container}>
-        <Thumbnail small source={{uri: avatar}} />
-        <View style={styles.content}>
-          <View style={styles.containerTitle}>
-            <Text style={styles.title}>{name ? name.trim() : ''}</Text>
-            {this.state.onPressed ? (
-              <Icon
-                style={styles.icon}
-                ios="ios-arrow-up"
-                android="md-arrow-dropup"
-                name="ios-arrow-up"
-              />
-            ) : (
-              <Icon
-                name="ios-arrow-up"
-                ios="ios-arrow-down"
-                android="md-arrow-dropdown"
-                style={styles.icon}
-              />
-            )}
+      <View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{position: 'relative'}}>
+              <Thumbnail small source={{uri: avatar}} style={styles.avatar} />
+            </View>
+            <Text numberOfLines={1} style={styles.className}>
+              {name}
+            </Text>
           </View>
-          <View style={styles.containerSubTitle}>
-            <Text style={styles.subTitle}>{code}</Text>
-            {status ? (
-              <View style={styles.containerSubTitle}>
+          <Image
+            source={require('../../../assets/img/icons8-more-than-100.png')}
+            style={{width: 15, height: 15}}
+          />
+        </View>
+        <View style={{flexDirection: 'row'}}>
+          <View style={styles.classAva} />
+          <View style={styles.infoContainer}>
+            <View style={styles.containerSubTitle}>
+              {saler ? (
                 <View
                   style={{
                     ...styles.card,
-                    ...{backgroundColor: theme.processColor1},
-                  }}>
-                  <Text style={styles.money}>{dotNumber(money)}đ</Text>
-                </View>
-                {receivedIdCard ? (
-                  <View
-                    style={{
-                      ...styles.card,
-                      ...{backgroundColor: theme.processColor2},
-                    }}>
-                    <Text style={styles.isReceivedCard}>ĐÃ NHẬN THẺ</Text>
-                  </View>
-                ) : (
-                  <View
-                    style={{
-                      ...styles.card,
-                      ...{backgroundColor: theme.secondColor},
-                    }}>
-                    <Text style={styles.isReceivedCard}>CHƯA NHẬN THẺ</Text>
-                  </View>
-                )}
-              </View>
-            ) : (
-              <View />
-            )}
-          </View>
-          {status ? (
-            <View style={styles.containerContentProcess}>
-              <View style={styles.processAndText}>
-                <View
-                  style={{
-                    ...styles.process,
-                    ...styles.containerProcess,
                     ...{
-                      backgroundColor: theme.processColorOpacity1,
+                      backgroundColor:
+                        !saler.color || saler.color === ''
+                          ? theme.processColor1
+                          : '#' + saler.color,
+                      marginRight: 5,
                     },
                   }}>
-                  <Animated.View
-                    style={[
-                      styles.process,
-                      styles.bar,
-                      {
-                        width:
-                          sumAttendance && sumLesson
-                            ? (maxWidthProcess * sumAttendance) / sumLesson
-                            : 0,
-                        backgroundColor: theme.processColor1,
-                      },
-                    ]}
-                  />
+                  <Text style={styles.saler}>{getShortName(saler.name)}</Text>
                 </View>
-                <Text style={styles.textProcess}>
-                  {sumAttendance}/{sumLesson}
-                </Text>
-              </View>
-              {score && maxScore ? (
-                <View style={styles.processAndText}>
-                  <View
-                    style={{
-                      ...styles.process,
-                      ...styles.containerProcess,
-                      ...{
-                        backgroundColor: theme.processColorOpacity2,
-                      },
-                    }}>
-                    <Animated.View
-                      style={[
-                        styles.process,
-                        styles.bar,
-                        {
-                          width:
-                            score && maxScore
-                              ? (maxWidthProcess * score) / maxScore
-                              : 0,
-                          backgroundColor: theme.processColor2,
-                        },
-                      ]}
-                    />
-                  </View>
-                  <Text style={styles.textProcess}>
-                    {score}/{maxScore}
-                  </Text>
+              ) : (
+                <View />
+              )}
+              {campaign ? (
+                <View
+                  style={{
+                    ...styles.card,
+                    ...{
+                      backgroundColor:
+                        !campaign.color || campaign.color === ''
+                          ? theme.processColor1
+                          : '#' + campaign.color,
+                    },
+                  }}>
+                  <Text style={styles.campaign}>{campaign.name.trim()}</Text>
                 </View>
               ) : (
                 <View />
               )}
             </View>
-          ) : (
-            <View />
-          )}
+            <View>
+              {phone ? <Call url={'tel:' + phone} phone={phone} /> : null}
+              {email ? (
+                <Text numberOfLines={1} style={styles.classInfoContainer}>
+                  {email}
+                </Text>
+              ) : null}
+            </View>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                onPress={() => {
+                  Linking.openURL(`tel:${phone}`);
+                  this.toggleCallModal();
+                }}>
+                <View style={styles.button}>
+                  <Text style={{fontSize: 16}}>Gọi điện</Text>
+                </View>
+              </TouchableOpacity>
+              {!status ? (
+                <TouchableOpacity onPress={() => this.toggleMoneyModal()}>
+                  <View style={[{marginLeft: 10}, styles.button]}>
+                    <Text style={{fontSize: 16}}>Nộp học phí</Text>
+                  </View>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity onPress={() => this.toggleMoneyModal()}>
+                  <View style={[{marginLeft: 10}, styles.collectedButton]}>
+                    <Text style={{fontSize: 16, color: 'white'}}>
+                      {dotNumber(money)} vnđ
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              )}
+            </View>
+          </View>
+          <CallRegisterModal
+            isVisible={this.state.callModalVisible}
+            onSwipeComplete={this.toggleCallModal}
+            imageSource={avatar}
+            email={email}
+            phone={phone}
+            changeCallStatus={this.props.changeCallStatus}
+            student_id={studentId}
+            token={this.props.token}
+            errorChangeCallStatus={this.props.errorChangeCallStatus}
+          />
+          <SubmitMoneyModal
+            isVisible={this.state.moneyModalVisible}
+            onSwipeComplete={this.toggleMoneyModal}
+            avatar_url={avatar}
+            classAva={classInfo.icon_url}
+            name={name}
+            next_code={next_code}
+            next_waiting_code={next_waiting_code}
+            token={this.props.token}
+            submitMoney={this.props.submitMoney}
+            register_id={registerId}
+            errorSubmitMoney={this.props.errorSubmitMoney}
+            room={classInfo.room.name}
+            base={classInfo.base.address}
+            className={classInfo.name}
+            study_time={classInfo.study_time}
+            description={classInfo.description}
+            type={classInfo.type}
+          />
         </View>
       </View>
     );
-  }
-
-  renderExpand() {
-    var {phone, email} = this.props;
-    if (this.state.onPressed) {
-      return (
-        <View style={styles.containerExpand}>
-          <Text style={styles.email}>{email}</Text>
-          <Call
-            url={'tel:' + phone}
-            phone={phone}
-            extraPadding={{paddingTop: 5}}
-          />
-        </View>
-      );
-    }
   }
 
   render() {
     if (Platform.OS === 'ios') {
       return (
         <View>
-          <TouchableOpacity onPress={() => this.onChangePress()}>
-            <View style={styles.containerAll}>
-              {this.content()}
-              {this.renderExpand()}
-            </View>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.setStudentId(this.props.studentId);
+              this.props.navigation.navigate('InfoStudent', {
+                studentId: this.props.studentId,
+              });
+            }}>
+            <View style={styles.containerAll}>{this.content()}</View>
           </TouchableOpacity>
         </View>
       );
     } else {
       return (
         <View>
-          <TouchableNativeFeedback onPress={() => this.onChangePress()}>
-            <View style={styles.containerAll}>
-              {this.content()}
-              {this.renderExpand()}
-            </View>
+          <TouchableNativeFeedback
+            onPress={() => {
+              this.props.setStudentId(this.props.studentId);
+              this.props.navigation.navigate('InfoStudent', {
+                studentId: this.props.studentId,
+              });
+            }}>
+            <View style={styles.containerAll}>{this.content()}</View>
           </TouchableNativeFeedback>
         </View>
       );
@@ -212,14 +214,12 @@ class ListItemStudent extends React.Component {
 
 const styles = {
   containerAll: {
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-  },
-  container: {
-    flexDirection: 'row',
+    paddingHorizontal: 16,
+    paddingVertical: 16,
   },
   containerExpand: {
     marginLeft: 55,
+    paddingTop: 5,
   },
   content: {
     flex: 1,
@@ -234,11 +234,11 @@ const styles = {
     color: 'black',
     fontWeight: '900',
     fontSize: Platform.isPad ? 18 : 13,
+    marginRight: 5,
   },
   subTitle: {
     color: '#7d7d7d',
-    fontSize: 13,
-    paddingTop: 5,
+    fontSize: 12,
   },
   icon: {
     fontSize: 20,
@@ -248,57 +248,92 @@ const styles = {
     height: 1,
     backgroundColor: theme.borderColor,
     marginRight: 20,
-
     marginLeft: 75,
-  },
-  containerContentProcess: {
-    paddingTop: 5,
-  },
-  containerProcess: {
-    marginVertical: 5,
-    backgroundColor: theme.secondColorOpacity,
-    width: maxWidthProcess,
-  },
-  bar: {},
-  process: {
-    borderRadius: 5,
-    height: 5,
-    backgroundColor: theme.secondColor,
-  },
-  processAndText: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  textProcess: {
-    color: theme.colorTitle,
-    fontSize: 12,
-  },
-  containerSubTitle: {
-    flexDirection: 'row',
   },
   email: {
     color: theme.colorSubTitle,
     marginTop: 5,
     fontSize: Platform.isPad ? 18 : 13,
   },
-  card: {
-    paddingHorizontal: 10,
-    marginLeft: 5,
-    borderRadius: 20,
+  contentTitle: {
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 15,
   },
-  money: {
+  dotCall: {
+    position: 'absolute',
+    top: 25,
+    left: 25,
+    height: 12,
+    width: 12,
+    borderRadius: 20,
+    borderWidth: 1.5,
+    borderColor: 'white',
+  },
+
+  listItemContainer: {
+    marginHorizontal: 16,
+    marginVertical: 10,
+  },
+  classAva: {
+    width: 37,
+    height: 37,
+    borderRadius: 19,
+  },
+  className: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginLeft: 15,
+    marginRight: 5,
+  },
+  containerSubTitle: {
+    flexDirection: 'row',
+    marginBottom: 10,
+  },
+  card: {
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    marginVertical: 5,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  saler: {
     fontSize: 10,
     color: 'white',
     textAlign: 'center',
   },
-  isReceivedCard: {
+  campaign: {
     fontSize: 10,
     color: 'white',
     textAlign: 'center',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginTop: 20,
+  },
+  button: {
+    backgroundColor: '#F6F6F6',
+    paddingVertical: 10,
+    paddingHorizontal: 18,
+    borderRadius: 8,
+  },
+  collectedButton: {
+    backgroundColor: '#C50000',
+    paddingVertical: 10,
+    paddingHorizontal: 18,
+    borderRadius: 8,
+  },
+  classInfoContainer: {
+    paddingTop: 5,
+    flex: 1,
+    flexWrap: 'wrap',
+    color: 'black',
+  },
+  infoContainer: {
+    marginLeft: 15,
+    flex: 1,
   },
 };
 

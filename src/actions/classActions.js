@@ -70,7 +70,7 @@ export function loadDataError() {
 export function loadDataCourseSuccessful(res) {
   return {
     type: types.LOAD_DATA_COURSES_SUCCESSFUL,
-    courseData: res.data.courses,
+    courseData: res.data,
     isLoading: false,
     error: false,
   };

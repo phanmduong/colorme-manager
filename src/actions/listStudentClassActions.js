@@ -30,6 +30,7 @@ export function loadDataListStudentClass(classId, token) {
 export function loadDataSuccessful(res) {
   return {
     type: types.LOAD_DATA_LIST_STUDENT_CLASS_SUCCESSFUL,
+    classInfo: res.data.class,
     listStudentClassData: res.data.students,
     isLoading: false,
     error: false,

@@ -3,7 +3,10 @@ import {Container, Item, List, Picker, View} from 'native-base';
 import ListItemClass from './listItem/ListItemClass';
 import Loading from './common/Loading';
 import theme from '../styles';
-import {Dimensions} from 'react-native';
+import {Dimensions, Image, TouchableOpacity} from 'react-native';
+import Search from './common/Search';
+import FilterModal from './infoStudent/FilterModal';
+import {convertVietText} from '../helper';
 
 var {height, width} = Dimensions.get('window');
 
@@ -11,9 +14,28 @@ class ClassComponent extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
+      search: '',
       selectedCourseId: 0,
     };
   }
+
+  searchClass = classList => {
+    if (this.state.search === '') {
+      return classList;
+    } else {
+      let searchedClassList = [];
+      for (let classItem of classList) {
+        if (
+          convertVietText(classItem.name).includes(
+            convertVietText(this.state.search),
+          )
+        ) {
+          searchedClassList.push(classItem);
+        }
+      }
+      return searchedClassList;
+    }
+  };
 
   onChangeCourse = course => {
     this.setState({selectedCourseId: course});
@@ -33,6 +55,29 @@ class ClassComponent extends React.Component {
     );
   };
 
+  headerComponent = () => {
+    return (
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <Search
+          placeholder="Tìm kiếm lớp học"
+          onChangeText={search => this.setState({search})}
+          value={this.state.search}
+          autoFocus={false}
+          extraStyle={{width: width - 85}}
+          extraInputStyle={{width: width - 85 - 48}}
+        />
+        <TouchableOpacity onPress={this.toggleFilterModal}>
+          <View style={styles.fitlerContainer}>
+            <Image
+              source={require('../../assets/img/icons8-sorting_options_filled.png')}
+              style={{width: 18, height: 18}}
+            />
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   render() {
     if (this.props.isLoadingCourse) {
       return <Loading size={width / 8} />;
@@ -42,21 +87,9 @@ class ClassComponent extends React.Component {
 
     return (
       <Container>
-        <View style={styles.containerPicker}>
-          <Picker
-            style={{width: width / 2, padding: 0, margin: 0}}
-            iosHeader="Chọn môn học"
-            mode="dialog"
-            defaultLabel={'Chọn môn'}
-            selectedValue={this.state.selectedCourseId}
-            onValueChange={this.onChangeCourse}>
-            {courses.map(function(course, index) {
-              return <Item label={course.name} value={course.id} key={index} />;
-            })}
-          </Picker>
-        </View>
         <List
-          dataArray={this.getDataClass()}
+          dataArray={this.searchClass(this.getDataClass())}
+          ListHeaderComponent={this.headerComponent}
           renderRow={(item, sectionID, rowID) => (
             <ListItemClass
               nameClass={item.name}
@@ -79,6 +112,15 @@ class ClassComponent extends React.Component {
 const styles = {
   containerPicker: {
     flexDirection: 'row',
+  },
+  fitlerContainer: {
+    width: 40,
+    height: 40,
+    backgroundColor: '#F6F6F6',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 20,
+    marginLeft: 10,
   },
 };
 

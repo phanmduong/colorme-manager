@@ -22,6 +22,22 @@ export default function classReducer(state = initialState.class, action) {
         isLoading: action.isLoading,
         error: action.error,
       });
+    case types.BEGIN_DATA_CLASS_REFRESH:
+      return Object.assign({}, state, {
+        isRefreshing: action.isRefreshing,
+        error: action.error,
+      });
+    case types.REFRESH_DATA_CLASS_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isRefreshing: action.isRefreshing,
+        error: action.error,
+        classData: action.classData,
+      });
+    case types.REFRESH_DATA_CLASS_ERROR:
+      return Object.assign({}, state, {
+        isRefreshing: action.isRefreshing,
+        error: action.error,
+      });
     case types.BEGIN_DATA_COURSES_LOAD:
       return Object.assign({}, state, {
         isLoadingCourse: action.isLoading,

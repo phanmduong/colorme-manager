@@ -6,7 +6,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import ClassComponent from '../components/ClassComponent';
 import * as classActions from '../actions/classActions';
-import {NavigationActions} from 'react-navigation';
+import * as baseActions from '../actions/baseActions';
+import * as genActions from '../actions/genActions';
 
 class ClassContainer extends React.Component {
   constructor(props) {
@@ -15,8 +16,27 @@ class ClassContainer extends React.Component {
   }
 
   componentDidMount() {
+    let genId =
+      this.props.analyticGenId === -1
+        ? this.props.currentGen.id
+        : this.props.analyticGenId;
+    this.props.classActions.loadDataClass(
+      this.props.analyticBaseId,
+      genId,
+      this.props.token,
+    );
     this.props.classActions.loadDataCourse(this.props.token);
+    this.props.baseActions.loadDataBase(this.props.token);
+    this.props.genActions.loadDataGen(this.props.token);
   }
+
+  loadDataClass = (baseId, genId) => {
+    this.props.classActions.loadDataClass(baseId, genId, this.props.token);
+  };
+
+  onRefresh = (baseId, genId) => {
+    this.props.classActions.refreshDataClass(baseId, genId, this.props.token);
+  };
 
   onSelectedItem(classId) {
     this.props.classActions.selectedClassId(classId);
@@ -27,9 +47,20 @@ class ClassContainer extends React.Component {
     return (
       <ClassComponent
         classData={this.props.classData}
+        isLoadingClass={this.props.isLoadingClass}
         courseData={this.props.courseData}
         isLoadingCourse={this.props.isLoadingCourse}
         onSelectedItem={this.onSelectedItem}
+        genData={this.props.genData}
+        baseData={this.props.baseData}
+        isLoadingGen={this.props.isLoadingGen}
+        isLoadingBase={this.props.isLoadingBase}
+        currentGen={this.props.currentGen}
+        onRefresh={this.onRefresh}
+        filter={this.loadDataClass}
+        refreshing={this.props.isRefreshing}
+        analyticGenId={this.props.analyticGenId}
+        analyticBaseId={this.props.analyticBaseId}
       />
     );
   }
@@ -41,17 +72,31 @@ ClassContainer.navigationOptions = {
 
 function mapStateToProps(state) {
   return {
-    classData: state.analytics.dashboardData.classes,
+    classData: state.class.classData,
+    isLoadingClass: state.class.isLoading,
+    errorLoadingClass: state.class.error,
     token: state.login.token,
     selectedClassId: state.class.selectedClassId,
     courseData: state.class.courseData,
     isLoadingCourse: state.class.isLoadingCourse,
+    genData: state.gen.genData,
+    isLoadingGen: state.gen.isLoading,
+    errorLoadingGen: state.gen.error,
+    baseData: state.base.baseData,
+    isLoadingBase: state.base.isLoading,
+    errorLoadingBase: state.base.error,
+    currentGen: state.gen.currentGen,
+    analyticBaseId: state.analytics.selectedBaseId,
+    analyticGenId: state.analytics.selectedGenId,
+    isRefreshing: state.class.isRefreshing,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     classActions: bindActionCreators(classActions, dispatch),
+    baseActions: bindActionCreators(baseActions, dispatch),
+    genActions: bindActionCreators(genActions, dispatch),
   };
 }
 

@@ -1,13 +1,17 @@
 import React from 'react';
-import {Container, Item, List, Picker, View} from 'native-base';
+import {Container, List, View} from 'native-base';
 import ListItemClass from './listItem/ListItemClass';
 import Loading from './common/Loading';
-import theme from '../styles';
-import {Dimensions, Image, TouchableOpacity} from 'react-native';
+import {
+  Dimensions,
+  Image,
+  RefreshControl,
+  TouchableOpacity,
+} from 'react-native';
 import Search from './common/Search';
-import FilterModal from './infoStudent/FilterModal';
 import {convertVietText} from '../helper';
-
+import FilterClassModal from './class/FilterClassModal';
+import theme from '../styles';
 var {height, width} = Dimensions.get('window');
 
 class ClassComponent extends React.Component {
@@ -15,9 +19,29 @@ class ClassComponent extends React.Component {
     super(props, context);
     this.state = {
       search: '',
-      selectedCourseId: 0,
+      selectedCourseId: -1,
+      selectedBaseId: this.props.analyticBaseId,
+      selectedCityId: -1,
+      selectedGenId: this.props.analyticGenId,
+      filterModalVisible: false,
     };
   }
+
+  onSelectBaseId = baseId => {
+    this.setState({selectedBaseId: baseId});
+  };
+
+  onSelectCityId = cityId => {
+    this.setState({selectedCityId: cityId});
+  };
+
+  onSelectCourseId = courseId => {
+    this.setState({selectedCourseId: courseId});
+  };
+
+  onSelectGenId = genId => {
+    this.setState({selectedGenId: genId});
+  };
 
   searchClass = classList => {
     if (this.state.search === '') {
@@ -37,22 +61,31 @@ class ClassComponent extends React.Component {
     }
   };
 
-  onChangeCourse = course => {
-    this.setState({selectedCourseId: course});
-  };
-
   getDataClass = () => {
-    if (this.state.selectedCourseId == 0) {
-      return this.props.classData;
-    }
-
-    if (this.props.classData == null || this.props.classData == undefined) {
+    let HNbase = [3, 4, 8, 9];
+    if (this.props.classData === null || this.props.classData === undefined) {
       return [];
     }
+    let filterClasses = this.props.classData;
+    if (this.state.selectedCourseId !== -1) {
+      filterClasses = filterClasses.filter(
+        classItem => classItem.course_id === this.state.selectedCourseId,
+      );
+    }
+    if (this.state.selectedCityId === 1) {
+      filterClasses = filterClasses.filter(classItem =>
+        HNbase.includes(classItem.base.id),
+      );
+    } else if (this.state.selectedCityId === 2) {
+      filterClasses = filterClasses.filter(
+        classItem => !HNbase.includes(classItem.base.id),
+      );
+    }
+    return filterClasses;
+  };
 
-    return this.props.classData.filter(
-      classItem => classItem.course_id == this.state.selectedCourseId,
-    );
+  toggleFilterModal = () => {
+    this.setState({filterModalVisible: !this.state.filterModalVisible});
   };
 
   headerComponent = () => {
@@ -74,22 +107,61 @@ class ClassComponent extends React.Component {
             />
           </View>
         </TouchableOpacity>
+        <FilterClassModal
+          isLoadingGen={this.props.isLoadingGen}
+          isLoadingBase={this.props.isLoadingBase}
+          isLoadingCourse={this.props.isLoadingCourse}
+          genData={this.props.genData}
+          baseData={this.props.baseData}
+          courseData={this.props.courseData}
+          onSelectCourseId={this.onSelectCourseId}
+          selectedCourseId={this.state.selectedCourseId}
+          onSelectBaseId={this.onSelectBaseId}
+          selectedBaseId={this.state.selectedBaseId}
+          onSelectCityId={this.onSelectCityId}
+          selectedCityId={this.state.selectedCityId}
+          onSelectGenId={this.onSelectGenId}
+          selectedGenId={this.state.selectedGenId}
+          closeModal={this.toggleFilterModal}
+          currentGen={this.props.currentGen}
+          isVisible={this.state.filterModalVisible}
+          filter={this.props.filter}
+          analyticBaseId={this.props.analyticBaseId}
+          analyticGenId={this.props.analyticGenId}
+        />
       </View>
     );
   };
 
   render() {
-    if (this.props.isLoadingCourse) {
+    if (
+      this.props.isLoadingCourse ||
+      this.props.isLoadingClass ||
+      this.props.isLoadingBase ||
+      this.props.isLoadingGen
+    ) {
       return <Loading size={width / 8} />;
     }
-
-    const courses = [{id: 0, name: 'Tất cả'}, ...this.props.courseData];
-
     return (
       <Container>
         <List
           dataArray={this.searchClass(this.getDataClass())}
           ListHeaderComponent={this.headerComponent}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.props.refreshing}
+              onRefresh={() =>
+                this.props.onRefresh(
+                  this.state.selectedBaseId,
+                  this.state.selectedGenId,
+                )
+              }
+              titleColor={theme.mainColor}
+              title="Đang tải..."
+              tintColor="#d9534f"
+              colors={['#d9534f']}
+            />
+          }
           renderRow={(item, sectionID, rowID) => (
             <ListItemClass
               nameClass={item.name}

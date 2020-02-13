@@ -55,6 +55,7 @@ export default {
     isLoadingCourse: false,
     error: false,
     selectedClassId: -1,
+    isRefreshing: false,
   },
   currentClassStudy: {
     classData: [],

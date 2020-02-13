@@ -210,6 +210,9 @@ class AnalyticsContainer extends React.Component {
         onClickRegisterList={this.onClickRegisterList}
         onClickListStudentPaid={this.onClickListStudentPaid}
         onClickListStudentZero={this.onClickListStudentZero}
+        isLoadingGen={this.props.isLoadingGen}
+        isLoadingBase={this.props.isLoadingBase}
+        currentGen={this.props.currentGen}
       />
     );
   }

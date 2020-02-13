@@ -257,13 +257,36 @@ class AnalyticsComponent extends React.Component {
     );
   };
 
+  getDefault = (array, comparedId) => {
+    for (let item of array) {
+      if (item.id === comparedId) {
+        return item;
+      }
+    }
+    return array[0];
+  };
+
+  getDefaultGen = gens => {
+    for (let gen of gens) {
+      if (gen.id === this.props.selectedGenId) {
+        return gen;
+      }
+    }
+    for (let gen of gens) {
+      if (gen.id === this.props.currentGen.id) {
+        return gen;
+      }
+    }
+    return gens[0];
+  };
+
   render() {
     if (this.props.isLoading) {
       return <Loading size={width / 8} />;
     } else {
-      let courseOptions = [];
+      let genOptions = [];
       for (let i = 0; i < this.props.genData.length; i++) {
-        courseOptions.push(this.props.genData[i]);
+        genOptions.push(this.props.genData[i]);
       }
 
       let baseOptions = [];
@@ -286,8 +309,8 @@ class AnalyticsComponent extends React.Component {
             }>
             <View style={styles.containerPicker}>
               <CustomPicker
-                options={courseOptions}
-                defaultValue={courseOptions[0]}
+                options={genOptions}
+                defaultValue={this.getDefaultGen(genOptions)}
                 getLabel={item => item.name}
                 modalAnimationType={'fade'}
                 optionTemplate={this.renderCoursePickerOption}
@@ -303,7 +326,10 @@ class AnalyticsComponent extends React.Component {
               />
               <CustomPicker
                 options={baseOptions}
-                defaultValue={baseOptions[0]}
+                defaultValue={this.getDefault(
+                  baseOptions,
+                  this.props.selectedBaseId,
+                )}
                 getLabel={item => item.name}
                 modalAnimationType={'fade'}
                 optionTemplate={this.renderBasePickerOption}

@@ -3,6 +3,7 @@
  */
 import * as types from '../constants/actionTypes';
 import * as classApi from '../apis/classApi';
+import * as analyticsApi from '../apis/analyticsApi';
 
 export function beginDataClassLoad() {
   return {
@@ -12,11 +13,11 @@ export function beginDataClassLoad() {
   };
 }
 
-export function loadDataClass(baseId, courseId, genId, token) {
+export function loadDataClass(baseId, genId, token) {
   return function(dispatch) {
     dispatch(beginDataClassLoad());
-    classApi
-      .loadClassApi(baseId, courseId, genId, token)
+    analyticsApi
+      .loadDashboard(baseId, genId, token)
       .then(function(res) {
         dispatch(loadDataSuccessful(res));
       })
@@ -32,6 +33,46 @@ export function loadDataSuccessful(res) {
     type: types.LOAD_DATA_CLASS_SUCCESSFUL,
     classData: res.data.classes,
     isLoading: false,
+    error: false,
+  };
+}
+
+export function beginDataClassRefresh() {
+  return {
+    type: types.BEGIN_DATA_CLASS_REFRESH,
+    isRefreshing: true,
+    error: false,
+  };
+}
+
+export function refreshDataClass(baseId, genId, token) {
+  return function(dispatch) {
+    dispatch(beginDataClassRefresh());
+    analyticsApi
+      .loadDashboard(baseId, genId, token)
+      .then(function(res) {
+        dispatch(refreshDataSuccessful(res));
+      })
+      .catch(error => {
+        dispatch(refreshDataError());
+        throw error;
+      });
+  };
+}
+
+export function refreshDataSuccessful(res) {
+  return {
+    type: types.REFRESH_DATA_CLASS_SUCCESSFUL,
+    classData: res.data.classes,
+    isRefreshing: false,
+    error: false,
+  };
+}
+
+export function refreshDataError() {
+  return {
+    type: types.REFRESH_DATA_CLASS_ERROR,
+    isRefreshing: false,
     error: false,
   };
 }

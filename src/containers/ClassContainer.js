@@ -45,7 +45,6 @@ class ClassContainer extends React.Component {
   }
 
   render() {
-    console.log(this.props.classData);
     return (
       <ClassComponent
         classData={this.props.classData}

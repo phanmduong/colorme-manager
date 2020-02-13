@@ -131,3 +131,43 @@ export function selectedClassId(id) {
     selectedClassId: id,
   };
 }
+
+function beginLoadBase() {
+  return {
+    type: types.BEGIN_LOAD_BASE,
+    isLoadingBase: true,
+    errorLoadingBase: false,
+  };
+}
+
+function loadBaseSuccessful(res) {
+  return {
+    type: types.LOAD_BASE_SUCCESSFUL,
+    isLoadingBase: false,
+    errorLoadingBase: false,
+    baseData: res.data.bases,
+  };
+}
+
+function loadBaseError() {
+  return {
+    type: types.LOAD_BASE_ERROR,
+    isLoadingBase: false,
+    errorLoadingBase: true,
+  };
+}
+
+export function loadBaseData(token) {
+  return function(dispatch) {
+    dispatch(beginLoadBase());
+    classApi
+      .loadBaseData(token)
+      .then(function(res) {
+        dispatch(loadBaseSuccessful(res));
+      })
+      .catch(error => {
+        dispatch(loadBaseError());
+        throw error;
+      });
+  };
+}

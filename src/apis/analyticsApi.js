@@ -11,5 +11,6 @@ export function loadDashboard(baseId, genId, token) {
   } else {
     url += baseId + '?token=' + token;
   }
+  console.log(url);
   return axios.get(url);
 }

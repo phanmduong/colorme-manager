@@ -27,3 +27,11 @@ export function loadCurrentClassStudyApi(token) {
   let url = env.API_URL + '/current-study-class?token=' + token;
   return axios.get(url);
 }
+
+export function loadBaseData(token) {
+  let url =
+    env.BASE_URL +
+    '/manageapi/v4/base/all?include=district.province&token=' +
+    token;
+  return axios.get(url);
+}

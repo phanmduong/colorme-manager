@@ -21,7 +21,7 @@ class ClassComponent extends React.Component {
       search: '',
       selectedCourseId: -1,
       selectedBaseId: this.props.analyticBaseId,
-      selectedCityId: -1,
+      selectedProvinceId: -1,
       selectedGenId: this.props.analyticGenId,
       filterModalVisible: false,
     };
@@ -31,8 +31,8 @@ class ClassComponent extends React.Component {
     this.setState({selectedBaseId: baseId});
   };
 
-  onSelectCityId = cityId => {
-    this.setState({selectedCityId: cityId});
+  onSelectCityId = provinceId => {
+    this.setState({selectedProvinceId: provinceId});
   };
 
   onSelectCourseId = courseId => {
@@ -62,7 +62,6 @@ class ClassComponent extends React.Component {
   };
 
   getDataClass = () => {
-    let HNbase = [3, 4, 8, 9];
     if (this.props.classData === null || this.props.classData === undefined) {
       return [];
     }
@@ -72,13 +71,10 @@ class ClassComponent extends React.Component {
         classItem => classItem.course_id === this.state.selectedCourseId,
       );
     }
-    if (this.state.selectedCityId === 1) {
-      filterClasses = filterClasses.filter(classItem =>
-        HNbase.includes(classItem.base.id),
-      );
-    } else if (this.state.selectedCityId === 2) {
+    if (this.state.selectedProvinceId !== -1) {
       filterClasses = filterClasses.filter(
-        classItem => !HNbase.includes(classItem.base.id),
+        classItem =>
+          classItem.base.district.provinceid === this.state.selectedProvinceId,
       );
     }
     return filterClasses;
@@ -119,7 +115,7 @@ class ClassComponent extends React.Component {
           onSelectBaseId={this.onSelectBaseId}
           selectedBaseId={this.state.selectedBaseId}
           onSelectCityId={this.onSelectCityId}
-          selectedCityId={this.state.selectedCityId}
+          selectedProvinceId={this.state.selectedProvinceId}
           onSelectGenId={this.onSelectGenId}
           selectedGenId={this.state.selectedGenId}
           closeModal={this.toggleFilterModal}
@@ -128,6 +124,8 @@ class ClassComponent extends React.Component {
           filter={this.props.filter}
           analyticBaseId={this.props.analyticBaseId}
           analyticGenId={this.props.analyticGenId}
+          provinces={this.props.provinces}
+          isLoadingProvinces={this.props.isLoadingProvinces}
         />
       </View>
     );
@@ -138,7 +136,8 @@ class ClassComponent extends React.Component {
       this.props.isLoadingCourse ||
       this.props.isLoadingClass ||
       this.props.isLoadingBase ||
-      this.props.isLoadingGen
+      this.props.isLoadingGen ||
+      this.props.isLoadingProvinces
     ) {
       return <Loading size={width / 8} />;
     }

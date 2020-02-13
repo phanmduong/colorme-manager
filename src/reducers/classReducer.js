@@ -54,6 +54,22 @@ export default function classReducer(state = initialState.class, action) {
         isLoadingCourse: action.isLoading,
         error: action.error,
       });
+    case types.BEGIN_LOAD_BASE:
+      return Object.assign({}, state, {
+        isLoadingBase: action.isLoadingBase,
+        errorLoadingBase: action.errorLoadingBase,
+      });
+    case types.LOAD_BASE_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isLoadingBase: action.isLoadingBase,
+        errorLoadingBase: action.errorLoadingBase,
+        baseData: action.baseData,
+      });
+    case types.LOAD_BASE_ERROR:
+      return Object.assign({}, state, {
+        isLoadingBase: action.isLoadingBase,
+        errorLoadingBase: action.errorLoadingBase,
+      });
     case types.SELECTED_CLASS_ID:
       return Object.assign({}, state, {
         selectedClassId: action.selectedClassId,

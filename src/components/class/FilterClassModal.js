@@ -15,8 +15,6 @@ var {width, height} = Dimensions.get('window');
 import theme from '../../styles';
 import {convertVietText} from '../../helper';
 
-export const CITY = [{id: 1, name: 'Hà Nội'}, {id: 2, name: 'Sài Gòn'}];
-
 class FilterClassModal extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -24,7 +22,7 @@ class FilterClassModal extends React.Component {
       search: '',
       selectedCourseId: this.props.selectedCourseId,
       selectedBaseId: this.props.selectedBaseId,
-      selectedCityId: this.props.selectedCityId,
+      selectedProvinceId: this.props.selectedProvinceId,
       selectedGenId: this.props.selectedGenId,
     };
   }
@@ -107,7 +105,10 @@ class FilterClassModal extends React.Component {
   }
 
   getData = array => {
-    let defaultOption = {id: -1, name: 'Tất cả'};
+    let defaultOption = {
+      id: -1,
+      name: 'Tất cả',
+    };
     let data = [defaultOption].concat(array);
     return data;
   };
@@ -167,31 +168,27 @@ class FilterClassModal extends React.Component {
 
   applyFilter = () => {
     this.props.onSelectCourseId(this.state.selectedCourseId);
-    this.props.onSelectCityId(this.state.selectedCityId);
+    this.props.onSelectCityId(this.state.selectedProvinceId);
     this.props.onSelectBaseId(this.state.selectedBaseId);
     this.props.onSelectGenId(this.state.selectedGenId);
   };
 
-  filterCity = bases => {
-    let HNbase = [3, 4, 8, 9];
-    if (this.state.selectedCityId === 1) {
-      let filterBases = [];
+  filterProvinces = bases => {
+    let baseData = [];
+    if (this.state.selectedProvinceId !== -1) {
       for (let base of bases) {
-        if (HNbase.includes(base.id) || base.id === -1) {
-          filterBases.push(base);
+        if (base.id !== -1) {
+          if (base.district.province.id === this.state.selectedProvinceId) {
+            baseData.push(base);
+          }
+        } else {
+          baseData.push(base);
         }
       }
-      return filterBases;
-    } else if (this.state.selectedCityId === 2) {
-      let filterBases = [];
-      for (let base of bases) {
-        if (!HNbase.includes(base.id) || base.id === -1) {
-          filterBases.push(base);
-        }
-      }
-      return filterBases;
+      return baseData;
+    } else {
+      return bases;
     }
-    return bases;
   };
 
   render() {
@@ -205,7 +202,8 @@ class FilterClassModal extends React.Component {
         <View style={styles.modal}>
           {!this.props.isLoadingGen &&
           !this.props.isLoadingBase &&
-          !this.props.isLoadingCourse ? (
+          !this.props.isLoadingCourse &&
+          !this.props.isLoadingProvinces ? (
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.titleContainer}>
                 <Text style={styles.title}>Lọc đăng ký</Text>
@@ -240,10 +238,12 @@ class FilterClassModal extends React.Component {
               <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Tỉnh thành</Text>
                 <CustomPicker
-                  options={this.getSearchedResults(this.getData(CITY))}
+                  options={this.getSearchedResults(
+                    this.getData(this.props.provinces),
+                  )}
                   defaultValue={this.getDefault(
-                    this.getData(CITY),
-                    this.state.selectedCityId,
+                    this.getData(this.props.provinces),
+                    this.state.selectedProvinceId,
                   )}
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
@@ -258,7 +258,7 @@ class FilterClassModal extends React.Component {
                     borderRadius: 6,
                   }}
                   onValueChange={value => {
-                    this.setState({search: '', selectedCityId: value.id});
+                    this.setState({search: '', selectedProvinceId: value.id});
                   }}
                 />
               </View>
@@ -266,7 +266,7 @@ class FilterClassModal extends React.Component {
                 <Text style={{fontSize: 16}}>Cơ sở</Text>
                 <CustomPicker
                   options={this.getSearchedResults(
-                    this.filterCity(this.getData(this.props.baseData)),
+                    this.filterProvinces(this.getData(this.props.baseData)),
                   )}
                   defaultValue={this.getDefault(
                     this.getData(this.props.baseData),

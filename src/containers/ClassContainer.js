@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import ClassComponent from '../components/ClassComponent';
 import * as classActions from '../actions/classActions';
-import * as baseActions from '../actions/baseActions';
+import * as saveRegisterActions from '../actions/saveRegisterActions';
 import * as genActions from '../actions/genActions';
 
 class ClassContainer extends React.Component {
@@ -26,7 +26,8 @@ class ClassContainer extends React.Component {
       this.props.token,
     );
     this.props.classActions.loadDataCourse(this.props.token);
-    this.props.baseActions.loadDataBase(this.props.token);
+    this.props.classActions.loadBaseData(this.props.token);
+    this.props.saveRegisterActions.loadProvinces(this.props.token);
     this.props.genActions.loadDataGen(this.props.token);
   }
 
@@ -44,6 +45,7 @@ class ClassContainer extends React.Component {
   }
 
   render() {
+    console.log(this.props.classData);
     return (
       <ClassComponent
         classData={this.props.classData}
@@ -61,6 +63,8 @@ class ClassContainer extends React.Component {
         refreshing={this.props.isRefreshing}
         analyticGenId={this.props.analyticGenId}
         analyticBaseId={this.props.analyticBaseId}
+        provinces={this.props.provinces}
+        isLoadingProvinces={this.props.isLoadingProvinces}
       />
     );
   }
@@ -82,21 +86,24 @@ function mapStateToProps(state) {
     genData: state.gen.genData,
     isLoadingGen: state.gen.isLoading,
     errorLoadingGen: state.gen.error,
-    baseData: state.base.baseData,
-    isLoadingBase: state.base.isLoading,
-    errorLoadingBase: state.base.error,
+    baseData: state.class.baseData,
+    isLoadingBase: state.class.isLoadingBase,
+    errorLoadingBase: state.class.errorLoadingBase,
     currentGen: state.gen.currentGen,
     analyticBaseId: state.analytics.selectedBaseId,
     analyticGenId: state.analytics.selectedGenId,
     isRefreshing: state.class.isRefreshing,
+    isLoadingProvinces: state.saveRegister.isLoadingProvinces,
+    errorLoadingProvinces: state.saveRegister.errorLoadingProvinces,
+    provinces: state.saveRegister.provinces,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     classActions: bindActionCreators(classActions, dispatch),
-    baseActions: bindActionCreators(baseActions, dispatch),
     genActions: bindActionCreators(genActions, dispatch),
+    saveRegisterActions: bindActionCreators(saveRegisterActions, dispatch),
   };
 }
 

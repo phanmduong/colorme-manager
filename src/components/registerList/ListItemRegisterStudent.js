@@ -13,6 +13,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {dotNumber, getShortName} from '../../helper';
 import CallRegisterModal from '../infoStudent/CallRegisterModal';
 import SubmitMoneyModal from '../infoStudent/SubmitMoneyModal';
+import Call from '../common/Call';
 
 class ListItemStudent extends React.Component {
   constructor(props, context) {
@@ -133,9 +134,12 @@ class ListItemStudent extends React.Component {
               )}
             </View>
             <View>
-              <Text
-                numberOfLines={1}
-                style={[styles.classInfoContainer, {paddingTop: 0}]}>
+              <Call
+                extraPadding={{paddingTop: 0, fontSize: 15}}
+                url={'tel:' + phone}
+                phone={phone}
+              />
+              <Text numberOfLines={1} style={styles.classInfoContainer}>
                 Đăng kí {created_at_cal}
               </Text>
               {paidStatus ? (

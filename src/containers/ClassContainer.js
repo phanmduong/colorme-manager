@@ -61,6 +61,7 @@ class ClassContainer extends React.Component {
   render() {
     return (
       <ClassComponent
+        {...this.props}
         classData={this.props.classData}
         isLoadingClass={this.props.isLoadingClass}
         courseData={this.props.courseData}

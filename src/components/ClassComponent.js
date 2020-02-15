@@ -163,15 +163,21 @@ class ClassComponent extends React.Component {
           }
           renderRow={(item, sectionID, rowID) => (
             <ListItemClass
+              {...this.props}
               nameClass={item.name}
               avatar={item.avatar_url}
               studyTime={item.study_time}
+              address={item.address}
               totalPaid={item.total_paid}
               totalRegisters={item.total_registers}
               paidTarget={item.paid_target}
               registerTarget={item.register_target}
               onPress={this.props.onSelectedItem}
               classId={item.id}
+              teach={item.teach}
+              assist={item.assist}
+              courseId={item.course_id}
+              baseId={item.base.id}
             />
           )}
         />

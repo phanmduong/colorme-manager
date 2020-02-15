@@ -50,22 +50,28 @@ class SaveRegisterComponent extends React.Component {
     let name = this.props.navigation.getParam('name');
     let phone = this.props.navigation.getParam('phone');
     let email = this.props.navigation.getParam('email');
+    let classId = this.props.navigation.getParam('classId');
+    let courseId = this.props.navigation.getParam('courseId');
+    if (!isEmptyInput(courseId)) {
+      this.props.onSelectCourseId(courseId);
+    }
+    let baseId = this.props.navigation.getParam('baseId');
     this.state = {
       name: isEmptyInput(name) ? '' : name,
       phone: isEmptyInput(phone) ? '' : phone,
       email: isEmptyInput(email) ? '' : email,
-      selectedCourse: false,
+      selectedCourse: !isEmptyInput(courseId),
       selectedCampaign: false,
       selectedGender: false,
       selectedAddress: false,
       selectedSource: false,
       selectedStatus: false,
-      selectedClassId: -1,
-      selectedCourseId: -1,
+      selectedClassId: isEmptyInput(classId) ? -1 : classId,
+      selectedCourseId: isEmptyInput(courseId) ? -1 : courseId,
       selectedSaler: false,
       source_id: '',
       status_id: '',
-      base_id: '',
+      base_id: isEmptyInput(baseId) ? '' : baseId,
       coupon: '',
       dob: '',
       address: '',
@@ -86,18 +92,139 @@ class SaveRegisterComponent extends React.Component {
 
   renderCoursePickerField = settings => {
     const {selectedItem, defaultText, getLabel} = settings;
+    let courseId = this.props.navigation.getParam('courseId');
     return (
       <LinearGradient
         colors={['#F6F6F6', '#F6F6F6']}
         style={styles.inputContainer}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}>
-        {!selectedItem && (
-          <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
-            <Text style={{color: '#b7b7b7', fontSize: 15}}>{defaultText}</Text>
-            <Text>▼</Text>
-          </View>
-        )}
+        {!selectedItem &&
+          (isEmptyInput(courseId) ? (
+            <View
+              style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+              <Text style={{color: '#b7b7b7', fontSize: 15}}>
+                {defaultText}
+              </Text>
+              <Text>▼</Text>
+            </View>
+          ) : (
+            <View
+              style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+              <Text style={{color: 'black', fontSize: 15}}>
+                {getLabel(this.getPropsName(this.props.courses, courseId))}
+              </Text>
+              <Text>▼</Text>
+            </View>
+          ))}
+        {selectedItem &&
+          (this.state.selectedCourse ? (
+            <View
+              style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+              <Text style={{color: 'black', fontSize: 15}}>
+                {getLabel(selectedItem)}
+              </Text>
+              <Text>▼</Text>
+            </View>
+          ) : (
+            <View
+              style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+              <Text style={{color: '#b7b7b7', fontSize: 15}}>
+                {defaultText}
+              </Text>
+              <Text>▼</Text>
+            </View>
+          ))}
+      </LinearGradient>
+    );
+  };
+
+  renderBasePickerField = settings => {
+    const {selectedItem, defaultText, getLabel} = settings;
+    let baseId = this.props.navigation.getParam('baseId');
+    return (
+      <LinearGradient
+        colors={['#F6F6F6', '#F6F6F6']}
+        style={styles.inputContainer}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 0}}>
+        {!selectedItem &&
+          (isEmptyInput(baseId) ? (
+            <View
+              style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+              <Text style={{color: '#b7b7b7', fontSize: 15}}>
+                {defaultText}
+              </Text>
+              <Text>▼</Text>
+            </View>
+          ) : (
+            <View
+              style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+              <Text style={{color: 'black', fontSize: 15}}>
+                {getLabel(
+                  this.getPropsName(
+                    this.getSelectBase(this.props.baseData, this.props.classes),
+                    baseId,
+                  ),
+                )}
+              </Text>
+              <Text>▼</Text>
+            </View>
+          ))}
+        {selectedItem &&
+          (this.state.selectedCourse ? (
+            <View
+              style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+              <Text style={{color: 'black', fontSize: 15}}>
+                {getLabel(selectedItem)}
+              </Text>
+              <Text>▼</Text>
+            </View>
+          ) : (
+            <View
+              style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+              <Text style={{color: '#b7b7b7', fontSize: 15}}>
+                {defaultText}
+              </Text>
+              <Text>▼</Text>
+            </View>
+          ))}
+      </LinearGradient>
+    );
+  };
+
+  renderClassPickerField = settings => {
+    const {selectedItem, defaultText, getLabel} = settings;
+    let classId = this.props.navigation.getParam('classId');
+    return (
+      <LinearGradient
+        colors={['#F6F6F6', '#F6F6F6']}
+        style={styles.inputContainer}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 0}}>
+        {!selectedItem &&
+          (isEmptyInput(classId) ? (
+            <View
+              style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+              <Text style={{color: '#b7b7b7', fontSize: 15}}>
+                {defaultText}
+              </Text>
+              <Text>▼</Text>
+            </View>
+          ) : (
+            <View
+              style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+              <Text style={{color: 'black', fontSize: 15}}>
+                {getLabel(
+                  this.getPropsName(
+                    this.filterBase(this.getClasses(this.props.classes)),
+                    classId,
+                  ),
+                )}
+              </Text>
+              <Text>▼</Text>
+            </View>
+          ))}
         {selectedItem &&
           (this.state.selectedCourse ? (
             <View
@@ -374,6 +501,15 @@ class SaveRegisterComponent extends React.Component {
       }
       return list;
     }
+  };
+
+  getPropsName = (array, comparedId) => {
+    for (let item of array) {
+      if (item.id === comparedId) {
+        return item;
+      }
+    }
+    return {name: ''};
   };
 
   renderPickerFooter(action) {
@@ -721,7 +857,7 @@ class SaveRegisterComponent extends React.Component {
                     modalAnimationType={'fade'}
                     onBlur={() => this.setState({search: ''})}
                     optionTemplate={this.renderPickerOption}
-                    fieldTemplate={this.renderCoursePickerField}
+                    fieldTemplate={this.renderBasePickerField}
                     headerTemplate={() => this.renderPickerHeader('Chọn cơ sở')}
                     footerTemplate={this.renderPickerFooter}
                     modalStyle={{
@@ -747,7 +883,7 @@ class SaveRegisterComponent extends React.Component {
                     modalAnimationType={'fade'}
                     onBlur={() => this.setState({search: ''})}
                     optionTemplate={this.renderPickerOption}
-                    fieldTemplate={this.renderCoursePickerField}
+                    fieldTemplate={this.renderClassPickerField}
                     headerTemplate={() => this.renderPickerHeader('Chọn lớp')}
                     footerTemplate={this.renderPickerFooter}
                     modalStyle={{

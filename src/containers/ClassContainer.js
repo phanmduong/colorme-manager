@@ -8,27 +8,41 @@ import ClassComponent from '../components/ClassComponent';
 import * as classActions from '../actions/classActions';
 import * as saveRegisterActions from '../actions/saveRegisterActions';
 import * as genActions from '../actions/genActions';
+import * as analyticsActions from '../actions/analyticsActions';
 
 class ClassContainer extends React.Component {
   constructor(props) {
     super(props);
     this.onSelectedItem = this.onSelectedItem.bind(this);
+    this.state = {
+      checkedDataGen: false,
+      checkedClasses: false,
+    };
   }
 
   componentDidMount() {
-    let genId =
-      this.props.analyticGenId === -1
-        ? this.props.currentGen.id
-        : this.props.analyticGenId;
-    this.props.classActions.loadDataClass(
-      this.props.analyticBaseId,
-      genId,
-      this.props.token,
-    );
+    this.props.genActions.loadDataGen(this.props.token);
     this.props.classActions.loadDataCourse(this.props.token);
     this.props.classActions.loadBaseData(this.props.token);
     this.props.saveRegisterActions.loadProvinces(this.props.token);
-    this.props.genActions.loadDataGen(this.props.token);
+  }
+
+  componentWillReceiveProps(props) {
+    const analyticsScreen = props.navigation.getParam('analyticsScreen');
+    let genId;
+    if (props.genData.length > 0 && !this.state.checkedDataGen) {
+      this.setState({checkedDataGen: true});
+      genId = analyticsScreen
+        ? props.analyticGenId === -1
+          ? props.currentGen.id
+          : props.analyticGenId
+        : props.currentGen.id;
+    }
+
+    if (props.genData.length > 0 && !this.state.checkedClasses) {
+      this.setState({checkedClasses: true});
+      this.loadDataClass(props.analyticBaseId, genId, this.props.token);
+    }
   }
 
   loadDataClass = (baseId, genId) => {
@@ -103,6 +117,7 @@ function mapDispatchToProps(dispatch) {
     classActions: bindActionCreators(classActions, dispatch),
     genActions: bindActionCreators(genActions, dispatch),
     saveRegisterActions: bindActionCreators(saveRegisterActions, dispatch),
+    analyticsActions: bindActionCreators(analyticsActions, dispatch),
   };
 }
 

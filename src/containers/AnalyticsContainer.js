@@ -173,7 +173,9 @@ class AnalyticsContainer extends React.Component {
   }
 
   onClickClass() {
-    this.props.navigation.navigate('Class');
+    this.props.navigation.navigate('Class', {
+      analyticsScreen: true,
+    });
   }
 
   onClickListStudentPaid() {

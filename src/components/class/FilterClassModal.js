@@ -129,7 +129,7 @@ class FilterClassModal extends React.Component {
       }
     }
     for (let gen of gens) {
-      if (gen.id === this.state.currentGen.id) {
+      if (gen.id === this.props.currentGen.id) {
         return gen;
       }
     }

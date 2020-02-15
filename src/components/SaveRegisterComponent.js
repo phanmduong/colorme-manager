@@ -484,6 +484,16 @@ class SaveRegisterComponent extends React.Component {
     );
   };
 
+  renderPickerFooter(action) {
+    return (
+      <TouchableOpacity
+        style={styles.headerFooterContainer}
+        onPress={action.close.bind(this)}>
+        <Text style={{color: '#C50000', fontSize: 19}}>Hủy</Text>
+      </TouchableOpacity>
+    );
+  }
+
   getSearchedResults = array => {
     let list = [];
     if (this.state.search === '') {
@@ -511,16 +521,6 @@ class SaveRegisterComponent extends React.Component {
     }
     return {name: ''};
   };
-
-  renderPickerFooter(action) {
-    return (
-      <TouchableOpacity
-        style={styles.headerFooterContainer}
-        onPress={action.close.bind(this)}>
-        <Text style={{color: '#C50000', fontSize: 19}}>Hủy</Text>
-      </TouchableOpacity>
-    );
-  }
 
   submitRegister = () => {
     if (isEmptyInput(this.state.name)) {

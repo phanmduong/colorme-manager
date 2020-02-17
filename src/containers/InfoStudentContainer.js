@@ -12,7 +12,7 @@ class InfoStudentContainer extends React.Component {
 
   componentDidMount(): void {
     let studentId = this.props.navigation.getParam('studentId');
-    this.props.infoStudentActions.loadStudent(studentId);
+    this.props.infoStudentActions.loadStudent(studentId, this.props.token);
   }
 
   setStudentId = studentId => {
@@ -59,6 +59,7 @@ class InfoStudentContainer extends React.Component {
   };
 
   render() {
+    console.log(this.props.student);
     return (
       <InfoStudentComponent
         {...this.props}

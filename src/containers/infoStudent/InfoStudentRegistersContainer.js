@@ -14,7 +14,7 @@ class InfoStudentRegistersContainer extends React.Component {
   };
 
   loadRegisters = studentId => {
-    this.props.infoStudentActions.loadRegisters(studentId);
+    this.props.infoStudentActions.loadRegisters(studentId, this.props.token);
   };
 
   changeCallStatus = (

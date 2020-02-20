@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import CurrentClassStudyComponent from '../components/CurrentClassStudyComponent';
 import * as currentClassStudyActions from '../actions/currentClassStudyActions';
+import * as classActions from '../actions/classActions';
 import {NavigationActions} from 'react-navigation';
 
 class CurrentClassStudyContainer extends React.Component {
@@ -23,8 +24,8 @@ class CurrentClassStudyContainer extends React.Component {
 
   onSelectedItem(classItem) {
     this.props.currentClassStudyActions.selectedCurrentClassStudy(classItem);
-    // this.props.listStudentAttendanceScreen();
-    this.props.navigation.navigate('ListStudentAttendance');
+    this.props.classActions.selectedClassId(classItem.id);
+    this.props.navigation.navigate('ListStudentClass');
   }
 
   openQrCode = classItem => {
@@ -82,6 +83,7 @@ function mapDispatchToProps(dispatch) {
       ),
     qrCodeScreen: () =>
       dispatch(NavigationActions.navigate({routeName: 'QRCode'})),
+    classActions: bindActionCreators(classActions, dispatch),
   };
 }
 

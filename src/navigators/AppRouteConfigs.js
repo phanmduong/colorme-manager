@@ -56,6 +56,7 @@ import TaskContainer from '../containers/TaskContainer';
 import NotificationContainer from '../containers/NotificationContainer';
 import ProfileContainer from '../containers/ProfileContainer';
 import EditProfileContainer from '../containers/EditProfileContainer';
+import EditClassContainer from '../containers/EditClassContainer';
 
 const navigationOptionsDefault = {
   defaultNavigationOptions: {
@@ -371,6 +372,13 @@ const TabDashboard = createStackNavigator(
     },
     EditProfile: {
       screen: EditProfileContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    EditClass: {
+      screen: EditClassContainer,
       navigationOptions: () => ({
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},

@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Animated,
   Switch,
-  Linking,
+  Alert,
   View,
   Text,
 } from 'react-native';
@@ -20,7 +20,18 @@ var maxWidthProcess = width / 4;
 class ListItemClass extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.state = {
+      classStatus: this.props.classStatus === 1,
+    };
   }
+
+  toggleSwitch = () => {
+    this.setState({classStatus: !this.state.classStatus});
+    this.props.changeClassStatus(this.props.classId);
+    if (this.props.errorClassStatus) {
+      Alert.alert('Thông báo', 'Có lỗi xảy ra');
+    }
+  };
 
   content() {
     var {
@@ -37,6 +48,9 @@ class ListItemClass extends React.Component {
       classId,
       courseId,
       baseId,
+      classData,
+      selectedGenId,
+      selectedBaseId,
     } = this.props;
     var tmpTotalPaid, tmpTotalRegister;
     tmpTotalPaid = totalPaid < paidTarget ? totalPaid : paidTarget;
@@ -57,7 +71,12 @@ class ListItemClass extends React.Component {
             }}>
             {nameClass}
           </Text>
-          <Switch value={true} />
+          {this.props.user.role === 2 ? (
+            <Switch
+              value={this.state.classStatus}
+              onValueChange={this.toggleSwitch}
+            />
+          ) : null}
         </View>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Thumbnail small />
@@ -173,7 +192,14 @@ class ListItemClass extends React.Component {
                   <Text style={{fontSize: 16}}>Thêm học viên</Text>
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() =>
+                  this.props.navigation.navigate('EditClass', {
+                    classData: classData,
+                    selectedGenId: selectedGenId,
+                    selectedBaseId: selectedBaseId,
+                  })
+                }>
                 <View style={[{marginLeft: 10}, styles.button]}>
                   <Text style={{fontSize: 16}}>Sửa</Text>
                 </View>
@@ -272,6 +298,10 @@ const styles = {
   },
   textProcess: {
     marginLeft: 15,
+  },
+  containerSubTitle: {
+    flexDirection: 'row',
+    marginBottom: 10,
   },
 };
 

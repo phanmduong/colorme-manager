@@ -58,6 +58,10 @@ class ClassContainer extends React.Component {
     this.props.navigation.navigate('ListStudentClass');
   }
 
+  changeClassStatus = classId => {
+    this.props.classActions.changeClassStatus(classId, this.props.token);
+  };
+
   render() {
     return (
       <ClassComponent
@@ -79,6 +83,8 @@ class ClassContainer extends React.Component {
         analyticBaseId={this.props.analyticBaseId}
         provinces={this.props.provinces}
         isLoadingProvinces={this.props.isLoadingProvinces}
+        changeClassStatus={this.changeClassStatus}
+        user={this.props.user}
       />
     );
   }
@@ -94,6 +100,7 @@ function mapStateToProps(state) {
     isLoadingClass: state.class.isLoading,
     errorLoadingClass: state.class.error,
     token: state.login.token,
+    user: state.login.user,
     selectedClassId: state.class.selectedClassId,
     courseData: state.class.courseData,
     isLoadingCourse: state.class.isLoadingCourse,

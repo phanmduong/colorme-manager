@@ -171,3 +171,166 @@ export function loadBaseData(token) {
       });
   };
 }
+
+export function infoCreateClass(token) {
+  return function(dispatch) {
+    dispatch(beginLoadInfoCreateClass());
+    classApi
+      .infoCreateClass(token)
+      .then(function(res) {
+        dispatch(loadInfoCreateClassSuccessful(res));
+      })
+      .catch(error => {
+        dispatch(loadInfoCreateClassError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadInfoCreateClass() {
+  return {
+    type: types.BEGIN_LOAD_INFO_CREATE_CLASS,
+    loadingInfoCreateClass: true,
+    errorInfoCreateClass: false,
+  };
+}
+
+function loadInfoCreateClassSuccessful(res) {
+  return {
+    type: types.LOAD_INFO_CREATE_CLASS_SUCCESSFUL,
+    loadingInfoCreateClass: false,
+    errorInfoCreateClass: false,
+    schedules: res.data.data.schedules,
+    rooms: res.data.data.rooms,
+    courses: res.data.data.courses,
+    genData: res.data.data.gens,
+    staffs: res.data.data.staffs,
+  };
+}
+
+function loadInfoCreateClassError() {
+  return {
+    type: types.LOAD_INFO_CREATE_CLASS_ERROR,
+    loadingInfoCreateClass: false,
+    errorInfoCreateClass: true,
+  };
+}
+
+export function addClass(classData, baseId, genId, token) {
+  return function(dispatch) {
+    dispatch(beginAddClass());
+    classApi
+      .addClass(classData, token)
+      .then(function(res) {
+        dispatch(addClassSuccessful());
+        dispatch(refreshDataClass(baseId, genId, token));
+      })
+      .catch(error => {
+        dispatch(addClassError());
+        throw error;
+      });
+  };
+}
+
+function beginAddClass() {
+  return {
+    type: types.BEGIN_ADD_CLASS,
+    isUpdatingClass: true,
+    errorUpdatingClass: false,
+  };
+}
+
+function addClassSuccessful() {
+  return {
+    type: types.ADD_CLASS_SUCCESSFUL,
+    isUpdatingClass: false,
+    errorUpdatingClass: false,
+  };
+}
+
+function addClassError() {
+  return {
+    type: types.ADD_CLASS_ERROR,
+    isUpdatingClass: false,
+    errorUpdatingClass: true,
+  };
+}
+
+export function loadClassInfo(classId, token) {
+  return function(dispatch) {
+    dispatch(beginLoadClassInfo());
+    classApi
+      .loadClassInfo(classId, token)
+      .then(function(res) {
+        dispatch(loadClassInfoSuccessful(res));
+      })
+      .catch(error => {
+        dispatch(loadClassInfoError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadClassInfo() {
+  return {
+    type: types.BEGIN_LOAD_CLASS_INFO,
+    loadingClassInfo: true,
+    errorClassInfo: false,
+  };
+}
+
+function loadClassInfoSuccessful(res) {
+  return {
+    type: types.LOAD_CLASS_INFO_SUCCESSFUL,
+    loadingClassInfo: false,
+    errorClassInfo: false,
+    classInfo: res.data.data.class,
+  };
+}
+
+function loadClassInfoError() {
+  return {
+    type: types.LOAD_CLASS_INFO_ERROR,
+    loadingClassInfo: false,
+    errorClassInfo: true,
+  };
+}
+
+export function changeClassStatus(classId, token) {
+  return function(dispatch) {
+    dispatch(beginChangeClassStatus());
+    classApi
+      .changeClassStatus(classId, token)
+      .then(function(res) {
+        dispatch(changeClassStatusSuccessful());
+      })
+      .catch(error => {
+        dispatch(changeClassStatusError());
+        throw error;
+      });
+  };
+}
+
+function beginChangeClassStatus() {
+  return {
+    type: types.BEGIN_CHANGE_CLASS_STATUS,
+    changingClassStatus: true,
+    errorClassStatus: false,
+  };
+}
+
+function changeClassStatusSuccessful() {
+  return {
+    type: types.CHANGE_CLASS_STATUS_SUCCESSFUL,
+    changingClassStatus: false,
+    errorClassStatus: false,
+  };
+}
+
+function changeClassStatusError() {
+  return {
+    type: types.CHANGE_CLASS_STATUS_ERROR,
+    changingClassStatus: false,
+    errorClassStatus: true,
+  };
+}

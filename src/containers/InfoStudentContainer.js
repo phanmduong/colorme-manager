@@ -59,7 +59,6 @@ class InfoStudentContainer extends React.Component {
   };
 
   render() {
-    console.log(this.props.student);
     return (
       <InfoStudentComponent
         {...this.props}

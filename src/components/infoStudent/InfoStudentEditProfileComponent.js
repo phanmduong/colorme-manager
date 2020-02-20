@@ -183,7 +183,7 @@ class InfoStudentEditProfileComponent extends React.Component {
       };
       this.props.updateProfile(register);
       if (this.props.errorLoadingRegister) {
-        Alert.alert('Thông báo', 'Có lỗi xảy !');
+        Alert.alert('Thông báo', 'Có lỗi xảy ra!');
       } else {
         // this.reset();
         Alert.alert('Thông báo', 'Đăng ký thành công!');

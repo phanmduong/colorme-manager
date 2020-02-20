@@ -74,6 +74,72 @@ export default function classReducer(state = initialState.class, action) {
       return Object.assign({}, state, {
         selectedClassId: action.selectedClassId,
       });
+    case types.BEGIN_LOAD_INFO_CREATE_CLASS:
+      return Object.assign({}, state, {
+        loadingInfoCreateClass: action.loadingInfoCreateClass,
+        errorInfoCreateClass: action.errorInfoCreateClass,
+      });
+    case types.LOAD_INFO_CREATE_CLASS_SUCCESSFUL:
+      return Object.assign({}, state, {
+        loadingInfoCreateClass: action.loadingInfoCreateClass,
+        errorInfoCreateClass: action.errorInfoCreateClass,
+        schedules: action.schedules,
+        rooms: action.rooms,
+        courses: action.courses,
+        genData: action.genData,
+        staffs: action.staffs,
+      });
+    case types.LOAD_INFO_CREATE_CLASS_ERROR:
+      return Object.assign({}, state, {
+        loadingInfoCreateClass: action.loadingInfoCreateClass,
+        errorInfoCreateClass: action.errorInfoCreateClass,
+      });
+    case types.BEGIN_ADD_CLASS:
+      return Object.assign({}, state, {
+        isUpdatingClass: action.isUpdatingClass,
+        errorUpdatingClass: action.errorUpdatingClass,
+      });
+    case types.ADD_CLASS_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isUpdatingClass: action.isUpdatingClass,
+        errorUpdatingClass: action.errorUpdatingClass,
+      });
+    case types.ADD_CLASS_ERROR:
+      return Object.assign({}, state, {
+        isUpdatingClass: action.isUpdatingClass,
+        errorUpdatingClass: action.errorUpdatingClass,
+      });
+    case types.BEGIN_LOAD_CLASS_INFO:
+      return Object.assign({}, state, {
+        loadingClassInfo: action.loadingClassInfo,
+        errorClassInfo: action.errorClassInfo,
+      });
+    case types.LOAD_CLASS_INFO_SUCCESSFUL:
+      return Object.assign({}, state, {
+        loadingClassInfo: action.loadingClassInfo,
+        errorClassInfo: action.errorClassInfo,
+        classInfo: action.classInfo,
+      });
+    case types.LOAD_CLASS_INFO_ERROR:
+      return Object.assign({}, state, {
+        loadingClassInfo: action.loadingClassInfo,
+        errorClassInfo: action.errorClassInfo,
+      });
+    case types.BEGIN_CHANGE_CLASS_STATUS:
+      return Object.assign({}, state, {
+        changingClassStatus: action.changingClassStatus,
+        errorClassStatus: action.errorClassStatus,
+      });
+    case types.CHANGE_CLASS_STATUS_SUCCESSFUL:
+      return Object.assign({}, state, {
+        changingClassStatus: action.changingClassStatus,
+        errorClassStatus: action.errorClassStatus,
+      });
+    case types.CHANGE_CLASS_STATUS_ERROR:
+      return Object.assign({}, state, {
+        changingClassStatus: action.changingClassStatus,
+        errorClassStatus: action.errorClassStatus,
+      });
     default:
       return state;
   }

@@ -174,10 +174,16 @@ class ClassComponent extends React.Component {
               registerTarget={item.register_target}
               onPress={this.props.onSelectedItem}
               classId={item.id}
-              teach={item.teach}
-              assist={item.assist}
+              teach={item.teacher}
+              assist={item.teacher_assistant}
               courseId={item.course_id}
               baseId={item.base.id}
+              changeClassStatus={this.props.changeClassStatus}
+              classStatus={item.status}
+              user={this.props.user}
+              classData={item}
+              selectedGenId={this.state.selectedGenId}
+              selectedBaseId={this.state.selectedBaseId}
             />
           )}
         />

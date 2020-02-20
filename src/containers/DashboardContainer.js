@@ -5,6 +5,7 @@ import React from 'react';
 import DashboardComponent from '../components/DashboardComponent';
 import * as taskActions from '../actions/taskActions';
 import * as notificationActions from '../actions/notificationActions';
+import * as registerListActions from '../actions/registerListActions';
 import MeetingStore from './meeting/MeetingStore';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -38,6 +39,10 @@ class DashboardContainer extends React.Component {
     this.props.notificationActions.loadNotifications(1, this.props.token);
   };
 
+  setAutoFocusRegisterListSearch = bool => {
+    this.props.registerListActions.setAutoFocusRegisterListSearch(bool);
+  };
+
   render() {
     return (
       <DashboardComponent
@@ -45,6 +50,7 @@ class DashboardContainer extends React.Component {
         {...this.props}
         refreshNotifications={this.refreshNotifications}
         refreshTasks={this.loadTasks}
+        setAutoFocusRegisterListSearch={this.setAutoFocusRegisterListSearch}
       />
     );
   }
@@ -74,6 +80,7 @@ function mapDispatchToProps(dispatch) {
   return {
     taskActions: bindActionCreators(taskActions, dispatch),
     notificationActions: bindActionCreators(notificationActions, dispatch),
+    registerListActions: bindActionCreators(registerListActions, dispatch),
   };
 }
 

@@ -185,7 +185,6 @@ class ListItemClass extends React.Component {
                     classId: classId,
                     courseId: courseId,
                     baseId: baseId,
-                    isSubScreen: true,
                   })
                 }>
                 <View style={styles.button}>

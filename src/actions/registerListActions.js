@@ -323,3 +323,10 @@ function resetRegisterListProps() {
     classId: -1,
   };
 }
+
+export function setAutoFocusRegisterListSearch(bool) {
+  return {
+    type: types.SET_AUTOFOCUS_REGISTER_LIST_SEARCH,
+    autoFocusRegisterListSearch: bool,
+  };
+}

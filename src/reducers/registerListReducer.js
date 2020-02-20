@@ -111,6 +111,10 @@ export default function registerListReducer(
         status_id: action.status_id,
         classId: action.classId,
       });
+    case types.SET_AUTOFOCUS_REGISTER_LIST_SEARCH:
+      return Object.assign({}, state, {
+        autoFocusRegisterListSearch: action.autoFocusRegisterListSearch,
+      });
     default:
       return state;
   }

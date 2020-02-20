@@ -99,6 +99,35 @@ const TabAttendance = createStackNavigator(
         headerTitleStyle: {color: 'black'},
       }),
     },
+    InfoStudent: {
+      screen: InfoStudentContainer,
+      navigationOptions: () => ({
+        header: null,
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    InfoStudentRegister: {
+      screen: InfoStudentRegistersContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    InfoStudentDetails: {
+      screen: InfoStudentDetailsContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    ListStudentClass: {
+      screen: ListStudentClassContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
   },
   navigationOptionsDefault,
 );
@@ -171,13 +200,6 @@ const TabDashboard = createStackNavigator(
     },
     ListStudentZero: {
       screen: ListStudentZeroContainer,
-      navigationOptions: () => ({
-        headerTintColor: 'black',
-        headerTitleStyle: {color: 'black'},
-      }),
-    },
-    RegisterList: {
-      screen: RegisterListContainer,
       navigationOptions: () => ({
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},

@@ -10,6 +10,7 @@ import * as dashboardActions from '../actions/analyticsActions';
 import * as loginActions from '../actions/loginActions';
 import AnalyticsComponent from '../components/AnalyticsComponent';
 import {NavigationActions} from 'react-navigation';
+import * as registerListActions from '../actions/registerListActions';
 import {Alert} from 'react-native';
 import _ from 'lodash';
 
@@ -187,10 +188,8 @@ class AnalyticsContainer extends React.Component {
   }
 
   onClickRegisterList() {
-    this.props.navigation.navigate('RegisterList', {
-      autoFocus: false,
-      isSubScreen: true,
-    });
+    this.props.registerListActions.setAutoFocusRegisterListSearch(true);
+    this.props.navigation.navigate('RegisterList');
   }
 
   render() {
@@ -246,6 +245,7 @@ function mapDispatchToProps(dispatch) {
     genActions: bindActionCreators(genActions, dispatch),
     dashboardActions: bindActionCreators(dashboardActions, dispatch),
     loginActions: bindActionCreators(loginActions, dispatch),
+    registerListActions: bindActionCreators(registerListActions, dispatch),
   };
 }
 

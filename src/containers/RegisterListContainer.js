@@ -327,11 +327,11 @@ class RegisterListContainer extends React.Component {
     this.props.registerListActions.reset();
   };
 
+  setAutoFocusRegisterListSearch = bool => {
+    this.props.registerListActions.setAutoFocusRegisterListSearch(bool);
+  };
+
   render() {
-    let autoFocus = this.props.navigation.getParam('autoFocus');
-    if (isEmptyInput(autoFocus)) {
-      autoFocus = false;
-    }
     return (
       <RegisterListComponent
         {...this.props}
@@ -344,7 +344,7 @@ class RegisterListContainer extends React.Component {
         loadDataRegisterList={this.loadDataRegisterListMy}
         updateFormAndLoadDataSearch={this.updateFormAndLoadDataSearchMy}
         setStudentId={this.setStudentId}
-        autoFocus={autoFocus}
+        autoFocus={this.props.autoFocusRegisterListSearch}
         token={this.props.token}
         errorChangeCallStatus={this.props.errorChangeCallStatus}
         errorSubmitMoney={this.props.errorSubmitMoney}
@@ -396,6 +396,7 @@ class RegisterListContainer extends React.Component {
         filterClasses={this.props.filterClasses}
         onSelectClassId={this.onSelectClassId}
         reloadFilterClasses={this.reloadFilterClasses}
+        setAutoFocusRegisterListSearch={this.setAutoFocusRegisterListSearch}
       />
     );
   }
@@ -444,6 +445,7 @@ function mapStateToProps(state) {
     isLoadingFilterClasses: state.saveRegister.isLoadingFilterClasses,
     filterClasses: state.saveRegister.filterClasses,
     classId: state.registerList.classId,
+    autoFocusRegisterListSearch: state.registerList.autoFocusRegisterListSearch,
   };
 }
 

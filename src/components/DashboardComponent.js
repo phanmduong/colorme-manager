@@ -111,12 +111,10 @@ class DashboardComponent extends React.Component {
               </View>
             </View>
             <TouchableOpacity
-              onPress={() =>
-                this.props.navigation.navigate('RegisterList', {
-                  autoFocus: true,
-                  isSubScreen: true,
-                })
-              }>
+              onPress={() => {
+                this.props.setAutoFocusRegisterListSearch(true);
+                this.props.navigation.navigate('RegisterList');
+              }}>
               <View style={styles.searchContainer}>
                 <Icon
                   name={'ios-search'}
@@ -214,9 +212,7 @@ class DashboardComponent extends React.Component {
                 iconImage={require('../../assets/img/icons8-writer_male.png')}
                 title={'Tạo đăng ký'}
                 onPress={() => {
-                  this.props.navigation.navigate('SaveRegister', {
-                    isSubScreen: true,
-                  });
+                  this.props.navigation.navigate('SaveRegister');
                 }}
               />
             </View>

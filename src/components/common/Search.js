@@ -10,6 +10,8 @@ const Search = ({
   autoFocus,
   extraStyle,
   extraInputStyle,
+  onBlur,
+  refer,
 }) => {
   return (
     <View style={[styles.searchContainer, extraStyle]}>
@@ -25,6 +27,8 @@ const Search = ({
         autoCapitalize="none"
         onChangeText={data => onChangeText(data)}
         value={value}
+        onBlur={onBlur}
+        ref={refer}
         style={[styles.searchInput, extraInputStyle]}
         clearButtonMode={'while-editing'}
         returnKeyType={'done'}

@@ -26,6 +26,12 @@ class RegisterListComponent extends React.Component {
     this.setState({filterModalVisible: !this.state.filterModalVisible});
   };
 
+  componentDidMount = () => {
+    this.props.navigation.addListener('didFocus', route => {
+      this.props.autoFocus ? this.searchRegisterList.focus() : null;
+    });
+  };
+
   resetModal = () => {
     this.setState({filterModalVisible: false});
     setTimeout(() => {
@@ -41,9 +47,12 @@ class RegisterListComponent extends React.Component {
           placeholder="Tìm kiếm (Email, tên, số điện thoại)"
           onChangeText={updateFormAndLoadDataSearch}
           value={search}
-          autoFocus={this.props.autoFocus}
+          refer={input => {
+            this.searchRegisterList = input;
+          }}
           extraStyle={{width: width - 85}}
           extraInputStyle={{width: width - 85 - 48}}
+          onBlur={() => this.props.setAutoFocusRegisterListSearch(false)}
         />
         <TouchableOpacity onPress={this.toggleFilterModal}>
           <View style={styles.fitlerContainer}>
@@ -110,21 +119,18 @@ class RegisterListComponent extends React.Component {
   }
 
   headerComponent = () => {
-    let isSubScreen = this.props.navigation.getParam('isSubScreen');
     return (
       <View style={{flex: 1}}>
-        {!isSubScreen ? (
-          <View style={styles.headerContainer}>
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Profile')}>
-              <Image
-                source={{uri: this.props.user.avatar_url}}
-                style={styles.headerAva}
-              />
-            </TouchableOpacity>
-            <Text style={styles.headerTitle}>Học viên</Text>
-          </View>
-        ) : null}
+        <View style={styles.headerContainer}>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Profile')}>
+            <Image
+              source={{uri: this.props.user.avatar_url}}
+              style={styles.headerAva}
+            />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>Học viên</Text>
+        </View>
         {this.renderSearch()}
       </View>
     );
@@ -199,11 +205,10 @@ class RegisterListComponent extends React.Component {
   }
 
   render() {
-    let isSubScreen = this.props.navigation.getParam('isSubScreen');
     return (
       <View
         style={
-          isIphoneX() && !isSubScreen
+          isIphoneX()
             ? {flex: 1, marginTop: getStatusBarHeight() + 10}
             : {flex: 1, marginTop: 20}
         }>

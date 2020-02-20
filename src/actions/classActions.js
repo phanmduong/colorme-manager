@@ -223,7 +223,7 @@ export function addClass(classData, baseId, genId, token) {
       .addClass(classData, token)
       .then(function(res) {
         dispatch(addClassSuccessful());
-        dispatch(refreshDataClass(baseId, genId, token));
+        dispatch(loadDataClass(baseId, genId, token));
       })
       .catch(error => {
         dispatch(addClassError());

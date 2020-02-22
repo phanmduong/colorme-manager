@@ -8,6 +8,8 @@ import CurrentClassStudyComponent from '../components/CurrentClassStudyComponent
 import * as currentClassStudyActions from '../actions/currentClassStudyActions';
 import * as classActions from '../actions/classActions';
 import {NavigationActions} from 'react-navigation';
+import moment from 'moment';
+import * as saveRegisterActions from '../actions/saveRegisterActions';
 
 class CurrentClassStudyContainer extends React.Component {
   constructor(props) {
@@ -17,10 +19,22 @@ class CurrentClassStudyContainer extends React.Component {
   }
 
   componentWillMount() {
+    this.props.classActions.loadDataCourse(this.props.token);
+    this.props.classActions.loadBaseData(this.props.token);
+    this.props.saveRegisterActions.loadProvinces(this.props.token);
+    this.loadDataCurrentClassStudy(this.props.selectedDate);
+  }
+
+  loadDataCurrentClassStudy = date => {
     this.props.currentClassStudyActions.loadDataCurrentClassStudy(
+      date,
       this.props.token,
     );
-  }
+  };
+
+  componentWillUnmount = () => {
+    this.onSelectDate(moment(new Date()).format('YYYY-MM-DD'));
+  };
 
   onSelectedItem(classItem) {
     this.props.currentClassStudyActions.selectedCurrentClassStudy(classItem);
@@ -30,7 +44,6 @@ class CurrentClassStudyContainer extends React.Component {
 
   openQrCode = classItem => {
     this.props.currentClassStudyActions.selectedCurrentClassStudy(classItem);
-    // this.props.qrCodeScreen();
     this.props.navigation.navigate('QRCode');
   };
 
@@ -40,10 +53,14 @@ class CurrentClassStudyContainer extends React.Component {
     );
   }
 
+  onSelectDate = date => {
+    this.props.currentClassStudyActions.onSelectDate(date);
+  };
+
   render() {
-    console.log(this.props.classData);
     return (
       <CurrentClassStudyComponent
+        {...this.props}
         error={this.props.error}
         classData={this.props.classData}
         isLoading={this.props.isLoading}
@@ -51,7 +68,14 @@ class CurrentClassStudyContainer extends React.Component {
         openQrCode={this.openQrCode}
         onReload={this.reloadCurrentClassStudy}
         avatar_url={this.props.avatar_url}
-        {...this.props}
+        onSelectDate={this.onSelectDate}
+        loadDataCurrentClassStudy={this.loadDataCurrentClassStudy}
+        courseData={this.props.courseData}
+        isLoadingCourse={this.props.isLoadingCourse}
+        baseData={this.props.baseData}
+        isLoadingBase={this.props.isLoadingBase}
+        isLoadingProvinces={this.props.isLoadingProvinces}
+        provinces={this.props.provinces}
       />
     );
   }
@@ -68,6 +92,15 @@ function mapStateToProps(state) {
     error: state.currentClassStudy.error,
     token: state.login.token,
     avatar_url: state.login.user.avatar_url,
+    selectedDate: state.currentClassStudy.selectedDate,
+    courseData: state.class.courseData,
+    isLoadingCourse: state.class.isLoadingCourse,
+    baseData: state.class.baseData,
+    isLoadingBase: state.class.isLoadingBase,
+    errorLoadingBase: state.class.errorLoadingBase,
+    isLoadingProvinces: state.saveRegister.isLoadingProvinces,
+    errorLoadingProvinces: state.saveRegister.errorLoadingProvinces,
+    provinces: state.saveRegister.provinces,
   };
 }
 
@@ -84,6 +117,7 @@ function mapDispatchToProps(dispatch) {
     qrCodeScreen: () =>
       dispatch(NavigationActions.navigate({routeName: 'QRCode'})),
     classActions: bindActionCreators(classActions, dispatch),
+    saveRegisterActions: bindActionCreators(saveRegisterActions, dispatch),
   };
 }
 

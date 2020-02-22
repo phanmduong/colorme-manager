@@ -30,6 +30,10 @@ export default function classReducer(
       return Object.assign({}, state, {
         selectedCurrentClassStudy: action.selectedCurrentClassStudy,
       });
+    case types.ON_SELECT_CLASS_DATE:
+      return Object.assign({}, state, {
+        selectedDate: action.selectedDate,
+      });
     default:
       return state;
   }

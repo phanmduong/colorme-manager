@@ -19,7 +19,7 @@ class ListStudentAttendanceContainer extends React.Component {
 
   onLoad() {
     const classID = this.props.classSelected.id;
-    const lessonID = this.props.classSelected.lesson.class_lesson_id;
+    const lessonID = this.props.classSelected.lesson.id;
     this.props.listStudentAttendanceActions.loadDataListStudentAttendance(
       classID,
       lessonID,
@@ -44,7 +44,6 @@ ListStudentAttendanceContainer.navigationOptions = {
 };
 
 function mapStateToProps(state) {
-  console.log(state.currentClassStudy.selectedCurrentClassStudy);
   return {
     token: state.login.token,
     classSelected: state.currentClassStudy.selectedCurrentClassStudy,

@@ -12,11 +12,11 @@ export function beginDataCurrentClassStudyLoad() {
   };
 }
 
-export function loadDataCurrentClassStudy(token) {
+export function loadDataCurrentClassStudy(date, token) {
   return function(dispatch) {
     dispatch(beginDataCurrentClassStudyLoad());
     classApi
-      .loadCurrentClassStudyApi(token)
+      .loadCurrentClassStudyApi(date, token)
       .then(function(res) {
         dispatch(loadDataSuccessful(res));
       })
@@ -30,7 +30,7 @@ export function loadDataCurrentClassStudy(token) {
 export function loadDataSuccessful(res) {
   return {
     type: types.LOAD_DATA_CURRENT_CLASS_STUDY_SUCCESSFUL,
-    classData: res.data.data,
+    classData: res.data.classes,
     isLoading: false,
     error: false,
   };
@@ -51,5 +51,12 @@ export function selectedCurrentClassStudy(classItem) {
       ...classItem,
       lesson: classItem.lesson[0],
     },
+  };
+}
+
+export function onSelectDate(date) {
+  return {
+    type: types.ON_SELECT_CLASS_DATE,
+    selectedDate: date,
   };
 }

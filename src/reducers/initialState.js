@@ -79,6 +79,7 @@ export default {
     isLoading: false,
     error: false,
     selectedCurrentClassStudy: {},
+    selectedDate: moment(new Date()).format('YYYY-MM-DD'),
   },
   qrcode: {
     isScanned: false,

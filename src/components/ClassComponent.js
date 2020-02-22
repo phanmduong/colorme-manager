@@ -31,7 +31,7 @@ class ClassComponent extends React.Component {
     this.setState({selectedBaseId: baseId});
   };
 
-  onSelectCityId = provinceId => {
+  onSelectProvinceId = provinceId => {
     this.setState({selectedProvinceId: provinceId});
   };
 
@@ -114,7 +114,7 @@ class ClassComponent extends React.Component {
           selectedCourseId={this.state.selectedCourseId}
           onSelectBaseId={this.onSelectBaseId}
           selectedBaseId={this.state.selectedBaseId}
-          onSelectCityId={this.onSelectCityId}
+          onSelectProvinceId={this.onSelectProvinceId}
           selectedProvinceId={this.state.selectedProvinceId}
           onSelectGenId={this.onSelectGenId}
           selectedGenId={this.state.selectedGenId}

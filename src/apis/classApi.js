@@ -29,8 +29,14 @@ export function loadCourseApi(token) {
   return axios.get(url);
 }
 
-export function loadCurrentClassStudyApi(token) {
-  let url = env.API_URL + '/current-study-class?token=' + token;
+export function loadCurrentClassStudyApi(date, token) {
+  let url =
+    env.BASE_URL +
+    '/manageapi/v4/class/by-date-teaching?date=' +
+    date +
+    '&include=class_lesson.analytics_attendance,class_lesson.lesson,base,room,course,teacher,teacher_assistant,schedule&token=' +
+    token;
+  console.log(url)
   return axios.get(url);
 }
 

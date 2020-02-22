@@ -23,7 +23,6 @@ class FilterClassModal extends React.Component {
       selectedCourseId: this.props.selectedCourseId,
       selectedBaseId: this.props.selectedBaseId,
       selectedProvinceId: this.props.selectedProvinceId,
-      selectedGenId: this.props.selectedGenId,
     };
   }
 
@@ -122,31 +121,6 @@ class FilterClassModal extends React.Component {
     return array[0];
   };
 
-  getDefaultGen = gens => {
-    for (let gen of gens) {
-      if (gen.id === this.state.selectedGenId) {
-        return gen;
-      }
-    }
-    for (let gen of gens) {
-      if (gen.id === this.props.currentGen.id) {
-        return gen;
-      }
-    }
-    return gens[0];
-  };
-
-  getGenData = () => {
-    let defaultGen = {id: -2, name: 'Tất cả'};
-    let genData = [];
-    genData.push(defaultGen);
-    for (let gen of this.props.genData) {
-      let pushedGen = {id: gen.id, name: 'Khóa ' + gen.name};
-      genData.push(pushedGen);
-    }
-    return genData;
-  };
-
   getSearchedResults = array => {
     let list = [];
     if (this.state.search === '') {
@@ -170,7 +144,6 @@ class FilterClassModal extends React.Component {
     this.props.onSelectCourseId(this.state.selectedCourseId);
     this.props.onSelectProvinceId(this.state.selectedProvinceId);
     this.props.onSelectBaseId(this.state.selectedBaseId);
-    this.props.onSelectGenId(this.state.selectedGenId);
   };
 
   filterProvinces = bases => {
@@ -200,8 +173,7 @@ class FilterClassModal extends React.Component {
         onBackButtonPress={this.props.closeModal}
         style={styles.modalContainer}>
         <View style={styles.modal}>
-          {!this.props.isLoadingGen &&
-          !this.props.isLoadingBase &&
+          {!this.props.isLoadingBase &&
           !this.props.isLoadingCourse &&
           !this.props.isLoadingProvinces ? (
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -291,36 +263,9 @@ class FilterClassModal extends React.Component {
                   }}
                 />
               </View>
-              <View style={styles.filterTitle}>
-                <Text style={{fontSize: 16}}>Khóa học</Text>
-                <CustomPicker
-                  options={this.getSearchedResults(this.getGenData())}
-                  defaultValue={this.getDefaultGen(this.getGenData())}
-                  getLabel={item => item.name}
-                  modalAnimationType={'fade'}
-                  optionTemplate={this.renderPickerOption}
-                  fieldTemplate={this.renderPickerField}
-                  headerTemplate={() =>
-                    this.renderPickerHeader('Chọn khóa học')
-                  }
-                  footerTemplate={this.renderPickerFooter}
-                  onBlur={() => this.setState({search: ''})}
-                  modalStyle={{
-                    borderRadius: 6,
-                  }}
-                  onValueChange={value => {
-                    this.setState({search: ''});
-                    this.setState({selectedGenId: value.id});
-                  }}
-                />
-              </View>
               <TouchableOpacity
                 onPress={() => {
                   this.applyFilter();
-                  this.props.filter(
-                    this.state.selectedBaseId,
-                    this.state.selectedGenId,
-                  );
                   this.props.closeModal();
                 }}>
                 <View style={styles.submit}>
@@ -350,7 +295,7 @@ class FilterClassModal extends React.Component {
 const styles = {
   modal: {
     backgroundColor: 'white',
-    height: height - 350,
+    height: height - 500,
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
     paddingHorizontal: 16,

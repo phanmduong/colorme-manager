@@ -164,6 +164,12 @@ class ClassComponent extends React.Component {
         classItem => classItem.base.id === this.state.selectedBaseId,
       );
     }
+    if (this.state.selectedProvinceId !== -1) {
+      filterClasses = filterClasses.filter(
+        classItem =>
+          classItem.base.district.province.id === this.state.selectedProvinceId,
+      );
+    }
     for (let classItem of filterClasses) {
       let classLesson = this.getCurrentLesson(
         this.props.selectedDate,

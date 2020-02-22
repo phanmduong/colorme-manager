@@ -34,9 +34,9 @@ export function loadCurrentClassStudyApi(date, token) {
     env.BASE_URL +
     '/manageapi/v4/class/by-date-teaching?date=' +
     date +
-    '&include=class_lesson.analytics_attendance,class_lesson.lesson,base,room,course,teacher,teacher_assistant,schedule&token=' +
+    '&include=class_lesson.analytics_attendance,class_lesson.lesson,base.district.province,room,course,teacher,teacher_assistant,schedule&token=' +
     token;
-  console.log(url)
+  console.log(url);
   return axios.get(url);
 }
 

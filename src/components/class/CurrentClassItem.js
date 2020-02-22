@@ -52,142 +52,153 @@ class CurrentClassItem extends React.Component {
         ? total_attendances
         : total_took_attendances;
     return (
-      <View style={styles.itemContainer}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Thumbnail small source={{uri: icon}} />
-            <Text numberOfLines={1} style={styles.className}>
-              {name}
-            </Text>
-          </View>
-          <Image
-            source={require('../../../assets/img/icons8-more-than-100.png')}
-            style={{width: 15, height: 15}}
-          />
-        </View>
-        <View style={{flexDirection: 'row'}}>
-          <View style={styles.placeholderAva} />
-          <View style={styles.infoContainer}>
-            <View style={styles.containerSubTitle}>
-              {!isEmptyInput(currentLesson) &&
-              !isEmptyInput(currentLesson.lesson) &&
-              !isEmptyInput(currentLesson.lesson.order) ? (
-                <View
-                  style={{
-                    ...styles.card,
-                    ...{
-                      backgroundColor: '#2ACC4C',
-                      marginRight: 5,
-                    },
-                  }}>
-                  <Text style={styles.saler}>
-                    Buổi {currentLesson.lesson.order}
-                  </Text>
-                </View>
-              ) : (
-                <View />
-              )}
-              {teacher ? (
-                <View
-                  style={{
-                    ...styles.card,
-                    ...{
-                      backgroundColor:
-                        !teacher.color || teacher.color === ''
-                          ? theme.processColor1
-                          : '#' + teacher.color,
-                      marginRight: 5,
-                    },
-                  }}>
-                  <Text style={styles.saler}>{getShortName(teacher.name)}</Text>
-                </View>
-              ) : (
-                <View />
-              )}
-              {teacher_assistant ? (
-                <View
-                  style={{
-                    ...styles.card,
-                    ...{
-                      backgroundColor:
-                        !teacher_assistant.color ||
-                        teacher_assistant.color === ''
-                          ? theme.processColor1
-                          : '#' + teacher_assistant.color,
-                    },
-                  }}>
-                  <Text style={styles.saler}>
-                    {getShortName(teacher_assistant.name)}
-                  </Text>
-                </View>
-              ) : (
-                <View />
-              )}
-            </View>
-            <View>
-              {schedule ? (
-                <Text
-                  numberOfLines={1}
-                  style={[styles.classInfoContainer, {paddingTop: 0}]}>
-                  {schedule.name}
-                </Text>
-              ) : null}
-              {room && base ? (
-                <Text numberOfLines={1} style={styles.classInfoContainer}>
-                  {room.name} - {base.name}
-                </Text>
-              ) : null}
-            </View>
-            <View style={styles.processAndText}>
-              <View
-                style={{
-                  ...styles.process,
-                  ...styles.containerProcess,
-                  ...{
-                    backgroundColor: '#F6F6F6',
-                  },
-                }}>
-                <Animated.View
-                  style={[
-                    styles.process,
-                    styles.bar,
-                    {
-                      width:
-                        total_took_attendances !== 0
-                          ? (maxWidthProcess * tmpTotalAttendance) /
-                            total_took_attendances
-                          : maxWidthProcess,
-                      backgroundColor: '#2ACC4C',
-                    },
-                  ]}
-                />
-              </View>
-              <Text style={styles.textProcess}>
-                {total_attendances}/{total_took_attendances} học viên
+      <TouchableOpacity
+        onPress={() => {
+          let classModifiedItem = {
+            ...classItem,
+            lesson: [this.getCurrentLesson()],
+          };
+          this.props.onSelectedItem(classModifiedItem);
+        }}>
+        <View style={styles.itemContainer}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Thumbnail small source={{uri: icon}} />
+              <Text numberOfLines={1} style={styles.className}>
+                {name}
               </Text>
             </View>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                onPress={() => {
-                  let classModifiedItem = {
-                    ...classItem,
-                    lesson: [this.getCurrentLesson()],
-                  };
-                  this.props.openQrCode(classModifiedItem);
-                }}>
-                <View style={styles.button}>
-                  <Text style={{fontSize: 16}}>Điểm danh</Text>
+            <Image
+              source={require('../../../assets/img/icons8-more-than-100.png')}
+              style={{width: 15, height: 15}}
+            />
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <View style={styles.placeholderAva} />
+            <View style={styles.infoContainer}>
+              <View style={styles.containerSubTitle}>
+                {!isEmptyInput(currentLesson) &&
+                !isEmptyInput(currentLesson.lesson) &&
+                !isEmptyInput(currentLesson.lesson.order) ? (
+                  <View
+                    style={{
+                      ...styles.card,
+                      ...{
+                        backgroundColor: '#2ACC4C',
+                        marginRight: 5,
+                      },
+                    }}>
+                    <Text style={styles.saler}>
+                      Buổi {currentLesson.lesson.order}
+                    </Text>
+                  </View>
+                ) : (
+                  <View />
+                )}
+                {teacher ? (
+                  <View
+                    style={{
+                      ...styles.card,
+                      ...{
+                        backgroundColor:
+                          !teacher.color || teacher.color === ''
+                            ? theme.processColor1
+                            : '#' + teacher.color,
+                        marginRight: 5,
+                      },
+                    }}>
+                    <Text style={styles.saler}>
+                      {getShortName(teacher.name)}
+                    </Text>
+                  </View>
+                ) : (
+                  <View />
+                )}
+                {teacher_assistant ? (
+                  <View
+                    style={{
+                      ...styles.card,
+                      ...{
+                        backgroundColor:
+                          !teacher_assistant.color ||
+                          teacher_assistant.color === ''
+                            ? theme.processColor1
+                            : '#' + teacher_assistant.color,
+                      },
+                    }}>
+                    <Text style={styles.saler}>
+                      {getShortName(teacher_assistant.name)}
+                    </Text>
+                  </View>
+                ) : (
+                  <View />
+                )}
+              </View>
+              <View>
+                {schedule ? (
+                  <Text
+                    numberOfLines={1}
+                    style={[styles.classInfoContainer, {paddingTop: 0}]}>
+                    {schedule.name}
+                  </Text>
+                ) : null}
+                {room && base ? (
+                  <Text numberOfLines={1} style={styles.classInfoContainer}>
+                    {room.name} - {base.name}
+                  </Text>
+                ) : null}
+              </View>
+              <View style={styles.processAndText}>
+                <View
+                  style={{
+                    ...styles.process,
+                    ...styles.containerProcess,
+                    ...{
+                      backgroundColor: '#F6F6F6',
+                    },
+                  }}>
+                  <Animated.View
+                    style={[
+                      styles.process,
+                      styles.bar,
+                      {
+                        width:
+                          total_took_attendances !== 0
+                            ? (maxWidthProcess * tmpTotalAttendance) /
+                              total_took_attendances
+                            : maxWidthProcess,
+                        backgroundColor: '#2ACC4C',
+                      },
+                    ]}
+                  />
                 </View>
-              </TouchableOpacity>
+                <Text style={styles.textProcess}>
+                  {total_attendances}/{total_took_attendances} học viên
+                </Text>
+              </View>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  onPress={() => {
+                    let classModifiedItem = {
+                      ...classItem,
+                      lesson: [this.getCurrentLesson()],
+                    };
+                    this.props.openQrCode(classModifiedItem);
+                  }}>
+                  <View style={styles.button}>
+                    <Text style={{fontSize: 16}}>Điểm danh</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }

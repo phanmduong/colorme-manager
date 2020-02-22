@@ -86,6 +86,7 @@ class ClassComponent extends React.Component {
         openQrCode={this.props.openQrCode}
         selectedDate={this.props.selectedDate}
         class_lesson={classItem.class_lesson}
+        onSelectedItem={this.props.onSelectedItem}
       />
     ));
   };

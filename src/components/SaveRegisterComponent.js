@@ -840,6 +840,7 @@ class SaveRegisterComponent extends React.Component {
                       selectedCourse: true,
                       selectedCourseId: value.id,
                       search: '',
+                      base_id: '',
                     });
                     this.props.onSelectCourseId(value.id);
                   }}

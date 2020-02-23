@@ -635,7 +635,9 @@ class SaveRegisterComponent extends React.Component {
     return (
       items &&
       items.map(item => {
-        const count = studyClasses.filter(sc => sc.base.id == item.id).length;
+        const count = studyClasses.filter(
+          sc => sc.base && sc.base.id == item.id,
+        ).length;
         return {
           id: item.id,
           name: `${item.name} - (${count} lớp) - ${item.address}`,
@@ -655,7 +657,11 @@ class SaveRegisterComponent extends React.Component {
         if (item.study_time) {
           label += ' - ' + item.study_time;
         }
-        return {id: item.id, base_id: item.base.id, name: label};
+        return {
+          id: item.id,
+          base_id: item.base && item.base.id ? item.base.id : -1,
+          name: label,
+        };
       })
     );
   };

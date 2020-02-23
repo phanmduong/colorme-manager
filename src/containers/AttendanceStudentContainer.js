@@ -158,7 +158,7 @@ function mapStateToProps(state) {
     errorUpdate: state.attendanceStudent.errorUpdate,
     studentCode: state.attendanceStudent.studentCode,
     orderLessonCourse:
-      state.currentClassStudy.selectedCurrentClassStudy.lesson.order,
+      state.currentClassStudy.selectedCurrentClassStudy.lesson.lesson.order,
     message: state.attendanceStudent.message,
     classId: state.currentClassStudy.selectedCurrentClassStudy.id,
     classStudent: state.attendanceStudent.classStudent,

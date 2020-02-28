@@ -184,6 +184,7 @@ class ClassComponent extends React.Component {
               classData={item}
               selectedGenId={this.state.selectedGenId}
               selectedBaseId={this.state.selectedBaseId}
+              description={item.description}
             />
           )}
         />

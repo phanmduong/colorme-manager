@@ -9,6 +9,8 @@ import * as classActions from '../actions/classActions';
 import * as saveRegisterActions from '../actions/saveRegisterActions';
 import * as genActions from '../actions/genActions';
 import * as analyticsActions from '../actions/analyticsActions';
+import {Text, View} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 class ClassContainer extends React.Component {
   constructor(props) {
@@ -19,6 +21,22 @@ class ClassContainer extends React.Component {
       checkedClasses: false,
     };
   }
+
+  static navigationOptions = ({navigation}) => ({
+    headerLeft: () => (
+      <View style={styles.headerLeftContainer}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Icon
+            name={'chevron-left'}
+            size={33}
+            color={'black'}
+            onPress={() => navigation.goBack()}
+          />
+          <Text style={styles.name}>Lớp học</Text>
+        </View>
+      </View>
+    ),
+  });
 
   componentDidMount() {
     this.props.genActions.loadDataGen(this.props.token);
@@ -90,8 +108,17 @@ class ClassContainer extends React.Component {
   }
 }
 
-ClassContainer.navigationOptions = {
-  title: 'Danh sách lớp học',
+const styles = {
+  name: {
+    fontWeight: '600',
+    fontSize: 23,
+  },
+  headerLeftContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 5,
+    marginLeft: 10,
+  },
 };
 
 function mapStateToProps(state) {

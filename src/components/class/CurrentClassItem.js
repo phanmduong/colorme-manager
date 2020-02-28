@@ -10,6 +10,7 @@ import {
 import {Thumbnail} from 'native-base';
 import theme from '../../styles';
 import {getShortName, isEmptyInput} from '../../helper';
+import moment from 'moment';
 
 var {height, width} = Dimensions.get('window');
 var maxWidthProcess = width / 4;
@@ -51,6 +52,24 @@ class CurrentClassItem extends React.Component {
       total_attendances < total_took_attendances
         ? total_attendances
         : total_took_attendances;
+    let nameSelectedDate = !isEmptyInput(currentLesson)
+      ? moment(this.props.selectedDate)
+          .locale('vi')
+          .format('dddd') +
+        ' ' +
+        moment(this.props.selectedDate)
+          .locale('vi')
+          .format('L')
+      : null;
+    nameSelectedDate = !isEmptyInput(nameSelectedDate)
+      ? nameSelectedDate.charAt(0).toUpperCase() + nameSelectedDate.slice(1)
+      : '';
+    let startTime = !isEmptyInput(currentLesson)
+      ? currentLesson.start_time.substring(0, 5).replace(':', 'h')
+      : '';
+    let endTime = !isEmptyInput(currentLesson)
+      ? currentLesson.end_time.substring(0, 5).replace(':', 'h')
+      : '';
     return (
       <TouchableOpacity
         onPress={() => {
@@ -140,10 +159,17 @@ class CurrentClassItem extends React.Component {
                 )}
               </View>
               <View>
-                {schedule ? (
+                {!isEmptyInput(nameSelectedDate) &&
+                !isEmptyInput(startTime) &&
+                !isEmptyInput(endTime) ? (
                   <Text
                     numberOfLines={1}
                     style={[styles.classInfoContainer, {paddingTop: 0}]}>
+                    {nameSelectedDate} - {startTime}-{endTime}
+                  </Text>
+                ) : null}
+                {schedule ? (
+                  <Text numberOfLines={1} style={styles.classInfoContainer}>
                     {schedule.name}
                   </Text>
                 ) : null}

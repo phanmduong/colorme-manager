@@ -12,17 +12,17 @@ import {
   Alert,
   Platform,
   KeyboardAvoidingView,
+  TextInput,
 } from 'react-native';
 import {observer} from 'mobx-react';
-import {Form, Input, InputGroup, Item, Picker} from 'native-base';
-import theme from '../../styles';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import withStyle from '../../components/HOC/withStyle';
 import Loading from '../../components/common/Loading';
 import LinearGradient from 'react-native-linear-gradient';
 import MultiSelect from './MultiSelect/react-native-multi-select';
-import {isEmptyInput} from '../../helper';
+import {convertVietText, isEmptyInput} from '../../helper';
 import Spinkit from 'react-native-spinkit';
+import {CustomPicker} from 'react-native-custom-picker';
 
 var {height, width} = Dimensions.get('window');
 
@@ -34,12 +34,78 @@ class StoreMeetingComponent extends React.Component {
       isDatePickerVisible: false,
       isTimePickerVisible: false,
       isVisibleModalCreate: true,
+      search: '',
     };
   }
 
   componentDidMount() {
     this.props.store.getFilterMeeting();
   }
+
+  renderPickerOption = settings => {
+    const {item, getLabel} = settings;
+    return (
+      <View style={styles.options}>
+        <Text style={{fontSize: 16}}>{getLabel(item)}</Text>
+      </View>
+    );
+  };
+
+  renderPickerHeader = title => {
+    return (
+      <View style={styles.headerFooterContainer}>
+        <Text style={styles.headerFooterText}>{title}</Text>
+        <View style={styles.searchContainer}>
+          <TextInput
+            placeholder="Tìm kiếm"
+            autoCapitalize="none"
+            onChangeText={search => {
+              this.setState({search});
+            }}
+            value={this.state.search}
+            style={styles.searchInput}
+            clearButtonMode={'while-editing'}
+          />
+        </View>
+      </View>
+    );
+  };
+
+  renderPickerFooter(action) {
+    return (
+      <TouchableOpacity
+        style={styles.headerFooterContainer}
+        onPress={action.close.bind(this)}>
+        <Text style={{color: '#C50000', fontSize: 19}}>Hủy</Text>
+      </TouchableOpacity>
+    );
+  }
+
+  renderRoomPickerField = settings => {
+    const {selectedItem, defaultText, getLabel} = settings;
+    return (
+      <LinearGradient
+        colors={['#F6F6F6', '#F6F6F6']}
+        style={styles.inputContainer}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 0}}>
+        {!selectedItem && (
+          <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+            <Text style={{color: '#b7b7b7', fontSize: 15}}>{defaultText}</Text>
+            <Text>▼</Text>
+          </View>
+        )}
+        {selectedItem && (
+          <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+            <Text style={{color: 'black', fontSize: 15}}>
+              {getLabel(selectedItem)}
+            </Text>
+            <Text>▼</Text>
+          </View>
+        )}
+      </LinearGradient>
+    );
+  };
 
   openDatePicker = () => {
     this.setState({isDatePickerVisible: true});
@@ -66,6 +132,25 @@ class StoreMeetingComponent extends React.Component {
       minute: time.getMinutes(),
     });
     this.setState({isTimePickerVisible: false});
+  };
+
+  getSearchedResults = array => {
+    let list = [];
+    if (this.state.search === '') {
+      return array;
+    } else {
+      for (let item of array) {
+        let normalizedName = item.name;
+        if (
+          convertVietText(normalizedName).includes(
+            convertVietText(this.state.search),
+          )
+        ) {
+          list.push(item);
+        }
+      }
+      return list;
+    }
   };
 
   onChangeRoom = roomId => {
@@ -130,7 +215,6 @@ class StoreMeetingComponent extends React.Component {
         behavior={Platform.OS === 'ios' ? 'padding' : ''}
         enabled>
         <SafeAreaView style={styles.container}>
-          {/*<Text style={styles.title}>Tạo cuộc họp</Text>*/}
           {isLoading ? (
             <View
               style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -138,94 +222,97 @@ class StoreMeetingComponent extends React.Component {
             </View>
           ) : (
             <ScrollView>
-              <View style={{marginTop: 20}}>
+              <View style={{marginTop: 30}}>
                 <Text style={styles.titleForm}>Tên cuộc họp</Text>
-                <InputGroup style={{width: width - 20}}>
-                  <Input
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    {...this.props}
                     value={meeting.name}
                     onChangeText={data => (meeting.name = data)}
                     returnKeyType={'next'}
                     placeholder="Tên cuộc họp"
                     blurOnSubmit={false}
                     editable={!this.props.isLoading}
-                    style={{
-                      lineHeight: 20,
-                      height: 40,
-                      fontSize: 15,
-                    }}
+                    style={{fontSize: 15}}
                   />
-                </InputGroup>
+                </View>
               </View>
-              <View style={{marginTop: 40}}>
+              <View style={{marginTop: 30}}>
                 <Text style={styles.titleForm}>Mô tả cuộc họp</Text>
-                <InputGroup style={{width: width - 20}}>
-                  <Input
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    {...this.props}
                     value={meeting.description}
                     onChangeText={data => (meeting.description = data)}
                     returnKeyType={'next'}
                     placeholder="Mô tả cuộc họp"
                     blurOnSubmit={false}
                     editable={!this.props.isLoading}
-                    style={{
-                      lineHeight: 20,
-                      height: 40,
-                      fontSize: 15,
-                    }}
+                    style={{fontSize: 15}}
                   />
-                </InputGroup>
+                </View>
               </View>
-              <View style={[{marginTop: 40}, styles.flexRow]}>
-                <View style={styles.flex1}>
-                  <Text style={styles.titleForm}>Ngày diễn ra</Text>
-                  <TouchableOpacity
-                    style={[styles.textForm, {marginRight: 10}]}
-                    onPress={this.openDatePicker}>
+              <View style={{marginTop: 30}}>
+                <Text style={styles.titleForm}>Ngày diễn ra</Text>
+                <TouchableOpacity
+                  style={styles.inputContainer}
+                  onPress={this.openDatePicker}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}>
                     <Text
                       style={{
                         fontSize: 15,
                       }}>
                       {meeting.date.format('DD/MM/YYYY')}
                     </Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.flex1}>
-                  <Text style={styles.titleForm}>Giờ diễn ra</Text>
-                  <TouchableOpacity
-                    style={styles.textForm}
-                    onPress={this.openTimePicker}>
+                    <Text>▼</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+              <View style={{marginTop: 30}}>
+                <Text style={styles.titleForm}>Giờ diễn ra</Text>
+                <TouchableOpacity
+                  style={styles.inputContainer}
+                  onPress={this.openTimePicker}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}>
                     <Text
                       style={{
                         fontSize: 15,
                       }}>
                       {meeting.date.format('HH:mm')}
                     </Text>
-                  </TouchableOpacity>
-                </View>
+                    <Text>▼</Text>
+                  </View>
+                </TouchableOpacity>
               </View>
-              <View style={{marginTop: 40}}>
+              <View style={{marginTop: 30}}>
                 <Text style={styles.titleForm}>Địa điểm diễn ra</Text>
-                <Picker
-                  style={{
-                    width: width - 40,
-                    paddingLeft: 10,
-                    paddingRight: 10,
-                    margin: 0,
-                    borderBottomColor: '#D9D5DC',
-                    borderBottomWidth: 1 / 3,
-                  }}
-                  iosHeader="Chọn địa điểm"
-                  mode="dialog"
+                <CustomPicker
+                  options={
+                    filter.rooms ? this.getSearchedResults(filter.rooms) : []
+                  }
+                  getLabel={item => item.name}
                   placeholder={'Chọn địa điểm'}
-                  itemStyle={{padding: 10}}
-                  selectedValue={meeting.room_id}
-                  onValueChange={this.onChangeRoom}>
-                  {filter.rooms &&
-                    filter.rooms.map(function(room, index) {
-                      return (
-                        <Item label={room.name} value={room.id} key={index} />
-                      );
-                    })}
-                </Picker>
+                  modalAnimationType={'fade'}
+                  onBlur={() => this.setState({search: ''})}
+                  optionTemplate={this.renderPickerOption}
+                  fieldTemplate={this.renderRoomPickerField}
+                  headerTemplate={() =>
+                    this.renderPickerHeader('Chọn địa điểm')
+                  }
+                  footerTemplate={this.renderPickerFooter}
+                  modalStyle={{
+                    borderRadius: 6,
+                  }}
+                  onValueChange={value => this.onChangeRoom(value.id)}
+                />
               </View>
               <View style={{marginTop: 40}}>
                 <Text style={styles.titleForm}>Thành phố</Text>
@@ -367,28 +454,17 @@ const styles = {
     marginBottom: 10,
     flex: 1,
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginVertical: 10,
-    textAlign: 'center',
-  },
   titleForm: {
-    color: theme.mainColor,
-    fontSize: 12,
+    color: 'black',
+    fontSize: 14,
   },
-  flex1: {
-    flex: 1,
-  },
-  flexRow: {
-    flexDirection: 'row',
-  },
-  textForm: {
-    paddingHorizontal: 10,
-    height: 40,
-    borderBottomColor: '#D9D5DC',
-    borderBottomWidth: 1 / 3,
+  inputContainer: {
+    marginTop: 8,
+    height: 45,
+    backgroundColor: '#F6F6F6',
     justifyContent: 'center',
+    paddingHorizontal: 10,
+    borderRadius: 8,
   },
   tag: {
     paddingHorizontal: 20,
@@ -400,7 +476,22 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-
+  options: {
+    marginVertical: 10,
+    paddingVertical: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F0F0F0',
+    marginHorizontal: 20,
+  },
+  headerFooterContainer: {
+    padding: 10,
+    alignItems: 'center',
+  },
+  headerFooterText: {
+    fontSize: 19,
+    fontWeight: 'bold',
+    color: 'black',
+  },
   btnSubmit: {
     paddingHorizontal: 20,
     borderRadius: 10,
@@ -413,6 +504,20 @@ const styles = {
     flexWrap: 'wrap',
     alignItems: 'flex-start',
     marginTop: 10,
+  },
+  searchInput: {
+    fontSize: 16,
+    color: '#707070',
+    marginLeft: 10,
+  },
+  searchContainer: {
+    marginTop: 10,
+    backgroundColor: '#f6f6f6',
+    height: 40,
+    width: width - 70,
+    borderRadius: 27,
+    justifyContent: 'center',
+    marginHorizontal: 10,
   },
 };
 

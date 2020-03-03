@@ -208,47 +208,53 @@ class MakeupClassComponent extends React.Component {
       let baseOptions = courseOptions[this.state.selectedCourseIndex].lessons;
       return (
         <ScrollView>
-          <View style={{flex: 1}}>
-            <CustomPicker
-              options={courseOptions}
-              getLabel={item => item.name}
-              placeholder={'Chọn môn'}
-              modalAnimationType={'fade'}
-              optionTemplate={this.renderCoursePickerOption}
-              fieldTemplate={this.renderCoursePickerField}
-              headerTemplate={this.renderCoursePickerHeader}
-              footerTemplate={this.renderCoursePickerFooter}
-              modalStyle={{
-                borderRadius: 6,
-              }}
-              onValueChange={value => {
-                this.setState({
-                  selectedCourse: true,
-                  selectedLesson: false,
-                  selectedCourseIndex: this.getIndex(courseOptions, value),
-                  selectedHN: false,
-                  selectedSG: false,
-                });
-              }}
-            />
-            {this.state.selectedCourse ? (
+          <View style={{flex: 1, marginHorizontal: 16}}>
+            <View style={{marginTop: 10}}>
+              <Text style={styles.titleForm}>Chọn môn học</Text>
               <CustomPicker
-                options={baseOptions}
+                options={courseOptions}
                 getLabel={item => item.name}
-                placeholder={'Chọn buổi'}
+                placeholder={'Chọn môn'}
                 modalAnimationType={'fade'}
-                optionTemplate={this.renderLessonPickerOption}
-                fieldTemplate={this.renderLessonPickerField}
-                headerTemplate={this.renderLessonPickerHeader}
+                optionTemplate={this.renderCoursePickerOption}
+                fieldTemplate={this.renderCoursePickerField}
+                headerTemplate={this.renderCoursePickerHeader}
                 footerTemplate={this.renderCoursePickerFooter}
                 modalStyle={{
                   borderRadius: 6,
                 }}
                 onValueChange={value => {
-                  this.setState({selectedLesson: true});
-                  this.props.loadSchedule(value.id);
+                  this.setState({
+                    selectedCourse: true,
+                    selectedLesson: false,
+                    selectedCourseIndex: this.getIndex(courseOptions, value),
+                    selectedHN: false,
+                    selectedSG: false,
+                  });
                 }}
               />
+            </View>
+            {this.state.selectedCourse ? (
+              <View style={{marginTop: 30}}>
+                <Text style={styles.titleForm}>Chọn buổi</Text>
+                <CustomPicker
+                  options={baseOptions}
+                  getLabel={item => item.name}
+                  placeholder={'Chọn buổi'}
+                  modalAnimationType={'fade'}
+                  optionTemplate={this.renderLessonPickerOption}
+                  fieldTemplate={this.renderLessonPickerField}
+                  headerTemplate={this.renderLessonPickerHeader}
+                  footerTemplate={this.renderCoursePickerFooter}
+                  modalStyle={{
+                    borderRadius: 6,
+                  }}
+                  onValueChange={value => {
+                    this.setState({selectedLesson: true});
+                    this.props.loadSchedule(value.id);
+                  }}
+                />
+              </View>
             ) : null}
             {this.state.selectedLesson ? (
               <View style={styles.containerTag}>
@@ -399,15 +405,6 @@ function getTime(time) {
   return time + 'h';
 }
 
-function processAuthorName(name) {
-  let processed = name.replace('\t\t', '');
-  processed = processed
-    .split(' ')
-    .splice(-2)
-    .join(' ');
-  return processed;
-}
-
 const styles = {
   container: {
     flex: 1,
@@ -415,12 +412,12 @@ const styles = {
     alignItems: 'center',
   },
   gradientSize: {
+    marginTop: 8,
+    height: 45,
+    backgroundColor: '#F6F6F6',
     justifyContent: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 24,
-    marginHorizontal: 10,
-    marginVertical: 10,
+    paddingHorizontal: 10,
+    borderRadius: 8,
   },
   headerFooterContainer: {
     padding: 10,
@@ -450,8 +447,7 @@ const styles = {
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
-    marginTop: 10,
-    marginHorizontal: 10,
+    marginTop: 30,
   },
   courseIcon: {
     width: 60,
@@ -463,7 +459,6 @@ const styles = {
     fontSize: 22,
   },
   courseContainer: {
-    marginHorizontal: 10,
     marginTop: 30,
   },
   subCourseContainer: {
@@ -476,6 +471,10 @@ const styles = {
     marginLeft: 7,
     flexWrap: 'wrap',
     flex: 1,
+  },
+  titleForm: {
+    color: 'black',
+    fontSize: 14,
   },
 };
 

@@ -52,6 +52,7 @@ class ListItemClass extends React.Component {
       selectedGenId,
       selectedBaseId,
       description,
+      date_end,
     } = this.props;
     var tmpTotalPaid, tmpTotalRegister;
     tmpTotalPaid = totalPaid < paidTarget ? totalPaid : paidTarget;
@@ -128,6 +129,11 @@ class ListItemClass extends React.Component {
               {description ? (
                 <Text numberOfLines={1} style={styles.classInfoContainer}>
                   {description}
+                </Text>
+              ) : null}
+              {date_end ? (
+                <Text numberOfLines={1} style={styles.classInfoContainer}>
+                  Kết thúc ngày {date_end}
                 </Text>
               ) : null}
               {address ? (

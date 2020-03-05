@@ -397,4 +397,9 @@ export default {
     isUpdatingProfile: false,
     errorUpdatingProfile: false,
   },
+  document: {
+    isLoadingDoc: false,
+    errorDoc: false,
+    documents: [],
+  },
 };

@@ -241,6 +241,17 @@ class DashboardComponent extends React.Component {
                 }}
               />
             </View>
+            <View style={styles.otherFeatureLine}>
+              <CircleTab
+                iconImage={require('../../assets/img/icons8-document.png')}
+                title={'Tài liệu'}
+                onPress={() => {
+                  this.props.navigation.navigate('Document');
+                }}
+              />
+              <View style={{width: width / 3}} />
+              <View style={{width: width / 3}} />
+            </View>
             <MeetingComponent
               store={this.props.store}
               {...this.props}

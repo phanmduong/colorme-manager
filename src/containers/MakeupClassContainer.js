@@ -3,6 +3,8 @@ import MakeupClassComponent from '../components/MakeupClassComponent';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as makeupClassActions from '../actions/makeupClassActions';
+import {Text, View} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 class MakeupClassContainer extends React.Component {
   constructor(props, context) {
@@ -10,7 +12,19 @@ class MakeupClassContainer extends React.Component {
   }
 
   static navigationOptions = ({navigation}) => ({
-    title: 'Lịch học bù',
+    headerLeft: () => (
+      <View style={styles.headerLeftContainer}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Icon
+            name={'chevron-left'}
+            size={33}
+            color={'black'}
+            onPress={() => navigation.goBack()}
+          />
+          <Text style={styles.name}>Lịch học bù</Text>
+        </View>
+      </View>
+    ),
   });
 
   componentDidMount = () => {
@@ -41,6 +55,19 @@ class MakeupClassContainer extends React.Component {
     );
   }
 }
+
+const styles = {
+  name: {
+    fontWeight: '600',
+    fontSize: 23,
+  },
+  headerLeftContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 5,
+    marginLeft: 10,
+  },
+};
 
 function mapStateToProps(state) {
   return {

@@ -178,10 +178,6 @@ class ShiftRegisterContainer extends React.Component {
   }
 }
 
-ShiftRegisterContainer.navigationOptions = {
-  title: 'Đăng kí lịch trực',
-};
-
 function mapStateToProps(state) {
   return {
     isLoadingBase: state.base.isLoading,

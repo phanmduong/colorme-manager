@@ -6,6 +6,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as listStudentAttendanceActions from '../actions/listStudentAttendanceActions';
 import ListStudentAttendanceComponent from '../components/ListStudentAttendanceComponent';
+import {Text, View} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 class ListStudentAttendanceContainer extends React.Component {
   constructor(props, context) {
@@ -16,6 +18,22 @@ class ListStudentAttendanceContainer extends React.Component {
   componentWillMount() {
     this.onLoad();
   }
+
+  static navigationOptions = ({navigation}) => ({
+    headerLeft: () => (
+      <View style={styles.headerLeftContainer}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Icon
+            name={'chevron-left'}
+            size={33}
+            color={'black'}
+            onPress={() => navigation.goBack()}
+          />
+          <Text style={styles.name}>Danh sách học viên</Text>
+        </View>
+      </View>
+    ),
+  });
 
   onLoad() {
     const classID = this.props.classSelected.id;
@@ -39,8 +57,17 @@ class ListStudentAttendanceContainer extends React.Component {
   }
 }
 
-ListStudentAttendanceContainer.navigationOptions = {
-  title: 'Danh sách học viên',
+const styles = {
+  name: {
+    fontWeight: '600',
+    fontSize: 23,
+  },
+  headerLeftContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 5,
+    marginLeft: 10,
+  },
 };
 
 function mapStateToProps(state) {

@@ -6,8 +6,9 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as collectMoneyActions from '../actions/collectMoneyActions';
 import CollectMoneyComponent from '../components/CollectMoneyComponent';
-import {Dimensions, Keyboard, Platform, Alert} from 'react-native';
+import {Dimensions, Keyboard, Platform, Alert, View, Text} from 'react-native';
 import * as alert from '../constants/alert';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 class CollectMoneyContainer extends React.Component {
   constructor(props, context) {
@@ -25,6 +26,22 @@ class CollectMoneyContainer extends React.Component {
   componentWillMount() {
     this.loadDataStudentList();
   }
+
+  static navigationOptions = ({navigation}) => ({
+    headerLeft: () => (
+      <View style={styles.headerLeftContainer}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Icon
+            name={'chevron-left'}
+            size={33}
+            color={'black'}
+            onPress={() => navigation.goBack()}
+          />
+          <Text style={styles.name}>Nộp tiền</Text>
+        </View>
+      </View>
+    ),
+  });
 
   updateFormData(name, value) {
     let formInfoMoney = Object.assign({}, this.props.formInfoMoney);
@@ -106,8 +123,17 @@ class CollectMoneyContainer extends React.Component {
   }
 }
 
-CollectMoneyContainer.navigationOptions = {
-  title: 'Nộp tiền',
+const styles = {
+  name: {
+    fontWeight: '600',
+    fontSize: 23,
+  },
+  headerLeftContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 5,
+    marginLeft: 10,
+  },
 };
 
 function mapStateToProps(state) {

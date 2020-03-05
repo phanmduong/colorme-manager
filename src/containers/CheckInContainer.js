@@ -4,10 +4,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import CheckInComponent from '../components/CheckInComponent';
-import {Alert} from 'react-native';
+import {Alert, Text, View} from 'react-native';
 import * as checkInCheckOutActions from '../actions/checkInCheckOutActions';
 import {bindActionCreators} from 'redux';
 import {NavigationActions} from 'react-navigation';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 class CheckInContainer extends React.Component {
   constructor(props, context) {
@@ -17,7 +18,19 @@ class CheckInContainer extends React.Component {
   }
 
   static navigationOptions = ({navigation}) => ({
-    title: navigation.state.params.title,
+    headerLeft: () => (
+      <View style={styles.headerLeftContainer}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Icon
+            name={'chevron-left'}
+            size={33}
+            color={'black'}
+            onPress={() => navigation.goBack()}
+          />
+          <Text style={styles.name}>{navigation.state.params.title}</Text>
+        </View>
+      </View>
+    ),
   });
 
   componentWillMount() {
@@ -55,6 +68,19 @@ class CheckInContainer extends React.Component {
     );
   }
 }
+
+const styles = {
+  name: {
+    fontWeight: '600',
+    fontSize: 23,
+  },
+  headerLeftContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 5,
+    marginLeft: 10,
+  },
+};
 
 function mapStateToProps(state) {
   return {

@@ -16,6 +16,7 @@ import ListItemStudent from './ListItemStudent';
 import Modal from 'react-native-modalbox';
 import Call from '../../components/common/Call';
 import ImagePicker from 'react-native-image-picker';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 var {height, width} = Dimensions.get('window');
 
@@ -39,7 +40,19 @@ class AccurateStudentContainer extends React.Component {
   }
 
   static navigationOptions = ({navigation}) => ({
-    title: 'Xác thực học viên',
+    headerLeft: () => (
+      <View style={styles.headerLeftContainer}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Icon
+            name={'chevron-left'}
+            size={33}
+            color={'black'}
+            onPress={() => navigation.goBack()}
+          />
+          <Text style={styles.name}>Xác thực học viên</Text>
+        </View>
+      </View>
+    ),
   });
 
   searchStudent = value => {
@@ -323,6 +336,16 @@ const styles = {
     color: theme.colorSubTitle,
     fontSize: 12,
     marginVertical: 5,
+  },
+  name: {
+    fontWeight: '600',
+    fontSize: 23,
+  },
+  headerLeftContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 5,
+    marginLeft: 10,
   },
 };
 

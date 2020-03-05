@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as profileActions from '../actions/profileActions';
 import EditProfileComponent from '../components/EditProfileComponent';
+import {Text, View} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 class EditProfileContainer extends React.Component {
   constructor(props, context) {
@@ -10,7 +12,19 @@ class EditProfileContainer extends React.Component {
   }
 
   static navigationOptions = ({navigation}) => ({
-    title: 'Chỉnh sửa thông tin',
+    headerLeft: () => (
+      <View style={styles.headerLeftContainer}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Icon
+            name={'chevron-left'}
+            size={33}
+            color={'black'}
+            onPress={() => navigation.goBack()}
+          />
+          <Text style={styles.name}>Chỉnh sửa thông tin</Text>
+        </View>
+      </View>
+    ),
   });
 
   updateProfile = profile => {
@@ -26,6 +40,19 @@ class EditProfileContainer extends React.Component {
     );
   }
 }
+
+const styles = {
+  name: {
+    fontWeight: '600',
+    fontSize: 23,
+  },
+  headerLeftContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 5,
+    marginLeft: 10,
+  },
+};
 
 function mapStateToProps(state) {
   return {

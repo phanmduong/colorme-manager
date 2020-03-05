@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as profileActions from '../actions/profileActions';
 import ProfileComponent from '../components/ProfileComponent';
+import {Text, View} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 class ProfileContainer extends React.Component {
   constructor(props, context) {
@@ -14,7 +16,19 @@ class ProfileContainer extends React.Component {
   };
 
   static navigationOptions = ({navigation}) => ({
-    title: 'Thông tin cá nhân',
+    headerLeft: () => (
+      <View style={styles.headerLeftContainer}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Icon
+            name={'chevron-left'}
+            size={33}
+            color={'black'}
+            onPress={() => navigation.goBack()}
+          />
+          <Text style={styles.name}>Thông tin cá nhân</Text>
+        </View>
+      </View>
+    ),
   });
 
   loadProfile = () => {
@@ -45,6 +59,19 @@ class ProfileContainer extends React.Component {
     );
   }
 }
+
+const styles = {
+  name: {
+    fontWeight: '600',
+    fontSize: 23,
+  },
+  headerLeftContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 5,
+    marginLeft: 10,
+  },
+};
 
 function mapStateToProps(state) {
   return {

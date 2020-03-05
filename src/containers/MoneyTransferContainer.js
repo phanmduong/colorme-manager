@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import {connect} from 'react-redux';
-import {Text, Alert} from 'react-native';
+import {Text, Alert, View} from 'react-native';
 import {bindActionCreators} from 'redux';
 import Segment from '../components/common/SegmentTwo';
 import * as moneyTransferActions from '../actions/moneyTransferActions';
@@ -11,6 +11,7 @@ import HistoryMoneyTransferComponent from '../components/moneyTransfer/HistoryMo
 import SearchStaffMoneyTransferComponent from '../components/moneyTransfer/SearchStaffMoneyTransferComponent';
 import * as alert from '../constants/alert';
 import io from 'socket.io-client';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 let self;
 class MoneyTransferContainer extends React.Component {
   constructor(props, context) {
@@ -40,16 +41,19 @@ class MoneyTransferContainer extends React.Component {
   }
 
   static navigationOptions = ({navigation}) => ({
-    headerTitle: 'Chuyển tiền',
-    // headerTitle: (<Segment
-    //         nameSeg1="Chuyển tiền"
-    //         nameSeg2="Lịch sử"
-    //         segmentActive={(navigation.state.params && navigation.state.params.segment) ? navigation.state.params.segment : 1}
-    //         changeSegmentActive={(navigation.state.params && navigation.state.params.changeSegmentActive)
-    //             ? navigation.state.params.changeSegmentActive : null
-    //         }
-    //     />
-    // ),
+    headerLeft: () => (
+      <View style={styles.headerLeftContainer}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Icon
+            name={'chevron-left'}
+            size={33}
+            color={'black'}
+            onPress={() => navigation.goBack()}
+          />
+          <Text style={styles.name}>Chuyển tiền</Text>
+        </View>
+      </View>
+    ),
   });
 
   componentWillReceiveProps(nextProps) {
@@ -177,6 +181,20 @@ class MoneyTransferContainer extends React.Component {
     // }
   }
 }
+
+const styles = {
+  name: {
+    fontWeight: '600',
+    fontSize: 23,
+  },
+  headerLeftContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 5,
+    marginLeft: 10,
+  },
+};
+
 function mapStateToProps(state) {
   return {
     token: state.login.token,

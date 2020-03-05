@@ -3,7 +3,6 @@
  */
 import * as React from 'react';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
-import theme from '../styles';
 import LoginContainer from '../containers/LoginContainer';
 import ClassContainer from '../containers/ClassContainer';
 // import QRCodeContainer from '../containers/QRCodeContainer';
@@ -18,9 +17,7 @@ import ListStudentClassContainer from '../containers/ListStudentClassContainer';
 import ListStudentPaidContainer from '../containers/ListStudentPaidContainer';
 import ListStudentZeroContainer from '../containers/ListStudentZeroContainer';
 import RegisterListContainer from '../containers/RegisterListContainer';
-import SidebarContainer from '../containers/SidebarContainer';
 import TabIcon from '../components/common/TabIcon';
-import MenuButton from '../components/common/MenuButton';
 import CheckInContainer from '../containers/CheckInContainer';
 import ListStudentAttendanceContainer from '../containers/ListStudentAttendanceContainer';
 import HistoryAttendanceShiftContainer from '../containers/historyAttendanceShift/HistoryAttendanceShiftContainer';

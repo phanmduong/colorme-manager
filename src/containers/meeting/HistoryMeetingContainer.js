@@ -6,6 +6,8 @@ import {connect} from 'react-redux';
 import MeetingStore from './MeetingStore';
 import {observer} from 'mobx-react';
 import HistoryMeetingComponent from './HistoryMeetingComponent';
+import {Text, View} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 @observer
 class MeetingContainer extends React.Component {
@@ -15,7 +17,19 @@ class MeetingContainer extends React.Component {
   }
 
   static navigationOptions = ({navigation}) => ({
-    title: 'Lịch sử cuộc họp',
+    headerLeft: () => (
+      <View style={styles.headerLeftContainer}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Icon
+            name={'chevron-left'}
+            size={33}
+            color={'black'}
+            onPress={() => navigation.goBack()}
+          />
+          <Text style={styles.name}>Lịch sử cuộc họp</Text>
+        </View>
+      </View>
+    ),
   });
 
   componentDidMount() {
@@ -26,6 +40,19 @@ class MeetingContainer extends React.Component {
     return <HistoryMeetingComponent store={this.store} {...this.props} />;
   }
 }
+
+const styles = {
+  name: {
+    fontWeight: '600',
+    fontSize: 23,
+  },
+  headerLeftContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 5,
+    marginLeft: 10,
+  },
+};
 
 function mapStateToProps(state) {
   return {

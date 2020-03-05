@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import NotificationComponent from '../components/NotificationComponent';
 import {bindActionCreators} from 'redux';
 import * as notificationActions from '../actions/notificationActions';
+import {Text, View} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 class NotificationContainer extends React.Component {
   constructor(props, context) {
@@ -14,6 +16,22 @@ class NotificationContainer extends React.Component {
     this.loadNotifications(1);
     this.readAllNotifications();
   };
+
+  static navigationOptions = ({navigation}) => ({
+    headerLeft: () => (
+      <View style={styles.headerLeftContainer}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Icon
+            name={'chevron-left'}
+            size={33}
+            color={'black'}
+            onPress={() => navigation.goBack()}
+          />
+          <Text style={styles.name}>Thông báo</Text>
+        </View>
+      </View>
+    ),
+  });
 
   componentWillUnmount = () => {
     this.loadNotifications(1);
@@ -42,10 +60,6 @@ class NotificationContainer extends React.Component {
     this.props.notificationActions.resetNotifications();
   };
 
-  static navigationOptions = ({navigation}) => ({
-    title: 'Thông báo',
-  });
-
   render() {
     return (
       <NotificationComponent
@@ -56,6 +70,19 @@ class NotificationContainer extends React.Component {
     );
   }
 }
+
+const styles = {
+  name: {
+    fontWeight: '600',
+    fontSize: 23,
+  },
+  headerLeftContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 5,
+    marginLeft: 10,
+  },
+};
 
 function mapStateToProps(state) {
   return {

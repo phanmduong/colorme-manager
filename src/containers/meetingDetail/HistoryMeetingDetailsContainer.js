@@ -6,6 +6,8 @@ import {connect} from 'react-redux';
 import MeetingDetailStore from './MeetingDetailStore';
 import {observer} from 'mobx-react';
 import MeetingDetailComponent from './MeetingDetailComponent';
+import {Text, View} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 @observer
 class HistoryMeetingDetailsContainer extends React.Component {
@@ -16,11 +18,21 @@ class HistoryMeetingDetailsContainer extends React.Component {
     this.store = new MeetingDetailStore(props.token, meetingId);
   }
 
-  static navigationOptions = ({navigation}) => {
-    return {
-      title: 'Chi tiết buổi họp',
-    };
-  };
+  static navigationOptions = ({navigation}) => ({
+    headerLeft: () => (
+      <View style={styles.headerLeftContainer}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Icon
+            name={'chevron-left'}
+            size={33}
+            color={'black'}
+            onPress={() => navigation.goBack()}
+          />
+          <Text style={styles.name}>Chi tiết buổi họp</Text>
+        </View>
+      </View>
+    ),
+  });
 
   componentDidMount() {
     this.store.loadList();
@@ -30,6 +42,19 @@ class HistoryMeetingDetailsContainer extends React.Component {
     return <MeetingDetailComponent store={this.store} {...this.props} />;
   }
 }
+
+const styles = {
+  name: {
+    fontWeight: '600',
+    fontSize: 23,
+  },
+  headerLeftContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 5,
+    marginLeft: 10,
+  },
+};
 
 function mapStateToProps(state) {
   return {

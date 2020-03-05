@@ -22,10 +22,6 @@ class HistoryAttendanceShiftContainer extends React.Component {
     this.store = new HistoryAttendanceShiftStore();
   }
 
-  static navigationOptions = ({navigation}) => ({
-    title: navigation.state.params.title,
-  });
-
   componentWillMount = () => {
     this.loadData();
     this.store.loadBases(this.props.token);

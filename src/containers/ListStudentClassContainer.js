@@ -7,6 +7,8 @@ import {bindActionCreators} from 'redux';
 import * as listStudentClassActions from '../actions/listStudentClassActions';
 import ListStudenClassComponent from '../components/ListStudenClassComponent';
 import * as infoStudentActions from '../actions/infoStudentActions';
+import {Text, View} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 class ListStudentClassContainer extends React.Component {
   constructor(props, context) {
@@ -17,6 +19,22 @@ class ListStudentClassContainer extends React.Component {
   componentWillMount() {
     this.onReload();
   }
+
+  static navigationOptions = ({navigation}) => ({
+    headerLeft: () => (
+      <View style={styles.headerLeftContainer}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Icon
+            name={'chevron-left'}
+            size={33}
+            color={'black'}
+            onPress={() => navigation.goBack()}
+          />
+          <Text style={styles.name}>Danh sách học viên</Text>
+        </View>
+      </View>
+    ),
+  });
 
   onReload() {
     this.props.listStudentClassActions.loadDataListStudentClass(
@@ -107,8 +125,17 @@ class ListStudentClassContainer extends React.Component {
   }
 }
 
-ListStudentClassContainer.navigationOptions = {
-  title: 'Danh sách học viên',
+const styles = {
+  name: {
+    fontWeight: '600',
+    fontSize: 23,
+  },
+  headerLeftContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 5,
+    marginLeft: 10,
+  },
 };
 
 function mapStateToProps(state) {

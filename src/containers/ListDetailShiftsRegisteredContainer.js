@@ -1,5 +1,7 @@
 import React from 'react';
 import ListDetailShiftsRegisteredComponent from '../components/ListDetailShiftsRegisteredComponent';
+import {Text, View} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 class ListDetailShiftsRegisteredContainer extends React.Component {
   constructor(props, context) {
@@ -7,7 +9,19 @@ class ListDetailShiftsRegisteredContainer extends React.Component {
   }
 
   static navigationOptions = ({navigation}) => ({
-    title: 'Chi tiết',
+    headerLeft: () => (
+      <View style={styles.headerLeftContainer}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Icon
+            name={'chevron-left'}
+            size={33}
+            color={'black'}
+            onPress={() => navigation.goBack()}
+          />
+          <Text style={styles.name}>Chi tiết</Text>
+        </View>
+      </View>
+    ),
   });
 
   render() {
@@ -23,5 +37,18 @@ class ListDetailShiftsRegisteredContainer extends React.Component {
     );
   }
 }
+
+const styles = {
+  name: {
+    fontWeight: '600',
+    fontSize: 23,
+  },
+  headerLeftContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 5,
+    marginLeft: 10,
+  },
+};
 
 export default ListDetailShiftsRegisteredContainer;

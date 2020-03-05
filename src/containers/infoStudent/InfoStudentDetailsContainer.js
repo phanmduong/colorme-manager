@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import * as infoStudentActions from '../../actions/infoStudentActions';
 import {bindActionCreators} from 'redux';
 import InfoStudentDetailsComponent from '../../components/infoStudent/InfoStudentDetailsComponent';
+import {Text, View} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 class InfoStudentDetailsContainer extends React.Component {
   constructor(props, context) {
@@ -13,8 +15,20 @@ class InfoStudentDetailsContainer extends React.Component {
     this.loadStudent();
   };
 
-  static navigationOptions = ({navigaton}) => ({
-    title: 'Thông tin học viên',
+  static navigationOptions = ({navigation}) => ({
+    headerLeft: () => (
+      <View style={styles.headerLeftContainer}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Icon
+            name={'chevron-left'}
+            size={33}
+            color={'black'}
+            onPress={() => navigation.goBack()}
+          />
+          <Text style={styles.name}>Thông tin học viên</Text>
+        </View>
+      </View>
+    ),
   });
 
   loadStudent = () => {
@@ -47,6 +61,19 @@ class InfoStudentDetailsContainer extends React.Component {
     );
   }
 }
+
+const styles = {
+  name: {
+    fontWeight: '600',
+    fontSize: 23,
+  },
+  headerLeftContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 5,
+    marginLeft: 10,
+  },
+};
 
 function mapStateToProps(state) {
   return {

@@ -6,7 +6,8 @@ import {connect} from 'react-redux';
 import MeetingStore from './MeetingStore';
 import {observer} from 'mobx-react';
 import MeetingComponent from './MeetingComponent';
-import {Image, TouchableOpacity, View} from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 @observer
 class MeetingContainer extends React.Component {
@@ -16,7 +17,19 @@ class MeetingContainer extends React.Component {
   }
 
   static navigationOptions = ({navigation}) => ({
-    title: 'Họp',
+    headerLeft: () => (
+      <View style={styles.headerLeftContainer}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Icon
+            name={'chevron-left'}
+            size={33}
+            color={'black'}
+            onPress={() => navigation.goBack()}
+          />
+          <Text style={styles.name}>Họp</Text>
+        </View>
+      </View>
+    ),
     headerRight: (
       <View style={{flexDirection: 'row', marginRight: 20}}>
         <TouchableOpacity onPress={() => navigation.navigate('HistoryMeeting')}>
@@ -45,6 +58,19 @@ class MeetingContainer extends React.Component {
     );
   }
 }
+
+const styles = {
+  name: {
+    fontWeight: '600',
+    fontSize: 23,
+  },
+  headerLeftContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 5,
+    marginLeft: 10,
+  },
+};
 
 function mapStateToProps(state) {
   return {

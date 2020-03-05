@@ -3,12 +3,13 @@
  */
 import React from 'react';
 import {connect} from 'react-redux';
-import {View} from 'react-native';
+import {Text, View} from 'react-native';
 import QRCodeComponent from '../components/QRCodeComponent';
 import * as attendanceStudentActions from '../actions/attendanceStudentActions';
 import * as QRCodeActions from '../actions/QRCodeActions';
 import {bindActionCreators} from 'redux';
 import {NavigationActions} from 'react-navigation';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 class QRCodeContainer extends React.Component {
   constructor(props, context) {
@@ -20,6 +21,22 @@ class QRCodeContainer extends React.Component {
     this.props.QRCodeActions.beginScanQRCode();
     // this.scannedQRCode("CM26415");
   }
+
+  static navigationOptions = ({navigation}) => ({
+    headerLeft: () => (
+      <View style={styles.headerLeftContainer}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Icon
+            name={'chevron-left'}
+            size={33}
+            color={'black'}
+            onPress={() => navigation.goBack()}
+          />
+          <Text style={styles.name}>Quét QR code</Text>
+        </View>
+      </View>
+    ),
+  });
 
   scannedQRCode(studentCode) {
     if (!this.props.isScanned) {
@@ -39,8 +56,17 @@ class QRCodeContainer extends React.Component {
   }
 }
 
-QRCodeContainer.navigationOptions = {
-  title: 'Quét QR code',
+const styles = {
+  name: {
+    fontWeight: '600',
+    fontSize: 23,
+  },
+  headerLeftContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 5,
+    marginLeft: 10,
+  },
 };
 
 function mapStateToProps(state) {

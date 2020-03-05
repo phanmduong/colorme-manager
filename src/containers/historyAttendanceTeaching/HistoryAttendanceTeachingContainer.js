@@ -22,10 +22,6 @@ class HistoryAttendanceTeachingContainer extends React.Component {
     this.store = new HistoryAttendanceTeachingStore();
   }
 
-  static navigationOptions = ({navigation}) => ({
-    title: 'Lịch sử lịch giảng dạy',
-  });
-
   componentWillMount() {
     this.loadData();
     this.store.loadGens(this.props.token);

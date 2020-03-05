@@ -6,7 +6,8 @@ import {connect} from 'react-redux';
 import MeetingDetailStore from './MeetingDetailStore';
 import {observer} from 'mobx-react';
 import MeetingDetailComponent from './MeetingDetailComponent';
-import {TouchableOpacity, Image} from 'react-native';
+import {TouchableOpacity, Image, View, Text} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 @observer
 class MeetingDetailContainer extends React.Component {
@@ -20,7 +21,19 @@ class MeetingDetailContainer extends React.Component {
   static navigationOptions = ({navigation}) => {
     const meetingId = navigation.getParam('meetingId', 0);
     return {
-      title: 'Chi tiết buổi họp',
+      headerLeft: () => (
+        <View style={styles.headerLeftContainer}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Icon
+              name={'chevron-left'}
+              size={33}
+              color={'black'}
+              onPress={() => navigation.goBack()}
+            />
+            <Text style={styles.name}>Chi tiết buổi họp</Text>
+          </View>
+        </View>
+      ),
       headerRight: (
         <TouchableOpacity
           onPress={() => navigation.navigate('EditStoreMeeting', {meetingId})}>
@@ -41,6 +54,19 @@ class MeetingDetailContainer extends React.Component {
     return <MeetingDetailComponent store={this.store} {...this.props} />;
   }
 }
+
+const styles = {
+  name: {
+    fontWeight: '600',
+    fontSize: 23,
+  },
+  headerLeftContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 5,
+    marginLeft: 10,
+  },
+};
 
 function mapStateToProps(state) {
   return {

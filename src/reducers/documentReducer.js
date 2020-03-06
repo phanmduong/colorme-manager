@@ -11,16 +11,43 @@ export default function documentReducer(
         isLoadingDoc: actions.isLoadingDoc,
         errorDoc: actions.errorDoc,
       });
+    case types.BEGIN_REFRESH_DOCUMENTS:
+      return Object.assign({}, state, {
+        refreshingDoc: actions.refreshingDoc,
+        errorDoc: actions.errorDoc,
+      });
     case types.LOAD_DOCUMENTS_SUCCESSFUL:
       return Object.assign({}, state, {
         isLoadingDoc: actions.isLoadingDoc,
+        refreshingDoc: actions.refreshingDoc,
         errorDoc: actions.errorDoc,
         documents: actions.documents,
       });
     case types.LOAD_DOCUMENTS_ERROR:
       return Object.assign({}, state, {
         isLoadingDoc: actions.isLoadingDoc,
+        refreshingDoc: actions.refreshingDoc,
         errorDoc: actions.errorDoc,
+      });
+    case types.BEGIN_LOAD_DEPARTMENT_FILTER:
+      return Object.assign({}, state, {
+        isLoadingDepartments: actions.isLoadingDepartments,
+        errorDepartments: actions.errorDepartments,
+      });
+    case types.LOAD_DEPARTMENT_FILTER_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isLoadingDepartments: actions.isLoadingDepartments,
+        errorDepartments: actions.errorDepartments,
+        departments: actions.departments,
+      });
+    case types.LOAD_DEPARTMENT_FILTER_ERROR:
+      return Object.assign({}, state, {
+        isLoadingDepartments: actions.isLoadingDepartments,
+        errorDepartments: actions.errorDepartments,
+      });
+    case types.ON_SELECT_DEPARTMENT_ID:
+      return Object.assign({}, state, {
+        selectedDepartmentId: actions.selectedDepartmentId,
       });
     default:
       return state;

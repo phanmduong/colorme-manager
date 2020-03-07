@@ -55,6 +55,7 @@ import ProfileContainer from '../containers/ProfileContainer';
 import EditProfileContainer from '../containers/EditProfileContainer';
 import EditClassContainer from '../containers/EditClassContainer';
 import DocumentContainer from '../containers/DocumentContainer';
+import DocumentWebViewContainer from '../containers/DocumentWebViewContainer';
 
 const navigationOptionsDefault = {
   defaultNavigationOptions: {
@@ -411,6 +412,14 @@ const TabDashboard = createStackNavigator(
         headerTitleStyle: {color: 'black'},
       }),
     },
+    DocumentWebView: {
+      screen: DocumentWebViewContainer,
+      navigationOptions: () => ({
+        header: null,
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
   },
   {
     defaultNavigationOptions: {
@@ -421,6 +430,20 @@ const TabDashboard = createStackNavigator(
     },
   },
 );
+
+TabDashboard.navigationOptions = ({navigation}) => {
+  let tabBarVisible = true;
+
+  let routeName = navigation.state.routes[navigation.state.index].routeName;
+
+  if (routeName === 'DocumentWebView') {
+    tabBarVisible = false;
+  }
+
+  return {
+    tabBarVisible,
+  };
+};
 
 const TabRegisterList = createStackNavigator(
   {

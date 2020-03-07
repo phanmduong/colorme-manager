@@ -119,7 +119,12 @@ class DocumentComponent extends React.Component {
               ) : null}
             </View>
             <View style={styles.buttonContainer}>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() =>
+                  this.props.navigation.navigate('DocumentWebView', {
+                    url: item.url,
+                  })
+                }>
                 <View style={styles.button}>
                   <Text style={{fontSize: 16}}>Xem tài liệu</Text>
                 </View>

@@ -12,6 +12,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.microsoft.codepush.react.CodePush;
+import com.github.yamill.orientation.OrientationPackage;
 
 import java.util.List;
 
@@ -46,6 +47,14 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
       return "index";
     }
   };
+
+  @Override
+   protected List<ReactPackage> getPackages() {
+    return Arrays.<ReactPackage>asList(
+        new MainReactPackage(),
+        new OrientationPackage()
+    );
+   }
 
   @Override
   public ReactNativeHost getReactNativeHost() {

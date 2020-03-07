@@ -56,12 +56,12 @@ class InfoStudentProgressComponent extends React.Component {
             {item.time ? (
               <Text style={styles.classInfoContainer}>Học lần {item.time}</Text>
             ) : null}
-            {item.teach.name ? (
+            {item.teach && item.teach.name ? (
               <Text style={styles.classInfoContainer}>
                 Giảng viên: {item.teach.name}
               </Text>
             ) : null}
-            {item.assist.name ? (
+            {item.assist && item.assist.name ? (
               <Text style={styles.classInfoContainer}>
                 Trợ giảng: {item.assist.name}
               </Text>

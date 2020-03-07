@@ -350,7 +350,7 @@ class FilterClassModal extends React.Component {
 const styles = {
   modal: {
     backgroundColor: 'white',
-    height: height - 450,
+    height: height - 370,
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
     paddingHorizontal: 16,

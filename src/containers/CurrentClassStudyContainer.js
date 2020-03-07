@@ -15,7 +15,6 @@ class CurrentClassStudyContainer extends React.Component {
   constructor(props) {
     super(props);
     this.onSelectedItem = this.onSelectedItem.bind(this);
-    this.reloadCurrentClassStudy = this.reloadCurrentClassStudy.bind(this);
   }
 
   componentWillMount() {
@@ -47,11 +46,12 @@ class CurrentClassStudyContainer extends React.Component {
     this.props.navigation.navigate('QRCode');
   };
 
-  reloadCurrentClassStudy() {
-    this.props.currentClassStudyActions.loadDataCurrentClassStudy(
+  onRefresh = () => {
+    this.props.currentClassStudyActions.refreshDataCurrentClassStudy(
+      this.props.selectedDate,
       this.props.token,
     );
-  }
+  };
 
   onSelectDate = date => {
     this.props.currentClassStudyActions.onSelectDate(date);
@@ -66,7 +66,7 @@ class CurrentClassStudyContainer extends React.Component {
         isLoading={this.props.isLoading}
         onSelectedItem={this.onSelectedItem}
         openQrCode={this.openQrCode}
-        onReload={this.reloadCurrentClassStudy}
+        onRefresh={this.onRefresh}
         avatar_url={this.props.avatar_url}
         onSelectDate={this.onSelectDate}
         loadDataCurrentClassStudy={this.loadDataCurrentClassStudy}
@@ -88,6 +88,7 @@ CurrentClassStudyContainer.navigationOptions = {
 function mapStateToProps(state) {
   return {
     isLoading: state.currentClassStudy.isLoading,
+    refreshing: state.currentClassStudy.refreshing,
     classData: state.currentClassStudy.classData,
     error: state.currentClassStudy.error,
     token: state.login.token,

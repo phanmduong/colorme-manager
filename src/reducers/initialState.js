@@ -77,6 +77,7 @@ export default {
   currentClassStudy: {
     classData: [],
     isLoading: false,
+    refreshing: false,
     error: false,
     selectedCurrentClassStudy: {},
     selectedDate: moment(new Date()).format('YYYY-MM-DD'),

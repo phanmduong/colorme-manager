@@ -1,5 +1,11 @@
 import React from 'react';
-import {Dimensions, Image, ScrollView, TouchableOpacity} from 'react-native';
+import {
+  Dimensions,
+  Image,
+  RefreshControl,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import {View, Text} from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {getStatusBarHeight, isIphoneX} from 'react-native-iphone-x-helper';
@@ -280,6 +286,16 @@ class ClassComponent extends React.Component {
             isIphoneX()
               ? {flex: 1, marginTop: getStatusBarHeight() + 10}
               : {flex: 1, marginTop: 20}
+          }
+          refreshControl={
+            <RefreshControl
+              refreshing={this.props.refreshing}
+              onRefresh={() => this.props.onRefresh()}
+              titleColor={theme.mainColor}
+              title="Đang tải..."
+              tintColor="#d9534f"
+              colors={['#d9534f']}
+            />
           }>
           {this.headerComponent()}
           <View style={{alignItems: 'center', marginVertical: 10}}>

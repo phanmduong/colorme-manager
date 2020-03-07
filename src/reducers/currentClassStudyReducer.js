@@ -14,9 +14,15 @@ export default function classReducer(
         isLoading: action.isLoading,
         error: action.error,
       });
+    case types.BEGIN_DATA_CURRENT_CLASS_STUDY_REFRESH:
+      return Object.assign({}, state, {
+        refreshing: action.refreshing,
+        error: action.error,
+      });
     case types.LOAD_DATA_CURRENT_CLASS_STUDY_SUCCESSFUL:
       return Object.assign({}, state, {
         isLoading: action.isLoading,
+        refreshing: action.refreshing,
         error: action.error,
         classData: action.classData,
         // classData: state.classData
@@ -24,6 +30,7 @@ export default function classReducer(
     case types.LOAD_DATA_CURRENT_CLASS_STUDY_ERROR:
       return Object.assign({}, state, {
         isLoading: action.isLoading,
+        refreshing: action.refreshing,
         error: action.error,
       });
     case types.SELECTED_CURRENT_CLASS_STUDY:

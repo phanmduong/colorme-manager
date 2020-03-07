@@ -12,9 +12,32 @@ export function beginDataCurrentClassStudyLoad() {
   };
 }
 
+export function beginDataCurrentClassStudyRefresh() {
+  return {
+    type: types.BEGIN_DATA_CURRENT_CLASS_STUDY_REFRESH,
+    refreshing: true,
+    error: false,
+  };
+}
+
 export function loadDataCurrentClassStudy(date, token) {
   return function(dispatch) {
     dispatch(beginDataCurrentClassStudyLoad());
+    classApi
+      .loadCurrentClassStudyApi(date, token)
+      .then(function(res) {
+        dispatch(loadDataSuccessful(res));
+      })
+      .catch(error => {
+        dispatch(loadDataError());
+        throw error;
+      });
+  };
+}
+
+export function refreshDataCurrentClassStudy(date, token) {
+  return function(dispatch) {
+    dispatch(beginDataCurrentClassStudyRefresh());
     classApi
       .loadCurrentClassStudyApi(date, token)
       .then(function(res) {
@@ -32,6 +55,7 @@ export function loadDataSuccessful(res) {
     type: types.LOAD_DATA_CURRENT_CLASS_STUDY_SUCCESSFUL,
     classData: res.data.classes,
     isLoading: false,
+    refreshing: false,
     error: false,
   };
 }
@@ -40,6 +64,7 @@ export function loadDataError() {
   return {
     type: types.LOAD_DATA_CURRENT_CLASS_STUDY_ERROR,
     isLoading: false,
+    refreshing: false,
     error: true,
   };
 }

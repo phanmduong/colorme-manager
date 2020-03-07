@@ -33,6 +33,11 @@ class TaskContainer extends React.Component {
     this.props.taskActions.loadTaskEmployees(this.props.token);
   };
 
+  onRefresh = (date, user_id) => {
+    this.loadTaskAnalytics(user_id);
+    this.loadTaskView(date, user_id);
+  };
+
   onSelectDate = date => {
     this.props.taskActions.onSelectDate(date);
   };
@@ -69,6 +74,7 @@ class TaskContainer extends React.Component {
         user={this.props.user}
         onSelectUserId={this.onSelectUserId}
         onSelectTask={this.onSelectTask}
+        onRefresh={this.onRefresh}
       />
     );
   }
@@ -81,9 +87,11 @@ function mapStateToProps(state) {
     selectedDate: state.task.selectedDate,
     taskAnalytics: state.task.taskAnalytics,
     isLoadingTaskAnalytics: state.task.isLoadingTaskAnalytics,
+    refreshingTaskAnalytics: state.task.refreshingTaskAnalytics,
     errorLoadingTaskAnalytics: state.task.errorLoadingTaskAnalytics,
     taskView: state.task.taskView,
     isLoadingTaskView: state.task.isLoadingTaskView,
+    refreshingTaskView: state.task.refreshingTaskView,
     errorLoadingTaskView: state.task.errorLoadingTaskView,
     employees: state.task.employees,
     isLoadingTaskEmployees: state.task.isLoadingTaskEmployees,

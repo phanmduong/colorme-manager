@@ -7,6 +7,7 @@ import {
   ScrollView,
   Image,
   TextInput,
+  RefreshControl,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import moment from 'moment';
@@ -202,7 +203,26 @@ class TaskComponent extends React.Component {
       nameSelectedDate =
         nameSelectedDate.charAt(0).toUpperCase() + nameSelectedDate.slice(1);
       return (
-        <ScrollView style={{flex: 1, marginTop: getStatusBarHeight() + 10}}>
+        <ScrollView
+          style={{flex: 1, marginTop: getStatusBarHeight() + 10}}
+          refreshControl={
+            <RefreshControl
+              refreshing={
+                this.props.isLoadingTaskAnalytics ||
+                this.props.isLoadingTaskView
+              }
+              onRefresh={() =>
+                this.props.onRefresh(
+                  moment(this.props.selectedDate).format('YYYY-MM-DD'),
+                  this.state.user_id,
+                )
+              }
+              titleColor={theme.mainColor}
+              title="Đang tải..."
+              tintColor="#d9534f"
+              colors={['#d9534f']}
+            />
+          }>
           <View
             style={{
               justifyContent: 'space-between',

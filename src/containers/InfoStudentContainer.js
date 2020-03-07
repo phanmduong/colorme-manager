@@ -58,6 +58,25 @@ class InfoStudentContainer extends React.Component {
     );
   };
 
+  onRefresh = () => {
+    this.props.infoStudentActions.loadRegisters(
+      this.props.student_id,
+      this.props.token,
+    );
+    this.props.infoStudentActions.loadHistoryCalls(
+      this.props.student_id,
+      this.props.token,
+    );
+    this.props.infoStudentActions.loadProgress(
+      this.props.student_id,
+      this.props.token,
+    );
+    this.props.infoStudentActions.loadHistoryCollect(
+      this.props.student_id,
+      this.props.token,
+    );
+  };
+
   render() {
     return (
       <InfoStudentComponent
@@ -89,6 +108,7 @@ class InfoStudentContainer extends React.Component {
         tabHistoryCollectMoney={() => {
           this.tabHistoryCollectMoney();
         }}
+        onRefresh={this.onRefresh}
       />
     );
   }
@@ -106,6 +126,14 @@ function mapStateToProps(state) {
     errorChangeCallStatus: state.infoStudent.errorChangeCallStatus,
     student: state.infoStudent.student,
     isLoadingStudent: state.infoStudent.isLoadingStudent,
+    isLoadingRegisters: state.infoStudent.isLoadingRegisters,
+    errorRegisters: state.infoStudent.errorRegisters,
+    isLoadingHistoryCalls: state.infoStudent.isLoadingHistoryCalls,
+    errorLoadingHistoryCalls: state.infoStudent.errorLoadingHistoryCalls,
+    isLoadingHistoryCollect: state.infoStudent.isLoadingHistoryCollect,
+    errorLoadingHistoryCollect: state.infoStudent.errorLoadingHistoryCollect,
+    isLoadingProgress: state.infoStudent.isLoadingProgress,
+    errorLoadingProgress: state.infoStudent.errorLoadingProgress,
   };
 }
 

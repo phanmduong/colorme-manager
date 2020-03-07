@@ -8,6 +8,7 @@ import {
   Image,
   Linking,
   Dimensions,
+  RefreshControl,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import CallRegisterModal from './infoStudent/CallRegisterModal';
@@ -55,7 +56,22 @@ class InfoStudentComponent extends React.Component {
       return (
         <ScrollView
           showsVerticalScrollIndicator={false}
-          style={{flex: 1, marginTop: getStatusBarHeight() + 10}}>
+          style={{flex: 1, marginTop: getStatusBarHeight() + 10}}
+          refreshControl={
+            <RefreshControl
+              refreshing={
+                this.props.isLoadingRegisters ||
+                this.props.isLoadingHistoryCalls ||
+                this.props.isLoadingHistoryCollect ||
+                this.props.isLoadingProgress
+              }
+              onRefresh={() => this.props.onRefresh()}
+              titleColor={theme.mainColor}
+              title="Đang tải..."
+              tintColor="#d9534f"
+              colors={['#d9534f']}
+            />
+          }>
           <View
             style={{
               flexDirection: 'row',

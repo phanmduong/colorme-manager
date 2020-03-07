@@ -8,6 +8,7 @@ import {
   Linking,
   TouchableOpacity,
   Alert,
+  RefreshControl,
 } from 'react-native';
 import Spinkit from 'react-native-spinkit';
 import theme from '../../styles';
@@ -229,7 +230,17 @@ class InfoStudentDetailsComponent extends React.Component {
       return (
         <ScrollView
           style={{marginHorizontal: 16}}
-          showsVerticalScrollIndicator={false}>
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.props.isLoadingStudent}
+              onRefresh={() => this.props.onRefresh()}
+              titleColor={theme.mainColor}
+              title="Đang tải..."
+              tintColor="#d9534f"
+              colors={['#d9534f']}
+            />
+          }>
           <View style={{alignItems: 'center', paddingTop: 30}}>
             <TouchableOpacity onPress={() => this.uploadImage('avatar_url')}>
               {!isEmptyInput(this.props.student.avatar_url) ? (

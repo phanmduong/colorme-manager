@@ -57,6 +57,7 @@ class InfoStudentDetailsContainer extends React.Component {
         isUploadingImage={this.props.isUploadingImage}
         errorUploadingImage={this.props.errorUploadingImage}
         isUpdatingProfile={this.props.isUpdatingProfile}
+        onRefresh={this.loadStudent}
       />
     );
   }

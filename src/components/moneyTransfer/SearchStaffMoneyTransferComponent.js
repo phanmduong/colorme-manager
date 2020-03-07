@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, Image, ScrollView} from 'react-native';
+import {Dimensions, Image, RefreshControl, ScrollView} from 'react-native';
 import {Button, Text, View, List} from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as alert from '../../constants/alert';
@@ -7,6 +7,7 @@ import Loading from '../common/Loading';
 import Search from '../common/Search';
 import ListItemStaffMoneyTransfer from './ListItemStaffMoneyTransfer';
 import {getStatusBarHeight} from 'react-native-iphone-x-helper';
+import theme from '../../styles';
 
 var {height, width} = Dimensions.get('window');
 let self;
@@ -87,6 +88,16 @@ class SearchStaffMoneyTransferComponent extends React.Component {
                 <View />;
               }
             }}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.props.isLoading}
+                onRefresh={() => this.props.onRefresh()}
+                titleColor={theme.mainColor}
+                title="Đang tải..."
+                tintColor="#d9534f"
+                colors={['#d9534f']}
+              />
+            }
           />
         );
       }
@@ -95,10 +106,10 @@ class SearchStaffMoneyTransferComponent extends React.Component {
 
   render() {
     return (
-      <ScrollView style={{flex: 1}} contentContainerStyle={{flexGrow: 1}}>
+      <View style={{flex: 1}} contentContainerStyle={{flexGrow: 1}}>
         {this.renderSearch()}
         {this.renderContent()}
-      </ScrollView>
+      </View>
     );
   }
 }

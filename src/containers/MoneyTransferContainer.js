@@ -147,6 +147,7 @@ class MoneyTransferContainer extends React.Component {
         isLoadingTransaction={this.props.isLoadingTransaction}
         user={this.props.user}
         avatar_url={this.props.avatar_url}
+        onRefresh={this.loadDataStaffList}
       />
     );
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, Platform} from 'react-native';
+import {Dimensions, Platform, RefreshControl} from 'react-native';
 import {Container, Button, View, List, Text} from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swiper from 'react-native-swiper';
@@ -10,7 +10,7 @@ import ListItemStudent from './listItem/ListItemStudent';
 import _ from 'lodash';
 import Search from './common/Search';
 import {convertVietText} from '../helper';
-import SubmitMoneyModal from "./infoStudent/SubmitMoneyModal";
+import SubmitMoneyModal from './infoStudent/SubmitMoneyModal';
 
 var {height, width} = Dimensions.get('window');
 const heightSwiper = Platform.OS === 'ios' ? height - 170 : height - 125;
@@ -95,6 +95,16 @@ class ListStudenClassComponent extends React.Component {
             style={styles.list}
             dataArray={this.searchStudent(this.props.listStudentClass)}
             ListHeaderComponent={this.headerComponent}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.props.refreshing}
+                onRefresh={() => this.props.onRefresh()}
+                titleColor={theme.mainColor}
+                title="Đang tải..."
+                tintColor="#d9534f"
+                colors={['#d9534f']}
+              />
+            }
             renderRow={(item, sectionID, rowID) => (
               <ListItemStudent
                 {...this.props}

@@ -14,9 +14,15 @@ export default function listStudentClassReducer(
         isLoading: action.isLoading,
         error: action.error,
       });
+    case types.BEGIN_DATA_LIST_STUDENT_CLASS_REFRESH:
+      return Object.assign({}, state, {
+        refreshing: action.refreshing,
+        error: action.error,
+      });
     case types.LOAD_DATA_LIST_STUDENT_CLASS_SUCCESSFUL:
       return Object.assign({}, state, {
         isLoading: action.isLoading,
+        refreshing: action.refreshing,
         error: action.error,
         listStudentClassData: action.listStudentClassData,
         classInfo: action.classInfo,
@@ -24,6 +30,7 @@ export default function listStudentClassReducer(
     case types.LOAD_DATA_LIST_STUDENT_CLASS_ERROR:
       return Object.assign({}, state, {
         isLoading: action.isLoading,
+        refreshing: action.refreshing,
         error: action.error,
       });
     default:

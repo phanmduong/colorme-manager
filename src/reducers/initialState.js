@@ -116,6 +116,7 @@ export default {
   listStudentClass: {
     listStudentClassData: [],
     isLoading: false,
+    refreshing: false,
     error: false,
     classInfo: {},
   },

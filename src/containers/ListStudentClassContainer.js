@@ -43,6 +43,13 @@ class ListStudentClassContainer extends React.Component {
     );
   }
 
+  onRefresh = () => {
+    this.props.listStudentClassActions.refreshDataListStudentClass(
+      this.props.selectedClassId,
+      this.props.token,
+    );
+  };
+
   setStudentId = studentId => {
     this.props.infoStudentActions.setStudentId(studentId);
   };
@@ -120,6 +127,7 @@ class ListStudentClassContainer extends React.Component {
         errorSubmitMoney={this.props.errorSubmitMoney}
         submitMoney={this.submitMoney}
         setStudentId={this.setStudentId}
+        onRefresh={this.onRefresh}
       />
     );
   }
@@ -144,6 +152,7 @@ function mapStateToProps(state) {
     selectedClassId: state.class.selectedClassId,
     listStudentClassData: state.listStudentClass.listStudentClassData,
     isLoading: state.listStudentClass.isLoading,
+    refreshing: state.listStudentClass.refreshing,
     classInfo: state.listStudentClass.classInfo,
     error: state.listStudentClass.error,
     isLoadingChangeCallStatus: state.infoStudent.isLoadingChangeCallStatus,

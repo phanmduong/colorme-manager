@@ -1,5 +1,12 @@
 import React from 'react';
-import {Dimensions, Keyboard, Alert, Image, ScrollView} from 'react-native';
+import {
+  Dimensions,
+  Keyboard,
+  Alert,
+  Image,
+  ScrollView,
+  RefreshControl,
+} from 'react-native';
 import {
   Container,
   Button,
@@ -170,6 +177,16 @@ class CollectMoneyComponent extends React.Component {
                 onPress={self.openModal}
               />
             )}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.props.isLoading}
+                onRefresh={() => this.props.onRefresh()}
+                titleColor={theme.mainColor}
+                title="Đang tải..."
+                tintColor="#d9534f"
+                colors={['#d9534f']}
+              />
+            }
           />
         );
       }
@@ -178,7 +195,7 @@ class CollectMoneyComponent extends React.Component {
 
   render() {
     return (
-      <ScrollView style={{flex: 1}} contentContainerStyle={{flexGrow: 1}}>
+      <View style={{flex: 1}}>
         {this.renderSearch()}
         {this.renderContent()}
         <Modal
@@ -343,7 +360,7 @@ class CollectMoneyComponent extends React.Component {
             </View>
           </View>
         </Modal>
-      </ScrollView>
+      </View>
     );
   }
 }

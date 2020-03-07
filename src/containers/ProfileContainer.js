@@ -55,6 +55,7 @@ class ProfileContainer extends React.Component {
         isChangingAvatar={this.props.isChangingAvatar}
         errorChangingAvatar={this.props.errorChangingAvatar}
         changeAvatar={this.changeAvatar}
+        onRefresh={this.loadProfile}
       />
     );
   }

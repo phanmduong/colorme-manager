@@ -7,6 +7,7 @@ import {
   View,
   Dimensions,
   Alert,
+  RefreshControl,
 } from 'react-native';
 import {isEmptyInput} from '../helper';
 import Spinkit from 'react-native-spinkit';
@@ -88,7 +89,17 @@ class ProfileComponent extends React.Component {
       return (
         <ScrollView
           style={{marginHorizontal: 16}}
-          showsVerticalScrollIndicator={false}>
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.props.isLoadingProfile}
+              onRefresh={() => this.props.onRefresh()}
+              titleColor={theme.mainColor}
+              title="Đang tải..."
+              tintColor="#d9534f"
+              colors={['#d9534f']}
+            />
+          }>
           <View style={{alignItems: 'center', paddingTop: 30}}>
             {!this.props.isChangingAvatar ? (
               <TouchableOpacity onPress={() => this.changeAvatar()}>

@@ -49,14 +49,6 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
   };
 
   @Override
-   protected List<ReactPackage> getPackages() {
-    return Arrays.<ReactPackage>asList(
-        new MainReactPackage(),
-        new OrientationPackage()
-    );
-   }
-
-  @Override
   public ReactNativeHost getReactNativeHost() {
     return mReactNativeHost;
   }

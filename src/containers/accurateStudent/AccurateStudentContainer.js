@@ -3,7 +3,12 @@
  */
 import React from 'react';
 import {connect} from 'react-redux';
-import {Dimensions, Image, TouchableOpacity} from 'react-native';
+import {
+  Dimensions,
+  Image,
+  RefreshControl,
+  TouchableOpacity,
+} from 'react-native';
 import {observer} from 'mobx-react';
 import theme from '../../styles';
 import {Button, Container, Item, List, Picker, Text, View} from 'native-base';
@@ -83,7 +88,7 @@ class AccurateStudentContainer extends React.Component {
   }
 
   renderContent() {
-    const {isLoading, error, students} = this.store;
+    const {isLoading, refreshing, error, students} = this.store;
     if (isLoading && students.length <= 0) {
       return <Loading size={width / 8} />;
     } else {
@@ -122,6 +127,16 @@ class AccurateStudentContainer extends React.Component {
                 onPress={this.openModal}
               />
             )}
+            refreshControl={
+              <RefreshControl
+                refreshing={isLoading}
+                onRefresh={() => this.store.searchStudent(this.props.token)}
+                titleColor={theme.mainColor}
+                title="Đang tải..."
+                tintColor="#d9534f"
+                colors={['#d9534f']}
+              />
+            }
           />
         );
       }

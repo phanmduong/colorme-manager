@@ -7,7 +7,6 @@ import {
   Clipboard,
   Dimensions,
   FlatList,
-  Image,
   RefreshControl,
 } from 'react-native';
 import {Thumbnail} from 'native-base';
@@ -15,7 +14,7 @@ import theme from '../styles';
 import Spinkit from 'react-native-spinkit';
 import Search from './common/Search';
 import {getShortName, convertVietText} from '../helper';
-import DocumentFilterModal from './document/DocumentFilterModal';
+import LinearGradient from 'react-native-linear-gradient';
 var {width, height} = Dimensions.get('window');
 
 class DocumentComponent extends React.Component {
@@ -23,39 +22,53 @@ class DocumentComponent extends React.Component {
     super(props, context);
     this.state = {
       search: '',
-      filterModalVisible: false,
-      hello: true,
+      departmentId: -1,
     };
   }
 
   headerComponent = () => {
     return (
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Search
-          placeholder="Tìm kiếm tài liệu"
-          onChangeText={search => this.setState({search})}
-          value={this.state.search}
-          autoFocus={false}
-          extraStyle={{width: width - 85}}
-          extraInputStyle={{width: width - 85 - 48}}
-        />
-        <TouchableOpacity onPress={this.toggleFilterModal}>
-          <View style={styles.fitlerContainer}>
-            <Image
-              source={require('../../assets/img/icons8-sorting_options_filled.png')}
-              style={{width: 18, height: 18}}
-            />
-          </View>
-        </TouchableOpacity>
-        <DocumentFilterModal
-          onSelectDepartmentId={this.props.onSelectDepartmentId}
-          isVisible={this.state.filterModalVisible}
-          closeModal={this.toggleFilterModal}
-          isLoadingDepartments={this.props.isLoadingDepartments}
-          departments={this.props.departments}
-          selectedDepartmentId={this.props.selectedDepartmentId}
-          loadDocuments={this.props.loadDocuments}
-        />
+      <View>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Search
+            placeholder="Tìm kiếm tài liệu"
+            onChangeText={search => this.setState({search})}
+            value={this.state.search}
+            autoFocus={false}
+          />
+        </View>
+        <View style={styles.containerTag}>
+          <TouchableOpacity onPress={() => this.setState({departmentId: -1})}>
+            <LinearGradient
+              colors={
+                this.state.departmentId === -1
+                  ? ['#F6F6F6', '#F6F6F6']
+                  : ['white', 'white']
+              }
+              start={{x: 0, y: 0}}
+              end={{x: 1, y: 0}}
+              style={styles.tag}>
+              <Text style={{color: 'black'}}>
+                Tất cả ({this.getDocLst(-1).length})
+              </Text>
+            </LinearGradient>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.setState({departmentId: 6})}>
+            <LinearGradient
+              colors={
+                this.state.departmentId === 6
+                  ? ['#F6F6F6', '#F6F6F6']
+                  : ['white', 'white']
+              }
+              start={{x: 0, y: 0}}
+              end={{x: 1, y: 0}}
+              style={styles.tag}>
+              <Text style={{color: 'black'}}>
+                Marketing ({this.getDocLst(6).length})
+              </Text>
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   };
@@ -148,8 +161,14 @@ class DocumentComponent extends React.Component {
     );
   };
 
-  toggleFilterModal = () => {
-    this.setState({filterModalVisible: !this.state.filterModalVisible});
+  getDocLst = departmentId => {
+    if (departmentId === -1) {
+      return this.props.documents;
+    } else {
+      return this.props.documents.filter(
+        doc => doc.department && doc.department.id === departmentId,
+      );
+    }
   };
 
   searchDocuments = docLst => {
@@ -172,15 +191,13 @@ class DocumentComponent extends React.Component {
     if (!this.props.isLoadingDoc && !this.props.isLoadingDepartments) {
       return (
         <FlatList
-          data={this.searchDocuments(this.props.documents)}
+          data={this.searchDocuments(this.getDocLst(this.state.departmentId))}
           renderItem={this.renderDoc}
           ListHeaderComponent={this.headerComponent}
           refreshControl={
             <RefreshControl
               refreshing={this.props.refreshingDoc}
-              onRefresh={() =>
-                this.props.refreshDocuments(this.props.selectedDepartmentId)
-              }
+              onRefresh={() => this.props.refreshDocuments('')}
               titleColor={theme.mainColor}
               title="Đang tải..."
               tintColor="#d9534f"
@@ -344,5 +361,19 @@ const styles = {
     alignItems: 'center',
     borderRadius: 20,
     marginLeft: 10,
+  },
+  tag: {
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  containerTag: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+    marginTop: 5,
+    marginHorizontal: 16,
   },
 };

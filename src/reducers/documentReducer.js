@@ -29,26 +29,6 @@ export default function documentReducer(
         refreshingDoc: actions.refreshingDoc,
         errorDoc: actions.errorDoc,
       });
-    case types.BEGIN_LOAD_DEPARTMENT_FILTER:
-      return Object.assign({}, state, {
-        isLoadingDepartments: actions.isLoadingDepartments,
-        errorDepartments: actions.errorDepartments,
-      });
-    case types.LOAD_DEPARTMENT_FILTER_SUCCESSFUL:
-      return Object.assign({}, state, {
-        isLoadingDepartments: actions.isLoadingDepartments,
-        errorDepartments: actions.errorDepartments,
-        departments: actions.departments,
-      });
-    case types.LOAD_DEPARTMENT_FILTER_ERROR:
-      return Object.assign({}, state, {
-        isLoadingDepartments: actions.isLoadingDepartments,
-        errorDepartments: actions.errorDepartments,
-      });
-    case types.ON_SELECT_DEPARTMENT_ID:
-      return Object.assign({}, state, {
-        selectedDepartmentId: actions.selectedDepartmentId,
-      });
     default:
       return state;
   }

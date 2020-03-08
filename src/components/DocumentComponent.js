@@ -62,82 +62,89 @@ class DocumentComponent extends React.Component {
 
   renderDoc = ({item}) => {
     return (
-      <View style={styles.containerAll}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <View style={{position: 'relative'}}>
-              <Thumbnail small source={{uri: item.creator.avatar_url}} />
-            </View>
-            <Text numberOfLines={2} style={styles.className}>
-              {item.name}
-            </Text>
-          </View>
-        </View>
-        <View style={{flexDirection: 'row'}}>
-          <View style={styles.classAva} />
-          <View style={styles.infoContainer}>
-            <View style={styles.containerSubTitle}>
-              {item.department ? (
-                <View
-                  style={{
-                    ...styles.card,
-                    ...{
-                      backgroundColor:
-                        !item.department.color || item.department.color === ''
-                          ? theme.processColor1
-                          : '#' + item.department.color,
-                      marginRight: 5,
-                    },
-                  }}>
-                  <Text style={styles.saler}>
-                    {getShortName(item.department.name)}
-                  </Text>
-                </View>
-              ) : (
-                <View />
-              )}
-            </View>
-            <View style={{flex: 1}}>
-              {item.description ? (
-                <Text
-                  numberOfLines={1}
-                  style={[styles.classInfoContainer, {paddingTop: 0}]}>
-                  {item.description}
-                </Text>
-              ) : null}
-              {item.creator && item.creator.name ? (
-                <Text numberOfLines={1} style={styles.classInfoContainer}>
-                  Được tạo bởi{' '}
-                  <Text style={{fontWeight: '600', color: 'black'}}>
-                    {item.creator.name}
-                  </Text>
-                </Text>
-              ) : null}
-            </View>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                onPress={() =>
-                  this.props.navigation.navigate('DocumentWebView', {
-                    url: item.url,
-                  })
-                }>
-                <View style={styles.button}>
-                  <Text style={{fontSize: 16}}>Xem tài liệu</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => Clipboard.setString(item.url)}>
-                <View style={[{marginLeft: 10}, styles.button]}>
-                  <Text style={{fontSize: 16}}>Copy URL</Text>
-                </View>
-              </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() =>
+          this.props.navigation.navigate('DocumentWebView', {
+            url: item.url,
+          })
+        }>
+        <View style={styles.containerAll}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{position: 'relative'}}>
+                <Thumbnail small source={{uri: item.creator.avatar_url}} />
+              </View>
+              <Text numberOfLines={2} style={styles.className}>
+                {item.name}
+              </Text>
             </View>
           </View>
+          <View style={{flexDirection: 'row'}}>
+            <View style={styles.classAva} />
+            <View style={styles.infoContainer}>
+              <View style={styles.containerSubTitle}>
+                {item.department ? (
+                  <View
+                    style={{
+                      ...styles.card,
+                      ...{
+                        backgroundColor:
+                          !item.department.color || item.department.color === ''
+                            ? theme.processColor1
+                            : '#' + item.department.color,
+                        marginRight: 5,
+                      },
+                    }}>
+                    <Text style={styles.saler}>
+                      {getShortName(item.department.name)}
+                    </Text>
+                  </View>
+                ) : (
+                  <View />
+                )}
+              </View>
+              <View style={{flex: 1}}>
+                {item.description ? (
+                  <Text
+                    numberOfLines={1}
+                    style={[styles.classInfoContainer, {paddingTop: 0}]}>
+                    {item.description}
+                  </Text>
+                ) : null}
+                {item.creator && item.creator.name ? (
+                  <Text numberOfLines={1} style={styles.classInfoContainer}>
+                    Được tạo bởi{' '}
+                    <Text style={{fontWeight: '600', color: 'black'}}>
+                      {item.creator.name}
+                    </Text>
+                  </Text>
+                ) : null}
+              </View>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.props.navigation.navigate('DocumentWebView', {
+                      url: item.url,
+                    })
+                  }>
+                  <View style={styles.button}>
+                    <Text style={{fontSize: 16}}>Xem tài liệu</Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => Clipboard.setString(item.url)}>
+                  <View style={[{marginLeft: 10}, styles.button]}>
+                    <Text style={{fontSize: 16}}>Copy URL</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 

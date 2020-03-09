@@ -12,7 +12,8 @@ class DocumentContainer extends React.Component {
   }
 
   componentDidMount = () => {
-    this.loadDocuments('');
+    this.loadDocuments(-1);
+    this.loadDepartments();
   };
 
   static navigationOptions = ({navigation}) => ({
@@ -32,11 +33,21 @@ class DocumentContainer extends React.Component {
   });
 
   loadDocuments = departmentId => {
+    if (departmentId === -1) {
+      departmentId = '';
+    }
     this.props.documentActions.loadDocuments(departmentId, this.props.token);
   };
 
   refreshDocuments = departmentId => {
+    if (departmentId === -1) {
+      departmentId = '';
+    }
     this.props.documentActions.refreshDocuments(departmentId, this.props.token);
+  };
+
+  loadDepartments = () => {
+    this.props.documentActions.loadDepartmentFilter(this.props.token);
   };
 
   render() {
@@ -44,6 +55,7 @@ class DocumentContainer extends React.Component {
       <DocumentComponent
         {...this.props}
         refreshDocuments={this.refreshDocuments}
+        loadDocuments={this.loadDocuments}
       />
     );
   }
@@ -69,6 +81,9 @@ function mapStateToProps(state) {
     refreshingDoc: state.document.refreshingDoc,
     errorDoc: state.document.errorDoc,
     documents: state.document.documents,
+    departments: state.document.departments,
+    isLoadingDepartments: state.document.isLoadingDepartments,
+    errorDepartments: state.document.errorDepartments,
   };
 }
 

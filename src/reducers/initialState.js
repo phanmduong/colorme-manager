@@ -404,5 +404,8 @@ export default {
     refreshingDoc: false,
     errorDoc: false,
     documents: [],
+    departments: [],
+    isLoadingDepartments: false,
+    errorDepartments: false,
   },
 };

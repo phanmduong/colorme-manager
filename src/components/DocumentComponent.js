@@ -8,6 +8,7 @@ import {
   Dimensions,
   FlatList,
   RefreshControl,
+  ScrollView,
 } from 'react-native';
 import {Thumbnail} from 'native-base';
 import theme from '../styles';
@@ -37,40 +38,34 @@ class DocumentComponent extends React.Component {
             autoFocus={false}
           />
         </View>
-        <View style={styles.containerTag}>
-          <TouchableOpacity onPress={() => this.setState({departmentId: -1})}>
-            <LinearGradient
-              colors={
-                this.state.departmentId === -1
-                  ? ['#F6F6F6', '#F6F6F6']
-                  : ['white', 'white']
-              }
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}
-              style={styles.tag}>
-              <Text style={{color: 'black'}}>
-                Tất cả ({this.getDocLst(-1).length})
-              </Text>
-            </LinearGradient>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.setState({departmentId: 6})}>
-            <LinearGradient
-              colors={
-                this.state.departmentId === 6
-                  ? ['#F6F6F6', '#F6F6F6']
-                  : ['white', 'white']
-              }
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}
-              style={styles.tag}>
-              <Text style={{color: 'black'}}>
-                Marketing ({this.getDocLst(6).length})
-              </Text>
-            </LinearGradient>
-          </TouchableOpacity>
-        </View>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <View style={styles.containerTag}>{this.renderTabs()}</View>
+        </ScrollView>
       </View>
     );
+  };
+
+  renderTabs = () => {
+    let defaultDepartment = {id: -1, name: 'Tất cả'};
+    let departmentLst = [defaultDepartment].concat(this.props.departments);
+    return departmentLst.map(department => (
+      <TouchableOpacity
+        onPress={() => this.setState({departmentId: department.id})}>
+        <LinearGradient
+          colors={
+            this.state.departmentId === department.id
+              ? ['#F6F6F6', '#F6F6F6']
+              : ['white', 'white']
+          }
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 0}}
+          style={styles.tag}>
+          <Text style={{color: 'black'}}>
+            {department.name} ({this.getDocLst(department.id).length})
+          </Text>
+        </LinearGradient>
+      </TouchableOpacity>
+    ));
   };
 
   renderDoc = ({item}) => {

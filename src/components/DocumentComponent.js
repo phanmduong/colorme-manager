@@ -8,6 +8,7 @@ import {
   Dimensions,
   FlatList,
   RefreshControl,
+  Alert,
   ScrollView,
 } from 'react-native';
 import {Thumbnail} from 'native-base';
@@ -143,7 +144,11 @@ class DocumentComponent extends React.Component {
                     <Text style={{fontSize: 16}}>Xem tài liệu</Text>
                   </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => Clipboard.setString(item.url)}>
+                <TouchableOpacity
+                  onPress={() => {
+                    Clipboard.setString(item.url);
+                    Alert.alert('Thông báo', 'Copy URL thành công');
+                  }}>
                   <View style={[{marginLeft: 10}, styles.button]}>
                     <Text style={{fontSize: 16}}>Copy URL</Text>
                   </View>

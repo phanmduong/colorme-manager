@@ -58,13 +58,13 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Your message to user when the camera is accessed for the first time</string>
+	<string>For QR code scan to extract student attendance data, upload ID and avatar pictures</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Để sử dụng tính năng điểm danh ứng dụng cần sử dụng vị trí của bạn</string>
+	<string>Attendance taking feature requires the location to confirm that the students are in classes</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Your message to user when the microsphone is accessed for the first time</string>
+	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Your message to user when the photo library is accessed for the first time</string>
+	<string>Photo library is used to select photos to upload ID and avatar pictures</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SegoeUI-Blank.ttf</string>

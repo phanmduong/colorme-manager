@@ -49,6 +49,9 @@ class DocumentComponent extends React.Component {
   renderTabs = () => {
     let defaultDepartment = {id: -1, name: 'Tất cả'};
     let departmentLst = [defaultDepartment].concat(this.props.departments);
+    departmentLst = departmentLst.filter(
+      department => this.getDocLst(department.id).length > 0,
+    );
     return departmentLst.map(department => (
       <TouchableOpacity
         onPress={() => this.setState({departmentId: department.id})}>
@@ -104,7 +107,7 @@ class DocumentComponent extends React.Component {
                         backgroundColor:
                           !item.department.color || item.department.color === ''
                             ? theme.processColor1
-                            : '#' + item.department.color,
+                            : item.department.color,
                         marginRight: 5,
                       },
                     }}>

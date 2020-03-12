@@ -20,6 +20,7 @@ import {getStatusBarHeight, isIphoneX} from 'react-native-iphone-x-helper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import {observer} from 'mobx-react';
+import {getShortName} from '../helper';
 
 @observer
 class DashboardComponent extends React.Component {
@@ -73,7 +74,19 @@ class DashboardComponent extends React.Component {
                     style={styles.headerAva}
                   />
                 </TouchableOpacity>
-                <Text style={styles.headerTitle}>Trang chủ</Text>
+                <Text style={styles.headerTitle}>
+                  {getShortName(this.props.user.name)}
+                </Text>
+                {this.props.user.role === 2 ? (
+                  <Image
+                    source={require('../../assets/img/icons8-star-100-filled.png')}
+                    style={{
+                      width: theme.mainIcon.width,
+                      height: theme.mainIcon.height,
+                      marginLeft: 5,
+                    }}
+                  />
+                ) : null}
               </View>
               <View style={{flexDirection: 'row'}}>
                 <TouchableOpacity

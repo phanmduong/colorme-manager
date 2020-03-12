@@ -88,7 +88,11 @@ class DocumentComponent extends React.Component {
             }}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <View style={{position: 'relative'}}>
-                <Thumbnail small source={{uri: item.creator.avatar_url}} />
+                <Thumbnail
+                  small
+                  source={{uri: item.creator.avatar_url}}
+                  style={theme.mainAvatar}
+                />
               </View>
               <Text numberOfLines={2} style={styles.className}>
                 {item.name}

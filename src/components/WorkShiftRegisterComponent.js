@@ -535,11 +535,7 @@ const styles = {
     fontWeight: 'bold',
     marginLeft: 10,
   },
-  headerAva: {
-    width: 35,
-    height: 35,
-    borderRadius: 18,
-  },
+  headerAva: theme.mainAvatar,
 };
 
 export default WorkShiftRegisterComponent;

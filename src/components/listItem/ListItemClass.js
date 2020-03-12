@@ -61,7 +61,7 @@ class ListItemClass extends React.Component {
     return (
       <View style={styles.container}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Thumbnail small source={{uri: avatar}} />
+          <Thumbnail small source={{uri: avatar}} style={theme.mainAvatar} />
           <Text
             numberOfLines={1}
             style={{
@@ -81,7 +81,7 @@ class ListItemClass extends React.Component {
           ) : null}
         </View>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Thumbnail small />
+          <Thumbnail small style={theme.mainAvatar} />
           <View style={styles.infoContainer}>
             <View style={styles.containerSubTitle}>
               {teach ? (

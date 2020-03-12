@@ -42,7 +42,7 @@ class ListItemClass extends React.Component {
       totalRegisters < registerTarget ? totalRegisters : registerTarget;
     return (
       <View style={styles.container}>
-        <Thumbnail small source={{uri: avatar}} />
+        <Thumbnail small source={{uri: avatar}} style={theme.mainAvatar} />
         <View style={styles.content}>
           <View style={styles.containerTitle}>
             <Text style={styles.title}>{nameClass.toUpperCase()}</Text>

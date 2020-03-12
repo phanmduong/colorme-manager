@@ -374,11 +374,7 @@ const styles = {
     alignItems: 'center',
     marginVertical: 20,
   },
-  headerAva: {
-    width: 35,
-    height: 35,
-    borderRadius: 18,
-  },
+  headerAva: theme.mainAvatar,
   headerTitle: {
     color: 'black',
     fontSize: 23,

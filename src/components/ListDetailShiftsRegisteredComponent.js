@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
+import theme from '../styles';
 var {height, width} = Dimensions.get('window');
 
 class ListDetailShiftsRegisteredComponent extends React.Component {
@@ -159,9 +160,9 @@ const styles = {
     justifyContent: 'center',
   },
   avatar: {
-    height: 25,
-    width: 25,
-    borderRadius: 18,
+    height: theme.mainAvatar.height,
+    width: theme.mainAvatar.width,
+    borderRadius: theme.mainAvatar.borderRadius,
     marginRight: 10,
   },
   searchContainer: {

@@ -23,10 +23,7 @@ class NotificationComponent extends React.Component {
   renderItem = ({item}) => (
     <View style={styles.itemContainer}>
       <View style={{flexDirection: 'row'}}>
-        <Image
-          source={{uri: item.image_url}}
-          style={{height: 50, width: 50, borderRadius: 30}}
-        />
+        <Image source={{uri: item.image_url}} style={theme.mainAvatar} />
         <View style={{flex: 1, flexWrap: 'wrap', marginLeft: 15}}>
           <HTML html={item.message} baseFontStyle={{fontSize: 16}} />
           <Text style={styles.itemText}>{item.created_at}</Text>

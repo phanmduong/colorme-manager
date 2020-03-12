@@ -15,4 +15,10 @@ export default (styles = {
   warningColor: '#ff9700',
   dangerColor: '#d92732',
   successColor: '#2da802',
+  mainHorizontal: 16,
+  mainAvatar: {
+    width: 35,
+    height: 35,
+    borderRadius: 18,
+  },
 });

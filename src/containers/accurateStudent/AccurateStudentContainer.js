@@ -352,16 +352,8 @@ const styles = {
     fontSize: 12,
     marginVertical: 5,
   },
-  name: {
-    fontWeight: '600',
-    fontSize: 23,
-  },
-  headerLeftContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginVertical: 5,
-    marginLeft: 10,
-  },
+  name: theme.header,
+  headerLeftContainer: theme.headerNavigateLeftContainer,
 };
 
 function mapStateToProps(state) {

@@ -11,6 +11,7 @@ import * as genActions from '../actions/genActions';
 import * as analyticsActions from '../actions/analyticsActions';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import theme from "../styles";
 
 class ClassContainer extends React.Component {
   constructor(props) {
@@ -109,16 +110,8 @@ class ClassContainer extends React.Component {
 }
 
 const styles = {
-  name: {
-    fontWeight: '600',
-    fontSize: 23,
-  },
-  headerLeftContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginVertical: 5,
-    marginLeft: 10,
-  },
+  name: theme.header,
+  headerLeftContainer: theme.headerNavigateLeftContainer,
 };
 
 function mapStateToProps(state) {

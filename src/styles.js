@@ -25,9 +25,17 @@ export default (styles = {
   title: {
     fontSize: 18,
     fontWeight: '600',
+    color: 'black',
   },
   header: {
     fontSize: 23,
     fontWeight: '600',
+    color: 'black',
+  },
+  headerNavigateLeftContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 5,
+    marginLeft: 10,
   },
 });

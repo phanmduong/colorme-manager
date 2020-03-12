@@ -27,7 +27,9 @@ MYAPP_RELEASE_KEY_PASSWORD='facebook'
 - Shift register
 - Analytics
 - Accurate student
-- Meeting
+- Meetings
+- Meeting details
+- History meetings
 - Teaching Rating
 - Collect money
 - Transfer money

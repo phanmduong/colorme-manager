@@ -530,9 +530,9 @@ const styles = {
     alignItems: 'center',
   },
   headerTitle: {
-    color: 'black',
-    fontSize: 23,
-    fontWeight: 'bold',
+    color: theme.mainTextColor,
+    fontSize: theme.header.fontSize,
+    fontWeight: theme.header.fontWeight,
     marginLeft: 10,
   },
   headerAva: theme.mainAvatar,

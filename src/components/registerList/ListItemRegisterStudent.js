@@ -337,8 +337,8 @@ const styles = {
     borderRadius: 19,
   },
   className: {
-    fontSize: 18,
-    fontWeight: '600',
+    fontSize: theme.title.fontSize,
+    fontWeight: theme.title.fontWeight,
     marginLeft: 15,
     marginRight: 5,
   },

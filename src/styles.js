@@ -21,4 +21,13 @@ export default (styles = {
     height: 35,
     borderRadius: 18,
   },
+  mainTextColor: 'black',
+  title: {
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  header: {
+    fontSize: 23,
+    fontWeight: '600',
+  },
 });

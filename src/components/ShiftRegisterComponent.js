@@ -376,9 +376,9 @@ const styles = {
   },
   headerAva: theme.mainAvatar,
   headerTitle: {
-    color: 'black',
-    fontSize: 23,
-    fontWeight: 'bold',
+    color: theme.mainTextColor,
+    fontSize: theme.header.fontSize,
+    fontWeight: theme.header.fontWeight,
     marginLeft: 10,
   },
 };

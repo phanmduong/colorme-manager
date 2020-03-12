@@ -491,9 +491,9 @@ const styles = {
     justifyContent: 'space-between',
   },
   headerTitle: {
-    color: 'black',
-    fontSize: 23,
-    fontWeight: 'bold',
+    color: theme.mainTextColor,
+    fontSize: theme.header.fontSize,
+    fontWeight: theme.header.fontWeight,
     marginLeft: 10,
   },
   headerAva: theme.mainAvatar,
@@ -512,8 +512,8 @@ const styles = {
     marginTop: 16,
   },
   sectionTitle: {
-    fontWeight: '600',
-    fontSize: 20,
+    fontWeight: theme.title.fontWeight,
+    fontSize: theme.title.fontSize,
   },
 };
 

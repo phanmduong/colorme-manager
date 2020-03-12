@@ -231,8 +231,8 @@ class CurrentClassItem extends React.Component {
 
 const styles = {
   className: {
-    fontSize: 18,
-    fontWeight: '600',
+    fontSize: theme.title.fontSize,
+    fontWeight: theme.title.fontWeight,
     marginLeft: 15,
     marginRight: 5,
   },

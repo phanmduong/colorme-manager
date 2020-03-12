@@ -41,9 +41,9 @@ const styles = {
   searchContainer: {
     backgroundColor: '#f6f6f6',
     height: 40,
-    width: Dimensions.get('window').width - 38,
+    width: Dimensions.get('window').width - 32,
     borderRadius: 27,
-    marginLeft: 19,
+    marginLeft: 16,
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: 10,

@@ -106,12 +106,12 @@ class ProfileComponent extends React.Component {
                 {!isEmptyInput(this.props.avatar_url) ? (
                   <Image
                     source={{uri: this.props.avatar_url}}
-                    style={{width: 100, height: 100, borderRadius: 50}}
+                    style={theme.largeAvatar}
                   />
                 ) : (
                   <Image
                     source={require('../../assets/img/icons8-male-user-96.png')}
-                    style={{width: 100, height: 100, borderRadius: 50}}
+                    style={theme.largeAvatar}
                   />
                 )}
               </TouchableOpacity>

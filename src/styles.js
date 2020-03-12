@@ -21,6 +21,21 @@ export default (styles = {
     height: 35,
     borderRadius: 18,
   },
+  largeAvatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+  },
+  shiftAvatar: {
+    width: 25,
+    height: 25,
+    borderRadius: 15,
+  },
+  miniAvatar: {
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+  },
   mainTextColor: 'black',
   title: {
     fontSize: 18,

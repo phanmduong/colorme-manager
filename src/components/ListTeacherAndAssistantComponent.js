@@ -153,7 +153,7 @@ class ListTeacherAndAssistantComponent extends React.Component {
                         : {uri: 'https://' + assistant.user.avatar_url}
                       : require('../../assets/img/icons8-male-user-96.png')
                   }
-                  style={styles.avatar}
+                  style={theme.largeAvatar}
                 />
                 <View style={styles.ratingTag}>
                   <Text style={{color: 'white'}}>

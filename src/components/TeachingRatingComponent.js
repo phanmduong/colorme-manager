@@ -185,7 +185,7 @@ class TeachingRatingComponent extends React.Component {
   renderTeacherFeedback = () => {
     return this.props.teacherFeedback.ratings.map(rating => (
       <View style={styles.feedbackContainer}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={{flexDirection: 'row'}}>
           <Image
             source={
               rating.student.avatar_url !== null
@@ -214,7 +214,7 @@ class TeachingRatingComponent extends React.Component {
   renderAssistantFeedback = () => {
     return this.props.assistantFeedback.ratings.map(rating => (
       <View style={styles.feedbackContainer}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={{flexDirection: 'row'}}>
           <Image
             source={
               rating.student.avatar_url !== null
@@ -738,11 +738,7 @@ const styles = {
     flexDirection: 'row',
     marginTop: 3,
   },
-  studentAva: {
-    width: 52,
-    height: 52,
-    borderRadius: 26,
-  },
+  studentAva: theme.mainAvatar,
   feedbackContainer: {
     padding: 15,
     backgroundColor: '#F7F7F7',

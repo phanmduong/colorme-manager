@@ -80,9 +80,9 @@ const styles = {
     justifyContent: 'center',
   },
   avatar: {
-    height: 25,
-    width: 25,
-    borderRadius: 18,
+    height: theme.shiftAvatar.height,
+    width: theme.shiftAvatar.width,
+    borderRadius: theme.shiftAvatar.borderRadius,
     marginRight: 10,
   },
   callBorder: {

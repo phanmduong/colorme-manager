@@ -440,11 +440,7 @@ const styles = {
     alignItems: 'flex-start',
     marginTop: 30,
   },
-  courseIcon: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-  },
+  courseIcon: theme.mainAvatar,
   courseName: {
     fontWeight: '600',
     fontSize: 22,

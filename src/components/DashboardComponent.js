@@ -51,93 +51,87 @@ class DashboardComponent extends React.Component {
             ? {flex: 1, marginTop: getStatusBarHeight() + 10}
             : {flex: 1, marginTop: 20}
         }>
-        <ScrollView
-          refreshControl={
-            <RefreshControl
-              refreshing={
-                refreshing || isRefreshingNotifications || isLoadingTaskView
-              }
-              onRefresh={this.handleRefresh}
-              titleColor={theme.mainColor}
-              title="Đang tải..."
-              tintColor="#d9534f"
-              colors={['#d9534f']}
-            />
-          }>
-          <View style={styles.container}>
-            <View style={styles.headerContainer}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate('Profile')}>
-                  <Image
-                    source={{uri: this.props.avatar_url}}
-                    style={styles.headerAva}
-                  />
-                </TouchableOpacity>
-                <Text style={styles.headerTitle}>
-                  {getShortName(this.props.user.name)}
-                </Text>
-                {this.props.user.role === 2 ? (
-                  <Image
-                    source={require('../../assets/img/icons8-star-100-filled.png')}
-                    style={{
-                      width: 18,
-                      height: 18,
-                      marginLeft: 5,
-                    }}
-                  />
-                ) : null}
-              </View>
-              <View style={{flexDirection: 'row'}}>
-                <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate('Task')}>
-                  <View style={[styles.headerIconContainer, {marginRight: 10}]}>
-                    <MatIcon
-                      name={'chrome-reader-mode'}
-                      size={20}
-                      color={'black'}
-                    />
-                  </View>
-                  {this.getTotalNotCompletedTasks() > 0 ? (
-                    <View style={styles.notificationBadge}>
-                      <Text style={styles.notificationNumber}>
-                        {this.getTotalNotCompletedTasks()}
-                      </Text>
-                    </View>
-                  ) : null}
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() =>
-                    this.props.navigation.navigate('Notification')
-                  }>
-                  <View style={styles.headerIconContainer}>
-                    <MatIcon name={'notifications'} size={20} color={'black'} />
-                  </View>
-                  {this.props.unread > 0 ? (
-                    <View style={styles.notificationBadge}>
-                      <Text style={styles.notificationNumber}>
-                        {this.props.unread}
-                      </Text>
-                    </View>
-                  ) : null}
-                </TouchableOpacity>
-              </View>
-            </View>
-            <TouchableOpacity
-              onPress={() => {
-                this.props.setAutoFocusRegisterListSearch(true);
-                this.props.navigation.navigate('RegisterList');
-              }}>
-              <View style={styles.searchContainer}>
-                <Icon
-                  name={'ios-search'}
-                  color={'black'}
-                  size={20}
-                  style={styles.searchIcon}
+        <View style={styles.container}>
+          <View style={styles.headerContainer}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Profile')}>
+                <Image
+                  source={{uri: this.props.avatar_url}}
+                  style={styles.headerAva}
                 />
-                <Text style={styles.searchInput}>Tìm kiếm học viên</Text>
-              </View>
-            </TouchableOpacity>
+              </TouchableOpacity>
+              <Text style={styles.headerTitle}>
+                {getShortName(this.props.user.name)}
+              </Text>
+              {this.props.user.role === 2 ? (
+                <Image
+                  source={require('../../assets/img/icons8-star-100-filled.png')}
+                  style={{
+                    width: 18,
+                    height: 18,
+                    marginLeft: 5,
+                  }}
+                />
+              ) : null}
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Task')}>
+                <View style={[styles.headerIconContainer, {marginRight: 10}]}>
+                  <MatIcon
+                    name={'chrome-reader-mode'}
+                    size={20}
+                    color={'black'}
+                  />
+                </View>
+                {this.getTotalNotCompletedTasks() > 0 ? (
+                  <View style={styles.notificationBadge}>
+                    <Text style={styles.notificationNumber}>
+                      {this.getTotalNotCompletedTasks()}
+                    </Text>
+                  </View>
+                ) : null}
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Notification')}>
+                <View style={styles.headerIconContainer}>
+                  <MatIcon name={'notifications'} size={20} color={'black'} />
+                </View>
+                {this.props.unread > 0 ? (
+                  <View style={styles.notificationBadge}>
+                    <Text style={styles.notificationNumber}>
+                      {this.props.unread}
+                    </Text>
+                  </View>
+                ) : null}
+              </TouchableOpacity>
+            </View>
+          </View>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.setAutoFocusRegisterListSearch(true);
+              this.props.navigation.navigate('RegisterList');
+            }}>
+            <View style={styles.searchContainer}>
+              <Icon
+                name={'ios-search'}
+                color={'black'}
+                size={20}
+                style={styles.searchIcon}
+              />
+              <Text style={styles.searchInput}>Tìm kiếm học viên</Text>
+            </View>
+          </TouchableOpacity>
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={
+                  refreshing || isRefreshingNotifications || isLoadingTaskView
+                }
+                onRefresh={this.handleRefresh}
+              />
+            }>
             <View style={styles.mainFeatureLine}>
               <CardMenu
                 colorOne={'#E26800'}
@@ -270,8 +264,8 @@ class DashboardComponent extends React.Component {
               {...this.props}
               mainScreen={true}
             />
-          </View>
-        </ScrollView>
+          </ScrollView>
+        </View>
       </View>
     );
   }

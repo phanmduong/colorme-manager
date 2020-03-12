@@ -53,8 +53,4 @@ export default (styles = {
     marginVertical: 5,
     marginLeft: 10,
   },
-  mainIcon: {
-    width: 18,
-    height: 18,
-  },
 });

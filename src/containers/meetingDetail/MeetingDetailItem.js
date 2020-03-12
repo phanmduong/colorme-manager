@@ -10,10 +10,12 @@ import {
   StyleSheet,
   Dimensions,
   FlatList,
+  RefreshControl,
 } from 'react-native';
 import {observer} from 'mobx-react';
 import {getMeetingStatus} from '../../helper';
 import SwipeOut from 'react-native-swipeout';
+import theme from '../../styles';
 
 var {height, width} = Dimensions.get('window');
 
@@ -114,11 +116,17 @@ class MeetingDetailItem extends React.Component {
         ListHeaderComponent={headerComponent}
         ListFooterComponent={footerComponent}
         showsVerticalScrollIndicator={false}
-        refreshing={store.refreshing}
         keyboardShouldPersistTaps={'handled'}
-        onRefresh={() => {
-          this.props.refreshMeetingDetail();
-        }}
+        refreshControl={
+          <RefreshControl
+            refreshing={store.refreshing}
+            onRefresh={this.props.refreshMeetingDetail}
+            titleColor={theme.mainColor}
+            title="Đang tải..."
+            tintColor="#d9534f"
+            colors={['#d9534f']}
+          />
+        }
         renderItem={({item, index}) => {
           const rightButton = [
             {

@@ -81,8 +81,8 @@ class DashboardComponent extends React.Component {
                   <Image
                     source={require('../../assets/img/icons8-star-100-filled.png')}
                     style={{
-                      width: theme.mainIcon.width,
-                      height: theme.mainIcon.height,
+                      width: 18,
+                      height: 18,
                       marginLeft: 5,
                     }}
                   />

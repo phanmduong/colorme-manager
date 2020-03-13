@@ -205,10 +205,6 @@ class DocumentComponent extends React.Component {
             <RefreshControl
               refreshing={this.props.refreshingDoc}
               onRefresh={() => this.props.refreshDocuments('')}
-              titleColor={theme.mainColor}
-              title="Đang tải..."
-              tintColor="#d9534f"
-              colors={['#d9534f']}
             />
           }
           style={{flex: 1}}

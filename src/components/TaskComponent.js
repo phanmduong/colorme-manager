@@ -217,10 +217,6 @@ class TaskComponent extends React.Component {
                   this.state.user_id,
                 )
               }
-              titleColor={theme.mainColor}
-              title="Đang tải..."
-              tintColor="#d9534f"
-              colors={['#d9534f']}
             />
           }>
           <View

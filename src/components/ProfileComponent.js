@@ -94,10 +94,6 @@ class ProfileComponent extends React.Component {
             <RefreshControl
               refreshing={this.props.isLoadingProfile}
               onRefresh={() => this.props.onRefresh()}
-              titleColor={theme.mainColor}
-              title="Đang tải..."
-              tintColor="#d9534f"
-              colors={['#d9534f']}
             />
           }>
           <View style={{alignItems: 'center', paddingTop: 30}}>

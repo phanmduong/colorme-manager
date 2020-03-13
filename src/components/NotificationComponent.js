@@ -69,10 +69,6 @@ class NotificationComponent extends React.Component {
             <RefreshControl
               refreshing={this.props.isRefreshingNotifications}
               onRefresh={this.handleRefresh}
-              titleColor={theme.mainColor}
-              title="Đang tải..."
-              tintColor="#d9534f"
-              colors={['#d9534f']}
             />
           }
         />

@@ -66,10 +66,6 @@ class InfoStudentComponent extends React.Component {
                 this.props.isLoadingProgress
               }
               onRefresh={() => this.props.onRefresh()}
-              titleColor={theme.mainColor}
-              title="Đang tải..."
-              tintColor="#d9534f"
-              colors={['#d9534f']}
             />
           }>
           <View

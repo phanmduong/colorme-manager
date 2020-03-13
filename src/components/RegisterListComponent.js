@@ -165,10 +165,6 @@ class RegisterListComponent extends React.Component {
             <RefreshControl
               refreshing={this.props.refreshing}
               onRefresh={() => this.props.onRefresh(this.props.search_coupon)}
-              titleColor={theme.mainColor}
-              title="Đang tải..."
-              tintColor="#d9534f"
-              colors={['#d9534f']}
             />
           }
           renderRow={(item, sectionID, rowID) => (

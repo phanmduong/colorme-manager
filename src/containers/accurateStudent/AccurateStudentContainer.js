@@ -131,10 +131,6 @@ class AccurateStudentContainer extends React.Component {
               <RefreshControl
                 refreshing={isLoading}
                 onRefresh={() => this.store.searchStudent(this.props.token)}
-                titleColor={theme.mainColor}
-                title="Đang tải..."
-                tintColor="#d9534f"
-                colors={['#d9534f']}
               />
             }
           />

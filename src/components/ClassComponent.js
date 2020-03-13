@@ -155,10 +155,6 @@ class ClassComponent extends React.Component {
                   this.state.selectedGenId,
                 )
               }
-              titleColor={theme.mainColor}
-              title="Đang tải..."
-              tintColor="#d9534f"
-              colors={['#d9534f']}
             />
           }
           renderRow={(item, sectionID, rowID) => (

@@ -301,10 +301,6 @@ class AnalyticsComponent extends React.Component {
               <RefreshControl
                 refreshing={this.props.isLoadingDashboard}
                 onRefresh={this.loadDataDashboard}
-                titleColor={theme.mainColor}
-                title="Đang tải..."
-                tintColor="#d9534f"
-                colors={['#d9534f']}
               />
             }>
             <View style={styles.containerPicker}>

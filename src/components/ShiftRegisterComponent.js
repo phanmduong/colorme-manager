@@ -236,10 +236,6 @@ class ShiftRegisterComponent extends React.Component {
               <RefreshControl
                 refreshing={self.props.isLoadingShiftRegister}
                 onRefresh={self.loadDataShiftRegister}
-                titleColor={theme.mainColor}
-                title="Đang tải..."
-                tintColor="#d9534f"
-                colors={['#d9534f']}
               />
             }>
             <View style={styles.headerContainer}>

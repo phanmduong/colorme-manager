@@ -45,11 +45,19 @@ class DashboardComponent extends React.Component {
     const {refreshing} = this.props.store;
     const {isRefreshingNotifications, isLoadingTaskView} = this.props;
     return (
-      <View
+      <ScrollView
         style={
           isIphoneX()
             ? {flex: 1, marginTop: getStatusBarHeight() + 10}
             : {flex: 1, marginTop: 20}
+        }
+        refreshControl={
+          <RefreshControl
+            refreshing={
+              refreshing || isRefreshingNotifications || isLoadingTaskView
+            }
+            onRefresh={this.handleRefresh}
+          />
         }>
         <View style={styles.container}>
           <View style={styles.headerContainer}>
@@ -123,150 +131,140 @@ class DashboardComponent extends React.Component {
               <Text style={styles.searchInput}>Tìm kiếm học viên</Text>
             </View>
           </TouchableOpacity>
-          <ScrollView
-            refreshControl={
-              <RefreshControl
-                refreshing={
-                  refreshing || isRefreshingNotifications || isLoadingTaskView
-                }
-                onRefresh={this.handleRefresh}
-              />
-            }>
-            <View style={styles.mainFeatureLine}>
-              <CardMenu
-                colorOne={'#E26800'}
-                colorTwo={'#E2DC50'}
-                checkInOutStyle={styles.checkInContainer}
-                standOutFontSize={{fontSize: 17}}
-                imageSource={require('../../assets/img/MiM-check-in.png')}
-                imageWidth={(width - 32) * 0.38}
-                title={'Check in'}
-                characterImgPosition={styles.checkInCharacterImgPosition}
-                onPress={() => {
-                  this.props.navigation.navigate('CheckIn', {
-                    title: 'Check in',
-                    type: 'checkin',
-                  });
-                }}
-              />
-              <CardMenu
-                colorOne={'#6800E2'}
-                colorTwo={'#2F94EB'}
-                checkInOutStyle={styles.checkOutContainer}
-                imageSource={require('../../assets/img/MiM-check-out.png')}
-                imageWidth={(width - 32) * 0.3 * 0.7}
-                title={'Check out'}
-                characterImgPosition={styles.checkOutCharacterImgPosition}
-                onPress={() => {
-                  this.props.navigation.navigate('CheckOut', {
-                    title: 'Check out',
-                    type: 'checkout',
-                  });
-                }}
-              />
-              <CardMenu
-                colorOne={'#E20000'}
-                colorTwo={'#E29950'}
-                checkInOutStyle={styles.checkOutContainer}
-                imageSource={require('../../assets/img/MiM-history.png')}
-                imageWidth={(width - 32) * 0.26 * 0.9}
-                title={'Lịch sử'}
-                characterImgPosition={styles.historyCharacterImgPosition}
-                onPress={() => {
-                  this.props.navigation.navigate('HistoryAllAttendance');
-                }}
-              />
-            </View>
-            <View style={styles.otherFeatureLine}>
-              <CircleTab
-                iconImage={require('../../assets/img/icons8-ratings-90.png')}
-                title={'Thống kê'}
-                onPress={() => {
-                  this.props.navigation.navigate('Analytics');
-                }}
-              />
-              <CircleTab
-                iconImage={require('../../assets/img/icons8-contact-100.png')}
-                title={'Xác thực'}
-                onPress={() => {
-                  this.props.navigation.navigate('AccurateStudent');
-                }}
-              />
-              <CircleTab
-                iconImage={require('../../assets/img/icons8-idea-96-2.png')}
-                title={'Họp'}
-                onPress={() => {
-                  this.props.navigation.navigate('Meeting');
-                }}
-              />
-            </View>
-            <View style={styles.otherFeatureLine}>
-              <CircleTab
-                iconImage={require('../../assets/img/icons8-rating-90.png')}
-                title={'Đánh giá'}
-                onPress={() => {
-                  this.props.navigation.navigate('TeachingRating');
-                }}
-              />
-              <CircleTab
-                iconImage={require('../../assets/img/icons8-calendar.png')}
-                title={'Lịch học bù'}
-                onPress={() => {
-                  this.props.navigation.navigate('MakeupClass');
-                }}
-              />
-              <CircleTab
-                iconImage={require('../../assets/img/icons8-writer_male.png')}
-                title={'Tạo đăng ký'}
-                onPress={() => {
-                  this.props.navigation.navigate('SaveRegister');
-                }}
-              />
-            </View>
-            <View style={styles.otherFeatureLine}>
-              <CircleTab
-                iconImage={require('../../assets/img/icons8-cheap_2_filled.png')}
-                title={'Nộp tiền'}
-                onPress={() => {
-                  this.props.navigation.navigate('CollectMoney');
-                }}
-              />
-              <CircleTab
-                iconImage={require('../../assets/img/icons8-wallet_filled.png')}
-                title={'Chuyển tiền'}
-                onPress={() => {
-                  this.props.navigation.navigate('MoneyTransfer');
-                }}
-              />
-              <CircleTab
-                iconImage={require('../../assets/img/icons8-teacher.png')}
-                title={'Lớp học'}
-                onPress={() => {
-                  this.props.navigation.navigate('Class', {
-                    analyticsScreen: false,
-                  });
-                }}
-              />
-            </View>
-            <View style={styles.otherFeatureLine}>
-              <CircleTab
-                iconImage={require('../../assets/img/icons8-document.png')}
-                title={'Tài liệu'}
-                onPress={() => {
-                  this.props.navigation.navigate('Document');
-                }}
-              />
-              <View style={{width: width / 3}} />
-              <View style={{width: width / 3}} />
-            </View>
-            <MeetingComponent
-              store={this.props.store}
-              {...this.props}
-              mainScreen={true}
+          <View style={styles.mainFeatureLine}>
+            <CardMenu
+              colorOne={'#E26800'}
+              colorTwo={'#E2DC50'}
+              checkInOutStyle={styles.checkInContainer}
+              standOutFontSize={{fontSize: 17}}
+              imageSource={require('../../assets/img/MiM-check-in.png')}
+              imageWidth={(width - 32) * 0.38}
+              title={'Check in'}
+              characterImgPosition={styles.checkInCharacterImgPosition}
+              onPress={() => {
+                this.props.navigation.navigate('CheckIn', {
+                  title: 'Check in',
+                  type: 'checkin',
+                });
+              }}
             />
-          </ScrollView>
+            <CardMenu
+              colorOne={'#6800E2'}
+              colorTwo={'#2F94EB'}
+              checkInOutStyle={styles.checkOutContainer}
+              imageSource={require('../../assets/img/MiM-check-out.png')}
+              imageWidth={(width - 32) * 0.3 * 0.7}
+              title={'Check out'}
+              characterImgPosition={styles.checkOutCharacterImgPosition}
+              onPress={() => {
+                this.props.navigation.navigate('CheckOut', {
+                  title: 'Check out',
+                  type: 'checkout',
+                });
+              }}
+            />
+            <CardMenu
+              colorOne={'#E20000'}
+              colorTwo={'#E29950'}
+              checkInOutStyle={styles.checkOutContainer}
+              imageSource={require('../../assets/img/MiM-history.png')}
+              imageWidth={(width - 32) * 0.26 * 0.9}
+              title={'Lịch sử'}
+              characterImgPosition={styles.historyCharacterImgPosition}
+              onPress={() => {
+                this.props.navigation.navigate('HistoryAllAttendance');
+              }}
+            />
+          </View>
+          <View style={styles.otherFeatureLine}>
+            <CircleTab
+              iconImage={require('../../assets/img/icons8-ratings-90.png')}
+              title={'Thống kê'}
+              onPress={() => {
+                this.props.navigation.navigate('Analytics');
+              }}
+            />
+            <CircleTab
+              iconImage={require('../../assets/img/icons8-contact-100.png')}
+              title={'Xác thực'}
+              onPress={() => {
+                this.props.navigation.navigate('AccurateStudent');
+              }}
+            />
+            <CircleTab
+              iconImage={require('../../assets/img/icons8-idea-96-2.png')}
+              title={'Họp'}
+              onPress={() => {
+                this.props.navigation.navigate('Meeting');
+              }}
+            />
+          </View>
+          <View style={styles.otherFeatureLine}>
+            <CircleTab
+              iconImage={require('../../assets/img/icons8-rating-90.png')}
+              title={'Đánh giá'}
+              onPress={() => {
+                this.props.navigation.navigate('TeachingRating');
+              }}
+            />
+            <CircleTab
+              iconImage={require('../../assets/img/icons8-calendar.png')}
+              title={'Lịch học bù'}
+              onPress={() => {
+                this.props.navigation.navigate('MakeupClass');
+              }}
+            />
+            <CircleTab
+              iconImage={require('../../assets/img/icons8-writer_male.png')}
+              title={'Tạo đăng ký'}
+              onPress={() => {
+                this.props.navigation.navigate('SaveRegister');
+              }}
+            />
+          </View>
+          <View style={styles.otherFeatureLine}>
+            <CircleTab
+              iconImage={require('../../assets/img/icons8-cheap_2_filled.png')}
+              title={'Nộp tiền'}
+              onPress={() => {
+                this.props.navigation.navigate('CollectMoney');
+              }}
+            />
+            <CircleTab
+              iconImage={require('../../assets/img/icons8-wallet_filled.png')}
+              title={'Chuyển tiền'}
+              onPress={() => {
+                this.props.navigation.navigate('MoneyTransfer');
+              }}
+            />
+            <CircleTab
+              iconImage={require('../../assets/img/icons8-teacher.png')}
+              title={'Lớp học'}
+              onPress={() => {
+                this.props.navigation.navigate('Class', {
+                  analyticsScreen: false,
+                });
+              }}
+            />
+          </View>
+          <View style={styles.otherFeatureLine}>
+            <CircleTab
+              iconImage={require('../../assets/img/icons8-document.png')}
+              title={'Tài liệu'}
+              onPress={() => {
+                this.props.navigation.navigate('Document');
+              }}
+            />
+            <View style={{width: width / 3}} />
+            <View style={{width: width / 3}} />
+          </View>
+          <MeetingComponent
+            store={this.props.store}
+            {...this.props}
+            mainScreen={true}
+          />
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }

@@ -13,6 +13,7 @@ import Search from './common/Search';
 import {getStatusBarHeight, isIphoneX} from 'react-native-iphone-x-helper';
 import FilterModal from './infoStudent/FilterModal';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
+import LinearGradient from 'react-native-linear-gradient';
 
 var {height, width} = Dimensions.get('window');
 class RegisterListComponent extends React.Component {
@@ -20,6 +21,7 @@ class RegisterListComponent extends React.Component {
     super(props, context);
     this.state = {
       filterModalVisible: false,
+      salerId: this.props.salerId,
     };
   }
 
@@ -121,6 +123,35 @@ class RegisterListComponent extends React.Component {
     );
   }
 
+  renderTabs = () => {
+    let salerLst = [
+      {id: -1, name: 'Tất cả'},
+      {id: this.props.user.id, name: 'Đơn của bạn'},
+    ];
+    return salerLst.map(saler => (
+      <TouchableOpacity
+        onPress={() => {
+          this.setState({salerId: saler.id});
+          this.props.onSelectSalerId(saler.id);
+          setTimeout(() => {
+            this.props.onRefresh(this.props.search_coupon);
+          }, 300);
+        }}>
+        <LinearGradient
+          colors={
+            this.state.salerId === saler.id
+              ? ['#F6F6F6', '#F6F6F6']
+              : ['white', 'white']
+          }
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 0}}
+          style={styles.tag}>
+          <Text style={{color: 'black'}}>{saler.name}</Text>
+        </LinearGradient>
+      </TouchableOpacity>
+    ));
+  };
+
   headerComponent = () => {
     return (
       <View style={{flex: 1}}>
@@ -145,6 +176,7 @@ class RegisterListComponent extends React.Component {
           </View>
         </View>
         {this.renderSearch()}
+        <View style={styles.containerTag}>{this.renderTabs()}</View>
       </View>
     );
   };
@@ -249,12 +281,11 @@ const styles = {
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
-    marginBottom: 10,
-    marginHorizontal: 20,
+    marginTop: 5,
+    marginHorizontal: 16,
   },
   tag: {
     paddingHorizontal: 20,
-    marginRight: 20,
     borderRadius: 20,
     height: 40,
     justifyContent: 'center',

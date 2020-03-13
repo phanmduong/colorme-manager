@@ -12,6 +12,7 @@ import Loading from './common/Loading';
 import Search from './common/Search';
 import {getStatusBarHeight, isIphoneX} from 'react-native-iphone-x-helper';
 import FilterModal from './infoStudent/FilterModal';
+import MatIcon from 'react-native-vector-icons/MaterialIcons';
 
 var {height, width} = Dimensions.get('window');
 class RegisterListComponent extends React.Component {
@@ -50,8 +51,10 @@ class RegisterListComponent extends React.Component {
           refer={input => {
             this.searchRegisterList = input;
           }}
-          extraStyle={{width: width - 85}}
-          extraInputStyle={{width: width - 85 - 48}}
+          extraStyle={{width: width - (theme.mainHorizontal * 2 + 40 + 10)}}
+          extraInputStyle={{
+            width: width - (theme.mainHorizontal * 2 + 40 + 10) - 48,
+          }}
           onBlur={() => this.props.setAutoFocusRegisterListSearch(false)}
         />
         <TouchableOpacity onPress={this.toggleFilterModal}>
@@ -122,14 +125,24 @@ class RegisterListComponent extends React.Component {
     return (
       <View style={{flex: 1}}>
         <View style={styles.headerContainer}>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Profile')}>
-            <Image
-              source={{uri: this.props.user.avatar_url}}
-              style={styles.headerAva}
-            />
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>Học viên</Text>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Profile')}>
+              <Image
+                source={{uri: this.props.user.avatar_url}}
+                style={styles.headerAva}
+              />
+            </TouchableOpacity>
+            <Text style={styles.headerTitle}>Đăng kí học</Text>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('SaveRegister')}>
+              <View style={styles.headerIconContainer}>
+                <MatIcon name={'add-circle'} size={20} color={'black'} />
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
         {this.renderSearch()}
       </View>
@@ -253,6 +266,7 @@ const styles = {
     marginBottom: 10,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
   headerTitle: {
     color: theme.mainTextColor,
@@ -269,6 +283,14 @@ const styles = {
     alignItems: 'center',
     borderRadius: 20,
     marginLeft: 10,
+  },
+  headerIconContainer: {
+    width: 40,
+    height: 40,
+    backgroundColor: '#F6F6F6',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 20,
   },
 };
 

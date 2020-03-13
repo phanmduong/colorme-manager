@@ -92,8 +92,10 @@ class ClassComponent extends React.Component {
           onChangeText={search => this.setState({search})}
           value={this.state.search}
           autoFocus={false}
-          extraStyle={{width: width - 85}}
-          extraInputStyle={{width: width - 85 - 48}}
+          extraStyle={{width: width - (theme.mainHorizontal * 2 + 40 + 10)}}
+          extraInputStyle={{
+            width: width - (theme.mainHorizontal * 2 + 40 + 10) - 48,
+          }}
         />
         <TouchableOpacity onPress={this.toggleFilterModal}>
           <View style={styles.fitlerContainer}>

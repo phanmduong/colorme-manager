@@ -366,8 +366,11 @@ const styles = {
     fontWeight: '600',
   },
   headerIconContainer: {
-    padding: 8,
-    backgroundColor: '#f6f6f6',
+    width: 40,
+    height: 40,
+    backgroundColor: '#F6F6F6',
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 20,
   },
 };

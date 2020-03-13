@@ -8,15 +8,14 @@ import {
   Text,
   View,
   Platform,
-  StatusBar,
+  TouchableOpacity,
 } from 'react-native';
 import {Form, InputGroup, Input, Button} from 'native-base';
-
+import ResetPasswordModal from './login/ResetPasswordModal';
 var {height, width} = Dimensions.get('window');
 import Spinkit from 'react-native-spinkit';
 import theme from '../styles';
 import LinearGradient from 'react-native-linear-gradient';
-import material from '../native-base-theme/variables/material';
 
 let self;
 
@@ -26,6 +25,7 @@ class LoginComponent extends React.Component {
     this.onPressLogin = this.onPressLogin.bind(this);
     this.state = {
       isKeyboardShow: false,
+      isResetPasswordModalVisible: false,
     };
     self = this;
   }
@@ -59,6 +59,12 @@ class LoginComponent extends React.Component {
     });
     self.props.changeStatusBarColor('light-content');
   }
+
+  toggleResetPasswordModal = () => {
+    this.setState({
+      isResetPasswordModalVisible: !this.state.isResetPasswordModalVisible,
+    });
+  };
 
   render() {
     return (
@@ -179,8 +185,14 @@ class LoginComponent extends React.Component {
             ...styles.contentResetPassword,
             ...{position: !this.state.isKeyboardShow ? 'absolute' : 'relative'},
           }}>
-          <Text style={styles.textResetPassword}>QUÊN MẬT KHẨU?</Text>
+          <TouchableOpacity onPress={this.toggleResetPasswordModal}>
+            <Text style={styles.textResetPassword}>QUÊN MẬT KHẨU?</Text>
+          </TouchableOpacity>
         </View>
+        <ResetPasswordModal
+          isVisible={this.state.isResetPasswordModalVisible}
+          onSwipeComplete={this.toggleResetPasswordModal}
+        />
       </View>
     );
   }

@@ -35,5 +35,4 @@ target 'ColorMEManager' do
     # Pods for testing
   end
   use_native_modules!
- end
-
+end

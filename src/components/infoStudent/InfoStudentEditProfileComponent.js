@@ -15,11 +15,12 @@ import {GENDER} from '../SaveRegisterComponent';
 import LinearGradient from 'react-native-linear-gradient';
 import Spinkit from 'react-native-spinkit';
 import theme from '../../styles';
-import {isEmptyInput} from '../../helper';
+import {convertVietText, isEmptyInput} from '../../helper';
 import {FORMAT_TIME_MYSQL} from '../../constants/constant';
 var {height, width} = Dimensions.get('window');
 import moment from 'moment';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import Search from '../common/Search';
 
 class InfoStudentEditProfileComponent extends React.Component {
   constructor(props, context) {
@@ -40,6 +41,7 @@ class InfoStudentEditProfileComponent extends React.Component {
       facebook: student.facebook,
       description: student.description,
       isDatePickerVisible: false,
+      search: '',
     };
   }
 
@@ -62,42 +64,24 @@ class InfoStudentEditProfileComponent extends React.Component {
     );
   }
 
-  renderGenderPickerField = settings => {
-    const {selectedItem, defaultText, getLabel} = settings;
-    console.log(selectedItem);
-    return (
-      <LinearGradient
-        colors={['#F6F6F6', '#F6F6F6']}
-        style={styles.inputContainer}
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 0}}>
-        {!selectedItem && (
-          <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
-            <Text style={{color: '#b7b7b7', fontSize: 15}}>{defaultText}</Text>
-            <Text>▼</Text>
-          </View>
-        )}
-        {selectedItem && (
-          <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
-            <Text style={{color: 'black', fontSize: 15}}>
-              {getLabel(selectedItem)}
-            </Text>
-            <Text>▼</Text>
-          </View>
-        )}
-      </LinearGradient>
-    );
-  };
-
-  renderGenderPickerHeader = () => {
+  renderPickerHeader = title => {
     return (
       <View style={styles.headerFooterContainer}>
-        <Text style={styles.headerFooterText}>Chọn giới tính</Text>
+        <Text style={styles.headerFooterText}>{title}</Text>
+        <Search
+          placeholder="Tìm kiếm"
+          onChangeText={search => {
+            this.setState({search});
+          }}
+          value={this.state.search}
+          extraStyle={{width: width - 70, marginLeft: 0}}
+          extraInputStyle={{width: width - 38 - 70}}
+        />
       </View>
     );
   };
 
-  renderProvincePickerField = settings => {
+  renderPickerField = settings => {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
@@ -120,14 +104,6 @@ class InfoStudentEditProfileComponent extends React.Component {
           </View>
         )}
       </LinearGradient>
-    );
-  };
-
-  renderProvincePickerHeader = () => {
-    return (
-      <View style={styles.headerFooterContainer}>
-        <Text style={styles.headerFooterText}>Chọn địa chỉ</Text>
-      </View>
     );
   };
 
@@ -142,10 +118,10 @@ class InfoStudentEditProfileComponent extends React.Component {
         address = [
           ...address,
           {
-            value: `${district.type} ${district.name}, ${province.type} ${
+            id: `${district.type} ${district.name}, ${province.type} ${
               province.name
             }`,
-            label: `${district.type} ${district.name}, ${province.type} ${
+            name: `${district.type} ${district.name}, ${province.type} ${
               province.name
             }`,
           },
@@ -153,6 +129,25 @@ class InfoStudentEditProfileComponent extends React.Component {
       });
     });
     return address;
+  };
+
+  getSearchedResults = array => {
+    let list = [];
+    if (this.state.search === '') {
+      return array;
+    } else {
+      for (let item of array) {
+        let normalizedName = item.name;
+        if (
+          convertVietText(normalizedName).includes(
+            convertVietText(this.state.search),
+          )
+        ) {
+          list.push(item);
+        }
+      }
+      return list;
+    }
   };
 
   updateProfile = () => {
@@ -213,7 +208,7 @@ class InfoStudentEditProfileComponent extends React.Component {
     if (!isEmptyInput(this.state.address)) {
       let allAddresses = this.getDataAddress();
       for (let address of allAddresses) {
-        let splitAddress = address.value.split(',');
+        let splitAddress = address.id.split(',');
         let splitDefaultAddress = this.state.address.split(',');
         if (
           splitAddress[0] === splitDefaultAddress[0] &&
@@ -303,14 +298,14 @@ class InfoStudentEditProfileComponent extends React.Component {
             <View style={{marginTop: 30}}>
               <Text style={styles.titleForm}>Chọn giới tính</Text>
               <CustomPicker
-                options={GENDER}
+                options={this.getSearchedResults(GENDER)}
                 defaultValue={this.getDefaultGender()}
                 getLabel={item => item.name}
                 placeholder={'Chọn giới tính'}
                 modalAnimationType={'fade'}
                 optionTemplate={this.renderCoursePickerOption}
-                fieldTemplate={this.renderGenderPickerField}
-                headerTemplate={this.renderGenderPickerHeader}
+                fieldTemplate={this.renderPickerField}
+                headerTemplate={() => this.renderPickerHeader('Chọn giới tính')}
                 footerTemplate={this.renderCoursePickerFooter}
                 modalStyle={{
                   borderRadius: 6,
@@ -347,21 +342,21 @@ class InfoStudentEditProfileComponent extends React.Component {
             <View style={{marginTop: 30}}>
               <Text style={styles.titleForm}>Địa chỉ</Text>
               <CustomPicker
-                options={this.getDataAddress()}
+                options={this.getSearchedResults(this.getDataAddress())}
                 defaultValue={this.getDefaultAddress()}
-                getLabel={item => item.value}
+                getLabel={item => item.name}
                 placeholder={'Chọn địa chỉ'}
                 modalAnimationType={'fade'}
                 optionTemplate={this.renderCoursePickerOption}
-                fieldTemplate={this.renderProvincePickerField}
-                headerTemplate={this.renderProvincePickerHeader}
+                fieldTemplate={this.renderPickerField}
+                headerTemplate={() => this.renderPickerHeader('Chọn địa chỉ')}
                 footerTemplate={this.renderCoursePickerFooter}
                 modalStyle={{
                   borderRadius: 6,
                 }}
                 onValueChange={value => {
                   this.setState({
-                    address: value.value,
+                    address: value.id,
                   });
                 }}
               />

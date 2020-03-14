@@ -56,6 +56,7 @@ import EditProfileContainer from '../containers/EditProfileContainer';
 import EditClassContainer from '../containers/EditClassContainer';
 import DocumentContainer from '../containers/DocumentContainer';
 import DocumentWebViewContainer from '../containers/DocumentWebViewContainer';
+import AddClassContainer from '../containers/AddClassContainer';
 
 const navigationOptionsDefault = {
   defaultNavigationOptions: {
@@ -416,6 +417,13 @@ const TabDashboard = createStackNavigator(
       screen: DocumentWebViewContainer,
       navigationOptions: () => ({
         header: null,
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    AddClass: {
+      screen: AddClassContainer,
+      navigationOptions: () => ({
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},
       }),

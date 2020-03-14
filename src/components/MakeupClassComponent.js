@@ -11,6 +11,8 @@ import {CustomPicker} from 'react-native-custom-picker';
 import LinearGradient from 'react-native-linear-gradient';
 import theme from '../styles';
 import Spinkit from 'react-native-spinkit';
+import Search from './common/Search';
+import {convertVietText} from '../helper';
 var {height, width} = Dimensions.get('window');
 
 class MakeupClassComponent extends React.Component {
@@ -23,10 +25,47 @@ class MakeupClassComponent extends React.Component {
       selectedHN: false,
       selectedSG: false,
       selectedAll: true,
+      search: '',
     };
   }
 
-  renderCoursePickerField = settings => {
+  renderPickerHeader = title => {
+    return (
+      <View style={styles.headerFooterContainer}>
+        <Text style={styles.headerFooterText}>{title}</Text>
+        <Search
+          placeholder="Tìm kiếm"
+          onChangeText={search => {
+            this.setState({search});
+          }}
+          value={this.state.search}
+          extraStyle={{width: width - 70, marginLeft: 0}}
+          extraInputStyle={{width: width - 38 - 70}}
+        />
+      </View>
+    );
+  };
+
+  renderPickerFooter(action) {
+    return (
+      <TouchableOpacity
+        style={styles.headerFooterContainer}
+        onPress={action.close.bind(this)}>
+        <Text style={{color: '#C50000', fontSize: 19}}>Hủy</Text>
+      </TouchableOpacity>
+    );
+  }
+
+  renderPickerOption = settings => {
+    const {item, getLabel} = settings;
+    return (
+      <View style={styles.options}>
+        <Text style={{fontSize: 16}}>{getLabel(item)}</Text>
+      </View>
+    );
+  };
+
+  renderPickerField = settings => {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
@@ -52,80 +91,42 @@ class MakeupClassComponent extends React.Component {
     );
   };
 
-  renderCoursePickerOption = settings => {
-    const {item, getLabel} = settings;
-    return (
-      <View style={styles.options}>
-        <Text style={{fontSize: 16}}>{getLabel(item)}</Text>
-      </View>
-    );
-  };
-
-  renderCoursePickerHeader = () => {
-    return (
-      <View style={styles.headerFooterContainer}>
-        <Text style={styles.headerFooterText}>Chọn môn</Text>
-      </View>
-    );
-  };
-
-  renderCoursePickerFooter(action) {
-    return (
-      <TouchableOpacity
-        style={styles.headerFooterContainer}
-        onPress={action.close.bind(this)}>
-        <Text style={{color: '#C50000', fontSize: 19}}>Hủy</Text>
-      </TouchableOpacity>
-    );
-  }
-
-  renderLessonPickerHeader = () => {
-    return (
-      <View style={styles.headerFooterContainer}>
-        <Text style={styles.headerFooterText}>Chọn buổi</Text>
-      </View>
-    );
-  };
-
-  renderLessonPickerOption = settings => {
-    const {item, getLabel} = settings;
-    return (
-      <View style={styles.options}>
-        <Text style={{fontSize: 16}}>
-          Buổi {item.order}: {getLabel(item)}
-        </Text>
-      </View>
-    );
-  };
-
-  renderLessonPickerField = settings => {
-    const {selectedItem, defaultText, getLabel} = settings;
-    return (
-      <LinearGradient
-        colors={['#EDEDED', '#EDEDED']}
-        style={styles.gradientSize}
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 0}}>
-        {!selectedItem && (
-          <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
-            <Text style={{color: 'black', fontSize: 16}}>{defaultText}</Text>
-            <Text>▼</Text>
-          </View>
-        )}
-        {selectedItem && (
-          <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
-            <Text style={{color: 'black', fontSize: 16}}>
-              Buổi {selectedItem.order}: {getLabel(selectedItem)}
-            </Text>
-            <Text>▼</Text>
-          </View>
-        )}
-      </LinearGradient>
-    );
-  };
-
   getIndex = (array, value) => {
     return array.findIndex(x => x.name === value.name);
+  };
+
+  getSearchedResults = array => {
+    let list = [];
+    if (this.state.search === '') {
+      return array;
+    } else {
+      for (let item of array) {
+        let normalizedName = item.name;
+        if (
+          convertVietText(normalizedName).includes(
+            convertVietText(this.state.search),
+          )
+        ) {
+          list.push(item);
+        }
+      }
+      return list;
+    }
+  };
+
+  getLessons = array => {
+    let lessons = [];
+    array.forEach(lesson => {
+      lessons = [
+        ...lessons,
+        {
+          id: lesson.id,
+          name: 'Buổi ' + lesson.order + ': ' + lesson.name,
+        },
+      ];
+    });
+
+    return lessons;
   };
 
   renderBasedOnBase = () => {
@@ -212,14 +213,15 @@ class MakeupClassComponent extends React.Component {
             <View style={{marginTop: 10}}>
               <Text style={styles.titleForm}>Chọn môn học</Text>
               <CustomPicker
-                options={courseOptions}
+                options={this.getSearchedResults(courseOptions)}
                 getLabel={item => item.name}
                 placeholder={'Chọn môn'}
                 modalAnimationType={'fade'}
-                optionTemplate={this.renderCoursePickerOption}
-                fieldTemplate={this.renderCoursePickerField}
-                headerTemplate={this.renderCoursePickerHeader}
-                footerTemplate={this.renderCoursePickerFooter}
+                optionTemplate={this.renderPickerOption}
+                fieldTemplate={this.renderPickerField}
+                headerTemplate={() => this.renderPickerHeader('Chọn môn')}
+                footerTemplate={this.renderPickerFooter}
+                onBlur={() => this.setState({search: ''})}
                 modalStyle={{
                   borderRadius: 6,
                 }}
@@ -230,6 +232,7 @@ class MakeupClassComponent extends React.Component {
                     selectedCourseIndex: this.getIndex(courseOptions, value),
                     selectedHN: false,
                     selectedSG: false,
+                    search: '',
                   });
                 }}
               />
@@ -238,19 +241,22 @@ class MakeupClassComponent extends React.Component {
               <View style={{marginTop: 30}}>
                 <Text style={styles.titleForm}>Chọn buổi</Text>
                 <CustomPicker
-                  options={baseOptions}
+                  options={this.getSearchedResults(
+                    this.getLessons(baseOptions),
+                  )}
                   getLabel={item => item.name}
                   placeholder={'Chọn buổi'}
                   modalAnimationType={'fade'}
-                  optionTemplate={this.renderLessonPickerOption}
-                  fieldTemplate={this.renderLessonPickerField}
-                  headerTemplate={this.renderLessonPickerHeader}
-                  footerTemplate={this.renderCoursePickerFooter}
+                  optionTemplate={this.renderPickerOption}
+                  fieldTemplate={this.renderPickerField}
+                  headerTemplate={() => this.renderPickerHeader('Chọn buổi')}
+                  footerTemplate={this.renderPickerFooter}
+                  onBlur={() => this.setState({search: ''})}
                   modalStyle={{
                     borderRadius: 6,
                   }}
                   onValueChange={value => {
-                    this.setState({selectedLesson: true});
+                    this.setState({selectedLesson: true, search: ''});
                     this.props.loadSchedule(value.id);
                   }}
                 />

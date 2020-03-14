@@ -17,6 +17,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Spinkit from 'react-native-spinkit';
 import {CustomPicker} from 'react-native-custom-picker';
 import theme from '../styles';
+import Search from './common/Search';
 var {height, width} = Dimensions.get('window');
 
 export const TYPE_CLASSES = [
@@ -222,6 +223,15 @@ class EditClassComponent extends React.Component {
     return (
       <View style={styles.headerFooterContainer}>
         <Text style={styles.headerFooterText}>{title}</Text>
+        <Search
+          placeholder="Tìm kiếm"
+          onChangeText={search => {
+            this.setState({search});
+          }}
+          value={this.state.search}
+          extraStyle={{width: width - 70, marginLeft: 0}}
+          extraInputStyle={{width: width - 38 - 70}}
+        />
       </View>
     );
   };
@@ -293,12 +303,14 @@ class EditClassComponent extends React.Component {
                 fieldTemplate={this.renderPickerField}
                 headerTemplate={() => this.renderPickerHeader('Chọn môn học')}
                 footerTemplate={this.renderPickerFooter}
+                onBlur={() => this.setState({search: ''})}
                 modalStyle={{
                   borderRadius: 6,
                 }}
                 onValueChange={value => {
                   this.setState({
                     course_id: value.id,
+                    search: '',
                   });
                 }}
               />
@@ -320,12 +332,14 @@ class EditClassComponent extends React.Component {
                 fieldTemplate={this.renderPickerField}
                 headerTemplate={() => this.renderPickerHeader('Chọn phòng học')}
                 footerTemplate={this.renderPickerFooter}
+                onBlur={() => this.setState({search: ''})}
                 modalStyle={{
                   borderRadius: 6,
                 }}
                 onValueChange={value => {
                   this.setState({
                     room_id: value.id,
+                    search: '',
                   });
                 }}
               />
@@ -427,6 +441,7 @@ class EditClassComponent extends React.Component {
                 onValueChange={value => {
                   this.setState({
                     schedule_id: value.id,
+                    search: '',
                   });
                 }}
               />
@@ -498,6 +513,7 @@ class EditClassComponent extends React.Component {
                 onValueChange={value => {
                   this.setState({
                     gen_id: value.id,
+                    search: '',
                   });
                 }}
               />
@@ -566,6 +582,7 @@ class EditClassComponent extends React.Component {
                 onValueChange={value => {
                   this.setState({
                     type: value.id,
+                    search: '',
                   });
                 }}
               />
@@ -626,12 +643,14 @@ class EditClassComponent extends React.Component {
                   this.renderPickerHeader('Chọn giảng viên')
                 }
                 footerTemplate={this.renderPickerFooter}
+                onBlur={() => this.setState({search: ''})}
                 modalStyle={{
                   borderRadius: 6,
                 }}
                 onValueChange={value => {
                   this.setState({
                     teacher_id: value.id,
+                    search: '',
                   });
                 }}
               />
@@ -651,12 +670,14 @@ class EditClassComponent extends React.Component {
                 fieldTemplate={this.renderPickerField}
                 headerTemplate={() => this.renderPickerHeader('Chọn trợ giảng')}
                 footerTemplate={this.renderPickerFooter}
+                onBlur={() => this.setState({search: ''})}
                 modalStyle={{
                   borderRadius: 6,
                 }}
                 onValueChange={value => {
                   this.setState({
                     teaching_assistant_id: value.id,
+                    search: '',
                   });
                 }}
               />

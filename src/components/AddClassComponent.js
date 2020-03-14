@@ -294,12 +294,14 @@ class AddClassComponent extends React.Component {
                 fieldTemplate={this.renderPickerField}
                 headerTemplate={() => this.renderPickerHeader('Chọn môn học')}
                 footerTemplate={this.renderPickerFooter}
+                onBlur={() => this.setState({search: ''})}
                 modalStyle={{
                   borderRadius: 6,
                 }}
                 onValueChange={value => {
                   this.setState({
                     course_id: value.id,
+                    search: '',
                   });
                 }}
               />
@@ -321,12 +323,14 @@ class AddClassComponent extends React.Component {
                 fieldTemplate={this.renderPickerField}
                 headerTemplate={() => this.renderPickerHeader('Chọn phòng học')}
                 footerTemplate={this.renderPickerFooter}
+                onBlur={() => this.setState({search: ''})}
                 modalStyle={{
                   borderRadius: 6,
                 }}
                 onValueChange={value => {
                   this.setState({
                     room_id: value.id,
+                    search: '',
                   });
                 }}
               />
@@ -428,6 +432,7 @@ class AddClassComponent extends React.Component {
                 onValueChange={value => {
                   this.setState({
                     schedule_id: value.id,
+                    search: '',
                   });
                 }}
               />
@@ -499,6 +504,7 @@ class AddClassComponent extends React.Component {
                 onValueChange={value => {
                   this.setState({
                     gen_id: value.id,
+                    search: '',
                   });
                 }}
               />
@@ -567,6 +573,7 @@ class AddClassComponent extends React.Component {
                 onValueChange={value => {
                   this.setState({
                     type: value.id,
+                    search: '',
                   });
                 }}
               />
@@ -627,12 +634,14 @@ class AddClassComponent extends React.Component {
                   this.renderPickerHeader('Chọn giảng viên')
                 }
                 footerTemplate={this.renderPickerFooter}
+                onBlur={() => this.setState({search: ''})}
                 modalStyle={{
                   borderRadius: 6,
                 }}
                 onValueChange={value => {
                   this.setState({
                     teacher_id: value.id,
+                    search: '',
                   });
                 }}
               />
@@ -652,12 +661,14 @@ class AddClassComponent extends React.Component {
                 fieldTemplate={this.renderPickerField}
                 headerTemplate={() => this.renderPickerHeader('Chọn trợ giảng')}
                 footerTemplate={this.renderPickerFooter}
+                onBlur={() => this.setState({search: ''})}
                 modalStyle={{
                   borderRadius: 6,
                 }}
                 onValueChange={value => {
                   this.setState({
                     teaching_assistant_id: value.id,
+                    search: '',
                   });
                 }}
               />

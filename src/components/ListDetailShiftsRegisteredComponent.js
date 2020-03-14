@@ -9,6 +9,7 @@ import {
   TextInput,
 } from 'react-native';
 import theme from '../styles';
+import Search from './common/Search';
 var {height, width} = Dimensions.get('window');
 
 class ListDetailShiftsRegisteredComponent extends React.Component {
@@ -111,18 +112,13 @@ class ListDetailShiftsRegisteredComponent extends React.Component {
               </Text>
             </View>
           </View>
-          <View style={styles.searchContainer}>
-            <TextInput
-              placeholder="Tìm kiếm"
-              autoCapitalize="none"
-              onChangeText={search => {
-                this.setState({search});
-              }}
-              value={this.state.search.value}
-              style={styles.searchInput}
-              clearButtonMode={'while-editing'}
-            />
-          </View>
+          <Search
+            placeholder="Tìm kiếm"
+            onChangeText={search => {
+              this.setState({search});
+            }}
+            value={this.state.search}
+          />
           {this.renderTotalHoursReport(this.state.search)}
         </View>
       </ScrollView>

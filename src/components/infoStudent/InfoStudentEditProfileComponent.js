@@ -307,12 +307,14 @@ class InfoStudentEditProfileComponent extends React.Component {
                 fieldTemplate={this.renderPickerField}
                 headerTemplate={() => this.renderPickerHeader('Chọn giới tính')}
                 footerTemplate={this.renderCoursePickerFooter}
+                onBlur={() => this.setState({search: ''})}
                 modalStyle={{
                   borderRadius: 6,
                 }}
                 onValueChange={value => {
                   this.setState({
                     gender: value.id,
+                    search: '',
                   });
                 }}
               />
@@ -351,12 +353,14 @@ class InfoStudentEditProfileComponent extends React.Component {
                 fieldTemplate={this.renderPickerField}
                 headerTemplate={() => this.renderPickerHeader('Chọn địa chỉ')}
                 footerTemplate={this.renderCoursePickerFooter}
+                onBlur={() => this.setState({search: ''})}
                 modalStyle={{
                   borderRadius: 6,
                 }}
                 onValueChange={value => {
                   this.setState({
                     address: value.id,
+                    search: '',
                   });
                 }}
               />

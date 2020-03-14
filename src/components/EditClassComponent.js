@@ -17,7 +17,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import Spinkit from 'react-native-spinkit';
 import {CustomPicker} from 'react-native-custom-picker';
 import theme from '../styles';
-import {GENDER} from './SaveRegisterComponent';
 var {height, width} = Dimensions.get('window');
 
 export const TYPE_CLASSES = [
@@ -60,17 +59,57 @@ class EditClassComponent extends React.Component {
       status: !classData.status ? '' : classData.status,
       teachers: [],
       teaching_assistants: [],
-      isDatePickerVisible: false,
+      date_end: !classData.date_end_en ? '' : moment(classData.date_end_en),
+      enroll_start_date: !classData.enroll_start_date
+        ? ''
+        : moment(classData.enroll_start_date),
+      enroll_end_date: !classData.enroll_end_date
+        ? ''
+        : moment(classData.enroll_end_date),
+      isDateStartPickerVisible: false,
+      isDateEndPickerVisible: false,
+      isEnrollStartPickerVisible: false,
+      isEnrollEndPickerVisible: false,
       search: '',
     };
   }
 
-  openDatePicker = () => {
-    this.setState({isDatePickerVisible: true});
+  openDateStartPicker = () => {
+    this.setState({isDateStartPickerVisible: true});
   };
 
-  handleDatePicked = date => {
-    this.setState({isDatePickerVisible: false, datestart: moment(date)});
+  openDateEndPicker = () => {
+    this.setState({isDateEndPickerVisible: true});
+  };
+
+  openEnrollStartPicker = () => {
+    this.setState({isEnrollStartPickerVisible: true});
+  };
+
+  openEnrollEndPicker = () => {
+    this.setState({isEnrollEndPickerVisible: true});
+  };
+
+  handleDateStartPicked = date => {
+    this.setState({isDateStartPickerVisible: false, datestart: moment(date)});
+  };
+
+  handleDateEndPicked = date => {
+    this.setState({isDateEndPickerVisible: false, date_end: moment(date)});
+  };
+
+  handleEnrollStartPicked = date => {
+    this.setState({
+      isEnrollStartPickerVisible: false,
+      enroll_start_date: moment(date),
+    });
+  };
+
+  handleEnrollEndPicked = date => {
+    this.setState({
+      isEnrollEndPickerVisible: false,
+      enroll_end_date: moment(date),
+    });
   };
 
   getSearchedResults = array => {
@@ -99,6 +138,20 @@ class EditClassComponent extends React.Component {
       }
     }
     return null;
+  };
+
+  getRooms = () => {
+    let rooms = [];
+    this.props.rooms.forEach(room => {
+      rooms = [
+        ...rooms,
+        {
+          id: room.id,
+          name: room.base + ' - ' + room.address + ' - ' + room.name,
+        },
+      ];
+    });
+    return rooms;
   };
 
   submitClass = () => {
@@ -225,6 +278,60 @@ class EditClassComponent extends React.Component {
             showsVerticalScrollIndicator={false}>
             <View style={{marginTop: 30}}>
               <Text style={styles.titleForm}>
+                Chọn môn học <Text style={{color: '#C50000'}}>*</Text>
+              </Text>
+              <CustomPicker
+                options={this.getSearchedResults(this.props.courses)}
+                defaultValue={this.getDefault(
+                  this.props.courses,
+                  this.state.course_id,
+                )}
+                getLabel={item => item.name}
+                placeholder={'Chọn môn học'}
+                modalAnimationType={'fade'}
+                optionTemplate={this.renderPickerOption}
+                fieldTemplate={this.renderPickerField}
+                headerTemplate={() => this.renderPickerHeader('Chọn môn học')}
+                footerTemplate={this.renderPickerFooter}
+                modalStyle={{
+                  borderRadius: 6,
+                }}
+                onValueChange={value => {
+                  this.setState({
+                    course_id: value.id,
+                  });
+                }}
+              />
+            </View>
+            <View style={{marginTop: 30}}>
+              <Text style={styles.titleForm}>
+                Chọn phòng học <Text style={{color: '#C50000'}}>*</Text>
+              </Text>
+              <CustomPicker
+                options={this.getSearchedResults(this.getRooms())}
+                defaultValue={this.getDefault(
+                  this.props.rooms,
+                  this.state.room_id,
+                )}
+                getLabel={item => item.name}
+                placeholder={'Chọn phòng học'}
+                modalAnimationType={'fade'}
+                optionTemplate={this.renderPickerOption}
+                fieldTemplate={this.renderPickerField}
+                headerTemplate={() => this.renderPickerHeader('Chọn phòng học')}
+                footerTemplate={this.renderPickerFooter}
+                modalStyle={{
+                  borderRadius: 6,
+                }}
+                onValueChange={value => {
+                  this.setState({
+                    room_id: value.id,
+                  });
+                }}
+              />
+            </View>
+            <View style={{marginTop: 30}}>
+              <Text style={styles.titleForm}>
                 Tên lớp <Text style={{color: '#C50000'}}>*</Text>
               </Text>
               <View style={styles.inputContainer}>
@@ -243,7 +350,7 @@ class EditClassComponent extends React.Component {
               </View>
             </View>
             <View style={{marginTop: 30}}>
-              <Text style={styles.titleForm}>Mô tả</Text>
+              <Text style={styles.titleForm}>Mô tả ngắn</Text>
               <View style={styles.inputContainer}>
                 <TextInput
                   {...this.props}
@@ -263,7 +370,7 @@ class EditClassComponent extends React.Component {
             </View>
             <View style={{marginTop: 30}}>
               <Text style={styles.titleForm}>
-                Chỉ tiêu nộp tiền <Text style={{color: '#C50000'}}>*</Text>
+                Số học viên tối đa <Text style={{color: '#C50000'}}>*</Text>
               </Text>
               <View style={styles.inputContainer}>
                 <TextInput
@@ -282,7 +389,7 @@ class EditClassComponent extends React.Component {
             </View>
             <View style={{marginTop: 30}}>
               <Text style={styles.titleForm}>
-                Chỉ tiêu đăng kí <Text style={{color: '#C50000'}}>*</Text>
+                Số đăng kí tối đa <Text style={{color: '#C50000'}}>*</Text>
               </Text>
               <View style={styles.inputContainer}>
                 <TextInput
@@ -298,6 +405,170 @@ class EditClassComponent extends React.Component {
                   style={{fontSize: 15}}
                 />
               </View>
+            </View>
+            <View style={{marginTop: 30}}>
+              <Text style={styles.titleForm}>Chọn lịch học</Text>
+              <CustomPicker
+                options={this.getSearchedResults(this.props.schedules)}
+                defaultValue={this.getDefault(
+                  this.props.schedules,
+                  this.state.schedule_id,
+                )}
+                getLabel={item => item.name}
+                placeholder={'Chọn lịch học'}
+                modalAnimationType={'fade'}
+                optionTemplate={this.renderPickerOption}
+                fieldTemplate={this.renderPickerField}
+                headerTemplate={() => this.renderPickerHeader('Chọn lịch học')}
+                footerTemplate={this.renderPickerFooter}
+                modalStyle={{
+                  borderRadius: 6,
+                }}
+                onValueChange={value => {
+                  this.setState({
+                    schedule_id: value.id,
+                  });
+                }}
+              />
+            </View>
+            <View style={{marginTop: 30}}>
+              <Text style={styles.titleForm}>Ngày khai giảng</Text>
+              <TouchableOpacity
+                style={styles.inputContainer}
+                onPress={this.openDateStartPicker}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 15,
+                    }}>
+                    {isEmptyInput(this.state.datestart)
+                      ? 'YYYY-MM-DD'
+                      : this.state.datestart.format('YYYY-MM-DD')}
+                  </Text>
+                  <Text>▼</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View style={{marginTop: 30}}>
+              <Text style={styles.titleForm}>Ngày bế giảng (dự kiến)</Text>
+              <TouchableOpacity
+                style={styles.inputContainer}
+                onPress={this.openDateEndPicker}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 15,
+                    }}>
+                    {isEmptyInput(this.state.date_end)
+                      ? 'YYYY-MM-DD'
+                      : this.state.date_end.format('YYYY-MM-DD')}
+                  </Text>
+                  <Text>▼</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View style={{marginTop: 30}}>
+              <Text style={styles.titleForm}>
+                Chọn khóa học <Text style={{color: '#C50000'}}>*</Text>
+              </Text>
+              <CustomPicker
+                options={this.getSearchedResults(this.props.genData)}
+                defaultValue={this.getDefault(
+                  this.props.genData,
+                  this.state.gen_id,
+                )}
+                getLabel={item => 'Khóa ' + item.name}
+                placeholder={'Chọn khóa học'}
+                modalAnimationType={'fade'}
+                optionTemplate={this.renderPickerOption}
+                fieldTemplate={this.renderPickerField}
+                headerTemplate={() => this.renderPickerHeader('Chọn khóa học')}
+                footerTemplate={this.renderPickerFooter}
+                modalStyle={{
+                  borderRadius: 6,
+                }}
+                onValueChange={value => {
+                  this.setState({
+                    gen_id: value.id,
+                  });
+                }}
+              />
+            </View>
+            <View style={{marginTop: 30}}>
+              <Text style={styles.titleForm}>Bắt đầu tuyển sinh từ</Text>
+              <TouchableOpacity
+                style={styles.inputContainer}
+                onPress={this.openEnrollStartPicker}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 15,
+                    }}>
+                    {isEmptyInput(this.state.enroll_start_date)
+                      ? 'YYYY-MM-DD'
+                      : this.state.enroll_start_date.format('YYYY-MM-DD')}
+                  </Text>
+                  <Text>▼</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View style={{marginTop: 30}}>
+              <Text style={styles.titleForm}>Kết thúc tuyển sinh sau</Text>
+              <TouchableOpacity
+                style={styles.inputContainer}
+                onPress={this.openEnrollEndPicker}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 15,
+                    }}>
+                    {isEmptyInput(this.state.enroll_end_date)
+                      ? 'YYYY-MM-DD'
+                      : this.state.enroll_end_date.format('YYYY-MM-DD')}
+                  </Text>
+                  <Text>▼</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View style={{marginTop: 30}}>
+              <Text style={styles.titleForm}>
+                Chọn thể loại lớp <Text style={{color: '#C50000'}}>*</Text>
+              </Text>
+              <CustomPicker
+                options={this.getSearchedResults(TYPE_CLASSES)}
+                defaultValue={this.getDefault(TYPE_CLASSES, this.state.type)}
+                getLabel={item => item.name}
+                placeholder={'Chọn thể loại'}
+                modalAnimationType={'fade'}
+                optionTemplate={this.renderPickerOption}
+                fieldTemplate={this.renderPickerField}
+                headerTemplate={() => this.renderPickerHeader('Chọn thể loại')}
+                footerTemplate={this.renderPickerFooter}
+                modalStyle={{
+                  borderRadius: 6,
+                }}
+                onValueChange={value => {
+                  this.setState({
+                    type: value.id,
+                  });
+                }}
+              />
             </View>
             <View style={{marginTop: 30}}>
               <Text style={styles.titleForm}>Link Driver</Text>
@@ -339,163 +610,9 @@ class EditClassComponent extends React.Component {
               </View>
             </View>
             <View style={{marginTop: 30}}>
-              <Text style={styles.titleForm}>Ngày khai giảng</Text>
-              <TouchableOpacity
-                style={styles.inputContainer}
-                onPress={this.openDatePicker}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}>
-                  <Text
-                    style={{
-                      fontSize: 15,
-                    }}>
-                    {isEmptyInput(this.state.datestart)
-                      ? 'YYYY-MM-DD'
-                      : this.state.datestart.format('YYYY-MM-DD')}
-                  </Text>
-                  <Text>▼</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-            <View style={{marginTop: 30}}>
-              <Text style={styles.titleForm}>
-                Chọn phòng học <Text style={{color: '#C50000'}}>*</Text>
-              </Text>
-              <CustomPicker
-                options={this.props.rooms}
-                defaultValue={this.getDefault(
-                  this.props.rooms,
-                  this.state.room_id,
-                )}
-                getLabel={item =>
-                  item.base + ' - ' + item.address + ' - ' + item.name
-                }
-                placeholder={'Chọn phòng học'}
-                modalAnimationType={'fade'}
-                optionTemplate={this.renderPickerOption}
-                fieldTemplate={this.renderPickerField}
-                headerTemplate={() => this.renderPickerHeader('Chọn phòng học')}
-                footerTemplate={this.renderPickerFooter}
-                modalStyle={{
-                  borderRadius: 6,
-                }}
-                onValueChange={value => {
-                  this.setState({
-                    room_id: value.id,
-                  });
-                }}
-              />
-            </View>
-            <View style={{marginTop: 30}}>
-              <Text style={styles.titleForm}>Chọn lịch học</Text>
-              <CustomPicker
-                options={this.props.schedules}
-                defaultValue={this.getDefault(
-                  this.props.schedules,
-                  this.state.schedule_id,
-                )}
-                getLabel={item => item.name}
-                placeholder={'Chọn lịch học'}
-                modalAnimationType={'fade'}
-                optionTemplate={this.renderPickerOption}
-                fieldTemplate={this.renderPickerField}
-                headerTemplate={() => this.renderPickerHeader('Chọn lịch học')}
-                footerTemplate={this.renderPickerFooter}
-                modalStyle={{
-                  borderRadius: 6,
-                }}
-                onValueChange={value => {
-                  this.setState({
-                    schedule_id: value.id,
-                  });
-                }}
-              />
-            </View>
-            <View style={{marginTop: 30}}>
-              <Text style={styles.titleForm}>
-                Chọn thể loại lớp <Text style={{color: '#C50000'}}>*</Text>
-              </Text>
-              <CustomPicker
-                options={TYPE_CLASSES}
-                defaultValue={this.getDefault(TYPE_CLASSES, this.state.type)}
-                getLabel={item => item.name}
-                placeholder={'Chọn thể loại'}
-                modalAnimationType={'fade'}
-                optionTemplate={this.renderPickerOption}
-                fieldTemplate={this.renderPickerField}
-                headerTemplate={() => this.renderPickerHeader('Chọn thể loại')}
-                footerTemplate={this.renderPickerFooter}
-                modalStyle={{
-                  borderRadius: 6,
-                }}
-                onValueChange={value => {
-                  this.setState({
-                    type: value.id,
-                  });
-                }}
-              />
-            </View>
-            <View style={{marginTop: 30}}>
-              <Text style={styles.titleForm}>
-                Chọn môn học <Text style={{color: '#C50000'}}>*</Text>
-              </Text>
-              <CustomPicker
-                options={this.props.courses}
-                defaultValue={this.getDefault(
-                  this.props.courses,
-                  this.state.course_id,
-                )}
-                getLabel={item => item.name}
-                placeholder={'Chọn môn học'}
-                modalAnimationType={'fade'}
-                optionTemplate={this.renderPickerOption}
-                fieldTemplate={this.renderPickerField}
-                headerTemplate={() => this.renderPickerHeader('Chọn môn học')}
-                footerTemplate={this.renderPickerFooter}
-                modalStyle={{
-                  borderRadius: 6,
-                }}
-                onValueChange={value => {
-                  this.setState({
-                    course_id: value.id,
-                  });
-                }}
-              />
-            </View>
-            <View style={{marginTop: 30}}>
-              <Text style={styles.titleForm}>
-                Chọn khóa học <Text style={{color: '#C50000'}}>*</Text>
-              </Text>
-              <CustomPicker
-                options={this.props.genData}
-                defaultValue={this.getDefault(
-                  this.props.genData,
-                  this.state.gen_id,
-                )}
-                getLabel={item => 'Khóa ' + item.name}
-                placeholder={'Chọn khóa học'}
-                modalAnimationType={'fade'}
-                optionTemplate={this.renderPickerOption}
-                fieldTemplate={this.renderPickerField}
-                headerTemplate={() => this.renderPickerHeader('Chọn khóa học')}
-                footerTemplate={this.renderPickerFooter}
-                modalStyle={{
-                  borderRadius: 6,
-                }}
-                onValueChange={value => {
-                  this.setState({
-                    gen_id: value.id,
-                  });
-                }}
-              />
-            </View>
-            <View style={{marginTop: 30}}>
               <Text style={styles.titleForm}>Chọn giảng viên</Text>
               <CustomPicker
-                options={this.props.staffs}
+                options={this.getSearchedResults(this.props.staffs)}
                 defaultValue={this.getDefault(
                   this.props.staffs,
                   this.state.teacher_id,
@@ -522,7 +639,7 @@ class EditClassComponent extends React.Component {
             <View style={{marginTop: 30}}>
               <Text style={styles.titleForm}>Chọn trợ giảng</Text>
               <CustomPicker
-                options={this.props.staffs}
+                options={this.getSearchedResults(this.props.staffs)}
                 defaultValue={this.getDefault(
                   this.props.staffs,
                   this.state.teaching_assistant_id,
@@ -564,9 +681,26 @@ class EditClassComponent extends React.Component {
               </LinearGradient>
             </TouchableOpacity>
             <DateTimePicker
-              isVisible={this.state.isDatePickerVisible}
-              onConfirm={this.handleDatePicked}
-              onCancel={() => this.setState({isDatePickerVisible: false})}
+              isVisible={this.state.isDateStartPickerVisible}
+              onConfirm={this.handleDateStartPicked}
+              onCancel={() => this.setState({isDateStartPickerVisible: false})}
+            />
+            <DateTimePicker
+              isVisible={this.state.isDateEndPickerVisible}
+              onConfirm={this.handleDateEndPicked}
+              onCancel={() => this.setState({isDateEndPickerVisible: false})}
+            />
+            <DateTimePicker
+              isVisible={this.state.isEnrollStartPickerVisible}
+              onConfirm={this.handleEnrollStartPicked}
+              onCancel={() =>
+                this.setState({isEnrollStartPickerVisible: false})
+              }
+            />
+            <DateTimePicker
+              isVisible={this.state.isEnrollEndPickerVisible}
+              onConfirm={this.handleEnrollEndPicked}
+              onCancel={() => this.setState({isEnrollEndPickerVisible: false})}
             />
           </ScrollView>
         </KeyboardAvoidingView>

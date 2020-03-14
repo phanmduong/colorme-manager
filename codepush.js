@@ -124,6 +124,6 @@ let codePushOptions = {
   updateDialog: true,
   installMode: CodePush.InstallMode.IMMEDIATE,
 };
-ColorMEManager = CodePush(codePushOptions)(ColorMEManager);
+// ColorMEManager = CodePush(codePushOptions)(ColorMEManager);
 
 AppRegistry.registerComponent('ColorMEManager', () => ColorMEManager);

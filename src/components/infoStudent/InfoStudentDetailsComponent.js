@@ -235,10 +235,6 @@ class InfoStudentDetailsComponent extends React.Component {
             <RefreshControl
               refreshing={this.props.isLoadingStudent}
               onRefresh={() => this.props.onRefresh()}
-              titleColor={theme.mainColor}
-              title="Đang tải..."
-              tintColor="#d9534f"
-              colors={['#d9534f']}
             />
           }>
           <View style={{alignItems: 'center', paddingTop: 30}}>
@@ -246,12 +242,12 @@ class InfoStudentDetailsComponent extends React.Component {
               {!isEmptyInput(this.props.student.avatar_url) ? (
                 <Image
                   source={{uri: this.props.student.avatar_url}}
-                  style={{width: 100, height: 100, borderRadius: 50}}
+                  style={theme.largeAvatar}
                 />
               ) : (
                 <Image
                   source={require('../../../assets/img/icons8-male-user-96.png')}
-                  style={{width: 100, height: 100, borderRadius: 50}}
+                  style={theme.largeAvatar}
                 />
               )}
             </TouchableOpacity>

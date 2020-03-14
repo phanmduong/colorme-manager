@@ -66,10 +66,6 @@ class InfoStudentComponent extends React.Component {
                 this.props.isLoadingProgress
               }
               onRefresh={() => this.props.onRefresh()}
-              titleColor={theme.mainColor}
-              title="Đang tải..."
-              tintColor="#d9534f"
-              colors={['#d9534f']}
             />
           }>
           <View
@@ -252,9 +248,9 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   starContainer: {
-    width: 37,
-    height: 37,
-    borderRadius: 19,
+    width: theme.mainAvatar.width,
+    height: theme.mainAvatar.height,
+    borderRadius: theme.mainAvatar.borderRadius,
     backgroundColor: '#FCCD03',
     justifyContent: 'center',
     alignItems: 'center',
@@ -265,12 +261,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     borderRadius: 8,
   },
-  ava: {
-    width: 35,
-    height: 35,
-    borderRadius: 18,
-    marginLeft: 5,
-  },
+  ava: theme.mainAvatar,
   actionContainer: {
     flexDirection: 'row',
     alignItems: 'center',

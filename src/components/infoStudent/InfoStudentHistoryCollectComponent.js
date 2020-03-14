@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Dimensions, Image, Text} from 'react-native';
 import Loading from '../common/Loading';
 import {dotNumber} from '../../helper';
+import theme from '../../styles';
 var {width, height} = Dimensions.get('window');
 
 class InfoStudentHistoryCollectComponent extends React.Component {
@@ -96,11 +97,7 @@ const styles = {
     marginHorizontal: 16,
     marginVertical: 10,
   },
-  classAva: {
-    width: 37,
-    height: 37,
-    borderRadius: 19,
-  },
+  classAva: theme.mainAvatar,
   className: {
     fontSize: 18,
     fontWeight: '600',

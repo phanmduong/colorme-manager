@@ -62,7 +62,11 @@ class ListItemStudent extends React.Component {
           }}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <View style={{position: 'relative'}}>
-              <Thumbnail small source={{uri: avatar}} style={styles.avatar} />
+              <Thumbnail
+                small
+                source={{uri: avatar}}
+                style={theme.mainAvatar}
+              />
               <View
                 style={{
                   ...styles.dotCall,
@@ -333,8 +337,8 @@ const styles = {
     borderRadius: 19,
   },
   className: {
-    fontSize: 18,
-    fontWeight: '600',
+    fontSize: theme.title.fontSize,
+    fontWeight: theme.title.fontWeight,
     marginLeft: 15,
     marginRight: 5,
   },

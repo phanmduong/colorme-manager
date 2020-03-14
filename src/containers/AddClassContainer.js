@@ -2,10 +2,10 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as classActions from '../actions/classActions';
-import EditClassComponent from '../components/EditClassComponent';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from "../styles";
+import theme from '../styles';
+import AddClassComponent from '../components/AddClassComponent';
 
 class EditClassContainer extends React.Component {
   constructor(props, context) {
@@ -37,18 +37,16 @@ class EditClassContainer extends React.Component {
   };
 
   addClass = classData => {
-    let selectedGenId = this.props.navigation.getParam('selectedGenId');
-    let selectedBaseId = this.props.navigation.getParam('selectedBaseId');
     return this.props.classActions.addClass(
       classData,
-      selectedBaseId,
-      selectedGenId,
+      '',
+      '',
       this.props.token,
     );
   };
 
   render() {
-    return <EditClassComponent {...this.props} addClass={this.addClass} />;
+    return <AddClassComponent {...this.props} addClass={this.addClass} />;
   }
 }
 

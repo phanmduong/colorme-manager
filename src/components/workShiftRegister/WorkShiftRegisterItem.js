@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import WorkShiftRegisterParticipatesModal from './WorkShiftRegisterParticipatesModal';
 import _ from 'lodash';
+import theme from '../../styles';
 
 class WorkShiftRegisterItem extends React.Component {
   constructor(props, context) {
@@ -225,10 +226,10 @@ const styles = {
     padding: 10,
   },
   participatesAvatar: {
-    width: 14,
-    height: 14,
+    width: theme.miniAvatar.width,
+    height: theme.miniAvatar.height,
     marginRight: 5,
-    borderRadius: 7,
+    borderRadius: theme.miniAvatar.borderRadius,
   },
   numberParticipate: {
     borderRadius: 7,
@@ -243,11 +244,7 @@ const styles = {
     marginLeft: 10,
     color: 'white',
   },
-  registeredAvatar: {
-    width: 25,
-    height: 25,
-    borderRadius: 15,
-  },
+  registeredAvatar: theme.shiftAvatar,
 };
 
 export default WorkShiftRegisterItem;

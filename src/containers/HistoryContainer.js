@@ -5,6 +5,7 @@ import * as historyTabAction from '../actions/historyTabActions';
 import {bindActionCreators} from 'redux';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import theme from "../styles";
 
 class HistoryContainer extends React.Component {
   constructor(props, context) {
@@ -64,16 +65,8 @@ class HistoryContainer extends React.Component {
 }
 
 const styles = {
-  name: {
-    fontWeight: '600',
-    fontSize: 23,
-  },
-  headerLeftContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginVertical: 5,
-    marginLeft: 10,
-  },
+  name: theme.header,
+  headerLeftContainer: theme.headerNavigateLeftContainer,
 };
 
 function mapStateToProps(state) {

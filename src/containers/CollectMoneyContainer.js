@@ -9,6 +9,7 @@ import CollectMoneyComponent from '../components/CollectMoneyComponent';
 import {Dimensions, Keyboard, Platform, Alert, View, Text} from 'react-native';
 import * as alert from '../constants/alert';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import theme from "../styles";
 
 class CollectMoneyContainer extends React.Component {
   constructor(props, context) {
@@ -125,16 +126,8 @@ class CollectMoneyContainer extends React.Component {
 }
 
 const styles = {
-  name: {
-    fontWeight: '600',
-    fontSize: 23,
-  },
-  headerLeftContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginVertical: 5,
-    marginLeft: 10,
-  },
+  name: theme.header,
+  headerLeftContainer: theme.headerNavigateLeftContainer,
 };
 
 function mapStateToProps(state) {

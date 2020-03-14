@@ -1,6 +1,7 @@
 import React from 'react';
 import {Image, TouchableOpacity, Linking} from 'react-native';
 import {View, Text, Button} from 'native-base';
+import theme from '../../styles';
 import _ from 'lodash';
 
 class ShiftRegisterItem extends React.Component {
@@ -125,11 +126,7 @@ const styles = {
     marginLeft: 10,
     color: 'white',
   },
-  avatar: {
-    width: 25,
-    height: 25,
-    borderRadius: 15,
-  },
+  avatar: theme.shiftAvatar,
 };
 
 export default ShiftRegisterItem;

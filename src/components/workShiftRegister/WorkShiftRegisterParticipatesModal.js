@@ -10,6 +10,7 @@ import {
   Linking,
 } from 'react-native';
 import Modal from 'react-native-modal';
+import theme from '../../styles';
 var {height, width} = Dimensions.get('window');
 
 class WorkShiftRegisterParticipatesModal extends React.Component {
@@ -115,9 +116,9 @@ const styles = {
     justifyContent: 'center',
   },
   avatar: {
-    height: 25,
-    width: 25,
-    borderRadius: 18,
+    height: theme.shiftAvatar.height,
+    width: theme.shiftAvatar.width,
+    borderRadius: theme.shiftAvatar.borderRadius,
     marginRight: 10,
   },
   callBorder: {

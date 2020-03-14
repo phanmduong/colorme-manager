@@ -304,10 +304,6 @@ class WorkShiftRegisterComponent extends React.Component {
               <RefreshControl
                 refreshing={this.props.isLoadingWorkShiftRegister}
                 onRefresh={this.props.onRefresh}
-                titleColor={theme.mainColor}
-                title="Đang tải..."
-                tintColor="#d9534f"
-                colors={['#d9534f']}
               />
             }>
             <View style={styles.headerContainer}>
@@ -530,16 +526,12 @@ const styles = {
     alignItems: 'center',
   },
   headerTitle: {
-    color: 'black',
-    fontSize: 23,
-    fontWeight: 'bold',
+    color: theme.mainTextColor,
+    fontSize: theme.header.fontSize,
+    fontWeight: theme.header.fontWeight,
     marginLeft: 10,
   },
-  headerAva: {
-    width: 35,
-    height: 35,
-    borderRadius: 18,
-  },
+  headerAva: theme.mainAvatar,
 };
 
 export default WorkShiftRegisterComponent;

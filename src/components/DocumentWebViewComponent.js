@@ -50,7 +50,6 @@ class DocumentWebViewComponent extends React.Component {
           <WebView
             source={{uri: this.processHTML()}}
             onLoadEnd={() => this.setState({loading: false})}
-            scrollEnabled={false}
           />
         </View>
         {!this.state.landscape ? (

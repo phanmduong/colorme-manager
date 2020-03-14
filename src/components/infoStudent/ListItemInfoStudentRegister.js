@@ -179,11 +179,7 @@ const styles = {
     marginHorizontal: 16,
     marginVertical: 10,
   },
-  classAva: {
-    width: 37,
-    height: 37,
-    borderRadius: 19,
-  },
+  classAva: theme.mainAvatar,
   className: {
     fontSize: 18,
     fontWeight: '600',

@@ -25,6 +25,7 @@
     "prop-types": "^15.7.2",
     "react": "16.9.0",
     "react-native": "0.60.5",
+    "react-native-autoheight-webview": "^1.4.2",
     "react-native-busy-indicator": "^1.1.0",
     "react-native-camera": "^3.3.0",
     "react-native-code-push": "^5.7.0",

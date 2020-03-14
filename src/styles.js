@@ -15,4 +15,42 @@ export default (styles = {
   warningColor: '#ff9700',
   dangerColor: '#d92732',
   successColor: '#2da802',
+  mainHorizontal: 16,
+  mainAvatar: {
+    width: 35,
+    height: 35,
+    borderRadius: 18,
+  },
+  largeAvatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+  },
+  shiftAvatar: {
+    width: 25,
+    height: 25,
+    borderRadius: 15,
+  },
+  miniAvatar: {
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+  },
+  mainTextColor: 'black',
+  title: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: 'black',
+  },
+  header: {
+    fontSize: 23,
+    fontWeight: '600',
+    color: 'black',
+  },
+  headerNavigateLeftContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 5,
+    marginLeft: 10,
+  },
 });

@@ -129,7 +129,7 @@ class MakeupClassComponent extends React.Component {
   };
 
   renderBasedOnBase = () => {
-    let HNbase = [3, 4, 8, 9];
+    let HNBases = [3, 4, 8, 9];
     let data = {};
     for (let schedule of this.props.schedule) {
       let address = schedule.class.room.address;
@@ -140,10 +140,10 @@ class MakeupClassComponent extends React.Component {
     }
     if (this.state.selectedHN) {
       let filterData = {};
-      for (var i in data) {
+      for (let i in data) {
         let filterSchedules = data[i];
         for (let filterSchedule of filterSchedules) {
-          if (HNbase.includes(filterSchedule.class.room.base_id)) {
+          if (HNBases.includes(filterSchedule.class.room.base_id)) {
             let filterAddress = filterSchedule.class.room.address;
             if (!(filterAddress in filterData)) {
               filterData[filterAddress] = [];
@@ -155,10 +155,10 @@ class MakeupClassComponent extends React.Component {
       return filterData;
     } else if (this.state.selectedSG) {
       let filterData = {};
-      for (var i in data) {
+      for (let i in data) {
         let filterSchedules = data[i];
         for (let filterSchedule of filterSchedules) {
-          if (!HNbase.includes(filterSchedule.class.room.base_id)) {
+          if (!HNBases.includes(filterSchedule.class.room.base_id)) {
             let filterAddress = filterSchedule.class.room.address;
             if (!(filterAddress in filterData)) {
               filterData[filterAddress] = [];
@@ -258,75 +258,66 @@ class MakeupClassComponent extends React.Component {
             ) : null}
             {this.state.selectedLesson ? (
               <View style={styles.containerTag}>
-                {this.state.selectedAll ? (
-                  <TouchableOpacity>
-                    <LinearGradient
-                      colors={['#E26800', '#E00000']}
-                      start={{x: 0, y: 0}}
-                      end={{x: 1, y: 0}}
-                      style={styles.tag}>
-                      <Text style={{color: 'white'}}>Tất cả</Text>
-                    </LinearGradient>
-                  </TouchableOpacity>
-                ) : (
-                  <TouchableOpacity
-                    style={styles.tag}
-                    onPress={() =>
-                      this.setState({
-                        selectedAll: true,
-                        selectedHN: false,
-                        selectedSG: false,
-                      })
-                    }>
-                    <Text>Tất cả</Text>
-                  </TouchableOpacity>
-                )}
-                {this.state.selectedHN ? (
-                  <TouchableOpacity>
-                    <LinearGradient
-                      colors={['#E26800', '#E00000']}
-                      start={{x: 0, y: 0}}
-                      end={{x: 1, y: 0}}
-                      style={styles.tag}>
-                      <Text style={{color: 'white'}}>Hà Nội</Text>
-                    </LinearGradient>
-                  </TouchableOpacity>
-                ) : (
-                  <TouchableOpacity
-                    style={styles.tag}
-                    onPress={() =>
-                      this.setState({
-                        selectedHN: true,
-                        selectedAll: false,
-                        selectedSG: false,
-                      })
-                    }>
-                    <Text>Hà Nội</Text>
-                  </TouchableOpacity>
-                )}
-                {this.state.selectedSG ? (
-                  <TouchableOpacity>
-                    <LinearGradient
-                      colors={['#E26800', '#E00000']}
-                      start={{x: 0, y: 0}}
-                      end={{x: 1, y: 0}}
-                      style={styles.tag}>
-                      <Text style={{color: 'white'}}>Sài Gòn</Text>
-                    </LinearGradient>
-                  </TouchableOpacity>
-                ) : (
-                  <TouchableOpacity
-                    style={styles.tag}
-                    onPress={() =>
-                      this.setState({
-                        selectedSG: true,
-                        selectedAll: false,
-                        selectedHN: false,
-                      })
-                    }>
-                    <Text>Sài Gòn</Text>
-                  </TouchableOpacity>
-                )}
+                <TouchableOpacity
+                  onPress={() =>
+                    this.setState({
+                      selectedAll: true,
+                      selectedHN: false,
+                      selectedSG: false,
+                    })
+                  }>
+                  <LinearGradient
+                    colors={
+                      this.state.selectedAll
+                        ? ['#F6F6F6', '#F6F6F6']
+                        : ['white', 'white']
+                    }
+                    start={{x: 0, y: 0}}
+                    end={{x: 1, y: 0}}
+                    style={styles.tag}>
+                    <Text style={{color: 'black'}}>Tất cả</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.setState({
+                      selectedHN: true,
+                      selectedAll: false,
+                      selectedSG: false,
+                    })
+                  }>
+                  <LinearGradient
+                    colors={
+                      this.state.selectedHN
+                        ? ['#F6F6F6', '#F6F6F6']
+                        : ['white', 'white']
+                    }
+                    start={{x: 0, y: 0}}
+                    end={{x: 1, y: 0}}
+                    style={styles.tag}>
+                    <Text style={{color: 'black'}}>Hà Nội</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.setState({
+                      selectedSG: true,
+                      selectedAll: false,
+                      selectedHN: false,
+                    })
+                  }>
+                  <LinearGradient
+                    colors={
+                      this.state.selectedSG
+                        ? ['#F6F6F6', '#F6F6F6']
+                        : ['white', 'white']
+                    }
+                    start={{x: 0, y: 0}}
+                    end={{x: 1, y: 0}}
+                    style={styles.tag}>
+                    <Text style={{color: 'black'}}>Sài Gòn</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
               </View>
             ) : null}
             {this.props.isLoadingScheduleClasses ? (
@@ -449,11 +440,7 @@ const styles = {
     alignItems: 'flex-start',
     marginTop: 30,
   },
-  courseIcon: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-  },
+  courseIcon: theme.mainAvatar,
   courseName: {
     fontWeight: '600',
     fontSize: 22,

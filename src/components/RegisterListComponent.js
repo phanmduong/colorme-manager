@@ -12,6 +12,8 @@ import Loading from './common/Loading';
 import Search from './common/Search';
 import {getStatusBarHeight, isIphoneX} from 'react-native-iphone-x-helper';
 import FilterModal from './infoStudent/FilterModal';
+import MatIcon from 'react-native-vector-icons/MaterialIcons';
+import LinearGradient from 'react-native-linear-gradient';
 
 var {height, width} = Dimensions.get('window');
 class RegisterListComponent extends React.Component {
@@ -19,6 +21,7 @@ class RegisterListComponent extends React.Component {
     super(props, context);
     this.state = {
       filterModalVisible: false,
+      salerId: this.props.salerId,
     };
   }
 
@@ -50,8 +53,10 @@ class RegisterListComponent extends React.Component {
           refer={input => {
             this.searchRegisterList = input;
           }}
-          extraStyle={{width: width - 85}}
-          extraInputStyle={{width: width - 85 - 48}}
+          extraStyle={{width: width - (theme.mainHorizontal * 2 + 40 + 10)}}
+          extraInputStyle={{
+            width: width - (theme.mainHorizontal * 2 + 40 + 10) - 48,
+          }}
           onBlur={() => this.props.setAutoFocusRegisterListSearch(false)}
         />
         <TouchableOpacity onPress={this.toggleFilterModal}>
@@ -118,20 +123,60 @@ class RegisterListComponent extends React.Component {
     );
   }
 
+  renderTabs = () => {
+    let salerLst = [
+      {id: -1, name: 'Tất cả'},
+      {id: this.props.user.id, name: 'Đơn của bạn'},
+    ];
+    return salerLst.map(saler => (
+      <TouchableOpacity
+        onPress={() => {
+          this.setState({salerId: saler.id});
+          this.props.onSelectSalerId(saler.id);
+          setTimeout(() => {
+            this.props.onRefresh(this.props.search_coupon);
+          }, 300);
+        }}>
+        <LinearGradient
+          colors={
+            this.state.salerId === saler.id
+              ? ['#F6F6F6', '#F6F6F6']
+              : ['white', 'white']
+          }
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 0}}
+          style={styles.tag}>
+          <Text style={{color: 'black'}}>{saler.name}</Text>
+        </LinearGradient>
+      </TouchableOpacity>
+    ));
+  };
+
   headerComponent = () => {
     return (
       <View style={{flex: 1}}>
         <View style={styles.headerContainer}>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Profile')}>
-            <Image
-              source={{uri: this.props.user.avatar_url}}
-              style={styles.headerAva}
-            />
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>Học viên</Text>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Profile')}>
+              <Image
+                source={{uri: this.props.user.avatar_url}}
+                style={styles.headerAva}
+              />
+            </TouchableOpacity>
+            <Text style={styles.headerTitle}>Đăng kí học</Text>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('SaveRegister')}>
+              <View style={styles.headerIconContainer}>
+                <MatIcon name={'add-circle'} size={20} color={'black'} />
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
         {this.renderSearch()}
+        <View style={styles.containerTag}>{this.renderTabs()}</View>
       </View>
     );
   };
@@ -165,10 +210,6 @@ class RegisterListComponent extends React.Component {
             <RefreshControl
               refreshing={this.props.refreshing}
               onRefresh={() => this.props.onRefresh(this.props.search_coupon)}
-              titleColor={theme.mainColor}
-              title="Đang tải..."
-              tintColor="#d9534f"
-              colors={['#d9534f']}
             />
           }
           renderRow={(item, sectionID, rowID) => (
@@ -240,12 +281,11 @@ const styles = {
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
-    marginBottom: 10,
-    marginHorizontal: 20,
+    marginTop: 5,
+    marginHorizontal: 16,
   },
   tag: {
     paddingHorizontal: 20,
-    marginRight: 20,
     borderRadius: 20,
     height: 40,
     justifyContent: 'center',
@@ -257,18 +297,15 @@ const styles = {
     marginBottom: 10,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
   headerTitle: {
-    color: 'black',
-    fontSize: 23,
-    fontWeight: 'bold',
+    color: theme.mainTextColor,
+    fontSize: theme.header.fontSize,
+    fontWeight: theme.header.fontWeight,
     marginLeft: 10,
   },
-  headerAva: {
-    width: 35,
-    height: 35,
-    borderRadius: 18,
-  },
+  headerAva: theme.mainAvatar,
   fitlerContainer: {
     width: 40,
     height: 40,
@@ -277,6 +314,14 @@ const styles = {
     alignItems: 'center',
     borderRadius: 20,
     marginLeft: 10,
+  },
+  headerIconContainer: {
+    width: 40,
+    height: 40,
+    backgroundColor: '#F6F6F6',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 20,
   },
 };
 

@@ -106,10 +106,3 @@ function loadDepartmentFilterError() {
     errorDepartments: true,
   };
 }
-
-export function selectedDepartmentId(departmentId) {
-  return {
-    type: types.ON_SELECT_DEPARTMENT_ID,
-    selectedDepartmentId: departmentId,
-  };
-}

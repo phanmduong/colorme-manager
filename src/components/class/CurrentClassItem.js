@@ -87,7 +87,7 @@ class CurrentClassItem extends React.Component {
               alignItems: 'center',
             }}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Thumbnail small source={{uri: icon}} />
+              <Thumbnail small source={{uri: icon}} style={theme.mainAvatar} />
               <Text numberOfLines={1} style={styles.className}>
                 {name}
               </Text>
@@ -231,19 +231,15 @@ class CurrentClassItem extends React.Component {
 
 const styles = {
   className: {
-    fontSize: 18,
-    fontWeight: '600',
+    fontSize: theme.title.fontSize,
+    fontWeight: theme.title.fontWeight,
     marginLeft: 15,
     marginRight: 5,
   },
   itemContainer: {
     paddingVertical: 16,
   },
-  placeholderAva: {
-    width: 37,
-    height: 37,
-    borderRadius: 19,
-  },
+  placeholderAva: theme.mainAvatar,
   infoContainer: {
     marginLeft: 15,
     flex: 1,

@@ -105,9 +105,9 @@ const styles = {
     marginVertical: 10,
   },
   callStatus: {
-    width: 37,
-    height: 37,
-    borderRadius: 19,
+    width: theme.mainAvatar.width,
+    height: theme.mainAvatar.height,
+    borderRadius: theme.mainAvatar.borderRadius,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -133,11 +133,7 @@ const styles = {
     flex: 1,
     flexWrap: 'wrap',
   },
-  classAva: {
-    width: 37,
-    height: 37,
-    borderRadius: 19,
-  },
+  classAva: theme.mainAvatar,
 };
 
 export default InfoStudentHistoryCallsComponent;

@@ -7,15 +7,16 @@ import {
   Clipboard,
   Dimensions,
   FlatList,
-  Image,
   RefreshControl,
+  Alert,
+  ScrollView,
 } from 'react-native';
 import {Thumbnail} from 'native-base';
 import theme from '../styles';
 import Spinkit from 'react-native-spinkit';
 import Search from './common/Search';
 import {getShortName, convertVietText} from '../helper';
-import DocumentFilterModal from './document/DocumentFilterModal';
+import LinearGradient from 'react-native-linear-gradient';
 var {width, height} = Dimensions.get('window');
 
 class DocumentComponent extends React.Component {
@@ -23,126 +24,158 @@ class DocumentComponent extends React.Component {
     super(props, context);
     this.state = {
       search: '',
-      filterModalVisible: false,
-      hello: true,
+      departmentId: -1,
     };
   }
 
   headerComponent = () => {
     return (
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Search
-          placeholder="Tìm kiếm tài liệu"
-          onChangeText={search => this.setState({search})}
-          value={this.state.search}
-          autoFocus={false}
-          extraStyle={{width: width - 85}}
-          extraInputStyle={{width: width - 85 - 48}}
-        />
-        <TouchableOpacity onPress={this.toggleFilterModal}>
-          <View style={styles.fitlerContainer}>
-            <Image
-              source={require('../../assets/img/icons8-sorting_options_filled.png')}
-              style={{width: 18, height: 18}}
-            />
-          </View>
-        </TouchableOpacity>
-        <DocumentFilterModal
-          onSelectDepartmentId={this.props.onSelectDepartmentId}
-          isVisible={this.state.filterModalVisible}
-          closeModal={this.toggleFilterModal}
-          isLoadingDepartments={this.props.isLoadingDepartments}
-          departments={this.props.departments}
-          selectedDepartmentId={this.props.selectedDepartmentId}
-          loadDocuments={this.props.loadDocuments}
-        />
+      <View>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Search
+            placeholder="Tìm kiếm tài liệu"
+            onChangeText={search => this.setState({search})}
+            value={this.state.search}
+            autoFocus={false}
+          />
+        </View>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <View style={styles.containerTag}>{this.renderTabs()}</View>
+        </ScrollView>
       </View>
     );
+  };
+
+  renderTabs = () => {
+    let defaultDepartment = {id: -1, name: 'Tất cả'};
+    let departmentLst = [defaultDepartment].concat(this.props.departments);
+    departmentLst = departmentLst.filter(
+      department => this.getDocLst(department.id).length > 0,
+    );
+    return departmentLst.map(department => (
+      <TouchableOpacity
+        onPress={() => this.setState({departmentId: department.id})}>
+        <LinearGradient
+          colors={
+            this.state.departmentId === department.id
+              ? ['#F6F6F6', '#F6F6F6']
+              : ['white', 'white']
+          }
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 0}}
+          style={styles.tag}>
+          <Text style={{color: 'black'}}>
+            {department.name} ({this.getDocLst(department.id).length})
+          </Text>
+        </LinearGradient>
+      </TouchableOpacity>
+    ));
   };
 
   renderDoc = ({item}) => {
     return (
-      <View style={styles.containerAll}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <View style={{position: 'relative'}}>
-              <Thumbnail small source={{uri: item.creator.avatar_url}} />
+      <TouchableOpacity
+        onPress={() =>
+          this.props.navigation.navigate('DocumentWebView', {
+            url: item.url,
+          })
+        }>
+        <View style={styles.containerAll}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{position: 'relative'}}>
+                <Thumbnail
+                  small
+                  source={{uri: item.creator.avatar_url}}
+                  style={theme.mainAvatar}
+                />
+              </View>
+              <Text numberOfLines={2} style={styles.className}>
+                {item.name}
+              </Text>
             </View>
-            <Text numberOfLines={2} style={styles.className}>
-              {item.name}
-            </Text>
           </View>
-        </View>
-        <View style={{flexDirection: 'row'}}>
-          <View style={styles.classAva} />
-          <View style={styles.infoContainer}>
-            <View style={styles.containerSubTitle}>
-              {item.department ? (
-                <View
-                  style={{
-                    ...styles.card,
-                    ...{
-                      backgroundColor:
-                        !item.department.color || item.department.color === ''
-                          ? theme.processColor1
-                          : '#' + item.department.color,
-                      marginRight: 5,
-                    },
+          <View style={{flexDirection: 'row'}}>
+            <View style={styles.classAva} />
+            <View style={styles.infoContainer}>
+              <View style={styles.containerSubTitle}>
+                {item.department ? (
+                  <View
+                    style={{
+                      ...styles.card,
+                      ...{
+                        backgroundColor:
+                          !item.department.color || item.department.color === ''
+                            ? theme.processColor1
+                            : item.department.color,
+                        marginRight: 5,
+                      },
+                    }}>
+                    <Text style={styles.saler}>
+                      {getShortName(item.department.name)}
+                    </Text>
+                  </View>
+                ) : (
+                  <View />
+                )}
+              </View>
+              <View style={{flex: 1}}>
+                {item.description ? (
+                  <Text
+                    numberOfLines={1}
+                    style={[styles.classInfoContainer, {paddingTop: 0}]}>
+                    {item.description}
+                  </Text>
+                ) : null}
+                {item.creator && item.creator.name ? (
+                  <Text numberOfLines={1} style={styles.classInfoContainer}>
+                    Được tạo bởi{' '}
+                    <Text style={{fontWeight: '600', color: 'black'}}>
+                      {item.creator.name}
+                    </Text>
+                  </Text>
+                ) : null}
+              </View>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.props.navigation.navigate('DocumentWebView', {
+                      url: item.url,
+                    })
+                  }>
+                  <View style={styles.button}>
+                    <Text style={{fontSize: 16}}>Xem tài liệu</Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    Clipboard.setString(item.url);
+                    Alert.alert('Thông báo', 'Copy URL thành công');
                   }}>
-                  <Text style={styles.saler}>
-                    {getShortName(item.department.name)}
-                  </Text>
-                </View>
-              ) : (
-                <View />
-              )}
-            </View>
-            <View style={{flex: 1}}>
-              {item.description ? (
-                <Text
-                  numberOfLines={1}
-                  style={[styles.classInfoContainer, {paddingTop: 0}]}>
-                  {item.description}
-                </Text>
-              ) : null}
-              {item.creator && item.creator.name ? (
-                <Text numberOfLines={1} style={styles.classInfoContainer}>
-                  Được tạo bởi{' '}
-                  <Text style={{fontWeight: '600', color: 'black'}}>
-                    {item.creator.name}
-                  </Text>
-                </Text>
-              ) : null}
-            </View>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                onPress={() =>
-                  this.props.navigation.navigate('DocumentWebView', {
-                    url: item.url,
-                  })
-                }>
-                <View style={styles.button}>
-                  <Text style={{fontSize: 16}}>Xem tài liệu</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => Clipboard.setString(item.url)}>
-                <View style={[{marginLeft: 10}, styles.button]}>
-                  <Text style={{fontSize: 16}}>Copy URL</Text>
-                </View>
-              </TouchableOpacity>
+                  <View style={[{marginLeft: 10}, styles.button]}>
+                    <Text style={{fontSize: 16}}>Copy URL</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
-  toggleFilterModal = () => {
-    this.setState({filterModalVisible: !this.state.filterModalVisible});
+  getDocLst = departmentId => {
+    if (departmentId === -1) {
+      return this.props.documents;
+    } else {
+      return this.props.documents.filter(
+        doc => doc.department && doc.department.id === departmentId,
+      );
+    }
   };
 
   searchDocuments = docLst => {
@@ -165,19 +198,13 @@ class DocumentComponent extends React.Component {
     if (!this.props.isLoadingDoc && !this.props.isLoadingDepartments) {
       return (
         <FlatList
-          data={this.searchDocuments(this.props.documents)}
+          data={this.searchDocuments(this.getDocLst(this.state.departmentId))}
           renderItem={this.renderDoc}
           ListHeaderComponent={this.headerComponent}
           refreshControl={
             <RefreshControl
               refreshing={this.props.refreshingDoc}
-              onRefresh={() =>
-                this.props.refreshDocuments(this.props.selectedDepartmentId)
-              }
-              titleColor={theme.mainColor}
-              title="Đang tải..."
-              tintColor="#d9534f"
-              colors={['#d9534f']}
+              onRefresh={() => this.props.refreshDocuments('')}
             />
           }
           style={{flex: 1}}
@@ -337,5 +364,19 @@ const styles = {
     alignItems: 'center',
     borderRadius: 20,
     marginLeft: 10,
+  },
+  tag: {
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  containerTag: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+    marginTop: 5,
+    marginHorizontal: 16,
   },
 };

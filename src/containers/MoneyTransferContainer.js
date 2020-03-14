@@ -12,6 +12,7 @@ import SearchStaffMoneyTransferComponent from '../components/moneyTransfer/Searc
 import * as alert from '../constants/alert';
 import io from 'socket.io-client';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import theme from "../styles";
 let self;
 class MoneyTransferContainer extends React.Component {
   constructor(props, context) {
@@ -184,16 +185,8 @@ class MoneyTransferContainer extends React.Component {
 }
 
 const styles = {
-  name: {
-    fontWeight: '600',
-    fontSize: 23,
-  },
-  headerLeftContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginVertical: 5,
-    marginLeft: 10,
-  },
+  name: theme.header,
+  headerLeftContainer: theme.headerNavigateLeftContainer,
 };
 
 function mapStateToProps(state) {

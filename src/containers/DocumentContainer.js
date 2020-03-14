@@ -5,6 +5,7 @@ import {bindActionCreators} from 'redux';
 import DocumentComponent from '../components/DocumentComponent';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import theme from "../styles";
 
 class DocumentContainer extends React.Component {
   constructor(props, context) {
@@ -12,7 +13,7 @@ class DocumentContainer extends React.Component {
   }
 
   componentDidMount = () => {
-    this.loadDocuments(this.props.selectedDepartmentId);
+    this.loadDocuments(-1);
     this.loadDepartments();
   };
 
@@ -50,15 +51,10 @@ class DocumentContainer extends React.Component {
     this.props.documentActions.loadDepartmentFilter(this.props.token);
   };
 
-  onSelectDepartmentId = departmentId => {
-    this.props.documentActions.selectedDepartmentId(departmentId);
-  };
-
   render() {
     return (
       <DocumentComponent
         {...this.props}
-        onSelectDepartmentId={this.onSelectDepartmentId}
         refreshDocuments={this.refreshDocuments}
         loadDocuments={this.loadDocuments}
       />
@@ -67,16 +63,8 @@ class DocumentContainer extends React.Component {
 }
 
 const styles = {
-  name: {
-    fontWeight: '600',
-    fontSize: 23,
-  },
-  headerLeftContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginVertical: 5,
-    marginLeft: 10,
-  },
+  name: theme.header,
+  headerLeftContainer: theme.headerNavigateLeftContainer,
 };
 
 function mapStateToProps(state) {
@@ -86,7 +74,6 @@ function mapStateToProps(state) {
     refreshingDoc: state.document.refreshingDoc,
     errorDoc: state.document.errorDoc,
     documents: state.document.documents,
-    selectedDepartmentId: state.document.selectedDepartmentId,
     departments: state.document.departments,
     isLoadingDepartments: state.document.isLoadingDepartments,
     errorDepartments: state.document.errorDepartments,

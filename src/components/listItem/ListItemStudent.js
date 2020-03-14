@@ -60,7 +60,11 @@ class ListItemStudent extends React.Component {
           }}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <View style={{position: 'relative'}}>
-              <Thumbnail small source={{uri: avatar}} style={styles.avatar} />
+              <Thumbnail
+                small
+                source={{uri: avatar}}
+                style={theme.mainAvatar}
+              />
             </View>
             <Text numberOfLines={1} style={styles.className}>
               {name}

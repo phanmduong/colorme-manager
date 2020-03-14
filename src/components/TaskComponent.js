@@ -217,10 +217,6 @@ class TaskComponent extends React.Component {
                   this.state.user_id,
                 )
               }
-              titleColor={theme.mainColor}
-              title="Đang tải..."
-              tintColor="#d9534f"
-              colors={['#d9534f']}
             />
           }>
           <View
@@ -452,14 +448,14 @@ const styles = {
     borderRadius: 20,
   },
   avatar: {
-    width: 35,
-    height: 35,
-    borderRadius: 18,
+    width: theme.mainAvatar.width,
+    height: theme.mainAvatar.height,
+    borderRadius: theme.mainAvatar.borderRadius,
     marginRight: 10,
   },
   placeholder: {
-    width: 35,
-    height: 35,
+    width: theme.mainAvatar.width,
+    height: theme.mainAvatar.height,
     marginRight: 10,
   },
   headerFooterContainer: {

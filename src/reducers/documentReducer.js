@@ -45,10 +45,6 @@ export default function documentReducer(
         isLoadingDepartments: actions.isLoadingDepartments,
         errorDepartments: actions.errorDepartments,
       });
-    case types.ON_SELECT_DEPARTMENT_ID:
-      return Object.assign({}, state, {
-        selectedDepartmentId: actions.selectedDepartmentId,
-      });
     default:
       return state;
   }

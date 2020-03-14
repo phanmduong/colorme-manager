@@ -2,6 +2,7 @@ import React from 'react';
 import ListDetailShiftsRegisteredComponent from '../components/ListDetailShiftsRegisteredComponent';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import theme from "../styles";
 
 class ListDetailShiftsRegisteredContainer extends React.Component {
   constructor(props, context) {
@@ -39,16 +40,8 @@ class ListDetailShiftsRegisteredContainer extends React.Component {
 }
 
 const styles = {
-  name: {
-    fontWeight: '600',
-    fontSize: 23,
-  },
-  headerLeftContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginVertical: 5,
-    marginLeft: 10,
-  },
+  name: theme.header,
+  headerLeftContainer: theme.headerNavigateLeftContainer,
 };
 
 export default ListDetailShiftsRegisteredContainer;

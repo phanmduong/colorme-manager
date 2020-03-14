@@ -291,10 +291,6 @@ class ClassComponent extends React.Component {
             <RefreshControl
               refreshing={this.props.refreshing}
               onRefresh={() => this.props.onRefresh()}
-              titleColor={theme.mainColor}
-              title="Đang tải..."
-              tintColor="#d9534f"
-              colors={['#d9534f']}
             />
           }>
           {this.headerComponent()}
@@ -482,20 +478,6 @@ const styles = {
     borderBottomColor: '#F0F0F0',
     marginHorizontal: 20,
   },
-  searchContainer: {
-    marginTop: 10,
-    backgroundColor: '#f6f6f6',
-    height: 40,
-    width: width - 70,
-    borderRadius: 27,
-    justifyContent: 'center',
-    marginHorizontal: 10,
-  },
-  searchInput: {
-    fontSize: 16,
-    color: '#707070',
-    marginLeft: 10,
-  },
   headerContainer: {
     marginHorizontal: 16,
     marginTop: 20,
@@ -505,16 +487,12 @@ const styles = {
     justifyContent: 'space-between',
   },
   headerTitle: {
-    color: 'black',
-    fontSize: 23,
-    fontWeight: 'bold',
+    color: theme.mainTextColor,
+    fontSize: theme.header.fontSize,
+    fontWeight: theme.header.fontWeight,
     marginLeft: 10,
   },
-  headerAva: {
-    width: 35,
-    height: 35,
-    borderRadius: 18,
-  },
+  headerAva: theme.mainAvatar,
   fitlerContainer: {
     width: 40,
     height: 40,
@@ -530,8 +508,8 @@ const styles = {
     marginTop: 16,
   },
   sectionTitle: {
-    fontWeight: '600',
-    fontSize: 20,
+    fontWeight: theme.title.fontWeight,
+    fontSize: theme.title.fontSize,
   },
 };
 

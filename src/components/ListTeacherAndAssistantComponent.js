@@ -14,6 +14,7 @@ import theme from '../styles';
 import {CustomPicker} from 'react-native-custom-picker';
 import LinearGradient from 'react-native-linear-gradient';
 import {convertVietText} from '../helper';
+import Search from './common/Search';
 var {height, width} = Dimensions.get('window');
 
 class ListTeacherAndAssistantComponent extends React.Component {
@@ -152,7 +153,7 @@ class ListTeacherAndAssistantComponent extends React.Component {
                         : {uri: 'https://' + assistant.user.avatar_url}
                       : require('../../assets/img/icons8-male-user-96.png')
                   }
-                  style={styles.avatar}
+                  style={theme.largeAvatar}
                 />
                 <View style={styles.ratingTag}>
                   <Text style={{color: 'white'}}>
@@ -313,18 +314,13 @@ class ListTeacherAndAssistantComponent extends React.Component {
             }}
           />
         </View>
-        <View style={styles.searchContainer}>
-          <TextInput
-            placeholder="Tìm kiếm"
-            autoCapitalize="none"
-            onChangeText={search => {
-              this.setState({search});
-            }}
-            value={this.state.search.value}
-            style={styles.searchInput}
-            clearButtonMode={'while-editing'}
-          />
-        </View>
+        <Search
+          onChangeText={search => {
+            this.setState({search});
+          }}
+          placeholder={'Tìm kiếm'}
+          value={this.state.search.value}
+        />
         {!this.props.isLoadingTeacherList &&
         !this.props.isLoadingAssistantList ? (
           this.state.role === 'Giảng viên' ? (

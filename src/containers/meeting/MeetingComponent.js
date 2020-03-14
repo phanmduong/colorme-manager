@@ -65,10 +65,6 @@ class MeetingComponent extends React.Component {
               <RefreshControl
                 refreshing={refreshing}
                 onRefresh={this.handleRefresh}
-                titleColor={theme.mainColor}
-                title="Đang tải..."
-                tintColor="#d9534f"
-                colors={['#d9534f']}
               />
             }>
             {meetingsNow.length > 0 && (

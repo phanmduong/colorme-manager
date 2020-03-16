@@ -51,6 +51,8 @@ class ListItemStudent extends React.Component {
       registerId,
       created_at_cal,
       paidTime,
+      source,
+      register_status,
     } = this.props;
     return (
       <View>
@@ -129,9 +131,47 @@ class ListItemStudent extends React.Component {
                         !campaign.color || campaign.color === ''
                           ? theme.processColor1
                           : '#' + campaign.color,
+                      marginRight: 5,
                     },
                   }}>
                   <Text style={styles.campaign}>{campaign.name.trim()}</Text>
+                </View>
+              ) : (
+                <View />
+              )}
+              {source ? (
+                <View
+                  style={{
+                    ...styles.card,
+                    ...{
+                      backgroundColor:
+                        !source.color || source.color === ''
+                          ? theme.processColor1
+                          : source.color,
+                      marginRight: 5,
+                    },
+                  }}>
+                  <Text style={styles.campaign}>{source.name.trim()}</Text>
+                </View>
+              ) : (
+                <View />
+              )}
+              {register_status &&
+              register_status.name &&
+              register_status.color ? (
+                <View
+                  style={{
+                    ...styles.card,
+                    ...{
+                      backgroundColor:
+                        !register_status.color || register_status.color === ''
+                          ? theme.processColor1
+                          : register_status.color,
+                    },
+                  }}>
+                  <Text style={styles.campaign}>
+                    {register_status.name.trim()}
+                  </Text>
                 </View>
               ) : (
                 <View />
@@ -345,6 +385,7 @@ const styles = {
   containerSubTitle: {
     flexDirection: 'row',
     marginBottom: 10,
+    flexWrap: 'wrap',
   },
   card: {
     paddingVertical: 4,

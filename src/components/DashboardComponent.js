@@ -262,7 +262,13 @@ class DashboardComponent extends React.Component {
                 this.props.navigation.navigate('AddClass');
               }}
             />
-            <View style={{width: width / 3}} />
+            <CircleTab
+              iconImage={require('../../assets/img/icons8-user_account.png')}
+              title={'Leads'}
+              onPress={() => {
+                this.props.navigation.navigate('Leads');
+              }}
+            />
           </View>
           <MeetingComponent
             store={this.props.store}

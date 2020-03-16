@@ -39,6 +39,7 @@ import taskReducer from './taskReducer';
 import notificationReducer from './notificationReducer';
 import profileReducer from "./profileReducer";
 import documentReducer from "./documentReducer";
+import leadsReducer from "./leadsReducer";
 
 const appReducer = combineReducers({
   login: loginReducer,
@@ -77,6 +78,7 @@ const appReducer = combineReducers({
   notification: notificationReducer,
   profile: profileReducer,
   document: documentReducer,
+  leads: leadsReducer,
 });
 
 const rootReducer = (state, action) => {

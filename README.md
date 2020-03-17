@@ -42,3 +42,11 @@ MYAPP_RELEASE_KEY_PASSWORD='facebook'
 - Task
 - Notification
 
+### All the forms:
+- Save register
+- Add class
+- Edit class
+- Make up class
+- Info student edit
+- Profile edit
+

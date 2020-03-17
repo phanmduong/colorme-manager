@@ -18,7 +18,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import Spinkit from 'react-native-spinkit';
-import {FORMAT_TIME_MYSQL} from '../constants/constant';
+import Search from './common/Search';
 var {width, height} = Dimensions.get('window');
 
 class EditProfileComponent extends React.Component {
@@ -69,18 +69,15 @@ class EditProfileComponent extends React.Component {
     return (
       <View style={styles.headerFooterContainer}>
         <Text style={styles.headerFooterText}>{title}</Text>
-        <View style={styles.searchContainer}>
-          <TextInput
-            placeholder="Tìm kiếm"
-            autoCapitalize="none"
-            onChangeText={search => {
-              this.setState({search});
-            }}
-            value={this.state.search}
-            style={styles.searchInput}
-            clearButtonMode={'while-editing'}
-          />
-        </View>
+        <Search
+          placeholder="Tìm kiếm"
+          onChangeText={search => {
+            this.setState({search});
+          }}
+          value={this.state.search}
+          extraStyle={{width: width - 70, marginLeft: 0}}
+          extraInputStyle={{width: width - 38 - 70}}
+        />
       </View>
     );
   };

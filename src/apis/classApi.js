@@ -74,6 +74,9 @@ export function addClass(classData, token) {
     status: classData.status,
     teachers: classData.teachers,
     teaching_assistants: classData.teaching_assistants,
+    enroll_start_date: classData.enroll_start_date,
+    enroll_end_date: classData.enroll_end_date,
+    date_end: classData.date_end,
   });
 }
 

@@ -180,7 +180,7 @@ class CollectMoneyComponent extends React.Component {
             refreshControl={
               <RefreshControl
                 refreshing={this.props.isLoading}
-                onRefresh={() => this.props.onRefresh()}
+                onRefresh={() => this.props.onRefresh(this.props.search)}
               />
             }
           />

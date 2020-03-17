@@ -119,7 +119,7 @@ class CollectMoneyContainer extends React.Component {
         isUpdatingMoneyStudent={this.props.isUpdatingData}
         errorUpdate={this.props.errorUpdate}
         avatar_url={this.props.avatar_url}
-        onRefresh={this.loadDataStudentList}
+        onRefresh={this.updateFormAndLoadDataSearch}
       />
     );
   }

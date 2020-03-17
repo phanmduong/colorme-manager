@@ -1,22 +1,22 @@
 PODS:
-  - appcenter-analytics (3.0.0):
+  - appcenter (2.3.0):
+    - AppCenterReactNativeShared
+    - React
+  - appcenter-analytics (2.3.0):
     - AppCenter/Analytics
     - AppCenterReactNativeShared
     - React
-  - appcenter-core (3.0.0):
+  - appcenter-crashes (2.3.0):
+    - AppCenter/Crashes (= 2.3.0)
     - AppCenterReactNativeShared
     - React
-  - appcenter-crashes (3.0.0):
-    - AppCenter/Crashes
-    - AppCenterReactNativeShared
-    - React
-  - AppCenter/Analytics (3.0.0):
+  - AppCenter/Analytics (2.3.0):
     - AppCenter/Core
-  - AppCenter/Core (3.0.0)
-  - AppCenter/Crashes (3.0.0):
+  - AppCenter/Core (2.3.0)
+  - AppCenter/Crashes (2.3.0):
     - AppCenter/Core
-  - AppCenterReactNativeShared (3.0.0):
-    - AppCenter/Core (= 3.0.0)
+  - AppCenterReactNativeShared (2.3.0):
+    - AppCenter/Core (= 2.3.0)
   - Base64 (1.1.2)
   - boost-for-react-native (1.63.0)
   - BVLinearGradient (2.5.6):
@@ -39,7 +39,7 @@ PODS:
   - glog (0.3.5)
   - JWT (3.0.0-beta.12):
     - Base64 (~> 1.1.2)
-  - OneSignal (2.12.6)
+  - OneSignal (2.10.1)
   - React (0.60.5):
     - React-Core (= 0.60.5)
     - React-DevSupport (= 0.60.5)
@@ -85,32 +85,32 @@ PODS:
     - React-cxxreact (= 0.60.5)
     - React-jsi (= 0.60.5)
   - React-jsinspector (0.60.5)
-  - react-native-camera (3.19.0):
+  - react-native-camera (3.3.2):
     - React
-    - react-native-camera/RCT (= 3.19.0)
-    - react-native-camera/RN (= 3.19.0)
-  - react-native-camera/RCT (3.19.0):
+    - react-native-camera/RCT (= 3.3.2)
+    - react-native-camera/RN (= 3.3.2)
+  - react-native-camera/RCT (3.3.2):
     - React
-  - react-native-camera/RN (3.19.0):
+  - react-native-camera/RN (3.3.2):
     - React
   - react-native-image-picker (1.1.0):
     - React
-  - react-native-image-resizer (1.2.0):
+  - react-native-image-resizer (1.1.0):
     - React
   - react-native-netinfo (4.7.0):
     - React
-  - react-native-network-info (5.2.1):
+  - react-native-network-info (5.1.0):
     - React
-  - react-native-onesignal (3.6.5):
-    - OneSignal (= 2.12.6)
+  - react-native-onesignal (3.3.2):
+    - OneSignal (= 2.10.1)
     - React (< 1.0.0, >= 0.13.0)
   - react-native-orientation (3.1.3):
     - React
-  - react-native-spinkit (1.4.1):
+  - react-native-spinkit (1.0.2):
     - React
   - react-native-splash-screen (3.2.0):
     - React
-  - react-native-webview (8.1.2):
+  - react-native-webview (8.0.6):
     - React
   - React-RCTActionSheet (0.60.5):
     - React-Core (= 0.60.5)
@@ -135,13 +135,13 @@ PODS:
     - React-Core (= 0.60.5)
   - React-RCTWebSocket (0.60.5):
     - React-Core (= 0.60.5)
-  - RNCAsyncStorage (1.8.1):
+  - RNCAsyncStorage (1.6.1):
     - React
   - RNDeviceInfo (2.3.2):
     - React
-  - RNGestureHandler (1.6.0):
+  - RNGestureHandler (1.4.1):
     - React
-  - RNReanimated (1.7.0):
+  - RNReanimated (1.2.0):
     - React
   - RNScreens (1.0.0-alpha.23):
     - React
@@ -151,9 +151,9 @@ PODS:
   - yoga (0.60.5.React)
 
 DEPENDENCIES:
-  - appcenter-analytics (from `../node_modules/appcenter-analytics/ios`)
-  - appcenter-core (from `../node_modules/appcenter/ios`)
-  - appcenter-crashes (from `../node_modules/appcenter-crashes/ios`)
+  - appcenter (from `../node_modules/appcenter`)
+  - appcenter-analytics (from `../node_modules/appcenter-analytics`)
+  - appcenter-crashes (from `../node_modules/appcenter-crashes`)
   - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
   - CodePush (from `../node_modules/react-native-code-push`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
@@ -205,12 +205,12 @@ SPEC REPOS:
     - SSZipArchive
 
 EXTERNAL SOURCES:
+  appcenter:
+    :path: "../node_modules/appcenter"
   appcenter-analytics:
-    :path: "../node_modules/appcenter-analytics/ios"
-  appcenter-core:
-    :path: "../node_modules/appcenter/ios"
+    :path: "../node_modules/appcenter-analytics"
   appcenter-crashes:
-    :path: "../node_modules/appcenter-crashes/ios"
+    :path: "../node_modules/appcenter-crashes"
   BVLinearGradient:
     :path: "../node_modules/react-native-linear-gradient"
   CodePush:
@@ -291,11 +291,11 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  AppCenter: 7a0bbe928d07467ac8b2d7f6f2a675872a6471d8
-  appcenter-analytics: 2eba9da53aa3efbfa625fc1ab9dd9ccebba18b24
-  appcenter-core: 98c617ae028c90020e404f020c37d7cb189adf4c
-  appcenter-crashes: add23a3c3cf0403e1f54c39d85e9b3c5db7279e7
-  AppCenterReactNativeShared: 48a905fe90071696748e3def60199546167cdb86
+  AppCenter: 9784d2fc998c9bd0b8fbaf4fb9ed69526d12ce1a
+  appcenter: e55cb133b100379be61158f511082196b8022424
+  appcenter-analytics: 9db55feacae3ca037c310d31620760ae054d50c6
+  appcenter-crashes: 47c9257ce4c9a7625face00f77908e69fa459394
+  AppCenterReactNativeShared: 7ac481cba7f926848a7be76dca4dcb2692df3b06
   Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
@@ -304,7 +304,7 @@ SPEC CHECKSUMS:
   Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
   glog: 1f3da668190260b06b429bb211bfbee5cd790c28
   JWT: 9b5c05abbcc1a0e69c3c91e1655b3387fc7e581d
-  OneSignal: a6df91542d1cf133b9dd19d89f2b533d8f2d3163
+  OneSignal: 8fb749fa07f88006403c9b659a570fb7fb74519a
   React: 53c53c4d99097af47cf60594b8706b4e3321e722
   React-Core: ba421f6b4f4cbe2fb17c0b6fc675f87622e78a64
   React-cxxreact: 8384287780c4999351ad9b6e7a149d9ed10a2395
@@ -312,16 +312,16 @@ SPEC CHECKSUMS:
   React-jsi: 4d8c9efb6312a9725b18d6fc818ffc103f60fec2
   React-jsiexecutor: 90ad2f9db09513fc763bc757fdc3c4ff8bde2a30
   React-jsinspector: e08662d1bf5b129a3d556eb9ea343a3f40353ae4
-  react-native-camera: 1a62f163f06c7e54811fc9396cdb80269a665238
+  react-native-camera: c74a970ada5fd757d8dcf51ee6beff1deaf8dee5
   react-native-image-picker: 3637d63fef7e32a230141ab4660d3ceb773c824f
-  react-native-image-resizer: b718335229b7be37c809bf9ed81d7a066fbfd2dd
+  react-native-image-resizer: 9dfb844937574db849fd18a56d8e6c607b0a31d8
   react-native-netinfo: 3dd993921571d01b78a8f91f1caaffcab7a1e1c7
-  react-native-network-info: d1290ffc0bd0709e11436f5b8d7f605dcc5c4530
-  react-native-onesignal: b77c201ba78bee36fd5e7725c6eb80a1180d351a
+  react-native-network-info: f327b8c73bced5dc08b4da313d96a5e33e9a6dac
+  react-native-onesignal: 93d50629a3f38df9df81178280ce7e7da6c29f05
   react-native-orientation: d4a97266b06ec8d45d74e626656a730ebbebbb6f
-  react-native-spinkit: da294fd828216ad211fe36a5c14c1e09f09e62db
+  react-native-spinkit: 9a5d2f95aa975d5660fd3e76b7eac38e7329e46c
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
-  react-native-webview: 055c7110f17c2f19c971f655064ee480638db668
+  react-native-webview: e11b5d7da61ac3acee13f3ae3184d417f773c5d5
   React-RCTActionSheet: b0f1ea83f4bf75fb966eae9bfc47b78c8d3efd90
   React-RCTAnimation: 359ba1b5690b1e87cc173558a78e82d35919333e
   React-RCTBlob: 5e2b55f76e9a1c7ae52b826923502ddc3238df24
@@ -332,10 +332,10 @@ SPEC CHECKSUMS:
   React-RCTText: b074d89033583d4f2eb5faf7ea2db3a13c7553a2
   React-RCTVibration: 2105b2e0e2b66a6408fc69a46c8a7fb5b2fdade0
   React-RCTWebSocket: cd932a16b7214898b6b7f788c8bddb3637246ac4
-  RNCAsyncStorage: 00bdf63f7f1e0f11d3323533dba4f222e58bf092
+  RNCAsyncStorage: 621bad7a889b5bf1583a52547f2dcd3a4d1ff15e
   RNDeviceInfo: bdc3e922b2ed0f086e9d9ab534e61bc316f08576
-  RNGestureHandler: dde546180bf24af0b5f737c8ad04b6f3fa51609a
-  RNReanimated: 031fe8d9ea93c2bd689a40f05320ef9d96f74d7f
+  RNGestureHandler: 4cb47a93019c1a201df2644413a0a1569a51c8aa
+  RNReanimated: 1b52415c4302f198cb581282a0166690bad62c43
   RNScreens: f28b48b8345f2f5f39ed6195518291515032a788
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
@@ -343,4 +343,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: f3e498585f7ed8d8d9c9dd55517a85866d1d90a6
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.8.3

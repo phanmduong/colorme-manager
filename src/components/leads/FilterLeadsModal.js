@@ -214,6 +214,7 @@ class FilterLeadsModal extends React.Component {
                     placeholder={'Nhập tỉnh/thành phố'}
                     autoCapitalize={false}
                     onChangeText={this.props.onSelectAddress}
+                    value={this.props.address}
                     clearButtonMode={true}
                     style={{width: 120, fontSize: 16}}
                   />

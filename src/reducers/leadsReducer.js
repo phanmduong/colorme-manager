@@ -71,6 +71,7 @@ export default function leadsReducer(state = initialState.leads, action) {
       return Object.assign({}, state, {
         start_time: action.start_time,
         end_time: action.end_time,
+        address: action.address,
         rate: action.rate,
         campaign_id: action.campaign_id,
         leadStatusId: action.leadStatusId,

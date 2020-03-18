@@ -230,6 +230,7 @@ export function reset() {
     type: types.RESET_FILTER_LEADS,
     start_time: '',
     end_time: '',
+    address: '',
     leadStatusId: -1,
     rate: -1,
     source_id: -1,

@@ -361,6 +361,13 @@ const TabDashboard = createStackNavigator(
         headerTitleStyle: {color: 'black'},
       }),
     },
+    InfoStudentEditProfile: {
+      screen: InfoStudentEditProfileContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
     StudentRegisterClass: {
       screen: StudentRegisterClassContainer,
     },

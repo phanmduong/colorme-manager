@@ -174,6 +174,10 @@ class LeadsContainer extends React.Component {
     );
   };
 
+  setStudentId = studentId => {
+    this.props.infoStudentActions.setStudentId(studentId);
+  };
+
   static navigationOptions = ({navigation}) => ({
     headerLeft: () => (
       <View style={styles.headerLeftContainer}>
@@ -208,6 +212,7 @@ class LeadsContainer extends React.Component {
         reset={this.reset}
         loadStaff={this.loadStaff}
         changeCallStatus={this.changeCallStatus}
+        setStudentId={this.setStudentId}
       />
     );
   }

@@ -80,6 +80,7 @@ class LeadsComponent extends React.Component {
 
   renderItem = ({item}) => (
     <ListItemLeads
+      {...this.props}
       token={this.props.token}
       avatar_url={item.avatar_url}
       name={item.name}
@@ -95,6 +96,7 @@ class LeadsComponent extends React.Component {
       changeCallStatus={this.props.changeCallStatus}
       errorChangeCallStatus={this.props.errorChangeCallStatus}
       notes={item.notes}
+      setStudentId={this.props.setStudentId}
     />
   );
 

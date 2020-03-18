@@ -197,157 +197,171 @@ class ListItemLeads extends React.Component {
       notes,
     } = this.props;
     return (
-      <View style={styles.containerAll}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <View style={{position: 'relative'}}>
-              <Thumbnail
-                small
-                source={{uri: avatar_url}}
-                style={theme.mainAvatar}
-              />
-            </View>
-            <Text numberOfLines={1} style={styles.className}>
-              {name}
-            </Text>
-          </View>
-          <Image
-            source={require('../../../assets/img/icons8-more-than-100.png')}
-            style={{width: 15, height: 15}}
-          />
-        </View>
-        <View style={{flexDirection: 'row'}}>
-          <View style={styles.classAva} />
-          <View style={styles.infoContainer}>
-            <View style={styles.containerSubTitle}>
-              {carer && carer.name && carer.color ? (
-                <View
-                  style={{
-                    ...styles.card,
-                    ...{
-                      backgroundColor:
-                        !carer.color || carer.color === ''
-                          ? theme.processColor1
-                          : '#' + carer.color,
-                      marginRight: 5,
-                    },
-                  }}>
-                  <Text style={styles.saler}>{getShortName(carer.name)}</Text>
-                </View>
-              ) : (
-                <View />
-              )}
-              {campaign && campaign.name && campaign.color ? (
-                <View
-                  style={{
-                    ...styles.card,
-                    ...{
-                      backgroundColor:
-                        !campaign.color || campaign.color === ''
-                          ? theme.processColor1
-                          : '#' + campaign.color,
-                      marginRight: 5,
-                    },
-                  }}>
-                  <Text style={styles.campaign}>{campaign.name.trim()}</Text>
-                </View>
-              ) : (
-                <View />
-              )}
-              {source && source.name && source.color ? (
-                <View
-                  style={{
-                    ...styles.card,
-                    ...{
-                      backgroundColor:
-                        !source.color || source.color === ''
-                          ? theme.processColor1
-                          : source.color,
-                      marginRight: 5,
-                    },
-                  }}>
-                  <Text style={styles.campaign}>{source.name.trim()}</Text>
-                </View>
-              ) : (
-                <View />
-              )}
-              {lead_status && lead_status.name && lead_status.color ? (
-                <View
-                  style={{
-                    ...styles.card,
-                    ...{
-                      backgroundColor:
-                        !lead_status.color || lead_status.color === ''
-                          ? theme.processColor1
-                          : lead_status.color,
-                    },
-                  }}>
-                  <Text style={styles.campaign}>{lead_status.name.trim()}</Text>
-                </View>
-              ) : (
-                <View />
-              )}
-            </View>
-            <View>
-              {this.renderStars(rate)}
-              {email ? (
-                <Text numberOfLines={1} style={styles.classInfoContainer}>
-                  {email}
-                </Text>
-              ) : null}
-              {phone ? (
-                <Call
-                  extraPadding={{paddingTop: 5, fontSize: 15}}
-                  url={'tel:' + phone}
-                  phone={phone}
+      <TouchableOpacity
+        onPress={() => {
+          this.props.setStudentId(id);
+          this.props.navigation.navigate('InfoStudent', {
+            studentId: id,
+          });
+        }}>
+        <View style={styles.containerAll}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{position: 'relative'}}>
+                <Thumbnail
+                  small
+                  source={{uri: avatar_url}}
+                  style={theme.mainAvatar}
                 />
-              ) : null}
-              {city ? (
-                <Text numberOfLines={1} style={styles.classInfoContainer}>
-                  TP. {city}
-                </Text>
-              ) : null}
-              {notes.map((note, index) => (
-                <Text numberOfLines={1} style={styles.classInfoContainer}>
-                  Ghi chú {index + 1}: {note}
-                </Text>
-              ))}
+              </View>
+              <Text numberOfLines={1} style={styles.className}>
+                {name}
+              </Text>
             </View>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                onPress={() => {
-                  Linking.openURL(`tel:${phone}`);
-                  this.toggleCallModal();
-                }}>
-                <View style={styles.button}>
-                  <Text style={{fontSize: 16}}>Gọi điện</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <View style={[{marginLeft: 10}, styles.button]}>
-                  <Text style={{fontSize: 16}}>Chỉnh sửa</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
+            <Image
+              source={require('../../../assets/img/icons8-more-than-100.png')}
+              style={{width: 15, height: 15}}
+            />
           </View>
-          <CallRegisterModal
-            isVisible={this.state.callModalVisible}
-            onSwipeComplete={this.toggleCallModal}
-            imageSource={avatar_url}
-            email={email}
-            phone={phone}
-            changeCallStatus={this.props.changeCallStatus}
-            student_id={id}
-            token={token}
-            errorChangeCallStatus={this.props.errorChangeCallStatus}
-          />
+          <View style={{flexDirection: 'row'}}>
+            <View style={styles.classAva} />
+            <View style={styles.infoContainer}>
+              <View style={styles.containerSubTitle}>
+                {carer && carer.name && carer.color ? (
+                  <View
+                    style={{
+                      ...styles.card,
+                      ...{
+                        backgroundColor:
+                          !carer.color || carer.color === ''
+                            ? theme.processColor1
+                            : '#' + carer.color,
+                        marginRight: 5,
+                      },
+                    }}>
+                    <Text style={styles.saler}>{getShortName(carer.name)}</Text>
+                  </View>
+                ) : (
+                  <View />
+                )}
+                {campaign && campaign.name && campaign.color ? (
+                  <View
+                    style={{
+                      ...styles.card,
+                      ...{
+                        backgroundColor:
+                          !campaign.color || campaign.color === ''
+                            ? theme.processColor1
+                            : '#' + campaign.color,
+                        marginRight: 5,
+                      },
+                    }}>
+                    <Text style={styles.campaign}>{campaign.name.trim()}</Text>
+                  </View>
+                ) : (
+                  <View />
+                )}
+                {source && source.name && source.color ? (
+                  <View
+                    style={{
+                      ...styles.card,
+                      ...{
+                        backgroundColor:
+                          !source.color || source.color === ''
+                            ? theme.processColor1
+                            : source.color,
+                        marginRight: 5,
+                      },
+                    }}>
+                    <Text style={styles.campaign}>{source.name.trim()}</Text>
+                  </View>
+                ) : (
+                  <View />
+                )}
+                {lead_status && lead_status.name && lead_status.color ? (
+                  <View
+                    style={{
+                      ...styles.card,
+                      ...{
+                        backgroundColor:
+                          !lead_status.color || lead_status.color === ''
+                            ? theme.processColor1
+                            : lead_status.color,
+                      },
+                    }}>
+                    <Text style={styles.campaign}>
+                      {lead_status.name.trim()}
+                    </Text>
+                  </View>
+                ) : (
+                  <View />
+                )}
+              </View>
+              <View>
+                {this.renderStars(rate)}
+                {email ? (
+                  <Text numberOfLines={1} style={styles.classInfoContainer}>
+                    {email}
+                  </Text>
+                ) : null}
+                {phone ? (
+                  <Call
+                    extraPadding={{paddingTop: 5, fontSize: 15}}
+                    url={'tel:' + phone}
+                    phone={phone}
+                  />
+                ) : null}
+                {city ? (
+                  <Text numberOfLines={1} style={styles.classInfoContainer}>
+                    TP. {city}
+                  </Text>
+                ) : null}
+                {notes.map((note, index) => (
+                  <Text numberOfLines={1} style={styles.classInfoContainer}>
+                    Ghi chú {index + 1}: {note}
+                  </Text>
+                ))}
+              </View>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  onPress={() => {
+                    Linking.openURL(`tel:${phone}`);
+                    this.toggleCallModal();
+                  }}>
+                  <View style={styles.button}>
+                    <Text style={{fontSize: 16}}>Gọi điện</Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.props.setStudentId(id);
+                    this.props.navigation.navigate('InfoStudentDetails');
+                  }}>
+                  <View style={[{marginLeft: 10}, styles.button]}>
+                    <Text style={{fontSize: 16}}>Chỉnh sửa</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <CallRegisterModal
+              isVisible={this.state.callModalVisible}
+              onSwipeComplete={this.toggleCallModal}
+              imageSource={avatar_url}
+              email={email}
+              phone={phone}
+              changeCallStatus={this.props.changeCallStatus}
+              student_id={id}
+              token={token}
+              errorChangeCallStatus={this.props.errorChangeCallStatus}
+            />
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }

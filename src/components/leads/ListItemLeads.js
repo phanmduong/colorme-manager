@@ -323,7 +323,7 @@ class ListItemLeads extends React.Component {
                 </View>
               </TouchableOpacity>
               <TouchableOpacity>
-                <View style={styles.button}>
+                <View style={[{marginLeft: 10}, styles.button]}>
                   <Text style={{fontSize: 16}}>Chỉnh sửa</Text>
                 </View>
               </TouchableOpacity>

@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../styles';
 import * as leadsActions from '../actions/leadsActions';
 import * as saveRegisterActions from '../actions/saveRegisterActions';
+import * as infoStudentActions from '../actions/infoStudentActions';
 import {bindActionCreators} from 'redux';
 
 class LeadsContainer extends React.Component {
@@ -150,6 +151,29 @@ class LeadsContainer extends React.Component {
     this.props.leadsActions.reset();
   };
 
+  changeCallStatus = (
+    callStatus,
+    studentId,
+    telecallId,
+    genId,
+    note,
+    callerId,
+    appointmentPayment,
+    dateTest,
+  ) => {
+    this.props.infoStudentActions.changeCallStatus(
+      callStatus,
+      studentId,
+      telecallId,
+      genId,
+      note,
+      callerId,
+      appointmentPayment,
+      dateTest,
+      this.props.token,
+    );
+  };
+
   static navigationOptions = ({navigation}) => ({
     headerLeft: () => (
       <View style={styles.headerLeftContainer}>
@@ -183,6 +207,7 @@ class LeadsContainer extends React.Component {
         onSelectCarer={this.onSelectCarer}
         reset={this.reset}
         loadStaff={this.loadStaff}
+        changeCallStatus={this.changeCallStatus}
       />
     );
   }
@@ -226,6 +251,7 @@ function mapStateToProps(state) {
     staff: state.leads.staff,
     isLoadingStaff: state.leads.isLoadingStaff,
     errorStaff: state.leads.errorStaff,
+    errorChangeCallStatus: state.infoStudent.errorChangeCallStatus,
   };
 }
 
@@ -233,6 +259,7 @@ function mapDispatchToProps(dispatch) {
   return {
     leadsActions: bindActionCreators(leadsActions, dispatch),
     saveRegisterActions: bindActionCreators(saveRegisterActions, dispatch),
+    infoStudentActions: bindActionCreators(infoStudentActions, dispatch),
   };
 }
 

@@ -176,8 +176,13 @@ class ListItemLeads extends React.Component {
     }
   };
 
+  toggleCallModal = () => {
+    this.setState({callModalVisible: !this.state.callModalVisible});
+  };
+
   render() {
     const {
+      id,
       avatar_url,
       name,
       email,
@@ -188,6 +193,7 @@ class ListItemLeads extends React.Component {
       carer,
       lead_status,
       city,
+      token,
     } = this.props;
     return (
       <View style={styles.containerAll}>
@@ -323,17 +329,17 @@ class ListItemLeads extends React.Component {
               </TouchableOpacity>
             </View>
           </View>
-          {/*<CallRegisterModal*/}
-          {/*  isVisible={this.state.callModalVisible}*/}
-          {/*  onSwipeComplete={this.toggleCallModal}*/}
-          {/*  imageSource={avatar_url}*/}
-          {/*  email={email}*/}
-          {/*  phone={phone}*/}
-          {/*  changeCallStatus={this.props.changeCallStatus}*/}
-          {/*  student_id={studentId}*/}
-          {/*  token={this.props.token}*/}
-          {/*  errorChangeCallStatus={this.props.errorChangeCallStatus}*/}
-          {/*/>*/}
+          <CallRegisterModal
+            isVisible={this.state.callModalVisible}
+            onSwipeComplete={this.toggleCallModal}
+            imageSource={avatar_url}
+            email={email}
+            phone={phone}
+            changeCallStatus={this.props.changeCallStatus}
+            student_id={id}
+            token={token}
+            errorChangeCallStatus={this.props.errorChangeCallStatus}
+          />
         </View>
       </View>
     );

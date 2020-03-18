@@ -8,18 +8,73 @@ export default function leadsReducer(state = initialState.leads, action) {
         isLoadingLeads: action.isLoadingLeads,
         errorLeads: action.errorLeads,
       });
+    case types.BEGIN_REFRESH_LEADS:
+      return Object.assign({}, state, {
+        refreshingLeads: action.refreshingLeads,
+        errorLeads: action.errorLeads,
+      });
     case types.LOAD_LEADS_SUCCESSFUL:
+      let leads =
+        action.currentPageLeads === 1
+          ? action.leads
+          : [...state.leads, ...action.leads];
       return Object.assign({}, state, {
         isLoadingLeads: action.isLoadingLeads,
         errorLeads: action.errorLeads,
-        leads: action.leads,
+        leads: leads,
         currentPageLeads: action.currentPageLeads,
         totalPageLeads: action.totalPageLeads,
+        refreshingLeads: action.refreshingLeads,
       });
     case types.LOAD_LEADS_ERROR:
       return Object.assign({}, state, {
         isLoadingLeads: action.isLoadingLeads,
         errorLeads: action.errorLeads,
+        refreshingLeads: action.refreshingLeads,
+      });
+    case types.BEGIN_SEARCH_LEADS:
+      return Object.assign({}, state, {
+        leads: action.leads,
+        currentPageLeads: action.currentPageLeads,
+        totalPageLeads: action.totalPageLeads,
+        searchLeads: action.searchLeads,
+      });
+    case types.ON_SELECT_START_TIME_LEADS:
+      return Object.assign({}, state, {
+        start_time: action.start_time,
+      });
+    case types.ON_SELECT_END_TIME_LEADS:
+      return Object.assign({}, state, {
+        end_time: action.end_time,
+      });
+    case types.ON_SELECT_RATE_LEADS:
+      return Object.assign({}, state, {
+        rate: action.rate,
+      });
+    case types.ON_SELECT_CAMPAIGN_LEADS:
+      return Object.assign({}, state, {
+        campaign_id: action.campaign_id,
+      });
+    case types.ON_SELECT_STATUS_LEADS:
+      return Object.assign({}, state, {
+        leadStatusId: action.leadStatusId,
+      });
+    case types.ON_SELECT_ADDRESS_LEADS:
+      return Object.assign({}, state, {
+        address: action.address,
+      });
+    case types.ON_SELECT_SOURCE_LEADS:
+      return Object.assign({}, state, {
+        source_id: action.source_id,
+      });
+    case types.RESET_FILTER_LEADS:
+      return Object.assign({}, state, {
+        start_time: action.start_time,
+        end_time: action.end_time,
+        rate: action.rate,
+        campaign_id: action.campaign_id,
+        leadStatusId: action.leadStatusId,
+        source_id: action.source_id,
       });
     default:
       return state;

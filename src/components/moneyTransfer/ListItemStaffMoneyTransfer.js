@@ -5,11 +5,11 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity,
 } from 'react-native';
-import {View, Text, Thumbnail, Icon, List, Button} from 'native-base';
+import {View, Text, Thumbnail} from 'native-base';
 import theme from '../../styles';
 import Call from '../common/Call';
 import Spinkit from 'react-native-spinkit';
-import {dotNumber, isEmptyInput} from '../../helper';
+import {dotNumber} from '../../helper';
 
 var {height, width} = Dimensions.get('window');
 var maxWidthProcess = width / 2;

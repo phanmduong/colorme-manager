@@ -47,6 +47,5 @@ export function getLeads(
     source_id +
     '&campaign_id=' +
     campaign_id;
-  console.log(url);
   return axios.get(url);
 }

@@ -427,5 +427,8 @@ export default {
     source_id: -1,
     campaign_id: -1,
     refreshingLeads: false,
+    staff: [],
+    isLoadingStaff: false,
+    errorStaff: false,
   },
 };

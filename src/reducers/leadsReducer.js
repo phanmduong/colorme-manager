@@ -67,6 +67,10 @@ export default function leadsReducer(state = initialState.leads, action) {
       return Object.assign({}, state, {
         source_id: action.source_id,
       });
+    case types.ON_SELECT_CARER_LEADS:
+      return Object.assign({}, state, {
+        carer_id: action.carer_id,
+      });
     case types.RESET_FILTER_LEADS:
       return Object.assign({}, state, {
         start_time: action.start_time,
@@ -76,6 +80,22 @@ export default function leadsReducer(state = initialState.leads, action) {
         campaign_id: action.campaign_id,
         leadStatusId: action.leadStatusId,
         source_id: action.source_id,
+      });
+    case types.BEGIN_LOAD_STAFFS:
+      return Object.assign({}, state, {
+        isLoadingStaff: action.isLoadingStaff,
+        errorStaff: action.errorStaff,
+      });
+    case types.LOAD_STAFFS_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isLoadingStaff: action.isLoadingStaff,
+        errorStaff: action.errorStaff,
+        staff: action.staff,
+      });
+    case types.LOAD_STAFFS_ERROR:
+      return Object.assign({}, state, {
+        isLoadingStaff: action.isLoadingStaff,
+        errorStaff: action.errorStaff,
       });
     default:
       return state;

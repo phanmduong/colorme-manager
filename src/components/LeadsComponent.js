@@ -67,6 +67,8 @@ class LeadsComponent extends React.Component {
           resetModal={this.resetModal}
           reset={this.props.reset}
           onRefresh={this.props.onRefresh}
+          onSelectCarer={this.props.onSelectCarer}
+          loadStaff={this.props.loadStaff}
         />
       </View>
     );

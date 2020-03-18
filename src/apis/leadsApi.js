@@ -49,3 +49,9 @@ export function getLeads(
     campaign_id;
   return axios.get(url);
 }
+
+export function getStaff(search, token) {
+  let url =
+    env.MANAGE_API_URL_V3 + '/get-staffs?search=' + search + '&token=' + token;
+  return axios.get(url);
+}

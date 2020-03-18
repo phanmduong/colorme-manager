@@ -225,6 +225,13 @@ export function onSelectAddressLeads(address) {
   };
 }
 
+export function onSelectCarerLeads(carer_id) {
+  return {
+    type: types.ON_SELECT_CARER_LEADS,
+    carer_id: carer_id,
+  };
+}
+
 export function reset() {
   return {
     type: types.RESET_FILTER_LEADS,
@@ -235,5 +242,45 @@ export function reset() {
     rate: -1,
     source_id: -1,
     campaign_id: -1,
+  };
+}
+
+export function getStaff(search, token) {
+  return function(dispatch) {
+    dispatch(beginLoadStaff());
+    leadsApi
+      .getStaff(search, token)
+      .then(function(res) {
+        dispatch(loadStaffSuccessful(res));
+      })
+      .catch(error => {
+        dispatch(loadStaffError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadStaff() {
+  return {
+    type: types.BEGIN_LOAD_STAFFS,
+    isLoadingStaff: true,
+    errorStaff: false,
+  };
+}
+
+function loadStaffSuccessful(res) {
+  return {
+    type: types.LOAD_STAFFS_SUCCESSFUL,
+    staff: res.data.staffs,
+    isLoadingStaff: false,
+    errorStaff: false,
+  };
+}
+
+function loadStaffError() {
+  return {
+    type: types.LOAD_STAFFS_ERROR,
+    isLoadingStaff: false,
+    errorStaff: true,
   };
 }

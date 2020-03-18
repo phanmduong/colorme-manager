@@ -7,7 +7,6 @@ import theme from '../styles';
 import * as leadsActions from '../actions/leadsActions';
 import * as saveRegisterActions from '../actions/saveRegisterActions';
 import {bindActionCreators} from 'redux';
-import FilterLeadsModal from '../components/leads/FilterLeadsModal';
 
 class LeadsContainer extends React.Component {
   constructor(props, context) {
@@ -19,6 +18,7 @@ class LeadsContainer extends React.Component {
     this.loadStatuses();
     this.loadCampaigns();
     this.loadSources();
+    this.loadStaff('');
   };
 
   loadLeads = () => {
@@ -98,6 +98,10 @@ class LeadsContainer extends React.Component {
     );
   };
 
+  loadStaff = search => {
+    this.props.leadsActions.getStaff(search, this.props.token);
+  };
+
   loadStatuses = () => {
     this.props.saveRegisterActions.loadStatuses('leads', this.props.token);
   };
@@ -138,6 +142,10 @@ class LeadsContainer extends React.Component {
     this.props.leadsActions.onSelectAddressLeads(address);
   };
 
+  onSelectCarer = carer_id => {
+    this.props.leadsActions.onSelectCarerLeads(carer_id);
+  };
+
   reset = () => {
     this.props.leadsActions.reset();
   };
@@ -172,7 +180,9 @@ class LeadsContainer extends React.Component {
         onSelectStatus={this.onSelectStatus}
         onSelectSource={this.onSelectSource}
         onSelectAddress={this.onSelectAddress}
+        onSelectCarer={this.onSelectCarer}
         reset={this.reset}
+        loadStaff={this.loadStaff}
       />
     );
   }
@@ -213,6 +223,9 @@ function mapStateToProps(state) {
     isLoadingSources: state.saveRegister.isLoadingSources,
     errorLoadingSources: state.saveRegister.errorLoadingSources,
     sources: state.saveRegister.sources,
+    staff: state.leads.staff,
+    isLoadingStaff: state.leads.isLoadingStaff,
+    errorStaff: state.leads.errorStaff,
   };
 }
 

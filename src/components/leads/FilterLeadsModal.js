@@ -95,6 +95,25 @@ class FilterLeadsModal extends React.Component {
     );
   };
 
+  renderStaffPickerHeader = title => {
+    return (
+      <View style={styles.headerFooterContainer}>
+        <Text style={styles.headerFooterText}>{title}</Text>
+        <View style={styles.searchContainer}>
+          <TextInput
+            placeholder="Tìm kiếm"
+            autoCapitalize="none"
+            onChangeText={search => {
+              this.props.loadStaff(search, this.props.token);
+            }}
+            style={styles.searchInput}
+            clearButtonMode={'while-editing'}
+          />
+        </View>
+      </View>
+    );
+  };
+
   renderPickerFooter(action) {
     return (
       <TouchableOpacity
@@ -206,6 +225,32 @@ class FilterLeadsModal extends React.Component {
                       : 'YYYY-MM-DD'}
                   </Text>
                 </TouchableOpacity>
+              </View>
+              <View style={styles.filterTitle}>
+                <Text style={{fontSize: 16}}>Nhân viên</Text>
+                <CustomPicker
+                  options={this.getData(this.props.staff)}
+                  defaultValue={this.getDefault(
+                    this.getData(this.props.staff),
+                    this.props.carer_id,
+                  )}
+                  getLabel={item => item.name}
+                  modalAnimationType={'fade'}
+                  optionTemplate={this.renderPickerOption}
+                  fieldTemplate={this.renderPickerField}
+                  headerTemplate={() =>
+                    this.renderStaffPickerHeader('Chọn nhân viên')
+                  }
+                  footerTemplate={this.renderPickerFooter}
+                  onBlur={() => this.setState({search: ''})}
+                  modalStyle={{
+                    borderRadius: 6,
+                  }}
+                  onValueChange={value => {
+                    this.setState({search: ''});
+                    this.props.onSelectCarer(value.id);
+                  }}
+                />
               </View>
               <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Tỉnh/thành phố</Text>

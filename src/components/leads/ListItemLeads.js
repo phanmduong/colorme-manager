@@ -194,6 +194,7 @@ class ListItemLeads extends React.Component {
       lead_status,
       city,
       token,
+      notes,
     } = this.props;
     return (
       <View style={styles.containerAll}>
@@ -311,6 +312,11 @@ class ListItemLeads extends React.Component {
                   TP. {city}
                 </Text>
               ) : null}
+              {notes.map((note, index) => (
+                <Text numberOfLines={1} style={styles.classInfoContainer}>
+                  Ghi chú {index + 1}: {note}
+                </Text>
+              ))}
             </View>
             <View style={styles.buttonContainer}>
               <TouchableOpacity

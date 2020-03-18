@@ -94,6 +94,7 @@ class LeadsComponent extends React.Component {
       id={item.id}
       changeCallStatus={this.props.changeCallStatus}
       errorChangeCallStatus={this.props.errorChangeCallStatus}
+      notes={item.notes}
     />
   );
 

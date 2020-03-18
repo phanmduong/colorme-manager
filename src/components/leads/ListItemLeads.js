@@ -21,6 +21,161 @@ class ListItemLeads extends React.Component {
     };
   }
 
+  renderStars = number => {
+    switch (number) {
+      case 1:
+        return (
+          <View style={styles.rateRow}>
+            <Image
+              source={require('../../../assets/img/icons8-star-100-filled.png')}
+              style={styles.rateIcon}
+            />
+            <Image
+              source={require('../../../assets/img/icons8-star-100-blank.png')}
+              style={styles.rateIcon}
+            />
+            <Image
+              source={require('../../../assets/img/icons8-star-100-blank.png')}
+              style={styles.rateIcon}
+            />
+            <Image
+              source={require('../../../assets/img/icons8-star-100-blank.png')}
+              style={styles.rateIcon}
+            />
+            <Image
+              source={require('../../../assets/img/icons8-star-100-blank.png')}
+              style={styles.rateIcon}
+            />
+          </View>
+        );
+      case 2:
+        return (
+          <View style={styles.rateRow}>
+            <Image
+              source={require('../../../assets/img/icons8-star-100-filled.png')}
+              style={styles.rateIcon}
+            />
+            <Image
+              source={require('../../../assets/img/icons8-star-100-filled.png')}
+              style={styles.rateIcon}
+            />
+            <Image
+              source={require('../../../assets/img/icons8-star-100-blank.png')}
+              style={styles.rateIcon}
+            />
+            <Image
+              source={require('../../../assets/img/icons8-star-100-blank.png')}
+              style={styles.rateIcon}
+            />
+            <Image
+              source={require('../../../assets/img/icons8-star-100-blank.png')}
+              style={styles.rateIcon}
+            />
+          </View>
+        );
+      case 3:
+        return (
+          <View style={styles.rateRow}>
+            <Image
+              source={require('../../../assets/img/icons8-star-100-filled.png')}
+              style={styles.rateIcon}
+            />
+            <Image
+              source={require('../../../assets/img/icons8-star-100-filled.png')}
+              style={styles.rateIcon}
+            />
+            <Image
+              source={require('../../../assets/img/icons8-star-100-filled.png')}
+              style={styles.rateIcon}
+            />
+            <Image
+              source={require('../../../assets/img/icons8-star-100-blank.png')}
+              style={styles.rateIcon}
+            />
+            <Image
+              source={require('../../../assets/img/icons8-star-100-blank.png')}
+              style={styles.rateIcon}
+            />
+          </View>
+        );
+      case 4:
+        return (
+          <View style={styles.rateRow}>
+            <Image
+              source={require('../../../assets/img/icons8-star-100-filled.png')}
+              style={styles.rateIcon}
+            />
+            <Image
+              source={require('../../../assets/img/icons8-star-100-filled.png')}
+              style={styles.rateIcon}
+            />
+            <Image
+              source={require('../../../assets/img/icons8-star-100-filled.png')}
+              style={styles.rateIcon}
+            />
+            <Image
+              source={require('../../../assets/img/icons8-star-100-filled.png')}
+              style={styles.rateIcon}
+            />
+            <Image
+              source={require('../../../assets/img/icons8-star-100-blank.png')}
+              style={styles.rateIcon}
+            />
+          </View>
+        );
+      case 5:
+        return (
+          <View style={styles.rateRow}>
+            <Image
+              source={require('../../../assets/img/icons8-star-100-filled.png')}
+              style={styles.rateIcon}
+            />
+            <Image
+              source={require('../../../assets/img/icons8-star-100-filled.png')}
+              style={styles.rateIcon}
+            />
+            <Image
+              source={require('../../../assets/img/icons8-star-100-filled.png')}
+              style={styles.rateIcon}
+            />
+            <Image
+              source={require('../../../assets/img/icons8-star-100-filled.png')}
+              style={styles.rateIcon}
+            />
+            <Image
+              source={require('../../../assets/img/icons8-star-100-filled.png')}
+              style={styles.rateIcon}
+            />
+          </View>
+        );
+      default:
+        return (
+          <View style={styles.rateRow}>
+            <Image
+              source={require('../../../assets/img/icons8-star-100-blank.png')}
+              style={styles.rateIcon}
+            />
+            <Image
+              source={require('../../../assets/img/icons8-star-100-blank.png')}
+              style={styles.rateIcon}
+            />
+            <Image
+              source={require('../../../assets/img/icons8-star-100-blank.png')}
+              style={styles.rateIcon}
+            />
+            <Image
+              source={require('../../../assets/img/icons8-star-100-blank.png')}
+              style={styles.rateIcon}
+            />
+            <Image
+              source={require('../../../assets/img/icons8-star-100-blank.png')}
+              style={styles.rateIcon}
+            />
+          </View>
+        );
+    }
+  };
+
   render() {
     const {
       avatar_url,
@@ -132,10 +287,9 @@ class ListItemLeads extends React.Component {
               )}
             </View>
             <View>
+              {this.renderStars(rate)}
               {email ? (
-                <Text
-                  numberOfLines={1}
-                  style={[styles.classInfoContainer, {paddingTop: 0}]}>
+                <Text numberOfLines={1} style={styles.classInfoContainer}>
                   {email}
                 </Text>
               ) : null}
@@ -309,6 +463,14 @@ const styles = {
   infoContainer: {
     marginLeft: 15,
     flex: 1,
+  },
+  rateIcon: {
+    width: 10,
+    height: 10,
+    marginRight: 2,
+  },
+  rateRow: {
+    flexDirection: 'row',
   },
 };
 

@@ -47,6 +47,7 @@ MYAPP_RELEASE_KEY_PASSWORD='facebook'
 - Add class
 - Edit class
 - Make up class
-- Info student edit
+- Info student details edit
 - Profile edit
+- Add lead
 

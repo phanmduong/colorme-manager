@@ -75,7 +75,7 @@ class InfoStudentEditProfileComponent extends React.Component {
           }}
           value={this.state.search}
           extraStyle={{width: width - 70, marginLeft: 0}}
-          extraInputStyle={{width: width - 38 - 70}}
+          extraInputStyle={{width: width - 38 - 80}}
         />
       </View>
     );

@@ -16,6 +16,7 @@ import Loading from '../common/Loading';
 var {width, height} = Dimensions.get('window');
 import theme from '../../styles';
 import {convertVietText} from '../../helper';
+import Search from '../common/Search';
 
 class FilterModal extends React.Component {
   constructor(props, context) {
@@ -80,18 +81,15 @@ class FilterModal extends React.Component {
     return (
       <View style={styles.headerFooterContainer}>
         <Text style={styles.headerFooterText}>{title}</Text>
-        <View style={styles.searchContainer}>
-          <TextInput
-            placeholder="Tìm kiếm"
-            autoCapitalize="none"
-            onChangeText={search => {
-              this.setState({search});
-            }}
-            value={this.state.search}
-            style={styles.searchInput}
-            clearButtonMode={'while-editing'}
-          />
-        </View>
+        <Search
+          placeholder="Tìm kiếm"
+          onChangeText={search => {
+            this.setState({search});
+          }}
+          value={this.state.search}
+          extraStyle={{width: width - 70, marginLeft: 0}}
+          extraInputStyle={{width: width - 38 - 80}}
+        />
       </View>
     );
   };

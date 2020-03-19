@@ -60,7 +60,7 @@ class RegisterListComponent extends React.Component {
           onBlur={() => this.props.setAutoFocusRegisterListSearch(false)}
         />
         <TouchableOpacity onPress={this.toggleFilterModal}>
-          <View style={styles.fitlerContainer}>
+          <View style={styles.filterContainer}>
             <Image
               source={require('../../assets/img/icons8-sorting_options_filled.png')}
               style={{width: 18, height: 18}}
@@ -308,7 +308,7 @@ const styles = {
     marginLeft: 10,
   },
   headerAva: theme.mainAvatar,
-  fitlerContainer: {
+  filterContainer: {
     width: 40,
     height: 40,
     backgroundColor: '#F6F6F6',

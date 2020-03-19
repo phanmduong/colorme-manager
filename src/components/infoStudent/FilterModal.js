@@ -248,7 +248,7 @@ class FilterModal extends React.Component {
           !this.props.isLoadingFilterClasses ? (
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.titleContainer}>
-                <Text style={styles.title}>Lọc đăng ký</Text>
+                <Text style={styles.title}>Lọc</Text>
               </View>
               <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Khóa học</Text>

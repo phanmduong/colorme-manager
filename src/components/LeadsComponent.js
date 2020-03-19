@@ -46,7 +46,7 @@ class LeadsComponent extends React.Component {
           }}
         />
         <TouchableOpacity onPress={this.toggleFilterModal}>
-          <View style={styles.fitlerContainer}>
+          <View style={styles.filterContainer}>
             <Image
               source={require('../../assets/img/icons8-sorting_options_filled.png')}
               style={{width: 18, height: 18}}
@@ -142,7 +142,7 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  fitlerContainer: {
+  filterContainer: {
     width: 40,
     height: 40,
     backgroundColor: '#F6F6F6',

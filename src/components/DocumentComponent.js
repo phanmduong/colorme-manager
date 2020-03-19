@@ -356,7 +356,7 @@ const styles = {
     marginLeft: 15,
     flex: 1,
   },
-  fitlerContainer: {
+  filterContainer: {
     width: 40,
     height: 40,
     backgroundColor: '#F6F6F6',

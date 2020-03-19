@@ -3,12 +3,9 @@ import {
   Dimensions,
   Keyboard,
   Alert,
-  Image,
-  ScrollView,
   RefreshControl,
 } from 'react-native';
 import {
-  Container,
   Button,
   View,
   List,
@@ -18,7 +15,6 @@ import {
   InputGroup,
   Text,
 } from 'native-base';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../styles';
 import * as alert from '../constants/alert';
 import Loading from './common/Loading';
@@ -27,7 +23,6 @@ import ListItemStudentCollectMoney from './collectMoney/ListItemStudentCollectMo
 import Modal from 'react-native-modalbox';
 import Call from './common/Call';
 import {dotNumber} from '../helper/index';
-import {getStatusBarHeight} from 'react-native-iphone-x-helper';
 
 var {height, width} = Dimensions.get('window');
 let self;

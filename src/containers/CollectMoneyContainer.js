@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as collectMoneyActions from '../actions/collectMoneyActions';
 import CollectMoneyComponent from '../components/CollectMoneyComponent';
-import {Dimensions, Keyboard, Platform, Alert, View, Text} from 'react-native';
+import {Alert, View, Text} from 'react-native';
 import * as alert from '../constants/alert';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../styles';

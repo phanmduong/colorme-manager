@@ -8,6 +8,7 @@ class AccurateStudentStore {
   @observable studentSelected = {};
   @observable search = '';
   @observable students = [];
+  @observable refreshing = false;
 
   @action
   searchStudent = token => {
@@ -26,6 +27,26 @@ class AccurateStudentStore {
       })
       .finally(() => {
         this.isLoading = false;
+      });
+  };
+
+  @action
+  refresh = token => {
+    this.refreshing = true;
+    this.error = false;
+    this.studentSelected = {};
+    this.students = [];
+
+    searchStudentRegisterApi({}, this.search, token)
+      .then(res => {
+        this.students = res.data.data.users;
+        console.log(this.students);
+      })
+      .catch(() => {
+        this.error = true;
+      })
+      .finally(() => {
+        this.refreshing = false;
       });
   };
 

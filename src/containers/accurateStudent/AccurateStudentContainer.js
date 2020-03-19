@@ -77,66 +77,57 @@ class AccurateStudentContainer extends React.Component {
     this.store.searchStudent(this.props.token);
   }
 
-  renderSearch() {
+  renderSearch = () => {
     return (
       <Search
         placeholder="Tìm kiếm (Email, tên, số điện thoại)"
         onChangeText={this.searchStudent}
-        value={this.store.search}
       />
     );
-  }
+  };
 
   renderContent() {
     const {isLoading, refreshing, error, students} = this.store;
-    if (isLoading && students.length <= 0) {
-      return <Loading size={width / 8} />;
-    } else {
-      if (error || students.length <= 0) {
-        return (
-          <Container>
-            <View style={styles.container}>
-              <Text style={styles.textError}>
-                {error ? alert.LOAD_DATA_ERROR : alert.NO_DATA_STUDENT_LIST}
-              </Text>
-              <Button
-                iconLeft
-                danger
-                small
-                onPress={() => {
-                  this.store.searchStudent(this.props.token);
-                }}
-                style={{marginTop: 10, alignSelf: null}}>
-                <MaterialCommunityIcons name="reload" color="white" size={20} />
-                <Text>Thử lại</Text>
-              </Button>
-            </View>
-          </Container>
-        );
-      } else {
-        return (
-          <List
-            dataArray={students.slice()}
-            renderRow={(item, sectionID, rowID) => (
-              <ListItemStudent
-                name={item.name}
-                avatar={item.avatar_url}
-                email={item.email}
-                phone={item.phone}
-                student={item}
-                onPress={this.openModal}
-              />
-            )}
-            refreshControl={
-              <RefreshControl
-                refreshing={isLoading}
-                onRefresh={() => this.store.searchStudent(this.props.token)}
-              />
-            }
+    return (
+      <List
+        dataArray={students.slice()}
+        renderRow={(item, sectionID, rowID) => (
+          <ListItemStudent
+            name={item.name}
+            avatar={item.avatar_url}
+            email={item.email}
+            phone={item.phone}
+            student={item}
+            onPress={this.openModal}
           />
-        );
-      }
-    }
+        )}
+        ListHeaderComponent={this.renderSearch}
+        contentContainerStyle={{flexGrow: 1}}
+        ListEmptyComponent={
+          isLoading ? (
+            refreshing ? (
+              <View />
+            ) : (
+              <Loading size={width / 8} />
+            )
+          ) : refreshing ? (
+            <View />
+          ) : (
+            <View style={styles.container}>
+              <Text style={{color: theme.dangerColor, fontSize: 16}}>
+                Không có kết quả
+              </Text>
+            </View>
+          )
+        }
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={() => this.store.refresh(this.props.token)}
+          />
+        }
+      />
+    );
   }
 
   openModal = student => {
@@ -181,7 +172,6 @@ class AccurateStudentContainer extends React.Component {
 
     return (
       <Container>
-        {this.renderSearch()}
         {this.renderContent()}
         {student && (
           <Modal

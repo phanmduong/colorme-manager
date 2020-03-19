@@ -71,7 +71,7 @@ class CollectMoneyComponent extends React.Component {
     }
   }
 
-  renderSearch() {
+  renderSearch = () => {
     const {updateFormAndLoadDataSearch, search} = this.props;
     return (
       <Search
@@ -81,7 +81,7 @@ class CollectMoneyComponent extends React.Component {
         autoFocus={false}
       />
     );
-  }
+  };
 
   openModal(student, register) {
     let formInfoMoney = Object.assign({}, this.props.formInfoMoney);
@@ -139,60 +139,53 @@ class CollectMoneyComponent extends React.Component {
   }
 
   renderContent() {
-    if (this.props.isLoading && this.props.studentList.length <= 0) {
-      return <Loading size={width / 8} />;
-    } else {
-      if (this.props.error || this.props.studentList.length <= 0) {
-        return (
-          <View style={styles.container}>
-            <Text style={styles.textError}>
-              {this.props.error
-                ? alert.LOAD_DATA_ERROR
-                : alert.NO_DATA_STUDENT_LIST}
-            </Text>
-            <Button
-              iconLeft
-              danger
-              small
-              onPress={this.props.loadDataStudentList}
-              style={{marginTop: 10, alignSelf: null}}>
-              <MaterialCommunityIcons name="reload" color="white" size={20} />
-              <Text>Thử lại</Text>
-            </Button>
-          </View>
-        );
-      } else {
-        return (
-          <List
-            style={styles.list}
-            dataArray={this.props.studentList}
-            renderRow={(item, sectionID, rowID) => (
-              <ListItemStudentCollectMoney
-                name={item.name}
-                avatar={item.avatar_url}
-                email={item.email}
-                phone={item.phone}
-                registers={item.registers}
-                student={item}
-                onPress={self.openModal}
-              />
-            )}
-            refreshControl={
-              <RefreshControl
-                refreshing={this.props.isLoading}
-                onRefresh={() => this.props.onRefresh(this.props.search)}
-              />
-            }
+    return (
+      <List
+        style={styles.list}
+        dataArray={this.props.studentList}
+        renderRow={(item, sectionID, rowID) => (
+          <ListItemStudentCollectMoney
+            name={item.name}
+            avatar={item.avatar_url}
+            email={item.email}
+            phone={item.phone}
+            registers={item.registers}
+            student={item}
+            onPress={self.openModal}
           />
-        );
-      }
-    }
+        )}
+        ListHeaderComponent={this.renderSearch}
+        contentContainerStyle={{flexGrow: 1}}
+        ListEmptyComponent={
+          this.props.isLoading ? (
+            this.props.refreshing ? (
+              <View />
+            ) : (
+              <Loading size={width / 8} />
+            )
+          ) : this.props.refreshing ? (
+            <View />
+          ) : (
+            <View style={styles.container}>
+              <Text style={{color: theme.dangerColor, fontSize: 16}}>
+                Không có kết quả
+              </Text>
+            </View>
+          )
+        }
+        refreshControl={
+          <RefreshControl
+            refreshing={this.props.refreshing}
+            onRefresh={this.props.onRefresh}
+          />
+        }
+      />
+    );
   }
 
   render() {
     return (
       <View style={{flex: 1}}>
-        {this.renderSearch()}
         {this.renderContent()}
         <Modal
           style={!this.state.isKeyboardShow ? styles.modalFull : styles.modal}

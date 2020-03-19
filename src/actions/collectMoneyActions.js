@@ -16,9 +16,21 @@ export function beginDataStudentListLoad() {
   };
 }
 
-export function loadDataStudentList(token, search) {
+export function beginDataStudentListRefresh() {
+  return {
+    type: types.BEGIN_DATA_STUDENT_LIST_COLLECT_MONEY_REFRESH,
+    refreshing: true,
+    error: false,
+  };
+}
+
+export function loadDataStudentList(refreshing, token, search) {
   return function(dispatch) {
-    dispatch(beginDataStudentListLoad());
+    if (!refreshing) {
+      dispatch(beginDataStudentListLoad());
+    } else {
+      dispatch(beginDataStudentListRefresh());
+    }
     studentApi
       .searchStudentRegisterApi(sourceCancel, search, token)
       .then(function(res) {
@@ -35,6 +47,13 @@ export function loadDataStudentList(token, search) {
   };
 }
 
+export function refreshDataStudentList(token, search) {
+  return function(dispatch) {
+    dispatch(updateFormSearch(search));
+    dispatch(loadDataStudentList(true, token, search));
+  };
+}
+
 export function loadDataSuccessful(res) {
   return {
     type: types.LOAD_DATA_STUDENT_LIST_COLLECT_MONEY_SUCCESSFUL,
@@ -43,6 +62,7 @@ export function loadDataSuccessful(res) {
     nextWaitingCode: res.data.data.next_waiting_code,
     isLoading: false,
     error: false,
+    refreshing: false,
   };
 }
 
@@ -51,6 +71,7 @@ export function loadDataError() {
     type: types.LOAD_DATA_STUDENT_LIST_COLLECT_MONEY_ERROR,
     isLoading: false,
     error: true,
+    refreshing: false,
   };
 }
 
@@ -59,7 +80,7 @@ export function updateFormAndLoadDataSearch(search, token) {
   sourceCancel = CancelToken.source();
   return dispatch => {
     dispatch(updateFormSearch(search));
-    dispatch(loadDataStudentList(token, search));
+    dispatch(loadDataStudentList(false, token, search));
   };
 }
 

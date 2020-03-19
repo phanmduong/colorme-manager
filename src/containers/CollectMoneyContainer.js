@@ -9,7 +9,7 @@ import CollectMoneyComponent from '../components/CollectMoneyComponent';
 import {Dimensions, Keyboard, Platform, Alert, View, Text} from 'react-native';
 import * as alert from '../constants/alert';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from "../styles";
+import theme from '../styles';
 
 class CollectMoneyContainer extends React.Component {
   constructor(props, context) {
@@ -64,10 +64,18 @@ class CollectMoneyContainer extends React.Component {
 
   loadDataStudentList() {
     this.props.collectMoneyActions.loadDataStudentList(
+      false,
       this.props.token,
       this.props.search,
     );
   }
+
+  refreshDataStudentList = () => {
+    this.props.collectMoneyActions.refreshDataStudentList(
+      this.props.token,
+      this.props.search,
+    );
+  };
 
   updateFormAndLoadDataSearch(search) {
     this.props.collectMoneyActions.updateFormAndLoadDataSearch(
@@ -119,7 +127,8 @@ class CollectMoneyContainer extends React.Component {
         isUpdatingMoneyStudent={this.props.isUpdatingData}
         errorUpdate={this.props.errorUpdate}
         avatar_url={this.props.avatar_url}
-        onRefresh={this.updateFormAndLoadDataSearch}
+        onRefresh={this.refreshDataStudentList}
+        refreshing={this.props.refreshing}
       />
     );
   }
@@ -144,6 +153,7 @@ function mapStateToProps(state) {
     nextWaitingCode: state.collectMoney.nextWaitingCode,
     formInfoMoney: state.collectMoney.formInfoMoney,
     avatar_url: state.login.user.avatar_url,
+    refreshing: state.collectMoney.refreshing,
   };
 }
 

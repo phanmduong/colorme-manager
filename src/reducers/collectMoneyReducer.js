@@ -14,6 +14,11 @@ export default function collectMoneyReducer(
         isLoading: action.isLoading,
         error: action.error,
       });
+    case types.BEGIN_DATA_STUDENT_LIST_COLLECT_MONEY_REFRESH:
+      return Object.assign({}, state, {
+        refreshing: action.refreshing,
+        error: action.error,
+      });
     case types.LOAD_DATA_STUDENT_LIST_COLLECT_MONEY_SUCCESSFUL:
       return Object.assign({}, state, {
         isLoading: action.isLoading,
@@ -21,11 +26,13 @@ export default function collectMoneyReducer(
         studentListData: action.studentListData,
         nextCode: action.nextCode,
         nextWaitingCode: action.nextWaitingCode,
+        refreshing: action.refreshing,
       });
     case types.LOAD_DATA_STUDENT_LIST_COLLECT_MONEY_ERROR:
       return Object.assign({}, state, {
         isLoading: action.isLoading,
         error: action.error,
+        refreshing: action.refreshing,
       });
     case types.UPDATE_FORM_SEARCH_STUDENT_LIST_COLLECT_MONEY:
       return Object.assign({}, state, {

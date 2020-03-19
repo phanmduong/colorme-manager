@@ -238,21 +238,21 @@ class DashboardComponent extends React.Component {
               }}
             />
             <CircleTab
+              iconImage={require('../../assets/img/icons8-document.png')}
+              title={'Tài liệu'}
+              onPress={() => {
+                this.props.navigation.navigate('Document');
+              }}
+            />
+          </View>
+          <View style={styles.otherFeatureLine}>
+            <CircleTab
               iconImage={require('../../assets/img/icons8-teacher.png')}
               title={'Lớp học'}
               onPress={() => {
                 this.props.navigation.navigate('Class', {
                   analyticsScreen: false,
                 });
-              }}
-            />
-          </View>
-          <View style={styles.otherFeatureLine}>
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-document.png')}
-              title={'Tài liệu'}
-              onPress={() => {
-                this.props.navigation.navigate('Document');
               }}
             />
             <CircleTab

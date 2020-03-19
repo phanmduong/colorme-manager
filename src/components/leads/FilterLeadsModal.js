@@ -268,8 +268,11 @@ class FilterLeadsModal extends React.Component {
               <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Đánh giá</Text>
                 <CustomPicker
-                  options={this.getSearchedResults(RATE)}
-                  defaultValue={this.getDefault(RATE, this.props.rate)}
+                  options={this.getSearchedResults(this.getData(RATE))}
+                  defaultValue={this.getDefault(
+                    this.getData(RATE),
+                    this.props.rate,
+                  )}
                   getLabel={item => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}

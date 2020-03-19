@@ -97,6 +97,21 @@ export default function leadsReducer(state = initialState.leads, action) {
         isLoadingStaff: action.isLoadingStaff,
         errorStaff: action.errorStaff,
       });
+    case types.BEGIN_SAVE_LEAD:
+      return Object.assign({}, state, {
+        isSavingLead: action.isSavingLead,
+        errorSaveLead: action.errorSaveLead,
+      });
+    case types.SAVE_LEAD_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isSavingLead: action.isSavingLead,
+        errorSaveLead: action.errorSaveLead,
+      });
+    case types.SAVE_LEAD_ERROR:
+      return Object.assign({}, state, {
+        isSavingLead: action.isSavingLead,
+        errorSaveLead: action.errorSaveLead,
+      });
     default:
       return state;
   }

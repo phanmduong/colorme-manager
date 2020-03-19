@@ -284,3 +284,42 @@ function loadStaffError() {
     errorStaff: true,
   };
 }
+
+export function saveLead(lead, token) {
+  return function(dispatch) {
+    dispatch(beginSaveLead());
+    leadsApi
+      .saveLead(lead, token)
+      .then(function(res) {
+        dispatch(saveLeadSuccessful(res));
+      })
+      .catch(error => {
+        dispatch(saveLeadError());
+        throw error;
+      });
+  };
+}
+
+function beginSaveLead() {
+  return {
+    type: types.BEGIN_SAVE_LEAD,
+    isSavingLead: true,
+    errorSaveLead: false,
+  };
+}
+
+function saveLeadSuccessful(res) {
+  return {
+    type: types.SAVE_LEAD_SUCCESSFUL,
+    isSavingLead: false,
+    errorSaveLead: false,
+  };
+}
+
+function saveLeadError() {
+  return {
+    type: types.SAVE_LEAD_ERROR,
+    isSavingLead: false,
+    errorSaveLead: true,
+  };
+}

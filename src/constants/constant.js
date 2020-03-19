@@ -48,11 +48,38 @@ export const BOOKMARK_FILTER = [
 ];
 
 export const RATE = [
-  {id: -1, name: 'Tất cả'},
   {id: 0, name: '0 sao'},
   {id: 1, name: '1 sao'},
   {id: 2, name: '2 sao'},
   {id: 3, name: '3 sao'},
   {id: 4, name: '4 sao'},
   {id: 5, name: '5 sao'},
+];
+
+export const CITY = [
+  {id: '0', name: 'Không có'},
+  {id: '01', name: 'Hà Nội'},
+  {id: '79', name: 'Hồ Chí Minh'},
+];
+
+export const GENDER = [
+  {
+    name: 'Nam',
+    id: '1',
+    label: 'Nam',
+    value: '1',
+  },
+  {
+    name: 'Nữ',
+    id: '2',
+    label: 'Nữ',
+    value: '2',
+  },
+
+  {
+    name: 'Khác',
+    id: '0',
+    label: 'Khác',
+    value: '0',
+  },
 ];

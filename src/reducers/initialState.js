@@ -430,5 +430,7 @@ export default {
     staff: [],
     isLoadingStaff: false,
     errorStaff: false,
+    isSavingLead: false,
+    errorSaveLead: false,
   },
 };

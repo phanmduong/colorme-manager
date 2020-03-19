@@ -58,6 +58,7 @@ import DocumentContainer from '../containers/DocumentContainer';
 import DocumentWebViewContainer from '../containers/DocumentWebViewContainer';
 import AddClassContainer from '../containers/AddClassContainer';
 import LeadsContainer from '../containers/LeadsContainer';
+import AddLeadsContainer from '../containers/AddLeadsContainer';
 
 const navigationOptionsDefault = {
   defaultNavigationOptions: {
@@ -438,6 +439,13 @@ const TabDashboard = createStackNavigator(
     },
     Leads: {
       screen: LeadsContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    AddLead: {
+      screen: AddLeadsContainer,
       navigationOptions: () => ({
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},

@@ -55,3 +55,23 @@ export function getStaff(search, token) {
     env.MANAGE_API_URL_V3 + '/get-staffs?search=' + search + '&token=' + token;
   return axios.get(url);
 }
+
+export function saveLead(lead, token) {
+  let url = env.MANAGE_API_URL_V3 + '/lead/edit-info?token=' + token;
+  return axios.put(url, {
+    id: lead.id,
+    name: lead.name,
+    email: lead.email,
+    phone: lead.phone,
+    rate: lead.rate,
+    status: lead.status,
+    note: lead.note,
+    father_name: lead.father_name,
+    interest: lead.interest,
+    university: lead.university,
+    city: lead.city,
+    gender: lead.gender,
+    status_id: lead.status_id,
+    address: lead.address,
+  });
+}

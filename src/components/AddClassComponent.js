@@ -681,7 +681,7 @@ class AddClassComponent extends React.Component {
                 end={{x: 1, y: 0}}
                 style={styles.btnSubmit}>
                 {!this.props.isUpdatingClass ? (
-                  <Text style={{color: 'white'}}>Cập nhật</Text>
+                  <Text style={{color: 'white'}}>Tạo lớp học</Text>
                 ) : (
                   <Spinkit
                     isVisible

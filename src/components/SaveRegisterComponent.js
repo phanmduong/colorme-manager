@@ -1289,20 +1289,6 @@ const styles = {
     paddingHorizontal: 10,
     borderRadius: 8,
   },
-  searchContainer: {
-    marginTop: 10,
-    backgroundColor: '#f6f6f6',
-    height: 40,
-    width: width - 70,
-    borderRadius: 27,
-    justifyContent: 'center',
-    marginHorizontal: 10,
-  },
-  searchInput: {
-    fontSize: 16,
-    color: '#707070',
-    marginLeft: 10,
-  },
   expandContainer: {
     alignItems: 'center',
     flex: 1,

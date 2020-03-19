@@ -161,19 +161,6 @@ const styles = {
     borderRadius: theme.mainAvatar.borderRadius,
     marginRight: 10,
   },
-  searchContainer: {
-    backgroundColor: '#f6f6f6',
-    height: 40,
-    width: Dimensions.get('window').width - 30,
-    borderRadius: 27,
-    justifyContent: 'center',
-    marginLeft: 15,
-  },
-  searchInput: {
-    fontSize: 16,
-    color: '#707070',
-    marginLeft: 14,
-  },
 };
 
 export default ListDetailShiftsRegisteredComponent;

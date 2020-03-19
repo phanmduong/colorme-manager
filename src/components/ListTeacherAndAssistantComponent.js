@@ -354,20 +354,6 @@ const styles = {
   containerPicker: {
     flexDirection: 'row',
   },
-  searchContainer: {
-    marginTop: 10,
-    backgroundColor: '#f6f6f6',
-    height: 40,
-    width: width - 32,
-    borderRadius: 27,
-    justifyContent: 'center',
-    marginHorizontal: theme.mainHorizontal,
-  },
-  searchInput: {
-    fontSize: 16,
-    color: '#707070',
-    marginLeft: 10,
-  },
   ratingTag: {
     backgroundColor: '#FED700',
     paddingVertical: 7,

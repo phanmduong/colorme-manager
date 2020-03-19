@@ -519,7 +519,7 @@ class AddLeadsComponent extends React.Component {
 
 const styles = {
   container: {
-    paddingHorizontal: 16,
+    paddingHorizontal: theme.mainHorizontal,
     marginBottom: 10,
     flex: 1,
   },

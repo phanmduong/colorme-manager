@@ -298,7 +298,7 @@ const styles = {
     height: height - 430,
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
-    paddingHorizontal: 16,
+    paddingHorizontal: theme.mainHorizontal,
   },
   filterTitle: {
     flexDirection: 'row',

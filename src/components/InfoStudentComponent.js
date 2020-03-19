@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
   tabContainer: {
     marginTop: 5,
     flexDirection: 'row',
-    paddingHorizontal: 16,
+    paddingHorizontal: theme.mainHorizontal,
   },
   gradientSize: {
     justifyContent: 'center',

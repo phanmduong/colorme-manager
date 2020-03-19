@@ -368,7 +368,7 @@ class ListItemLeads extends React.Component {
 
 const styles = {
   containerAll: {
-    paddingHorizontal: 16,
+    paddingHorizontal: theme.mainHorizontal,
     paddingVertical: 16,
   },
   containerExpand: {

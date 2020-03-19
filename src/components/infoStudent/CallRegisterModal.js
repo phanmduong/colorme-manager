@@ -209,7 +209,7 @@ const styles = {
     backgroundColor: 'white',
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
-    paddingHorizontal: 16,
+    paddingHorizontal: theme.mainHorizontal,
   },
   dateContainer: {
     marginTop: 8,

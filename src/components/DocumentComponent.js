@@ -234,7 +234,7 @@ const styles = {
     alignItems: 'center',
   },
   containerAll: {
-    paddingHorizontal: 16,
+    paddingHorizontal: theme.mainHorizontal,
     paddingVertical: 16,
   },
   containerExpand: {

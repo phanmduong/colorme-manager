@@ -513,7 +513,7 @@ const styles = {
     fontSize: 14,
   },
   container: {
-    paddingHorizontal: 16,
+    paddingHorizontal: theme.mainHorizontal,
     marginBottom: 10,
     flex: 1,
   },

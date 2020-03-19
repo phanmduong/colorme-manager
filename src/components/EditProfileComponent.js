@@ -19,6 +19,7 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import Spinkit from 'react-native-spinkit';
 import Search from './common/Search';
+import theme from '../styles';
 var {width, height} = Dimensions.get('window');
 
 class EditProfileComponent extends React.Component {
@@ -433,7 +434,7 @@ const styles = {
     borderRadius: 8,
   },
   container: {
-    marginHorizontal: 16,
+    marginHorizontal: theme.mainHorizontal,
     marginBottom: 10,
     flex: 1,
   },

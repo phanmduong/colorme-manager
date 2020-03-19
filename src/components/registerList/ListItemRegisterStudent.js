@@ -368,7 +368,7 @@ const styles = {
   },
 
   listItemContainer: {
-    marginHorizontal: 16,
+    marginHorizontal: theme.mainHorizontal,
     marginVertical: 10,
   },
   classAva: {

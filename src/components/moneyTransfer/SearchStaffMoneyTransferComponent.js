@@ -1,8 +1,6 @@
 import React from 'react';
 import {Dimensions, RefreshControl} from 'react-native';
-import {Button, Text, View, List} from 'native-base';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import * as alert from '../../constants/alert';
+import {Text, View, List} from 'native-base';
 import Loading from '../common/Loading';
 import Search from '../common/Search';
 import ListItemStaffMoneyTransfer from './ListItemStaffMoneyTransfer';
@@ -114,7 +112,7 @@ const styles = {
     height: 95,
   },
   headerContainer: {
-    marginHorizontal: 16,
+    marginHorizontal: theme.mainHorizontal,
     marginTop: 20,
     marginBottom: 10,
     flexDirection: 'row',

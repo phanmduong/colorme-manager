@@ -365,7 +365,7 @@ const styles = {
     marginHorizontal: 20,
   },
   headerContainer: {
-    marginHorizontal: 16,
+    marginHorizontal: theme.mainHorizontal,
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: 20,

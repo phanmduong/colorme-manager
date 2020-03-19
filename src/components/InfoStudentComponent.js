@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
   },
   essentialContainer: {
     flexDirection: 'row',
-    marginHorizontal: 16,
+    marginHorizontal: theme.mainHorizontal,
     marginVertical: 20,
   },
   starContainer: {

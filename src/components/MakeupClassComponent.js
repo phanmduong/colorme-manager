@@ -209,7 +209,7 @@ class MakeupClassComponent extends React.Component {
       let baseOptions = courseOptions[this.state.selectedCourseIndex].lessons;
       return (
         <ScrollView>
-          <View style={{flex: 1, marginHorizontal: 16}}>
+          <View style={{flex: 1, marginHorizontal: theme.mainHorizontal}}>
             <View style={{marginTop: 10}}>
               <Text style={styles.titleForm}>Chọn môn học</Text>
               <CustomPicker

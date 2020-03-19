@@ -361,7 +361,7 @@ const styles = {
     width: width - 32,
     borderRadius: 27,
     justifyContent: 'center',
-    marginHorizontal: 16,
+    marginHorizontal: theme.mainHorizontal,
   },
   searchInput: {
     fontSize: 16,

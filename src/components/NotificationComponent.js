@@ -107,7 +107,7 @@ const styles = {
   itemContainer: {
     flex: 1,
     marginVertical: 10,
-    marginHorizontal: 16,
+    marginHorizontal: theme.mainHorizontal,
   },
   itemText: {
     fontSize: 14,

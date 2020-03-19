@@ -292,7 +292,7 @@ const styles = {
   },
 
   listItemContainer: {
-    marginHorizontal: 16,
+    marginHorizontal: theme.mainHorizontal,
     marginVertical: 10,
   },
   classAva: {
@@ -377,6 +377,6 @@ const styles = {
     flexWrap: 'wrap',
     alignItems: 'flex-start',
     marginTop: 5,
-    marginHorizontal: 16,
+    marginHorizontal: theme.mainHorizontal,
   },
 };

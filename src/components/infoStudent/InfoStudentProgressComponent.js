@@ -94,7 +94,7 @@ class InfoStudentProgressComponent extends React.Component {
 
 const styles = {
   listItemContainer: {
-    marginHorizontal: 16,
+    marginHorizontal: theme.mainHorizontal,
     marginVertical: 10,
   },
   classAva: theme.mainAvatar,

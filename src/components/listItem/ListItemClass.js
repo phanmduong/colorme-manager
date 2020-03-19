@@ -248,7 +248,7 @@ class ListItemClass extends React.Component {
 const styles = {
   container: {
     flex: 1,
-    marginHorizontal: 16,
+    marginHorizontal: theme.mainHorizontal,
     paddingTop: 20,
   },
   infoContainer: {

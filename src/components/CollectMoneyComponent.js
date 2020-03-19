@@ -461,7 +461,7 @@ const styles = {
     justifyContent: 'center',
   },
   headerContainer: {
-    marginHorizontal: 16,
+    marginHorizontal: theme.mainHorizontal,
     marginTop: 20,
     marginBottom: 10,
     flexDirection: 'row',

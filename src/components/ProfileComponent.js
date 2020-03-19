@@ -88,7 +88,7 @@ class ProfileComponent extends React.Component {
     if (!this.props.isLoadingProfile && !isEmptyInput(this.props.profile)) {
       return (
         <ScrollView
-          style={{marginHorizontal: 16}}
+          style={{marginHorizontal: theme.mainHorizontal}}
           showsVerticalScrollIndicator={false}
           refreshControl={
             <RefreshControl

@@ -346,7 +346,7 @@ class TaskComponent extends React.Component {
               </View>
             </View>
           ) : (
-            <View style={{flex: 1, marginHorizontal: 16}}>
+            <View style={{flex: 1, marginHorizontal: theme.mainHorizontal}}>
               <View style={{flexDirection: 'row', marginVertical: 15}}>
                 <TouchableOpacity onPress={() => this.setState({tab: 1})}>
                   <View

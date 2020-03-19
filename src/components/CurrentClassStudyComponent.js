@@ -479,7 +479,7 @@ const styles = {
     marginHorizontal: 20,
   },
   headerContainer: {
-    marginHorizontal: 16,
+    marginHorizontal: theme.mainHorizontal,
     marginTop: 20,
     marginBottom: 10,
     flexDirection: 'row',
@@ -504,7 +504,7 @@ const styles = {
   },
   sectionContainer: {
     flex: 1,
-    marginHorizontal: 16,
+    marginHorizontal: theme.mainHorizontal,
     marginTop: 16,
   },
   sectionTitle: {

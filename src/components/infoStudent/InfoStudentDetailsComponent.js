@@ -229,7 +229,7 @@ class InfoStudentDetailsComponent extends React.Component {
     ) {
       return (
         <ScrollView
-          style={{marginHorizontal: 16}}
+          style={{marginHorizontal: theme.mainHorizontal}}
           showsVerticalScrollIndicator={false}
           refreshControl={
             <RefreshControl

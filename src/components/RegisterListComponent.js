@@ -284,7 +284,7 @@ const styles = {
     flexWrap: 'wrap',
     alignItems: 'flex-start',
     marginTop: 5,
-    marginHorizontal: 16,
+    marginHorizontal: theme.mainHorizontal,
   },
   tag: {
     paddingHorizontal: 20,
@@ -294,7 +294,7 @@ const styles = {
     alignItems: 'center',
   },
   headerContainer: {
-    marginHorizontal: 16,
+    marginHorizontal: theme.mainHorizontal,
     marginTop: 20,
     marginBottom: 10,
     flexDirection: 'row',

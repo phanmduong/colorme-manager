@@ -19,9 +19,21 @@ export function beginDataStaffListLoad() {
   };
 }
 
-export function loadDataStaffList(token, page, search) {
+export function beginDataStaffListRefresh() {
+  return {
+    type: types.BEGIN_DATA_STAFF_OF_MONEY_TRANSFER_REFRESH,
+    refreshingStaffList: true,
+    errorStaffList: false,
+  };
+}
+
+export function loadDataStaffList(refreshing, token, page, search) {
   return function(dispatch) {
-    dispatch(beginDataStaffListLoad());
+    if (!refreshing) {
+      dispatch(beginDataStaffListLoad());
+    } else {
+      dispatch(beginDataStaffListRefresh());
+    }
     moneyTransferApi
       .searchStaffApi(token, search, page, sourceCancel)
       .then(function(res) {
@@ -38,6 +50,13 @@ export function loadDataStaffList(token, page, search) {
   };
 }
 
+export function refreshDataStaffList(token, search) {
+  return function(dispatch) {
+    dispatch(updateFormSearchStaff(search));
+    dispatch(loadDataStaffList(true, token, 1, search));
+  };
+}
+
 export function loadDataStaffSuccessful(res) {
   return {
     type: types.LOAD_DATA_STAFF_OF_MONEY_TRANSFER_SUCCESSFUL,
@@ -46,6 +65,7 @@ export function loadDataStaffSuccessful(res) {
     totalPageStaffList: res.data.paginator.total_pages,
     isLoadingStaffList: false,
     errorStaffList: false,
+    refreshingStaffList: false,
   };
 }
 
@@ -54,6 +74,7 @@ export function loadDataStaffError() {
     type: types.LOAD_DATA_STAFF_OF_MONEY_TRANSFER_ERROR,
     isLoadingStaffList: false,
     errorStaffList: true,
+    refreshingStaffList: false,
   };
 }
 
@@ -62,7 +83,7 @@ export function updateFormAndLoadDataSearchStaff(search, token) {
   sourceCancel = CancelToken.source();
   return dispatch => {
     dispatch(updateFormSearchStaff(search));
-    dispatch(loadDataStaffList(token, 1, search));
+    dispatch(loadDataStaffList(false, token, 1, search));
   };
 }
 

@@ -12,7 +12,7 @@ import SearchStaffMoneyTransferComponent from '../components/moneyTransfer/Searc
 import * as alert from '../constants/alert';
 import io from 'socket.io-client';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from "../styles";
+import theme from '../styles';
 let self;
 class MoneyTransferContainer extends React.Component {
   constructor(props, context) {
@@ -109,6 +109,7 @@ class MoneyTransferContainer extends React.Component {
   loadDataStaffList() {
     if (this.props.currentPageStaffList < this.props.totalPageStaffList) {
       this.props.moneyTransferActions.loadDataStaffList(
+        false,
         this.props.token,
         this.props.currentPageStaffList + 1,
         this.props.searchStaff,
@@ -122,6 +123,13 @@ class MoneyTransferContainer extends React.Component {
       this.props.token,
     );
   }
+
+  refreshDataStaffList = () => {
+    this.props.moneyTransferActions.refreshDataStaffList(
+      this.props.token,
+      this.props.searchStaff,
+    );
+  };
 
   loadDataHistoryTransaction() {
     if (
@@ -148,39 +156,10 @@ class MoneyTransferContainer extends React.Component {
         isLoadingTransaction={this.props.isLoadingTransaction}
         user={this.props.user}
         avatar_url={this.props.avatar_url}
-        onRefresh={this.updateFormAndLoadDataSearchStaff}
+        onRefresh={this.refreshDataStaffList}
+        refreshing={this.props.refreshingStaffList}
       />
     );
-
-    // if (this.props.segment === 1) {
-    //     return (
-    //         <SearchStaffMoneyTransferComponent
-    //             updateFormAndLoadDataSearch={this.updateFormAndLoadDataSearchStaff}
-    //             loadDataStaffList={this.loadDataStaffList}
-    //             isLoading={this.props.isLoadingStaffList}
-    //             error={this.props.errorStaffList}
-    //             staffList={this.props.staffListData}
-    //             search={this.props.searchStaff}
-    //             postTransaction={this.postTransaction}
-    //             isLoadingTransaction={this.props.isLoadingTransaction}
-    //             user={this.props.user}
-    //
-    //         />
-    //     )
-    // } else {
-    //     return (
-    //         <HistoryMoneyTransferComponent
-    //             loadDataHistoryTransaction={this.loadDataHistoryTransaction}
-    //             isLoading={this.props.isLoadingHistoryTransaction}
-    //             error={this.props.errorHistoryTransaction}
-    //             transactionList={this.props.transactionListData}
-    //             userId={this.props.userId}
-    //             rejectTransaction={this.rejectTransaction}
-    //             acceptTransaction={this.acceptTransaction}
-    //             currentMoney={this.props.currentMoney}
-    //         />
-    //     )
-    // }
   }
 }
 
@@ -214,6 +193,7 @@ function mapStateToProps(state) {
     currentMoney: state.moneyTransfer.currentMoney,
     openTabMoneyTransfer: state.moneyTransfer.openTabMoneyTransfer,
     avatar_url: state.login.user.avatar_url,
+    refreshingStaffList: state.moneyTransfer.refreshingStaffList,
   };
 }
 

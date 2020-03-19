@@ -14,6 +14,11 @@ export default function moneyTransferReducer(
         isLoadingStaffList: action.isLoadingStaffList,
         errorStaffList: action.errorStaffList,
       });
+    case types.BEGIN_DATA_STAFF_OF_MONEY_TRANSFER_REFRESH:
+      return Object.assign({}, state, {
+        refreshingStaffList: action.refreshingStaffList,
+        errorStaffList: action.errorStaffList,
+      });
     case types.LOAD_DATA_STAFF_OF_MONEY_TRANSFER_SUCCESSFUL:
       let staffListData =
         action.currentPageAll === 1
@@ -28,11 +33,13 @@ export default function moneyTransferReducer(
         ),
         currentPageStaffList: action.currentPageStaffList,
         totalPageStaffList: action.totalPageStaffList,
+        refreshingStaffList: action.refreshingStaffList,
       });
     case types.LOAD_DATA_STAFF_OF_MONEY_TRANSFER_ERROR:
       return Object.assign({}, state, {
         isLoadingStaffList: action.isLoadingStaffList,
         errorStaffList: action.errorStaffList,
+        refreshingStaffList: action.refreshingStaffList,
       });
     case types.UPDATE_FORM_SEARCH_STAFF_LIST:
       return Object.assign({}, state, {

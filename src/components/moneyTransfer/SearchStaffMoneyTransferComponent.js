@@ -6,6 +6,7 @@ import * as alert from '../../constants/alert';
 import Loading from '../common/Loading';
 import Search from '../common/Search';
 import ListItemStaffMoneyTransfer from './ListItemStaffMoneyTransfer';
+import theme from '../../styles';
 
 var {height, width} = Dimensions.get('window');
 let self;
@@ -16,7 +17,7 @@ class SearchStaffMoneyTransferComponent extends React.Component {
     self = this;
   }
 
-  renderSearch() {
+  renderSearch = () => {
     const {updateFormAndLoadDataSearch, search} = this.props;
     return (
       <Search
@@ -26,82 +27,72 @@ class SearchStaffMoneyTransferComponent extends React.Component {
         autoFocus={false}
       />
     );
-  }
+  };
 
   renderContent() {
-    if (this.props.isLoading && this.props.staffList.length <= 0) {
-      return <Loading size={width / 8} />;
-    } else {
-      if (this.props.error || this.props.staffList.length <= 0) {
-        return (
-          <View style={styles.container}>
-            <Text style={styles.textError}>
-              {this.props.error
-                ? alert.LOAD_DATA_ERROR
-                : alert.NO_DATA_STUDENT_LIST}
-            </Text>
-            <Button
-              iconLeft
-              danger
-              small
-              onPress={this.props.loadDataStaffList}
-              style={{marginTop: 10, alignSelf: null}}>
-              <MaterialCommunityIcons name="reload" color="white" size={20} />
-              <Text>Thử lại</Text>
-            </Button>
-          </View>
-        );
-      } else {
-        return (
-          <List
-            style={styles.list}
-            onEndReached={this.props.loadDataStaffList}
-            onEndReachedThreshold={height / 2}
-            dataArray={this.props.staffList}
-            renderRow={(item, sectionID, rowID) => {
-              return (
-                <ListItemStaffMoneyTransfer
-                  postTransaction={this.props.postTransaction}
-                  userId={item.id}
-                  name={item.name}
-                  avatar={item.avatar_url}
-                  email={item.email}
-                  phone={item.phone}
-                  role={this.props.user.role}
-                  money={item.money}
-                  isTransaction={
-                    item.isTransaction || this.props.user.status == 2
-                  }
-                />
-              );
-            }}
-            renderFooter={() => {
-              if (this.props.isLoading) {
-                return (
-                  <View style={styles.loading}>
-                    <Loading size={width / 12} />
-                  </View>
-                );
-              } else {
-                <View />;
-              }
-            }}
-            refreshControl={
-              <RefreshControl
-                refreshing={this.props.isLoading}
-                onRefresh={() => this.props.onRefresh(this.props.search)}
-              />
-            }
+    return (
+      <List
+        style={styles.list}
+        onEndReached={this.props.loadDataStaffList}
+        dataArray={this.props.staffList}
+        renderRow={(item, sectionID, rowID) => {
+          return (
+            <ListItemStaffMoneyTransfer
+              postTransaction={this.props.postTransaction}
+              userId={item.id}
+              name={item.name}
+              avatar={item.avatar_url}
+              email={item.email}
+              phone={item.phone}
+              role={this.props.user.role}
+              money={item.money}
+              isTransaction={item.isTransaction || this.props.user.status == 2}
+            />
+          );
+        }}
+        ListHeaderComponent={this.renderSearch}
+        contentContainerStyle={{flexGrow: 1}}
+        ListEmptyComponent={
+          this.props.isLoading ? (
+            this.props.refreshing ? (
+              <View />
+            ) : (
+              <Loading size={width / 8} />
+            )
+          ) : this.props.refreshing ? (
+            <View />
+          ) : (
+            <View style={styles.container}>
+              <Text style={{color: theme.dangerColor, fontSize: 16}}>
+                Không có kết quả
+              </Text>
+            </View>
+          )
+        }
+        renderFooter={() => {
+          if (this.props.isLoading) {
+            return (
+              <View style={styles.loading}>
+                <Loading size={width / 12} />
+              </View>
+            );
+          } else {
+            <View />;
+          }
+        }}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.props.refreshing}
+            onRefresh={this.props.onRefresh}
           />
-        );
-      }
-    }
+        }
+      />
+    );
   }
 
   render() {
     return (
       <View style={{flex: 1}} contentContainerStyle={{flexGrow: 1}}>
-        {this.renderSearch()}
         {this.renderContent()}
       </View>
     );

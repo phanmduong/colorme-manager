@@ -184,6 +184,7 @@ export default {
     errorTransaction: false,
     currentMoney: 0,
     openTabMoneyTransfer: false,
+    refreshingStaffList: false,
   },
   listStudentPaid: {
     listStudentPaidData: [],

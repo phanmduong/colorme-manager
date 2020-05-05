@@ -715,7 +715,8 @@ class SaveRegisterComponent extends React.Component {
         <KeyboardAvoidingView
           style={{flex: 1}}
           behavior={Platform.OS === 'ios' ? 'padding' : ''}
-          enabled>
+          enabled
+          keyboardVerticalOffset={100}>
           <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={{marginTop: 30}}>

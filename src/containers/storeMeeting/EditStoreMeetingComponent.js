@@ -213,11 +213,14 @@ class EditStoreMeetingComponent extends React.Component {
 
   render() {
     let {meeting, isLoading, filter, isStoring} = this.props.store;
+    const keyboardVerticalOffset =
+      Platform.OS === 'ios' ? Dimensions.get('window').height * 0.11 : 0;
     return (
       <KeyboardAvoidingView
         style={{flex: 1}}
         behavior={Platform.OS === 'ios' ? 'padding' : ''}
-        enabled>
+        enabled
+        keyboardVerticalOffset={keyboardVerticalOffset}>
         <SafeAreaView style={styles.container}>
           {isLoading ? (
             <View

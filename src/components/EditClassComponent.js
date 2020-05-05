@@ -282,7 +282,8 @@ class EditClassComponent extends React.Component {
         <KeyboardAvoidingView
           style={{flex: 1}}
           behavior={Platform.OS === 'ios' ? 'padding' : ''}
-          enabled>
+          enabled
+          keyboardVerticalOffset={100}>
           <ScrollView
             style={styles.container}
             showsVerticalScrollIndicator={false}>

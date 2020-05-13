@@ -70,6 +70,12 @@ export function loadCheck(token, type) {
             let location = NativeModules.RNLocationModule;
             location.getLocation((lat, long) => {
               if (lat == null || long == null) {
+                if (ignoreDevices.indexOf(device.device_id) > 0) {
+                  device.long = LONGITUDE;
+                  device.lat = LATITUDE;
+                  callback(null);
+                  called = true;
+                }
                 Alert.alert(
                   'Thông báo',
                   'Kiểm tra định vị trên thiết bị của bạn',

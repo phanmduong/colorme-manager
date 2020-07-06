@@ -68,7 +68,7 @@ function beginSearchStaff(search) {
 }
 
 export function searchStaff(search, token) {
-  sourceCancel.cancel('Canceled by api student list .');
+  sourceCancel.cancel('Canceled by staff api.');
   sourceCancel = CancelToken.source();
   return function(dispatch) {
     dispatch(beginSearchStaff(search));
@@ -88,5 +88,15 @@ export function refreshStaff(search, token) {
   return function(dispatch) {
     dispatch(beginSearchStaff(search));
     dispatch(getStaff(true, 1, search, token));
+  };
+}
+
+export function resetStaff() {
+  return {
+    type: types.RESET_MANAGE_STAFF,
+    staff: [],
+    search: '',
+    currentPage: 0,
+    totalPage: 1,
   };
 }

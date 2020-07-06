@@ -16,6 +16,10 @@ class StaffContainer extends React.Component {
     this.loadStaff();
   };
 
+  componentWillUnmount = () => {
+    this.resetStaff();
+  };
+
   loadStaff = () => {
     if (this.props.currentPage < this.props.totalPage) {
       this.props.staffActions.getStaff(
@@ -33,6 +37,10 @@ class StaffContainer extends React.Component {
 
   refreshStaff = () => {
     this.props.staffActions.refreshStaff(this.props.search, this.props.token);
+  };
+
+  resetStaff = () => {
+    this.props.staffActions.resetStaff();
   };
 
   static navigationOptions = ({navigation}) => ({

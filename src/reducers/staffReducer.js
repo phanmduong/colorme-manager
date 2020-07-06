@@ -50,6 +50,13 @@ export default function staffReducer(state = initialState.staff, action) {
         currentPage: action.currentPage,
         totalPage: action.totalPage,
       });
+    case types.RESET_MANAGE_STAFF:
+      return Object.assign({}, state, {
+        staff: action.staff,
+        search: action.search,
+        currentPage: action.currentPage,
+        totalPage: action.totalPage,
+      });
     default:
       return state;
   }

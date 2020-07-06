@@ -36,6 +36,7 @@ class StaffComponent extends React.Component {
       email={item.email}
       name={item.name}
       base_id={item.base_id}
+      department_id={item.department_id}
     />
   );
 
@@ -48,7 +49,9 @@ class StaffComponent extends React.Component {
         onEndReached={this.props.loadStaff}
         ListHeaderComponent={this.headerComponent}
         ListEmptyComponent={
-          this.props.isLoadingStaff || this.props.isLoadingBase ? (
+          this.props.isLoadingStaff ||
+          this.props.isLoadingBase ||
+          this.props.isLoadingDepartments ? (
             this.props.refreshingStaff ? (
               <View />
             ) : (

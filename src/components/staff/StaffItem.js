@@ -26,6 +26,17 @@ class StaffItem extends React.Component {
     return 'Không có cơ sở';
   };
 
+  getDepartmentInfo = () => {
+    const {departments, department_id} = this.props;
+    const department = departments.find(
+      department => department.id == department_id,
+    );
+    if (department) {
+      return department.name;
+    }
+    return 'Không có bộ phận';
+  };
+
   content() {
     const {name, avatar, email, phone} = this.props;
     return (
@@ -38,6 +49,7 @@ class StaffItem extends React.Component {
           <View style={styles.containerSubTitle}>
             <Text style={styles.subTitle}>{email}</Text>
             <Text style={styles.subTitle}>{this.getBaseInfo()}</Text>
+            <Text style={styles.subTitle}>{this.getDepartmentInfo()}</Text>
             <Call
               url={'tel:' + phone}
               phone={phone}

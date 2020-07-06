@@ -443,5 +443,11 @@ export default {
     currentPage: 0,
     search: '',
     refreshingStaff: false,
+    departments: [],
+    isLoadingDepartments: false,
+    errorDepartments: false,
+    roles: [],
+    isLoadingRoles: false,
+    errorRoles: false,
   },
 };

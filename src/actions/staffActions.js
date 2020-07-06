@@ -100,3 +100,43 @@ export function resetStaff() {
     totalPage: 1,
   };
 }
+
+export function loadDepartments(token) {
+  return function(dispatch) {
+    dispatch(beginLoadDepartments());
+    staffApi
+      .getDepartments(token)
+      .then(function(res) {
+        dispatch(loadDepartmentsSuccessful(res));
+      })
+      .catch(error => {
+        loadDepartmentsError();
+        throw error;
+      });
+  };
+}
+
+function beginLoadDepartments() {
+  return {
+    type: types.BEGIN_LOAD_DEPARTMENTS,
+    isLoadingDepartments: true,
+    errorDepartments: false,
+  };
+}
+
+function loadDepartmentsSuccessful(res) {
+  return {
+    type: types.LOAD_DEPARTMENTS_SUCCESSFUL,
+    isLoadingDepartments: false,
+    errorDepartments: false,
+    departments: res.data.data.departments,
+  };
+}
+
+function loadDepartmentsError() {
+  return {
+    type: types.LOAD_DEPARTMENTS_ERROR,
+    isLoadingDepartments: false,
+    errorDepartments: true,
+  };
+}

@@ -140,3 +140,43 @@ function loadDepartmentsError() {
     errorDepartments: true,
   };
 }
+
+export function loadRoles(token) {
+  return function(dispatch) {
+    dispatch(beginLoadRoles());
+    staffApi
+      .getRoles(token)
+      .then(function(res) {
+        dispatch(loadRolesSuccessful(res));
+      })
+      .catch(error => {
+        loadRolesError();
+        throw error;
+      });
+  };
+}
+
+function beginLoadRoles() {
+  return {
+    type: types.BEGIN_LOAD_ROLES,
+    isLoadingRoles: true,
+    errorRoles: false,
+  };
+}
+
+function loadRolesSuccessful(res) {
+  return {
+    type: types.LOAD_ROLES_SUCCESSFUL,
+    isLoadingRoles: true,
+    errorRoles: false,
+    roles: res.data.data.roles,
+  };
+}
+
+function loadRolesError() {
+  return {
+    type: types.LOAD_ROLES_ERROR,
+    isLoadingRoles: true,
+    errorRoles: false,
+  };
+}

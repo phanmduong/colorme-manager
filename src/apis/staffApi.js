@@ -18,7 +18,6 @@ export function getDepartments(token) {
     env.MANAGE_API_URL_V3 +
     '/department/get-all-departments?limit=-1&token=' +
     token;
-  console.log(url);
   return axios.get(url);
 }
 

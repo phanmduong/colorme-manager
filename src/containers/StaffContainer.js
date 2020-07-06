@@ -17,6 +17,7 @@ class StaffContainer extends React.Component {
     this.loadBases();
     this.loadDepartments();
     this.loadStaff();
+    this.loadRoles();
   };
 
   componentWillUnmount = () => {
@@ -40,6 +41,10 @@ class StaffContainer extends React.Component {
 
   loadDepartments = () => {
     this.props.staffActions.loadDepartments(this.props.token);
+  };
+
+  loadRoles = () => {
+    this.props.staffActions.loadRoles(this.props.token);
   };
 
   searchStaff = search => {
@@ -71,6 +76,7 @@ class StaffContainer extends React.Component {
   });
 
   render() {
+    console.log(this.props.roles);
     return (
       <StaffComponent
         {...this.props}
@@ -103,6 +109,9 @@ function mapStateToProps(state) {
     departments: state.staff.departments,
     isLoadingDepartments: state.staff.isLoadingDepartments,
     errorDepartments: state.staff.errorDepartments,
+    roles: state.staff.roles,
+    isLoadingRoles: state.staff.isLoadingRoles,
+    errorRoles: state.staff.errorRoles,
   };
 }
 

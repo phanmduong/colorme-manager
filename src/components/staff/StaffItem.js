@@ -3,8 +3,6 @@ import {
   Dimensions,
   Image,
   Platform,
-  TouchableNativeFeedback,
-  TouchableOpacity,
 } from 'react-native';
 import {View, Text, Thumbnail} from 'native-base';
 import theme from '../../styles';
@@ -80,21 +78,9 @@ class StaffItem extends React.Component {
 
   render() {
     if (Platform.OS === 'ios') {
-      return (
-        <View>
-          <TouchableOpacity>
-            <View style={styles.containerAll}>{this.content()}</View>
-          </TouchableOpacity>
-        </View>
-      );
+      return <View style={styles.containerAll}>{this.content()}</View>;
     } else {
-      return (
-        <View>
-          <TouchableNativeFeedback>
-            <View style={styles.containerAll}>{this.content()}</View>
-          </TouchableNativeFeedback>
-        </View>
-      );
+      return <View style={styles.containerAll}>{this.content()}</View>;
     }
   }
 }

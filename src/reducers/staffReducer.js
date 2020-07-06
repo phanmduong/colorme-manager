@@ -28,7 +28,6 @@ export default function staffReducer(state = initialState.staff, action) {
         action.currentPage === 1
           ? action.staff
           : [...state.staff, ...filterData];
-      console.log(staff);
       return Object.assign({}, state, {
         isLoadingStaff: action.isLoadingStaff,
         errorStaff: action.errorStaff,

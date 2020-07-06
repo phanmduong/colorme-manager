@@ -17,6 +17,15 @@ class StaffItem extends React.Component {
     super(props, context);
   }
 
+  getBaseInfo = () => {
+    const {baseData, base_id} = this.props;
+    const base = baseData.find(base => base.id == base_id);
+    if (base) {
+      return `${base.name}: ${base.address}`;
+    }
+    return 'Không có cơ sở';
+  };
+
   content() {
     const {name, avatar, email, phone} = this.props;
     return (
@@ -28,6 +37,7 @@ class StaffItem extends React.Component {
           </View>
           <View style={styles.containerSubTitle}>
             <Text style={styles.subTitle}>{email}</Text>
+            <Text style={styles.subTitle}>{this.getBaseInfo()}</Text>
             <Call
               url={'tel:' + phone}
               phone={phone}

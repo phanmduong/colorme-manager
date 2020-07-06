@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import * as staffActions from '../actions/staffActions';
+import * as baseActions from '../actions/baseActions';
 import StaffComponent from '../components/StaffComponent';
 import {bindActionCreators} from 'redux';
 import {Text, View} from 'react-native';
@@ -14,6 +15,7 @@ class StaffContainer extends React.Component {
 
   componentDidMount = () => {
     this.loadStaff();
+    this.loadBases();
   };
 
   componentWillUnmount = () => {
@@ -29,6 +31,10 @@ class StaffContainer extends React.Component {
         this.props.token,
       );
     }
+  };
+
+  loadBases = () => {
+    this.props.baseActions.loadDataBase(this.props.token);
   };
 
   searchStaff = search => {
@@ -60,7 +66,7 @@ class StaffContainer extends React.Component {
   });
 
   render() {
-    console.log(this.props.staff);
+    console.log(this.props.baseData);
     return (
       <StaffComponent
         {...this.props}
@@ -87,12 +93,16 @@ function mapStateToProps(state) {
     currentPage: state.staff.currentPage,
     search: state.staff.search,
     refreshingStaff: state.staff.refreshingStaff,
+    baseData: state.base.baseData,
+    isLoadingBase: state.base.isLoading,
+    errorBase: state.base.error,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     staffActions: bindActionCreators(staffActions, dispatch),
+    baseActions: bindActionCreators(baseActions, dispatch),
   };
 }
 

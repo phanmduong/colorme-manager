@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Dimensions,
+  Image,
   Platform,
   TouchableNativeFeedback,
   TouchableOpacity,
@@ -47,13 +48,19 @@ class StaffItem extends React.Component {
   };
 
   content() {
-    const {name, avatar, email, phone} = this.props;
+    const {name, avatar, email, phone, role} = this.props;
     return (
       <View style={styles.container}>
         <Thumbnail small source={{uri: avatar}} style={theme.mainAvatar} />
         <View style={styles.content}>
           <View style={styles.containerTitle}>
             <Text style={styles.title}>{name.trim()}</Text>
+            {role === 2 ? (
+              <Image
+                source={require('../../../assets/img/icons8-star-100-filled.png')}
+                style={styles.starIcon}
+              />
+            ) : null}
           </View>
           <View style={styles.containerSubTitle}>
             <Text style={styles.subTitle}>{email}</Text>
@@ -110,7 +117,7 @@ const styles = {
   containerTitle: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   title: {
     color: 'black',
@@ -181,6 +188,11 @@ const styles = {
     fontSize: 10,
     color: 'white',
     textAlign: 'center',
+  },
+  starIcon: {
+    width: 10,
+    height: 10,
+    marginLeft: 5,
   },
 };
 

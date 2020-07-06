@@ -76,7 +76,6 @@ class StaffContainer extends React.Component {
   });
 
   render() {
-    console.log(this.props.roles);
     return (
       <StaffComponent
         {...this.props}

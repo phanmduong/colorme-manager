@@ -37,9 +37,10 @@ import {infoStudentReducer} from './InfoStudentReducer';
 import {infoStudentTabReducer} from './infoStudentTabReducer';
 import taskReducer from './taskReducer';
 import notificationReducer from './notificationReducer';
-import profileReducer from "./profileReducer";
-import documentReducer from "./documentReducer";
-import leadsReducer from "./leadsReducer";
+import profileReducer from './profileReducer';
+import documentReducer from './documentReducer';
+import leadsReducer from './leadsReducer';
+import staffReducer from './staffReducer';
 
 const appReducer = combineReducers({
   login: loginReducer,
@@ -79,6 +80,7 @@ const appReducer = combineReducers({
   profile: profileReducer,
   document: documentReducer,
   leads: leadsReducer,
+  staff: staffReducer,
 });
 
 const rootReducer = (state, action) => {

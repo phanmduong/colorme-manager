@@ -435,4 +435,13 @@ export default {
     isSavingLead: false,
     errorSaveLead: false,
   },
+  staff: {
+    staff: [],
+    isLoadingStaff: false,
+    errorStaff: false,
+    totalPage: 1,
+    currentPage: 0,
+    search: '',
+    refreshingStaff: false,
+  },
 };

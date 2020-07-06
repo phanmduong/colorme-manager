@@ -51,6 +51,7 @@ class DashboardComponent extends React.Component {
             ? {flex: 1, marginTop: getStatusBarHeight() + 10}
             : {flex: 1, marginTop: 20}
         }
+        showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
             refreshing={
@@ -238,10 +239,10 @@ class DashboardComponent extends React.Component {
               }}
             />
             <CircleTab
-              iconImage={require('../../assets/img/icons8-document.png')}
-              title={'Tài liệu'}
+              iconImage={require('../../assets/img/icons8-phone_contact.png')}
+              title={'Danh bạ nhân viên'}
               onPress={() => {
-                this.props.navigation.navigate('Document');
+                this.props.navigation.navigate('Staff');
               }}
             />
           </View>
@@ -278,7 +279,13 @@ class DashboardComponent extends React.Component {
                 this.props.navigation.navigate('AddLead');
               }}
             />
-            <View style={{width: width / 3}} />
+            <CircleTab
+              iconImage={require('../../assets/img/icons8-document.png')}
+              title={'Tài liệu'}
+              onPress={() => {
+                this.props.navigation.navigate('Document');
+              }}
+            />
             <View style={{width: width / 3}} />
           </View>
           <MeetingComponent

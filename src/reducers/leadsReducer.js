@@ -81,18 +81,18 @@ export default function leadsReducer(state = initialState.leads, action) {
         leadStatusId: action.leadStatusId,
         source_id: action.source_id,
       });
-    case types.BEGIN_LOAD_STAFFS:
+    case types.BEGIN_LOAD_LEAD_STAFFS:
       return Object.assign({}, state, {
         isLoadingStaff: action.isLoadingStaff,
         errorStaff: action.errorStaff,
       });
-    case types.LOAD_STAFFS_SUCCESSFUL:
+    case types.LOAD_LEAD_STAFFS_SUCCESSFUL:
       return Object.assign({}, state, {
         isLoadingStaff: action.isLoadingStaff,
         errorStaff: action.errorStaff,
         staff: action.staff,
       });
-    case types.LOAD_STAFFS_ERROR:
+    case types.LOAD_LEAD_STAFFS_ERROR:
       return Object.assign({}, state, {
         isLoadingStaff: action.isLoadingStaff,
         errorStaff: action.errorStaff,

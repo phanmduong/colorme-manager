@@ -262,7 +262,7 @@ export function getStaff(search, token) {
 
 function beginLoadStaff() {
   return {
-    type: types.BEGIN_LOAD_STAFFS,
+    type: types.BEGIN_LOAD_LEAD_STAFFS,
     isLoadingStaff: true,
     errorStaff: false,
   };
@@ -270,7 +270,7 @@ function beginLoadStaff() {
 
 function loadStaffSuccessful(res) {
   return {
-    type: types.LOAD_STAFFS_SUCCESSFUL,
+    type: types.LOAD_LEAD_STAFFS_SUCCESSFUL,
     staff: res.data.staffs,
     isLoadingStaff: false,
     errorStaff: false,
@@ -279,7 +279,7 @@ function loadStaffSuccessful(res) {
 
 function loadStaffError() {
   return {
-    type: types.LOAD_STAFFS_ERROR,
+    type: types.LOAD_LEAD_STAFFS_ERROR,
     isLoadingStaff: false,
     errorStaff: true,
   };

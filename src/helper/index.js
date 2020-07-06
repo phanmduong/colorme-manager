@@ -257,3 +257,12 @@ export function convertVietText(alias) {
   str = str.trim();
   return str;
 }
+
+export function itemExist(item, array) {
+  for (let compared of array) {
+    if (compared.id === item.id) {
+      return true;
+    }
+  }
+  return false;
+}

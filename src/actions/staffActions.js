@@ -1,6 +1,10 @@
 import * as types from '../constants/actionTypes';
 import * as staffApi from '../apis/staffApi';
 
+import axios from 'axios';
+let CancelToken = axios.CancelToken;
+let sourceCancel = CancelToken.source();
+
 export function getStaff(refreshing, page, search, token) {
   return function(dispatch) {
     if (!refreshing) {
@@ -9,13 +13,17 @@ export function getStaff(refreshing, page, search, token) {
       dispatch(beginRefreshStaff());
     }
     staffApi
-      .getStaff(page, search, token)
+      .getStaff(sourceCancel, page, search, token)
       .then(function(res) {
         dispatch(loadStaffSuccessful(res));
       })
       .catch(error => {
-        dispatch(loadStaffError());
-        throw error;
+        if (axios.isCancel(error)) {
+          console.log('Request canceled', error.message);
+        } else {
+          dispatch(loadStaffError());
+          throw error;
+        }
       });
   };
 }
@@ -60,6 +68,8 @@ function beginSearchStaff(search) {
 }
 
 export function searchStaff(search, token) {
+  sourceCancel.cancel('Canceled by api student list .');
+  sourceCancel = CancelToken.source();
   return function(dispatch) {
     dispatch(beginSearchStaff(search));
     dispatch(getStaff(false, 1, search, token));

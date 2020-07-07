@@ -77,6 +77,14 @@ class InfoStudentContainer extends React.Component {
     );
   };
 
+  changePassword = password => {
+    this.props.infoStudentActions.changePassword(
+      this.props.student_id,
+      password,
+      this.props.token,
+    );
+  };
+
   render() {
     return (
       <InfoStudentComponent
@@ -109,6 +117,7 @@ class InfoStudentContainer extends React.Component {
           this.tabHistoryCollectMoney();
         }}
         onRefresh={this.onRefresh}
+        changePassword={this.changePassword}
       />
     );
   }
@@ -134,6 +143,8 @@ function mapStateToProps(state) {
     errorLoadingHistoryCollect: state.infoStudent.errorLoadingHistoryCollect,
     isLoadingProgress: state.infoStudent.isLoadingProgress,
     errorLoadingProgress: state.infoStudent.errorLoadingProgress,
+    isChangingPassword: state.infoStudent.isChangingPassword,
+    errorPassword: state.infoStudent.errorPassword,
   };
 }
 

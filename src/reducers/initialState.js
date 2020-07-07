@@ -338,6 +338,8 @@ export default {
     progress: [],
     isLoadingProgress: false,
     errorLoadingProgress: false,
+    isChangingPassword: false,
+    errorPassword: false,
   },
   infoStudentTab: {
     registers: {

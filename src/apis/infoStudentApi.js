@@ -115,3 +115,11 @@ export function updateProfile(register, token) {
     description: register.description,
   });
 }
+
+export function changePassword(studentId, newPassword, token) {
+  let url = env.MANAGE_API_URL + '/change-password-student?token=' + token;
+  return axios.post(url, {
+    id: studentId,
+    new_password: newPassword,
+  });
+}

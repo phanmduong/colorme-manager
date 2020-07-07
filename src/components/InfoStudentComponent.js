@@ -17,6 +17,7 @@ import {getShortName, isEmptyInput} from '../helper';
 import {getStatusBarHeight} from 'react-native-iphone-x-helper';
 import Spinkit from 'react-native-spinkit';
 import theme from '../styles';
+import ChangePasswordModal from './infoStudent/ChangePasswordModal';
 var {height, width} = Dimensions.get('window');
 
 class InfoStudentComponent extends React.Component {
@@ -24,6 +25,7 @@ class InfoStudentComponent extends React.Component {
     super(props, context);
     this.state = {
       callModalVisible: false,
+      changePasswordModalVisible: false,
     };
   }
 
@@ -45,6 +47,12 @@ class InfoStudentComponent extends React.Component {
 
   toggleCallModal = () => {
     this.setState({callModalVisible: !this.state.callModalVisible});
+  };
+
+  toggleChangePasswordModal = () => {
+    this.setState({
+      changePasswordModalVisible: !this.state.changePasswordModalVisible,
+    });
   };
 
   render() {
@@ -194,6 +202,12 @@ class InfoStudentComponent extends React.Component {
                 <Text style={{fontSize: 16}}>Đăng ký</Text>
               </View>
             </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.toggleChangePasswordModal()}>
+              <View style={[styles.essentialButton, {marginLeft: 10}]}>
+                <Text style={{fontSize: 16}}>Đổi MK</Text>
+              </View>
+            </TouchableOpacity>
           </View>
           <View style={{flex: 1}}>{this.props.tabComponent}</View>
           <CallRegisterModal
@@ -206,6 +220,12 @@ class InfoStudentComponent extends React.Component {
             student_id={this.props.student_id}
             token={this.props.token}
             errorChangeCallStatus={this.props.errorChangeCallStatus}
+          />
+          <ChangePasswordModal
+            {...this.props}
+            isVisible={this.state.changePasswordModalVisible}
+            changePassword={this.props.changePassword}
+            closeModal={this.toggleChangePasswordModal}
           />
         </ScrollView>
       );

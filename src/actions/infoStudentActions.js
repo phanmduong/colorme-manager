@@ -428,3 +428,42 @@ function loadProgressError() {
     errorLoadingProgress: true,
   };
 }
+
+export function changePassword(studentId, password, token) {
+  return function(dispatch) {
+    dispatch(beginChangePassword());
+    infoStudentApi
+      .changePassword(studentId, password, token)
+      .then(function(res) {
+        dispatch(changePasswordSuccessful());
+      })
+      .catch(error => {
+        dispatch(changePasswordError());
+        throw error;
+      });
+  };
+}
+
+function beginChangePassword() {
+  return {
+    type: types.BEGIN_CHANGE_STUDENT_PASSWORD,
+    isChangingPassword: true,
+    errorPassword: false,
+  };
+}
+
+function changePasswordSuccessful() {
+  return {
+    type: types.CHANGE_STUDENT_PASSWORD_SUCCESSFUL,
+    isChangingPassword: false,
+    errorPassword: false,
+  };
+}
+
+function changePasswordError() {
+  return {
+    type: types.CHANGE_STUDENT_PASSWORD_ERROR,
+    isChangingPassword: false,
+    errorPassword: true,
+  };
+}

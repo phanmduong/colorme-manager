@@ -147,6 +147,21 @@ export function infoStudentReducer(state = initialState.infoStudent, action) {
         isLoadingProgress: action.isLoadingProgress,
         errorLoadingProgress: action.errorLoadingProgress,
       });
+    case type.BEGIN_CHANGE_STUDENT_PASSWORD:
+      return Object.assign({}, state, {
+        isChangingPassword: action.isChangingPassword,
+        errorPassword: action.errorPassword,
+      });
+    case type.CHANGE_STUDENT_PASSWORD_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isChangingPassword: action.isChangingPassword,
+        errorPassword: action.errorPassword,
+      });
+    case type.CHANGE_STUDENT_PASSWORD_ERROR:
+      return Object.assign({}, state, {
+        isChangingPassword: action.isChangingPassword,
+        errorPassword: action.errorPassword,
+      });
     default:
       return state;
   }

@@ -263,8 +263,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   essentialContainer: {
-    flex: 1,
-    flexWrap: 'wrap',
     flexDirection: 'row',
     marginHorizontal: theme.mainHorizontal,
     marginVertical: 20,

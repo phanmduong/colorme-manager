@@ -20,6 +20,8 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Determine current location for punch in and punch out</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

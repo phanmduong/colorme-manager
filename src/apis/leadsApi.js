@@ -2,6 +2,7 @@ import * as env from '../constants/env';
 import axios from 'axios';
 
 export function getLeads(
+  sourceCancel,
   page,
   search,
   start_time,
@@ -47,7 +48,7 @@ export function getLeads(
     source_id +
     '&campaign_id=' +
     campaign_id;
-  return axios.get(url);
+  return axios.get(url, {cancelToken: sourceCancel.token});
 }
 
 export function getStaff(search, token) {

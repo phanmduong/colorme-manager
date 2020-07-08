@@ -51,10 +51,7 @@ class StaffComponent extends React.Component {
         onEndReached={this.props.loadStaff}
         ListHeaderComponent={this.headerComponent}
         ListEmptyComponent={
-          this.props.isLoadingStaff ||
-          this.props.isLoadingBase ||
-          this.props.isLoadingDepartments ||
-          this.props.isLoadingRoles ? (
+          this.props.isLoadingStaff ? (
             this.props.refreshingStaff ? (
               <View />
             ) : (

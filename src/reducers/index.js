@@ -41,6 +41,7 @@ import profileReducer from './profileReducer';
 import documentReducer from './documentReducer';
 import leadsReducer from './leadsReducer';
 import staffReducer from './staffReducer';
+import clockManageReducer from "./clockManageReducer";
 
 const appReducer = combineReducers({
   login: loginReducer,
@@ -81,6 +82,7 @@ const appReducer = combineReducers({
   document: documentReducer,
   leads: leadsReducer,
   staff: staffReducer,
+  clockManage: clockManageReducer,
 });
 
 const rootReducer = (state, action) => {

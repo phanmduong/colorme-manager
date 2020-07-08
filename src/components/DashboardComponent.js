@@ -36,7 +36,7 @@ class DashboardComponent extends React.Component {
 
   getTotalNotCompletedTasks = () => {
     let totalNotCompleted = this.props.taskView.filter(
-      task => task.status === 0,
+      (task) => task.status === 0,
     );
     return totalNotCompleted.length;
   };
@@ -286,7 +286,13 @@ class DashboardComponent extends React.Component {
                 this.props.navigation.navigate('Document');
               }}
             />
-            <View style={{width: width / 3}} />
+            <CircleTab
+              iconImage={require('../../assets/img/icons8-management.png')}
+              title={'Chấm công'}
+              onPress={() => {
+                this.props.navigation.navigate('ClockManage');
+              }}
+            />
           </View>
           <MeetingComponent
             store={this.props.store}

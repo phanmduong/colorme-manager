@@ -452,4 +452,5 @@ export default {
     isLoadingRoles: false,
     errorRoles: false,
   },
+  clockManage: {},
 };

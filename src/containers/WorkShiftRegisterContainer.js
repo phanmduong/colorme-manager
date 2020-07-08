@@ -21,7 +21,7 @@ class WorkShiftRegisterContainer extends React.Component {
         setTimeout(() => {
             this.props.workShiftRegisterAction.selectedBaseId(this.props.baseData[0].id);
             this.props.workShiftRegisterAction.selectedGenId(this.props.currentGen.id)
-        }, 500);
+        }, 1000);
         setTimeout(() => this.loadDataWorkShiftRegister(
             this.props.baseData[0].id,
             this.props.currentGen.id,

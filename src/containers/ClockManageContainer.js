@@ -28,8 +28,26 @@ class ClockManageContainer extends React.Component {
     ),
   });
 
+  componentDidMount = () => {
+    this.loadShifts(this.props.selectedDate);
+  };
+
+  loadShifts = (date) => {
+    this.props.clockManageActions.getShiftClock(date, this.props.token);
+  };
+
+  onSelectDate = (date) => {
+    this.props.clockManageActions.onSelectClockManageDate(date);
+  };
+
   render() {
-    return <ClockManageComponent {...this.props} />;
+    return (
+      <ClockManageComponent
+        {...this.props}
+        onSelectDate={this.onSelectDate}
+        loadShifts={this.loadShifts}
+      />
+    );
   }
 }
 
@@ -39,7 +57,13 @@ const styles = {
 };
 
 function mapStateToProps(state) {
-  return {};
+  return {
+    token: state.login.token,
+    selectedDate: state.clockManage.selectedDate,
+    shifts: state.clockManage.shifts,
+    isLoadingShifts: state.clockManage.isLoadingShifts,
+    errorShifts: state.clockManage.errorShifts,
+  };
 }
 
 function mapDispatchToProps(dispatch) {

@@ -38,18 +38,10 @@ class ClassComponent extends React.Component {
           onPress={() => this.props.navigation.navigate('Profile')}>
           <Image
             source={{uri: this.props.avatar_url}}
-            style={{width: 35, height: 35, borderRadius: 18}}
+            style={styles.headerAva}
           />
         </TouchableOpacity>
-        <Text
-          style={{
-            color: 'black',
-            fontSize: 23,
-            fontWeight: 'bold',
-            marginLeft: 10,
-          }}>
-          Điểm danh
-        </Text>
+        <Text style={styles.headerTitle}>Điểm danh</Text>
       </View>
       <TouchableOpacity onPress={this.toggleFilterModal}>
         <View style={styles.filterContainer}>
@@ -78,8 +70,8 @@ class ClassComponent extends React.Component {
     </View>
   );
 
-  renderClassItem = classList => {
-    return classList.map(classItem => (
+  renderClassItem = (classList) => {
+    return classList.map((classItem) => (
       <CurrentClassItem
         name={classItem.name}
         icon={classItem.course.icon_url}
@@ -101,19 +93,19 @@ class ClassComponent extends React.Component {
     this.setState({week: this.createWeek(new Date())});
   };
 
-  onSelectBaseId = baseId => {
+  onSelectBaseId = (baseId) => {
     this.setState({selectedBaseId: baseId});
   };
 
-  onSelectProvinceId = provinceId => {
+  onSelectProvinceId = (provinceId) => {
     this.setState({selectedProvinceId: provinceId});
   };
 
-  onSelectCourseId = courseId => {
+  onSelectCourseId = (courseId) => {
     this.setState({selectedCourseId: courseId});
   };
 
-  createWeek = dateData => {
+  createWeek = (dateData) => {
     let date = new Date(dateData);
     let week = [];
     for (let i = 1; i <= 7; i++) {
@@ -144,7 +136,7 @@ class ClassComponent extends React.Component {
     });
   };
 
-  onSelectDate = date => {
+  onSelectDate = (date) => {
     this.props.onSelectDate(date);
     this.props.loadDataCurrentClassStudy(date);
   };
@@ -163,17 +155,17 @@ class ClassComponent extends React.Component {
     let futureClasses = [];
     if (this.state.selectedCourseId !== -1) {
       filterClasses = filterClasses.filter(
-        classItem => classItem.course.id === this.state.selectedCourseId,
+        (classItem) => classItem.course.id === this.state.selectedCourseId,
       );
     }
     if (this.state.selectedBaseId !== -1) {
       filterClasses = filterClasses.filter(
-        classItem => classItem.base.id === this.state.selectedBaseId,
+        (classItem) => classItem.base.id === this.state.selectedBaseId,
       );
     }
     if (this.state.selectedProvinceId !== -1) {
       filterClasses = filterClasses.filter(
-        classItem =>
+        (classItem) =>
           classItem.base.district.province.id === this.state.selectedProvinceId,
       );
     }
@@ -200,12 +192,12 @@ class ClassComponent extends React.Component {
     let pastClasses = [];
     if (this.state.selectedCourseId !== -1) {
       filterClasses = filterClasses.filter(
-        classItem => classItem.course.id === this.state.selectedCourseId,
+        (classItem) => classItem.course.id === this.state.selectedCourseId,
       );
     }
     if (this.state.selectedBaseId !== -1) {
       filterClasses = filterClasses.filter(
-        classItem => classItem.base.id === this.state.selectedBaseId,
+        (classItem) => classItem.base.id === this.state.selectedBaseId,
       );
     }
     for (let classItem of filterClasses) {
@@ -231,12 +223,12 @@ class ClassComponent extends React.Component {
     let pastClasses = [];
     if (this.state.selectedCourseId !== -1) {
       filterClasses = filterClasses.filter(
-        classItem => classItem.course.id === this.state.selectedCourseId,
+        (classItem) => classItem.course.id === this.state.selectedCourseId,
       );
     }
     if (this.state.selectedBaseId !== -1) {
       filterClasses = filterClasses.filter(
-        classItem => classItem.base.id === this.state.selectedBaseId,
+        (classItem) => classItem.base.id === this.state.selectedBaseId,
       );
     }
     for (let classItem of filterClasses) {
@@ -271,13 +263,9 @@ class ClassComponent extends React.Component {
       !this.props.isLoadingCourse
     ) {
       let nameSelectedDate =
-        moment(this.props.selectedDate)
-          .locale('vi')
-          .format('dddd') +
+        moment(this.props.selectedDate).locale('vi').format('dddd') +
         ' ' +
-        moment(this.props.selectedDate)
-          .locale('vi')
-          .format('L');
+        moment(this.props.selectedDate).locale('vi').format('L');
       nameSelectedDate =
         nameSelectedDate.charAt(0).toUpperCase() + nameSelectedDate.slice(1);
       return (
@@ -461,22 +449,6 @@ const styles = {
     width: 35,
     height: 35,
     marginRight: 10,
-  },
-  headerFooterContainer: {
-    padding: 10,
-    alignItems: 'center',
-  },
-  headerFooterText: {
-    fontSize: 19,
-    fontWeight: 'bold',
-    color: 'black',
-  },
-  options: {
-    marginVertical: 10,
-    paddingVertical: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F0F0F0',
-    marginHorizontal: 20,
   },
   headerContainer: {
     marginHorizontal: theme.mainHorizontal,

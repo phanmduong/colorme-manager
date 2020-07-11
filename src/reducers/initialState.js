@@ -452,5 +452,10 @@ export default {
     isLoadingRoles: false,
     errorRoles: false,
   },
-  clockManage: {},
+  clockManage: {
+    selectedDate: moment(new Date()).unix(),
+    shifts: [],
+    isLoadingShifts: false,
+    errorShifts: false,
+  },
 };

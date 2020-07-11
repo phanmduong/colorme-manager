@@ -1,24 +1,16 @@
 import React from 'react';
-import {
-  RefreshControl,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-  Dimensions,
-} from 'react-native';
+import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import moment from 'moment';
 import theme from '../styles';
-import ShiftClockItem from './clockManage/ShiftClockItem';
-import Spinkit from 'react-native-spinkit';
-import {convertTimeToSecond, isEmptyInput} from '../helper';
-const {width, height} = Dimensions.get('window');
+import ClockManageShiftContainer from '../containers/clockManage/ClockManageShiftContainer';
+import LinearGradient from 'react-native-linear-gradient';
 
 class ClockManageComponent extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
       week: [],
+      tabIndex: 0,
     };
   }
 
@@ -43,119 +35,13 @@ class ClockManageComponent extends React.Component {
     return week;
   };
 
-  groupShifts = (shifts) => {
-    let shiftMap = {};
-    if (!isEmptyInput(shifts)) {
-      shifts.forEach((shift) => {
-        const shiftName = `${shift.name}: (${shift.start_shift_time} - ${shift.end_shift_time})`;
-        if (!(shiftName in shiftMap)) {
-          shiftMap[shiftName] = [shift];
-        } else {
-          shiftMap[shiftName].push(shift);
-        }
-      });
-    }
-    return shiftMap;
-  };
-
-  renderShiftClockItems = (shiftMap) => {
-    return Object.keys(shiftMap).map((key, index) => (
-      <ShiftClockItem shiftName={key} shifts={shiftMap[key]} />
-    ));
-  };
-
-  renderCurrentShifts = () => {
-    let currentShifts = [];
-    const {shifts} = this.props;
-    shifts.forEach((shift) => {
-      if (shift.end_shift_time && shift.start_shift_time) {
-        const currentTime = moment();
-        const startTime = moment(
-          moment.unix(this.props.selectedDate).format('YYYY-MM-DD') +
-            ' ' +
-            shift.start_shift_time,
-        );
-        const endTime = moment(
-          moment.unix(this.props.selectedDate).format('YYYY-MM-DD') +
-            ' ' +
-            shift.end_shift_time,
-        );
-        if (currentTime.isAfter(startTime) && currentTime.isBefore(endTime)) {
-          currentShifts.push(shift);
-        }
-      }
-    });
-
-    if (currentShifts.length > 0) {
-      const shiftMap = this.groupShifts(currentShifts);
-      return (
-        <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>Đang diễn ra</Text>
-          {this.renderShiftClockItems(shiftMap)}
-        </View>
-      );
-    }
-  };
-
-  renderPastShifts = () => {
-    let pastShifts = [];
-    const {shifts} = this.props;
-    shifts.forEach((shift) => {
-      if (shift.end_shift_time && shift.start_shift_time) {
-        const currentTime = moment();
-        const endTime = moment(
-          moment.unix(this.props.selectedDate).format('YYYY-MM-DD') +
-            ' ' +
-            shift.end_shift_time,
-        );
-        if (currentTime.isAfter(endTime)) {
-          pastShifts.push(shift);
-        }
-      }
-    });
-
-    if (pastShifts.length > 0) {
-      const shiftMap = this.groupShifts(pastShifts);
-      return (
-        <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>Đã diễn ra</Text>
-          {this.renderShiftClockItems(shiftMap)}
-        </View>
-      );
-    }
-  };
-
-  renderFutureShifts = () => {
-    let futureShifts = [];
-    const {shifts} = this.props;
-    shifts.forEach((shift) => {
-      if (shift.end_shift_time && shift.start_shift_time) {
-        const currentTime = moment();
-        const startTime = moment(
-          moment.unix(this.props.selectedDate).format('YYYY-MM-DD') +
-            ' ' +
-            shift.start_shift_time,
-        );
-        if (currentTime.isBefore(startTime)) {
-          futureShifts.push(shift);
-        }
-      }
-    });
-
-    if (futureShifts.length > 0) {
-      const shiftMap = this.groupShifts(futureShifts);
-      return (
-        <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>Chưa diễn ra</Text>
-          {this.renderShiftClockItems(shiftMap)}
-        </View>
-      );
-    }
-  };
-
   onSelectDate = (date) => {
     this.props.onSelectDate(date);
     this.props.loadShifts(date);
+  };
+
+  changeTab = (index) => {
+    this.setState({tabIndex: index});
   };
 
   render() {
@@ -202,24 +88,22 @@ class ClockManageComponent extends React.Component {
             );
           })}
         </View>
-        {this.props.isLoadingShifts ? (
-          <View style={{flex: 1}}>
-            <View style={styles.container}>
-              <Spinkit
-                isVisible
-                color={theme.mainColor}
-                type="Wave"
-                size={width / 8}
-              />
-            </View>
-          </View>
-        ) : (
-          <View>
-            <View>{this.renderCurrentShifts()}</View>
-            <View>{this.renderPastShifts()}</View>
-            <View>{this.renderFutureShifts()}</View>
-          </View>
-        )}
+        <View style={styles.tabContainer}>
+          <LinearGradient
+            colors={
+              this.state.tabIndex === 0
+                ? ['#F6F6F6', '#F6F6F6']
+                : ['#FFFFFF', '#FFFFFF']
+            }
+            style={styles.gradientSize}
+            start={{x: 0, y: 0}}
+            end={{x: 1, y: 0}}>
+            <TouchableOpacity onPress={() => this.changeTab(0)}>
+              <Text style={styles.tabText}>Trực</Text>
+            </TouchableOpacity>
+          </LinearGradient>
+        </View>
+        {this.state.tabIndex === 0 ? <ClockManageShiftContainer /> : null}
       </ScrollView>
     );
   }
@@ -265,15 +149,6 @@ const styles = {
     fontWeight: '600',
     color: 'black',
   },
-  sectionContainer: {
-    flex: 1,
-    marginHorizontal: theme.mainHorizontal,
-    marginTop: 16,
-  },
-  sectionTitle: {
-    fontWeight: theme.title.fontWeight,
-    fontSize: theme.title.fontSize,
-  },
   selectedDateContainer: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -289,6 +164,22 @@ const styles = {
     height: 40,
     borderRadius: 20,
     backgroundColor: '#DDDDDD',
+  },
+  tabContainer: {
+    marginTop: 20,
+    flexDirection: 'row',
+    paddingHorizontal: theme.mainHorizontal,
+  },
+  gradientSize: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 104,
+    height: 35,
+    borderRadius: 24,
+  },
+  tabText: {
+    fontSize: 16,
+    color: 'black',
   },
 };
 

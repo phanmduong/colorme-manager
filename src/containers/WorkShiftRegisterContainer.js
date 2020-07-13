@@ -18,32 +18,40 @@ class WorkShiftRegisterContainer extends React.Component {
 
   componentWillMount = () => {
     this.loadBaseAndGenData();
-    setTimeout(() => {
-      this.props.workShiftRegisterAction.selectedBaseId(
-        this.props.baseData[0].id,
+  };
+
+  componentWillReceiveProps = (nextProps) => {
+    this.checkData(nextProps);
+  };
+
+  checkData = (props) => {
+    if (props.baseData.length > 0 && !this.state.checkedDataBase) {
+      this.setState({checkedDataBase: true});
+      this.props.workShiftRegisterAction.selectedBaseId(props.baseData[0].id);
+    }
+
+    if (props.genData.length > 0 && !this.state.checkedDataGen) {
+      this.setState({checkedDataGen: true});
+      this.props.workShiftRegisterAction.selectedGenId(props.currentGen.id);
+    }
+
+    if (
+      props.genData.length > 0 &&
+      props.baseData.length > 0 &&
+      !this.state.checkedDataWorkShiftRegister
+    ) {
+      this.setState({checkedDataWorkShiftRegister: true});
+      this.loadDataWorkShiftRegister(
+        props.baseData[0].id,
+        props.currentGen.id,
+        this.props.token,
       );
-      this.props.workShiftRegisterAction.selectedGenId(
-        this.props.currentGen.id,
-      );
-    }, 1000);
-    setTimeout(
-      () =>
-        this.loadDataWorkShiftRegister(
-          this.props.baseData[0].id,
-          this.props.currentGen.id,
-          this.props.token,
-        ),
-      1000,
-    );
+    }
   };
 
   loadBaseAndGenData = () => {
-    if (!this.props.baseData || this.props.baseData.length <= 0) {
-      this.props.baseActions.loadDataBase(this.props.token);
-    }
-    if (!this.props.genData || this.props.genData.length <= 0) {
-      this.props.genActions.loadDataGen(this.props.token);
-    }
+    this.props.baseActions.loadDataBase(this.props.token);
+    this.props.genActions.loadDataGen(this.props.token);
   };
 
   loadDataWorkShiftRegister = (baseId, genId) => {

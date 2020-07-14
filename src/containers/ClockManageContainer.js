@@ -28,12 +28,12 @@ class ClockManageContainer extends React.Component {
     ),
   });
 
-  componentDidMount = () => {
-    this.loadShifts(this.props.selectedDate);
-  };
-
   loadShifts = (date) => {
     this.props.clockManageActions.getShiftClock(date, this.props.token);
+  };
+
+  loadClasses = (date) => {
+    this.props.clockManageActions.getTeachingClock(date, this.props.token);
   };
 
   onSelectDate = (date) => {
@@ -46,6 +46,7 @@ class ClockManageContainer extends React.Component {
         {...this.props}
         onSelectDate={this.onSelectDate}
         loadShifts={this.loadShifts}
+        loadClasses={this.loadClasses}
       />
     );
   }

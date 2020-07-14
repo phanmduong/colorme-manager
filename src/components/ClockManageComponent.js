@@ -4,6 +4,7 @@ import moment from 'moment';
 import theme from '../styles';
 import ClockManageShiftContainer from '../containers/clockManage/ClockManageShiftContainer';
 import LinearGradient from 'react-native-linear-gradient';
+import ClockManageTeachingContainer from '../containers/clockManage/ClockManageTeachingContainer';
 
 class ClockManageComponent extends React.Component {
   constructor(props, context) {
@@ -38,6 +39,7 @@ class ClockManageComponent extends React.Component {
   onSelectDate = (date) => {
     this.props.onSelectDate(date);
     this.props.loadShifts(date);
+    this.props.loadClasses(date);
   };
 
   changeTab = (index) => {
@@ -102,8 +104,22 @@ class ClockManageComponent extends React.Component {
               <Text style={styles.tabText}>Trực</Text>
             </TouchableOpacity>
           </LinearGradient>
+          <LinearGradient
+            colors={
+              this.state.tabIndex === 1
+                ? ['#F6F6F6', '#F6F6F6']
+                : ['#FFFFFF', '#FFFFFF']
+            }
+            style={styles.gradientSize}
+            start={{x: 0, y: 0}}
+            end={{x: 1, y: 0}}>
+            <TouchableOpacity onPress={() => this.changeTab(1)}>
+              <Text style={styles.tabText}>Giảng dạy</Text>
+            </TouchableOpacity>
+          </LinearGradient>
         </View>
         {this.state.tabIndex === 0 ? <ClockManageShiftContainer /> : null}
+        {this.state.tabIndex === 1 ? <ClockManageTeachingContainer /> : null}
       </ScrollView>
     );
   }

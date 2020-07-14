@@ -7,3 +7,10 @@ export function getShiftClock(time, token) {
     time: time,
   });
 }
+
+export function getTeachingClock(time, token) {
+  let url = env.MANAGE_API_URL_V3 + '/gens/0/attendance-classes?token=' + token;
+  return axios.post(url, {
+    time: time,
+  });
+}

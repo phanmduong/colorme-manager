@@ -457,5 +457,8 @@ export default {
     shifts: [],
     isLoadingShifts: false,
     errorShifts: false,
+    classes: [],
+    isLoadingClasses: false,
+    errorClasses: false,
   },
 };

@@ -46,3 +46,43 @@ export function onSelectClockManageDate(date) {
     selectedDate: date,
   };
 }
+
+export function getTeachingClock(time, token) {
+  return function (dispatch) {
+    dispatch(beginLoadTeachingClock());
+    clockManageApi
+      .getTeachingClock(time, token)
+      .then(function (res) {
+        dispatch(loadTeachingClockSuccessful(res));
+      })
+      .catch((error) => {
+        dispatch(loadTeachingClockError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadTeachingClock() {
+  return {
+    type: types.BEGIN_LOAD_TEACHING_CLOCK,
+    isLoadingClasses: true,
+    errorClasses: false,
+  };
+}
+
+function loadTeachingClockSuccessful(res) {
+  return {
+    type: types.LOAD_TEACHING_CLOCK_SUCCESSFUL,
+    isLoadingClasses: false,
+    errorClasses: false,
+    classes: res.data.data.classes,
+  };
+}
+
+function loadTeachingClockError() {
+  return {
+    type: types.LOAD_TEACHING_CLOCK_ERROR,
+    isLoadingClasses: false,
+    errorClasses: true,
+  };
+}

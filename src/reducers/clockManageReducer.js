@@ -26,6 +26,22 @@ export default function clockManageReducer(
       return Object.assign({}, state, {
         selectedDate: action.selectedDate,
       });
+    case types.BEGIN_LOAD_TEACHING_CLOCK:
+      return Object.assign({}, state, {
+        isLoadingClasses: action.isLoadingClasses,
+        errorClasses: action.errorClasses,
+      });
+    case types.LOAD_TEACHING_CLOCK_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isLoadingClasses: action.isLoadingClasses,
+        errorClasses: action.errorClasses,
+        classes: action.classes,
+      });
+    case types.LOAD_TEACHING_CLOCK_ERROR:
+      return Object.assign({}, state, {
+        isLoadingClasses: action.isLoadingClasses,
+        errorClasses: action.errorClasses,
+      });
     default:
       return state;
   }

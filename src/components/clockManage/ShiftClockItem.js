@@ -15,7 +15,7 @@ class ShiftClockItem extends React.Component {
     };
 
     if (shift.start_shift_time && shift.check_in_time) {
-      const check_in_time = convertTimeToSecond(shift.start_shift_time);
+      const check_in_time = convertTimeToSecond(shift.check_in_time);
       const start_shift_time = convertTimeToSecond(shift.start_shift_time);
       if (check_in_time <= start_shift_time) {
         data.checkInBackgroundColor = '#69C655';

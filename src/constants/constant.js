@@ -83,3 +83,6 @@ export const GENDER = [
     value: '0',
   },
 ];
+
+export const TEACHER_ROLE = 'TEACHER_ROLE';
+export const TEACHER_ASSISTANT_ROLE = 'TEACHER_ASSISTANT_ROLE';

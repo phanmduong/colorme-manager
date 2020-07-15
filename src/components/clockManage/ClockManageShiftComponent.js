@@ -37,7 +37,7 @@ class ClockManageShiftComponent extends React.Component {
     let currentShifts = [];
     const {shifts} = this.props;
     shifts.forEach((shift) => {
-      if (shift.end_shift_time && shift.start_shift_time) {
+      if (shift.start_shift_time && shift.end_shift_time) {
         const currentTime = moment();
         const startTime = moment(
           moment.unix(this.props.selectedDate).format('YYYY-MM-DD') +
@@ -70,7 +70,7 @@ class ClockManageShiftComponent extends React.Component {
     let pastShifts = [];
     const {shifts} = this.props;
     shifts.forEach((shift) => {
-      if (shift.end_shift_time && shift.start_shift_time) {
+      if (shift.start_shift_time && shift.end_shift_time) {
         const currentTime = moment();
         const endTime = moment(
           moment.unix(this.props.selectedDate).format('YYYY-MM-DD') +
@@ -98,7 +98,7 @@ class ClockManageShiftComponent extends React.Component {
     let futureShifts = [];
     const {shifts} = this.props;
     shifts.forEach((shift) => {
-      if (shift.end_shift_time && shift.start_shift_time) {
+      if (shift.start_shift_time && shift.end_shift_time) {
         const currentTime = moment();
         const startTime = moment(
           moment.unix(this.props.selectedDate).format('YYYY-MM-DD') +

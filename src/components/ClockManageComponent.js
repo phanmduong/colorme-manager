@@ -101,7 +101,7 @@ class ClockManageComponent extends React.Component {
             start={{x: 0, y: 0}}
             end={{x: 1, y: 0}}>
             <TouchableOpacity onPress={() => this.changeTab(0)}>
-              <Text style={styles.tabText}>Trực</Text>
+              <Text style={styles.tabText}>Giảng dạy</Text>
             </TouchableOpacity>
           </LinearGradient>
           <LinearGradient
@@ -114,12 +114,12 @@ class ClockManageComponent extends React.Component {
             start={{x: 0, y: 0}}
             end={{x: 1, y: 0}}>
             <TouchableOpacity onPress={() => this.changeTab(1)}>
-              <Text style={styles.tabText}>Giảng dạy</Text>
+              <Text style={styles.tabText}>Trực</Text>
             </TouchableOpacity>
           </LinearGradient>
         </View>
-        {this.state.tabIndex === 0 ? <ClockManageShiftContainer /> : null}
-        {this.state.tabIndex === 1 ? <ClockManageTeachingContainer /> : null}
+        {this.state.tabIndex === 0 ? <ClockManageTeachingContainer /> : null}
+        {this.state.tabIndex === 1 ? <ClockManageShiftContainer /> : null}
       </ScrollView>
     );
   }

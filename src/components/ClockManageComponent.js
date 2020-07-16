@@ -5,6 +5,7 @@ import theme from '../styles';
 import ClockManageShiftContainer from '../containers/clockManage/ClockManageShiftContainer';
 import LinearGradient from 'react-native-linear-gradient';
 import ClockManageTeachingContainer from '../containers/clockManage/ClockManageTeachingContainer';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 class ClockManageComponent extends React.Component {
   constructor(props, context) {
@@ -17,6 +18,10 @@ class ClockManageComponent extends React.Component {
 
   componentDidMount = () => {
     this.setState({week: this.createWeek(new Date())});
+  };
+
+  componentWillUnmount = () => {
+    this.props.clockManageActions.resetClock();
   };
 
   createWeek = (dateData) => {
@@ -34,6 +39,20 @@ class ClockManageComponent extends React.Component {
       week.push(day);
     }
     return week;
+  };
+
+  nextWeek = () => {
+    const lastDate = new Date(this.state.week[6]);
+    this.setState({
+      week: this.createWeek(lastDate.setDate(lastDate.getDate() + 2)),
+    });
+  };
+
+  previousWeek = () => {
+    const firstDate = new Date(this.state.week[0]);
+    this.setState({
+      week: this.createWeek(firstDate.setDate(firstDate.getDate() - 2)),
+    });
   };
 
   onSelectDate = (date) => {
@@ -59,6 +78,9 @@ class ClockManageComponent extends React.Component {
           <Text style={styles.fullDateText}>{nameSelectedDate}</Text>
         </View>
         <View style={styles.weekAlign}>
+          <TouchableOpacity onPress={this.previousWeek}>
+            <Icon name={'keyboard-arrow-left'} color={'#000000'} size={34} />
+          </TouchableOpacity>
           {this.state.week.map((date, index) => {
             let isSelectedDate =
               moment.unix(this.props.selectedDate).format('DD/MM/YYYY') ===
@@ -89,6 +111,9 @@ class ClockManageComponent extends React.Component {
               </TouchableOpacity>
             );
           })}
+          <TouchableOpacity onPress={this.nextWeek}>
+            <Icon name={'keyboard-arrow-right'} color={'#000000'} size={34} />
+          </TouchableOpacity>
         </View>
         <View style={styles.tabContainer}>
           <LinearGradient
@@ -148,7 +173,6 @@ const styles = {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginHorizontal: theme.mainHorizontal,
   },
   dateName: {
     color: 'black',

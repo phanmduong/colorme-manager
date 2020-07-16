@@ -1,5 +1,6 @@
 import * as types from '../constants/actionTypes';
 import * as clockManageApi from '../apis/clockManageApi';
+import moment from 'moment';
 
 export function getShiftClock(time, token) {
   return function (dispatch) {
@@ -84,5 +85,14 @@ function loadTeachingClockError() {
     type: types.LOAD_TEACHING_CLOCK_ERROR,
     isLoadingClasses: false,
     errorClasses: true,
+  };
+}
+
+export function resetClock() {
+  return {
+    type: types.RESET_CLOCK,
+    selectedDate: moment(new Date()).unix(),
+    shifts: [],
+    classes: [],
   };
 }

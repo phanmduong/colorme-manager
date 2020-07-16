@@ -42,6 +42,12 @@ export default function clockManageReducer(
         isLoadingClasses: action.isLoadingClasses,
         errorClasses: action.errorClasses,
       });
+    case types.RESET_CLOCK:
+      return Object.assign({}, state, {
+        selectedDate: action.selectedDate,
+        shifts: action.shifts,
+        classes: action.classes,
+      });
     default:
       return state;
   }

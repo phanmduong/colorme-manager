@@ -13,12 +13,8 @@ class WorkShiftClockDate extends React.Component {
     self = this;
   }
 
-  // shouldComponentUpdate(nextProps) {
-  //     return !_.isEqual(nextProps.dateData, this.props.dateData);
-  // }
-
   renderShiftItem() {
-    const data = _.sortBy(this.props.shifts);
+    const data = _.orderBy(this.props.shifts, ['start_time'], ['asc']);
     return data.map((shift, index) => (
       <WorkShiftClockItem shift={shift} key={index} />
     ));
@@ -29,9 +25,7 @@ class WorkShiftClockDate extends React.Component {
       <View style={styles.card}>
         <Card>
           <CardItem style={{width: '100%'}}>
-            <Body style={styles.container}>
-              {this.renderShiftItem()}
-            </Body>
+            <Body style={styles.container}>{this.renderShiftItem()}</Body>
           </CardItem>
         </Card>
       </View>

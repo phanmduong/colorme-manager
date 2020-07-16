@@ -460,5 +460,8 @@ export default {
     classes: [],
     isLoadingClasses: false,
     errorClasses: false,
+    workShiftData: [],
+    isLoadingWorkShiftData: false,
+    errorWorkShiftData: false,
   },
 };

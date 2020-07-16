@@ -96,3 +96,43 @@ export function resetClock() {
     classes: [],
   };
 }
+
+export function getWorkShiftClock(time, token) {
+  return function (dispatch) {
+    dispatch(beginLoadWorkShiftClock());
+    clockManageApi
+      .getWorkShiftClock(time, token)
+      .then(function (res) {
+        dispatch(loadWorkShiftClockSuccessful(res));
+      })
+      .catch((error) => {
+        dispatch(loadWorkShiftClockError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadWorkShiftClock() {
+  return {
+    type: types.BEGIN_LOAD_WORK_SHIFT_CLOCK,
+    isLoadingWorkShiftData: true,
+    errorWorkShiftData: false,
+  };
+}
+
+function loadWorkShiftClockSuccessful(res) {
+  return {
+    type: types.LOAD_WORK_SHIFT_CLOCK_SUCCESSFUL,
+    isLoadingWorkShiftData: false,
+    errorWorkShiftData: false,
+    workShiftData: res.data.data,
+  };
+}
+
+function loadWorkShiftClockError() {
+  return {
+    type: types.LOAD_WORK_SHIFT_CLOCK_ERROR,
+    isLoadingWorkShiftData: false,
+    errorWorkShiftData: true,
+  };
+}

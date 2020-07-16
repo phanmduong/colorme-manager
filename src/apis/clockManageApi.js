@@ -14,3 +14,13 @@ export function getTeachingClock(time, token) {
     time: time,
   });
 }
+
+export function getWorkShiftClock(time, token) {
+  let url =
+    env.MANAGE_API_URL_V3 +
+    '/gens/0/attendance-work-shifts?token=' +
+    token +
+    '&time=' +
+    time;
+  return axios.get(url);
+}

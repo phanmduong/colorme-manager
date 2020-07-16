@@ -48,6 +48,22 @@ export default function clockManageReducer(
         shifts: action.shifts,
         classes: action.classes,
       });
+    case types.BEGIN_LOAD_WORK_SHIFT_CLOCK:
+      return Object.assign({}, state, {
+        isLoadingWorkShiftData: action.isLoadingWorkShiftData,
+        errorWorkShiftData: action.errorWorkShiftData,
+      });
+    case types.LOAD_WORK_SHIFT_CLOCK_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isLoadingWorkShiftData: action.isLoadingWorkShiftData,
+        errorWorkShiftData: action.errorWorkShiftData,
+        workShiftData: action.workShiftData,
+      });
+    case types.LOAD_WORK_SHIFT_CLOCK_ERROR:
+      return Object.assign({}, state, {
+        isLoadingWorkShiftData: action.isLoadingWorkShiftData,
+        errorWorkShiftData: action.errorWorkShiftData,
+      });
     default:
       return state;
   }

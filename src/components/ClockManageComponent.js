@@ -6,6 +6,7 @@ import ClockManageShiftContainer from '../containers/clockManage/ClockManageShif
 import LinearGradient from 'react-native-linear-gradient';
 import ClockManageTeachingContainer from '../containers/clockManage/ClockManageTeachingContainer';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import ClockManageWorkShiftContainer from '../containers/clockManage/ClockManageWorkShiftContainer';
 
 class ClockManageComponent extends React.Component {
   constructor(props, context) {
@@ -139,12 +140,26 @@ class ClockManageComponent extends React.Component {
             start={{x: 0, y: 0}}
             end={{x: 1, y: 0}}>
             <TouchableOpacity onPress={() => this.changeTab(1)}>
+              <Text style={styles.tabText}>Làm việc</Text>
+            </TouchableOpacity>
+          </LinearGradient>
+          <LinearGradient
+            colors={
+              this.state.tabIndex === 2
+                ? ['#F6F6F6', '#F6F6F6']
+                : ['#FFFFFF', '#FFFFFF']
+            }
+            style={styles.gradientSize}
+            start={{x: 0, y: 0}}
+            end={{x: 1, y: 0}}>
+            <TouchableOpacity onPress={() => this.changeTab(2)}>
               <Text style={styles.tabText}>Trực</Text>
             </TouchableOpacity>
           </LinearGradient>
         </View>
         {this.state.tabIndex === 0 ? <ClockManageTeachingContainer /> : null}
-        {this.state.tabIndex === 1 ? <ClockManageShiftContainer /> : null}
+        {this.state.tabIndex === 1 ? <ClockManageWorkShiftContainer /> : null}
+        {this.state.tabIndex === 2 ? <ClockManageShiftContainer /> : null}
       </ScrollView>
     );
   }

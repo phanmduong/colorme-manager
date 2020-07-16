@@ -1,16 +1,11 @@
 import React from 'react';
-import {View, Text, Card, CardItem, Body} from 'native-base';
+import {View, Card, CardItem, Body} from 'native-base';
 import _ from 'lodash';
-import {Dimensions} from 'react-native';
 import WorkShiftClockItem from './WorkShiftClockItem';
-
-var self;
-var {height, width} = Dimensions.get('window');
 
 class WorkShiftClockDate extends React.Component {
   constructor(props, context) {
     super(props, context);
-    self = this;
   }
 
   renderShiftItem() {

@@ -29,24 +29,26 @@ class ClockManageTeachingComponent extends React.Component {
   renderCurrentClasses = () => {
     let currentClasses = [];
     const {classes} = this.props;
-    classes.forEach((classItem) => {
-      if (classItem.start_time && classItem.end_time) {
-        const currentTime = moment();
-        const startTime = moment(
-          moment.unix(this.props.selectedDate).format('YYYY-MM-DD') +
-            ' ' +
-            classItem.start_time,
-        );
-        const endTime = moment(
-          moment.unix(this.props.selectedDate).format('YYYY-MM-DD') +
-            ' ' +
-            classItem.end_time,
-        );
-        if (currentTime.isAfter(startTime) && currentTime.isBefore(endTime)) {
-          currentClasses.push(classItem);
+    if (classes) {
+      classes.forEach((classItem) => {
+        if (classItem.start_time && classItem.end_time) {
+          const currentTime = moment();
+          const startTime = moment(
+            moment.unix(this.props.selectedDate).format('YYYY-MM-DD') +
+              ' ' +
+              classItem.start_time,
+          );
+          const endTime = moment(
+            moment.unix(this.props.selectedDate).format('YYYY-MM-DD') +
+              ' ' +
+              classItem.end_time,
+          );
+          if (currentTime.isAfter(startTime) && currentTime.isBefore(endTime)) {
+            currentClasses.push(classItem);
+          }
         }
-      }
-    });
+      });
+    }
 
     if (currentClasses.length > 0) {
       return (
@@ -61,19 +63,21 @@ class ClockManageTeachingComponent extends React.Component {
   renderPastClasses = () => {
     let pastClasses = [];
     const {classes} = this.props;
-    classes.forEach((classItem) => {
-      if (classItem.start_time && classItem.end_time) {
-        const currentTime = moment();
-        const endTime = moment(
-          moment.unix(this.props.selectedDate).format('YYYY-MM-DD') +
-            ' ' +
-            classItem.end_time,
-        );
-        if (currentTime.isAfter(endTime)) {
-          pastClasses.push(classItem);
+    if (classes) {
+      classes.forEach((classItem) => {
+        if (classItem.start_time && classItem.end_time) {
+          const currentTime = moment();
+          const endTime = moment(
+            moment.unix(this.props.selectedDate).format('YYYY-MM-DD') +
+              ' ' +
+              classItem.end_time,
+          );
+          if (currentTime.isAfter(endTime)) {
+            pastClasses.push(classItem);
+          }
         }
-      }
-    });
+      });
+    }
 
     if (pastClasses.length > 0) {
       return (
@@ -88,19 +92,21 @@ class ClockManageTeachingComponent extends React.Component {
   renderFutureClasses = () => {
     let futureClasses = [];
     const {classes} = this.props;
-    classes.forEach((classItem) => {
-      if (classItem.start_time && classItem.end_time) {
-        const currentTime = moment();
-        const startTime = moment(
-          moment.unix(this.props.selectedDate).format('YYYY-MM-DD') +
-            ' ' +
-            classItem.start_time,
-        );
-        if (currentTime.isBefore(startTime)) {
-          futureClasses.push(classItem);
+    if (classes) {
+      classes.forEach((classItem) => {
+        if (classItem.start_time && classItem.end_time) {
+          const currentTime = moment();
+          const startTime = moment(
+            moment.unix(this.props.selectedDate).format('YYYY-MM-DD') +
+              ' ' +
+              classItem.start_time,
+          );
+          if (currentTime.isBefore(startTime)) {
+            futureClasses.push(classItem);
+          }
         }
-      }
-    });
+      });
+    }
 
     if (futureClasses.length > 0) {
       return (

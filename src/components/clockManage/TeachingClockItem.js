@@ -106,42 +106,40 @@ class TeachingClockItem extends React.Component {
   render() {
     const {name, icon, description, room, study_time} = this.props;
     return (
-      <TouchableOpacity>
-        <View style={styles.itemContainer}>
-          <View style={styles.headerContainer}>
-            <Thumbnail small source={{uri: icon}} style={theme.mainAvatar} />
-            <Text numberOfLines={1} style={styles.className}>
-              {name}
-            </Text>
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            <View style={styles.placeholderAva} />
-            <View style={styles.infoContainer}>
-              <View>
-                {study_time ? (
-                  <Text
-                    numberOfLines={1}
-                    style={[styles.classInfoContainer, {paddingTop: 0}]}>
-                    {study_time}
-                  </Text>
-                ) : null}
-                {description ? (
-                  <Text numberOfLines={1} style={styles.classInfoContainer}>
-                    {description}
-                  </Text>
-                ) : null}
-                {room && room.name && room.address ? (
-                  <Text numberOfLines={1} style={styles.classInfoContainer}>
-                    {room.name} - {room.address}
-                  </Text>
-                ) : null}
-                {this.renderTeacher(TEACHER_ROLE)}
-                {this.renderTeacher(TEACHER_ASSISTANT_ROLE)}
-              </View>
+      <View style={styles.itemContainer}>
+        <View style={styles.headerContainer}>
+          <Thumbnail small source={{uri: icon}} style={theme.mainAvatar} />
+          <Text numberOfLines={1} style={styles.className}>
+            {name}
+          </Text>
+        </View>
+        <View style={{flexDirection: 'row'}}>
+          <View style={styles.placeholderAva} />
+          <View style={styles.infoContainer}>
+            <View>
+              {study_time ? (
+                <Text
+                  numberOfLines={1}
+                  style={[styles.classInfoContainer, {paddingTop: 0}]}>
+                  {study_time}
+                </Text>
+              ) : null}
+              {description ? (
+                <Text numberOfLines={1} style={styles.classInfoContainer}>
+                  {description}
+                </Text>
+              ) : null}
+              {room && room.name && room.address ? (
+                <Text numberOfLines={1} style={styles.classInfoContainer}>
+                  {room.name} - {room.address}
+                </Text>
+              ) : null}
+              {this.renderTeacher(TEACHER_ROLE)}
+              {this.renderTeacher(TEACHER_ASSISTANT_ROLE)}
             </View>
           </View>
         </View>
-      </TouchableOpacity>
+      </View>
     );
   }
 }

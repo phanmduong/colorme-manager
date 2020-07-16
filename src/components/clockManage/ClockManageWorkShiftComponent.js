@@ -3,16 +3,28 @@ import {View, Dimensions} from 'react-native';
 import WorkShiftClockSelectionCell from './WorkShiftClockSelectionCell';
 import theme from '../../styles';
 import Spinkit from 'react-native-spinkit';
+import Search from '../common/Search';
 const {width, height} = Dimensions.get('window');
 
 class ClockManageWorkShiftComponent extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.state = {
+      search: '',
+    };
   }
 
   renderWorkShiftCells = () => {
     const {workShiftData} = this.props;
-    return workShiftData.map((person) => (
+    const data = workShiftData.filter((person) => {
+      let normalizedName = person.name
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
+      return normalizedName
+        .toLowerCase()
+        .includes(this.state.search.toLowerCase());
+    });
+    return data.map((person) => (
       <WorkShiftClockSelectionCell
         avatar_url={person.avatar_url}
         name={person.name}
@@ -40,7 +52,15 @@ class ClockManageWorkShiftComponent extends React.Component {
         </View>
       </View>
     ) : (
-      <View>{this.renderWorkShiftCells()}</View>
+      <View style={styles.workShiftsContainer}>
+        <Search
+          placeholder="Tìm kiếm"
+          onChangeText={(search) => {
+            this.setState({search});
+          }}
+        />
+        <View>{this.renderWorkShiftCells()}</View>
+      </View>
     );
   }
 }
@@ -50,6 +70,9 @@ const styles = {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  workShiftsContainer: {
+    marginTop: 10,
   },
 };
 

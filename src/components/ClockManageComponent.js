@@ -60,6 +60,7 @@ class ClockManageComponent extends React.Component {
     this.props.onSelectDate(date);
     this.props.loadShifts(date);
     this.props.loadClasses(date);
+    this.props.loadWorkShifts(date);
   };
 
   changeTab = (index) => {
@@ -157,9 +158,15 @@ class ClockManageComponent extends React.Component {
             </TouchableOpacity>
           </LinearGradient>
         </View>
-        {this.state.tabIndex === 0 ? <ClockManageTeachingContainer /> : null}
-        {this.state.tabIndex === 1 ? <ClockManageWorkShiftContainer /> : null}
-        {this.state.tabIndex === 2 ? <ClockManageShiftContainer /> : null}
+        {this.state.tabIndex === 0 ? (
+          <ClockManageTeachingContainer {...this.props} />
+        ) : null}
+        {this.state.tabIndex === 1 ? (
+          <ClockManageWorkShiftContainer {...this.props} />
+        ) : null}
+        {this.state.tabIndex === 2 ? (
+          <ClockManageShiftContainer {...this.props} />
+        ) : null}
       </ScrollView>
     );
   }

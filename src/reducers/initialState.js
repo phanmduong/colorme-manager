@@ -463,5 +463,6 @@ export default {
     workShiftData: [],
     isLoadingWorkShiftData: false,
     errorWorkShiftData: false,
+    selectedEmployee: null,
   },
 };

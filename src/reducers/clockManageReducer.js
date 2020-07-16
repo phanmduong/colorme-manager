@@ -64,6 +64,10 @@ export default function clockManageReducer(
         isLoadingWorkShiftData: action.isLoadingWorkShiftData,
         errorWorkShiftData: action.errorWorkShiftData,
       });
+    case types.ON_SELECT_WORK_SHIFT_CLOCK_EMPLOYEE:
+      return Object.assign({}, state, {
+        selectedEmployee: action.selectedEmployee,
+      });
     default:
       return state;
   }

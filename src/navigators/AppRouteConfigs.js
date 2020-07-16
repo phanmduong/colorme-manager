@@ -61,6 +61,7 @@ import LeadsContainer from '../containers/LeadsContainer';
 import AddLeadsContainer from '../containers/AddLeadsContainer';
 import StaffContainer from '../containers/StaffContainer';
 import ClockManageContainer from '../containers/ClockManageContainer';
+import ClockManageWorkShiftDetailsContainer from '../containers/ClockManageWorkShiftDetailsContainer';
 
 const navigationOptionsDefault = {
   defaultNavigationOptions: {
@@ -462,6 +463,13 @@ const TabDashboard = createStackNavigator(
     },
     ClockManage: {
       screen: ClockManageContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    ClockManageWorkShiftDetails: {
+      screen: ClockManageWorkShiftDetailsContainer,
       navigationOptions: () => ({
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},

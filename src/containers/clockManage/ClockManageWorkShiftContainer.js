@@ -17,8 +17,17 @@ class ClockManageWorkShiftContainer extends React.Component {
     this.props.clockManageActions.getWorkShiftClock(date, this.props.token);
   };
 
+  onSelectWorkShiftEmployee = (employee) => {
+    this.props.clockManageActions.onSelectWorkShiftClockEmployee(employee);
+  };
+
   render() {
-    return <ClockManageWorkShiftComponent {...this.props} />;
+    return (
+      <ClockManageWorkShiftComponent
+        {...this.props}
+        onSelectWorkShiftEmployee={this.onSelectWorkShiftEmployee}
+      />
+    );
   }
 }
 

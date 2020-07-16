@@ -1,13 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import ClockManageComponent from '../components/ClockManageComponent';
-import * as clockManageActions from '../actions/clockManageActions';
-import {bindActionCreators} from 'redux';
+import ClockManageWorkShiftDetailsComponent from '../components/ClockManageWorkShiftDetailsComponent';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../styles';
+import {bindActionCreators} from 'redux';
+import * as clockManageActions from '../actions/clockManageActions';
 
-class ClockManageContainer extends React.Component {
+class ClockManageWorkShiftDetailsContainer extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
@@ -28,32 +28,8 @@ class ClockManageContainer extends React.Component {
     ),
   });
 
-  loadShifts = (date) => {
-    this.props.clockManageActions.getShiftClock(date, this.props.token);
-  };
-
-  loadClasses = (date) => {
-    this.props.clockManageActions.getTeachingClock(date, this.props.token);
-  };
-
-  loadWorkShifts = (date) => {
-    this.props.clockManageActions.getWorkShiftClock(date, this.props.token);
-  };
-
-  onSelectDate = (date) => {
-    this.props.clockManageActions.onSelectClockManageDate(date);
-  };
-
   render() {
-    return (
-      <ClockManageComponent
-        {...this.props}
-        onSelectDate={this.onSelectDate}
-        loadShifts={this.loadShifts}
-        loadClasses={this.loadClasses}
-        loadWorkShifts={this.loadWorkShifts}
-      />
-    );
+    return <ClockManageWorkShiftDetailsComponent {...this.props} />;
   }
 }
 
@@ -66,9 +42,7 @@ function mapStateToProps(state) {
   return {
     token: state.login.token,
     selectedDate: state.clockManage.selectedDate,
-    shifts: state.clockManage.shifts,
-    isLoadingShifts: state.clockManage.isLoadingShifts,
-    errorShifts: state.clockManage.errorShifts,
+    selectedEmployee: state.clockManage.selectedEmployee,
   };
 }
 
@@ -81,4 +55,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ClockManageContainer);
+)(ClockManageWorkShiftDetailsContainer);

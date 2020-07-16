@@ -136,3 +136,10 @@ function loadWorkShiftClockError() {
     errorWorkShiftData: true,
   };
 }
+
+export function onSelectWorkShiftClockEmployee(employee) {
+  return {
+    type: types.ON_SELECT_WORK_SHIFT_CLOCK_EMPLOYEE,
+    selectedEmployee: employee,
+  };
+}

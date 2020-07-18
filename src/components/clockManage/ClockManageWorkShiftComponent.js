@@ -28,6 +28,8 @@ class ClockManageWorkShiftComponent extends React.Component {
       <WorkShiftClockSelectionCell
         avatar_url={person.avatar_url}
         name={person.name}
+        selectedDate={this.props.selectedDate}
+        work_shifts={person.work_shifts}
         onPress={() => {
           this.props.navigation.navigate('ClockManageWorkShiftDetails', {
             name: person.name,

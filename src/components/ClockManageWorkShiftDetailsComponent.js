@@ -22,7 +22,8 @@ class ClockManageWorkShiftDetailsComponent extends React.Component {
   }
 
   componentDidMount = () => {
-    this.setState({week: this.createWeek(new Date())});
+    const {selectedDate} = this.props;
+    this.setState({week: this.createWeek(new Date(selectedDate * 1000))});
   };
 
   createWeek = (dateData) => {

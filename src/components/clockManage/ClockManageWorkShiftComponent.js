@@ -15,7 +15,7 @@ class ClockManageWorkShiftComponent extends React.Component {
   }
 
   renderWorkShiftCells = () => {
-    const {workShiftData} = this.props;
+    const {workShiftData, selectedDate} = this.props;
     const data = workShiftData.filter((person) => {
       let normalizedName = person.name
         .normalize('NFD')
@@ -34,6 +34,7 @@ class ClockManageWorkShiftComponent extends React.Component {
           this.props.navigation.navigate('ClockManageWorkShiftDetails', {
             name: person.name,
             avatar_url: person.avatar_url,
+            originalDate: selectedDate,
           });
           this.props.onSelectWorkShiftEmployee(person);
         }}

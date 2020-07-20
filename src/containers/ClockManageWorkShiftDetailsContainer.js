@@ -13,6 +13,13 @@ class ClockManageWorkShiftDetailsContainer extends React.Component {
     super(props, context);
   }
 
+  componentWillUnmount = () => {
+    const {navigation} = this.props;
+    const originalDate = navigation.getParam('originalDate');
+    this.onSelectDate(originalDate);
+    this.loadWorkShifts(originalDate);
+  };
+
   static navigationOptions = ({navigation}) => ({
     headerLeft: () => (
       <View style={styles.headerLeftContainer}>

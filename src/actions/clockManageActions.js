@@ -162,7 +162,6 @@ export function getEmployeeWorkShiftClock(employeeId, time, token) {
       .then(function (res) {
         const shifts = res.data.data;
         const employee = shifts.find((person) => person.id === employeeId);
-        console.log(employeeId);
         dispatch(loadEmployeeWorkShiftClockSuccessful(employee));
       })
       .catch((error) => {

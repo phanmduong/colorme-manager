@@ -13,11 +13,8 @@ class ClockManageWorkShiftDetailsContainer extends React.Component {
     super(props, context);
   }
 
-  componentWillUnmount = () => {
-    const {navigation} = this.props;
-    const originalDate = navigation.getParam('originalDate');
-    this.onSelectDate(originalDate);
-    this.loadWorkShifts(originalDate);
+  componentDidMount = () => {
+    this.onSelectDate(this.props.selectedDate);
   };
 
   static navigationOptions = ({navigation}) => ({
@@ -53,11 +50,18 @@ class ClockManageWorkShiftDetailsContainer extends React.Component {
   });
 
   loadWorkShifts = (date) => {
-    this.props.clockManageActions.getWorkShiftClock(date, this.props.token);
+    const employeeId = this.props.navigation.getParam('employeeId');
+    this.props.clockManageActions.getEmployeeWorkShiftClock(
+      employeeId,
+      date,
+      this.props.token,
+    );
   };
 
   onSelectDate = (date) => {
-    this.props.clockManageActions.onSelectClockManageDate(date);
+    this.props.clockManageActions.onSelectEmployeeWorkShiftClockManageDate(
+      date,
+    );
   };
 
   render() {
@@ -81,7 +85,7 @@ function mapStateToProps(state) {
   return {
     token: state.login.token,
     selectedDate: state.clockManage.selectedDate,
-    workShiftData: state.clockManage.workShiftData,
+    employeeSelectedDate: state.clockManage.employeeSelectedDate,
     isLoadingWorkShiftData: state.clockManage.isLoadingWorkShiftData,
     errorWorkShiftData: state.clockManage.errorWorkShiftData,
     selectedEmployee: state.clockManage.selectedEmployee,

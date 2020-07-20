@@ -32,9 +32,9 @@ class ClockManageWorkShiftComponent extends React.Component {
         work_shifts={person.work_shifts}
         onPress={() => {
           this.props.navigation.navigate('ClockManageWorkShiftDetails', {
+            employeeId: person.id,
             name: person.name,
             avatar_url: person.avatar_url,
-            originalDate: selectedDate,
           });
           this.props.onSelectWorkShiftEmployee(person);
         }}

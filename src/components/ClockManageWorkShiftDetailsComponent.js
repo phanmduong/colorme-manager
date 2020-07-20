@@ -23,7 +23,9 @@ class ClockManageWorkShiftDetailsComponent extends React.Component {
 
   componentDidMount = () => {
     const {selectedDate} = this.props;
-    this.setState({week: this.createWeek(new Date(selectedDate * 1000))});
+    this.setState({
+      week: this.createWeek(new Date(selectedDate * 1000)),
+    });
   };
 
   createWeek = (dateData) => {
@@ -63,12 +65,9 @@ class ClockManageWorkShiftDetailsComponent extends React.Component {
   };
 
   renderWorkShift = () => {
-    const {selectedEmployee, workShiftData} = this.props;
-    const employee = workShiftData.find(
-      (person) => person.id === selectedEmployee.id,
-    );
-    if (employee && employee.work_shifts) {
-      return <WorkShiftClockDate shifts={employee.work_shifts} />;
+    const {selectedEmployee} = this.props;
+    if (selectedEmployee && selectedEmployee.work_shifts) {
+      return <WorkShiftClockDate shifts={selectedEmployee.work_shifts} />;
     } else {
       return (
         <View style={styles.container}>
@@ -80,9 +79,9 @@ class ClockManageWorkShiftDetailsComponent extends React.Component {
 
   render() {
     let nameSelectedDate =
-      moment.unix(this.props.selectedDate).locale('vi').format('dddd') +
+      moment.unix(this.props.employeeSelectedDate).locale('vi').format('dddd') +
       ' ' +
-      moment.unix(this.props.selectedDate).locale('vi').format('L');
+      moment.unix(this.props.employeeSelectedDate).locale('vi').format('L');
     nameSelectedDate =
       nameSelectedDate.charAt(0).toUpperCase() + nameSelectedDate.slice(1);
     return (
@@ -96,8 +95,9 @@ class ClockManageWorkShiftDetailsComponent extends React.Component {
           </TouchableOpacity>
           {this.state.week.map((date, index) => {
             let isSelectedDate =
-              moment.unix(this.props.selectedDate).format('DD/MM/YYYY') ===
-              moment(date).format('DD/MM/YYYY');
+              moment
+                .unix(this.props.employeeSelectedDate)
+                .format('DD/MM/YYYY') === moment(date).format('DD/MM/YYYY');
             return (
               <TouchableOpacity
                 onPress={() => this.onSelectDate(moment(date).unix())}>

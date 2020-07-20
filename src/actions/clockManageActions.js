@@ -94,6 +94,7 @@ export function resetClock() {
     selectedDate: moment(new Date()).unix(),
     shifts: [],
     classes: [],
+    workShiftData: [],
   };
 }
 
@@ -141,5 +142,39 @@ export function onSelectWorkShiftClockEmployee(employee) {
   return {
     type: types.ON_SELECT_WORK_SHIFT_CLOCK_EMPLOYEE,
     selectedEmployee: employee,
+  };
+}
+
+function loadEmployeeWorkShiftClockSuccessful(employee) {
+  return {
+    type: types.LOAD_EMPLOYEE_WORK_SHIFT_CLOCK_SUCCESSFUL,
+    isLoadingWorkShiftData: false,
+    errorWorkShiftData: false,
+    selectedEmployee: employee,
+  };
+}
+
+export function getEmployeeWorkShiftClock(employeeId, time, token) {
+  return function (dispatch) {
+    dispatch(beginLoadWorkShiftClock());
+    clockManageApi
+      .getWorkShiftClock(time, token)
+      .then(function (res) {
+        const shifts = res.data.data;
+        const employee = shifts.find((person) => person.id === employeeId);
+        console.log(employeeId);
+        dispatch(loadEmployeeWorkShiftClockSuccessful(employee));
+      })
+      .catch((error) => {
+        dispatch(loadWorkShiftClockError());
+        throw error;
+      });
+  };
+}
+
+export function onSelectEmployeeWorkShiftClockManageDate(date) {
+  return {
+    type: types.ON_SELECT_EMPLOYEE_WORK_SHIFT_CLOCK_MANAGE_DATE,
+    employeeSelectedDate: date,
   };
 }

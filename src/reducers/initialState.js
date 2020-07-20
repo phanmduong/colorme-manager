@@ -464,5 +464,6 @@ export default {
     isLoadingWorkShiftData: false,
     errorWorkShiftData: false,
     selectedEmployee: null,
+    employeeSelectedDate: null,
   },
 };

@@ -4,8 +4,8 @@
 import axios from 'axios';
 import * as env from '../constants/env';
 
-export function loadLoginApi(login) {
-  let url = env.API_URL + '/login';
+export function loadLoginApi(login, domain) {
+  let url = env.apiUrl(domain) + '/login';
   return axios.post(url, {
     email: login.username,
     password: login.password,

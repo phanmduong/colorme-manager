@@ -32,7 +32,7 @@ export function loginUser(login, domain, openMainScreen, logout) {
   return function (dispatch) {
     dispatch(beginLogin());
     loadLoginApi
-      .loadLoginApi(login)
+      .loadLoginApi(login, domain)
       .then(function (res) {
         loadLoginApi
           .loadCheckDevice(device, res.data.token, domain)
@@ -127,9 +127,7 @@ export function gotDataLogin(username, password, domain) {
       username: username,
       password: password,
     },
-    domain: {
-      manageApiUrl: domain,
-    },
+    domain: domain,
     isGetDataLocalSuccessful: true,
   };
 }

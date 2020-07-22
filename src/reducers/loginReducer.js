@@ -38,7 +38,7 @@ export default function loginReducer(state = initialState.login, action) {
       return Object.assign({}, initialState.login, {
         login: action.login,
         isGetDataLocalSuccessful: action.isGetDataLocalSuccessful,
-        manageApiUrl: action.manageApiUrl,
+        domain: action.domain,
       });
     default:
       return state;

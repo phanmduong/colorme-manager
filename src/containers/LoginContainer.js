@@ -28,7 +28,7 @@ class LoginContainer extends React.Component {
   saveDataLogin() {
     this.props.loginActions.setDataLogin(
       this.props.login,
-      this.props.domain.manageApiUrl,
+      this.props.domain,
     );
   }
 
@@ -46,11 +46,11 @@ class LoginContainer extends React.Component {
     if (
       this.props.login.username &&
       this.props.login.password &&
-      this.props.domain.manageApiUrl
+      this.props.domain
     ) {
       this.props.loginActions.loginUser(
         this.props.login,
-        this.props.domain.manageApiUrl,
+        this.props.domain,
         this.openMainScreen,
       );
       this.saveDataLogin();

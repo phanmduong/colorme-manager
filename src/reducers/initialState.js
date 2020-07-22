@@ -21,9 +21,7 @@ export default {
     isGetDataLocalSuccessful: false,
     isCheckIn: false,
     deviceUser: {},
-    domain: {
-      manageApiUrl: 'manageapi.colorme.vn',
-    },
+    domain: 'manageapi.colorme.vn',
   },
   base: {
     baseData: [],

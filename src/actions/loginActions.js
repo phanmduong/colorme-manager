@@ -23,20 +23,20 @@ export function beginLogin() {
   };
 }
 
-export function loginUser(login, openMainScreen, logout) {
+export function loginUser(login, domain, openMainScreen, logout) {
   let device = {
     device_id: DeviceInfo.getUniqueID(),
     name: DeviceInfo.getModel(),
     os: DeviceInfo.getBrand() + ' - ' + DeviceInfo.getSystemVersion(),
   };
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginLogin());
     loadLoginApi
       .loadLoginApi(login)
-      .then(function(res) {
+      .then(function (res) {
         loadLoginApi
-          .loadCheckDevice(device, res.data.token)
-          .then(function(resCheckDevice) {
+          .loadCheckDevice(device, res.data.token, domain)
+          .then(function (resCheckDevice) {
             if (resCheckDevice.data.status === 0) {
               dispatch(
                 loginSuccess(
@@ -56,7 +56,7 @@ export function loginUser(login, openMainScreen, logout) {
             dispatch(changeStatusTransaction(res.data.user));
           });
       })
-      .catch(error => {
+      .catch((error) => {
         if (logout) {
           logout();
         }
@@ -110,21 +110,25 @@ export function loginError() {
 }
 
 export function getDataLogin() {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const username = await AsyncStorage.getItem('@ColorME:username');
       const password = await AsyncStorage.getItem('@ColorME:password');
-      dispatch(gotDataLogin(username, password));
+      const domain = await AsyncStorage.getItem('@ColorME:domain');
+      dispatch(gotDataLogin(username, password, domain));
     } catch (error) {}
   };
 }
 
-export function gotDataLogin(username, password) {
+export function gotDataLogin(username, password, domain) {
   return {
     type: types.GOT_DATA_LOGIN,
     login: {
       username: username,
       password: password,
+    },
+    domain: {
+      manageApiUrl: domain,
     },
     isGetDataLocalSuccessful: true,
   };
@@ -139,11 +143,12 @@ function changeStatusTransaction(user) {
   };
 }
 
-export function setDataLogin(login) {
-  return async function() {
+export function setDataLogin(login, domain) {
+  return async function () {
     try {
       await AsyncStorage.setItem('@ColorME:username', login.username);
       await AsyncStorage.setItem('@ColorME:password', login.password);
+      await AsyncStorage.setItem('@ColorME:domain', domain);
     } catch (error) {}
   };
 }

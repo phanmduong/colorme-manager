@@ -39,7 +39,7 @@ PODS:
   - glog (0.3.5)
   - JWT (3.0.0-beta.12):
     - Base64 (~> 1.1.2)
-  - OneSignal (2.14.2)
+  - OneSignal (2.14.3)
   - React (0.60.5):
     - React-Core (= 0.60.5)
     - React-DevSupport (= 0.60.5)
@@ -85,13 +85,13 @@ PODS:
     - React-cxxreact (= 0.60.5)
     - React-jsi (= 0.60.5)
   - React-jsinspector (0.60.5)
-  - react-native-camera (3.31.0):
+  - react-native-camera (3.33.0):
     - React
-    - react-native-camera/RCT (= 3.31.0)
-    - react-native-camera/RN (= 3.31.0)
-  - react-native-camera/RCT (3.31.0):
+    - react-native-camera/RCT (= 3.33.0)
+    - react-native-camera/RN (= 3.33.0)
+  - react-native-camera/RCT (3.33.0):
     - React
-  - react-native-camera/RN (3.31.0):
+  - react-native-camera/RN (3.33.0):
     - React
   - react-native-image-picker (1.1.0):
     - React
@@ -101,8 +101,8 @@ PODS:
     - React
   - react-native-network-info (5.2.1):
     - React
-  - react-native-onesignal (3.8.1):
-    - OneSignal (= 2.14.2)
+  - react-native-onesignal (3.9.0):
+    - OneSignal (= 2.14.3)
     - React (< 1.0.0, >= 0.13.0)
   - react-native-orientation (3.1.3):
     - React
@@ -139,9 +139,9 @@ PODS:
     - React
   - RNDeviceInfo (2.3.2):
     - React
-  - RNGestureHandler (1.6.1):
+  - RNGestureHandler (1.7.0):
     - React
-  - RNReanimated (1.9.0):
+  - RNReanimated (1.10.0):
     - React
   - RNScreens (1.0.0-alpha.23):
     - React
@@ -304,7 +304,7 @@ SPEC CHECKSUMS:
   Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
   glog: 1f3da668190260b06b429bb211bfbee5cd790c28
   JWT: 9b5c05abbcc1a0e69c3c91e1655b3387fc7e581d
-  OneSignal: 1dcb1fd96f9c15a5c352dcfcab9106a7c15eced7
+  OneSignal: 7dfe466265c05f02b95a274b9c997a0619ad2117
   React: 53c53c4d99097af47cf60594b8706b4e3321e722
   React-Core: ba421f6b4f4cbe2fb17c0b6fc675f87622e78a64
   React-cxxreact: 8384287780c4999351ad9b6e7a149d9ed10a2395
@@ -312,12 +312,12 @@ SPEC CHECKSUMS:
   React-jsi: 4d8c9efb6312a9725b18d6fc818ffc103f60fec2
   React-jsiexecutor: 90ad2f9db09513fc763bc757fdc3c4ff8bde2a30
   React-jsinspector: e08662d1bf5b129a3d556eb9ea343a3f40353ae4
-  react-native-camera: 679479bfe0f59103aca704e8dc39b0cedf5e2f65
+  react-native-camera: b95731eb91691ae7c8acdd496a1ef051ae2e65ff
   react-native-image-picker: 3637d63fef7e32a230141ab4660d3ceb773c824f
   react-native-image-resizer: 3a0a2ab15953b2aec5dda20338e3c6bd6c26e528
   react-native-netinfo: 3dd993921571d01b78a8f91f1caaffcab7a1e1c7
   react-native-network-info: d1290ffc0bd0709e11436f5b8d7f605dcc5c4530
-  react-native-onesignal: aad5c22170ee7a48ac2005bf1cdd2cfd8f45e51b
+  react-native-onesignal: 3cb529f99353f5765ca3ce305c9e8c583fd54c81
   react-native-orientation: d4a97266b06ec8d45d74e626656a730ebbebbb6f
   react-native-spinkit: da294fd828216ad211fe36a5c14c1e09f09e62db
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
@@ -334,8 +334,8 @@ SPEC CHECKSUMS:
   React-RCTWebSocket: cd932a16b7214898b6b7f788c8bddb3637246ac4
   RNCAsyncStorage: db711e29e5e0500d9bd21aa0c2e397efa45302b1
   RNDeviceInfo: bdc3e922b2ed0f086e9d9ab534e61bc316f08576
-  RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38
-  RNReanimated: b5ccb50650ba06f6e749c7c329a1bc3ae0c88b43
+  RNGestureHandler: b6b359bb800ae399a9c8b27032bdbf7c18f08a08
+  RNReanimated: 347ecd4322f7a5da4c523d289150022433095b9e
   RNScreens: f28b48b8345f2f5f39ed6195518291515032a788
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23

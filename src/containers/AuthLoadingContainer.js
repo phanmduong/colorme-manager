@@ -41,9 +41,11 @@ class AuthLoadingContainer extends React.Component {
   _bootstrapAsync = async () => {
     const username = await AsyncStorage.getItem('@ColorME:username');
     const password = await AsyncStorage.getItem('@ColorME:password');
-    if (username && password) {
+    const domain = await AsyncStorage.getItem('@ColorME:domain');
+    if (username && password && domain) {
       this.props.loginActions.loginUser(
         {username, password},
+        domain,
         this._whenLoginSuccess,
         this._logout,
       );
@@ -108,6 +110,7 @@ function mapStateToProps(state) {
     token: state.login.token,
     isGetDataLocalSuccessful: state.login.isGetDataLocalSuccessful,
     isAutoLogin: state.autoLogin.isAutoLogin,
+    domain: state.login.domain,
   };
 }
 export default connect(

@@ -12,8 +12,9 @@ export function loadLoginApi(login) {
   });
 }
 
-export function loadCheckDevice(device, token) {
-  let url = env.MANAGE_API_URL + '/checkincheckout/check-device?token=' + token;
+export function loadCheckDevice(device, token, domain) {
+  let url =
+    env.manageApiUrl(domain) + '/checkincheckout/check-device?token=' + token;
   return axios.post(url, {
     device_id: device.device_id,
     device_name: device.name,

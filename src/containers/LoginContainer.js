@@ -26,7 +26,10 @@ class LoginContainer extends React.Component {
   }
 
   saveDataLogin() {
-    this.props.loginActions.setDataLogin(this.props.login);
+    this.props.loginActions.setDataLogin(
+      this.props.login,
+      this.props.domain.manageApiUrl,
+    );
   }
 
   updateFormData(name, value) {
@@ -40,8 +43,16 @@ class LoginContainer extends React.Component {
   };
 
   onClickLogin() {
-    if (this.props.login.username && this.props.login.password) {
-      this.props.loginActions.loginUser(this.props.login, this.openMainScreen);
+    if (
+      this.props.login.username &&
+      this.props.login.password &&
+      this.props.domain.manageApiUrl
+    ) {
+      this.props.loginActions.loginUser(
+        this.props.login,
+        this.props.domain.manageApiUrl,
+        this.openMainScreen,
+      );
       this.saveDataLogin();
     } else {
       Alert.alert('Thông báo', alert.CHECK_INFO_LOGIN);
@@ -96,6 +107,7 @@ function mapStateToProps(state) {
     token: state.login.token,
     isGetDataLocalSuccessful: state.login.isGetDataLocalSuccessful,
     isAutoLogin: state.autoLogin.isAutoLogin,
+    domain: state.login.domain,
   };
 }
 
@@ -106,7 +118,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(LoginContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);

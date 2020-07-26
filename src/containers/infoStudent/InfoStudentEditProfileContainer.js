@@ -6,7 +6,7 @@ import * as saveRegisterActions from '../../actions/saveRegisterActions';
 import InfoStudentEditProfileComponent from '../../components/infoStudent/InfoStudentEditProfileComponent';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from "../../styles";
+import theme from '../../styles';
 
 class InfoStudentEditProfileContainer extends React.Component {
   constructor(props, context) {
@@ -34,11 +34,18 @@ class InfoStudentEditProfileContainer extends React.Component {
   };
 
   loadProvinces = () => {
-    this.props.saveRegisterActions.loadProvinces(this.props.token);
+    this.props.saveRegisterActions.loadProvinces(
+      this.props.token,
+      this.props.domain,
+    );
   };
 
-  updateProfile = register => {
-    this.props.infoStudentActions.updateProfile(register, this.props.token);
+  updateProfile = (register) => {
+    this.props.infoStudentActions.updateProfile(
+      register,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   render() {
@@ -68,6 +75,7 @@ function mapStateToProps(state) {
     provinces: state.saveRegister.provinces,
     isUpdatingProfile: state.infoStudent.isUpdatingProfile,
     errorUpdatingProfile: state.infoStudent.errorUpdatingProfile,
+    domain: state.login.domain,
   };
 }
 

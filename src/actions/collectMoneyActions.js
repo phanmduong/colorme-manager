@@ -24,19 +24,19 @@ export function beginDataStudentListRefresh() {
   };
 }
 
-export function loadDataStudentList(refreshing, token, search) {
-  return function(dispatch) {
+export function loadDataStudentList(refreshing, token, search, domain) {
+  return function (dispatch) {
     if (!refreshing) {
       dispatch(beginDataStudentListLoad());
     } else {
       dispatch(beginDataStudentListRefresh());
     }
     studentApi
-      .searchStudentRegisterApi(sourceCancel, search, token)
-      .then(function(res) {
+      .searchStudentRegisterApi(sourceCancel, search, token, domain)
+      .then(function (res) {
         dispatch(loadDataSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         if (axios.isCancel(error)) {
           console.log('Request canceled', error.message);
         } else {
@@ -47,10 +47,10 @@ export function loadDataStudentList(refreshing, token, search) {
   };
 }
 
-export function refreshDataStudentList(token, search) {
-  return function(dispatch) {
+export function refreshDataStudentList(token, search, domain) {
+  return function (dispatch) {
     dispatch(updateFormSearch(search));
-    dispatch(loadDataStudentList(true, token, search));
+    dispatch(loadDataStudentList(true, token, search, domain));
   };
 }
 
@@ -75,12 +75,12 @@ export function loadDataError() {
   };
 }
 
-export function updateFormAndLoadDataSearch(search, token) {
+export function updateFormAndLoadDataSearch(search, token, domain) {
   sourceCancel.cancel('Canceled by api student list .');
   sourceCancel = CancelToken.source();
-  return dispatch => {
+  return (dispatch) => {
     dispatch(updateFormSearch(search));
-    dispatch(loadDataStudentList(false, token, search));
+    dispatch(loadDataStudentList(false, token, search, domain));
   };
 }
 
@@ -115,17 +115,25 @@ export function beginUpdateMoneyStudent() {
   };
 }
 
-export function updateMoneyStudent(token, formInfoMoney, registerId) {
+export function updateMoneyStudent(token, formInfoMoney, registerId, domain) {
   let {money, code, note, isReceivedCard} = formInfoMoney;
   console.log('money', formInfoMoney);
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginUpdateMoneyStudent());
     collectMoneyApi
-      .updateMoneyApi(token, registerId, money, code, note, isReceivedCard)
-      .then(function(res) {
+      .updateMoneyApi(
+        token,
+        registerId,
+        money,
+        code,
+        note,
+        isReceivedCard,
+        domain,
+      )
+      .then(function (res) {
         dispatch(updateDataSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(updateDataError(error.response.data));
       });
   };

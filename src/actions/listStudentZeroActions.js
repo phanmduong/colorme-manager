@@ -11,11 +11,11 @@ export function beginDataListStudentZeroLoad() {
     error: false,
   };
 }
-export function loadDataListStudentZero(genId, baseId) {
+export function loadDataListStudentZero(genId, baseId, domain) {
   return function(dispatch) {
     dispatch(beginDataListStudentZeroLoad());
     studentApi
-      .loadStudentListByFilterApi(genId, baseId, 'zero')
+      .loadStudentListByFilterApi(genId, baseId, 'zero', domain)
       .then(function(res) {
         dispatch(loadDataSuccessful(res));
       })

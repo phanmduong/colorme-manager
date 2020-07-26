@@ -24,11 +24,11 @@ class HistoryAttendanceTeachingContainer extends React.Component {
 
   componentWillMount() {
     this.loadData();
-    this.store.loadGens(this.props.token);
+    this.store.loadGens(this.props.token, this.props.domain);
   }
 
   loadData = () => {
-    this.store.loadHistoryTeaching(this.props.token);
+    this.store.loadHistoryTeaching(this.props.token, this.props.domain);
   };
 
   errorData() {
@@ -51,7 +51,7 @@ class HistoryAttendanceTeachingContainer extends React.Component {
     );
   }
 
-  onSelectGenId = genId => {
+  onSelectGenId = (genId) => {
     this.store.selectedGenId = genId;
     this.loadData();
   };
@@ -67,7 +67,7 @@ class HistoryAttendanceTeachingContainer extends React.Component {
             defaultLabel={'Chọn khóa'}
             selectedValue={selectedGenId}
             onValueChange={this.onSelectGenId}>
-            {gens.map(function(gen, index) {
+            {gens.map(function (gen, index) {
               return (
                 <Item label={'Khóa ' + gen.name} value={gen.id} key={index} />
               );
@@ -112,6 +112,7 @@ function mapStateToProps(state) {
   return {
     token: state.login.token,
     user: state.login.user,
+    domain: state.login.domain,
   };
 }
 

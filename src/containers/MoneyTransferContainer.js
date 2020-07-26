@@ -32,10 +32,11 @@ class MoneyTransferContainer extends React.Component {
       transports: ['websocket'],
     });
 
-    this.socket.on('colorme-channel:notification', data => {
+    this.socket.on('colorme-channel:notification', (data) => {
       if (data.notification && data.notification.transaction) {
         this.props.moneyTransferActions.updateHistoryTransactionWithSocket(
           this.props.token,
+          this.props.domain,
         );
       }
     });
@@ -83,6 +84,7 @@ class MoneyTransferContainer extends React.Component {
       transactionId,
       1,
       this.props.token,
+      this.props.domain,
     );
   }
 
@@ -91,6 +93,7 @@ class MoneyTransferContainer extends React.Component {
       transactionId,
       -1,
       this.props.token,
+      this.props.domain,
     );
   }
 
@@ -98,6 +101,7 @@ class MoneyTransferContainer extends React.Component {
     this.props.moneyTransferActions.updateTransaction(
       receiverId,
       this.props.token,
+      this.props.domain,
     );
   }
 
@@ -113,6 +117,7 @@ class MoneyTransferContainer extends React.Component {
         this.props.token,
         this.props.currentPageStaffList + 1,
         this.props.searchStaff,
+        this.props.domain,
       );
     }
   }
@@ -121,6 +126,7 @@ class MoneyTransferContainer extends React.Component {
     this.props.moneyTransferActions.updateFormAndLoadDataSearchStaff(
       search,
       this.props.token,
+      this.props.domain,
     );
   }
 
@@ -128,6 +134,7 @@ class MoneyTransferContainer extends React.Component {
     this.props.moneyTransferActions.refreshDataStaffList(
       this.props.token,
       this.props.searchStaff,
+      this.props.domain,
     );
   };
 
@@ -139,6 +146,7 @@ class MoneyTransferContainer extends React.Component {
       this.props.moneyTransferActions.loadDataHistoryTransaction(
         this.props.token,
         this.props.currentPageHistoryTransaction + 1,
+        this.props.domain,
       );
     }
   }
@@ -194,6 +202,7 @@ function mapStateToProps(state) {
     openTabMoneyTransfer: state.moneyTransfer.openTabMoneyTransfer,
     avatar_url: state.login.user.avatar_url,
     refreshingStaffList: state.moneyTransfer.refreshingStaffList,
+    domain: state.login.domain,
   };
 }
 

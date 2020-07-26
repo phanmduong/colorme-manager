@@ -27,19 +27,19 @@ export function beginDataStaffListRefresh() {
   };
 }
 
-export function loadDataStaffList(refreshing, token, page, search) {
-  return function(dispatch) {
+export function loadDataStaffList(refreshing, token, page, search, domain) {
+  return function (dispatch) {
     if (!refreshing) {
       dispatch(beginDataStaffListLoad());
     } else {
       dispatch(beginDataStaffListRefresh());
     }
     moneyTransferApi
-      .searchStaffApi(token, search, page, sourceCancel)
-      .then(function(res) {
+      .searchStaffApi(token, search, page, sourceCancel, domain)
+      .then(function (res) {
         dispatch(loadDataStaffSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         if (axios.isCancel(error)) {
           console.log('Request canceled', error.message);
         } else {
@@ -50,10 +50,10 @@ export function loadDataStaffList(refreshing, token, page, search) {
   };
 }
 
-export function refreshDataStaffList(token, search) {
-  return function(dispatch) {
+export function refreshDataStaffList(token, search, domain) {
+  return function (dispatch) {
     dispatch(updateFormSearchStaff(search));
-    dispatch(loadDataStaffList(true, token, 1, search));
+    dispatch(loadDataStaffList(true, token, 1, search, domain));
   };
 }
 
@@ -78,12 +78,12 @@ export function loadDataStaffError() {
   };
 }
 
-export function updateFormAndLoadDataSearchStaff(search, token) {
+export function updateFormAndLoadDataSearchStaff(search, token, domain) {
   sourceCancel.cancel('Canceled by api register list ().');
   sourceCancel = CancelToken.source();
-  return dispatch => {
+  return (dispatch) => {
     dispatch(updateFormSearchStaff(search));
-    dispatch(loadDataStaffList(false, token, 1, search));
+    dispatch(loadDataStaffList(false, token, 1, search, domain));
   };
 }
 
@@ -112,15 +112,15 @@ export function beginDataHistoryTransactionLoad() {
   };
 }
 
-export function loadDataHistoryTransaction(token, page) {
-  return function(dispatch) {
+export function loadDataHistoryTransaction(token, page, domain) {
+  return function (dispatch) {
     dispatch(beginDataHistoryTransactionLoad());
     moneyTransferApi
-      .getTransactionApi(token, page)
-      .then(function(res) {
+      .getTransactionApi(token, page, domain)
+      .then(function (res) {
         dispatch(loadDataHistoryTransactionSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         if (axios.isCancel(error)) {
           console.log('Request canceled', error.message);
         } else {
@@ -160,15 +160,15 @@ export function beginTransaction() {
   };
 }
 
-export function updateTransaction(receiverId, token) {
-  return function(dispatch) {
+export function updateTransaction(receiverId, token, domain) {
+  return function (dispatch) {
     dispatch(beginTransaction());
     moneyTransferApi
-      .postTransactionApi(receiverId, token)
-      .then(function(res) {
+      .postTransactionApi(receiverId, token, domain)
+      .then(function (res) {
         dispatch(transactionSuccessful());
       })
-      .catch(error => {
+      .catch((error) => {
         // if (axios.isCancel(error)) {
         //     console.log('Request canceled', error.message);
         // } else {
@@ -204,15 +204,15 @@ export function beginConfirmTransaction(transactionId) {
   };
 }
 
-export function updateConfirmTransaction(transactionId, status, token) {
-  return function(dispatch) {
+export function updateConfirmTransaction(transactionId, status, token, domain) {
+  return function (dispatch) {
     dispatch(beginConfirmTransaction());
     moneyTransferApi
-      .conformTransactionApi(transactionId, status, token)
-      .then(function(res) {
+      .conformTransactionApi(transactionId, status, token, domain)
+      .then(function (res) {
         dispatch(confirmTransactionSuccessful(transactionId));
       })
-      .catch(error => {
+      .catch((error) => {
         if (axios.isCancel(error)) {
           console.log('Request canceled', error.message);
         } else {
@@ -232,10 +232,10 @@ export function confirmTransactionSuccessful(transactionId) {
   };
 }
 
-export function updateHistoryTransactionWithSocket(token) {
-  return function(dispatch) {
+export function updateHistoryTransactionWithSocket(token, domain) {
+  return function (dispatch) {
     dispatch(setDataUpdateHistoryTransactionWithSocket());
-    dispatch(loadDataHistoryTransaction(token, 1));
+    dispatch(loadDataHistoryTransaction(token, 1, domain));
   };
 }
 

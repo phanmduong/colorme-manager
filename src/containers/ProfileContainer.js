@@ -5,7 +5,7 @@ import * as profileActions from '../actions/profileActions';
 import ProfileComponent from '../components/ProfileComponent';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from "../styles";
+import theme from '../styles';
 
 class ProfileContainer extends React.Component {
   constructor(props, context) {
@@ -33,15 +33,16 @@ class ProfileContainer extends React.Component {
   });
 
   loadProfile = () => {
-    this.props.profileActions.loadProfile(this.props.token);
+    this.props.profileActions.loadProfile(this.props.token, this.props.domain);
   };
 
-  changeAvatar = imageUri => {
+  changeAvatar = (imageUri) => {
     this.props.profileActions.changeAvatar(
       this.props.user.id,
       this.props.user,
       imageUri,
       this.props.token,
+      this.props.domain,
     );
   };
 
@@ -78,6 +79,7 @@ function mapStateToProps(state) {
     isChangingAvatar: state.profile.isChangingAvatar,
     errorChangingAvatar: state.profile.errorChangingAvatar,
     changeAvatarMessage: state.profile.changeAvatarMessage,
+    domain: state.login.domain,
   };
 }
 
@@ -87,7 +89,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ProfileContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainer);

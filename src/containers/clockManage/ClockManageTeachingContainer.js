@@ -14,7 +14,11 @@ class ClockManageTeachingContainer extends React.Component {
   };
 
   loadTeachingClock = (date) => {
-    this.props.clockManageActions.getTeachingClock(date, this.props.token);
+    this.props.clockManageActions.getTeachingClock(
+      date,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   render() {
@@ -29,6 +33,7 @@ function mapStateToProps(state) {
     isLoadingClasses: state.clockManage.isLoadingClasses,
     errorClasses: state.clockManage.errorClasses,
     classes: state.clockManage.classes,
+    domain: state.login.domain,
   };
 }
 

@@ -8,7 +8,7 @@ import * as listStudentAttendanceActions from '../actions/listStudentAttendanceA
 import ListStudentAttendanceComponent from '../components/ListStudentAttendanceComponent';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from "../styles";
+import theme from '../styles';
 
 class ListStudentAttendanceContainer extends React.Component {
   constructor(props, context) {
@@ -43,6 +43,7 @@ class ListStudentAttendanceContainer extends React.Component {
       classID,
       lessonID,
       this.props.token,
+      this.props.domain,
     );
   }
 
@@ -71,6 +72,7 @@ function mapStateToProps(state) {
     listStudentAttendanceData:
       state.listStudentAttendance.listStudentAttendanceData,
     error: state.listStudentAttendance.error,
+    domain: state.login.domain,
   };
 }
 

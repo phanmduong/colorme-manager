@@ -24,12 +24,12 @@ class HistoryAttendanceShiftContainer extends React.Component {
 
   componentWillMount = () => {
     this.loadData();
-    this.store.loadBases(this.props.token);
-    this.store.loadGens(this.props.token);
+    this.store.loadBases(this.props.token, this.props.domain);
+    this.store.loadGens(this.props.token, this.props.domain);
   };
 
   loadData = () => {
-    this.store.loadHistoryShift(this.props.token);
+    this.store.loadHistoryShift(this.props.token, this.props.domain);
   };
 
   errorData() {
@@ -53,12 +53,12 @@ class HistoryAttendanceShiftContainer extends React.Component {
     );
   }
 
-  onSelectBaseId = baseId => {
+  onSelectBaseId = (baseId) => {
     this.store.selectedBaseId = baseId;
     this.loadData();
   };
 
-  onSelectGenId = genId => {
+  onSelectGenId = (genId) => {
     this.store.selectedGenId = genId;
     this.loadData();
   };
@@ -83,7 +83,7 @@ class HistoryAttendanceShiftContainer extends React.Component {
             defaultLabel={'Chọn khóa'}
             selectedValue={selectedGenId}
             onValueChange={this.onSelectGenId}>
-            {gens.map(function(gen, index) {
+            {gens.map(function (gen, index) {
               return (
                 <Item label={'Khóa ' + gen.name} value={gen.id} key={index} />
               );
@@ -96,7 +96,7 @@ class HistoryAttendanceShiftContainer extends React.Component {
             defaultLabel={'Chọn cơ sở'}
             selectedValue={selectedBaseId}
             onValueChange={this.onSelectBaseId}>
-            {bases.map(function(base, index) {
+            {bases.map(function (base, index) {
               return <Item label={base.name} value={base.id} key={index} />;
             })}
           </Picker>
@@ -139,6 +139,7 @@ function mapStateToProps(state) {
   return {
     token: state.login.token,
     user: state.login.user,
+    domain: state.login.domain,
   };
 }
 

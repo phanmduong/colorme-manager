@@ -21,6 +21,7 @@ export function getLeads(
   source_id,
   campaign_id,
   token,
+  domain,
 ) {
   return function (dispatch) {
     if (!refreshing) {
@@ -45,6 +46,7 @@ export function getLeads(
         source_id,
         campaign_id,
         token,
+        domain,
       )
       .then(function (res) {
         dispatch(loadLeadsSuccessful(res));
@@ -111,6 +113,7 @@ export function searchLeads(
   source_id,
   campaign_id,
   token,
+  domain,
 ) {
   sourceCancel.cancel('Canceled by leads api.');
   sourceCancel = CancelToken.source();
@@ -133,6 +136,7 @@ export function searchLeads(
         source_id,
         campaign_id,
         token,
+        domain,
       ),
     );
   };
@@ -152,6 +156,7 @@ export function refreshLeads(
   source_id,
   campaign_id,
   token,
+  domain,
 ) {
   return function (dispatch) {
     dispatch(beginSearchLeads(search));
@@ -172,6 +177,7 @@ export function refreshLeads(
         source_id,
         campaign_id,
         token,
+        domain,
       ),
     );
   };
@@ -256,11 +262,11 @@ export function reset() {
   };
 }
 
-export function getStaff(search, token) {
+export function getStaff(search, token, domain) {
   return function (dispatch) {
     dispatch(beginLoadStaff());
     leadsApi
-      .getStaff(search, token)
+      .getStaff(search, token, domain)
       .then(function (res) {
         dispatch(loadStaffSuccessful(res));
       })
@@ -296,11 +302,11 @@ function loadStaffError() {
   };
 }
 
-export function saveLead(lead, token) {
+export function saveLead(lead, token, domain) {
   return function (dispatch) {
     dispatch(beginSaveLead());
     leadsApi
-      .saveLead(lead, token)
+      .saveLead(lead, token, domain)
       .then(function (res) {
         dispatch(saveLeadSuccessful(res));
       })

@@ -9,7 +9,7 @@ import ListStudenClassComponent from '../components/ListStudenClassComponent';
 import * as infoStudentActions from '../actions/infoStudentActions';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from "../styles";
+import theme from '../styles';
 
 class ListStudentClassContainer extends React.Component {
   constructor(props, context) {
@@ -41,6 +41,7 @@ class ListStudentClassContainer extends React.Component {
     this.props.listStudentClassActions.loadDataListStudentClass(
       this.props.selectedClassId,
       this.props.token,
+      this.props.domain,
     );
   }
 
@@ -48,10 +49,11 @@ class ListStudentClassContainer extends React.Component {
     this.props.listStudentClassActions.refreshDataListStudentClass(
       this.props.selectedClassId,
       this.props.token,
+      this.props.domain,
     );
   };
 
-  setStudentId = studentId => {
+  setStudentId = (studentId) => {
     this.props.infoStudentActions.setStudentId(studentId);
   };
 
@@ -75,6 +77,7 @@ class ListStudentClassContainer extends React.Component {
       appointmentPayment,
       dateTest,
       this.props.token,
+      this.props.domain,
     );
   };
 
@@ -110,6 +113,7 @@ class ListStudentClassContainer extends React.Component {
       this.props.appointmentPayment,
       statusId,
       sourceId,
+      this.props.domain,
     );
   };
 
@@ -166,6 +170,7 @@ function mapStateToProps(state) {
     start_time: state.registerList.start_time,
     end_time: state.registerList.end_time,
     appointmentPayment: state.registerList.appointmentPayment,
+    domain: state.login.domain,
   };
 }
 

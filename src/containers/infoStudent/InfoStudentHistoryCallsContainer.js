@@ -17,6 +17,7 @@ class InfoStudentHistoryCallsContainer extends React.Component {
     this.props.infoStudentActions.loadHistoryCalls(
       this.props.studentId,
       this.props.token,
+      this.props.domain,
     );
   };
 
@@ -37,6 +38,7 @@ function mapStateToProps(state) {
     isLoadingHistoryCalls: state.infoStudent.isLoadingHistoryCalls,
     errorLoadingHistoryCalls: state.infoStudent.errorLoadingHistoryCalls,
     studentId: state.infoStudent.studentId,
+    domain: state.login.domain,
   };
 }
 

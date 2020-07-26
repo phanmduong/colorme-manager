@@ -1,11 +1,11 @@
 import * as type from '../constants/actionTypes';
 import * as teachingRatingApi from '../apis/teachingRatingApi';
 
-export function loadTeacherRating(token, userId) {
+export function loadTeacherRating(token, userId, domain) {
   return function(dispatch) {
     dispatch(beginLoadingTeacherRating());
     teachingRatingApi
-      .evaluateTeacher(token, userId)
+      .evaluateTeacher(token, userId, domain)
       .then(function(res) {
         dispatch(loadTeacherRatingSuccessful(res));
       })
@@ -41,11 +41,11 @@ function loadTeacherRatingError() {
   };
 }
 
-export function loadAssistantRating(token, userId) {
+export function loadAssistantRating(token, userId, domain) {
   return function(dispatch) {
     dispatch(beginLoadingAssistantRating());
     teachingRatingApi
-      .evaluateAssistant(token, userId)
+      .evaluateAssistant(token, userId, domain)
       .then(function(res) {
         dispatch(loadAssistantRatingSuccessful(res));
       })
@@ -88,11 +88,11 @@ export function selectedGenId(genId) {
   };
 }
 
-export function loadTeacherFeedback(token, genId, userId) {
+export function loadTeacherFeedback(token, genId, userId, domain) {
   return function(dispatch) {
     dispatch(beginLoadTeacherFeedback());
     teachingRatingApi
-      .getTeacherFeedback(token, genId, userId)
+      .getTeacherFeedback(token, genId, userId, domain)
       .then(function(res) {
         dispatch(loadTeacherFeedbackSuccessful(res));
       })
@@ -128,11 +128,11 @@ function loadTeacherFeedbackError() {
   };
 }
 
-export function loadAssistantFeedback(token, genId, userId) {
+export function loadAssistantFeedback(token, genId, userId, domain) {
   return function(dispatch) {
     dispatch(beginLoadAssistantFeedback());
     teachingRatingApi
-      .getAssistantFeedback(token, genId, userId)
+      .getAssistantFeedback(token, genId, userId, domain)
       .then(function(res) {
         dispatch(loadAssistantFeedbackSuccessful(res));
       })

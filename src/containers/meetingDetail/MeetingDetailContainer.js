@@ -16,7 +16,7 @@ class MeetingDetailContainer extends React.Component {
     super(props);
     const {navigation} = this.props;
     const meetingId = navigation.getParam('meetingId', 0);
-    this.store = new MeetingDetailStore(props.token, meetingId);
+    this.store = new MeetingDetailStore(props.token, meetingId, props.domain);
   }
 
   static navigationOptions = ({navigation}) => {
@@ -64,6 +64,7 @@ const styles = {
 function mapStateToProps(state) {
   return {
     token: state.login.token,
+    domain: state.login.domain,
   };
 }
 

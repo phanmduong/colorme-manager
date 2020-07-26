@@ -1,6 +1,5 @@
 import * as types from '../constants/actionTypes';
 import * as taskApi from '../apis/taskApi';
-import {exp} from 'react-native-reanimated';
 
 export function onSelectDate(date) {
   return {
@@ -9,11 +8,11 @@ export function onSelectDate(date) {
   };
 }
 
-export function loadTaskAnalytics(user_id, token) {
+export function loadTaskAnalytics(user_id, token, domain) {
   return function(dispatch) {
     dispatch(beginLoadTaskAnalytics());
     taskApi
-      .getTaskAnalytics(user_id, token)
+      .getTaskAnalytics(user_id, token, domain)
       .then(function(res) {
         dispatch(loadTaskAnalyticsSuccessful(res));
       })
@@ -49,11 +48,11 @@ function loadTaskAnalyticsError() {
   };
 }
 
-export function loadTaskView(date, user_id, token) {
+export function loadTaskView(date, user_id, token, domain) {
   return function(dispatch) {
     dispatch(beginLoadTaskView());
     taskApi
-      .getTasks(date, user_id, token)
+      .getTasks(date, user_id, token, domain)
       .then(function(res) {
         dispatch(loadTaskViewSuccessful(res));
       })
@@ -89,11 +88,11 @@ function loadTaskViewError() {
   };
 }
 
-export function loadTaskEmployees(token) {
+export function loadTaskEmployees(token, domain) {
   return function(dispatch) {
     dispatch(beginLoadTaskEmployees());
     taskApi
-      .getTaskEmployees(token)
+      .getTaskEmployees(token, domain)
       .then(function(res) {
         dispatch(loadTaskEmployeesSuccessful(res));
       })

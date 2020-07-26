@@ -20,22 +20,24 @@ class Store {
   @observable errorStore = false;
   @observable ignoreUsers = [];
   @observable selectedMeetingId = 0;
+  @observable domain = '';
 
-  constructor(token, meetingId) {
+  constructor(token, meetingId, domain) {
     this.token = token;
     this.selectedMeetingId = meetingId;
+    this.domain = domain;
   }
 
   @action
   getFilterMeeting = () => {
     this.isLoading = true;
     this.error = false;
-    loadFilterMeeting(this.token)
-      .then(res => {
+    loadFilterMeeting(this.token, this.domain)
+      .then((res) => {
         this.filter = res.data.data.filter;
         console.log(this.filter);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         this.error = true;
       })
@@ -49,8 +51,8 @@ class Store {
     this.isLoading = true;
     this.error = false;
     console.log(this.selectedMeetingId);
-    loadMeetingDetail(this.token, this.selectedMeetingId)
-      .then(res => {
+    loadMeetingDetail(this.token, this.selectedMeetingId, this.domain)
+      .then((res) => {
         this.meeting.name = res.data.data.meeting.name;
         this.meeting.description = res.data.data.meeting.description;
         let meetingDate = res.data.data.meeting.date.replace(' ', 'T');
@@ -74,7 +76,7 @@ class Store {
         this.meeting.ignore_users = filterObject.ignore_users;
         this.ignoreUsers = filterObject.ignore_users;
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         this.error = true;
       })
@@ -84,24 +86,24 @@ class Store {
   };
 
   @action
-  storeMeeting = goBack => {
+  storeMeeting = (goBack) => {
     this.isStoring = true;
     this.errorStore = false;
     const filter = this.filter;
     const provinceIDs = filter.provinces
       ? filter.provinces
-          .filter(province =>
+          .filter((province) =>
             this.meeting.provinces.includes(province.provinceid),
           )
-          .map(province => province.provinceid)
+          .map((province) => province.provinceid)
       : [];
 
     const departmentIds = filter.departments
       ? filter.departments
-          .filter(department =>
+          .filter((department) =>
             this.meeting.departments.includes(department.id),
           )
-          .map(department => department.id)
+          .map((department) => department.id)
       : [];
 
     const filterJSON = {
@@ -119,12 +121,13 @@ class Store {
       this.meeting.name,
       this.meeting.room_id,
       dateString,
+      this.domain,
       this.meeting.description,
       'available',
       filterString,
       this.selectedMeetingId,
     )
-      .then(res => {
+      .then((res) => {
         const meeting = res.data.data.meeting;
         console.log(meeting);
         Alert.alert('Thông báo', 'Tạo cuộc họp thành công', [
@@ -136,7 +139,7 @@ class Store {
           },
         ]);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         Alert.alert('Thông báo', 'Có lỗi xảy ra');
         this.errorStore = true;

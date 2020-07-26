@@ -12,15 +12,15 @@ export function beginDataListStudentPaidLoad() {
   };
 }
 
-export function loadDataListStudentPaid(genId, baseId) {
-  return function(dispatch) {
+export function loadDataListStudentPaid(genId, baseId, domain) {
+  return function (dispatch) {
     dispatch(beginDataListStudentPaidLoad());
     studentApi
-      .loadStudentListByFilterApi(genId, baseId, 'paid')
-      .then(function(res) {
+      .loadStudentListByFilterApi(genId, baseId, 'paid', domain)
+      .then(function (res) {
         dispatch(loadDataSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadDataError());
         throw error;
       });

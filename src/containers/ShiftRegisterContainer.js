@@ -18,10 +18,10 @@ class ShiftRegisterContainer extends React.Component {
       transports: ['websocket'],
     });
 
-    this.socket.on('colorme-channel:regis-shift', data => {
+    this.socket.on('colorme-channel:regis-shift', (data) => {
       this.props.shiftRegisterActions.updateDataRegister(data);
     });
-    this.socket.on('colorme-channel:remove-shift', data => {
+    this.socket.on('colorme-channel:remove-shift', (data) => {
       this.props.shiftRegisterActions.updateDataRegister(data);
     });
 
@@ -71,7 +71,7 @@ class ShiftRegisterContainer extends React.Component {
 
     if (!nextProps.isLoadingGen) {
       var genData = _.sortBy(nextProps.genData, [
-        function(o) {
+        function (o) {
           return parseInt(o.name);
         },
       ]);
@@ -93,7 +93,7 @@ class ShiftRegisterContainer extends React.Component {
     if (props.genData.length > 0 && !this.state.checkedDataGen) {
       this.setState({checkedDataGen: true});
       var genData = _.sortBy(props.genData, [
-        function(o) {
+        function (o) {
           return parseInt(o.name);
         },
       ]);
@@ -114,16 +114,17 @@ class ShiftRegisterContainer extends React.Component {
         props.baseData[0].id,
         props.currentGen.id,
         this.props.token,
+        this.props.domain,
       );
     }
   }
 
   loadData() {
     if (!this.props.baseData || this.props.baseData.length <= 0) {
-      this.props.baseActions.loadDataBase(this.props.token);
+      this.props.baseActions.loadDataBase(this.props.token, this.props.domain);
     }
     if (!this.props.genData || this.props.genData.length <= 0) {
-      this.props.genActions.loadDataGen(this.props.token);
+      this.props.genActions.loadDataGen(this.props.token, this.props.domain);
     }
     this.checkData(this.props);
   }
@@ -133,6 +134,7 @@ class ShiftRegisterContainer extends React.Component {
       baseId,
       genId,
       this.props.token,
+      this.props.domain,
     );
   }
 
@@ -147,11 +149,19 @@ class ShiftRegisterContainer extends React.Component {
   }
 
   onRegister(registerId) {
-    this.props.shiftRegisterActions.register(registerId, this.props.token);
+    this.props.shiftRegisterActions.register(
+      registerId,
+      this.props.token,
+      this.props.domain,
+    );
   }
 
   onUnRegister(registerId) {
-    this.props.shiftRegisterActions.unRegister(registerId, this.props.token);
+    this.props.shiftRegisterActions.unRegister(
+      registerId,
+      this.props.token,
+      this.props.domain,
+    );
   }
 
   render() {
@@ -182,7 +192,6 @@ function mapStateToProps(state) {
   return {
     isLoadingBase: state.base.isLoading,
     baseData: state.base.baseData,
-
     errorBase: state.base.error,
     token: state.login.token,
     isLoadingGen: state.gen.isLoading,
@@ -195,6 +204,7 @@ function mapStateToProps(state) {
     selectedBaseId: state.shiftRegister.selectedBaseId,
     selectedGenId: state.shiftRegister.selectedGenId,
     user: state.login.user,
+    domain: state.login.domain,
   };
 }
 

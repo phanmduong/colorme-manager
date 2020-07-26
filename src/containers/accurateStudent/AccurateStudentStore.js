@@ -11,14 +11,14 @@ class AccurateStudentStore {
   @observable refreshing = false;
 
   @action
-  searchStudent = token => {
+  searchStudent = (token, domain) => {
     this.isLoading = true;
     this.error = false;
     this.studentSelected = {};
     this.students = [];
 
-    searchStudentRegisterApi({}, this.search, token)
-      .then(res => {
+    searchStudentRegisterApi({}, this.search, token, domain)
+      .then((res) => {
         this.students = res.data.data.users;
         console.log(this.students);
       })
@@ -31,14 +31,14 @@ class AccurateStudentStore {
   };
 
   @action
-  refresh = token => {
+  refresh = (token, domain) => {
     this.refreshing = true;
     this.error = false;
     this.studentSelected = {};
     this.students = [];
 
-    searchStudentRegisterApi({}, this.search, token)
-      .then(res => {
+    searchStudentRegisterApi({}, this.search, token, domain)
+      .then((res) => {
         this.students = res.data.data.users;
         console.log(this.students);
       })
@@ -50,21 +50,21 @@ class AccurateStudentStore {
       });
   };
 
-  @action uploadImage = (file, imageField, token) => {
+  @action uploadImage = (file, imageField, token, domain) => {
     this.studentSelected = {
       ...this.studentSelected,
       ['isUploading_' + imageField]: true,
     };
     uploadImage(
       file,
-      event => {
+      (event) => {
         let data = JSON.parse(event.currentTarget.response);
         this.studentSelected = {
           ...this.studentSelected,
           ['isUploading_' + imageField]: false,
           [imageField]: data.image_url,
         };
-        this.students = this.students.map(student => {
+        this.students = this.students.map((student) => {
           if (student.id == this.studentSelected.id) {
             return this.studentSelected;
           }
@@ -74,6 +74,7 @@ class AccurateStudentStore {
       this.studentSelected.id,
       imageField,
       token,
+      domain,
     );
   };
 }

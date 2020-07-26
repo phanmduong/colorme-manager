@@ -11,8 +11,9 @@ export function updateMoneyApi(
   code,
   note = '',
   isReceivedCard = false,
+  domain,
 ) {
-  let url = env.API_URL + '/getmoney?token=' + token;
+  let url = env.apiUrl(domain) + '/getmoney?token=' + token;
   return axios.post(url, {
     register_id: registerId,
     money: money,

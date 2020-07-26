@@ -6,7 +6,7 @@ import * as teachingTeamActions from '../actions/teachingTeamActions';
 import * as genActions from '../actions/genActions';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from "../styles";
+import theme from '../styles';
 
 class ListTeacherAndAssistantContainer extends React.Component {
   constructor(props, context) {
@@ -46,22 +46,29 @@ class ListTeacherAndAssistantContainer extends React.Component {
     }
   };
 
-  loadTeacherList = genId => {
-    this.props.teachingTeamActions.loadTeacherList(this.props.token, genId);
+  loadTeacherList = (genId) => {
+    this.props.teachingTeamActions.loadTeacherList(
+      this.props.token,
+      genId,
+      this.props.domain,
+    );
   };
 
-  loadAssistantList = genId => {
-    this.props.teachingTeamActions.loadAssistantList(this.props.token, genId);
+  loadAssistantList = (genId) => {
+    this.props.teachingTeamActions.loadAssistantList(
+      this.props.token,
+      genId,
+      this.props.domain,
+    );
   };
 
-  onSelectGenId = genId => {
+  onSelectGenId = (genId) => {
     this.props.teachingTeamActions.selectedGenId(genId);
     this.loadTeacherList(genId);
     this.loadAssistantList(genId);
   };
 
   render() {
-    console.log('hello ' + this.props.teacherList);
     return (
       <ListTeacherAndAssistantComponent
         isLoadingTeacherList={this.props.isLoadingTeacherList}
@@ -96,6 +103,7 @@ function mapStateToProps(state) {
     teachingGen: state.gen.teachingGen,
     genData: state.gen.genData,
     isLoadingGen: state.gen.isLoading,
+    domain: state.login.domain,
   };
 }
 

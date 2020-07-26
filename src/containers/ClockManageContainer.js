@@ -29,15 +29,27 @@ class ClockManageContainer extends React.Component {
   });
 
   loadShifts = (date) => {
-    this.props.clockManageActions.getShiftClock(date, this.props.token);
+    this.props.clockManageActions.getShiftClock(
+      date,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   loadClasses = (date) => {
-    this.props.clockManageActions.getTeachingClock(date, this.props.token);
+    this.props.clockManageActions.getTeachingClock(
+      date,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   loadWorkShifts = (date) => {
-    this.props.clockManageActions.getWorkShiftClock(date, this.props.token);
+    this.props.clockManageActions.getWorkShiftClock(
+      date,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   onSelectDate = (date) => {
@@ -69,6 +81,7 @@ function mapStateToProps(state) {
     shifts: state.clockManage.shifts,
     isLoadingShifts: state.clockManage.isLoadingShifts,
     errorShifts: state.clockManage.errorShifts,
+    domain: state.login.domain,
   };
 }
 

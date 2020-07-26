@@ -5,7 +5,7 @@ import {bindActionCreators} from 'redux';
 import DocumentComponent from '../components/DocumentComponent';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from "../styles";
+import theme from '../styles';
 
 class DocumentContainer extends React.Component {
   constructor(props, context) {
@@ -33,22 +33,33 @@ class DocumentContainer extends React.Component {
     ),
   });
 
-  loadDocuments = departmentId => {
+  loadDocuments = (departmentId) => {
     if (departmentId === -1) {
       departmentId = '';
     }
-    this.props.documentActions.loadDocuments(departmentId, this.props.token);
+    this.props.documentActions.loadDocuments(
+      departmentId,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
-  refreshDocuments = departmentId => {
+  refreshDocuments = (departmentId) => {
     if (departmentId === -1) {
       departmentId = '';
     }
-    this.props.documentActions.refreshDocuments(departmentId, this.props.token);
+    this.props.documentActions.refreshDocuments(
+      departmentId,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   loadDepartments = () => {
-    this.props.documentActions.loadDepartmentFilter(this.props.token);
+    this.props.documentActions.loadDepartmentFilter(
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   render() {
@@ -77,6 +88,7 @@ function mapStateToProps(state) {
     departments: state.document.departments,
     isLoadingDepartments: state.document.isLoadingDepartments,
     errorDepartments: state.document.errorDepartments,
+    domain: state.login.domain,
   };
 }
 
@@ -86,7 +98,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(DocumentContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(DocumentContainer);

@@ -12,11 +12,11 @@ export function beginDataListStudentAttendanceLoad() {
   };
 }
 
-export function loadDataListStudentAttendance(classID, lessonID, token) {
+export function loadDataListStudentAttendance(classID, lessonID, token, domain) {
   return function(dispatch) {
     dispatch(beginDataListStudentAttendanceLoad());
     lessonCourseApi
-      .loadListStudentAttendanceByLessonApi(classID, lessonID, token)
+      .loadListStudentAttendanceByLessonApi(classID, lessonID, token, domain)
       .then(function(res) {
         dispatch(loadDataSuccessful(res));
       })

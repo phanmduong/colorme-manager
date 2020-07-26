@@ -12,10 +12,14 @@ class InfoStudentContainer extends React.Component {
 
   componentDidMount(): void {
     let studentId = this.props.navigation.getParam('studentId');
-    this.props.infoStudentActions.loadStudent(studentId, this.props.token);
+    this.props.infoStudentActions.loadStudent(
+      studentId,
+      this.props.token,
+      this.props.domain,
+    );
   }
 
-  setStudentId = studentId => {
+  setStudentId = (studentId) => {
     this.props.infoStudentActions.setStudentId(studentId);
   };
 
@@ -55,6 +59,7 @@ class InfoStudentContainer extends React.Component {
       appointmentPayment,
       dateTest,
       this.props.token,
+      this.props.domain,
     );
   };
 
@@ -62,26 +67,31 @@ class InfoStudentContainer extends React.Component {
     this.props.infoStudentActions.loadRegisters(
       this.props.student_id,
       this.props.token,
+      this.props.domain,
     );
     this.props.infoStudentActions.loadHistoryCalls(
       this.props.student_id,
       this.props.token,
+      this.props.domain,
     );
     this.props.infoStudentActions.loadProgress(
       this.props.student_id,
       this.props.token,
+      this.props.domain,
     );
     this.props.infoStudentActions.loadHistoryCollect(
       this.props.student_id,
       this.props.token,
+      this.props.domain,
     );
   };
 
-  changePassword = password => {
+  changePassword = (password) => {
     this.props.infoStudentActions.changePassword(
       this.props.student_id,
       password,
       this.props.token,
+      this.props.domain,
     );
   };
 
@@ -145,6 +155,7 @@ function mapStateToProps(state) {
     errorLoadingProgress: state.infoStudent.errorLoadingProgress,
     isChangingPassword: state.infoStudent.isChangingPassword,
     errorPassword: state.infoStudent.errorPassword,
+    domain: state.login.domain,
   };
 }
 

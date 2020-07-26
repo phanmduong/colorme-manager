@@ -5,7 +5,7 @@ import {bindActionCreators} from 'redux';
 import * as makeupClassActions from '../actions/makeupClassActions';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from "../styles";
+import theme from '../styles';
 
 class MakeupClassContainer extends React.Component {
   constructor(props, context) {
@@ -37,11 +37,18 @@ class MakeupClassContainer extends React.Component {
   };
 
   loadAllCourses = () => {
-    this.props.makeupClassActions.loadAllCourses(this.props.token);
+    this.props.makeupClassActions.loadAllCourses(
+      this.props.token,
+      this.props.domain,
+    );
   };
 
-  loadSchedule = id => {
-    this.props.makeupClassActions.loadScheduleClasses(this.props.token, id);
+  loadSchedule = (id) => {
+    this.props.makeupClassActions.loadScheduleClasses(
+      this.props.token,
+      id,
+      this.props.domain,
+    );
   };
 
   render() {
@@ -71,6 +78,7 @@ function mapStateToProps(state) {
     isLoadingAllCourses: state.makeupClasses.isLoadingAllCourses,
     errorLoadingAllCourses: state.makeupClasses.errorLoadingAllCourses,
     courses: state.makeupClasses.courses,
+    domain: state.login.domain,
   };
 }
 

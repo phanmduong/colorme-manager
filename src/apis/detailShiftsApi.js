@@ -1,9 +1,9 @@
 import axios from 'axios';
 import * as env from '../constants/env';
 
-export function loadDetailShifts(baseId, genId, id, week, token) {
+export function loadDetailShifts(baseId, genId, id, week, token, domain) {
   let url =
-    env.MANAGE_API_URL_V3 +
+    env.manageApiUrlV3(domain) +
     '/work-shift/detail-shifts/' +
     id +
     '?baseId=' +

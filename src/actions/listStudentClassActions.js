@@ -20,11 +20,11 @@ export function beginDataListStudentClassRefresh() {
   };
 }
 
-export function loadDataListStudentClass(classId, token) {
+export function loadDataListStudentClass(classId, token, domain) {
   return function(dispatch) {
     dispatch(beginDataListStudentClassLoad());
     studentApi
-      .loadListStudentClassApi(classId, token)
+      .loadListStudentClassApi(classId, token, domain)
       .then(function(res) {
         dispatch(loadDataSuccessful(res));
       })
@@ -35,11 +35,11 @@ export function loadDataListStudentClass(classId, token) {
   };
 }
 
-export function refreshDataListStudentClass(classId, token) {
+export function refreshDataListStudentClass(classId, token, domain) {
   return function(dispatch) {
     dispatch(beginDataListStudentClassRefresh());
     studentApi
-      .loadListStudentClassApi(classId, token)
+      .loadListStudentClassApi(classId, token, domain)
       .then(function(res) {
         dispatch(loadDataSuccessful(res));
       })

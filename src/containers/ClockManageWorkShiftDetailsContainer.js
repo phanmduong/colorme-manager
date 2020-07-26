@@ -55,6 +55,7 @@ class ClockManageWorkShiftDetailsContainer extends React.Component {
       employeeId,
       date,
       this.props.token,
+      this.props.domain,
     );
   };
 
@@ -89,6 +90,7 @@ function mapStateToProps(state) {
     isLoadingWorkShiftData: state.clockManage.isLoadingWorkShiftData,
     errorWorkShiftData: state.clockManage.errorWorkShiftData,
     selectedEmployee: state.clockManage.selectedEmployee,
+    domain: state.login.domain,
   };
 }
 

@@ -1,13 +1,13 @@
 import axios from 'axios';
 import * as env from '../constants/env';
 
-export function loadProfile(token) {
-  let url = env.MANAGE_API_URL + '/profile?token=' + token;
+export function loadProfile(token, domain) {
+  let url = env.manageApiUrl(domain) + '/profile?token=' + token;
   return axios.get(url);
 }
 
-export function updateProfile(profile, token) {
-  let url = env.MANAGE_API_URL_V3 + '/edit-profile?token=' + token;
+export function updateProfile(profile, token, domain) {
+  let url = env.manageApiUrlV3(domain) + '/edit-profile?token=' + token;
   return axios.post(url, {
     name: profile.name,
     email: profile.email,
@@ -23,8 +23,8 @@ export function updateProfile(profile, token) {
   });
 }
 
-export function changeAvatar(id, file, token) {
-  let url = env.MANAGE_API_URL + '/change-avatar?token=' + token;
+export function changeAvatar(id, file, token, domain) {
+  let url = env.manageApiUrl(domain) + '/change-avatar?token=' + token;
   let formData = new FormData();
   formData.append('id', id);
   formData.append('avatar', {

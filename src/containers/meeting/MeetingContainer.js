@@ -8,13 +8,13 @@ import {observer} from 'mobx-react';
 import MeetingComponent from './MeetingComponent';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from "../../styles";
+import theme from '../../styles';
 
 @observer
 class MeetingContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.store = new MeetingStore(props.token);
+    this.store = new MeetingStore(props.token, props.domain);
   }
 
   static navigationOptions = ({navigation}) => ({
@@ -68,6 +68,7 @@ const styles = {
 function mapStateToProps(state) {
   return {
     token: state.login.token,
+    domain: state.login.domain,
   };
 }
 
@@ -75,7 +76,4 @@ function mapDispatchToProps(dispatch) {
   return {};
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(MeetingContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(MeetingContainer);

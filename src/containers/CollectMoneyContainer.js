@@ -59,6 +59,7 @@ class CollectMoneyContainer extends React.Component {
       this.props.token,
       this.props.formInfoMoney,
       registerId,
+      this.props.domain,
     );
   }
 
@@ -67,6 +68,7 @@ class CollectMoneyContainer extends React.Component {
       false,
       this.props.token,
       this.props.search,
+      this.props.domain,
     );
   }
 
@@ -74,6 +76,7 @@ class CollectMoneyContainer extends React.Component {
     this.props.collectMoneyActions.refreshDataStudentList(
       this.props.token,
       this.props.search,
+      this.props.domain,
     );
   };
 
@@ -81,6 +84,7 @@ class CollectMoneyContainer extends React.Component {
     this.props.collectMoneyActions.updateFormAndLoadDataSearch(
       search,
       this.props.token,
+      this.props.domain,
     );
   }
 
@@ -154,6 +158,7 @@ function mapStateToProps(state) {
     formInfoMoney: state.collectMoney.formInfoMoney,
     avatar_url: state.login.user.avatar_url,
     refreshing: state.collectMoney.refreshing,
+    domain: state.login.domain,
   };
 }
 

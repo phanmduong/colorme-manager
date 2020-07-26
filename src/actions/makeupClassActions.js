@@ -1,11 +1,11 @@
 import * as type from '../constants/actionTypes';
 import * as makeupClassApi from '../apis/makeupClassApi';
 
-export function loadScheduleClasses(token, lessonId) {
+export function loadScheduleClasses(token, lessonId, domain) {
   return function(dispatch) {
     dispatch(beginLoadingScheduleClasses());
     makeupClassApi
-      .loadScheduleClasses(token, lessonId)
+      .loadScheduleClasses(token, lessonId, domain)
       .then(function(res) {
         dispatch(loadScheduleClassesSuccessful(res));
       })
@@ -41,11 +41,11 @@ function loadScheduleClassesError() {
   };
 }
 
-export function loadAllCourses(token) {
+export function loadAllCourses(token, domain) {
   return function(dispatch) {
     dispatch(beginLoadingAllCourses());
     makeupClassApi
-      .loadAllCourses(token)
+      .loadAllCourses(token, domain)
       .then(function(res) {
         dispatch(loadAllCoursesSuccessful(res));
       })

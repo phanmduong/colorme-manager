@@ -1,15 +1,15 @@
 import * as workShiftRegisterApi from '../apis/workShiftRegisterApi';
 import * as type from '../constants/actionTypes';
 
-export function loadWorkShift(baseId, genId, token) {
-  return function(dispatch) {
+export function loadWorkShift(baseId, genId, token, domain) {
+  return function (dispatch) {
     dispatch(beginLoadWorkShiftData());
     workShiftRegisterApi
-      .loadWorkShift(baseId, genId, token)
-      .then(function(res) {
+      .loadWorkShift(baseId, genId, token, domain)
+      .then(function (res) {
         dispatch(loadWorkShiftDataSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadWorkShiftDataError(error));
         throw error;
       });
@@ -55,12 +55,12 @@ export function loadWorkShiftDataError(error) {
   };
 }
 
-export function register(workShiftId, token) {
-  return function(dispatch) {
+export function register(workShiftId, token, domain) {
+  return function (dispatch) {
     dispatch(beginWorkShiftRegister(workShiftId));
     workShiftRegisterApi
-      .registerWorkShift(workShiftId, token)
-      .then(function(res) {
+      .registerWorkShift(workShiftId, token, domain)
+      .then(function (res) {
         dispatch(
           registering(
             JSON.stringify({
@@ -71,7 +71,7 @@ export function register(workShiftId, token) {
         );
         dispatch(workShiftRegisterSuccessful(workShiftId));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(workShiftRegisterError(workShiftId));
         throw error;
       });
@@ -146,12 +146,12 @@ export function workShiftUnregisterError(workShiftId) {
   };
 }
 
-export function unregister(workShiftId, token) {
-  return function(dispatch) {
+export function unregister(workShiftId, token, domain) {
+  return function (dispatch) {
     dispatch(beginWorkShiftUnregister(workShiftId));
     workShiftRegisterApi
-      .removeWorkShift(workShiftId, token)
-      .then(function(res) {
+      .removeWorkShift(workShiftId, token, domain)
+      .then(function (res) {
         dispatch(
           unregistering(
             JSON.stringify({
@@ -162,7 +162,7 @@ export function unregister(workShiftId, token) {
         );
         dispatch(workShiftUnregisterSuccessful(workShiftId));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(workShiftUnregisterError(workShiftId));
         throw error;
       });

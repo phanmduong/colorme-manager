@@ -31,28 +31,40 @@ class StaffContainer extends React.Component {
         this.props.currentPage + 1,
         this.props.search,
         this.props.token,
+        this.props.domain,
       );
     }
   };
 
   loadBases = () => {
-    this.props.baseActions.loadDataBase(this.props.token);
+    this.props.baseActions.loadDataBase(this.props.token, this.props.domain);
   };
 
   loadDepartments = () => {
-    this.props.staffActions.loadDepartments(this.props.token);
+    this.props.staffActions.loadDepartments(
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   loadRoles = () => {
-    this.props.staffActions.loadRoles(this.props.token);
+    this.props.staffActions.loadRoles(this.props.token, this.props.domain);
   };
 
-  searchStaff = search => {
-    this.props.staffActions.searchStaff(search, this.props.token);
+  searchStaff = (search) => {
+    this.props.staffActions.searchStaff(
+      search,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   refreshStaff = () => {
-    this.props.staffActions.refreshStaff(this.props.search, this.props.token);
+    this.props.staffActions.refreshStaff(
+      this.props.search,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   resetStaff = () => {
@@ -111,6 +123,7 @@ function mapStateToProps(state) {
     roles: state.staff.roles,
     isLoadingRoles: state.staff.isLoadingRoles,
     errorRoles: state.staff.errorRoles,
+    domain: state.login.domain,
   };
 }
 
@@ -121,7 +134,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(StaffContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(StaffContainer);

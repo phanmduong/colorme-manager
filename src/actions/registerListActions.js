@@ -37,8 +37,9 @@ export function loadDataRegisterListMy(
   sourceId,
   genId,
   classId,
+  domain,
 ) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginDataRegisterListLoadMy());
     studentApi
       .loadRegisterListApi(
@@ -61,11 +62,12 @@ export function loadDataRegisterListMy(
         end_time,
         sourceId,
         statusId,
+        domain,
       )
-      .then(function(res) {
+      .then(function (res) {
         dispatch(loadDataSuccessfulMy(res, salerId, search_coupon));
       })
-      .catch(error => {
+      .catch((error) => {
         if (axios.isCancel(error)) {
           console.log('Request canceled', error.message);
         } else {
@@ -117,10 +119,11 @@ export function updateFormAndLoadDataSearchMy(
   genId,
   classId,
   token,
+  domain,
 ) {
   sourceCancelMy.cancel('Canceled by api register list (my).');
   sourceCancelMy = CancelToken.source();
-  return dispatch => {
+  return (dispatch) => {
     dispatch(updateFormSearchMy(searchMy));
     dispatch(
       loadDataRegisterListMy(
@@ -142,6 +145,7 @@ export function updateFormAndLoadDataSearchMy(
         sourceId,
         genId,
         classId,
+        domain,
       ),
     );
   };
@@ -175,8 +179,9 @@ export function refreshRegisterListMy(
   sourceId,
   genId,
   classId,
+  domain,
 ) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(resetRegisterListMy());
     dispatch(
       loadDataRegisterListMy(
@@ -198,6 +203,7 @@ export function refreshRegisterListMy(
         sourceId,
         genId,
         classId,
+        domain,
       ),
     );
   };
@@ -298,7 +304,7 @@ export function onSelectClassId(classId) {
 }
 
 export function reset() {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(resetRegisterListProps());
     dispatch(selectedGenId(-1));
     dispatch(selectedBaseId(-1));

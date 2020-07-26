@@ -1,11 +1,11 @@
 import * as types from '../constants/actionTypes';
 import * as profileApi from '../apis/profileApi';
 
-export function loadProfile(token) {
+export function loadProfile(token, domain) {
   return function(dispatch) {
     dispatch(beginLoadProfile());
     profileApi
-      .loadProfile(token)
+      .loadProfile(token, domain)
       .then(function(res) {
         dispatch(loadProfileSuccessful(res));
       })
@@ -42,16 +42,16 @@ function loadProfileError() {
   };
 }
 
-export function changeAvatar(id, user, file, token) {
+export function changeAvatar(id, user, file, token, domain) {
   return function(dispatch) {
     dispatch(beginChangeAvatar());
     profileApi
-      .changeAvatar(id, file, token)
-      .then(function(res) {
+      .changeAvatar(id, file, token, domain)
+      .then(function (res) {
         dispatch(updateSystemAvatar(user, res));
         dispatch(changeAvatarSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(changeAvatarError());
         throw error;
       });
@@ -91,11 +91,11 @@ function changeAvatarError() {
   };
 }
 
-export function updateProfile(profile, token) {
+export function updateProfile(profile, token, domain) {
   return function(dispatch) {
     dispatch(beginUpdateProfile());
     profileApi
-      .updateProfile(profile, token)
+      .updateProfile(profile, token, domain)
       .then(function(res) {
         dispatch(updateProfileSuccessful());
         dispatch(loadProfile(token));

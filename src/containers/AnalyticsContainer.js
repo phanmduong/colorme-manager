@@ -14,7 +14,7 @@ import * as registerListActions from '../actions/registerListActions';
 import {Alert, Text, View} from 'react-native';
 import _ from 'lodash';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from "../styles";
+import theme from '../styles';
 
 class AnalyticsContainer extends React.Component {
   constructor(props, context) {
@@ -106,7 +106,7 @@ class AnalyticsContainer extends React.Component {
       // }
 
       var genData = _.sortBy(nextProps.genData, [
-        function(o) {
+        function (o) {
           return parseInt(o.name);
         },
       ]);
@@ -134,7 +134,7 @@ class AnalyticsContainer extends React.Component {
     if (props.genData.length > 0 && !this.state.checkedDataGen) {
       this.setState({checkedDataGen: true});
       var genData = _.sortBy(props.genData, [
-        function(o) {
+        function (o) {
           return parseInt(o.name);
         },
       ]);
@@ -155,16 +155,17 @@ class AnalyticsContainer extends React.Component {
         -1,
         props.currentGen.id,
         this.props.token,
+        this.props.domain,
       );
     }
   }
 
   loadData() {
     if (!this.props.baseData || this.props.baseData.length <= 0) {
-      this.props.baseActions.loadDataBase(this.props.token);
+      this.props.baseActions.loadDataBase(this.props.token, this.props.domain);
     }
     if (!this.props.genData || this.props.genData.length <= 0) {
-      this.props.genActions.loadDataGen(this.props.token);
+      this.props.genActions.loadDataGen(this.props.token, this.props.domain);
     }
     this.checkData(this.props);
   }
@@ -174,6 +175,7 @@ class AnalyticsContainer extends React.Component {
       baseId,
       genId,
       this.props.token,
+      this.props.domain,
     );
   }
 
@@ -255,6 +257,7 @@ function mapStateToProps(state) {
     errorDashboard: state.analytics.error,
     selectedBaseId: state.analytics.selectedBaseId,
     selectedGenId: state.analytics.selectedGenId,
+    domain: state.login.domain,
   };
 }
 
@@ -268,7 +271,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(AnalyticsContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(AnalyticsContainer);

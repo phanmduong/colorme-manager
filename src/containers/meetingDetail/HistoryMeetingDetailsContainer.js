@@ -8,7 +8,7 @@ import {observer} from 'mobx-react';
 import MeetingDetailComponent from './MeetingDetailComponent';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from "../../styles";
+import theme from '../../styles';
 
 @observer
 class HistoryMeetingDetailsContainer extends React.Component {
@@ -16,7 +16,7 @@ class HistoryMeetingDetailsContainer extends React.Component {
     super(props);
     const {navigation} = this.props;
     const meetingId = navigation.getParam('meetingId', 0);
-    this.store = new MeetingDetailStore(props.token, meetingId);
+    this.store = new MeetingDetailStore(props.token, meetingId, props.domain);
   }
 
   static navigationOptions = ({navigation}) => ({
@@ -52,6 +52,7 @@ const styles = {
 function mapStateToProps(state) {
   return {
     token: state.login.token,
+    domain: state.login.domain,
   };
 }
 

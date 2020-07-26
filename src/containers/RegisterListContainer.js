@@ -34,11 +34,11 @@ class RegisterListContainer extends React.Component {
     this.loadGens();
   }
 
-  componentWillReceiveProps = nextProps => {
+  componentWillReceiveProps = (nextProps) => {
     this.checkCurrentGen(nextProps);
   };
 
-  checkCurrentGen = props => {
+  checkCurrentGen = (props) => {
     if (
       !isEmptyInput(props.currentGen.id) &&
       !isEmptyInput(this.props.currentGen.id) &&
@@ -50,27 +50,40 @@ class RegisterListContainer extends React.Component {
   };
 
   loadBases = () => {
-    this.props.baseActions.loadDataBase(this.props.token);
+    this.props.baseActions.loadDataBase(this.props.token, this.props.domain);
   };
 
   loadCampaigns = () => {
-    this.props.saveRegisterActions.loadCampaigns(this.props.token);
+    this.props.saveRegisterActions.loadCampaigns(
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   loadSources = () => {
-    this.props.saveRegisterActions.loadSources(this.props.token);
+    this.props.saveRegisterActions.loadSources(
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   loadStatuses = () => {
-    this.props.saveRegisterActions.loadStatuses('registers', this.props.token);
+    this.props.saveRegisterActions.loadStatuses(
+      'registers',
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   loadSalers = () => {
-    this.props.saveRegisterActions.loadSalers(this.props.token);
+    this.props.saveRegisterActions.loadSalers(
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   loadGens = () => {
-    this.props.genActions.loadDataGen(this.props.token);
+    this.props.genActions.loadDataGen(this.props.token, this.props.domain);
   };
 
   loadFilterClasses = () => {
@@ -78,17 +91,23 @@ class RegisterListContainer extends React.Component {
       this.props.saveRegisterActions.loadFilterClasses(
         this.props.currentGen.id,
         this.props.token,
+        this.props.domain,
       );
     } else {
       this.props.saveRegisterActions.loadFilterClasses(
         this.props.selectedGenId,
         this.props.token,
+        this.props.domain,
       );
     }
   };
 
-  reloadFilterClasses = genId => {
-    this.props.saveRegisterActions.reloadFilterClasses(genId, this.props.token);
+  reloadFilterClasses = (genId) => {
+    this.props.saveRegisterActions.reloadFilterClasses(
+      genId,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   loadDataRegisterListMy() {
@@ -123,11 +142,12 @@ class RegisterListContainer extends React.Component {
         sourceId,
         genId,
         classId,
+        this.props.domain,
       );
     }
   }
 
-  refreshRegisterListMy = search_coupon => {
+  refreshRegisterListMy = (search_coupon) => {
     let baseId =
       this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
     let salerId = this.props.salerId === -1 ? '' : this.props.salerId;
@@ -165,6 +185,7 @@ class RegisterListContainer extends React.Component {
       sourceId,
       genId,
       classId,
+      this.props.domain,
     );
   };
 
@@ -198,10 +219,11 @@ class RegisterListContainer extends React.Component {
       genId,
       classId,
       this.props.token,
+      this.props.domain,
     );
   }
 
-  setStudentId = studentId => {
+  setStudentId = (studentId) => {
     this.props.infoStudentActions.setStudentId(studentId);
   };
 
@@ -225,6 +247,7 @@ class RegisterListContainer extends React.Component {
       appointmentPayment,
       dateTest,
       this.props.token,
+      this.props.domain,
     );
   };
 
@@ -260,62 +283,63 @@ class RegisterListContainer extends React.Component {
       this.props.appointmentPayment,
       statusId,
       sourceId,
+      this.props.domain,
     );
   };
 
-  onSelectBaseId = baseId => {
+  onSelectBaseId = (baseId) => {
     this.props.baseActions.selectedBaseId(baseId);
   };
 
-  onSelectSalerId = salerId => {
+  onSelectSalerId = (salerId) => {
     this.props.registerListActions.onSelectSalerId(salerId);
   };
 
-  onSelectCampaignId = campaignId => {
+  onSelectCampaignId = (campaignId) => {
     this.props.registerListActions.onSelectCampaignId(campaignId);
   };
 
-  onSelectPaidStatus = paidStatus => {
+  onSelectPaidStatus = (paidStatus) => {
     this.props.registerListActions.onSelectPaidStatus(paidStatus);
   };
 
-  onSelectClassStatus = classStatus => {
+  onSelectClassStatus = (classStatus) => {
     this.props.registerListActions.onSelectClassStatus(classStatus);
   };
 
-  onSelectCallStatus = callStatus => {
+  onSelectCallStatus = (callStatus) => {
     this.props.registerListActions.onSelectCallStatus(callStatus);
   };
 
-  onSelectBookmark = bookmark => {
+  onSelectBookmark = (bookmark) => {
     this.props.registerListActions.onSelectBookmark(bookmark);
   };
 
-  onSelectStartTime = date => {
+  onSelectStartTime = (date) => {
     this.props.registerListActions.onSelectStartTime(date);
   };
 
-  onSelectEndTime = date => {
+  onSelectEndTime = (date) => {
     this.props.registerListActions.onSelectEndTime(date);
   };
 
-  onSelectAppointmentPayment = date => {
+  onSelectAppointmentPayment = (date) => {
     this.props.registerListActions.onSelectAppointmentPayment(date);
   };
 
-  onSelectStatus = statusId => {
+  onSelectStatus = (statusId) => {
     this.props.registerListActions.onSelectStatus(statusId);
   };
 
-  onSelectSource = sourceId => {
+  onSelectSource = (sourceId) => {
     this.props.registerListActions.onSelectSource(sourceId);
   };
 
-  onSelectGenId = genId => {
+  onSelectGenId = (genId) => {
     this.props.genActions.selectedGenId(genId);
   };
 
-  onSelectClassId = classId => {
+  onSelectClassId = (classId) => {
     this.props.registerListActions.onSelectClassId(classId);
   };
 
@@ -323,7 +347,7 @@ class RegisterListContainer extends React.Component {
     this.props.registerListActions.reset();
   };
 
-  setAutoFocusRegisterListSearch = bool => {
+  setAutoFocusRegisterListSearch = (bool) => {
     this.props.registerListActions.setAutoFocusRegisterListSearch(bool);
   };
 
@@ -442,6 +466,7 @@ function mapStateToProps(state) {
     filterClasses: state.saveRegister.filterClasses,
     classId: state.registerList.classId,
     autoFocusRegisterListSearch: state.registerList.autoFocusRegisterListSearch,
+    domain: state.login.domain,
   };
 }
 

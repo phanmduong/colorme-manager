@@ -46,10 +46,11 @@ class LeadsContainer extends React.Component {
       source_id,
       campaign_id,
       this.props.token,
+      this.props.domain,
     );
   };
 
-  searchData = searchLeads => {
+  searchData = (searchLeads) => {
     let carer_id = this.props.carer_id === -1 ? '' : this.props.carer_id;
     let rate = this.props.rate === -1 ? '' : this.props.rate;
     let leadStatusId =
@@ -71,10 +72,11 @@ class LeadsContainer extends React.Component {
       source_id,
       campaign_id,
       this.props.token,
+      this.props.domain,
     );
   };
 
-  onRefresh = searchLeads => {
+  onRefresh = (searchLeads) => {
     let carer_id = this.props.carer_id === -1 ? '' : this.props.carer_id;
     let rate = this.props.rate === -1 ? '' : this.props.rate;
     let leadStatusId =
@@ -96,54 +98,69 @@ class LeadsContainer extends React.Component {
       source_id,
       campaign_id,
       this.props.token,
+      this.props.domain,
     );
   };
 
-  loadStaff = search => {
-    this.props.leadsActions.getStaff(search, this.props.token);
+  loadStaff = (search) => {
+    this.props.leadsActions.getStaff(
+      search,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   loadStatuses = () => {
-    this.props.saveRegisterActions.loadStatuses('leads', this.props.token);
+    this.props.saveRegisterActions.loadStatuses(
+      'leads',
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   loadCampaigns = () => {
-    this.props.saveRegisterActions.loadCampaigns(this.props.token);
+    this.props.saveRegisterActions.loadCampaigns(
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   loadSources = () => {
-    this.props.saveRegisterActions.loadSources(this.props.token);
+    this.props.saveRegisterActions.loadSources(
+      this.props.token,
+      this.props.domain,
+    );
   };
 
-  onSelectStartTime = startTime => {
+  onSelectStartTime = (startTime) => {
     this.props.leadsActions.onSelectStartTimeLeads(startTime);
   };
 
-  onSelectEndTime = endTime => {
+  onSelectEndTime = (endTime) => {
     this.props.leadsActions.onSelectEndTimeLeads(endTime);
   };
 
-  onSelectRate = rate => {
+  onSelectRate = (rate) => {
     this.props.leadsActions.onSelectRateLeads(rate);
   };
 
-  onSelectCampaign = campaign => {
+  onSelectCampaign = (campaign) => {
     this.props.leadsActions.onSelectCampaignLeads(campaign);
   };
 
-  onSelectStatus = status => {
+  onSelectStatus = (status) => {
     this.props.leadsActions.onSelectStatusLeads(status);
   };
 
-  onSelectSource = source => {
+  onSelectSource = (source) => {
     this.props.leadsActions.onSelectSourceLeads(source);
   };
 
-  onSelectAddress = address => {
+  onSelectAddress = (address) => {
     this.props.leadsActions.onSelectAddressLeads(address);
   };
 
-  onSelectCarer = carer_id => {
+  onSelectCarer = (carer_id) => {
     this.props.leadsActions.onSelectCarerLeads(carer_id);
   };
 
@@ -171,10 +188,11 @@ class LeadsContainer extends React.Component {
       appointmentPayment,
       dateTest,
       this.props.token,
+      this.props.domain,
     );
   };
 
-  setStudentId = studentId => {
+  setStudentId = (studentId) => {
     this.props.infoStudentActions.setStudentId(studentId);
   };
 
@@ -257,6 +275,7 @@ function mapStateToProps(state) {
     isLoadingStaff: state.leads.isLoadingStaff,
     errorStaff: state.leads.errorStaff,
     errorChangeCallStatus: state.infoStudent.errorChangeCallStatus,
+    domain: state.login.domain,
   };
 }
 
@@ -268,7 +287,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(LeadsContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(LeadsContainer);

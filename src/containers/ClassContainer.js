@@ -11,7 +11,7 @@ import * as genActions from '../actions/genActions';
 import * as analyticsActions from '../actions/analyticsActions';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from "../styles";
+import theme from '../styles';
 
 class ClassContainer extends React.Component {
   constructor(props) {
@@ -40,10 +40,13 @@ class ClassContainer extends React.Component {
   });
 
   componentDidMount() {
-    this.props.genActions.loadDataGen(this.props.token);
-    this.props.classActions.loadDataCourse(this.props.token);
-    this.props.classActions.loadBaseData(this.props.token);
-    this.props.saveRegisterActions.loadProvinces(this.props.token);
+    this.props.genActions.loadDataGen(this.props.token, this.props.domain);
+    this.props.classActions.loadDataCourse(this.props.token, this.props.domain);
+    this.props.classActions.loadBaseData(this.props.token, this.props.domain);
+    this.props.saveRegisterActions.loadProvinces(
+      this.props.token,
+      this.props.domain,
+    );
   }
 
   componentWillReceiveProps(props) {
@@ -60,16 +63,26 @@ class ClassContainer extends React.Component {
 
     if (props.genData.length > 0 && !this.state.checkedClasses) {
       this.setState({checkedClasses: true});
-      this.loadDataClass(props.analyticBaseId, genId, this.props.token);
+      this.loadDataClass(props.analyticBaseId, genId);
     }
   }
 
   loadDataClass = (baseId, genId) => {
-    this.props.classActions.loadDataClass(baseId, genId, this.props.token);
+    this.props.classActions.loadDataClass(
+      baseId,
+      genId,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   onRefresh = (baseId, genId) => {
-    this.props.classActions.refreshDataClass(baseId, genId, this.props.token);
+    this.props.classActions.refreshDataClass(
+      baseId,
+      genId,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   onSelectedItem(classId) {
@@ -77,8 +90,12 @@ class ClassContainer extends React.Component {
     this.props.navigation.navigate('ListStudentClass');
   }
 
-  changeClassStatus = classId => {
-    this.props.classActions.changeClassStatus(classId, this.props.token);
+  changeClassStatus = (classId) => {
+    this.props.classActions.changeClassStatus(
+      classId,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   render() {
@@ -137,6 +154,7 @@ function mapStateToProps(state) {
     isLoadingProvinces: state.saveRegister.isLoadingProvinces,
     errorLoadingProvinces: state.saveRegister.errorLoadingProvinces,
     provinces: state.saveRegister.provinces,
+    domain: state.login.domain,
   };
 }
 
@@ -149,7 +167,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ClassContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ClassContainer);

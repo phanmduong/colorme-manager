@@ -6,7 +6,7 @@ import {bindActionCreators} from 'redux';
 import * as genActions from '../actions/genActions';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from "../styles";
+import theme from '../styles';
 
 class TeachingRatingDuplicateContainer extends React.Component {
   constructor(props, context) {
@@ -51,17 +51,19 @@ class TeachingRatingDuplicateContainer extends React.Component {
     }
   };
 
-  loadTeacherRatingData = userId => {
+  loadTeacherRatingData = (userId) => {
     this.props.teachingRatingActions.loadTeacherRating(
       this.props.token,
       userId,
+      this.props.domain,
     );
   };
 
-  loadAssistantRatingData = userId => {
+  loadAssistantRatingData = (userId) => {
     this.props.teachingRatingActions.loadAssistantRating(
       this.props.token,
       userId,
+      this.props.domain,
     );
   };
 
@@ -70,6 +72,7 @@ class TeachingRatingDuplicateContainer extends React.Component {
       this.props.token,
       genId,
       userId,
+      this.props.domain,
     );
   };
 
@@ -78,10 +81,11 @@ class TeachingRatingDuplicateContainer extends React.Component {
       this.props.token,
       genId,
       userId,
+      this.props.domain,
     );
   };
 
-  onSelectGenId = genId => {
+  onSelectGenId = (genId) => {
     const {navigation} = this.props;
     let userId = navigation.getParam('userId', 0);
     this.props.teachingRatingActions.selectedGenId(genId);
@@ -147,6 +151,7 @@ function mapStateToProps(state) {
       state.teachingRatingDuplicate.isLoadingAssistantFeedback,
     errorLoadingAssistantFeedback:
       state.teachingRatingDuplicate.errorLoadingAssistantFeedback,
+    domain: state.login.domain,
   };
 }
 

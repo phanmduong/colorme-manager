@@ -12,11 +12,11 @@ export function beginDataGenLoad() {
   };
 }
 
-export function loadDataGen(token) {
+export function loadDataGen(token, domain) {
   return function(dispatch) {
     dispatch(beginDataGenLoad());
     genApi
-      .loadGenApi(token)
+      .loadGenApi(token, domain)
       .then(function(res) {
         dispatch(loadDataSuccessful(res));
       })

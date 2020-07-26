@@ -35,15 +35,22 @@ class AddLeadsContainer extends React.Component {
   });
 
   loadProvinces = () => {
-    this.props.saveRegisterActions.loadProvinces(this.props.token);
+    this.props.saveRegisterActions.loadProvinces(
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   loadStatuses = () => {
-    this.props.saveRegisterActions.loadStatuses('leads', this.props.token);
+    this.props.saveRegisterActions.loadStatuses(
+      'leads',
+      this.props.token,
+      this.props.domain,
+    );
   };
 
-  saveLead = lead => {
-    this.props.leadsActions.saveLead(lead, this.props.token);
+  saveLead = (lead) => {
+    this.props.leadsActions.saveLead(lead, this.props.token, this.props.domain);
   };
 
   render() {
@@ -67,6 +74,7 @@ function mapStateToProps(state) {
     isLoadingStatuses: state.saveRegister.isLoadingStatuses,
     errorLoadingStatuses: state.saveRegister.errorLoadingStatuses,
     statuses: state.saveRegister.statuses,
+    domain: state.login.domain,
   };
 }
 
@@ -77,7 +85,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(AddLeadsContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(AddLeadsContainer);

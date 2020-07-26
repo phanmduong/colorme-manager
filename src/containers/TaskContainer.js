@@ -21,16 +21,28 @@ class TaskContainer extends React.Component {
     this.onSelectDate(moment(new Date()).format('YYYY-MM-DD'));
   };
 
-  loadTaskAnalytics = user_id => {
-    this.props.taskActions.loadTaskAnalytics(user_id, this.props.token);
+  loadTaskAnalytics = (user_id) => {
+    this.props.taskActions.loadTaskAnalytics(
+      user_id,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   loadTaskView = (date, user_id) => {
-    this.props.taskActions.loadTaskView(date, user_id, this.props.token);
+    this.props.taskActions.loadTaskView(
+      date,
+      user_id,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   loadTaskEmployees = () => {
-    this.props.taskActions.loadTaskEmployees(this.props.token);
+    this.props.taskActions.loadTaskEmployees(
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   onRefresh = (date, user_id) => {
@@ -38,7 +50,7 @@ class TaskContainer extends React.Component {
     this.loadTaskView(date, user_id);
   };
 
-  onSelectDate = date => {
+  onSelectDate = (date) => {
     this.props.taskActions.onSelectDate(date);
   };
 
@@ -47,11 +59,11 @@ class TaskContainer extends React.Component {
     this.loadTaskView(date, user_id);
   };
 
-  setStudentId = studentId => {
+  setStudentId = (studentId) => {
     this.props.infoStudentActions.setStudentId(studentId);
   };
 
-  onSelectTask = studentId => {
+  onSelectTask = (studentId) => {
     this.setStudentId(studentId);
     this.props.navigation.navigate('InfoStudent', {
       studentId: studentId,
@@ -97,6 +109,7 @@ function mapStateToProps(state) {
     isLoadingTaskEmployees: state.task.isLoadingTaskEmployees,
     errorLoadingTaskEmployees: state.task.errorLoadingTaskEmployees,
     student: state.infoStudent.student,
+    domain: state.login.domain,
   };
 }
 
@@ -107,7 +120,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(TaskContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(TaskContainer);

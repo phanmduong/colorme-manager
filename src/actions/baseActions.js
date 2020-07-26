@@ -13,11 +13,11 @@ export function beginDataBaseLoad() {
   };
 }
 
-export function loadDataBase(token) {
+export function loadDataBase(token, domain) {
   return function(dispatch) {
     dispatch(beginDataBaseLoad());
     baseApi
-      .loadBaseApi(token)
+      .loadBaseApi(token, domain)
       .then(function(res) {
         dispatch(loadDataSuccessful(res));
       })

@@ -9,7 +9,7 @@ import * as checkInCheckOutActions from '../actions/checkInCheckOutActions';
 import {bindActionCreators} from 'redux';
 import {NavigationActions} from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from "../styles";
+import theme from '../styles';
 
 class CheckInContainer extends React.Component {
   constructor(props, context) {
@@ -44,6 +44,7 @@ class CheckInContainer extends React.Component {
     this.props.checkInCheckOutActions.loadCheck(
       this.props.token,
       this.props.navigation.state.params.type,
+      this.props.domain,
     );
   }
 
@@ -83,6 +84,7 @@ function mapStateToProps(state) {
     checkInData: state.checkInCheckOut.checkIn,
     token: state.login.token,
     user: state.login.user,
+    domain: state.login.domain,
   };
 }
 
@@ -95,7 +97,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(CheckInContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(CheckInContainer);

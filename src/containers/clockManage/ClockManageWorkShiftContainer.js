@@ -14,7 +14,11 @@ class ClockManageWorkShiftContainer extends React.Component {
   };
 
   loadWorkShifts = (date) => {
-    this.props.clockManageActions.getWorkShiftClock(date, this.props.token);
+    this.props.clockManageActions.getWorkShiftClock(
+      date,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   onSelectWorkShiftEmployee = (employee) => {
@@ -38,6 +42,7 @@ function mapStateToProps(state) {
     isLoadingWorkShiftData: state.clockManage.isLoadingWorkShiftData,
     errorWorkShiftData: state.clockManage.errorWorkShiftData,
     selectedDate: state.clockManage.selectedDate,
+    domain: state.login.domain,
   };
 }
 

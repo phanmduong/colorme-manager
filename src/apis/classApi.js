@@ -24,14 +24,14 @@ export function loadClassApi(
   });
 }
 
-export function loadCourseApi(token) {
-  let url = env.API_URL + '/paid-courses?token=' + token;
+export function loadCourseApi(token, domain) {
+  let url = env.apiUrl(domain) + '/paid-courses?token=' + token;
   return axios.get(url);
 }
 
-export function loadCurrentClassStudyApi(date, token) {
+export function loadCurrentClassStudyApi(date, token, domain) {
   let url =
-    env.BASE_URL +
+    env.baseUrl(domain) +
     '/manageapi/v4/class/by-date-teaching?date=' +
     date +
     '&include=class_lesson.analytics_attendance,class_lesson.lesson,base.district.province,room,course,teacher,teacher_assistant,schedule&token=' +
@@ -40,21 +40,22 @@ export function loadCurrentClassStudyApi(date, token) {
   return axios.get(url);
 }
 
-export function loadBaseData(token) {
+export function loadBaseData(token, domain) {
   let url =
-    env.BASE_URL +
+    env.baseUrl(domain) +
     '/manageapi/v4/base/all?include=district.province&token=' +
     token;
   return axios.get(url);
 }
 
-export function infoCreateClass(token) {
-  let url = env.MANAGE_API_URL + '/class/info-create-class?token=' + token;
+export function infoCreateClass(token, domain) {
+  let url =
+    env.manageApiUrl(domain) + '/class/info-create-class?token=' + token;
   return axios.get(url);
 }
 
-export function addClass(classData, token) {
-  let url = env.MANAGE_API_URL + '/class/store-class?token=' + token;
+export function addClass(classData, token, domain) {
+  let url = env.manageApiUrl(domain) + '/class/store-class?token=' + token;
   return axios.post(url, {
     id: classData.id,
     datestart: classData.datestart,
@@ -86,8 +87,8 @@ export function loadClassInfo(classId, token) {
   return axios.get(url);
 }
 
-export function changeClassStatus(classId, token) {
-  let url = env.MANAGE_API_URL + '/class/change-status?token=' + token;
+export function changeClassStatus(classId, token, domain) {
+  let url = env.manageApiUrl(domain) + '/class/change-status?token=' + token;
   return axios.post(url, {
     class_id: classId,
   });

@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import * as detailShiftsActions from '../actions/detailShiftsActions';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from "../styles";
+import theme from '../styles';
 
 class DetailShiftsContainer extends React.Component {
   constructor(props, context) {
@@ -42,6 +42,7 @@ class DetailShiftsContainer extends React.Component {
       id,
       week,
       this.props.token,
+      this.props.domain,
     );
   };
 
@@ -77,6 +78,7 @@ function mapStateToProps(state) {
     detailShifts: state.detailShifts.detailShifts,
     user: state.login.user,
     token: state.login.token,
+    domain: state.login.domain,
   };
 }
 

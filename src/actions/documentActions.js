@@ -2,11 +2,11 @@ import * as types from '../constants/actionTypes';
 import * as documentApi from '../apis/documentApi';
 import * as meetingApi from '../apis/meetingApi';
 
-export function loadDocuments(departmentId, token) {
+export function loadDocuments(departmentId, token, domain) {
   return function(dispatch) {
     dispatch(beginLoadDocuments());
     documentApi
-      .loadDocuments(departmentId, token)
+      .loadDocuments(departmentId, token, domain)
       .then(function(res) {
         dispatch(loadDocumentsSuccessful(res));
       })
@@ -17,11 +17,11 @@ export function loadDocuments(departmentId, token) {
   };
 }
 
-export function refreshDocuments(departmentId, token) {
+export function refreshDocuments(departmentId, token, domain) {
   return function(dispatch) {
     dispatch(beginRefreshDocuments());
     documentApi
-      .loadDocuments(departmentId, token)
+      .loadDocuments(departmentId, token, domain)
       .then(function(res) {
         dispatch(loadDocumentsSuccessful(res));
       })
@@ -67,11 +67,11 @@ function loadDocumentsError() {
   };
 }
 
-export function loadDepartmentFilter(token) {
+export function loadDepartmentFilter(token, domain) {
   return function(dispatch) {
     dispatch(beginLoadDepartmentFilter());
     meetingApi
-      .loadFilterMeeting(token)
+      .loadFilterMeeting(token, domain)
       .then(function(res) {
         dispatch(loadDepartmentFilterSuccessful(res));
       })

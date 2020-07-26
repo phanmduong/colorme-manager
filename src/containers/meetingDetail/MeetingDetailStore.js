@@ -33,10 +33,12 @@ class MeetingDetailStore {
   @observable reason = '';
   @observable isDeletingIssue = false;
   @observable errorDeletingIssue = false;
+  @observable domain = '';
 
-  constructor(token, meetingId) {
+  constructor(token, meetingId, domain) {
     this.token = token;
     this.selectedMeetingId = meetingId;
+    this.domain = domain;
   }
 
   @action
@@ -44,12 +46,12 @@ class MeetingDetailStore {
     this.isLoadingMeetings = true;
     this.errorMeetings = false;
 
-    loadMeetings(this.token)
-      .then(res => {
+    loadMeetings(this.token, this.domain)
+      .then((res) => {
         this.meetings = res.data.data.meetings;
         console.log(this.meetings);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         this.errorMeetings = true;
       })
@@ -63,12 +65,12 @@ class MeetingDetailStore {
     this.refreshing = true;
     this.error = false;
     console.log(this.selectedMeetingId);
-    loadMeetingDetail(this.token, this.selectedMeetingId)
-      .then(res => {
+    loadMeetingDetail(this.token, this.selectedMeetingId, this.domain)
+      .then((res) => {
         this.meeting = res.data.data.meeting;
         console.log(this.meeting);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         this.error = true;
       })
@@ -82,12 +84,12 @@ class MeetingDetailStore {
     this.isLoading = true;
     this.error = false;
     console.log(this.selectedMeetingId);
-    loadMeetingDetail(this.token, this.selectedMeetingId)
-      .then(res => {
+    loadMeetingDetail(this.token, this.selectedMeetingId, this.domain)
+      .then((res) => {
         this.meeting = res.data.data.meeting;
         console.log(this.meeting);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         this.error = true;
       })
@@ -102,12 +104,12 @@ class MeetingDetailStore {
     this.errorStoringIssue = false;
     console.log(this.nameIssue);
 
-    storeIssue(this.token, this.selectedMeetingId, this.nameIssue)
-      .then(res => {
+    storeIssue(this.token, this.selectedMeetingId, this.nameIssue, this.domain)
+      .then((res) => {
         this.meeting.issues = [...this.meeting.issues, res.data.data.issue];
         this.nameIssue = '';
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         this.errorStoringIssue = true;
       })
@@ -117,23 +119,23 @@ class MeetingDetailStore {
   };
 
   @action
-  deleteMeetingIssue = issueId => {
+  deleteMeetingIssue = (issueId) => {
     this.isDeletingIssue = true;
     this.errorDeletingIssue = false;
-    deleteMeetingIssue(this.token, issueId)
-      .then(res => {
+    deleteMeetingIssue(this.token, issueId, this.domain)
+      .then((res) => {
         if (res.data.status === 0) {
           Alert.alert('Thông báo', res.data.message);
         } else {
           let array = [...this.meeting.issues];
-          let index = array.findIndex(x => x.id === issueId);
+          let index = array.findIndex((x) => x.id === issueId);
           if (index !== -1) {
             array.splice(index, 1);
             this.meeting.issues = array;
           }
         }
       })
-      .catch(error => {
+      .catch((error) => {
         this.errorDeletingIssue = true;
       })
       .finally(() => {
@@ -147,15 +149,15 @@ class MeetingDetailStore {
     this.errorJoin = false;
 
     console.log('ok');
-    joinMeeting(this.token, meetingId, status, note)
-      .then(res => {
+    joinMeeting(this.token, meetingId, status, note, this.domain)
+      .then((res) => {
         console.log(res.data);
         this.meeting = {
           ...this.meeting,
           joined: res.data.data.meeting_participate,
         };
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         this.errorJoin = true;
       })
@@ -165,19 +167,19 @@ class MeetingDetailStore {
   };
 
   @action
-  checkInMeeting = meetingId => {
+  checkInMeeting = (meetingId) => {
     this.isChecking = true;
     this.errorCheckIn = false;
 
-    checkInMeeting(this.token, meetingId)
-      .then(res => {
+    checkInMeeting(this.token, meetingId, this.domain)
+      .then((res) => {
         console.log(res.data);
         this.meeting = {
           ...this.meeting,
           joined: res.data.data.meeting_participate,
         };
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         this.errorCheckIn = true;
       })
@@ -188,7 +190,7 @@ class MeetingDetailStore {
 
   @computed
   get meetingsNow() {
-    return this.meetings.filter(meeting => {
+    return this.meetings.filter((meeting) => {
       const date = moment(meeting.date, FORMAT_TIME_MYSQL).format('X');
       const now = moment().unix();
       return date - 1800 <= now && now <= parseInt(date) + 3600;
@@ -197,7 +199,7 @@ class MeetingDetailStore {
 
   @computed
   get meetingsSoon() {
-    return this.meetings.filter(meeting => {
+    return this.meetings.filter((meeting) => {
       const date = moment(meeting.date, FORMAT_TIME_MYSQL).format('X');
       const now = moment().unix();
       return now < date - 1800;

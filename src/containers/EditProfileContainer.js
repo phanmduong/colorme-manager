@@ -5,7 +5,7 @@ import * as profileActions from '../actions/profileActions';
 import EditProfileComponent from '../components/EditProfileComponent';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from "../styles";
+import theme from '../styles';
 
 class EditProfileContainer extends React.Component {
   constructor(props, context) {
@@ -28,8 +28,12 @@ class EditProfileContainer extends React.Component {
     ),
   });
 
-  updateProfile = profile => {
-    this.props.profileActions.updateProfile(profile, this.props.token);
+  updateProfile = (profile) => {
+    this.props.profileActions.updateProfile(
+      profile,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   render() {
@@ -53,6 +57,7 @@ function mapStateToProps(state) {
     profile: state.profile.user,
     isUpdatingProfile: state.profile.isUpdatingProfile,
     errorUpdatingProfile: state.profile.errorUpdatingProfile,
+    domain: state.login.domain,
   };
 }
 

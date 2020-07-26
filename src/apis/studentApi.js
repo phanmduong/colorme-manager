@@ -25,9 +25,10 @@ export function loadRegisterListApi(
   end_time = '',
   source_id = '',
   status_id = '',
+  domain,
 ) {
   let url =
-    env.API_URL +
+    env.apiUrl(domain) +
     '/register-list?page=' +
     page +
     '&search=' +
@@ -67,16 +68,19 @@ export function loadRegisterListApi(
   return axios.get(url, {cancelToken: sourceCancel.token});
 }
 
-export function loadStudentListByFilterApi(genId, baseId, filter) {
+export function loadStudentListByFilterApi(genId, baseId, filter, domain) {
   let url =
     baseId >= 0
-      ? `${env.API_NODE_URL}/students/${genId}/${filter}?base_id=${baseId}`
-      : `${env.API_NODE_URL}/students/${genId}/${filter}`;
+      ? `${env.apiNodeUrl(
+          domain,
+        )}/students/${genId}/${filter}?base_id=${baseId}`
+      : `${env.apiNodeUrl(domain)}/students/${genId}/${filter}`;
   return axios.get(url);
 }
 
-export function loadListStudentClassApi(classId, token) {
-  let url = env.API_URL + '/class/' + classId + '/students?token=' + token;
+export function loadListStudentClassApi(classId, token, domain) {
+  let url =
+    env.apiUrl(domain) + '/class/' + classId + '/students?token=' + token;
   return axios.get(url);
 }
 
@@ -100,9 +104,18 @@ export function searchStudentApi(
   return axios.get(url, {cancelToken: sourceCancel.token});
 }
 
-export function searchStudentRegisterApi(sourceCancel = {}, search, token) {
+export function searchStudentRegisterApi(
+  sourceCancel = {},
+  search,
+  token,
+  domain,
+) {
   let url =
-    env.API_URL + '/v2/search-registers?search=' + search + '&token=' + token;
+    env.apiUrl(domain) +
+    '/v2/search-registers?search=' +
+    search +
+    '&token=' +
+    token;
   return axios.get(url, {cancelToken: sourceCancel.token});
 }
 
@@ -113,8 +126,9 @@ export function uploadImage(
   imageField,
   token,
   error,
+  domain,
 ) {
-  let url = env.MANAGE_API_URL + '/upload-image-user';
+  let url = env.manageApiUrl(domain) + '/upload-image-user';
   if (token) {
     url += '?token=' + token;
   }

@@ -13,15 +13,15 @@ export function beginDataClassLoad() {
   };
 }
 
-export function loadDataClass(baseId, genId, token) {
-  return function(dispatch) {
+export function loadDataClass(baseId, genId, token, domain) {
+  return function (dispatch) {
     dispatch(beginDataClassLoad());
     analyticsApi
-      .loadDashboard(baseId, genId, token)
-      .then(function(res) {
+      .loadDashboard(baseId, genId, token, domain)
+      .then(function (res) {
         dispatch(loadDataSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadDataError());
         throw error;
       });
@@ -45,15 +45,15 @@ export function beginDataClassRefresh() {
   };
 }
 
-export function refreshDataClass(baseId, genId, token) {
-  return function(dispatch) {
+export function refreshDataClass(baseId, genId, token, domain) {
+  return function (dispatch) {
     dispatch(beginDataClassRefresh());
     analyticsApi
-      .loadDashboard(baseId, genId, token)
-      .then(function(res) {
+      .loadDashboard(baseId, genId, token, domain)
+      .then(function (res) {
         dispatch(refreshDataSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(refreshDataError());
         throw error;
       });
@@ -85,15 +85,15 @@ export function beginDataCourseLoad() {
   };
 }
 
-export function loadDataCourse(token) {
-  return function(dispatch) {
+export function loadDataCourse(token, domain) {
+  return function (dispatch) {
     dispatch(beginDataCourseLoad());
     classApi
-      .loadCourseApi(token)
-      .then(function(res) {
+      .loadCourseApi(token, domain)
+      .then(function (res) {
         dispatch(loadDataCourseSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadDataCourseError());
         throw error;
       });
@@ -157,30 +157,30 @@ function loadBaseError() {
   };
 }
 
-export function loadBaseData(token) {
-  return function(dispatch) {
+export function loadBaseData(token, domain) {
+  return function (dispatch) {
     dispatch(beginLoadBase());
     classApi
-      .loadBaseData(token)
-      .then(function(res) {
+      .loadBaseData(token, domain)
+      .then(function (res) {
         dispatch(loadBaseSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadBaseError());
         throw error;
       });
   };
 }
 
-export function infoCreateClass(token) {
-  return function(dispatch) {
+export function infoCreateClass(token, domain) {
+  return function (dispatch) {
     dispatch(beginLoadInfoCreateClass());
     classApi
-      .infoCreateClass(token)
-      .then(function(res) {
+      .infoCreateClass(token, domain)
+      .then(function (res) {
         dispatch(loadInfoCreateClassSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadInfoCreateClassError());
         throw error;
       });
@@ -216,16 +216,16 @@ function loadInfoCreateClassError() {
   };
 }
 
-export function addClass(classData, baseId, genId, token) {
-  return function(dispatch) {
+export function addClass(classData, baseId, genId, token, domain) {
+  return function (dispatch) {
     dispatch(beginAddClass());
     classApi
-      .addClass(classData, token)
-      .then(function(res) {
+      .addClass(classData, token, domain)
+      .then(function (res) {
         dispatch(addClassSuccessful());
-        dispatch(loadDataClass(baseId, genId, token));
+        dispatch(loadDataClass(baseId, genId, token, domain));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(addClassError());
         throw error;
       });
@@ -257,14 +257,14 @@ function addClassError() {
 }
 
 export function loadClassInfo(classId, token) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginLoadClassInfo());
     classApi
       .loadClassInfo(classId, token)
-      .then(function(res) {
+      .then(function (res) {
         dispatch(loadClassInfoSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadClassInfoError());
         throw error;
       });
@@ -296,15 +296,15 @@ function loadClassInfoError() {
   };
 }
 
-export function changeClassStatus(classId, token) {
-  return function(dispatch) {
+export function changeClassStatus(classId, token, domain) {
+  return function (dispatch) {
     dispatch(beginChangeClassStatus());
     classApi
-      .changeClassStatus(classId, token)
-      .then(function(res) {
+      .changeClassStatus(classId, token, domain)
+      .then(function (res) {
         dispatch(changeClassStatusSuccessful());
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(changeClassStatusError());
         throw error;
       });

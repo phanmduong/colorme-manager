@@ -2,11 +2,11 @@ import * as types from '../constants/actionTypes';
 import * as clockManageApi from '../apis/clockManageApi';
 import moment from 'moment';
 
-export function getShiftClock(time, token) {
+export function getShiftClock(time, token, domain) {
   return function (dispatch) {
     dispatch(beginLoadShiftClock());
     clockManageApi
-      .getShiftClock(time, token)
+      .getShiftClock(time, token, domain)
       .then(function (res) {
         dispatch(loadShiftClockSuccessful(res));
       })
@@ -48,11 +48,11 @@ export function onSelectClockManageDate(date) {
   };
 }
 
-export function getTeachingClock(time, token) {
+export function getTeachingClock(time, token, domain) {
   return function (dispatch) {
     dispatch(beginLoadTeachingClock());
     clockManageApi
-      .getTeachingClock(time, token)
+      .getTeachingClock(time, token, domain)
       .then(function (res) {
         dispatch(loadTeachingClockSuccessful(res));
       })
@@ -98,11 +98,11 @@ export function resetClock() {
   };
 }
 
-export function getWorkShiftClock(time, token) {
+export function getWorkShiftClock(time, token, domain) {
   return function (dispatch) {
     dispatch(beginLoadWorkShiftClock());
     clockManageApi
-      .getWorkShiftClock(time, token)
+      .getWorkShiftClock(time, token, domain)
       .then(function (res) {
         dispatch(loadWorkShiftClockSuccessful(res));
       })
@@ -154,11 +154,11 @@ function loadEmployeeWorkShiftClockSuccessful(employee) {
   };
 }
 
-export function getEmployeeWorkShiftClock(employeeId, time, token) {
+export function getEmployeeWorkShiftClock(employeeId, time, token, domain) {
   return function (dispatch) {
     dispatch(beginLoadWorkShiftClock());
     clockManageApi
-      .getWorkShiftClock(time, token)
+      .getWorkShiftClock(time, token, domain)
       .then(function (res) {
         const shifts = res.data.data;
         const employee = shifts.find((person) => person.id === employeeId);

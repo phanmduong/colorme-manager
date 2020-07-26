@@ -9,9 +9,9 @@ export function loadLessonCourseApi(courseId, token) {
   return axios.get(url);
 }
 
-export function loadListStudentAttendanceByLessonApi(classID, lessonID, token) {
+export function loadListStudentAttendanceByLessonApi(classID, lessonID, token, domain) {
   let url =
-    env.MANAGE_API_URL_V3 +
+    env.manageApiUrlV3(domain) +
     `/v2/course/get-attendance-lesson/${classID}/${lessonID}?token=` +
     token;
   return axios.get(url);

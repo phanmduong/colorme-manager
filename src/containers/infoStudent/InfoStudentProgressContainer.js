@@ -17,6 +17,7 @@ class InfoStudentProgressContainer extends React.Component {
     this.props.infoStudentActions.loadProgress(
       this.props.studentId,
       this.props.token,
+      this.props.domain,
     );
   };
 
@@ -37,6 +38,7 @@ function mapStateToProps(state) {
     progress: state.infoStudent.progress,
     isLoadingProgress: state.infoStudent.isLoadingProgress,
     errorLoadingProgress: state.infoStudent.errorLoadingProgress,
+    domain: state.login.domain,
   };
 }
 

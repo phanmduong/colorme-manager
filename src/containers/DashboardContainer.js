@@ -14,7 +14,7 @@ import moment from 'moment';
 class DashboardContainer extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.store = new MeetingStore(props.token);
+    this.store = new MeetingStore(props.token, props.domain);
   }
 
   componentDidMount() {
@@ -28,18 +28,27 @@ class DashboardContainer extends React.Component {
       moment(new Date()).format('YYYY-MM-DD'),
       this.props.user.id,
       this.props.token,
+      this.props.domain,
     );
   };
 
   refreshNotifications = () => {
-    this.props.notificationActions.refreshNotifications(1, this.props.token);
+    this.props.notificationActions.refreshNotifications(
+      1,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   loadNotifications = () => {
-    this.props.notificationActions.loadNotifications(1, this.props.token);
+    this.props.notificationActions.loadNotifications(
+      1,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
-  setAutoFocusRegisterListSearch = bool => {
+  setAutoFocusRegisterListSearch = (bool) => {
     this.props.registerListActions.setAutoFocusRegisterListSearch(bool);
   };
 
@@ -73,6 +82,7 @@ function mapStateToProps(state) {
       state.notification.errorRefreshingNotifications,
     isReadingNotifications: state.notification.isReadingNotifications,
     errorReadingNotifications: state.notification.errorReadingNotifications,
+    domain: state.login.domain,
   };
 }
 
@@ -84,7 +94,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(DashboardContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardContainer);

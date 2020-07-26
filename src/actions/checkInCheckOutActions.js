@@ -15,7 +15,7 @@ const ignoreDevices = ['104cd46e55b546c6', '40f8929c0eb03dfe','44757c666c8d846b'
 const LONGITUDE = 105.801194;
 const LATITUDE = 21.022909;
 
-export function loadCheck(token, type) {
+export function loadCheck(token, type, domain) {
   return function(dispatch) {
     dispatch({
       type: types.BEGIN_CHECK_IN,
@@ -123,7 +123,7 @@ export function loadCheck(token, type) {
           console.log(device);
           if (type === 'checkin') {
             checkInCheckOutApi
-              .checkin(device, token)
+              .checkin(device, token, domain)
               .then(function(res) {
                 // console.log(device);
                 Alert.alert('Thông báo', 'Hãy đọc nội dung thông báo');
@@ -138,7 +138,7 @@ export function loadCheck(token, type) {
               });
           } else {
             checkInCheckOutApi
-              .checkout(device, token)
+              .checkout(device, token, domain)
               .then(function(res) {
                 // console.log(device);
                 Alert.alert('Thông báo', 'Hãy đọc nội dung thông báo');

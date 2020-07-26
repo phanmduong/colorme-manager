@@ -2,15 +2,15 @@ import * as types from '../constants/actionTypes';
 import * as saveRegisterApi from '../apis/saveRegisterApi';
 import {selectedGenId} from './genActions';
 
-export function loadCourses(token) {
-  return function(dispatch) {
+export function loadCourses(token, domain) {
+  return function (dispatch) {
     dispatch(beginLoadCourses());
     saveRegisterApi
-      .loadCoursesApi(token)
-      .then(function(res) {
+      .loadCoursesApi(token, domain)
+      .then(function (res) {
         dispatch(loadCoursesSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadCoursesError());
         throw error;
       });
@@ -42,15 +42,15 @@ function loadCoursesError() {
   };
 }
 
-export function loadClasses(token, courseId) {
-  return function(dispatch) {
+export function loadClasses(token, courseId, domain) {
+  return function (dispatch) {
     dispatch(beginLoadClasses());
     saveRegisterApi
-      .loadClassesApi(token, courseId)
-      .then(function(res) {
+      .loadClassesApi(token, courseId, domain)
+      .then(function (res) {
         dispatch(loadClassesSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadClassesError());
         throw error;
       });
@@ -82,15 +82,15 @@ function loadClassesError() {
   };
 }
 
-export function register(token, register) {
-  return function(dispatch) {
+export function register(token, register, domain) {
+  return function (dispatch) {
     dispatch(beginRegister());
     saveRegisterApi
-      .saveRegisterApi(token, register)
-      .then(function(res) {
+      .saveRegisterApi(token, register, domain)
+      .then(function (res) {
         dispatch(registerSuccessful());
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(registerError());
         throw error;
       });
@@ -121,15 +121,15 @@ function registerError() {
   };
 }
 
-export function loadCampaigns(token) {
-  return function(dispatch) {
+export function loadCampaigns(token, domain) {
+  return function (dispatch) {
     dispatch(beginLoadCampaigns());
     saveRegisterApi
-      .loadCampaigns(token)
-      .then(function(res) {
+      .loadCampaigns(token, domain)
+      .then(function (res) {
         dispatch(loadCampaignsSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadCampaignsError());
         throw error;
       });
@@ -161,15 +161,15 @@ function loadCampaignsError() {
   };
 }
 
-export function loadProvinces(token) {
-  return function(dispatch) {
+export function loadProvinces(token, domain) {
+  return function (dispatch) {
     dispatch(beginLoadProvinces());
     saveRegisterApi
-      .loadProvinces(token)
-      .then(function(res) {
+      .loadProvinces(token, domain)
+      .then(function (res) {
         dispatch(loadProvincesSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadProvincesError());
         throw error;
       });
@@ -201,15 +201,15 @@ function loadProvincesError() {
   };
 }
 
-export function loadSources(token) {
-  return function(dispatch) {
+export function loadSources(token, domain) {
+  return function (dispatch) {
     dispatch(beginLoadSources());
     saveRegisterApi
-      .loadSources(token)
-      .then(function(res) {
+      .loadSources(token, domain)
+      .then(function (res) {
         dispatch(loadSourcesSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadSourcesError());
         throw error;
       });
@@ -241,15 +241,15 @@ function loadSourcesError() {
   };
 }
 
-export function loadStatuses(ref, token) {
-  return function(dispatch) {
+export function loadStatuses(ref, token, domain) {
+  return function (dispatch) {
     dispatch(beginLoadStatuses());
     saveRegisterApi
-      .loadStatuses(ref, token)
-      .then(function(res) {
+      .loadStatuses(ref, token, domain)
+      .then(function (res) {
         dispatch(loadStatusesSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadStatusesError());
         throw error;
       });
@@ -281,15 +281,15 @@ function loadStatusesError() {
   };
 }
 
-export function loadSalers(token) {
-  return function(dispatch) {
+export function loadSalers(token, domain) {
+  return function (dispatch) {
     dispatch(beginLoadSalers());
     saveRegisterApi
-      .loadSalers(token)
-      .then(function(res) {
+      .loadSalers(token, domain)
+      .then(function (res) {
         dispatch(loadSalersSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadSalersError());
         throw error;
       });
@@ -321,15 +321,15 @@ function loadSalersError() {
   };
 }
 
-export function loadFilterClasses(genId, token) {
-  return function(dispatch) {
+export function loadFilterClasses(genId, token, domain) {
+  return function (dispatch) {
     dispatch(beginLoadFilterClasses());
     saveRegisterApi
-      .loadFilterClasses(genId, token)
-      .then(function(res) {
+      .loadFilterClasses(genId, token, domain)
+      .then(function (res) {
         dispatch(loadFilterClassesSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadFilterClassesError());
         throw error;
       });
@@ -361,9 +361,9 @@ function loadFilterClassesError() {
   };
 }
 
-export function reloadFilterClasses(genId, token) {
-  return function(dispatch) {
+export function reloadFilterClasses(genId, token, domain) {
+  return function (dispatch) {
     dispatch(selectedGenId(genId));
-    dispatch(loadFilterClasses(genId, token));
+    dispatch(loadFilterClasses(genId, token, domain));
   };
 }

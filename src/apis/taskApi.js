@@ -1,9 +1,9 @@
 import axios from 'axios';
 import * as env from '../constants/env';
 
-export function getTaskAnalytics(user_id, token) {
+export function getTaskAnalytics(user_id, token, domain) {
   let url =
-    env.MANAGE_API_URL +
+    env.manageApiUrl(domain) +
     '/task/analytics/by-user?user_id=' +
     user_id +
     '&token=' +
@@ -11,9 +11,9 @@ export function getTaskAnalytics(user_id, token) {
   return axios.get(url);
 }
 
-export function getTasks(date, user_id, token) {
+export function getTasks(date, user_id, token, domain) {
   let url =
-    env.MANAGE_API_URL +
+    env.manageApiUrl(domain) +
     '/v4/task/by-date?date=' +
     date +
     '&include=task_list,register.saler&user_id=' +
@@ -23,7 +23,7 @@ export function getTasks(date, user_id, token) {
   return axios.get(url);
 }
 
-export function getTaskEmployees(token) {
-  let url = env.MANAGE_API_URL + '/v4/task/all-employees?token=' + token;
+export function getTaskEmployees(token, domain) {
+  let url = env.manageApiUrl(domain) + '/v4/task/all-employees?token=' + token;
   return axios.get(url);
 }

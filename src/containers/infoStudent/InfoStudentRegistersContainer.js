@@ -13,8 +13,12 @@ class InfoStudentRegistersContainer extends React.Component {
     this.loadRegisters(this.props.studentId);
   };
 
-  loadRegisters = studentId => {
-    this.props.infoStudentActions.loadRegisters(studentId, this.props.token);
+  loadRegisters = (studentId) => {
+    this.props.infoStudentActions.loadRegisters(
+      studentId,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   changeCallStatus = (
@@ -37,6 +41,7 @@ class InfoStudentRegistersContainer extends React.Component {
       appointmentPayment,
       dateTest,
       this.props.token,
+      this.props.domain,
     );
   };
 
@@ -72,6 +77,7 @@ class InfoStudentRegistersContainer extends React.Component {
       this.props.appointmentPayment,
       statusId,
       sourceId,
+      this.props.domain,
     );
   };
 
@@ -111,6 +117,7 @@ function mapStateToProps(state) {
     source_id: state.infoStudent.source_id,
     search_coupon: state.infoStudent.search_coupon,
     classStatus: state.registerList.classStatus,
+    domain: state.login.domain,
   };
 }
 

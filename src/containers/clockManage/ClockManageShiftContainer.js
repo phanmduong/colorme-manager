@@ -14,7 +14,11 @@ class ClockManageShiftContainer extends React.Component {
   };
 
   loadShifts = (date) => {
-    this.props.clockManageActions.getShiftClock(date, this.props.token);
+    this.props.clockManageActions.getShiftClock(
+      date,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   render() {
@@ -29,6 +33,7 @@ function mapStateToProps(state) {
     shifts: state.clockManage.shifts,
     isLoadingShifts: state.clockManage.isLoadingShifts,
     errorShifts: state.clockManage.errorShifts,
+    domain: state.login.domain,
   };
 }
 

@@ -21,12 +21,17 @@ class HistoryAttendanceShiftStore {
   @observable selectedBaseId = '';
 
   @action
-  loadHistoryShift = token => {
+  loadHistoryShift = (token, domain) => {
     this.isLoading = true;
     this.error = false;
 
-    historyAttendanceShiftApi(this.selectedBaseId, this.selectedGenId, token)
-      .then(res => {
+    historyAttendanceShiftApi(
+      this.selectedBaseId,
+      this.selectedGenId,
+      token,
+      domain,
+    )
+      .then((res) => {
         this.shifts = res.data.data.shifts;
       })
       .catch(() => {
@@ -38,7 +43,7 @@ class HistoryAttendanceShiftStore {
   };
 
   @action
-  loadHistoryWorkShift = token => {
+  loadHistoryWorkShift = (token, domain) => {
     this.isLoading = true;
     this.error = false;
 
@@ -46,8 +51,9 @@ class HistoryAttendanceShiftStore {
       this.selectedBaseId,
       this.selectedGenId,
       token,
+      domain,
     )
-      .then(res => {
+      .then((res) => {
         this.shifts = res.data.data.work_shifts;
       })
       .catch(() => {
@@ -59,12 +65,12 @@ class HistoryAttendanceShiftStore {
   };
 
   @action
-  loadBases = token => {
+  loadBases = (token, domain) => {
     this.isLoadingBase = true;
     this.errorBase = false;
 
-    loadBaseApi(token)
-      .then(res => {
+    loadBaseApi(token, domain)
+      .then((res) => {
         this.bases = res.data.bases.reverse();
         this.selectedBaseId = this.bases[0].id;
       })
@@ -77,12 +83,12 @@ class HistoryAttendanceShiftStore {
   };
 
   @action
-  loadGens = token => {
+  loadGens = (token, domain) => {
     this.isLoadingGen = true;
     this.errorGen = false;
 
-    loadGenApi(token)
-      .then(res => {
+    loadGenApi(token, domain)
+      .then((res) => {
         this.gens = res.data.data.gens;
         this.selectedGenId = res.data.data.current_gen.id;
       })
@@ -96,7 +102,7 @@ class HistoryAttendanceShiftStore {
 
   @computed
   get listShift() {
-    return groupBy(this.shifts, shift => shift.week, ['week', 'shifts']);
+    return groupBy(this.shifts, (shift) => shift.week, ['week', 'shifts']);
   }
 }
 

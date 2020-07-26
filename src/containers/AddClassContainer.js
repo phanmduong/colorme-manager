@@ -33,15 +33,19 @@ class EditClassContainer extends React.Component {
   });
 
   loadInfoCreateClass = () => {
-    return this.props.classActions.infoCreateClass(this.props.token);
+    return this.props.classActions.infoCreateClass(
+      this.props.token,
+      this.props.domain,
+    );
   };
 
-  addClass = classData => {
+  addClass = (classData) => {
     return this.props.classActions.addClass(
       classData,
       '',
       '',
       this.props.token,
+      this.props.domain,
     );
   };
 
@@ -70,6 +74,7 @@ function mapStateToProps(state) {
     classInfo: state.class.classInfo,
     loadingClassInfo: state.class.loadingClassInfo,
     errorClassInfo: state.class.errorClassInfo,
+    domain: state.login.domain,
   };
 }
 
@@ -79,7 +84,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(EditClassContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(EditClassContainer);

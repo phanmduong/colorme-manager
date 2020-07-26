@@ -5,7 +5,7 @@ import * as classActions from '../actions/classActions';
 import EditClassComponent from '../components/EditClassComponent';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from "../styles";
+import theme from '../styles';
 
 class EditClassContainer extends React.Component {
   constructor(props, context) {
@@ -33,10 +33,13 @@ class EditClassContainer extends React.Component {
   });
 
   loadInfoCreateClass = () => {
-    return this.props.classActions.infoCreateClass(this.props.token);
+    return this.props.classActions.infoCreateClass(
+      this.props.token,
+      this.props.domain,
+    );
   };
 
-  addClass = classData => {
+  addClass = (classData) => {
     let selectedGenId = this.props.navigation.getParam('selectedGenId');
     let selectedBaseId = this.props.navigation.getParam('selectedBaseId');
     return this.props.classActions.addClass(
@@ -44,6 +47,7 @@ class EditClassContainer extends React.Component {
       selectedBaseId,
       selectedGenId,
       this.props.token,
+      this.props.domain,
     );
   };
 
@@ -72,6 +76,7 @@ function mapStateToProps(state) {
     classInfo: state.class.classInfo,
     loadingClassInfo: state.class.loadingClassInfo,
     errorClassInfo: state.class.errorClassInfo,
+    domain: state.login.domain,
   };
 }
 
@@ -81,7 +86,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(EditClassContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(EditClassContainer);

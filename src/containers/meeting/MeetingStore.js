@@ -16,9 +16,11 @@ class MeetingStore {
   @observable participates = [];
   @observable refreshing = false;
   @observable reason = '';
+  @observable domain = '';
 
-  constructor(token) {
+  constructor(token, domain) {
     this.token = token;
+    this.domain = domain;
   }
 
   @action
@@ -26,12 +28,12 @@ class MeetingStore {
     this.isLoading = true;
     this.error = false;
 
-    loadMeetings(this.token)
-      .then(res => {
+    loadMeetings(this.token, this.domain)
+      .then((res) => {
         this.meetings = res.data.data.meetings;
         console.log(this.meetings);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         this.error = true;
       })
@@ -45,12 +47,12 @@ class MeetingStore {
     this.isLoading = true;
     this.error = false;
 
-    loadMeetings(this.token, 'closed')
-      .then(res => {
+    loadMeetings(this.token, this.domain, 'closed')
+      .then((res) => {
         this.meetings = res.data.data.meetings;
         console.log(this.meetings);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         this.error = true;
       })
@@ -64,12 +66,12 @@ class MeetingStore {
     this.refreshing = true;
     this.error = false;
 
-    loadMeetings(this.token)
-      .then(res => {
+    loadMeetings(this.token, this.domain)
+      .then((res) => {
         this.meetings = res.data.data.meetings;
         console.log(this.meetings);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         this.error = true;
       })
@@ -83,12 +85,12 @@ class MeetingStore {
     this.refreshing = true;
     this.error = false;
 
-    loadMeetings(this.token, 'closed')
-      .then(res => {
+    loadMeetings(this.token, this.domain, 'closed')
+      .then((res) => {
         this.meetings = res.data.data.meetings;
         console.log(this.meetings);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         this.error = true;
       })
@@ -103,10 +105,10 @@ class MeetingStore {
     this.errorJoin = false;
 
     console.log('ok');
-    joinMeeting(this.token, meetingId, status, note)
-      .then(res => {
+    joinMeeting(this.token, meetingId, status, note, this.domain)
+      .then((res) => {
         console.log(res.data);
-        this.meetings = this.meetings.map(meeting => {
+        this.meetings = this.meetings.map((meeting) => {
           if (meeting.id == meetingId) {
             return {
               ...meeting,
@@ -116,7 +118,7 @@ class MeetingStore {
           return meeting;
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         this.errorJoin = true;
       })
@@ -126,14 +128,14 @@ class MeetingStore {
   };
 
   @action
-  checkInMeeting = meetingId => {
+  checkInMeeting = (meetingId) => {
     this.isChecking = true;
     this.errorCheckIn = false;
 
-    checkInMeeting(this.token, meetingId)
-      .then(res => {
+    checkInMeeting(this.token, meetingId, this.domain)
+      .then((res) => {
         console.log(res.data);
-        this.meetings = this.meetings.map(meeting => {
+        this.meetings = this.meetings.map((meeting) => {
           if (meeting.id == meetingId) {
             return {
               ...meeting,
@@ -143,7 +145,7 @@ class MeetingStore {
           return meeting;
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         this.errorCheckIn = true;
       })
@@ -154,7 +156,7 @@ class MeetingStore {
 
   @computed
   get meetingsNow() {
-    return this.meetings.filter(meeting => {
+    return this.meetings.filter((meeting) => {
       const date = moment(meeting.date, FORMAT_TIME_MYSQL).format('X');
       const now = moment().unix();
       return date - 1800 <= now && now <= parseInt(date) + 3600;
@@ -163,7 +165,7 @@ class MeetingStore {
 
   @computed
   get meetingsSoon() {
-    return this.meetings.filter(meeting => {
+    return this.meetings.filter((meeting) => {
       const date = moment(meeting.date, FORMAT_TIME_MYSQL).format('X');
       const now = moment().unix();
       return now < date - 1800;

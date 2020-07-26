@@ -1,11 +1,11 @@
 import * as types from '../constants/actionTypes';
 import * as notificationApi from '../apis/notificationApi';
 
-export function loadNotifications(page, token) {
+export function loadNotifications(page, token, domain) {
   return function(dispatch) {
     dispatch(beginLoadNotifications());
     notificationApi
-      .loadNotifications(page, token)
+      .loadNotifications(page, token, domain)
       .then(function(res) {
         dispatch(loadNotificationsSuccessful(res));
       })
@@ -49,11 +49,11 @@ export function resetNotifications() {
   };
 }
 
-export function loadMoreNotifications(page, token) {
+export function loadMoreNotifications(page, token, domain) {
   return function(dispatch) {
     dispatch(beginLoadMoreNotifications());
     notificationApi
-      .loadNotifications(page, token)
+      .loadNotifications(page, token, domain)
       .then(function(res) {
         dispatch(loadMoreNotificationsSuccessful(res));
       })
@@ -90,11 +90,11 @@ function loadMoreNotificationsError() {
   };
 }
 
-export function refreshNotifications(page, token) {
+export function refreshNotifications(page, token, domain) {
   return function(dispatch) {
     dispatch(beginRefreshNotifications());
     notificationApi
-      .loadNotifications(page, token)
+      .loadNotifications(page, token, domain)
       .then(function(res) {
         dispatch(refreshNotificationsSuccessful(res));
       })
@@ -132,15 +132,15 @@ function refreshNotificationsError() {
   };
 }
 
-export function readAllNotifications(token) {
+export function readAllNotifications(token, domain) {
   return function(dispatch) {
     dispatch(beginReadNotifications());
     notificationApi
-      .readAllNotifications(token)
-      .then(function(res) {
+      .readAllNotifications(token, domain)
+      .then(function (res) {
         dispatch(readNotificationsSuccessful());
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(readNotificationsError());
         throw error;
       });

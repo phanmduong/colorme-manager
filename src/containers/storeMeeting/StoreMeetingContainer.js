@@ -8,13 +8,13 @@ import {observer} from 'mobx-react';
 import StoreMeetingComponent from './StoreMeetingComponent';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from "../../styles";
+import theme from '../../styles';
 
 @observer
 class StoreMeetingContainer extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.store = new Store(props.token);
+    this.store = new Store(props.token, props.domain);
   }
 
   static navigationOptions = ({navigation}) => ({
@@ -46,6 +46,7 @@ const styles = {
 function mapStateToProps(state) {
   return {
     token: state.login.token,
+    domain: state.login.domain,
   };
 }
 

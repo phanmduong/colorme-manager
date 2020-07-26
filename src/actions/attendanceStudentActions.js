@@ -16,37 +16,37 @@ export function beginGetInforStudent() {
   };
 }
 
-export function loadInfoStudent(studentCode, token) {
-  return function(dispatch) {
+export function loadInfoStudent(studentCode, token, domain) {
+  return function (dispatch) {
     dispatch(beginGetInforStudent());
     attendanceStudentApi
-      .getInfoStudentApi(studentCode, token)
-      .then(function(res) {
+      .getInfoStudentApi(studentCode, token, domain)
+      .then(function (res) {
         dispatch(loadedInforStudentSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadedInforStudentError(error.response.data));
         throw error;
       });
   };
 }
 
-export function studentChangeStatusBlock(studentID, token, status) {
-  return function(dispatch) {
+export function studentChangeStatusBlock(studentID, token, status, domain) {
+  return function (dispatch) {
     dispatch({
       type: types.BEGIN_UNBLOCK_STUDENT,
       isChangeStatusBlocking: true,
     });
     attendanceStudentApi
-      .studentChangeStatusBlock(studentID, token, status)
-      .then(function(res) {
+      .studentChangeStatusBlock(studentID, token, status, domain)
+      .then(function (res) {
         dispatch({
           type: types.LOAD_UNBLOCKING_STUDENT,
           isChangeStatusBlocking: false,
           student: res.data.student,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch({
           type: types.ERROR_UNBLOCKING_STUDENT,
           isChangeStatusBlocking: false,
@@ -57,15 +57,15 @@ export function studentChangeStatusBlock(studentID, token, status) {
   };
 }
 
-export function uploadImageStudent(file, studentId, imageField, token) {
-  return function(dispatch) {
+export function uploadImageStudent(file, studentId, imageField, token, domain) {
+  return function (dispatch) {
     dispatch({
       type: types.BEGIN_UPLOAD_IMAGE_STUDENT,
       imageField: imageField,
     });
     uploadImage(
       file,
-      event => {
+      (event) => {
         let data = JSON.parse(event.currentTarget.response);
         dispatch({
           type: types.UPLOAD_IMAGE_STUDENT,
@@ -76,10 +76,11 @@ export function uploadImageStudent(file, studentId, imageField, token) {
       studentId,
       imageField,
       token,
-        (error)=>{
-        Alert.alert("Thông báo", "Tải ảnh lỗi");
+      (error) => {
+        Alert.alert('Thông báo', 'Tải ảnh lỗi');
         console.log(error);
-        }
+      },
+      domain,
     );
   };
 }
@@ -111,15 +112,15 @@ export function beginPostAttendaceStudent() {
   };
 }
 
-export function updateAttendanceStudent(attendanceId, token) {
-  return function(dispatch) {
+export function updateAttendanceStudent(attendanceId, token, domain) {
+  return function (dispatch) {
     dispatch(beginPostAttendaceStudent());
     attendanceStudentApi
-      .postAttendanceStudentApi(attendanceId, token)
-      .then(function(res) {
+      .postAttendanceStudentApi(attendanceId, token, domain)
+      .then(function (res) {
         dispatch(updateAttendanceStudentSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(updateAttendanceStudentError());
         throw error;
       });

@@ -18,16 +18,20 @@ class CurrentClassStudyContainer extends React.Component {
   }
 
   componentWillMount() {
-    this.props.classActions.loadDataCourse(this.props.token);
-    this.props.classActions.loadBaseData(this.props.token);
-    this.props.saveRegisterActions.loadProvinces(this.props.token);
+    this.props.classActions.loadDataCourse(this.props.token, this.props.domain);
+    this.props.classActions.loadBaseData(this.props.token, this.props.domain);
+    this.props.saveRegisterActions.loadProvinces(
+      this.props.token,
+      this.props.domain,
+    );
     this.loadDataCurrentClassStudy(this.props.selectedDate);
   }
 
-  loadDataCurrentClassStudy = date => {
+  loadDataCurrentClassStudy = (date) => {
     this.props.currentClassStudyActions.loadDataCurrentClassStudy(
       date,
       this.props.token,
+      this.props.domain,
     );
   };
 
@@ -41,7 +45,7 @@ class CurrentClassStudyContainer extends React.Component {
     this.props.navigation.navigate('ListStudentClass');
   }
 
-  openQrCode = classItem => {
+  openQrCode = (classItem) => {
     this.props.currentClassStudyActions.selectedCurrentClassStudy(classItem);
     this.props.navigation.navigate('QRCode');
   };
@@ -50,10 +54,11 @@ class CurrentClassStudyContainer extends React.Component {
     this.props.currentClassStudyActions.refreshDataCurrentClassStudy(
       this.props.selectedDate,
       this.props.token,
+      this.props.domain,
     );
   };
 
-  onSelectDate = date => {
+  onSelectDate = (date) => {
     this.props.currentClassStudyActions.onSelectDate(date);
   };
 
@@ -102,6 +107,7 @@ function mapStateToProps(state) {
     isLoadingProvinces: state.saveRegister.isLoadingProvinces,
     errorLoadingProvinces: state.saveRegister.errorLoadingProvinces,
     provinces: state.saveRegister.provinces,
+    domain: state.login.domain,
   };
 }
 

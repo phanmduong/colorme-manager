@@ -43,6 +43,7 @@ class AttendanceStudentContainer extends React.Component {
     this.props.attendanceStudentActions.loadInfoStudent(
       this.props.studentCode,
       this.props.token,
+      this.props.domain,
     );
   }
 
@@ -95,6 +96,7 @@ class AttendanceStudentContainer extends React.Component {
     this.props.attendanceStudentActions.updateAttendanceStudent(
       attendanceId,
       this.props.token,
+      this.props.domain,
     );
   }
 
@@ -103,6 +105,7 @@ class AttendanceStudentContainer extends React.Component {
       this.props.student.id,
       this.props.token,
       false,
+      this.props.domain,
     );
   };
 
@@ -111,6 +114,7 @@ class AttendanceStudentContainer extends React.Component {
       this.props.student.id,
       this.props.token,
       true,
+      this.props.domain,
     );
   };
 
@@ -120,6 +124,7 @@ class AttendanceStudentContainer extends React.Component {
       this.props.student.id,
       imageField,
       this.props.token,
+      this.props.domain,
     );
   };
 
@@ -164,6 +169,7 @@ function mapStateToProps(state) {
     classStudent: state.attendanceStudent.classStudent,
     statusRequestUpdated: state.attendanceStudent.statusRequestUpdated,
     messageError: state.attendanceStudent.messageError,
+    domain: state.login.domain,
   };
 }
 

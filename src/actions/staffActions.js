@@ -5,7 +5,7 @@ import axios from 'axios';
 let CancelToken = axios.CancelToken;
 let sourceCancel = CancelToken.source();
 
-export function getStaff(refreshing, page, search, token) {
+export function getStaff(refreshing, page, search, token, domain) {
   return function(dispatch) {
     if (!refreshing) {
       dispatch(beginLoadStaff());
@@ -13,7 +13,7 @@ export function getStaff(refreshing, page, search, token) {
       dispatch(beginRefreshStaff());
     }
     staffApi
-      .getStaff(sourceCancel, page, search, token)
+      .getStaff(sourceCancel, page, search, token, domain)
       .then(function(res) {
         dispatch(loadStaffSuccessful(res));
       })
@@ -67,12 +67,12 @@ function beginSearchStaff(search) {
   };
 }
 
-export function searchStaff(search, token) {
+export function searchStaff(search, token, domain) {
   sourceCancel.cancel('Canceled by staff api.');
   sourceCancel = CancelToken.source();
   return function(dispatch) {
     dispatch(beginSearchStaff(search));
-    dispatch(getStaff(false, 1, search, token));
+    dispatch(getStaff(false, 1, search, token, domain));
   };
 }
 
@@ -84,10 +84,10 @@ function beginRefreshStaff() {
   };
 }
 
-export function refreshStaff(search, token) {
+export function refreshStaff(search, token, domain) {
   return function(dispatch) {
     dispatch(beginSearchStaff(search));
-    dispatch(getStaff(true, 1, search, token));
+    dispatch(getStaff(true, 1, search, token, domain));
   };
 }
 
@@ -101,11 +101,11 @@ export function resetStaff() {
   };
 }
 
-export function loadDepartments(token) {
+export function loadDepartments(token, domain) {
   return function(dispatch) {
     dispatch(beginLoadDepartments());
     staffApi
-      .getDepartments(token)
+      .getDepartments(token, domain)
       .then(function(res) {
         dispatch(loadDepartmentsSuccessful(res));
       })
@@ -141,11 +141,11 @@ function loadDepartmentsError() {
   };
 }
 
-export function loadRoles(token) {
+export function loadRoles(token, domain) {
   return function(dispatch) {
     dispatch(beginLoadRoles());
     staffApi
-      .getRoles(token)
+      .getRoles(token, domain)
       .then(function(res) {
         dispatch(loadRolesSuccessful(res));
       })

@@ -12,11 +12,11 @@ export function beginDataDashboardLoad() {
   };
 }
 
-export function loadDataDashboard(baseId, genId, token) {
+export function loadDataDashboard(baseId, genId, token, domain) {
   return function(dispatch) {
     dispatch(beginDataDashboardLoad());
     analyticsApi
-      .loadDashboard(baseId, genId, token)
+      .loadDashboard(baseId, genId, token, domain)
       .then(function(res) {
         dispatch(loadDataDashboardSuccessful(res));
       })

@@ -13,12 +13,12 @@ class HistoryAttendanceTeachingStore {
   @observable selectedGenId = '';
 
   @action
-  loadHistoryTeaching = token => {
+  loadHistoryTeaching = (token, domain) => {
     this.isLoading = true;
     this.error = false;
 
-    historyAttendanceTeacherApi(this.selectedGenId, token)
-      .then(res => {
+    historyAttendanceTeacherApi(this.selectedGenId, token, domain)
+      .then((res) => {
         this.attendances = res.data.data.teaching;
       })
       .catch(() => {
@@ -30,12 +30,12 @@ class HistoryAttendanceTeachingStore {
   };
 
   @action
-  loadGens = token => {
+  loadGens = (token, domain) => {
     this.isLoadingGen = true;
     this.errorGen = false;
 
-    loadGenApi(token)
-      .then(res => {
+    loadGenApi(token, domain)
+      .then((res) => {
         this.gens = res.data.data.gens;
         this.selectedGenId = res.data.data.teaching_gen.id;
         // this.selectedGenId = 33;
@@ -50,7 +50,7 @@ class HistoryAttendanceTeachingStore {
 
   @computed
   get listAttendance() {
-    return groupBy(this.attendances, attendance => attendance.class_id, [
+    return groupBy(this.attendances, (attendance) => attendance.class_id, [
       'class',
       'lessons',
     ]);

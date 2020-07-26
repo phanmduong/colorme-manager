@@ -15,21 +15,23 @@ class Store {
   @observable isStoring = false;
   @observable errorStore = false;
   @observable ignoreUsers = [];
+  @observable domain = '';
 
-  constructor(token) {
+  constructor(token, domain) {
     this.token = token;
+    this.domain = domain;
   }
 
   @action
   getFilterMeeting = () => {
     this.isLoading = true;
     this.error = false;
-    loadFilterMeeting(this.token)
-      .then(res => {
+    loadFilterMeeting(this.token, this.domain)
+      .then((res) => {
         this.filter = res.data.data.filter;
         console.log(this.filter);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         this.error = true;
       })
@@ -39,20 +41,20 @@ class Store {
   };
 
   @action
-  storeMeeting = goBack => {
+  storeMeeting = (goBack) => {
     this.isStoring = true;
     this.errorStore = false;
     const filter = this.filter;
     const provinceIDs = filter.provinces
       ? filter.provinces
-          .filter(province => province.selected)
-          .map(province => province.provinceid)
+          .filter((province) => province.selected)
+          .map((province) => province.provinceid)
       : [];
 
     const departmentIds = filter.departments
       ? filter.departments
-          .filter(department => department.selected)
-          .map(department => department.id)
+          .filter((department) => department.selected)
+          .map((department) => department.id)
       : [];
 
     const filterJSON = {
@@ -70,11 +72,12 @@ class Store {
       this.meeting.name,
       this.meeting.room_id,
       dateString,
+      this.domain,
       this.meeting.description,
       'available',
       filterString,
     )
-      .then(res => {
+      .then((res) => {
         const meeting = res.data.data.meeting;
         console.log(meeting);
         Alert.alert('Thông báo', 'Tạo cuộc họp thành công', [
@@ -86,7 +89,7 @@ class Store {
           },
         ]);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         Alert.alert('Thông báo', 'Có lỗi xảy ra');
         this.errorStore = true;

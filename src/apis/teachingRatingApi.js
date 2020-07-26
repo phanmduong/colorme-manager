@@ -1,9 +1,9 @@
 import * as env from '../constants/env';
 import axios from 'axios';
 
-export function evaluateTeacher(token, userId) {
+export function evaluateTeacher(token, userId, domain) {
   let url =
-    env.MANAGE_API_URL_V3 +
+    env.manageApiUrlV3(domain) +
     '/teaching/evaluate-person-teacher?token=' +
     token +
     '&user_id=' +
@@ -11,9 +11,9 @@ export function evaluateTeacher(token, userId) {
   return axios.get(url);
 }
 
-export function evaluateAssistant(token, userId) {
+export function evaluateAssistant(token, userId, domain) {
   let url =
-    env.MANAGE_API_URL_V3 +
+    env.manageApiUrlV3(domain) +
     '/teaching/evaluate-person-teaching-assistant?token=' +
     token +
     '&user_id=' +
@@ -21,9 +21,9 @@ export function evaluateAssistant(token, userId) {
   return axios.get(url);
 }
 
-export function getTeacherFeedback(token, genId, userId) {
+export function getTeacherFeedback(token, genId, userId, domain) {
   let url =
-    env.MANAGE_API_URL_V3 +
+    env.manageApiUrlV3(domain) +
     '/teaching/evaluate-teacher-detail-student-rating?token=' +
     token +
     '&gen_id=' +
@@ -33,9 +33,9 @@ export function getTeacherFeedback(token, genId, userId) {
   return axios.get(url);
 }
 
-export function getAssistantFeedback(token, genId, userId) {
+export function getAssistantFeedback(token, genId, userId, domain) {
   let url =
-    env.MANAGE_API_URL_V3 +
+    env.manageApiUrlV3(domain) +
     '/teaching/evaluate-teaching-assistant-detail-student-rating?gen_id=' +
     genId +
     '&user_id=' +
@@ -45,9 +45,9 @@ export function getAssistantFeedback(token, genId, userId) {
   return axios.get(url);
 }
 
-export function getTeacherList(token, genId) {
+export function getTeacherList(token, genId, domain) {
   let url =
-    env.MANAGE_API_URL_V3 +
+    env.manageApiUrlV3(domain) +
     '/teaching/evaluate-teacher?gen_id=' +
     genId +
     '&token=' +
@@ -55,9 +55,9 @@ export function getTeacherList(token, genId) {
   return axios.get(url);
 }
 
-export function getAssistantList(token, genId) {
+export function getAssistantList(token, genId, domain) {
   let url =
-    env.MANAGE_API_URL_V3 +
+    env.manageApiUrlV3(domain) +
     '/teaching/evaluate-teaching-assistant?gen_id=' +
     genId +
     '&token=' +

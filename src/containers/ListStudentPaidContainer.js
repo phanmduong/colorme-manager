@@ -8,7 +8,7 @@ import * as listStudentPaidActions from '../actions/listStudentPaidActions';
 import ListStudenPaidComponent from '../components/ListStudenPaidComponent';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from "../styles";
+import theme from '../styles';
 
 class ListStudentPaidContainer extends React.Component {
   constructor(props, context) {
@@ -40,6 +40,7 @@ class ListStudentPaidContainer extends React.Component {
     this.props.listStudentPaidActions.loadDataListStudentPaid(
       this.props.selectedGenId,
       this.props.selectedBaseId,
+      this.props.domain,
     );
   }
 
@@ -68,6 +69,7 @@ function mapStateToProps(state) {
     listStudentPaidData: state.listStudentPaid.listStudentPaidData,
     isLoading: state.listStudentPaid.isLoading,
     error: state.listStudentPaid.error,
+    domain: state.login.domain,
   };
 }
 

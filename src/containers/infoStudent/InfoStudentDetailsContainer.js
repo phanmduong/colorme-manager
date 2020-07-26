@@ -35,6 +35,7 @@ class InfoStudentDetailsContainer extends React.Component {
     this.props.infoStudentActions.loadStudent(
       this.props.studentId,
       this.props.token,
+      this.props.domain,
     );
   };
 
@@ -44,6 +45,7 @@ class InfoStudentDetailsContainer extends React.Component {
       this.props.studentId,
       imageField,
       this.props.token,
+      this.props.domain,
     );
   };
 
@@ -87,6 +89,7 @@ function mapStateToProps(state) {
     errorUploadingImage: state.infoStudent.errorUploadingImage,
     isUpdatingProfile: state.infoStudent.isUpdatingProfile,
     errorUpdatingProfile: state.infoStudent.errorUpdatingProfile,
+    domain: state.login.domain,
   };
 }
 

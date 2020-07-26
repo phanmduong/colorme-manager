@@ -8,7 +8,7 @@ import * as listStudentZeroActions from '../actions/listStudentZeroActions';
 import ListStudenZeroComponent from '../components/ListStudenZeroComponent';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from "../styles";
+import theme from '../styles';
 
 class ListStudentZeroContainer extends React.Component {
   constructor(props, context) {
@@ -40,6 +40,7 @@ class ListStudentZeroContainer extends React.Component {
     this.props.listStudentZeroActions.loadDataListStudentZero(
       this.props.selectedGenId,
       this.props.selectedBaseId,
+      this.props.domain,
     );
   }
 
@@ -68,6 +69,7 @@ function mapStateToProps(state) {
     listStudentZeroData: state.listStudentZero.listStudentZeroData,
     isLoading: state.listStudentZero.isLoading,
     error: state.listStudentZero.error,
+    domain: state.login.domain,
   };
 }
 

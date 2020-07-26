@@ -12,11 +12,11 @@ export function beginDataShiftRegisterLoad() {
   };
 }
 
-export function loadDataShiftRegister(baseId, genId, token) {
+export function loadDataShiftRegister(baseId, genId, token, domain) {
   return function(dispatch) {
     dispatch(beginDataShiftRegisterLoad());
     shiftRegisterApi
-      .loadShiftRegister(baseId, genId, token)
+      .loadShiftRegister(baseId, genId, token, domain)
       .then(function(res) {
         dispatch(loadDataShiftRegisterSuccessful(res));
       })
@@ -65,11 +65,11 @@ export function selectedGenId(genId) {
   };
 }
 
-export function register(registerId, token) {
+export function register(registerId, token, domain) {
   return function(dispatch) {
     dispatch(postShiftRegister(registerId));
     shiftRegisterApi
-      .register(registerId, token)
+      .register(registerId, token, domain)
       .then(function(res) {
         dispatch(
           updateDataRegister(
@@ -115,15 +115,15 @@ export function ShiftRegisterError(registerId) {
   };
 }
 
-export function unRegister(registerId, token) {
+export function unRegister(registerId, token, domain) {
   return function(dispatch) {
     dispatch(postShiftUnRegister(registerId));
     shiftRegisterApi
-      .unregister(registerId, token)
-      .then(function(res) {
+      .unregister(registerId, token, domain)
+      .then(function (res) {
         dispatch(shiftUnRegisterSuccessful(registerId, res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(ShiftUnRegisterError());
         throw error;
       });

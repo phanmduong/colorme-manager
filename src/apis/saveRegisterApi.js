@@ -1,8 +1,8 @@
 import axios from 'axios';
 import * as env from '../constants/env';
 
-export function saveRegisterApi(token, register) {
-  let url = env.MANAGE_API_URL + '/v2/register?token=' + token;
+export function saveRegisterApi(token, register, domain) {
+  let url = env.manageApiUrl(domain) + '/v2/register?token=' + token;
   return axios.post(url, {
     name: register.name,
     phone: register.phone,
@@ -27,45 +27,45 @@ export function saveRegisterApi(token, register) {
   });
 }
 
-export function loadCoursesApi(token) {
-  let url = env.API_URL + '/paid-courses?token=' + token;
+export function loadCoursesApi(token, domain) {
+  let url = env.apiUrl(domain) + '/paid-courses?token=' + token;
   return axios.get(url);
 }
 
-export function loadClassesApi(token, course_id) {
+export function loadClassesApi(token, course_id, domain) {
   let url =
-    env.MANAGE_API_URL + '/v2/course/' + course_id + '/class?token=' + token;
+    env.manageApiUrl(domain) + '/v2/course/' + course_id + '/class?token=' + token;
   return axios.get(url);
 }
 
-export function loadCampaigns(token) {
+export function loadCampaigns(token, domain) {
   let url =
-    env.MANAGE_API_URL + '/marketing-campaign/all?limit=34&token=' + token;
+    env.manageApiUrl(domain) + '/marketing-campaign/all?limit=34&token=' + token;
   return axios.get(url);
 }
 
-export function loadProvinces(token) {
-  let url = env.MANAGE_API_URL + '/province/all?token=' + token;
+export function loadProvinces(token, domain) {
+  let url = env.manageApiUrl(domain) + '/province/all?token=' + token;
   return axios.get(url);
 }
 
-export function loadSources(token) {
-  let url = env.MANAGE_API_URL + '/source/all?token=' + token;
+export function loadSources(token, domain) {
+  let url = env.manageApiUrl(domain) + '/source/all?token=' + token;
   return axios.get(url);
 }
 
-export function loadStatuses(ref, token) {
+export function loadStatuses(ref, token, domain) {
   let url =
-    env.MANAGE_API_URL + '/v4/statuses/all?ref=' + ref + '&token=' + token;
+    env.manageApiUrl(domain) + '/v4/statuses/all?ref=' + ref + '&token=' + token;
   return axios.get(url);
 }
 
-export function loadSalers(token) {
-  let url = env.API_URL + '/all-saler?token=' + token;
+export function loadSalers(token, domain) {
+  let url = env.apiUrl(domain) + '/all-saler?token=' + token;
   return axios.get(url);
 }
 
-export function loadFilterClasses(genId, token) {
-  let url = env.API_URL + '/apiv2/gens/' + genId + '/class?token=' + token;
+export function loadFilterClasses(genId, token, domain) {
+  let url = env.apiUrl(domain) + '/apiv2/gens/' + genId + '/class?token=' + token;
   return axios.get(url);
 }

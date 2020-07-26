@@ -41,17 +41,13 @@ class WorkShiftRegisterContainer extends React.Component {
       !this.state.checkedDataWorkShiftRegister
     ) {
       this.setState({checkedDataWorkShiftRegister: true});
-      this.loadDataWorkShiftRegister(
-        props.baseData[0].id,
-        props.currentGen.id,
-        this.props.token,
-      );
+      this.loadDataWorkShiftRegister(props.baseData[0].id, props.currentGen.id);
     }
   };
 
   loadBaseAndGenData = () => {
-    this.props.baseActions.loadDataBase(this.props.token);
-    this.props.genActions.loadDataGen(this.props.token);
+    this.props.baseActions.loadDataBase(this.props.token, this.props.domain);
+    this.props.genActions.loadDataGen(this.props.token, this.props.domain);
   };
 
   loadDataWorkShiftRegister = (baseId, genId) => {
@@ -59,6 +55,7 @@ class WorkShiftRegisterContainer extends React.Component {
       baseId,
       genId,
       this.props.token,
+      this.props.domain,
     );
   };
 
@@ -73,11 +70,19 @@ class WorkShiftRegisterContainer extends React.Component {
   };
 
   onRegister = (shiftId) => {
-    this.props.workShiftRegisterAction.register(shiftId, this.props.token);
+    this.props.workShiftRegisterAction.register(
+      shiftId,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   onUnregister = (shiftId) => {
-    this.props.workShiftRegisterAction.unregister(shiftId, this.props.token);
+    this.props.workShiftRegisterAction.unregister(
+      shiftId,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   render() {
@@ -120,6 +125,7 @@ function mapStateToProps(state) {
     errorBase: state.base.error,
     errorWorkShiftRegister: state.workShiftRegister.error,
     user: state.login.user,
+    domain: state.login.domain,
   };
 }
 

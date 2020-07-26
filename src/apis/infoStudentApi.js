@@ -1,20 +1,25 @@
 import axios from 'axios';
 import * as env from '../constants/env';
 
-export function loadInfoStudent(studentId, token) {
-  let url = env.MANAGE_API_URL + '/student/' + studentId + '?token=' + token;
+export function loadInfoStudent(studentId, token, domain) {
+  let url =
+    env.manageApiUrl(domain) + '/student/' + studentId + '?token=' + token;
   return axios.get(url);
 }
 
-export function loadRegisters(studentId, token) {
+export function loadRegisters(studentId, token, domain) {
   let url =
-    env.MANAGE_API_URL + '/student/' + studentId + '/registers?token=' + token;
+    env.manageApiUrl(domain) +
+    '/student/' +
+    studentId +
+    '/registers?token=' +
+    token;
   return axios.get(url);
 }
 
-export function loadHistoryCalls(studentId, token) {
+export function loadHistoryCalls(studentId, token, domain) {
   let url =
-    env.MANAGE_API_URL +
+    env.manageApiUrl(domain) +
     '/student/' +
     studentId +
     '/history-calls?token=' +
@@ -22,15 +27,19 @@ export function loadHistoryCalls(studentId, token) {
   return axios.get(url);
 }
 
-export function loadProgress(studentId, token) {
+export function loadProgress(studentId, token, domain) {
   let url =
-    env.MANAGE_API_URL + '/student/' + studentId + '/progress?token=' + token;
+    env.manageApiUrl(domain) +
+    '/student/' +
+    studentId +
+    '/progress?token=' +
+    token;
   return axios.get(url);
 }
 
-export function loadHistoryCollect(studentId, token) {
+export function loadHistoryCollect(studentId, token, domain) {
   let url =
-    env.MANAGE_API_URL +
+    env.manageApiUrl(domain) +
     '/student/' +
     studentId +
     '/history-collect-money?token=' +
@@ -48,8 +57,10 @@ export function changeCallStatusStudent(
   appointmentPayment,
   dateTest,
   token,
+  domain,
 ) {
-  let url = env.MANAGE_API_URL + '/change-call-status-student?token=' + token;
+  let url =
+    env.manageApiUrl(domain) + '/change-call-status-student?token=' + token;
   return axios.post(url, {
     student_id: studentId,
     telecall_id: telecallId,
@@ -69,8 +80,10 @@ export function submitMoney(
   note,
   payment_method,
   token,
+  domain,
 ) {
-  let url = env.MANAGE_API_URL + '/collect-money/pay-money?token=' + token;
+  let url =
+    env.manageApiUrl(domain) + '/collect-money/pay-money?token=' + token;
   return axios.post(url, {
     register_id: register_id,
     money: '' + money,
@@ -80,8 +93,8 @@ export function submitMoney(
   });
 }
 
-export function uploadImage(fileUri, studentId, imageField, token) {
-  let url = env.MANAGE_API_URL + '/upload-image-user?token=' + token;
+export function uploadImage(fileUri, studentId, imageField, token, domain) {
+  let url = env.manageApiUrl(domain) + '/upload-image-user?token=' + token;
   let formData = new FormData();
   formData.append(imageField, {
     uri: fileUri,
@@ -97,9 +110,9 @@ export function uploadImage(fileUri, studentId, imageField, token) {
   });
 }
 
-export function updateProfile(register, token) {
+export function updateProfile(register, token, domain) {
   let url =
-    env.MANAGE_API_URL + '/student/' + register.id + '/edit?token=' + token;
+    env.manageApiUrl(domain) + '/student/' + register.id + '/edit?token=' + token;
   return axios.post(url, {
     id: register.id,
     name: register.name,
@@ -116,8 +129,9 @@ export function updateProfile(register, token) {
   });
 }
 
-export function changePassword(studentId, newPassword, token) {
-  let url = env.MANAGE_API_URL + '/change-password-student?token=' + token;
+export function changePassword(studentId, newPassword, token, domain) {
+  let url =
+    env.manageApiUrl(domain) + '/change-password-student?token=' + token;
   return axios.post(url, {
     id: studentId,
     new_password: newPassword,

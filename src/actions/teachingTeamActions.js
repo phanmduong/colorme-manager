@@ -1,11 +1,11 @@
 import * as teachingRatingApi from '../apis/teachingRatingApi';
 import * as type from '../constants/actionTypes';
 
-export function loadTeacherList(token, genId) {
+export function loadTeacherList(token, genId, domain) {
   return function(dispatch) {
     dispatch(beginLoadTeacherList());
     teachingRatingApi
-      .getTeacherList(token, genId)
+      .getTeacherList(token, genId, domain)
       .then(function(res) {
         dispatch(loadTeacherListSuccessful(res));
       })
@@ -41,11 +41,11 @@ function loadTeacherListError() {
   };
 }
 
-export function loadAssistantList(token, genId) {
+export function loadAssistantList(token, genId, domain) {
   return function(dispatch) {
     dispatch(beginLoadAssistantList());
     teachingRatingApi
-      .getAssistantList(token, genId)
+      .getAssistantList(token, genId, domain)
       .then(function(res) {
         dispatch(loadAssistantListSuccessful(res));
       })

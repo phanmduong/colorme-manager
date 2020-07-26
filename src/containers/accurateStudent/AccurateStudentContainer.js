@@ -60,21 +60,21 @@ class AccurateStudentContainer extends React.Component {
     ),
   });
 
-  searchStudent = value => {
+  searchStudent = (value) => {
     this.store.search = value;
     if (this.timeOut !== null) {
       clearTimeout(this.timeOut);
     }
     this.timeOut = setTimeout(
-      function() {
-        this.store.searchStudent(this.props.token);
+      function () {
+        this.store.searchStudent(this.props.token, this.props.domain);
       }.bind(this),
       500,
     );
   };
 
   componentDidMount() {
-    this.store.searchStudent(this.props.token);
+    this.store.searchStudent(this.props.token, this.props.domain);
   }
 
   renderSearch = () => {
@@ -123,14 +123,16 @@ class AccurateStudentContainer extends React.Component {
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
-            onRefresh={() => this.store.refresh(this.props.token)}
+            onRefresh={() =>
+              this.store.refresh(this.props.token, this.props.domain)
+            }
           />
         }
       />
     );
   }
 
-  openModal = student => {
+  openModal = (student) => {
     this.store.studentSelected = student;
     this._modal.open();
   };
@@ -176,7 +178,7 @@ class AccurateStudentContainer extends React.Component {
         {student && (
           <Modal
             style={styles.modalFull}
-            ref={modal => {
+            ref={(modal) => {
               this._modal = modal;
             }}
             position={'center'}
@@ -236,7 +238,7 @@ class AccurateStudentContainer extends React.Component {
       ...this.studentSelected,
       ['isUploading_' + imageField]: true,
     };
-    ImagePicker.showImagePicker(options, response => {
+    ImagePicker.showImagePicker(options, (response) => {
       console.log('Response = ', response);
 
       if (response.didCancel) {
@@ -260,7 +262,12 @@ class AccurateStudentContainer extends React.Component {
           type: 'image/*',
         };
 
-        this.store.uploadImage(source, imageField, this.props.token);
+        this.store.uploadImage(
+          source,
+          imageField,
+          this.props.token,
+          this.props.domain,
+        );
 
         // You can also display the image using data:
         // const source = { uri: 'data:image/jpeg;base64,' + response.data };
@@ -346,6 +353,7 @@ function mapStateToProps(state) {
   return {
     token: state.login.token,
     user: state.login.user,
+    domain: state.login.domain,
   };
 }
 

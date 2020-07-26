@@ -6,7 +6,7 @@ import {bindActionCreators} from 'redux';
 import * as genActions from '../actions/genActions';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from "../styles";
+import theme from '../styles';
 
 class TeachingRatingContainer extends React.Component {
   constructor(props, context) {
@@ -61,17 +61,19 @@ class TeachingRatingContainer extends React.Component {
     }
   }
 
-  loadTeacherRatingData = userId => {
+  loadTeacherRatingData = (userId) => {
     this.props.teachingRatingActions.loadTeacherRating(
       this.props.token,
       userId,
+      this.props.domain,
     );
   };
 
-  loadAssistantRatingData = userId => {
+  loadAssistantRatingData = (userId) => {
     this.props.teachingRatingActions.loadAssistantRating(
       this.props.token,
       userId,
+      this.props.domain,
     );
   };
 
@@ -80,6 +82,7 @@ class TeachingRatingContainer extends React.Component {
       this.props.token,
       genId,
       userId,
+      this.props.domain,
     );
   };
 
@@ -88,14 +91,15 @@ class TeachingRatingContainer extends React.Component {
       this.props.token,
       genId,
       userId,
+      this.props.domain,
     );
   };
 
   loadGenData = () => {
-    this.props.genActions.loadDataGen(this.props.token);
+    this.props.genActions.loadDataGen(this.props.token, this.props.domain);
   };
 
-  onSelectGenId = genId => {
+  onSelectGenId = (genId) => {
     this.props.teachingRatingActions.selectedGenId(genId);
     this.loadTeacherFeedback(genId, this.props.user.id);
     this.loadAssistantFeedback(genId, this.props.user.id);
@@ -160,6 +164,7 @@ function mapStateToProps(state) {
     isLoadingAssistantFeedback: state.teachingRating.isLoadingAssistantFeedback,
     errorLoadingAssistantFeedback:
       state.teachingRating.errorLoadingAssistantFeedback,
+    domain: state.login.domain,
   };
 }
 

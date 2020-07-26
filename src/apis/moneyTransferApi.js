@@ -9,10 +9,11 @@ export function searchStaffApi(
   search,
   page = 1,
   sourceCancel,
+  domain,
   limit = 20,
 ) {
   let url =
-    env.API_URL +
+    env.apiUrl(domain) +
     '/staffs?q=' +
     search +
     '&page=' +
@@ -24,9 +25,9 @@ export function searchStaffApi(
   return axios.get(url, {cancelToken: sourceCancel.token});
 }
 
-export function getTransactionApi(token, page = 1, limit = 20) {
+export function getTransactionApi(token, page = 1, domain, limit = 20) {
   let url =
-    env.API_URL +
+    env.apiUrl(domain) +
     '/transactions?page=' +
     page +
     '&limit=' +
@@ -36,17 +37,17 @@ export function getTransactionApi(token, page = 1, limit = 20) {
   return axios.get(url);
 }
 
-export function postTransactionApi(receiverId, token) {
+export function postTransactionApi(receiverId, token, domain) {
   let url =
-    env.MANAGE_API_URL_V3 + '/finance/create-transaction?token=' + token;
+    env.manageApiUrlV3(domain) + '/finance/create-transaction?token=' + token;
   return axios.post(url, {
     receiver_id: receiverId,
   });
 }
 
-export function conformTransactionApi(transactionId, status, token) {
+export function conformTransactionApi(transactionId, status, token, domain) {
   let url =
-    env.MANAGE_API_URL_V3 + '/finance/confirm-transaction?token=' + token;
+    env.manageApiUrlV3(domain) + '/finance/confirm-transaction?token=' + token;
   return axios.post(url, {
     transaction_id: transactionId,
     status: status,

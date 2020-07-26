@@ -20,30 +20,30 @@ export function beginDataCurrentClassStudyRefresh() {
   };
 }
 
-export function loadDataCurrentClassStudy(date, token) {
-  return function(dispatch) {
+export function loadDataCurrentClassStudy(date, token, domain) {
+  return function (dispatch) {
     dispatch(beginDataCurrentClassStudyLoad());
     classApi
-      .loadCurrentClassStudyApi(date, token)
-      .then(function(res) {
+      .loadCurrentClassStudyApi(date, token, domain)
+      .then(function (res) {
         dispatch(loadDataSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadDataError());
         throw error;
       });
   };
 }
 
-export function refreshDataCurrentClassStudy(date, token) {
-  return function(dispatch) {
+export function refreshDataCurrentClassStudy(date, token, domain) {
+  return function (dispatch) {
     dispatch(beginDataCurrentClassStudyRefresh());
     classApi
-      .loadCurrentClassStudyApi(date, token)
-      .then(function(res) {
+      .loadCurrentClassStudyApi(date, token, domain)
+      .then(function (res) {
         dispatch(loadDataSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadDataError());
         throw error;
       });

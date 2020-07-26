@@ -1,9 +1,9 @@
 import axios from 'axios';
 import * as env from '../constants/env';
 
-export function loadScheduleClasses(token, lessonId) {
+export function loadScheduleClasses(token, lessonId, domain) {
   let url =
-    env.MANAGE_API_URL +
+    env.manageApiUrl(domain) +
     '/class/schedule-class-future/' +
     lessonId +
     '?token=' +
@@ -11,7 +11,7 @@ export function loadScheduleClasses(token, lessonId) {
   return axios.get(url);
 }
 
-export function loadAllCourses(token) {
-  let url = env.MANAGE_API_URL + '/class/course-lessons?token=' + token;
+export function loadAllCourses(token, domain) {
+  let url = env.manageApiUrl(domain) + '/class/course-lessons?token=' + token;
   return axios.get(url);
 }

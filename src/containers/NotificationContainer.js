@@ -5,7 +5,7 @@ import {bindActionCreators} from 'redux';
 import * as notificationActions from '../actions/notificationActions';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from "../styles";
+import theme from '../styles';
 
 class NotificationContainer extends React.Component {
   constructor(props, context) {
@@ -38,23 +38,28 @@ class NotificationContainer extends React.Component {
     this.loadNotifications(1);
   };
 
-  loadNotifications = page => {
-    this.props.notificationActions.loadNotifications(page, this.props.token);
+  loadNotifications = (page) => {
+    this.props.notificationActions.loadNotifications(
+      page,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
-  loadMoreNotifications = page => {
+  loadMoreNotifications = (page) => {
     this.props.notificationActions.loadMoreNotifications(
       page,
       this.props.token,
+      this.props.domain,
     );
   };
 
   readAllNotifications = () => {
-    this.props.notificationActions.readAllNotifications(this.props.token);
+    this.props.notificationActions.readAllNotifications(this.props.token, this.props.domain);
   };
 
-  refreshNotifications = page => {
-    this.props.notificationActions.refreshNotifications(page, this.props.token);
+  refreshNotifications = (page) => {
+    this.props.notificationActions.refreshNotifications(page, this.props.token, this.props.domain);
   };
 
   resetNotifications = () => {
@@ -90,6 +95,7 @@ function mapStateToProps(state) {
     isRefreshingNotifications: state.notification.isRefreshingNotifications,
     errorRefreshingNotifications:
       state.notification.errorRefreshingNotifications,
+    domain: state.login.domain,
   };
 }
 

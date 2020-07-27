@@ -56,7 +56,7 @@ export function loadSources(token, domain) {
 
 export function loadStatuses(ref, token, domain) {
   let url =
-    env.manageApiUrl(domain) + '/v4/statuses/all?ref=' + ref + '&token=' + token;
+    env.manageApiUrlV4(domain) + '/statuses/all?ref=' + ref + '&token=' + token;
   return axios.get(url);
 }
 

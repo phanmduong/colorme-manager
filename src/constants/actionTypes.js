@@ -11,6 +11,7 @@ export const LOGIN_USER = 'LOGIN_USER';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const GOT_DATA_LOGIN = 'GOT_DATA_LOGIN';
 export const SET_AUTO_LOGIN = 'SET_AUTO_LOGIN';
+export const UPDATE_DOMAIN_FORM = 'UPDATE_DOMAIN_FORM';
 
 export const CLOSE_DRAWER = 'CLOSE_DRAWER';
 export const OPEN_DRAWER = 'OPEN_DRAWER';

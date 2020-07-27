@@ -26,10 +26,7 @@ class LoginContainer extends React.Component {
   }
 
   saveDataLogin() {
-    this.props.loginActions.setDataLogin(
-      this.props.login,
-      this.props.domain,
-    );
+    this.props.loginActions.setDataLogin(this.props.login, this.props.domain);
   }
 
   updateFormData(name, value) {
@@ -37,6 +34,10 @@ class LoginContainer extends React.Component {
     login[name] = value;
     this.props.loginActions.updateDataLoginForm(login);
   }
+
+  updateDomainForm = (domain) => {
+    this.props.loginActions.updateDomainForm(domain);
+  };
 
   openMainScreen = () => {
     this.props.navigation.navigate('Main');
@@ -75,7 +76,11 @@ class LoginContainer extends React.Component {
     if (nextProps.isGetDataLocalSuccessful && nextProps.isAutoLogin) {
       nextProps.autoLoginActions.setAutoLogin(false);
       if (nextProps.login.username && nextProps.login.password) {
-        nextProps.loginActions.loginUser(nextProps.login, this.openMainScreen);
+        nextProps.loginActions.loginUser(
+          nextProps.login,
+          nextProps.domain,
+          this.openMainScreen,
+        );
       }
     }
   }
@@ -84,6 +89,7 @@ class LoginContainer extends React.Component {
     return (
       <LoginComponent
         updateFormData={this.updateFormData}
+        updateDomainForm={this.updateDomainForm}
         onClickLogin={this.onClickLogin}
         username={this.props.login.username}
         password={this.props.login.password}

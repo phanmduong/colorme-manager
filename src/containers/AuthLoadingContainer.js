@@ -16,7 +16,7 @@ class AuthLoadingContainer extends React.Component {
   }
 
   componentDidMount() {
-    if (isEmptyInput(this.props.token)) {
+    if (isEmptyInput(this.props.token) || isEmptyInput(this.props.domain)) {
       this._bootstrapAsync();
     } else {
       this._whenLoginSuccess();

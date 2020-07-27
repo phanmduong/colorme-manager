@@ -3,19 +3,15 @@
  */
 import React from 'react';
 import {
-  Dimensions,
   Keyboard,
   Text,
   View,
-  Platform,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  TextInput,
 } from 'react-native';
-import {Form, InputGroup, Input, Button} from 'native-base';
-import ResetPasswordModal from './login/ResetPasswordModal';
-var {height, width} = Dimensions.get('window');
 import Spinkit from 'react-native-spinkit';
 import theme from '../styles';
-import LinearGradient from 'react-native-linear-gradient';
 
 let self;
 
@@ -60,250 +56,112 @@ class LoginComponent extends React.Component {
     self.props.changeStatusBarColor('light-content');
   }
 
-  toggleResetPasswordModal = () => {
-    this.setState({
-      isResetPasswordModalVisible: !this.state.isResetPasswordModalVisible,
-    });
-  };
-
   render() {
     return (
-      <View
-        style={{
-          ...styles.container,
-          ...{
-            paddingBottom:
-              this.state.isKeyboardShow && Platform.OS === 'ios'
-                ? height / 3
-                : 0,
-            justifyContent: !this.state.isKeyboardShow
-              ? 'flex-start'
-              : 'center',
-            alignItems: !this.state.isKeyboardShow ? 'stretch' : 'center',
-          },
-        }}>
-        {!this.state.isKeyboardShow && (
-          <LinearGradient
-            colors={['#ff0064', '#c51600']}
-            style={styles.containerColorME}>
-            <View style={styles.contentColorME}>
-              <Text style={styles.textColor}>color</Text>
-              <Text style={styles.textME}>ME</Text>
-            </View>
-          </LinearGradient>
-        )}
-        {!this.state.isKeyboardShow && (
-          <View style={{flex: 1, backgroundColor: '#fff'}} />
-        )}
-        <View
-          style={{
-            ...styles.containerFormLogin,
-            ...{
-              position: !this.state.isKeyboardShow ? 'absolute' : 'relative',
-              top: !this.state.isKeyboardShow ? height / 2 - 25 : 0,
-            },
-          }}>
-          <View
-            style={{
-              flex: 1,
-              position: 'relative',
-            }}>
-            <View style={styles.contentForm}>
-              <Form>
-                <Text style={styles.textTitleInput}>EMAIL</Text>
-                <InputGroup style={{width: width - width * 0.3}}>
-                  <Input
-                    value={this.props.username}
-                    onChangeText={data =>
-                      this.props.updateFormData('username', data)
-                    }
-                    returnKeyType={'next'}
-                    placeholder="Email"
-                    blurOnSubmit={false}
-                    keyboardType={'email-address'}
-                    onSubmitEditing={() => {
-                      this.refs.password._root.focus();
-                    }}
-                    editable={!this.props.isLoading}
-                    style={{
-                      lineHeight: 20,
-                      height: 40,
-                    }}
-                  />
-                </InputGroup>
-                <Text
-                  style={{
-                    ...styles.textTitleInput,
-                    ...{
-                      paddingTop: 15,
-                    },
-                  }}>
-                  PASSWORD
-                </Text>
-                <InputGroup>
-                  <Input
-                    style={{
-                      height: 40,
-                    }}
-                    ref="password"
-                    secureTextEntry
-                    onChangeText={data =>
-                      this.props.updateFormData('password', data)
-                    }
-                    value={this.props.password}
-                    returnKeyType={'done'}
-                    placeholder="Password"
-                    onSubmitEditing={this.props.onClickLogin}
-                    editable={!this.props.isLoading}
-                  />
-                </InputGroup>
-              </Form>
-            </View>
-            <Button
-              disabled={this.props.isLoading}
-              block
-              rounded
-              style={styles.button}
-              onPress={this.onPressLogin}>
-              {this.props.isLoading ? (
-                <View style={styles.containerLoading}>
-                  <Spinkit
-                    isVisible
-                    color="white"
-                    type="ThreeBounce"
-                    size={40}
-                  />
-                </View>
-              ) : (
-                <Text style={styles.textLogin}>ĐĂNG NHẬP</Text>
-              )}
-            </Button>
+      <KeyboardAvoidingView
+        behavior={'padding'}
+        enabled
+        style={styles.container}>
+        <View>
+          <Text style={styles.titleForm}>Tên đăng nhập</Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              value={this.props.username}
+              ref={'username'}
+              onChangeText={(data) =>
+                this.props.updateFormData('username', data)
+              }
+              returnKeyType={'next'}
+              placeholder="username"
+              blurOnSubmit={false}
+              onSubmitEditing={(event) => {
+                this.refs.password.focus();
+              }}
+              style={{fontSize: 15}}
+              autoCapitalize={'none'}
+              editable={!this.props.isLoading}
+            />
           </View>
         </View>
-        <View
-          style={{
-            ...styles.contentResetPassword,
-            ...{position: !this.state.isKeyboardShow ? 'absolute' : 'relative'},
-          }}>
-          <TouchableOpacity onPress={this.toggleResetPasswordModal}>
-            <Text style={styles.textResetPassword}>QUÊN MẬT KHẨU?</Text>
-          </TouchableOpacity>
+        <View style={{marginTop: 30}}>
+          <Text style={styles.titleForm}>Mật khẩu</Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              value={this.props.password}
+              ref={'password'}
+              onChangeText={(data) =>
+                this.props.updateFormData('password', data)
+              }
+              returnKeyType={'next'}
+              placeholder="password"
+              blurOnSubmit={false}
+              onSubmitEditing={(event) => {
+                this.refs.domain.focus();
+              }}
+              editable={!this.props.isLoading}
+              style={{fontSize: 15}}
+            />
+          </View>
         </View>
-        <ResetPasswordModal
-          isVisible={this.state.isResetPasswordModalVisible}
-          onSwipeComplete={this.toggleResetPasswordModal}
-        />
-      </View>
+        <View style={{marginTop: 30}}>
+          <Text style={styles.titleForm}>Tên miền doanh nghiệp</Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              value={this.props.domain}
+              ref={'domain'}
+              onChangeText={(data) => this.props.updateDomainForm(data)}
+              returnKeyType={'done'}
+              placeholder="Ví dụ: demo.eduto.net"
+              blurOnSubmit={false}
+              onSubmitEditing={this.props.onClickLogin}
+              editable={!this.props.isLoading}
+              autoCapitalize={'none'}
+              style={{fontSize: 15}}
+            />
+          </View>
+        </View>
+        {!this.props.isLoading ? (
+          <TouchableOpacity onPress={() => this.onPressLogin()}>
+            <View style={styles.btnSubmit} onPress={this.onPressLogin}>
+              <Text style={{color: 'white'}}>Đăng nhập</Text>
+            </View>
+          </TouchableOpacity>
+        ) : (
+          <View style={styles.btnSubmit}>
+            <Spinkit isVisible color="white" type="ThreeBounce" size={40} />
+          </View>
+        )}
+      </KeyboardAvoidingView>
     );
   }
 }
 
 const styles = {
-  container_image: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  image: {
-    height: 100,
-    width: 100,
-  },
-  container_form: {
-    flex: 3,
-    marginHorizontal: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  button: {
-    backgroundColor: '#ff0038',
-    position: 'absolute',
-    height: 45,
-    bottom: -23,
-    elevation: 11,
-    shadowColor: '#666666',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowRadius: 10,
-    shadowOpacity: 0.5,
-    marginHorizontal: width / 5,
-    width: width - (2 * width) / 5,
-  },
   container: {
     flex: 1,
-    position: 'relative',
-    backgroundColor: '#fff',
+    justifyContent: 'center',
+    marginHorizontal: theme.mainHorizontal,
   },
-  containerColorME: {
-    flex: 1,
+  titleForm: {
+    color: 'black',
+    fontSize: 14,
+  },
+  inputContainer: {
+    marginTop: 8,
+    height: 45,
+    backgroundColor: '#F6F6F6',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    borderRadius: 25,
+  },
+  btnSubmit: {
+    backgroundColor: '#0A66E9',
+    paddingHorizontal: 20,
+    borderRadius: 25,
+    height: 45,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  contentColorME: {
-    alignItems: 'flex-end',
-  },
-  textColor: {
-    color: 'white',
-    fontSize: 35,
-    fontWeight: Platform.OS === 'ios' ? '900' : 'normal',
-    fontFamily: Platform.OS === 'ios' ? 'Segoe UI' : 'SegoeUI-Blank',
-    backgroundColor: 'transparent',
-  },
-  textME: {
-    color: 'white',
-    fontSize: 100,
-    fontWeight: Platform.OS === 'ios' ? '900' : 'normal',
-    fontFamily: Platform.OS === 'ios' ? 'Segoe UI' : 'SegoeUI-Blank',
-    backgroundColor: 'transparent',
-    lineHeight: 100,
-  },
-  containerFormLogin: {
-    height: (2 * height) / 5,
-    width: width,
-    paddingBottom: 25,
-  },
-  contentForm: {
-    backgroundColor: '#fff',
-    flex: 1,
-    marginHorizontal: width / 10,
-    borderRadius: 10,
-    elevation: 10,
-    shadowColor: '#666666',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowRadius: 10,
-    shadowOpacity: 0.4,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  textTitleInput: {
-    color: '#ff0038',
-    fontWeight: Platform.OS === 'ios' ? 'bold' : 'normal',
-    fontFamily: Platform.OS === 'ios' ? 'Segoe UI' : 'SegoeUI-Bold',
-  },
-  contentResetPassword: {
-    bottom: 0,
-    width: width,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: height / 10,
-  },
-  textResetPassword: {
-    color: '#797979',
-    fontWeight: 'bold',
-  },
-  textLogin: {
-    color: '#FFF',
-    fontSize: 15,
-    fontWeight: 'bold',
-  },
-  containerLoading: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    marginTop: 40,
   },
 };
 

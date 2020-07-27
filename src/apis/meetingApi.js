@@ -48,7 +48,7 @@ export function storeIssue(
   description = '',
   status = 'accept',
 ) {
-  let url = env.MANAGE_API_URL_V3 + '/meeting/store-issue?token=' + token;
+  let url = env.manageApiUrlV3(domain) + '/meeting/store-issue?token=' + token;
   return axios.post(url, {
     meeting_id,
     issue,
@@ -68,7 +68,7 @@ export function storeMeeting(
   filter = {},
   meeting_id = '',
 ) {
-  let url = env.MANAGE_API_URL_V3 + '/meeting/store-meeting?token=' + token;
+  let url = env.manageApiUrlV3(domain) + '/meeting/store-meeting?token=' + token;
   console.log({
     meeting_id,
     name,

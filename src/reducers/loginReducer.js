@@ -13,6 +13,10 @@ export default function loginReducer(state = initialState.login, action) {
           login: action.login,
         },
       };
+    case types.UPDATE_DOMAIN_FORM:
+      return Object.assign({}, state, {
+        domain: action.domain,
+      });
     case types.BEGIN_LOGIN:
       return Object.assign({}, state, {
         isLoading: action.isLoading,
@@ -27,6 +31,7 @@ export default function loginReducer(state = initialState.login, action) {
         token: action.token,
         isCheckIn: action.isCheckIn,
         deviceUser: action.deviceUser,
+        domain: action.domain,
       });
     case types.LOGIN_ERROR:
       return Object.assign({}, state, {

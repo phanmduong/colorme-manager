@@ -14,6 +14,13 @@ export function updateDataLoginForm(login) {
   };
 }
 
+export function updateDomainForm(domain) {
+  return {
+    type: types.UPDATE_DOMAIN_FORM,
+    domain: domain,
+  };
+}
+
 export function beginLogin() {
   return {
     type: types.BEGIN_LOGIN,
@@ -41,12 +48,13 @@ export function loginUser(login, domain, openMainScreen, logout) {
               dispatch(
                 loginSuccess(
                   res,
+                  domain,
                   false,
                   resCheckDevice.data.message.device_user,
                 ),
               );
             } else {
-              dispatch(loginSuccess(res, true));
+              dispatch(loginSuccess(res, domain, true));
             }
             if (res.data.user.role > 0) {
               openMainScreen();
@@ -86,7 +94,7 @@ export function changeStatusBarColor(color) {
   };
 }
 
-export function loginSuccess(res, isCheckIn = true, deviceUser = {}) {
+export function loginSuccess(res, domain, isCheckIn = true, deviceUser = {}) {
   let token = res.data.token;
   OneSignal.sendTags({user_id: res.data.user ? res.data.user.id : 0});
   return {
@@ -97,6 +105,7 @@ export function loginSuccess(res, isCheckIn = true, deviceUser = {}) {
     deviceUser: deviceUser,
     isLoading: false,
     error: false,
+    domain: domain,
   };
 }
 

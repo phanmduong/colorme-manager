@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, Platform, Text, View} from 'react-native';
+import {Dimensions, Image, Platform, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Spinkit from 'react-native-spinkit';
 import {connect} from 'react-redux';
@@ -56,15 +56,13 @@ class AuthLoadingContainer extends React.Component {
 
   render() {
     return (
-      <LinearGradient
-        colors={['#ff0064', '#c51600']}
-        style={styles.containerColorME}>
-        <View style={styles.contentColorME}>
-          <Text style={styles.textColor}>color</Text>
-          <Text style={styles.textME}>ME</Text>
-        </View>
-        <Spinkit isVisible color="white" type="ThreeBounce" size={40} />
-      </LinearGradient>
+      <View style={styles.containerColorME}>
+        <Image
+          source={require('../../assets/img/edutoLogo.png')}
+          style={{transform: [{scale: 0.2}]}}
+        />
+        <Spinkit isVisible color="#0A66E9" type="ThreeBounce" size={40} />
+      </View>
     );
   }
 }

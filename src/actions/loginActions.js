@@ -32,7 +32,7 @@ export function beginLogin() {
 
 export function loginUser(login, domain, openMainScreen, logout) {
   let device = {
-    device_id: DeviceInfo.getUniqueID(),
+    device_id: DeviceInfo.getUniqueId(),
     name: DeviceInfo.getModel(),
     os: DeviceInfo.getBrand() + ' - ' + DeviceInfo.getSystemVersion(),
   };

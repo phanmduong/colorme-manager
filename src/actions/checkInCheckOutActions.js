@@ -21,7 +21,7 @@ export function loadCheck(token, type, domain) {
       type: types.BEGIN_CHECK_IN,
     });
     let device = {
-      device_id: DeviceInfo.getUniqueID(),
+      device_id: DeviceInfo.getUniqueId(),
     };
 
     async.waterfall(

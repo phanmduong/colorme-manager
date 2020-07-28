@@ -107,6 +107,7 @@ class LoginComponent extends React.Component {
                 onSubmitEditing={(event) => {
                   this.refs.domain.focus();
                 }}
+                secureTextEntry
                 editable={!this.props.isLoading}
                 style={{fontSize: 15}}
               />

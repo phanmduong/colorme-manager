@@ -1,4 +1,4 @@
-package vn.colorme.phanminhduong.colormemanager;
+package vn.colorme.manage.eduto;
 
 import androidx.multidex.MultiDexApplication;
 import android.util.Log;
@@ -16,7 +16,7 @@ import com.github.yamill.orientation.OrientationPackage;
 
 import java.util.List;
 
-import vn.colorme.phanminhduong.colormemanager.modules.LocationPackage;
+import vn.colorme.manage.eduto.modules.LocationPackage;
 
 public class MainApplication extends MultiDexApplication implements ReactApplication {
 

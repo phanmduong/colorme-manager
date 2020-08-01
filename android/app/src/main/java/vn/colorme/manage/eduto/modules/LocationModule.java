@@ -1,4 +1,4 @@
-package vn.colorme.phanminhduong.colormemanager.modules;
+package vn.colorme.manage.eduto.modules;
 
 import android.Manifest;
 import android.app.Activity;

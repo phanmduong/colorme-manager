@@ -205,7 +205,7 @@ class CallRegisterModal extends React.Component {
 
 const styles = {
   modal: {
-    height: height - 140,
+    height: 640,
     backgroundColor: 'white',
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,

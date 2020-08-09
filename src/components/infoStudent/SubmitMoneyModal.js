@@ -261,7 +261,7 @@ const styles = {
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
     paddingHorizontal: theme.mainHorizontal,
-    height: height - 140,
+    height: 800,
   },
   avatar: {
     width: 35,

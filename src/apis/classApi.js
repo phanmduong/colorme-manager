@@ -5,23 +5,34 @@ import axios from 'axios';
 import * as env from '../constants/env';
 
 export function loadClassApi(
+  sourceCancel,
   search,
-  teacherId,
   courseId,
   page,
   genId,
   baseId,
   token,
+  domain,
+  teacherId = '',
 ) {
-  let url = env.MANAGE_API_URL_V3 + '/class/all?token=' + token;
-  return axios.get(url, {
-    search: search,
-    teacher_id: teacherId,
-    course_id: courseId,
-    page: page,
-    gen_id: genId,
-    base_id: baseId,
-  });
+  let url =
+    env.manageApiUrlV3(domain) +
+    '/class/all?search=' +
+    search +
+    '&teacher_id=' +
+    teacherId +
+    '&course_id=' +
+    courseId +
+    '&page=' +
+    page +
+    '&gen_id=' +
+    genId +
+    '&base_id=' +
+    baseId +
+    '&token=' +
+    token;
+  console.log(url);
+  return axios.get(url, {cancelToken: sourceCancel.token});
 }
 
 export function loadCourseApi(token, domain) {

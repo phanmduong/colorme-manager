@@ -44,9 +44,14 @@ class ClassContainer extends React.Component {
     this.props.classActions.loadDataCourse(this.props.token, this.props.domain);
     this.props.classActions.loadBaseData(this.props.token, this.props.domain);
     this.props.saveRegisterActions.loadProvinces(
-      this.props.token,
-      this.props.domain,
+        this.props.token,
+        this.props.domain,
     );
+    this.loadDataClass();
+  }
+
+  componentWillUnmount() {
+    this.props.classActions.reset();
   }
 
   componentWillReceiveProps(props) {
@@ -67,19 +72,37 @@ class ClassContainer extends React.Component {
     }
   }
 
-  loadDataClass = (baseId, genId) => {
+  loadDataClass = () => {
+    const selectedBaseId =
+      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
+    const selectedGenId =
+      this.props.selectedGenId === -1 ? '' : this.props.selectedGenId;
+    const courseId =
+      this.props.selectedCourseId === -1 ? '' : this.props.selectedCourseId;
     this.props.classActions.loadDataClass(
-      baseId,
-      genId,
+      false,
+      this.props.search,
+      courseId,
+      this.props.currentPage + 1,
+      selectedGenId,
+      selectedBaseId,
       this.props.token,
       this.props.domain,
     );
   };
 
-  onRefresh = (baseId, genId) => {
+  onRefresh = () => {
+    const selectedBaseId =
+      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
+    const selectedGenId =
+      this.props.selectedGenId === -1 ? '' : this.props.selectedGenId;
+    const courseId =
+      this.props.selectedCourseId === -1 ? '' : this.props.selectedCourseId;
     this.props.classActions.refreshDataClass(
-      baseId,
-      genId,
+      this.props.search,
+      courseId,
+      selectedGenId,
+      selectedBaseId,
       this.props.token,
       this.props.domain,
     );
@@ -98,6 +121,39 @@ class ClassContainer extends React.Component {
     );
   };
 
+  searchClass = (search) => {
+    const selectedBaseId =
+      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
+    const selectedGenId =
+      this.props.selectedGenId === -1 ? '' : this.props.selectedGenId;
+    const courseId =
+      this.props.selectedCourseId === -1 ? '' : this.props.selectedCourseId;
+    this.props.classActions.searchClass(
+      search,
+      courseId,
+      selectedGenId,
+      selectedBaseId,
+      this.props.token,
+      this.props.domain,
+    );
+  };
+
+  onSelectGenId = (id) => {
+    this.props.classActions.selectedGenId(id);
+  };
+
+  onSelectBaseId = (id) => {
+    this.props.classActions.selectedBaseId(id);
+  };
+
+  onSelectCourseId = (id) => {
+    this.props.classActions.selectedCourseId(id);
+  };
+
+  applyFilter = () => {
+    this.searchClass(this.props.search);
+  };
+
   render() {
     return (
       <ClassComponent
@@ -113,7 +169,7 @@ class ClassContainer extends React.Component {
         isLoadingBase={this.props.isLoadingBase}
         currentGen={this.props.currentGen}
         onRefresh={this.onRefresh}
-        filter={this.loadDataClass}
+        filter={this.applyFilter}
         refreshing={this.props.isRefreshing}
         analyticGenId={this.props.analyticGenId}
         analyticBaseId={this.props.analyticBaseId}
@@ -121,6 +177,11 @@ class ClassContainer extends React.Component {
         isLoadingProvinces={this.props.isLoadingProvinces}
         changeClassStatus={this.changeClassStatus}
         user={this.props.user}
+        loadDataClass={this.loadDataClass}
+        searchClass={this.searchClass}
+        onSelectBaseId={this.onSelectBaseId}
+        onSelectCourseId={this.onSelectCourseId}
+        onSelectGenId={this.onSelectGenId}
       />
     );
   }
@@ -148,13 +209,17 @@ function mapStateToProps(state) {
     isLoadingBase: state.class.isLoadingBase,
     errorLoadingBase: state.class.errorLoadingBase,
     currentGen: state.gen.currentGen,
-    analyticBaseId: state.analytics.selectedBaseId,
-    analyticGenId: state.analytics.selectedGenId,
     isRefreshing: state.class.isRefreshing,
     isLoadingProvinces: state.saveRegister.isLoadingProvinces,
     errorLoadingProvinces: state.saveRegister.errorLoadingProvinces,
     provinces: state.saveRegister.provinces,
     domain: state.login.domain,
+    search: state.class.search,
+    currentPage: state.class.currentPage,
+    totalPage: state.class.totalPage,
+    selectedBaseId: state.class.selectedBaseId,
+    selectedCourseId: state.class.selectedCourseId,
+    selectedGenId: state.class.selectedGenId,
   };
 }
 

@@ -74,6 +74,12 @@ export default {
     errorClassInfo: false,
     changingClassStatus: false,
     errorClassStatus: false,
+    selectedGenId: -1,
+    currentPage: 0,
+    totalPage: 1,
+    search: '',
+    selectedBaseId: -1,
+    selectedCourseId: -1,
   },
   currentClassStudy: {
     classData: [],

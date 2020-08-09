@@ -39,17 +39,17 @@ class EditClassComponent extends React.Component {
       id: !classData.id ? '' : classData.id,
       name: !classData.name ? '' : classData.name,
       description: !classData.description ? '' : classData.description,
-      target: !classData.paid_target ? '' : '' + classData.paid_target,
-      regis_target: !classData.register_target
+      target: !classData.target ? '' : '' + classData.target,
+      regis_target: !classData.regis_target
         ? ''
-        : '' + classData.register_target,
+        : '' + classData.regis_target,
       link_drive: !classData.link_drive ? '' : classData.link_drive,
       study_time: !classData.study_time ? '' : classData.study_time,
       datestart: !classData.datestart_en ? '' : moment(classData.datestart_en),
-      room_id: !classData.room_id ? '' : classData.room_id,
+      room_id: !classData.room ? '' : classData.room.id,
       schedule_id: !classData.schedule_id ? '' : classData.schedule_id,
       type: !classData.type ? '' : classData.type,
-      course_id: !classData.course_id ? '' : classData.course_id,
+      course_id: !classData.course ? '' : classData.course.id,
       gen_id: !classData.gen.id ? '' : classData.gen.id,
       teacher_id:
         !classData.teacher || !classData.teacher.id ? '' : classData.teacher.id,
@@ -91,29 +91,29 @@ class EditClassComponent extends React.Component {
     this.setState({isEnrollEndPickerVisible: true});
   };
 
-  handleDateStartPicked = date => {
+  handleDateStartPicked = (date) => {
     this.setState({isDateStartPickerVisible: false, datestart: moment(date)});
   };
 
-  handleDateEndPicked = date => {
+  handleDateEndPicked = (date) => {
     this.setState({isDateEndPickerVisible: false, date_end: moment(date)});
   };
 
-  handleEnrollStartPicked = date => {
+  handleEnrollStartPicked = (date) => {
     this.setState({
       isEnrollStartPickerVisible: false,
       enroll_start_date: moment(date),
     });
   };
 
-  handleEnrollEndPicked = date => {
+  handleEnrollEndPicked = (date) => {
     this.setState({
       isEnrollEndPickerVisible: false,
       enroll_end_date: moment(date),
     });
   };
 
-  getSearchedResults = array => {
+  getSearchedResults = (array) => {
     let list = [];
     if (this.state.search === '') {
       return array;
@@ -143,7 +143,7 @@ class EditClassComponent extends React.Component {
 
   getRooms = () => {
     let rooms = [];
-    this.props.rooms.forEach(room => {
+    this.props.rooms.forEach((room) => {
       rooms = [
         ...rooms,
         {
@@ -200,7 +200,7 @@ class EditClassComponent extends React.Component {
     }
   };
 
-  renderPickerOption = settings => {
+  renderPickerOption = (settings) => {
     const {item, getLabel} = settings;
     return (
       <View style={styles.options}>
@@ -219,13 +219,13 @@ class EditClassComponent extends React.Component {
     );
   }
 
-  renderPickerHeader = title => {
+  renderPickerHeader = (title) => {
     return (
       <View style={styles.headerFooterContainer}>
         <Text style={styles.headerFooterText}>{title}</Text>
         <Search
           placeholder="Tìm kiếm"
-          onChangeText={search => {
+          onChangeText={(search) => {
             this.setState({search});
           }}
           value={this.state.search}
@@ -236,7 +236,7 @@ class EditClassComponent extends React.Component {
     );
   };
 
-  renderPickerField = settings => {
+  renderPickerField = (settings) => {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
@@ -297,7 +297,7 @@ class EditClassComponent extends React.Component {
                   this.props.courses,
                   this.state.course_id,
                 )}
-                getLabel={item => item.name}
+                getLabel={(item) => item.name}
                 placeholder={'Chọn môn học'}
                 modalAnimationType={'fade'}
                 optionTemplate={this.renderPickerOption}
@@ -308,7 +308,7 @@ class EditClassComponent extends React.Component {
                 modalStyle={{
                   borderRadius: 6,
                 }}
-                onValueChange={value => {
+                onValueChange={(value) => {
                   this.setState({
                     course_id: value.id,
                     search: '',
@@ -326,7 +326,7 @@ class EditClassComponent extends React.Component {
                   this.props.rooms,
                   this.state.room_id,
                 )}
-                getLabel={item => item.name}
+                getLabel={(item) => item.name}
                 placeholder={'Chọn phòng học'}
                 modalAnimationType={'fade'}
                 optionTemplate={this.renderPickerOption}
@@ -337,7 +337,7 @@ class EditClassComponent extends React.Component {
                 modalStyle={{
                   borderRadius: 6,
                 }}
-                onValueChange={value => {
+                onValueChange={(value) => {
                   this.setState({
                     room_id: value.id,
                     search: '',
@@ -353,11 +353,11 @@ class EditClassComponent extends React.Component {
                 <TextInput
                   {...this.props}
                   value={this.state.name}
-                  onChangeText={data => this.setState({name: data})}
+                  onChangeText={(data) => this.setState({name: data})}
                   returnKeyType={'next'}
                   placeholder="Tên lớp"
                   blurOnSubmit={false}
-                  onSubmitEditing={event => {
+                  onSubmitEditing={(event) => {
                     this.refs.description.focus();
                   }}
                   style={{fontSize: 15}}
@@ -372,12 +372,12 @@ class EditClassComponent extends React.Component {
                   value={this.state.description}
                   autoCapitalize={'none'}
                   ref={'description'}
-                  onChangeText={data => this.setState({description: data})}
+                  onChangeText={(data) => this.setState({description: data})}
                   returnKeyType={'next'}
                   placeholder="Mô tả"
                   blurOnSubmit={false}
                   style={{fontSize: 15}}
-                  onSubmitEditing={event => {
+                  onSubmitEditing={(event) => {
                     this.refs.target.focus();
                   }}
                 />
@@ -394,7 +394,7 @@ class EditClassComponent extends React.Component {
                   autoCapitalize={'none'}
                   keyboardType={'number-pad'}
                   ref={'target'}
-                  onChangeText={data => this.setState({target: data})}
+                  onChangeText={(data) => this.setState({target: data})}
                   returnKeyType={'next'}
                   placeholder="Chỉ tiêu nộp tiền"
                   blurOnSubmit={false}
@@ -413,7 +413,7 @@ class EditClassComponent extends React.Component {
                   autoCapitalize={'none'}
                   keyboardType={'number-pad'}
                   ref={'regis_target'}
-                  onChangeText={data => this.setState({regis_target: data})}
+                  onChangeText={(data) => this.setState({regis_target: data})}
                   returnKeyType={'next'}
                   placeholder="Chỉ tiêu đăng kí"
                   blurOnSubmit={false}
@@ -429,7 +429,7 @@ class EditClassComponent extends React.Component {
                   this.props.schedules,
                   this.state.schedule_id,
                 )}
-                getLabel={item => item.name}
+                getLabel={(item) => item.name}
                 placeholder={'Chọn lịch học'}
                 modalAnimationType={'fade'}
                 optionTemplate={this.renderPickerOption}
@@ -439,7 +439,7 @@ class EditClassComponent extends React.Component {
                 modalStyle={{
                   borderRadius: 6,
                 }}
-                onValueChange={value => {
+                onValueChange={(value) => {
                   this.setState({
                     schedule_id: value.id,
                     search: '',
@@ -501,7 +501,7 @@ class EditClassComponent extends React.Component {
                   this.props.genData,
                   this.state.gen_id,
                 )}
-                getLabel={item => 'Khóa ' + item.name}
+                getLabel={(item) => 'Khóa ' + item.name}
                 placeholder={'Chọn khóa học'}
                 modalAnimationType={'fade'}
                 optionTemplate={this.renderPickerOption}
@@ -511,7 +511,7 @@ class EditClassComponent extends React.Component {
                 modalStyle={{
                   borderRadius: 6,
                 }}
-                onValueChange={value => {
+                onValueChange={(value) => {
                   this.setState({
                     gen_id: value.id,
                     search: '',
@@ -570,7 +570,7 @@ class EditClassComponent extends React.Component {
               <CustomPicker
                 options={this.getSearchedResults(TYPE_CLASSES)}
                 defaultValue={this.getDefault(TYPE_CLASSES, this.state.type)}
-                getLabel={item => item.name}
+                getLabel={(item) => item.name}
                 placeholder={'Chọn thể loại'}
                 modalAnimationType={'fade'}
                 optionTemplate={this.renderPickerOption}
@@ -580,7 +580,7 @@ class EditClassComponent extends React.Component {
                 modalStyle={{
                   borderRadius: 6,
                 }}
-                onValueChange={value => {
+                onValueChange={(value) => {
                   this.setState({
                     type: value.id,
                     search: '',
@@ -596,11 +596,11 @@ class EditClassComponent extends React.Component {
                   value={this.state.link_drive}
                   autoCapitalize={'none'}
                   ref={'link_drive'}
-                  onChangeText={data => this.setState({link_drive: data})}
+                  onChangeText={(data) => this.setState({link_drive: data})}
                   returnKeyType={'next'}
                   placeholder="Link Driver"
                   blurOnSubmit={false}
-                  onSubmitEditing={event => {
+                  onSubmitEditing={(event) => {
                     this.refs.study_time.focus();
                   }}
                   style={{fontSize: 15}}
@@ -615,12 +615,12 @@ class EditClassComponent extends React.Component {
                 <TextInput
                   {...this.props}
                   value={this.state.study_time}
-                  onChangeText={data => this.setState({study_time: data})}
+                  onChangeText={(data) => this.setState({study_time: data})}
                   returnKeyType={'next'}
                   ref={'study_time'}
                   placeholder="Giờ học"
                   blurOnSubmit={false}
-                  onSubmitEditing={event => {
+                  onSubmitEditing={(event) => {
                     this.refs.study_time.focus();
                   }}
                   style={{fontSize: 15}}
@@ -635,7 +635,7 @@ class EditClassComponent extends React.Component {
                   this.props.staffs,
                   this.state.teacher_id,
                 )}
-                getLabel={item => item.name}
+                getLabel={(item) => item.name}
                 placeholder={'Chọn giảng viên'}
                 modalAnimationType={'fade'}
                 optionTemplate={this.renderPickerOption}
@@ -648,7 +648,7 @@ class EditClassComponent extends React.Component {
                 modalStyle={{
                   borderRadius: 6,
                 }}
-                onValueChange={value => {
+                onValueChange={(value) => {
                   this.setState({
                     teacher_id: value.id,
                     search: '',
@@ -664,7 +664,7 @@ class EditClassComponent extends React.Component {
                   this.props.staffs,
                   this.state.teaching_assistant_id,
                 )}
-                getLabel={item => item.name}
+                getLabel={(item) => item.name}
                 placeholder={'Chọn trợ giảng'}
                 modalAnimationType={'fade'}
                 optionTemplate={this.renderPickerOption}
@@ -675,7 +675,7 @@ class EditClassComponent extends React.Component {
                 modalStyle={{
                   borderRadius: 6,
                 }}
-                onValueChange={value => {
+                onValueChange={(value) => {
                   this.setState({
                     teaching_assistant_id: value.id,
                     search: '',

@@ -8,6 +8,7 @@ import * as baseActions from '../actions/baseActions';
 import * as genActions from '../actions/genActions';
 import * as dashboardActions from '../actions/analyticsActions';
 import * as loginActions from '../actions/loginActions';
+import * as classActions from '../actions/classActions';
 import AnalyticsComponent from '../components/AnalyticsComponent';
 import {NavigationActions} from 'react-navigation';
 import * as registerListActions from '../actions/registerListActions';
@@ -190,6 +191,8 @@ class AnalyticsContainer extends React.Component {
   }
 
   onClickClass() {
+    this.props.classActions.selectedGenId(this.props.selectedGenId);
+    this.props.classActions.selectedBaseId(this.props.selectedBaseId);
     this.props.navigation.navigate('Class', {
       analyticsScreen: true,
     });
@@ -268,6 +271,7 @@ function mapDispatchToProps(dispatch) {
     dashboardActions: bindActionCreators(dashboardActions, dispatch),
     loginActions: bindActionCreators(loginActions, dispatch),
     registerListActions: bindActionCreators(registerListActions, dispatch),
+    classActions: bindActionCreators(classActions, dispatch),
   };
 }
 

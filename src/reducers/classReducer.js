@@ -12,28 +12,25 @@ export default function classReducer(state = initialState.class, action) {
         error: action.error,
       });
     case types.LOAD_DATA_CLASS_SUCCESSFUL:
+      const classData =
+        action.currentPage === 1
+          ? action.classData
+          : [...state.classData, ...action.classData];
       return Object.assign({}, state, {
         isLoading: action.isLoading,
         error: action.error,
-        classData: action.classData,
+        classData: classData,
+        currentPage: action.currentPage,
+        totalPage: action.totalPage,
+        isRefreshing: action.isRefreshing,
       });
     case types.LOAD_DATA_CLASS_ERROR:
       return Object.assign({}, state, {
         isLoading: action.isLoading,
         error: action.error,
+        isRefreshing: action.isRefreshing,
       });
     case types.BEGIN_DATA_CLASS_REFRESH:
-      return Object.assign({}, state, {
-        isRefreshing: action.isRefreshing,
-        error: action.error,
-      });
-    case types.REFRESH_DATA_CLASS_SUCCESSFUL:
-      return Object.assign({}, state, {
-        isRefreshing: action.isRefreshing,
-        error: action.error,
-        classData: action.classData,
-      });
-    case types.REFRESH_DATA_CLASS_ERROR:
       return Object.assign({}, state, {
         isRefreshing: action.isRefreshing,
         error: action.error,
@@ -73,6 +70,18 @@ export default function classReducer(state = initialState.class, action) {
     case types.SELECTED_CLASS_ID:
       return Object.assign({}, state, {
         selectedClassId: action.selectedClassId,
+      });
+    case types.SELECTED_CLASS_BASE_ID:
+      return Object.assign({}, state, {
+        selectedBaseId: action.selectedBaseId,
+      });
+    case types.SELECTED_CLASS_GEN_ID:
+      return Object.assign({}, state, {
+        selectedGenId: action.selectedGenId,
+      });
+    case types.SELECTED_CLASS_COURSE_ID:
+      return Object.assign({}, state, {
+        selectedCourseId: action.selectedCourseId,
       });
     case types.BEGIN_LOAD_INFO_CREATE_CLASS:
       return Object.assign({}, state, {
@@ -139,6 +148,23 @@ export default function classReducer(state = initialState.class, action) {
       return Object.assign({}, state, {
         changingClassStatus: action.changingClassStatus,
         errorClassStatus: action.errorClassStatus,
+      });
+    case types.BEGIN_SEARCH_CLASS:
+      return Object.assign({}, state, {
+        search: action.search,
+        currentPage: action.currentPage,
+        totalPage: action.totalPage,
+        classData: action.classData,
+      });
+    case types.RESET_CLASS:
+      return Object.assign({}, state, {
+        classData: action.classData,
+        selectedGenId: action.selectedGenId,
+        currentPage: action.currentPage,
+        totalPage: action.totalPage,
+        search: action.search,
+        selectedBaseId: action.selectedBaseId,
+        selectedCourseId: action.selectedCourseId,
       });
     default:
       return state;

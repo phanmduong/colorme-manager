@@ -147,7 +147,7 @@ class ClassComponent extends React.Component {
               {...this.props}
               key={item.id}
               nameClass={item.name}
-              avatar={item.course.icon_url} // CHANGED
+              avatar={item.course ? item.course.icon_url : null} // CHANGED
               studyTime={item.study_time}
               address={
                 item.room ? `${item.room.name} - ${item.room.address}` : null
@@ -160,7 +160,7 @@ class ClassComponent extends React.Component {
               classId={item.id}
               teach={item.teacher}
               assist={item.teacher_assistant}
-              courseId={item.course.id} // CHANGED
+              courseId={item.course ? item.course.id : null} // CHANGED
               baseId={item.room ? item.room.base_id : null} // CHANGED
               changeClassStatus={this.props.changeClassStatus}
               classStatus={item.status}

@@ -617,15 +617,15 @@ const DashboardMain = createBottomTabNavigator(
         ),
       }),
     },
-    TabShiftRegister: {
-      screen: TabShiftRegister,
-      navigationOptions: ({navigation}) => ({
-        tabBarLabel: 'Lịch trực',
-        tabBarIcon: ({tintColor}) => (
-          <TabIcon nameIcon="fontawesome|edit" color={tintColor} />
-        ),
-      }),
-    },
+    // TabShiftRegister: {
+    //   screen: TabShiftRegister,
+    //   navigationOptions: ({navigation}) => ({
+    //     tabBarLabel: 'Lịch trực',
+    //     tabBarIcon: ({tintColor}) => (
+    //       <TabIcon nameIcon="fontawesome|edit" color={tintColor} />
+    //     ),
+    //   }),
+    // },
     TabDashboard: {
       screen: TabDashboard,
       navigationOptions: ({navigation}) => ({
@@ -635,15 +635,15 @@ const DashboardMain = createBottomTabNavigator(
         ),
       }),
     },
-    TabRegisterList: {
-      screen: TabRegisterList,
-      navigationOptions: ({navigation}) => ({
-        tabBarLabel: 'Nộp tiền',
-        tabBarIcon: ({tintColor}) => (
-          <TabIcon nameIcon="fontawesome|graduation-cap" color={tintColor} />
-        ),
-      }),
-    },
+    // TabRegisterList: {
+    //   screen: TabRegisterList,
+    //   navigationOptions: ({navigation}) => ({
+    //     tabBarLabel: 'Nộp tiền',
+    //     tabBarIcon: ({tintColor}) => (
+    //       <TabIcon nameIcon="fontawesome|graduation-cap" color={tintColor} />
+    //     ),
+    //   }),
+    // },
     TabWorkShift: {
       screen: TabWorkShift,
       navigationOptions: ({navigation}) => ({

@@ -204,8 +204,8 @@ class AnalyticsContainer extends React.Component {
   }
 
   onClickRegisterList() {
-    this.props.registerListActions.setAutoFocusRegisterListSearch(true);
-    this.props.navigation.navigate('RegisterList');
+    // this.props.registerListActions.setAutoFocusRegisterListSearch(true);
+    // this.props.navigation.navigate('RegisterList');
   }
 
   render() {

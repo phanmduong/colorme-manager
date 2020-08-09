@@ -14,7 +14,7 @@ export function apiUrl(domain) {
   } else if (domain.toLowerCase().includes('ieg')) {
     return `http://api.${domainParts[1]}.${domainParts[2]}`;
   } else if (domain.toLowerCase().includes('eduto')) {
-    return `http://demo.${domainParts[1]}.${domainParts[2]}/api/v3`;
+    return `http://${domainParts[0]}.${domainParts[1]}.${domainParts[2]}/api/v3`;
   }
 }
 
@@ -25,7 +25,7 @@ export function manageApiUrl(domain) {
   } else if (domain.toLowerCase().includes('ieg')) {
     return `http://manageapi.${domainParts[1]}.${domainParts[2]}`;
   } else if (domain.toLowerCase().includes('eduto')) {
-    return `http://demo.${domainParts[1]}.${domainParts[2]}/manageapi/v3`;
+    return `http://${domainParts[0]}.${domainParts[1]}.${domainParts[2]}/manageapi/v3`;
   }
 }
 
@@ -36,7 +36,7 @@ export function baseUrl(domain) {
   } else if (domain.toLowerCase().includes('ieg')) {
     return `https://${domainParts[1]}.${domainParts[2]}`;
   } else if (domain.toLowerCase().includes('eduto')) {
-    return `http://demo.${domainParts[1]}.${domainParts[2]}`;
+    return `http://${domainParts[0]}.${domainParts[1]}.${domainParts[2]}`;
   }
 }
 
@@ -57,7 +57,7 @@ export function apiNodeUrl(domain) {
   } else if (domain.toLowerCase().includes('ieg')) {
     return `http://${domainParts[1]}.${domainParts[2]}:8000`;
   } else if (domain.toLowerCase().includes('eduto')) {
-    return `http://demo.${domainParts[1]}.${domainParts[2]}:8000`;
+    return `http://${domainParts[0]}.${domainParts[1]}.${domainParts[2]}:8000`;
   }
 }
 

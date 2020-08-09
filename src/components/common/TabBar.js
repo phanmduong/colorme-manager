@@ -11,13 +11,13 @@ import posed from 'react-native-pose';
 import LinearGradient from 'react-native-linear-gradient';
 
 const windowWidth = Dimensions.get('window').width;
-const tabWidth = windowWidth / 5;
+const tabWidth = windowWidth / 3;
 const SpotLight = posed.View({
   route0: {x: 0},
   route1: {x: tabWidth},
   route2: {x: tabWidth * 2},
-  route3: {x: tabWidth * 3},
-  route4: {x: tabWidth * 4},
+  // route3: {x: tabWidth * 3},
+  // route4: {x: tabWidth * 4},
 });
 
 const Scaler = posed.View({

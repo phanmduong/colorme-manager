@@ -117,21 +117,21 @@ class DashboardComponent extends React.Component {
               </TouchableOpacity>
             </View>
           </View>
-          <TouchableOpacity
-            onPress={() => {
-              this.props.setAutoFocusRegisterListSearch(true);
-              this.props.navigation.navigate('RegisterList');
-            }}>
-            <View style={styles.searchContainer}>
-              <Icon
-                name={'ios-search'}
-                color={'black'}
-                size={20}
-                style={styles.searchIcon}
-              />
-              <Text style={styles.searchInput}>Tìm kiếm học viên</Text>
-            </View>
-          </TouchableOpacity>
+          {/*<TouchableOpacity*/}
+          {/*  onPress={() => {*/}
+          {/*    this.props.setAutoFocusRegisterListSearch(true);*/}
+          {/*    this.props.navigation.navigate('RegisterList');*/}
+          {/*  }}>*/}
+          {/*  <View style={styles.searchContainer}>*/}
+          {/*    <Icon*/}
+          {/*      name={'ios-search'}*/}
+          {/*      color={'black'}*/}
+          {/*      size={20}*/}
+          {/*      style={styles.searchIcon}*/}
+          {/*    />*/}
+          {/*    <Text style={styles.searchInput}>Tìm kiếm học viên</Text>*/}
+          {/*  </View>*/}
+          {/*</TouchableOpacity>*/}
           <View style={styles.mainFeatureLine}>
             <CardMenu
               colorOne={'#E26800'}
@@ -185,36 +185,20 @@ class DashboardComponent extends React.Component {
                 this.props.navigation.navigate('Analytics');
               }}
             />
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-contact-100.png')}
-              title={'Xác thực'}
-              onPress={() => {
-                this.props.navigation.navigate('AccurateStudent');
-              }}
-            />
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-idea-96-2.png')}
-              title={'Họp'}
-              onPress={() => {
-                this.props.navigation.navigate('Meeting');
-              }}
-            />
-          </View>
-          <View style={styles.otherFeatureLine}>
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-rating-90.png')}
-              title={'Đánh giá'}
-              onPress={() => {
-                this.props.navigation.navigate('TeachingRating');
-              }}
-            />
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-calendar.png')}
-              title={'Lịch học bù'}
-              onPress={() => {
-                this.props.navigation.navigate('MakeupClass');
-              }}
-            />
+            {/*<CircleTab*/}
+            {/*  iconImage={require('../../assets/img/icons8-contact-100.png')}*/}
+            {/*  title={'Xác thực'}*/}
+            {/*  onPress={() => {*/}
+            {/*    this.props.navigation.navigate('AccurateStudent');*/}
+            {/*  }}*/}
+            {/*/>*/}
+            {/*<CircleTab*/}
+            {/*  iconImage={require('../../assets/img/icons8-idea-96-2.png')}*/}
+            {/*  title={'Họp'}*/}
+            {/*  onPress={() => {*/}
+            {/*    this.props.navigation.navigate('Meeting');*/}
+            {/*  }}*/}
+            {/*/>*/}
             <CircleTab
               iconImage={require('../../assets/img/icons8-writer_male.png')}
               title={'Tạo đăng ký'}
@@ -222,31 +206,6 @@ class DashboardComponent extends React.Component {
                 this.props.navigation.navigate('SaveRegister');
               }}
             />
-          </View>
-          <View style={styles.otherFeatureLine}>
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-cheap_2_filled.png')}
-              title={'Nộp tiền'}
-              onPress={() => {
-                this.props.navigation.navigate('CollectMoney');
-              }}
-            />
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-wallet_filled.png')}
-              title={'Chuyển tiền'}
-              onPress={() => {
-                this.props.navigation.navigate('MoneyTransfer');
-              }}
-            />
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-phone_contact.png')}
-              title={'Danh bạ nhân viên'}
-              onPress={() => {
-                this.props.navigation.navigate('Staff');
-              }}
-            />
-          </View>
-          <View style={styles.otherFeatureLine}>
             <CircleTab
               iconImage={require('../../assets/img/icons8-teacher.png')}
               title={'Lớp học'}
@@ -256,6 +215,22 @@ class DashboardComponent extends React.Component {
                 });
               }}
             />
+          </View>
+          <View style={styles.otherFeatureLine}>
+            {/*<CircleTab*/}
+            {/*  iconImage={require('../../assets/img/icons8-rating-90.png')}*/}
+            {/*  title={'Đánh giá'}*/}
+            {/*  onPress={() => {*/}
+            {/*    this.props.navigation.navigate('TeachingRating');*/}
+            {/*  }}*/}
+            {/*/>*/}
+            {/*<CircleTab*/}
+            {/*  iconImage={require('../../assets/img/icons8-calendar.png')}*/}
+            {/*  title={'Lịch học bù'}*/}
+            {/*  onPress={() => {*/}
+            {/*    this.props.navigation.navigate('MakeupClass');*/}
+            {/*  }}*/}
+            {/*/>*/}
             <CircleTab
               iconImage={require('../../assets/img/icons8-new_window.png')}
               title={'Tạo lớp học'}
@@ -270,8 +245,6 @@ class DashboardComponent extends React.Component {
                 this.props.navigation.navigate('Leads');
               }}
             />
-          </View>
-          <View style={styles.otherFeatureLine}>
             <CircleTab
               iconImage={require('../../assets/img/icons8-add_user_group_man_man.png')}
               title={'Tạo lead'}
@@ -279,20 +252,46 @@ class DashboardComponent extends React.Component {
                 this.props.navigation.navigate('AddLead');
               }}
             />
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-document.png')}
-              title={'Tài liệu'}
-              onPress={() => {
-                this.props.navigation.navigate('Document');
-              }}
-            />
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-management.png')}
-              title={'Chấm công'}
-              onPress={() => {
-                this.props.navigation.navigate('ClockManage');
-              }}
-            />
+          </View>
+          <View style={styles.otherFeatureLine}>
+            {/*<CircleTab*/}
+            {/*  iconImage={require('../../assets/img/icons8-cheap_2_filled.png')}*/}
+            {/*  title={'Nộp tiền'}*/}
+            {/*  onPress={() => {*/}
+            {/*    this.props.navigation.navigate('CollectMoney');*/}
+            {/*  }}*/}
+            {/*/>*/}
+            {/*<CircleTab*/}
+            {/*  iconImage={require('../../assets/img/icons8-wallet_filled.png')}*/}
+            {/*  title={'Chuyển tiền'}*/}
+            {/*  onPress={() => {*/}
+            {/*    this.props.navigation.navigate('MoneyTransfer');*/}
+            {/*  }}*/}
+            {/*/>*/}
+            {/*<CircleTab*/}
+            {/*  iconImage={require('../../assets/img/icons8-phone_contact.png')}*/}
+            {/*  title={'Danh bạ nhân viên'}*/}
+            {/*  onPress={() => {*/}
+            {/*    this.props.navigation.navigate('Staff');*/}
+            {/*  }}*/}
+            {/*/>*/}
+          </View>
+          <View style={styles.otherFeatureLine}></View>
+          <View style={styles.otherFeatureLine}>
+            {/*<CircleTab*/}
+            {/*  iconImage={require('../../assets/img/icons8-document.png')}*/}
+            {/*  title={'Tài liệu'}*/}
+            {/*  onPress={() => {*/}
+            {/*    this.props.navigation.navigate('Document');*/}
+            {/*  }}*/}
+            {/*/>*/}
+            {/*<CircleTab*/}
+            {/*  iconImage={require('../../assets/img/icons8-management.png')}*/}
+            {/*  title={'Chấm công'}*/}
+            {/*  onPress={() => {*/}
+            {/*    this.props.navigation.navigate('ClockManage');*/}
+            {/*  }}*/}
+            {/*/>*/}
           </View>
           <MeetingComponent
             store={this.props.store}

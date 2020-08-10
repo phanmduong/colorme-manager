@@ -18,6 +18,7 @@ export function updateDomainForm(domain) {
   return {
     type: types.UPDATE_DOMAIN_FORM,
     domain: domain,
+    error: false,
   };
 }
 

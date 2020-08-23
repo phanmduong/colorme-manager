@@ -32,7 +32,7 @@ class LoginContainer extends React.Component {
   updateFormData(name, value) {
     let login = this.props.login;
     login[name] = value;
-    this.props.loginActions.updateDataLoginForm(login);
+    this.props.loginActions.updateDataLoginForm(login, this.props.domain);
   }
 
   updateDomainForm = (domain) => {
@@ -86,6 +86,7 @@ class LoginContainer extends React.Component {
   }
 
   render() {
+    console.log(this.props.domain);
     return (
       <LoginComponent
         updateFormData={this.updateFormData}

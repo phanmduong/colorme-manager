@@ -12,6 +12,7 @@ export default function loginReducer(state = initialState.login, action) {
         ...{
           login: action.login,
         },
+        domain: action.domain,
       };
     case types.UPDATE_DOMAIN_FORM:
       return Object.assign({}, state, {

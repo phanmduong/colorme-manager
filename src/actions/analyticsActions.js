@@ -13,14 +13,14 @@ export function beginDataDashboardLoad() {
 }
 
 export function loadDataDashboard(baseId, genId, token, domain) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginDataDashboardLoad());
     analyticsApi
       .loadDashboard(baseId, genId, token, domain)
-      .then(function(res) {
+      .then(function (res) {
         dispatch(loadDataDashboardSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadDataDashboardError());
         throw error;
       });
@@ -55,5 +55,19 @@ export function selectedGenId(genId) {
   return {
     type: types.SELECTED_GEN_ID_ANALYTICS,
     selectedGenId: genId,
+  };
+}
+
+export function selectedStartDate(startDate) {
+  return {
+    type: types.SELECTED_START_DATE_ANALYTICS,
+    startDate: startDate,
+  };
+}
+
+export function selectedEndDate(endDate) {
+  return {
+    type: types.SELECTED_END_DATE_ANALYTICS,
+    endDate: endDate,
   };
 }

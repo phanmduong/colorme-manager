@@ -33,6 +33,14 @@ export default function dashboardReducer(
       return Object.assign({}, state, {
         selectedGenId: action.selectedGenId,
       });
+    case types.SELECTED_START_DATE_ANALYTICS:
+      return Object.assign({}, state, {
+        startDate: action.startDate,
+      });
+    case types.SELECTED_END_DATE_ANALYTICS:
+      return Object.assign({}, state, {
+        endDate: action.endDate,
+      });
     default:
       return state;
   }

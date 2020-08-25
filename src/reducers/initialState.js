@@ -120,6 +120,8 @@ export default {
     dashboardData: {},
     selectedBaseId: -1,
     selectedGenId: -1,
+    startDate: moment().startOf('month'),
+    endDate: moment(),
   },
   listStudentClass: {
     listStudentClassData: [],

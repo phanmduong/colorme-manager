@@ -15,6 +15,7 @@ class AnalyticsCalenderPicker extends React.Component {
       isVisible,
       startDate,
       endDate,
+      loadAnalytics,
     } = this.props;
     return (
       <Modal isVisible={isVisible} style={styles.modal}>
@@ -28,7 +29,14 @@ class AnalyticsCalenderPicker extends React.Component {
             onDateChange={onDateChange}
           />
           <TouchableOpacity
-            onPress={startDate && endDate ? () => toggleModal() : () => null}>
+            onPress={
+              startDate && endDate
+                ? () => {
+                    toggleModal();
+                    loadAnalytics();
+                  }
+                : () => null
+            }>
             <View
               style={
                 startDate && endDate

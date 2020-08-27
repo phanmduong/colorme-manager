@@ -4,43 +4,110 @@
 import * as types from '../constants/actionTypes';
 import * as analyticsApi from '../apis/analyticsApi';
 
-export function beginDataDashboardLoad() {
+export function beginLoadAnalyticsRegister() {
   return {
-    type: types.BEGIN_DATA_ANALYTICS_LOAD,
-    isLoading: true,
-    error: false,
+    type: types.BEGIN_DATA_ANALYTICS_REGISTER_LOAD,
+    isLoadingAnalyticsRegister: true,
+    errorAnalyticsRegister: false,
   };
 }
 
-export function loadDataDashboard(baseId, genId, token, domain) {
+export function loadAnalyticsRegister(
+  baseId,
+  staffId,
+  startTime,
+  endTime,
+  token,
+  domain,
+) {
   return function (dispatch) {
-    dispatch(beginDataDashboardLoad());
+    dispatch(beginLoadAnalyticsRegister());
     analyticsApi
-      .loadDashboard(baseId, genId, token, domain)
+      .loadAnalyticsRegister(baseId, staffId, startTime, endTime, token, domain)
       .then(function (res) {
-        dispatch(loadDataDashboardSuccessful(res));
+        dispatch(loadAnalyticsRegisterSuccessful(res));
       })
       .catch((error) => {
-        dispatch(loadDataDashboardError());
+        dispatch(loadAnalyticsRegisterError());
         throw error;
       });
   };
 }
 
-export function loadDataDashboardSuccessful(res) {
+export function loadAnalyticsRegisterSuccessful(res) {
   return {
-    type: types.LOAD_DATA_ANALYTICS_SUCCESSFUL,
-    dashboardData: res.data,
-    isLoading: false,
-    error: false,
+    type: types.LOAD_DATA_ANALYTICS_REGISTER_SUCCESSFUL,
+    analyticsRegister: res.data.analytics,
+    isLoadingAnalyticsRegister: false,
+    errorAnalyticsRegister: false,
   };
 }
 
-export function loadDataDashboardError() {
+export function loadAnalyticsRegisterError() {
   return {
-    type: types.LOAD_DATA_ANALYTICS_ERROR,
-    isLoading: false,
-    error: true,
+    type: types.LOAD_DATA_ANALYTICS_REGISTER_ERROR,
+    isLoadingAnalyticsRegister: false,
+    errorAnalyticsRegister: true,
+  };
+}
+
+export function loadAnalyticsRevenue(
+  startTime,
+  endTime,
+  staffId,
+  baseId,
+  courseId,
+  sourceId,
+  campaignId,
+  token,
+  domain,
+) {
+  return function (dispatch) {
+    dispatch(beginLoadAnalyticsRevenue());
+    analyticsApi
+      .loadAnalyticsRevenue(
+        startTime,
+        endTime,
+        staffId,
+        baseId,
+        courseId,
+        sourceId,
+        campaignId,
+        token,
+        domain,
+      )
+      .then((res) => {
+        dispatch(loadAnalyticsRevenueSuccessful(res));
+      })
+      .catch((error) => {
+        dispatch(loadAnalyticsRevenueError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadAnalyticsRevenue() {
+  return {
+    type: types.BEGIN_DATA_ANALYTICS_REVENUE_LOAD,
+    isLoadingAnalyticsRevenue: true,
+    errorAnalyticsRevenue: false,
+  };
+}
+
+function loadAnalyticsRevenueSuccessful(res) {
+  return {
+    type: types.LOAD_DATA_ANALYTICS_REVENUE_SUCCESSFUL,
+    isLoadingAnalyticsRevenue: false,
+    errorAnalyticsRevenue: false,
+    analyticsRevenue: res.data.analytics,
+  };
+}
+
+function loadAnalyticsRevenueError() {
+  return {
+    type: types.LOAD_DATA_ANALYTICS_REVENUE_ERROR,
+    isLoadingAnalyticsRevenue: false,
+    errorAnalyticsRevenue: true,
   };
 }
 

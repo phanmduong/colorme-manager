@@ -4,12 +4,57 @@
 import axios from 'axios';
 import * as env from '../constants/env';
 
-export function loadDashboard(baseId, genId, token, domain) {
-  let url = env.apiUrl(domain) + '/v2/gens/' + genId + '/dashboard/';
-  if (baseId === -1) {
-    url += '?token=' + token;
-  } else {
-    url += baseId + '?token=' + token;
-  }
+export function loadAnalyticsRegister(
+  baseId,
+  staffId,
+  startTime,
+  endTime,
+  token,
+  domain,
+) {
+  let url =
+    env.manageApiUrlV4(domain) +
+    '/dashboard/analytics-register?start_time=' +
+    startTime +
+    '&end_time=' +
+    endTime +
+    '&staff_id=' +
+    staffId +
+    '&base_id=' +
+    baseId +
+    '&token=' +
+    token;
+  return axios.get(url);
+}
+
+export function loadAnalyticsRevenue(
+  startTime,
+  endTime,
+  staffId,
+  baseId,
+  courseId,
+  sourceId,
+  campaignId,
+  token,
+  domain,
+) {
+  let url =
+    env.manageApiUrlV4(domain) +
+    '/dashboard/analytics-revenue?start_time=' +
+    startTime +
+    '&end_time=' +
+    endTime +
+    '&staff_id=' +
+    staffId +
+    '&base_id=' +
+    baseId +
+    '&course_id=' +
+    courseId +
+    '&source_id=' +
+    sourceId +
+    '&campaign_id=' +
+    campaignId +
+    '&token=' +
+    token;
   return axios.get(url);
 }

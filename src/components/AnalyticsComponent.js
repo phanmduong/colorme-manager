@@ -1,20 +1,10 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  Image,
-  Dimensions,
-} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
 import AnalyticsRegisterContainer from '../containers/analytics/AnalyticsRegisterContainer';
 import AnalyticsKPIContainer from '../containers/analytics/AnalyticsKPIContainer';
 import AnalyticsClassContainer from '../containers/analytics/AnalyticsClassContainer';
 import theme from '../styles';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
-import MatIcon from 'react-native-vector-icons/MaterialIcons';
-const {width, height} = Dimensions.get('window');
-import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 import AnalyticsCalenderPicker from './analytics/AnalyticsCalenderPicker';
 
 class AnalyticsComponent extends React.Component {
@@ -115,45 +105,13 @@ class AnalyticsComponent extends React.Component {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.infoRow}>
-          <View style={[styles.infoContainer, {marginRight: 8}]}>
-            <View style={styles.row}>
-              <Text style={{marginRight: 10}}>Số lượng đăng kí</Text>
-              <View
-                style={[
-                  styles.iconContainer,
-                  {
-                    backgroundColor: '#65DA3A',
-                  },
-                ]}>
-                <MatIcon name={'add-circle'} size={18} color={'white'} />
-              </View>
-            </View>
-            <Text style={styles.infoNum}>12.131</Text>
-          </View>
-          <View style={[styles.infoContainer, {marginLeft: 8}]}>
-            <View style={styles.row}>
-              <Text style={{marginRight: 10}}>Đã đóng học phí</Text>
-              <View
-                style={[styles.iconContainer, {backgroundColor: '#FFDB5A'}]}>
-                <FA5Icon name={'money-bill-alt'} size={12} color={'white'} />
-              </View>
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.infoNum}>121</Text>
-              <View style={styles.extraNumContainer}>
-                <Text style={styles.extraNum}>10%</Text>
-              </View>
-            </View>
-          </View>
-        </View>
-
         <AnalyticsCalenderPicker
           isVisible={this.state.isCalendarPickerVisible}
           onDateChange={this.onDateChange}
           toggleModal={this.toggleModal}
           startDate={this.props.startDate}
           endDate={this.props.endDate}
+          loadAnalytics={this.props.loadAnalytics}
         />
 
         {this.state.tabIdx === 0 ? <AnalyticsRegisterContainer /> : null}
@@ -206,29 +164,6 @@ const styles = {
   icon: {
     width: 18,
     height: 18,
-  },
-  infoRow: {
-    flexDirection: 'row',
-    marginTop: 15,
-    marginHorizontal: theme.mainHorizontal,
-  },
-  infoContainer: {
-    backgroundColor: '#f6f6f6',
-    borderRadius: 10,
-    padding: 10,
-    width: (width - theme.mainHorizontal) / 2 - 16,
-  },
-  iconContainer: {
-    width: 25,
-    height: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 20,
-  },
-  infoNum: {
-    fontWeight: 'bold',
-    fontSize: 18,
-    marginTop: 10,
   },
   row: {
     flexDirection: 'row',

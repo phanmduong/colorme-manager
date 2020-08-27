@@ -9,29 +9,41 @@ export default function dashboardReducer(
   action,
 ) {
   switch (action.type) {
-    case types.BEGIN_DATA_ANALYTICS_LOAD:
+    case types.BEGIN_DATA_ANALYTICS_REGISTER_LOAD:
       return Object.assign({}, state, {
-        isLoading: action.isLoading,
-        error: action.error,
+        isLoadingAnalyticsRegister: action.isLoadingAnalyticsRegister,
+        errorAnalyticsRegister: action.errorAnalyticsRegister,
       });
-    case types.LOAD_DATA_ANALYTICS_SUCCESSFUL:
+    case types.LOAD_DATA_ANALYTICS_REGISTER_SUCCESSFUL:
       return Object.assign({}, state, {
-        isLoading: action.isLoading,
-        error: action.error,
-        dashboardData: action.dashboardData,
+        isLoadingAnalyticsRegister: action.isLoadingAnalyticsRegister,
+        errorAnalyticsRegister: action.errorAnalyticsRegister,
+        analyticsRegister: action.analyticsRegister,
       });
-    case types.LOAD_DATA_ANALYTICS_ERROR:
+    case types.LOAD_DATA_ANALYTICS_REGISTER_ERROR:
       return Object.assign({}, state, {
-        isLoading: action.isLoading,
-        error: action.error,
+        isLoadingAnalyticsRegister: action.isLoadingAnalyticsRegister,
+        errorAnalyticsRegister: action.errorAnalyticsRegister,
+      });
+    case types.BEGIN_DATA_ANALYTICS_REVENUE_LOAD:
+      return Object.assign({}, state, {
+        isLoadingAnalyticsRevenue: action.isLoadingAnalyticsRevenue,
+        errorAnalyticsRevenue: action.errorAnalyticsRevenue,
+      });
+    case types.LOAD_DATA_ANALYTICS_REVENUE_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isLoadingAnalyticsRevenue: action.isLoadingAnalyticsRevenue,
+        errorAnalyticsRevenue: action.errorAnalyticsRevenue,
+        analyticsRevenue: action.analyticsRevenue,
+      });
+    case types.LOAD_DATA_ANALYTICS_REVENUE_ERROR:
+      return Object.assign({}, state, {
+        isLoadingAnalyticsRevenue: action.isLoadingAnalyticsRevenue,
+        errorAnalyticsRevenue: action.errorAnalyticsRevenue,
       });
     case types.SELECTED_BASE_ID_ANALYTICS:
       return Object.assign({}, state, {
         selectedBaseId: action.selectedBaseId,
-      });
-    case types.SELECTED_GEN_ID_ANALYTICS:
-      return Object.assign({}, state, {
-        selectedGenId: action.selectedGenId,
       });
     case types.SELECTED_START_DATE_ANALYTICS:
       return Object.assign({}, state, {

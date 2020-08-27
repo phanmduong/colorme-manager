@@ -13,7 +13,6 @@ class AnalyticsRegisterComponent extends React.Component {
   }
 
   render() {
-      console.log(this.props.analyticsRegister);
     return this.props.isLoadingAnalyticsRegister ||
       this.props.isLoadingAnalyticsRevenue ? (
       <Loading size={width / 8} />
@@ -37,6 +36,7 @@ class AnalyticsRegisterComponent extends React.Component {
           revenueNums={this.props.analyticsRegister.money_by_date}
         />
         <AnalyticsStudentBarChart
+          dates={this.props.analyticsRegister.dates}
           newRegis={this.props.analyticsRegister.new_register_by_date}
           oldRegis={this.props.analyticsRegister.old_register_by_date}
         />

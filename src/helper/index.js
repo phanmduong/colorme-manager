@@ -17,7 +17,7 @@ export function dotNumber(number) {
 
 export function maxArray(arr) {
   var max = -10000000;
-  arr.forEach(function(item) {
+  arr.forEach(function (item) {
     var data = parseInt(item);
     if (data > max) {
       max = data;
@@ -51,7 +51,7 @@ export function groupBy(collection, iteratee, props) {
   return _.chain(collection)
     .groupBy(iteratee)
     .toPairs()
-    .map(function(currentItem) {
+    .map(function (currentItem) {
       return _.zipObject(props, currentItem);
     })
     .value();
@@ -265,4 +265,8 @@ export function itemExist(item, array) {
     }
   }
   return false;
+}
+
+export function findSum(numLst) {
+  return numLst.reduce((a, b) => a + b, 0);
 }

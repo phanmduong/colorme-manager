@@ -10,6 +10,7 @@ class AnalyticsRegisterContainer extends React.Component {
   }
 
   render() {
+    console.log(this.props.analyticsRevenue);
     return <AnalyticsRegisterComponent {...this.props} />;
   }
 }
@@ -21,13 +22,6 @@ function mapStateToProps(state) {
     isLoadingAnalyticsRegister: state.analytics.isLoadingAnalyticsRegister,
     errorAnalyticsRegister: state.analytics.errorAnalyticsRegister,
     analyticsRegister: state.analytics.analyticsRegister,
-    selectedBaseId: state.analytics.selectedBaseId,
-    selectedStaffId: state.analytics.selectedStaffId,
-    startDate: state.analytics.startDate,
-    endDate: state.analytics.endDate,
-    selectedCourseId: state.analytics.selectedCourseId,
-    selectedSourceId: state.analytics.selectedSourceId,
-    selectedCampaignId: state.analytics.selectedCampaignId,
     analyticsRevenue: state.analytics.analyticsRevenue,
     isLoadingAnalyticsRevenue: state.analytics.isLoadingAnalyticsRevenue,
     errorAnalyticsRevenue: state.analytics.errorAnalyticsRevenue,

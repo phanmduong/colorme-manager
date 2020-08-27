@@ -1,17 +1,16 @@
 import React from 'react';
-import {View, Dimensions, Text, TouchableOpacity} from 'react-native';
+import {Text, View, Dimensions, TouchableOpacity} from 'react-native';
 import theme from '../../styles';
-const {width, height} = Dimensions.get('window');
+import {dotNumber} from '../../helper';
+import FA5Icon from 'react-native-vector-icons/FontAwesome5';
+import {DAILY, MONTH, QUARTER, WEEK, YEAR} from '../../constants/constant';
 import _ from 'lodash';
 import moment from 'moment';
-import {DAILY, MONTH, QUARTER, WEEK, YEAR} from '../../constants/constant';
-import MatIcon from 'react-native-vector-icons/MaterialIcons';
-import FA5Icon from 'react-native-vector-icons/FontAwesome5';
-import {dotNumber} from "../../helper";
+const {width, height} = Dimensions.get('window');
 
 const fixedHeight = 200;
 
-class AnalyticsRegisterBarChart extends React.Component {
+class AnalyticsRevenueBarChart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,55 +18,51 @@ class AnalyticsRegisterBarChart extends React.Component {
     };
   }
 
-  pairsDateRegisPaid = () => {
-    const {dates, regisNums, paidNums} = this.props;
-    return _.zipWith(dates, regisNums, paidNums, function (a, b, c) {
-      return [a, b, c];
+  pairsDateRevenue = () => {
+    const {dates, revenueNums} = this.props;
+    return _.zipWith(dates, revenueNums, function (a, b) {
+      return [a, b];
     });
   };
 
-  getMaxValue = (regisPaidPairs) => {
+  getMaxValue = (revenueLst) => {
     let maxValue = 0;
-    for (const item of regisPaidPairs) {
-      if (maxValue < item[0]) {
-        maxValue = item[0];
+    revenueLst.forEach(function (item) {
+      if (maxValue < parseInt(item)) {
+        maxValue = parseInt(item);
       }
-      if (maxValue < item[1]) {
-        maxValue = item[1];
-      }
-    }
+    });
     return maxValue;
   };
 
-  groupedPairRegisPaid = (grouped) => {
-    let pairRegisPaid = [];
+  revenueLst = (grouped) => {
+    let revenueLst = [];
     for (const key in grouped) {
-      let accum = [0, 0];
+      let accum = 0;
       for (const item of grouped[key]) {
-        accum[0] += item[1];
-        accum[1] += item[2];
+        accum += parseInt(item[1]);
       }
-      pairRegisPaid.push(accum);
+      revenueLst.push(accum);
     }
-    return pairRegisPaid;
+    return revenueLst;
   };
 
   renderDailyBarChart = () => {
-    const pairsDateRegisPaid = this.pairsDateRegisPaid();
-    const groupedByDate = _.groupBy(pairsDateRegisPaid, function (item) {
+    const pairsDateRevenue = this.pairsDateRevenue();
+    const groupedByDate = _.groupBy(pairsDateRevenue, function (item) {
       return item[0];
     });
     const unitWidth =
       (width - theme.mainHorizontal * 2) / Object.keys(groupedByDate).length;
-    const barWidth = unitWidth / 3;
-    const pairRegisPaid = this.groupedPairRegisPaid(groupedByDate);
-    const maxValue = this.getMaxValue(pairRegisPaid);
-    return this.barChartGraph(pairRegisPaid, maxValue, barWidth);
+    const barWidth = unitWidth / 2;
+    const revenueLst = this.revenueLst(groupedByDate);
+    const maxValue = this.getMaxValue(revenueLst);
+    return this.barChartGraph(revenueLst, maxValue, barWidth);
   };
 
   renderWeeklyBarChart = () => {
-    const pairsDateRegisPaid = this.pairsDateRegisPaid();
-    const groupedByWeek = pairsDateRegisPaid.reduce((acc, item) => {
+    const pairsDateRevenue = this.pairsDateRevenue();
+    const groupedByWeek = pairsDateRevenue.reduce((acc, item) => {
       // create a composed key: 'year-week'
       const yearWeek = `${moment(item[0]).year()}-${moment(item[0]).week()}`;
 
@@ -83,28 +78,28 @@ class AnalyticsRegisterBarChart extends React.Component {
     }, {});
     const unitWidth =
       (width - theme.mainHorizontal * 2) / Object.keys(groupedByWeek).length;
-    const barWidth = unitWidth / 3;
-    const pairRegisPaid = this.groupedPairRegisPaid(groupedByWeek);
-    const maxValue = this.getMaxValue(pairRegisPaid);
-    return this.barChartGraph(pairRegisPaid, maxValue, barWidth);
+    const barWidth = unitWidth / 2;
+    const revenueLst = this.revenueLst(groupedByWeek);
+    const maxValue = this.getMaxValue(revenueLst);
+    return this.barChartGraph(revenueLst, maxValue, barWidth);
   };
 
   renderMonthlyBarChart = () => {
-    const pairsDateRegisPaid = this.pairsDateRegisPaid();
-    const groupedByMonth = _.groupBy(pairsDateRegisPaid, function (item) {
+    const pairsDateRevenue = this.pairsDateRevenue();
+    const groupedByMonth = _.groupBy(pairsDateRevenue, function (item) {
       return item[0].substring(0, 7);
     });
     const unitWidth =
       (width - theme.mainHorizontal * 2) / Object.keys(groupedByMonth).length;
-    const barWidth = unitWidth / 3;
-    const pairRegisPaid = this.groupedPairRegisPaid(groupedByMonth);
-    const maxValue = this.getMaxValue(pairRegisPaid);
-    return this.barChartGraph(pairRegisPaid, maxValue, barWidth);
+    const barWidth = unitWidth / 2;
+    const revenueLst = this.revenueLst(groupedByMonth);
+    const maxValue = this.getMaxValue(revenueLst);
+    return this.barChartGraph(revenueLst, maxValue, barWidth);
   };
 
   renderQuarterlyBarChart = () => {
-    const pairsDateRegisPaid = this.pairsDateRegisPaid();
-    const groupedByQuarter = pairsDateRegisPaid.reduce((acc, item) => {
+    const pairsDateRevenue = this.pairsDateRevenue();
+    const groupedByQuarter = pairsDateRevenue.reduce((acc, item) => {
       // create a composed key: 'year-week'
       const yearWeek = `${moment(item[0]).year()}-${moment(item[0]).quarter()}`;
 
@@ -120,46 +115,36 @@ class AnalyticsRegisterBarChart extends React.Component {
     }, {});
     const unitWidth =
       (width - theme.mainHorizontal * 2) / Object.keys(groupedByQuarter).length;
-    const barWidth = unitWidth / 3;
-    const pairRegisPaid = this.groupedPairRegisPaid(groupedByQuarter);
-    const maxValue = this.getMaxValue(pairRegisPaid);
-    return this.barChartGraph(pairRegisPaid, maxValue, barWidth);
+    const barWidth = unitWidth / 2;
+    const revenueLst = this.revenueLst(groupedByQuarter);
+    const maxValue = this.getMaxValue(revenueLst);
+    return this.barChartGraph(revenueLst, maxValue, barWidth);
   };
 
   renderYearlyBarChart = () => {
-    const pairsDateRegisPaid = this.pairsDateRegisPaid();
-    const groupedByYear = _.groupBy(pairsDateRegisPaid, function (item) {
+    const pairsDateRevenue = this.pairsDateRevenue();
+    const groupedByYear = _.groupBy(pairsDateRevenue, function (item) {
       return item[0].substring(0, 4);
     });
     const unitWidth =
       (width - theme.mainHorizontal * 2) / Object.keys(groupedByYear).length;
-    const barWidth = unitWidth / 3;
-    const pairRegisPaid = this.groupedPairRegisPaid(groupedByYear);
-    const maxValue = this.getMaxValue(pairRegisPaid);
-    return this.barChartGraph(pairRegisPaid, maxValue, barWidth);
+    const barWidth = unitWidth / 2;
+    const revenueLst = this.revenueLst(groupedByYear);
+    const maxValue = this.getMaxValue(revenueLst);
+    return this.barChartGraph(revenueLst, maxValue, barWidth);
   };
 
-  barChartGraph = (pairsOfRegisPaid, maxValue, barWidth) => {
-    return pairsOfRegisPaid.map(function (pair) {
-      const regisHeight =
-        maxValue === 0 ? fixedHeight : fixedHeight * (pair[0] / maxValue);
-      const paidHeight =
-        maxValue === 0 ? fixedHeight : fixedHeight * (pair[1] / maxValue);
+  barChartGraph = (revenueLst, maxValue, barWidth) => {
+    return revenueLst.map(function (revenue) {
+      const revenueHeight =
+        maxValue === 0 ? fixedHeight : fixedHeight * (revenue / maxValue);
       return (
         <View style={styles.barRow}>
           <View
             style={{
               width: barWidth,
-              height: regisHeight,
+              height: revenueHeight,
               backgroundColor: maxValue === 0 ? 'white' : '#69C553',
-            }}
-          />
-          <View style={{width: barWidth / 10}} />
-          <View
-            style={{
-              width: barWidth,
-              height: paidHeight,
-              backgroundColor: maxValue === 0 ? 'white' : '#FFDB5A',
             }}
           />
         </View>
@@ -190,7 +175,7 @@ class AnalyticsRegisterBarChart extends React.Component {
         <View style={styles.infoRow}>
           <View style={[styles.infoContainer, {marginRight: 8}]}>
             <View style={styles.row}>
-              <Text style={{marginRight: 10}}>Số lượng đăng kí</Text>
+              <Text style={{marginRight: 10}}>Tổng doanh thu</Text>
               <View
                 style={[
                   styles.iconContainer,
@@ -198,29 +183,28 @@ class AnalyticsRegisterBarChart extends React.Component {
                     backgroundColor: '#65DA3A',
                   },
                 ]}>
-                <MatIcon name={'add-circle'} size={18} color={'white'} />
+                <FA5Icon name={'money-bill-alt'} size={12} color={'white'} />
               </View>
             </View>
-            <Text style={styles.infoNum}>{dotNumber(this.props.totalRegister)}</Text>
+            <Text style={styles.infoNum}>{dotNumber(this.props.revenue)}</Text>
           </View>
           <View style={[styles.infoContainer, {marginLeft: 8}]}>
             <View style={styles.row}>
-              <Text style={{marginRight: 10}}>Đã đóng học phí</Text>
+              <Text style={{marginRight: 10}}>D.thu hôm nay</Text>
               <View
-                style={[styles.iconContainer, {backgroundColor: '#FFDB5A'}]}>
+                style={[
+                  styles.iconContainer,
+                  {
+                    backgroundColor: '#65DA3A',
+                  },
+                ]}>
                 <FA5Icon name={'money-bill-alt'} size={12} color={'white'} />
               </View>
             </View>
             <View style={styles.row}>
-              <Text style={styles.infoNum}>{dotNumber(this.props.totalPaid)}</Text>
-              <View style={styles.extraNumContainer}>
-                <Text style={styles.extraNum}>
-                  {Math.round(
-                    (this.props.totalPaid / this.props.totalRegister) * 100,
-                  )}
-                  %
-                </Text>
-              </View>
+              <Text style={styles.infoNum}>
+                {dotNumber(this.props.revenueToday)}
+              </Text>
             </View>
           </View>
         </View>
@@ -292,7 +276,7 @@ class AnalyticsRegisterBarChart extends React.Component {
 
         <View style={{alignItems: 'center', marginTop: 15}}>
           <Text style={{fontSize: 13}}>
-            Số lượt đăng kí và hoàn thành học phí
+            Doanh thu
           </Text>
         </View>
       </View>
@@ -301,13 +285,32 @@ class AnalyticsRegisterBarChart extends React.Component {
 }
 
 const styles = {
+  infoRow: {
+    flexDirection: 'row',
+    marginTop: 15,
+    marginHorizontal: theme.mainHorizontal,
+  },
+  infoContainer: {
+    backgroundColor: '#f6f6f6',
+    borderRadius: 10,
+    padding: 10,
+    width: (width - theme.mainHorizontal) / 2 - 16,
+  },
+  iconContainer: {
+    width: 25,
+    height: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 20,
+  },
+  infoNum: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginTop: 10,
+  },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  barRow: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
   },
   barContainer: {
     flexDirection: 'row',
@@ -327,41 +330,10 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  infoNum: {
-    fontWeight: 'bold',
-    fontSize: 18,
-    marginTop: 10,
-  },
-  extraNumContainer: {
-    paddingVertical: 2,
-    paddingHorizontal: 5,
-    borderRadius: 10,
-    backgroundColor: '#65DA3A',
-    marginTop: 10,
-    marginLeft: 5,
-  },
-  extraNum: {
-    color: 'white',
-    fontSize: 12,
-  },
-  infoRow: {
+  barRow: {
     flexDirection: 'row',
-    marginTop: 15,
-    marginHorizontal: theme.mainHorizontal,
-  },
-  infoContainer: {
-    backgroundColor: '#f6f6f6',
-    borderRadius: 10,
-    padding: 10,
-    width: (width - theme.mainHorizontal) / 2 - 16,
-  },
-  iconContainer: {
-    width: 25,
-    height: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 20,
+    alignItems: 'flex-end',
   },
 };
 
-export default AnalyticsRegisterBarChart;
+export default AnalyticsRevenueBarChart;

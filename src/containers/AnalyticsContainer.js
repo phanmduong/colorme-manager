@@ -113,6 +113,7 @@ function mapStateToProps(state) {
     token: state.login.token,
     domain: state.login.domain,
     selectedBaseId: state.analytics.selectedBaseId,
+    selectedStaffId: state.analytics.selectedStaffId,
     startDate: state.analytics.startDate,
     endDate: state.analytics.endDate,
     selectedCourseId: state.analytics.selectedCourseId,

@@ -86,7 +86,6 @@ class LoginContainer extends React.Component {
   }
 
   render() {
-    console.log(this.props.domain);
     return (
       <LoginComponent
         updateFormData={this.updateFormData}

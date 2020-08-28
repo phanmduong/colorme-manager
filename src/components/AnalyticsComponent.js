@@ -134,6 +134,9 @@ class AnalyticsComponent extends React.Component {
           onSelectBaseId={this.props.onSelectBaseId}
           onSelectSourceId={this.props.onSelectSourceId}
           onSelectCampaignId={this.props.onSelectCampaignId}
+          onSelectGenId={this.props.onSelectGenId}
+          onSelectStartDate={this.props.onSelectStartDate}
+          onSelectEndDate={this.props.onSelectEndDate}
         />
       </ScrollView>
     );

@@ -13,7 +13,7 @@ import * as saveRegisterActions from '../actions/saveRegisterActions';
 import * as leadsActions from '../actions/leadsActions';
 import * as classActions from '../actions/classActions';
 import * as baseActions from '../actions/baseActions';
-import AnalyticsCalenderPicker from '../components/analytics/AnalyticsCalenderPicker';
+import * as genActions from '../actions/genActions';
 
 class AnalyticsContainer extends React.Component {
   constructor(props, context) {
@@ -27,6 +27,7 @@ class AnalyticsContainer extends React.Component {
     this.loadStaff('');
     this.loadCourses();
     this.loadBases();
+    this.loadGens();
   }
 
   static navigationOptions = ({navigation}) => ({
@@ -148,6 +149,10 @@ class AnalyticsContainer extends React.Component {
     this.props.analyticsActions.selectedCourseId(courseId);
   };
 
+  onSelectGenId = (genId) => {
+    this.props.analyticsActions.selectedGenId(genId);
+  };
+
   loadCampaigns = () => {
     this.props.saveRegisterActions.loadCampaigns(
       this.props.token,
@@ -170,6 +175,10 @@ class AnalyticsContainer extends React.Component {
     );
   };
 
+  loadGens = () => {
+    this.props.genActions.loadDataGen(this.props.token, this.props.domain);
+  };
+
   loadCourses = () => {
     this.props.classActions.loadDataCourse(this.props.token, this.props.domain);
   };
@@ -179,6 +188,7 @@ class AnalyticsContainer extends React.Component {
   };
 
   render() {
+    console.log(this.props.startDate);
     return (
       <AnalyticsComponent
         {...this.props}
@@ -191,6 +201,7 @@ class AnalyticsContainer extends React.Component {
         onSelectBaseId={this.onSelectBaseId}
         onSelectSourceId={this.onSelectSourceId}
         onSelectCampaignId={this.onSelectCampaignId}
+        onSelectGenId={this.onSelectGenId}
       />
     );
   }
@@ -225,6 +236,9 @@ function mapStateToProps(state) {
     isLoadingCourse: state.class.isLoadingCourse,
     isLoadingBase: state.base.isLoading,
     baseData: state.base.baseData,
+    genData: state.gen.genData,
+    isLoadingGen: state.gen.isLoading,
+    selectedGenId: state.analytics.selectedGenId,
   };
 }
 
@@ -235,6 +249,7 @@ function mapDispatchToProps(dispatch) {
     saveRegisterActions: bindActionCreators(saveRegisterActions, dispatch),
     leadsActions: bindActionCreators(leadsActions, dispatch),
     baseActions: bindActionCreators(baseActions, dispatch),
+    genActions: bindActionCreators(genActions, dispatch),
   };
 }
 

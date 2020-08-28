@@ -61,6 +61,10 @@ export default function dashboardReducer(
       return Object.assign({}, state, {
         selectedBaseId: action.selectedBaseId,
       });
+    case types.SELECTED_GEN_ID_ANALYTICS:
+      return Object.assign({}, state, {
+        selectedGenId: action.selectedGenId,
+      });
     case types.SELECTED_START_DATE_ANALYTICS:
       return Object.assign({}, state, {
         startDate: action.startDate,

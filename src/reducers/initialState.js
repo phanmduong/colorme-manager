@@ -119,6 +119,7 @@ export default {
     errorAnalyticsRegister: false,
     analyticsRegister: {},
     selectedBaseId: -1,
+    selectedGenId: -1,
     selectedStaffId: -1,
     startDate: moment().startOf('month'),
     endDate: moment(),

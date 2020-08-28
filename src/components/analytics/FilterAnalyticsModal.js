@@ -14,6 +14,7 @@ var {width, height} = Dimensions.get('window');
 import theme from '../../styles';
 import {convertVietText} from '../../helper';
 import Search from '../common/Search';
+import moment from 'moment';
 
 class FilterAnalyticsModal extends React.Component {
   constructor(props, context) {
@@ -128,6 +129,22 @@ class FilterAnalyticsModal extends React.Component {
     return array[0];
   };
 
+  getGenData = () => {
+    let defaultGen = {id: -1, name: 'Tất cả'};
+    let genData = [];
+    genData.push(defaultGen);
+    for (let gen of this.props.genData) {
+      let pushedGen = {
+        id: gen.id,
+        name: 'Khóa ' + gen.name,
+        start_time: gen.start_time,
+        end_time: gen.end_time,
+      };
+      genData.push(pushedGen);
+    }
+    return genData;
+  };
+
   getSearchedResults = (array) => {
     let list = [];
     if (this.state.search === '') {
@@ -158,10 +175,36 @@ class FilterAnalyticsModal extends React.Component {
         <View style={styles.modal}>
           {!this.props.isLoadingCampaigns &&
           !this.props.isLoadingSources &&
-          !this.props.isLoadingCourse ? (
+          !this.props.isLoadingCourse &&
+          !this.props.isLoadingGen ? (
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.titleContainer}>
                 <Text style={styles.title}>Lọc</Text>
+              </View>
+              <View style={styles.filterTitle}>
+                <Text style={{fontSize: 16}}>Khóa học</Text>
+                <CustomPicker
+                  options={this.getSearchedResults(this.getGenData())}
+                  defaultValue={this.getDefault(this.getGenData())}
+                  getLabel={(item) => item.name}
+                  modalAnimationType={'fade'}
+                  optionTemplate={this.renderPickerOption}
+                  fieldTemplate={this.renderPickerField}
+                  headerTemplate={() =>
+                    this.renderPickerHeader('Chọn khóa học')
+                  }
+                  footerTemplate={this.renderPickerFooter}
+                  onBlur={() => this.setState({search: ''})}
+                  modalStyle={{
+                    borderRadius: 6,
+                  }}
+                  onValueChange={(value) => {
+                    this.setState({search: ''});
+                    this.props.onSelectGenId(value.id);
+                    this.props.onSelectStartDate(moment(value.start_time));
+                    this.props.onSelectEndDate(moment(value.end_time));
+                  }}
+                />
               </View>
               <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Môn học</Text>
@@ -296,10 +339,11 @@ class FilterAnalyticsModal extends React.Component {
                   }}
                 />
               </View>
-              <TouchableOpacity onPress={() => {
-                this.props.loadAnalytics();
-                this.props.closeModal();
-              }}>
+              <TouchableOpacity
+                onPress={() => {
+                  this.props.loadAnalytics();
+                  this.props.closeModal();
+                }}>
                 <View style={styles.submit}>
                   <Text style={styles.submitTitle}>Áp dụng</Text>
                 </View>
@@ -327,7 +371,7 @@ class FilterAnalyticsModal extends React.Component {
 const styles = {
   modal: {
     backgroundColor: 'white',
-    height: 500,
+    height: 550,
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
     paddingHorizontal: theme.mainHorizontal,

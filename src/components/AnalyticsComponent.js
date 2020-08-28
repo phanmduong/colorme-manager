@@ -6,6 +6,7 @@ import AnalyticsClassContainer from '../containers/analytics/AnalyticsClassConta
 import theme from '../styles';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import AnalyticsCalenderPicker from './analytics/AnalyticsCalenderPicker';
+import FilterAnalyticsModal from './analytics/FilterAnalyticsModal';
 
 class AnalyticsComponent extends React.Component {
   constructor(props, context) {
@@ -13,6 +14,7 @@ class AnalyticsComponent extends React.Component {
     this.state = {
       tabIdx: 0,
       isCalendarPickerVisible: false,
+      isFilterModalVisible: false,
     };
   }
 
@@ -35,49 +37,52 @@ class AnalyticsComponent extends React.Component {
     }
   };
 
+  toggleFilter = () => {
+    this.setState({isFilterModalVisible: !this.state.isFilterModalVisible});
+  };
+
   render() {
     return (
       <ScrollView style={styles.container}>
-        <ScrollView
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          style={styles.containerTag}>
-          <TouchableOpacity onPress={() => this.setState({tabIdx: 0})}>
-            <View
-              style={[
-                styles.tag,
-                {
-                  backgroundColor:
-                    this.state.tabIdx === 0 ? '#F6F6F6' : 'white',
-                },
-              ]}>
-              <Text style={{color: 'black'}}>Doanh thu và đăng kí</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.setState({tabIdx: 1})}>
-            <View
-              style={[
-                styles.tag,
-                {
-                  backgroundColor:
-                    this.state.tabIdx === 1 ? '#F6F6F6' : 'white',
-                },
-              ]}>
-              <Text style={{color: 'black'}}>KPI doanh thu</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.setState({tabIdx: 2})}>
-            <View
-              style={[
-                styles.tag,
-                {
-                  backgroundColor:
-                    this.state.tabIdx === 2 ? '#F6F6F6' : 'white',
-                },
-              ]}>
-              <Text style={{color: 'black'}}>Lớp học</Text>
-            </View>
-          </TouchableOpacity>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <View style={styles.containerTag}>
+            <TouchableOpacity onPress={() => this.setState({tabIdx: 0})}>
+              <View
+                style={[
+                  styles.tag,
+                  {
+                    backgroundColor:
+                      this.state.tabIdx === 0 ? '#F6F6F6' : 'white',
+                  },
+                ]}>
+                <Text style={{color: 'black'}}>Doanh thu và đăng kí</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.setState({tabIdx: 1})}>
+              <View
+                style={[
+                  styles.tag,
+                  {
+                    backgroundColor:
+                      this.state.tabIdx === 1 ? '#F6F6F6' : 'white',
+                  },
+                ]}>
+                <Text style={{color: 'black'}}>KPI doanh thu</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.setState({tabIdx: 2})}>
+              <View
+                style={[
+                  styles.tag,
+                  {
+                    backgroundColor:
+                      this.state.tabIdx === 2 ? '#F6F6F6' : 'white',
+                  },
+                ]}>
+                <Text style={{color: 'black'}}>Lớp học</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         </ScrollView>
 
         <View style={styles.dateFilterRow}>
@@ -95,7 +100,7 @@ class AnalyticsComponent extends React.Component {
                 : null}
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={this.toggleFilter}>
             <View style={styles.filterContainer}>
               <Image
                 source={require('../../assets/img/icons8-sorting_options_filled.png')}
@@ -117,6 +122,19 @@ class AnalyticsComponent extends React.Component {
         {this.state.tabIdx === 0 ? <AnalyticsRegisterContainer /> : null}
         {this.state.tabIdx === 1 ? <AnalyticsKPIContainer /> : null}
         {this.state.tabIdx === 2 ? <AnalyticsClassContainer /> : null}
+
+        <FilterAnalyticsModal
+          {...this.props}
+          isVisible={this.state.isFilterModalVisible}
+          closeModal={this.toggleFilter}
+          loadStaff={this.props.loadStaff}
+          loadAnalytics={this.props.loadAnalytics}
+          onSelectCourseId={this.props.onSelectCourseId}
+          onSelectStaffId={this.props.onSelectStaffId}
+          onSelectBaseId={this.props.onSelectBaseId}
+          onSelectSourceId={this.props.onSelectSourceId}
+          onSelectCampaignId={this.props.onSelectCampaignId}
+        />
       </ScrollView>
     );
   }

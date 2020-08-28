@@ -128,6 +128,9 @@ export default {
     selectedCourseId: -1,
     selectedSourceId: -1,
     selectedCampaignId: -1,
+    analyticsKpis: [],
+    isLoadingAnalyticsKPI: false,
+    errorAnalyticsKPI: false,
   },
   listStudentClass: {
     listStudentClassData: [],

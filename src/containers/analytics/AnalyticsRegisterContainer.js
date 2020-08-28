@@ -10,7 +10,6 @@ class AnalyticsRegisterContainer extends React.Component {
   }
 
   render() {
-    console.log(this.props.analyticsRevenue);
     return <AnalyticsRegisterComponent {...this.props} />;
   }
 }

@@ -138,3 +138,91 @@ export function selectedEndDate(endDate) {
     endDate: endDate,
   };
 }
+
+export function selectedCampaignId(campaignId) {
+  return {
+    type: types.SELECTED_CAMPAIGN_ID_ANALYTICS,
+    selectedCampaignId: campaignId,
+  };
+}
+
+export function selectedSourceId(sourceId) {
+  return {
+    type: types.SELECTED_SOURCE_ID_ANALYTICS,
+    selectedSourceId: sourceId,
+  };
+}
+
+export function selectedCourseId(courseId) {
+  return {
+    type: types.SELECTED_COURSE_ID_ANALYTICS,
+    selectedCourseId: courseId,
+  };
+}
+
+export function selectedStaffId(staffId) {
+  return {
+    type: types.SELECTED_STAFF_ID_ANALYTICS,
+    selectedStaffId: staffId,
+  };
+}
+
+export function loadAnalyticsKPI(
+  startTime,
+  endTime,
+  baseId,
+  courseId,
+  sourceId,
+  campaignId,
+  staffId,
+  token,
+  domain,
+) {
+  return function (dispatch) {
+    dispatch(beginLoadAnalyticsKPI());
+    analyticsApi
+      .loadAnalyticsKPI(
+        startTime,
+        endTime,
+        baseId,
+        courseId,
+        sourceId,
+        campaignId,
+        staffId,
+        token,
+        domain,
+      )
+      .then((res) => {
+        dispatch(loadAnalyticsKPISuccessful(res));
+      })
+      .catch((error) => {
+        dispatch(loadAnalyticsKPIError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadAnalyticsKPI() {
+  return {
+    type: types.BEGIN_DATA_ANALYTICS_KPI_LOAD,
+    isLoadingAnalyticsKPI: true,
+    errorAnalyticsKPI: false,
+  };
+}
+
+function loadAnalyticsKPISuccessful(res) {
+  return {
+    type: types.LOAD_DATA_ANALYTICS_KPI_SUCCESSFUL,
+    isLoadingAnalyticsKPI: false,
+    errorAnalyticsKPI: false,
+    analyticsKpis: res.data.analytics,
+  };
+}
+
+function loadAnalyticsKPIError() {
+  return {
+    type: types.LOAD_DATA_ANALYTICS_KPI_ERROR,
+    isLoadingAnalyticsKPI: false,
+    errorAnalyticsKPI: true,
+  };
+}

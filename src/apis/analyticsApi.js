@@ -56,5 +56,39 @@ export function loadAnalyticsRevenue(
     campaignId +
     '&token=' +
     token;
+  console.log(url);
+  return axios.get(url);
+}
+
+export function loadAnalyticsKPI(
+  startTime,
+  endTime,
+  baseId,
+  courseId,
+  sourceId,
+  campaignId,
+  staffId,
+  token,
+  domain,
+) {
+  let url =
+    env.manageApiUrlV4(domain) +
+    '/dashboard/analytics-kpi?start_time=' +
+    startTime +
+    '&end_time=' +
+    endTime +
+    '&base_id=' +
+    baseId +
+    '&course_id=' +
+    courseId +
+    '&source_id=' +
+    sourceId +
+    '&campaign_id=' +
+    campaignId +
+    '&staff_id=' +
+    staffId +
+    '&token=' +
+    token +
+    '&include=base,base.district.province';
   return axios.get(url);
 }

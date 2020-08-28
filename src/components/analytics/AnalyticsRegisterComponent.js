@@ -21,7 +21,8 @@ class AnalyticsRegisterComponent extends React.Component {
         style={styles.wrapper}
         showsPagination={true}
         height={450}
-        activeDotColor={'black'}>
+        activeDotColor={'black'}
+        loop={false}>
         <AnalyticsRegisterBarChart
           dates={this.props.analyticsRegister.dates}
           regisNums={this.props.analyticsRegister.registers_by_date}

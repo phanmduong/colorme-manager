@@ -143,8 +143,8 @@ class AnalyticsStudentBarChart extends React.Component {
           ? fixedHeight
           : fixedHeight * ((pair[0] + pair[1]) / maxValue);
       const oldRegisHeight =
-        maxValue === 0
-          ? fixedHeight
+        pair[0] + pair[1] === 0
+          ? 0
           : totalHeight * (pair[1] / (pair[0] + pair[1]));
       return (
         <View style={styles.barRow}>
@@ -158,7 +158,7 @@ class AnalyticsStudentBarChart extends React.Component {
               style={{
                 width: barWidth,
                 height: oldRegisHeight,
-                backgroundColor: maxValue === 0 ? 'white' : '#FFDB5A',
+                backgroundColor: oldRegisHeight === 0 ? 'white' : '#FFDB5A',
               }}
             />
           </View>
@@ -308,9 +308,7 @@ class AnalyticsStudentBarChart extends React.Component {
         </View>
 
         <View style={{alignItems: 'center', marginTop: 15}}>
-          <Text style={{fontSize: 13}}>
-            Số lượt đăng kí và hoàn thành học phí
-          </Text>
+          <Text style={{fontSize: 13}}>Tỉ lệ học viên mới cũ</Text>
         </View>
       </View>
     );

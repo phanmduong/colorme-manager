@@ -41,6 +41,22 @@ export default function dashboardReducer(
         isLoadingAnalyticsRevenue: action.isLoadingAnalyticsRevenue,
         errorAnalyticsRevenue: action.errorAnalyticsRevenue,
       });
+    case types.BEGIN_DATA_ANALYTICS_KPI_LOAD:
+      return Object.assign({}, state, {
+        isLoadingAnalyticsKPI: action.isLoadingAnalyticsKPI,
+        errorAnalyticsKPI: action.errorAnalyticsKPI,
+      });
+    case types.LOAD_DATA_ANALYTICS_KPI_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isLoadingAnalyticsKPI: action.isLoadingAnalyticsKPI,
+        errorAnalyticsKPI: action.errorAnalyticsKPI,
+        analyticsKpis: action.analyticsKpis,
+      });
+    case types.LOAD_DATA_ANALYTICS_KPI_ERROR:
+      return Object.assign({}, state, {
+        isLoadingAnalyticsKPI: action.isLoadingAnalyticsKPI,
+        errorAnalyticsKPI: action.errorAnalyticsKPI,
+      });
     case types.SELECTED_BASE_ID_ANALYTICS:
       return Object.assign({}, state, {
         selectedBaseId: action.selectedBaseId,
@@ -52,6 +68,22 @@ export default function dashboardReducer(
     case types.SELECTED_END_DATE_ANALYTICS:
       return Object.assign({}, state, {
         endDate: action.endDate,
+      });
+    case types.SELECTED_COURSE_ID_ANALYTICS:
+      return Object.assign({}, state, {
+        selectedCourseId: action.selectedCourseId,
+      });
+    case types.SELECTED_CAMPAIGN_ID_ANALYTICS:
+      return Object.assign({}, state, {
+        selectedCampaignId: action.selectedCampaignId,
+      });
+    case types.SELECTED_SOURCE_ID_ANALYTICS:
+      return Object.assign({}, state, {
+        selectedSourceId: action.selectedSourceId,
+      });
+    case types.SELECTED_STAFF_ID_ANALYTICS:
+      return Object.assign({}, state, {
+        selectedStaffId: action.selectedStaffId,
       });
     default:
       return state;

@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Image,
+  Alert,
+} from 'react-native';
 import AnalyticsRegisterContainer from '../containers/analytics/AnalyticsRegisterContainer';
 import AnalyticsKPIContainer from '../containers/analytics/AnalyticsKPIContainer';
 import AnalyticsClassContainer from '../containers/analytics/AnalyticsClassContainer';
@@ -33,7 +40,7 @@ class AnalyticsComponent extends React.Component {
         isCalendarPickerVisible: !this.state.isCalendarPickerVisible,
       });
     } else {
-      alert('hello');
+      Alert.alert('Thông báo', 'Bạn cần chọn ngày bắt đầu và ngày kết thúc.');
     }
   };
 

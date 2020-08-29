@@ -3,6 +3,7 @@ import {View, Text, Image} from 'react-native';
 import * as Progress from 'react-native-progress';
 import theme from '../../styles';
 import {dotNumber} from '../../helper';
+import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 
 const AnalyticsKPIItem = ({name, kpi, revenue, avatar_url}) => {
   const getPercentage = () => {
@@ -18,7 +19,13 @@ const AnalyticsKPIItem = ({name, kpi, revenue, avatar_url}) => {
 
   return (
     <View style={styles.kpiContainer}>
-      <Image source={{uri: avatar_url}} style={styles.avatar} />
+      {avatar_url ? (
+        <Image source={{uri: avatar_url}} style={styles.avatar} />
+      ) : (
+        <View style={[styles.avatar, styles.iconContainer]}>
+          <FA5Icon name={'money-bill-alt'} size={15} color={'white'} />
+        </View>
+      )}
       <View style={styles.infoContainer}>
         <Text style={styles.name}>{name}</Text>
         <Progress.Bar
@@ -66,6 +73,11 @@ const styles = {
   stats: {
     color: 'black',
     fontSize: 13,
+  },
+  iconContainer: {
+    backgroundColor: '#65DA3A',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 };
 

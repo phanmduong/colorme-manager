@@ -10,21 +10,43 @@ class AnalyticsKPIComponent extends React.Component {
   }
 
   renderKPIs = () => {
-    return this.props.analyticsKpis.map((kpi) => (
+    return this.props.analyticsKpis.map((person) => (
       <AnalyticsKPIItem
-        name={kpi.name}
-        kpi={kpi.kpi}
-        revenue={kpi.revenue}
-        avatar_url={kpi.avatar_url}
+        name={person.name}
+        kpi={person.kpi}
+        revenue={person.revenue}
+        avatar_url={person.avatar_url}
       />
     ));
+  };
+
+  pairKpiRevenue = () => {
+    const kpi = this.props.analyticsKpis.reduce(function (accum, currentItem) {
+      return (accum += currentItem.kpi);
+    }, 0);
+    const revenue = this.props.analyticsKpis.reduce(function (
+      accum,
+      currentItem,
+    ) {
+      return (accum += currentItem.revenue);
+    },
+    0);
+    return {kpi, revenue};
   };
 
   render() {
     return this.props.isLoadingAnalyticsKPI ? (
       <Loading size={width / 8} />
     ) : (
-      <View>{this.renderKPIs()}</View>
+      <View>
+        <AnalyticsKPIItem
+          name={'Tất cả'}
+          kpi={this.pairKpiRevenue().kpi}
+          revenue={this.pairKpiRevenue().revenue}
+          avatar_url={null}
+        />
+        {this.renderKPIs()}
+      </View>
     );
   }
 }

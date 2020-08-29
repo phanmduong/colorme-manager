@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import Modal from 'react-native-modal';
-import {getBottomSpace} from "react-native-iphone-x-helper";
+import {getBottomSpace} from 'react-native-iphone-x-helper';
 
 class AnalyticsCalenderPicker extends React.Component {
   constructor(props) {
@@ -19,7 +19,10 @@ class AnalyticsCalenderPicker extends React.Component {
       loadAnalytics,
     } = this.props;
     return (
-      <Modal isVisible={isVisible} style={styles.modal}>
+      <Modal
+        isVisible={isVisible}
+        style={styles.modal}
+        onBackdropPress={toggleModal}>
         <View style={styles.calendarContainer}>
           <CalendarPicker
             startFromMonday={true}

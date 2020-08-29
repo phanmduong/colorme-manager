@@ -142,23 +142,23 @@ class AnalyticsStudentBarChart extends React.Component {
         maxValue === 0
           ? fixedHeight
           : fixedHeight * ((pair[0] + pair[1]) / maxValue);
-      const oldRegisHeight =
+      const newRegisHeight =
         pair[0] + pair[1] === 0
           ? 0
-          : totalHeight * (pair[1] / (pair[0] + pair[1]));
+          : totalHeight * (pair[0] / (pair[0] + pair[1]));
       return (
         <View style={styles.barRow}>
           <View
             style={{
               width: barWidth,
               height: totalHeight,
-              backgroundColor: maxValue === 0 ? 'white' : '#69C553',
+              backgroundColor: maxValue === 0 ? 'white' : '#FFDB5A',
             }}>
             <View
               style={{
                 width: barWidth,
-                height: oldRegisHeight,
-                backgroundColor: oldRegisHeight === 0 ? 'white' : '#FFDB5A',
+                height: newRegisHeight,
+                backgroundColor: newRegisHeight === 0 ? 'white' : '#69C553',
               }}
             />
           </View>

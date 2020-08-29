@@ -9,6 +9,9 @@ export function loadAnalyticsRegister(
   staffId,
   startTime,
   endTime,
+  courseId,
+  sourceId,
+  campaignId,
   token,
   domain,
 ) {
@@ -22,8 +25,15 @@ export function loadAnalyticsRegister(
     staffId +
     '&base_id=' +
     baseId +
+    '&course_id=' +
+    courseId +
+    '&source_id=' +
+    sourceId +
+    '&campaign_id=' +
+    campaignId +
     '&token=' +
     token;
+  console.log(url);
   return axios.get(url);
 }
 
@@ -56,7 +66,6 @@ export function loadAnalyticsRevenue(
     campaignId +
     '&token=' +
     token;
-  console.log(url);
   return axios.get(url);
 }
 

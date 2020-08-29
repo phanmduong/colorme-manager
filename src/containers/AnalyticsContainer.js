@@ -53,11 +53,20 @@ class AnalyticsContainer extends React.Component {
       this.props.selectedStaffId === -1 ? '' : this.props.selectedStaffId;
     let startTime = this.props.startDate.format('YYYY-MM-DD');
     let endTime = this.props.endDate.format('YYYY-MM-DD');
+    let courseId =
+      this.props.selectedCourseId === -1 ? '' : this.props.selectedCourseId;
+    let sourceId =
+      this.props.selectedSourceId === -1 ? '' : this.props.selectedSourceId;
+    let campaignId =
+      this.props.selectedCampaignId === -1 ? '' : this.props.selectedCampaignId;
     this.props.analyticsActions.loadAnalyticsRegister(
       baseId,
       staffId,
       startTime,
       endTime,
+      courseId,
+      sourceId,
+      campaignId,
       this.props.token,
       this.props.domain,
     );
@@ -188,7 +197,6 @@ class AnalyticsContainer extends React.Component {
   };
 
   render() {
-    console.log(this.props.startDate);
     return (
       <AnalyticsComponent
         {...this.props}

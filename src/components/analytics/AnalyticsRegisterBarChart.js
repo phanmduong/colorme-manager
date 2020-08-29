@@ -151,7 +151,7 @@ class AnalyticsRegisterBarChart extends React.Component {
             style={{
               width: barWidth,
               height: regisHeight,
-              backgroundColor: maxValue === 0 ? 'white' : '#69C553',
+              backgroundColor: maxValue === 0 ? 'white' : '#FFDB5A',
             }}
           />
           <View style={{width: barWidth / 10}} />
@@ -159,7 +159,7 @@ class AnalyticsRegisterBarChart extends React.Component {
             style={{
               width: barWidth,
               height: paidHeight,
-              backgroundColor: maxValue === 0 ? 'white' : '#FFDB5A',
+              backgroundColor: maxValue === 0 ? 'white' : '#65DA3A',
             }}
           />
         </View>
@@ -195,7 +195,7 @@ class AnalyticsRegisterBarChart extends React.Component {
                 style={[
                   styles.iconContainer,
                   {
-                    backgroundColor: '#65DA3A',
+                    backgroundColor: '#FFDB5A',
                   },
                 ]}>
                 <MatIcon name={'add-circle'} size={18} color={'white'} />
@@ -207,7 +207,7 @@ class AnalyticsRegisterBarChart extends React.Component {
             <View style={styles.row}>
               <Text style={{marginRight: 10}}>Đã đóng học phí</Text>
               <View
-                style={[styles.iconContainer, {backgroundColor: '#FFDB5A'}]}>
+                style={[styles.iconContainer, {backgroundColor: '#65DA3A'}]}>
                 <FA5Icon name={'money-bill-alt'} size={12} color={'white'} />
               </View>
             </View>

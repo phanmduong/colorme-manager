@@ -17,13 +17,26 @@ export function loadAnalyticsRegister(
   staffId,
   startTime,
   endTime,
+  courseId,
+  sourceId,
+  campaignId,
   token,
   domain,
 ) {
   return function (dispatch) {
     dispatch(beginLoadAnalyticsRegister());
     analyticsApi
-      .loadAnalyticsRegister(baseId, staffId, startTime, endTime, token, domain)
+      .loadAnalyticsRegister(
+        baseId,
+        staffId,
+        startTime,
+        endTime,
+        courseId,
+        sourceId,
+        campaignId,
+        token,
+        domain,
+      )
       .then(function (res) {
         dispatch(loadAnalyticsRegisterSuccessful(res));
       })

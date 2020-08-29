@@ -185,7 +185,10 @@ class FilterAnalyticsModal extends React.Component {
                 <Text style={{fontSize: 16}}>Khóa học</Text>
                 <CustomPicker
                   options={this.getSearchedResults(this.getGenData())}
-                  defaultValue={this.getDefault(this.getGenData())}
+                  defaultValue={this.getDefault(
+                    this.getGenData(),
+                    this.props.selectedGenId,
+                  )}
                   getLabel={(item) => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}

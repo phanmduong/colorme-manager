@@ -186,7 +186,7 @@ class AnalyticsRevenueBarChart extends React.Component {
                 <FA5Icon name={'money-bill-alt'} size={12} color={'white'} />
               </View>
             </View>
-            <Text style={styles.infoNum}>{dotNumber(this.props.revenue)}</Text>
+            <Text style={styles.infoNum}>{dotNumber(this.props.revenue)}đ</Text>
           </View>
           <View style={[styles.infoContainer, {marginLeft: 8}]}>
             <View style={styles.row}>
@@ -203,7 +203,7 @@ class AnalyticsRevenueBarChart extends React.Component {
             </View>
             <View style={styles.row}>
               <Text style={styles.infoNum}>
-                {dotNumber(this.props.revenueToday)}
+                {dotNumber(this.props.revenueToday)}đ
               </Text>
             </View>
           </View>

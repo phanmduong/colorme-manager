@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import Modal from 'react-native-modal';
+import {getBottomSpace} from "react-native-iphone-x-helper";
 
 class AnalyticsCalenderPicker extends React.Component {
   constructor(props) {
@@ -59,7 +60,7 @@ const styles = {
   },
   calendarContainer: {
     backgroundColor: 'white',
-    height: 420,
+    paddingBottom: getBottomSpace(),
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     alignItems: 'center',

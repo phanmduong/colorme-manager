@@ -33,7 +33,6 @@ export function loadAnalyticsRegister(
     campaignId +
     '&token=' +
     token;
-  console.log(url);
   return axios.get(url);
 }
 
@@ -99,5 +98,45 @@ export function loadAnalyticsKPI(
     '&token=' +
     token +
     '&include=base,base.district.province';
+  return axios.get(url);
+}
+
+export function loadAnalyticsClasses(
+  startDate,
+  endDate,
+  staffId,
+  baseId,
+  enrollStart,
+  enrollEnd,
+  courseId,
+  sourceId,
+  campaignId,
+  token,
+  domain,
+) {
+  let url =
+    env.manageApiUrlV4(domain) +
+    '/class/all?start_date=' +
+    startDate +
+    '&end_date=' +
+    endDate +
+    '&staff_id=' +
+    staffId +
+    '&base_id=' +
+    baseId +
+    '&enroll_start_date=' +
+    enrollStart +
+    '&enroll_end_date=' +
+    enrollEnd +
+    '&course_id=' +
+    courseId +
+    '&source_id=' +
+    sourceId +
+    '&campaign_id=' +
+    campaignId +
+    '&token=' +
+    token +
+    '&include=course,base,target,register_target,schedule,room,teacher,teacher_assistant';
+  console.log(url);
   return axios.get(url);
 }

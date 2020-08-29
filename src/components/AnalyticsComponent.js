@@ -121,7 +121,12 @@ class AnalyticsComponent extends React.Component {
 
         {this.state.tabIdx === 0 ? <AnalyticsRegisterContainer /> : null}
         {this.state.tabIdx === 1 ? <AnalyticsKPIContainer /> : null}
-        {this.state.tabIdx === 2 ? <AnalyticsClassContainer /> : null}
+        {this.state.tabIdx === 2 ? (
+          <AnalyticsClassContainer
+            navigation={this.props.navigation}
+            loadDataClass={this.props.loadDataClass}
+          />
+        ) : null}
 
         <FilterAnalyticsModal
           {...this.props}

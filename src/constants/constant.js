@@ -92,3 +92,6 @@ export const WEEK = 'WEEK';
 export const MONTH = 'MONTH';
 export const QUARTER = 'QUARTER';
 export const YEAR = 'YEAR'
+
+export const ENROLLING = 'ENROLLING';
+export const STUDYING = 'STUDYING'

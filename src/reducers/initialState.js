@@ -2,6 +2,7 @@ import HistoryAttendanceTeachingContainer from '../containers/historyAttendanceT
 import React from 'react';
 import InfoStudentRegistersContainer from '../containers/infoStudent/InfoStudentRegistersContainer';
 import moment from 'moment';
+import {ENROLLING} from "../constants/constant";
 /**
  * Created by phanmduong on 4/5/17.
  */
@@ -132,6 +133,12 @@ export default {
     analyticsKpis: [],
     isLoadingAnalyticsKPI: false,
     errorAnalyticsKPI: false,
+    analyticsClasses: [],
+    isLoadingAnalyticsClasses: false,
+    errorAnalyticsClasses: false,
+    enrollStart: moment().startOf('month'),
+    enrollEnd: moment(),
+    classType: ENROLLING,
   },
   listStudentClass: {
     listStudentClassData: [],

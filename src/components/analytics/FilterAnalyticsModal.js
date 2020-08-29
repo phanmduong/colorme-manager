@@ -115,7 +115,10 @@ class FilterAnalyticsModal extends React.Component {
   }
 
   getData = (array) => {
-    let defaultOption = {id: -1, name: 'Tất cả'};
+    let defaultOption = {
+      id: -1,
+      name: 'Tất cả',
+    };
     let data = [defaultOption].concat(array);
     return data;
   };
@@ -130,7 +133,12 @@ class FilterAnalyticsModal extends React.Component {
   };
 
   getGenData = () => {
-    let defaultGen = {id: -1, name: 'Tất cả'};
+    let defaultGen = {
+      id: -1,
+      name: 'Mặc định',
+      start_time: moment().startOf('month'),
+      end_time: moment(),
+    };
     let genData = [];
     genData.push(defaultGen);
     for (let gen of this.props.genData) {

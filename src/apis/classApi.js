@@ -31,7 +31,6 @@ export function loadClassApi(
     baseId +
     '&token=' +
     token;
-  console.log(url);
   return axios.get(url, {cancelToken: sourceCancel.token});
 }
 

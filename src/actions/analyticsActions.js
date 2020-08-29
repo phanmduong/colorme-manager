@@ -142,6 +142,7 @@ export function selectedStartDate(startDate) {
   return {
     type: types.SELECTED_START_DATE_ANALYTICS,
     startDate: startDate,
+    enrollStart: startDate,
   };
 }
 
@@ -149,6 +150,7 @@ export function selectedEndDate(endDate) {
   return {
     type: types.SELECTED_END_DATE_ANALYTICS,
     endDate: endDate,
+    enrollEnd: endDate,
   };
 }
 
@@ -177,6 +179,13 @@ export function selectedStaffId(staffId) {
   return {
     type: types.SELECTED_STAFF_ID_ANALYTICS,
     selectedStaffId: staffId,
+  };
+}
+
+export function selectedClassType(type) {
+  return {
+    type: types.SELECTED_CLASS_TYPE_ANALYTICS,
+    classType: type,
   };
 }
 
@@ -237,5 +246,69 @@ function loadAnalyticsKPIError() {
     type: types.LOAD_DATA_ANALYTICS_KPI_ERROR,
     isLoadingAnalyticsKPI: false,
     errorAnalyticsKPI: true,
+  };
+}
+
+export function loadAnalyticsClasses(
+  startDate,
+  endDate,
+  staffId,
+  baseId,
+  enrollStart,
+  enrollEnd,
+  courseId,
+  sourceId,
+  campaignId,
+  token,
+  domain,
+) {
+  return function (dispatch) {
+    dispatch(beginLoadAnalyticsClasses());
+    analyticsApi
+      .loadAnalyticsClasses(
+        startDate,
+        endDate,
+        staffId,
+        baseId,
+        enrollStart,
+        enrollEnd,
+        courseId,
+        sourceId,
+        campaignId,
+        token,
+        domain,
+      )
+      .then((res) => {
+        dispatch(loadAnalyticsClassesSuccessful(res));
+      })
+      .catch((error) => {
+        dispatch(loadAnalyticsClassesError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadAnalyticsClasses() {
+  return {
+    type: types.BEGIN_DATA_ANALYTICS_CLASSES_LOAD,
+    isLoadingAnalyticsClasses: true,
+    errorAnalyticsClasses: false,
+  };
+}
+
+function loadAnalyticsClassesSuccessful(res) {
+  return {
+    type: types.LOAD_DATA_ANALYTICS_CLASSES_SUCCESSFUL,
+    isLoadingAnalyticsClasses: false,
+    errorAnalyticsClasses: false,
+    analyticsClasses: res.data.classes,
+  };
+}
+
+function loadAnalyticsClassesError() {
+  return {
+    type: types.LOAD_DATA_ANALYTICS_CLASSES_ERROR,
+    isLoadingAnalyticsClasses: false,
+    errorAnalyticsClasses: true,
   };
 }

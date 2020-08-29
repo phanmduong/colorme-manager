@@ -54,24 +54,6 @@ class ClassContainer extends React.Component {
     this.props.classActions.reset();
   }
 
-  componentWillReceiveProps(props) {
-    const analyticsScreen = props.navigation.getParam('analyticsScreen');
-    let genId;
-    if (props.genData.length > 0 && !this.state.checkedDataGen) {
-      this.setState({checkedDataGen: true});
-      genId = analyticsScreen
-        ? props.analyticGenId === -1
-          ? props.currentGen.id
-          : props.analyticGenId
-        : props.currentGen.id;
-    }
-
-    if (props.genData.length > 0 && !this.state.checkedClasses) {
-      this.setState({checkedClasses: true});
-      this.loadDataClass(props.analyticBaseId, genId);
-    }
-  }
-
   loadDataClass = () => {
     const selectedBaseId =
       this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;

@@ -14,6 +14,7 @@ import * as leadsActions from '../actions/leadsActions';
 import * as classActions from '../actions/classActions';
 import * as baseActions from '../actions/baseActions';
 import * as genActions from '../actions/genActions';
+import {ENROLLING, STUDYING} from '../constants/constant';
 
 class AnalyticsContainer extends React.Component {
   constructor(props, context) {
@@ -28,6 +29,10 @@ class AnalyticsContainer extends React.Component {
     this.loadCourses();
     this.loadBases();
     this.loadGens();
+  }
+
+  componentWillUnmount() {
+    this.props.classActions.reset();
   }
 
   static navigationOptions = ({navigation}) => ({
@@ -102,6 +107,7 @@ class AnalyticsContainer extends React.Component {
     this.loadAnalyticsRegister();
     this.loadAnalyticsRevenue();
     this.loadAnalyticsKPI();
+    this.loadDataClass();
   };
 
   loadAnalyticsKPI = () => {
@@ -196,6 +202,48 @@ class AnalyticsContainer extends React.Component {
     this.props.baseActions.loadDataBase(this.props.token, this.props.domain);
   };
 
+  loadDataClass = () => {
+    const baseId =
+      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
+    const courseId =
+      this.props.selectedCourseId === -1 ? '' : this.props.selectedCourseId;
+    const startDate =
+      this.props.classType === STUDYING
+        ? this.props.startDate.format('YYYY-MM-DD')
+        : '';
+    const endDate =
+      this.props.classType === STUDYING
+        ? this.props.endDate.format('YYYY-MM-DD')
+        : '';
+    const enrollStart =
+      this.props.classType === STUDYING
+        ? ''
+        : this.props.enrollStart.format('YYYY-MM-DD');
+    const enrollEnd =
+      this.props.classType === STUDYING
+        ? ''
+        : this.props.enrollEnd.format('YYYY-MM-DD');
+    let staffId =
+      this.props.selectedStaffId === -1 ? '' : this.props.selectedStaffId;
+    let sourceId =
+      this.props.selectedSourceId === -1 ? '' : this.props.selectedSourceId;
+    let campaignId =
+      this.props.selectedCampaignId === -1 ? '' : this.props.selectedCampaignId;
+    this.props.analyticsActions.loadAnalyticsClasses(
+      startDate,
+      endDate,
+      staffId,
+      baseId,
+      enrollStart,
+      enrollEnd,
+      courseId,
+      sourceId,
+      campaignId,
+      this.props.token,
+      this.props.domain,
+    );
+  };
+
   render() {
     return (
       <AnalyticsComponent
@@ -210,6 +258,7 @@ class AnalyticsContainer extends React.Component {
         onSelectSourceId={this.onSelectSourceId}
         onSelectCampaignId={this.onSelectCampaignId}
         onSelectGenId={this.onSelectGenId}
+        loadDataClass={this.loadDataClass}
       />
     );
   }
@@ -247,6 +296,9 @@ function mapStateToProps(state) {
     genData: state.gen.genData,
     isLoadingGen: state.gen.isLoading,
     selectedGenId: state.analytics.selectedGenId,
+    enrollStart: state.analytics.enrollStart,
+    enrollEnd: state.analytics.enrollEnd,
+    classType: state.analytics.classType,
   };
 }
 

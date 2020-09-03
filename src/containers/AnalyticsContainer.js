@@ -3,39 +3,36 @@
  */
 import React from 'react';
 import {connect} from 'react-redux';
+import AnalyticsComponent from '../components/AnalyticsComponent';
+import {Text, View} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import theme from '../styles';
 import {bindActionCreators} from 'redux';
+import * as analyticsActions from '../actions/analyticsActions';
+import * as saveRegisterActions from '../actions/saveRegisterActions';
+import * as leadsActions from '../actions/leadsActions';
+import * as classActions from '../actions/classActions';
 import * as baseActions from '../actions/baseActions';
 import * as genActions from '../actions/genActions';
-import * as dashboardActions from '../actions/analyticsActions';
-import * as loginActions from '../actions/loginActions';
-import AnalyticsComponent from '../components/AnalyticsComponent';
-import {NavigationActions} from 'react-navigation';
-import * as registerListActions from '../actions/registerListActions';
-import {Alert, Text, View} from 'react-native';
-import _ from 'lodash';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from "../styles";
+import {ENROLLING, STUDYING} from '../constants/constant';
 
 class AnalyticsContainer extends React.Component {
   constructor(props, context) {
     super(props, context);
+  }
 
-    this.state = {
-      isLoading: true,
-      checkedDataBase: false,
-      checkedDataGen: false,
-      checkedDataDashboard: false,
-      genData: [],
-      baseData: [],
-    };
+  componentDidMount() {
+    this.loadAnalytics();
+    this.loadCampaigns();
+    this.loadSources();
+    this.loadStaff('');
+    this.loadCourses();
+    this.loadBases();
+    this.loadGens();
+  }
 
-    this.onSelectBaseId = this.onSelectBaseId.bind(this);
-    this.onSelectGenId = this.onSelectGenId.bind(this);
-    this.loadDataDashboard = this.loadDataDashboard.bind(this);
-    this.onClickClass = this.onClickClass.bind(this);
-    this.onClickRegisterList = this.onClickRegisterList.bind(this);
-    this.onClickListStudentPaid = this.onClickListStudentPaid.bind(this);
-    this.onClickListStudentZero = this.onClickListStudentZero.bind(this);
+  componentWillUnmount() {
+    this.props.classActions.reset();
   }
 
   static navigationOptions = ({navigation}) => ({
@@ -54,180 +51,200 @@ class AnalyticsContainer extends React.Component {
     ),
   });
 
-  componentWillMount() {
-    if (!this.props.isCheckIn) {
-      Alert.alert(
-        'Thiết bị',
-        'Đây là máy của ' +
-          this.props.deviceUser.name +
-          '. Bạn sẽ không thể dùng tính năng check in và check out. Bạn có muốn tiếp tục?',
-        [
-          {text: 'Đăng xuất', onPress: () => this.logout()},
-          {
-            text: 'Tiếp tục',
-            onPress: () => {},
-          },
-        ],
-        {cancelable: false},
-      );
-    }
-    this.loadData();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (!nextProps.isLoadingBase && !nextProps.isLoadingGen) {
-      this.setState({
-        isLoading: false,
-      });
-    } else {
-      this.setState({
-        isLoading: true,
-      });
-    }
-
-    if (nextProps.errorBase || nextProps.errorGen || nextProps.errorDashboard) {
-      this.setState({
-        error: true,
-      });
-    } else {
-      this.setState({
-        error: false,
-      });
-    }
-
-    if (
-      !nextProps.isLoadingGen &&
-      this.props.isLoadingGen !== nextProps.isLoadingGen
-    ) {
-      // if (nextProps.errorGen) {
-      //     Alert.alert('Điểm danh', "Kiểm tra các kết nối trước khi điểm danh");
-      // } else {
-      //     Alert.alert('Điểm danh', "Đã lưu trữ thời gian và toạ độ của bạn");
-      // }
-
-      var genData = _.sortBy(nextProps.genData, [
-        function(o) {
-          return parseInt(o.name);
-        },
-      ]);
-      genData = _.reverse(genData);
-      this.setState({
-        genData: genData,
-      });
-    }
-
-    this.checkData(nextProps);
-  }
-
-  logout() {
-    this.props.loginActions.logout();
-  }
-
-  checkData(props) {
-    if (props.baseData.length > 0 && !this.state.checkedDataBase) {
-      this.setState({checkedDataBase: true});
-      var baseData = [{id: -1, name: 'Tất cả'}, ...props.baseData];
-      this.setState({baseData: baseData});
-      this.props.dashboardActions.selectedBaseId(baseData[0].id);
-    }
-
-    if (props.genData.length > 0 && !this.state.checkedDataGen) {
-      this.setState({checkedDataGen: true});
-      var genData = _.sortBy(props.genData, [
-        function(o) {
-          return parseInt(o.name);
-        },
-      ]);
-      genData = _.reverse(genData);
-      this.setState({
-        genData: genData,
-      });
-      this.props.dashboardActions.selectedGenId(props.currentGen.id);
-    }
-
-    if (
-      props.genData.length > 0 &&
-      props.baseData.length > 0 &&
-      !this.state.checkedDataDashboard
-    ) {
-      this.setState({checkedDataDashboard: true});
-      this.props.dashboardActions.loadDataDashboard(
-        -1,
-        props.currentGen.id,
-        this.props.token,
-      );
-    }
-  }
-
-  loadData() {
-    if (!this.props.baseData || this.props.baseData.length <= 0) {
-      this.props.baseActions.loadDataBase(this.props.token);
-    }
-    if (!this.props.genData || this.props.genData.length <= 0) {
-      this.props.genActions.loadDataGen(this.props.token);
-    }
-    this.checkData(this.props);
-  }
-
-  loadDataDashboard(baseId, genId) {
-    this.props.dashboardActions.loadDataDashboard(
+  loadAnalyticsRegister = () => {
+    let baseId =
+      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
+    let staffId =
+      this.props.selectedStaffId === -1 ? '' : this.props.selectedStaffId;
+    let startTime = this.props.startDate.format('YYYY-MM-DD');
+    let endTime = this.props.endDate.format('YYYY-MM-DD');
+    let courseId =
+      this.props.selectedCourseId === -1 ? '' : this.props.selectedCourseId;
+    let sourceId =
+      this.props.selectedSourceId === -1 ? '' : this.props.selectedSourceId;
+    let campaignId =
+      this.props.selectedCampaignId === -1 ? '' : this.props.selectedCampaignId;
+    this.props.analyticsActions.loadAnalyticsRegister(
       baseId,
-      genId,
+      staffId,
+      startTime,
+      endTime,
+      courseId,
+      sourceId,
+      campaignId,
       this.props.token,
     );
-  }
+  };
 
-  onSelectBaseId(baseId) {
-    this.props.dashboardActions.selectedBaseId(baseId);
-    this.loadDataDashboard(baseId, this.props.selectedGenId);
-  }
+  loadAnalyticsRevenue = () => {
+    let baseId =
+      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
+    let staffId =
+      this.props.selectedStaffId === -1 ? '' : this.props.selectedStaffId;
+    let startTime = this.props.startDate.format('YYYY-MM-DD');
+    let endTime = this.props.endDate.format('YYYY-MM-DD');
+    let courseId =
+      this.props.selectedCourseId === -1 ? '' : this.props.selectedCourseId;
+    let sourceId =
+      this.props.selectedSourceId === -1 ? '' : this.props.selectedSourceId;
+    let campaignId =
+      this.props.selectedCampaignId === -1 ? '' : this.props.selectedCampaignId;
+    this.props.analyticsActions.loadAnalyticsRevenue(
+      startTime,
+      endTime,
+      staffId,
+      baseId,
+      courseId,
+      sourceId,
+      campaignId,
+      this.props.token,
+    );
+  };
 
-  onSelectGenId(genId) {
-    this.props.dashboardActions.selectedGenId(genId);
-    this.loadDataDashboard(this.props.selectedBaseId, genId);
-  }
+  loadAnalytics = () => {
+    this.loadAnalyticsRegister();
+    this.loadAnalyticsRevenue();
+    this.loadAnalyticsKPI();
+    this.loadDataClass();
+  };
 
-  onClickClass() {
-    this.props.navigation.navigate('Class', {
-      analyticsScreen: true,
-    });
-  }
+  loadAnalyticsKPI = () => {
+    let baseId =
+      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
+    let staffId =
+      this.props.selectedStaffId === -1 ? '' : this.props.selectedStaffId;
+    let startTime = this.props.startDate.format('YYYY-MM-DD');
+    let endTime = this.props.endDate.format('YYYY-MM-DD');
+    let courseId =
+      this.props.selectedCourseId === -1 ? '' : this.props.selectedCourseId;
+    let sourceId =
+      this.props.selectedSourceId === -1 ? '' : this.props.selectedSourceId;
+    let campaignId =
+      this.props.selectedCampaignId === -1 ? '' : this.props.selectedCampaignId;
+    this.props.analyticsActions.loadAnalyticsKPI(
+      startTime,
+      endTime,
+      baseId,
+      courseId,
+      sourceId,
+      campaignId,
+      staffId,
+      this.props.token,
+    );
+  };
 
-  onClickListStudentPaid() {
-    this.props.navigation.navigate('ListStudentPaid');
-  }
+  onSelectStartDate = (startDate) => {
+    this.props.analyticsActions.selectedStartDate(startDate);
+  };
 
-  onClickListStudentZero() {
-    this.props.navigation.navigate('ListStudentZero');
-  }
+  onSelectEndDate = (endDate) => {
+    this.props.analyticsActions.selectedEndDate(endDate);
+  };
 
-  onClickRegisterList() {
-    this.props.registerListActions.setAutoFocusRegisterListSearch(true);
-    this.props.navigation.navigate('RegisterList');
-  }
+  onSelectBaseId = (baseId) => {
+    this.props.analyticsActions.selectedBaseId(baseId);
+  };
+
+  onSelectCampaignId = (campaignId) => {
+    this.props.analyticsActions.selectedCampaignId(campaignId);
+  };
+
+  onSelectSourceId = (sourceId) => {
+    this.props.analyticsActions.selectedSourceId(sourceId);
+  };
+
+  onSelectStaffId = (staffId) => {
+    this.props.analyticsActions.selectedStaffId(staffId);
+  };
+
+  onSelectCourseId = (courseId) => {
+    this.props.analyticsActions.selectedCourseId(courseId);
+  };
+
+  onSelectGenId = (genId) => {
+    this.props.analyticsActions.selectedGenId(genId);
+  };
+
+  loadCampaigns = () => {
+    this.props.saveRegisterActions.loadCampaigns(this.props.token);
+  };
+
+  loadSources = () => {
+    this.props.saveRegisterActions.loadSources(this.props.token);
+  };
+
+  loadStaff = (search) => {
+    this.props.leadsActions.getStaff(search, this.props.token);
+  };
+
+  loadGens = () => {
+    this.props.genActions.loadDataGen(this.props.token);
+  };
+
+  loadCourses = () => {
+    this.props.classActions.loadDataCourse(this.props.token);
+  };
+
+  loadBases = () => {
+    this.props.baseActions.loadDataBase(this.props.token);
+  };
+
+  loadDataClass = () => {
+    const baseId =
+      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
+    const courseId =
+      this.props.selectedCourseId === -1 ? '' : this.props.selectedCourseId;
+    const startDate =
+      this.props.classType === STUDYING
+        ? this.props.startDate.format('YYYY-MM-DD')
+        : '';
+    const endDate =
+      this.props.classType === STUDYING
+        ? this.props.endDate.format('YYYY-MM-DD')
+        : '';
+    const enrollStart =
+      this.props.classType === STUDYING
+        ? ''
+        : this.props.enrollStart.format('YYYY-MM-DD');
+    const enrollEnd =
+      this.props.classType === STUDYING
+        ? ''
+        : this.props.enrollEnd.format('YYYY-MM-DD');
+    let staffId =
+      this.props.selectedStaffId === -1 ? '' : this.props.selectedStaffId;
+    let sourceId =
+      this.props.selectedSourceId === -1 ? '' : this.props.selectedSourceId;
+    let campaignId =
+      this.props.selectedCampaignId === -1 ? '' : this.props.selectedCampaignId;
+    this.props.analyticsActions.loadAnalyticsClasses(
+      startDate,
+      endDate,
+      staffId,
+      baseId,
+      enrollStart,
+      enrollEnd,
+      courseId,
+      sourceId,
+      campaignId,
+      this.props.token,
+    );
+  };
 
   render() {
     return (
       <AnalyticsComponent
-        isLoading={this.state.isLoading}
-        isLoadingDashboard={this.props.isLoadingDashboard}
-        error={this.state.error}
-        genData={this.state.genData}
-        baseData={this.state.baseData}
-        loadDataDashboard={this.loadDataDashboard}
-        dashboardData={this.props.dashboardData}
-        selectedBaseId={this.props.selectedBaseId}
-        selectedGenId={this.props.selectedGenId}
+        {...this.props}
+        onSelectStartDate={this.onSelectStartDate}
+        onSelectEndDate={this.onSelectEndDate}
+        loadAnalytics={this.loadAnalytics}
+        loadStaff={this.loadStaff}
+        onSelectCourseId={this.onSelectCourseId}
+        onSelectStaffId={this.onSelectStaffId}
         onSelectBaseId={this.onSelectBaseId}
+        onSelectSourceId={this.onSelectSourceId}
+        onSelectCampaignId={this.onSelectCampaignId}
         onSelectGenId={this.onSelectGenId}
-        errorDashboard={this.props.errorDashboard}
-        onClickClass={this.onClickClass}
-        onClickRegisterList={this.onClickRegisterList}
-        onClickListStudentPaid={this.onClickListStudentPaid}
-        onClickListStudentZero={this.onClickListStudentZero}
-        isLoadingGen={this.props.isLoadingGen}
-        isLoadingBase={this.props.isLoadingBase}
-        currentGen={this.props.currentGen}
+        loadDataClass={this.loadDataClass}
       />
     );
   }
@@ -240,35 +257,45 @@ const styles = {
 
 function mapStateToProps(state) {
   return {
+    token: state.login.token,
+    selectedBaseId: state.analytics.selectedBaseId,
+    selectedStaffId: state.analytics.selectedStaffId,
+    startDate: state.analytics.startDate,
+    endDate: state.analytics.endDate,
+    selectedCourseId: state.analytics.selectedCourseId,
+    selectedSourceId: state.analytics.selectedSourceId,
+    selectedCampaignId: state.analytics.selectedCampaignId,
+    isLoadingCampaigns: state.saveRegister.isLoadingCampaigns,
+    errorLoadingCampaigns: state.saveRegister.errorLoadingCampaigns,
+    campaigns: state.saveRegister.campaigns,
+    isLoadingSources: state.saveRegister.isLoadingSources,
+    errorLoadingSources: state.saveRegister.errorLoadingSources,
+    sources: state.saveRegister.sources,
+    staff: state.leads.staff,
+    isLoadingStaff: state.leads.isLoadingStaff,
+    errorStaff: state.leads.errorStaff,
+    courseData: state.class.courseData,
+    isLoadingCourse: state.class.isLoadingCourse,
     isLoadingBase: state.base.isLoading,
     baseData: state.base.baseData,
-    errorBase: state.base.error,
-    token: state.login.token,
-    isCheckIn: state.login.isCheckIn,
-    deviceUser: state.login.deviceUser,
-    isLoadingGen: state.gen.isLoading,
-    currentGen: state.gen.currentGen,
     genData: state.gen.genData,
-    errorGen: state.gen.error,
-    isLoadingDashboard: state.analytics.isLoading,
-    dashboardData: state.analytics.dashboardData,
-    errorDashboard: state.analytics.error,
-    selectedBaseId: state.analytics.selectedBaseId,
+    isLoadingGen: state.gen.isLoading,
     selectedGenId: state.analytics.selectedGenId,
+    enrollStart: state.analytics.enrollStart,
+    enrollEnd: state.analytics.enrollEnd,
+    classType: state.analytics.classType,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+    analyticsActions: bindActionCreators(analyticsActions, dispatch),
+    classActions: bindActionCreators(classActions, dispatch),
+    saveRegisterActions: bindActionCreators(saveRegisterActions, dispatch),
+    leadsActions: bindActionCreators(leadsActions, dispatch),
     baseActions: bindActionCreators(baseActions, dispatch),
     genActions: bindActionCreators(genActions, dispatch),
-    dashboardActions: bindActionCreators(dashboardActions, dispatch),
-    loginActions: bindActionCreators(loginActions, dispatch),
-    registerListActions: bindActionCreators(registerListActions, dispatch),
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(AnalyticsContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(AnalyticsContainer);

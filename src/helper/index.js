@@ -266,3 +266,7 @@ export function itemExist(item, array) {
   }
   return false;
 }
+
+export function findSum(numLst) {
+  return numLst.reduce((a, b) => a + b, 0);
+}

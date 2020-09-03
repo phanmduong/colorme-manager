@@ -86,3 +86,12 @@ export const GENDER = [
 
 export const TEACHER_ROLE = 'TEACHER_ROLE';
 export const TEACHER_ASSISTANT_ROLE = 'TEACHER_ASSISTANT_ROLE';
+
+export const DAILY = 'DAILY';
+export const WEEK = 'WEEK';
+export const MONTH = 'MONTH';
+export const QUARTER = 'QUARTER';
+export const YEAR = 'YEAR'
+
+export const ENROLLING = 'ENROLLING';
+export const STUDYING = 'STUDYING'

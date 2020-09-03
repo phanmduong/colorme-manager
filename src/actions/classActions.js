@@ -3,7 +3,10 @@
  */
 import * as types from '../constants/actionTypes';
 import * as classApi from '../apis/classApi';
-import * as analyticsApi from '../apis/analyticsApi';
+import axios from 'axios';
+
+let CancelToken = axios.CancelToken;
+let sourceCancel = CancelToken.source();
 
 export function beginDataClassLoad() {
   return {
@@ -13,17 +16,41 @@ export function beginDataClassLoad() {
   };
 }
 
-export function loadDataClass(baseId, genId, token) {
-  return function(dispatch) {
-    dispatch(beginDataClassLoad());
-    analyticsApi
-      .loadDashboard(baseId, genId, token)
-      .then(function(res) {
+export function loadDataClass(
+  refreshing,
+  search,
+  courseId,
+  page,
+  genId,
+  baseId,
+  token,
+) {
+  return function (dispatch) {
+    if (!refreshing) {
+      dispatch(beginDataClassLoad());
+    } else {
+      dispatch(beginDataClassRefresh());
+    }
+    classApi
+      .loadClassApi(
+        sourceCancel,
+        search,
+        courseId,
+        page,
+        genId,
+        baseId,
+        token,
+      )
+      .then(function (res) {
         dispatch(loadDataSuccessful(res));
       })
-      .catch(error => {
-        dispatch(loadDataError());
-        throw error;
+      .catch((error) => {
+        if (axios.isCancel(error)) {
+          console.log('Request canceled', error.message);
+        } else {
+          dispatch(loadDataError());
+          throw error;
+        }
       });
   };
 }
@@ -34,6 +61,9 @@ export function loadDataSuccessful(res) {
     classData: res.data.classes,
     isLoading: false,
     error: false,
+    currentPage: res.data.paginator.current_page,
+    totalPage: res.data.paginator.total_pages,
+    isRefreshing: false,
   };
 }
 
@@ -45,35 +75,39 @@ export function beginDataClassRefresh() {
   };
 }
 
-export function refreshDataClass(baseId, genId, token) {
-  return function(dispatch) {
-    dispatch(beginDataClassRefresh());
-    analyticsApi
-      .loadDashboard(baseId, genId, token)
-      .then(function(res) {
-        dispatch(refreshDataSuccessful(res));
-      })
-      .catch(error => {
-        dispatch(refreshDataError());
-        throw error;
-      });
+export function refreshDataClass(
+  search,
+  courseId,
+  genId,
+  baseId,
+  token,
+) {
+  return function (dispatch) {
+    dispatch(beginSearchClass(search));
+    dispatch(
+      loadDataClass(true, search, courseId, 1, genId, baseId, token),
+    );
   };
 }
 
-export function refreshDataSuccessful(res) {
+function beginSearchClass(search) {
   return {
-    type: types.REFRESH_DATA_CLASS_SUCCESSFUL,
-    classData: res.data.classes,
-    isRefreshing: false,
-    error: false,
+    type: types.BEGIN_SEARCH_CLASS,
+    search: search,
+    currentPage: 1,
+    totalPage: 1,
+    classData: [],
   };
 }
 
-export function refreshDataError() {
-  return {
-    type: types.REFRESH_DATA_CLASS_ERROR,
-    isRefreshing: false,
-    error: false,
+export function searchClass(search, courseId, genId, baseId, token) {
+  sourceCancel.cancel('Canceled by class api.');
+  sourceCancel = CancelToken.source();
+  return function (dispatch) {
+    dispatch(beginSearchClass(search));
+    dispatch(
+      loadDataClass(false, search, courseId, 1, genId, baseId, token),
+    );
   };
 }
 
@@ -86,14 +120,14 @@ export function beginDataCourseLoad() {
 }
 
 export function loadDataCourse(token) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginDataCourseLoad());
     classApi
       .loadCourseApi(token)
-      .then(function(res) {
+      .then(function (res) {
         dispatch(loadDataCourseSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadDataCourseError());
         throw error;
       });
@@ -105,6 +139,7 @@ export function loadDataError() {
     type: types.LOAD_DATA_CLASS_ERROR,
     isLoading: false,
     error: false,
+    isRefreshing: false,
   };
 }
 
@@ -130,6 +165,40 @@ export function selectedClassId(id) {
     type: types.SELECTED_CLASS_ID,
     selectedClassId: id,
   };
+}
+
+export function selectedBaseId(id) {
+  return {
+    type: types.SELECTED_CLASS_BASE_ID,
+    selectedBaseId: id,
+  };
+}
+
+export function selectedGenId(id) {
+  return {
+    type: types.SELECTED_CLASS_GEN_ID,
+    selectedGenId: id,
+  };
+}
+
+export function selectedCourseId(id) {
+  return {
+    type: types.SELECTED_CLASS_COURSE_ID,
+    selectedCourseId: id,
+  };
+}
+
+export function reset() {
+  return {
+    type: types.RESET_CLASS,
+    classData: [],
+    selectedGenId: -1,
+    currentPage: 0,
+    totalPage: 1,
+    search: '',
+    selectedBaseId: -1,
+    selectedCourseId: -1,
+  }
 }
 
 function beginLoadBase() {
@@ -158,14 +227,14 @@ function loadBaseError() {
 }
 
 export function loadBaseData(token) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginLoadBase());
     classApi
       .loadBaseData(token)
-      .then(function(res) {
+      .then(function (res) {
         dispatch(loadBaseSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadBaseError());
         throw error;
       });
@@ -173,14 +242,14 @@ export function loadBaseData(token) {
 }
 
 export function infoCreateClass(token) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginLoadInfoCreateClass());
     classApi
       .infoCreateClass(token)
-      .then(function(res) {
+      .then(function (res) {
         dispatch(loadInfoCreateClassSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadInfoCreateClassError());
         throw error;
       });
@@ -217,15 +286,15 @@ function loadInfoCreateClassError() {
 }
 
 export function addClass(classData, baseId, genId, token) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginAddClass());
     classApi
       .addClass(classData, token)
-      .then(function(res) {
+      .then(function (res) {
         dispatch(addClassSuccessful());
         dispatch(loadDataClass(baseId, genId, token));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(addClassError());
         throw error;
       });
@@ -257,14 +326,14 @@ function addClassError() {
 }
 
 export function loadClassInfo(classId, token) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginLoadClassInfo());
     classApi
       .loadClassInfo(classId, token)
-      .then(function(res) {
+      .then(function (res) {
         dispatch(loadClassInfoSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadClassInfoError());
         throw error;
       });
@@ -297,14 +366,14 @@ function loadClassInfoError() {
 }
 
 export function changeClassStatus(classId, token) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginChangeClassStatus());
     classApi
       .changeClassStatus(classId, token)
-      .then(function(res) {
+      .then(function (res) {
         dispatch(changeClassStatusSuccessful());
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(changeClassStatusError());
         throw error;
       });

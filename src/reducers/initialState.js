@@ -2,6 +2,7 @@ import HistoryAttendanceTeachingContainer from '../containers/historyAttendanceT
 import React from 'react';
 import InfoStudentRegistersContainer from '../containers/infoStudent/InfoStudentRegistersContainer';
 import moment from 'moment';
+import {ENROLLING} from '../constants/constant';
 /**
  * Created by phanmduong on 4/5/17.
  */
@@ -73,6 +74,12 @@ export default {
     errorClassInfo: false,
     changingClassStatus: false,
     errorClassStatus: false,
+    selectedGenId: -1,
+    currentPage: 0,
+    totalPage: 1,
+    search: '',
+    selectedBaseId: -1,
+    selectedCourseId: -1,
   },
   currentClassStudy: {
     classData: [],
@@ -108,11 +115,29 @@ export default {
     selectedGenId: -1,
   },
   analytics: {
-    isLoading: false,
-    error: false,
-    dashboardData: {},
+    isLoadingAnalyticsRegister: false,
+    errorAnalyticsRegister: false,
+    analyticsRegister: {},
     selectedBaseId: -1,
     selectedGenId: -1,
+    selectedStaffId: -1,
+    startDate: moment().startOf('month'),
+    endDate: moment(),
+    analyticsRevenue: {},
+    isLoadingAnalyticsRevenue: false,
+    errorAnalyticsRevenue: false,
+    selectedCourseId: -1,
+    selectedSourceId: -1,
+    selectedCampaignId: -1,
+    analyticsKpis: [],
+    isLoadingAnalyticsKPI: false,
+    errorAnalyticsKPI: false,
+    analyticsClasses: [],
+    isLoadingAnalyticsClasses: false,
+    errorAnalyticsClasses: false,
+    enrollStart: moment().startOf('month'),
+    enrollEnd: moment(),
+    classType: ENROLLING,
   },
   listStudentClass: {
     listStudentClassData: [],

@@ -11,7 +11,7 @@ import * as genActions from '../actions/genActions';
 import * as analyticsActions from '../actions/analyticsActions';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from "../styles";
+import theme from '../styles';
 
 class ClassContainer extends React.Component {
   constructor(props) {
@@ -40,36 +40,51 @@ class ClassContainer extends React.Component {
   });
 
   componentDidMount() {
-    this.props.genActions.loadDataGen(this.props.token);
-    this.props.classActions.loadDataCourse(this.props.token);
-    this.props.classActions.loadBaseData(this.props.token);
-    this.props.saveRegisterActions.loadProvinces(this.props.token);
+    this.props.genActions.loadDataGen(this.props.token, this.props.domain);
+    this.props.classActions.loadDataCourse(this.props.token, this.props.domain);
+    this.props.classActions.loadBaseData(this.props.token, this.props.domain);
+    this.props.saveRegisterActions.loadProvinces(
+        this.props.token,
+    );
+    this.loadDataClass();
   }
 
-  componentWillReceiveProps(props) {
-    const analyticsScreen = props.navigation.getParam('analyticsScreen');
-    let genId;
-    if (props.genData.length > 0 && !this.state.checkedDataGen) {
-      this.setState({checkedDataGen: true});
-      genId = analyticsScreen
-        ? props.analyticGenId === -1
-          ? props.currentGen.id
-          : props.analyticGenId
-        : props.currentGen.id;
-    }
-
-    if (props.genData.length > 0 && !this.state.checkedClasses) {
-      this.setState({checkedClasses: true});
-      this.loadDataClass(props.analyticBaseId, genId, this.props.token);
-    }
+  componentWillUnmount() {
+    this.props.classActions.reset();
   }
 
-  loadDataClass = (baseId, genId) => {
-    this.props.classActions.loadDataClass(baseId, genId, this.props.token);
+  loadDataClass = () => {
+    const selectedBaseId =
+      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
+    const selectedGenId =
+      this.props.selectedGenId === -1 ? '' : this.props.selectedGenId;
+    const courseId =
+      this.props.selectedCourseId === -1 ? '' : this.props.selectedCourseId;
+    this.props.classActions.loadDataClass(
+      false,
+      this.props.search,
+      courseId,
+      this.props.currentPage + 1,
+      selectedGenId,
+      selectedBaseId,
+      this.props.token,
+    );
   };
 
-  onRefresh = (baseId, genId) => {
-    this.props.classActions.refreshDataClass(baseId, genId, this.props.token);
+  onRefresh = () => {
+    const selectedBaseId =
+      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
+    const selectedGenId =
+      this.props.selectedGenId === -1 ? '' : this.props.selectedGenId;
+    const courseId =
+      this.props.selectedCourseId === -1 ? '' : this.props.selectedCourseId;
+    this.props.classActions.refreshDataClass(
+      this.props.search,
+      courseId,
+      selectedGenId,
+      selectedBaseId,
+      this.props.token,
+    );
   };
 
   onSelectedItem(classId) {
@@ -77,8 +92,43 @@ class ClassContainer extends React.Component {
     this.props.navigation.navigate('ListStudentClass');
   }
 
-  changeClassStatus = classId => {
-    this.props.classActions.changeClassStatus(classId, this.props.token);
+  changeClassStatus = (classId) => {
+    this.props.classActions.changeClassStatus(
+      classId,
+      this.props.token,
+    );
+  };
+
+  searchClass = (search) => {
+    const selectedBaseId =
+      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
+    const selectedGenId =
+      this.props.selectedGenId === -1 ? '' : this.props.selectedGenId;
+    const courseId =
+      this.props.selectedCourseId === -1 ? '' : this.props.selectedCourseId;
+    this.props.classActions.searchClass(
+      search,
+      courseId,
+      selectedGenId,
+      selectedBaseId,
+      this.props.token,
+    );
+  };
+
+  onSelectGenId = (id) => {
+    this.props.classActions.selectedGenId(id);
+  };
+
+  onSelectBaseId = (id) => {
+    this.props.classActions.selectedBaseId(id);
+  };
+
+  onSelectCourseId = (id) => {
+    this.props.classActions.selectedCourseId(id);
+  };
+
+  applyFilter = () => {
+    this.searchClass(this.props.search);
   };
 
   render() {
@@ -96,7 +146,7 @@ class ClassContainer extends React.Component {
         isLoadingBase={this.props.isLoadingBase}
         currentGen={this.props.currentGen}
         onRefresh={this.onRefresh}
-        filter={this.loadDataClass}
+        filter={this.applyFilter}
         refreshing={this.props.isRefreshing}
         analyticGenId={this.props.analyticGenId}
         analyticBaseId={this.props.analyticBaseId}
@@ -104,6 +154,11 @@ class ClassContainer extends React.Component {
         isLoadingProvinces={this.props.isLoadingProvinces}
         changeClassStatus={this.changeClassStatus}
         user={this.props.user}
+        loadDataClass={this.loadDataClass}
+        searchClass={this.searchClass}
+        onSelectBaseId={this.onSelectBaseId}
+        onSelectCourseId={this.onSelectCourseId}
+        onSelectGenId={this.onSelectGenId}
       />
     );
   }
@@ -131,12 +186,16 @@ function mapStateToProps(state) {
     isLoadingBase: state.class.isLoadingBase,
     errorLoadingBase: state.class.errorLoadingBase,
     currentGen: state.gen.currentGen,
-    analyticBaseId: state.analytics.selectedBaseId,
-    analyticGenId: state.analytics.selectedGenId,
     isRefreshing: state.class.isRefreshing,
     isLoadingProvinces: state.saveRegister.isLoadingProvinces,
     errorLoadingProvinces: state.saveRegister.errorLoadingProvinces,
     provinces: state.saveRegister.provinces,
+    search: state.class.search,
+    currentPage: state.class.currentPage,
+    totalPage: state.class.totalPage,
+    selectedBaseId: state.class.selectedBaseId,
+    selectedCourseId: state.class.selectedCourseId,
+    selectedGenId: state.class.selectedGenId,
   };
 }
 
@@ -149,7 +208,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ClassContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ClassContainer);

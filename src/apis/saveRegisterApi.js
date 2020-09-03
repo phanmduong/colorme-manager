@@ -56,7 +56,7 @@ export function loadSources(token) {
 
 export function loadStatuses(ref, token) {
   let url =
-    env.MANAGE_API_URL + '/v4/statuses/all?ref=' + ref + '&token=' + token;
+    env.MANAGE_API_URL_V4 + '/statuses/all?ref=' + ref + '&token=' + token;
   return axios.get(url);
 }
 

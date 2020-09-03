@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, List, View} from 'native-base';
+import {Container, List, Text, View} from 'native-base';
 import ListItemClass from './listItem/ListItemClass';
 import Loading from './common/Loading';
 import {
@@ -18,32 +18,16 @@ class ClassComponent extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      search: '',
-      selectedCourseId: -1,
-      selectedBaseId: this.props.analyticBaseId,
-      selectedProvinceId: -1,
-      selectedGenId: this.props.analyticGenId,
+      // selectedProvinceId: -1,
       filterModalVisible: false,
     };
   }
 
-  onSelectBaseId = baseId => {
-    this.setState({selectedBaseId: baseId});
-  };
-
-  onSelectProvinceId = provinceId => {
+  onSelectProvinceId = (provinceId) => {
     this.setState({selectedProvinceId: provinceId});
   };
 
-  onSelectCourseId = courseId => {
-    this.setState({selectedCourseId: courseId});
-  };
-
-  onSelectGenId = genId => {
-    this.setState({selectedGenId: genId});
-  };
-
-  searchClass = classList => {
+  searchClass = (classList) => {
     if (this.state.search === '') {
       return classList;
     } else {
@@ -61,24 +45,24 @@ class ClassComponent extends React.Component {
     }
   };
 
-  getDataClass = () => {
-    if (this.props.classData === null || this.props.classData === undefined) {
-      return [];
-    }
-    let filterClasses = this.props.classData;
-    if (this.state.selectedCourseId !== -1) {
-      filterClasses = filterClasses.filter(
-        classItem => classItem.course_id === this.state.selectedCourseId,
-      );
-    }
-    if (this.state.selectedProvinceId !== -1) {
-      filterClasses = filterClasses.filter(
-        classItem =>
-          classItem.base.district.provinceid === this.state.selectedProvinceId,
-      );
-    }
-    return filterClasses;
-  };
+  // getDataClass = () => {
+  //   if (this.props.classData === null || this.props.classData === undefined) {
+  //     return [];
+  //   }
+  //   let filterClasses = this.props.classData;
+  //   if (this.state.selectedCourseId !== -1) {
+  //     filterClasses = filterClasses.filter(
+  //       (classItem) => classItem.course_id === this.state.selectedCourseId,
+  //     );
+  //   }
+  //   if (this.state.selectedProvinceId !== -1) {
+  //     filterClasses = filterClasses.filter(
+  //       (classItem) =>
+  //         classItem.base.district.provinceid === this.state.selectedProvinceId,
+  //     );
+  //   }
+  //   return filterClasses;
+  // };
 
   toggleFilterModal = () => {
     this.setState({filterModalVisible: !this.state.filterModalVisible});
@@ -89,8 +73,8 @@ class ClassComponent extends React.Component {
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <Search
           placeholder="Tìm kiếm lớp học"
-          onChangeText={search => this.setState({search})}
-          value={this.state.search}
+          onChangeText={this.props.searchClass}
+          value={this.props.search}
           autoFocus={false}
           extraStyle={{width: width - (theme.mainHorizontal * 2 + 40 + 10)}}
           extraInputStyle={{
@@ -112,20 +96,18 @@ class ClassComponent extends React.Component {
           genData={this.props.genData}
           baseData={this.props.baseData}
           courseData={this.props.courseData}
-          onSelectCourseId={this.onSelectCourseId}
-          selectedCourseId={this.state.selectedCourseId}
-          onSelectBaseId={this.onSelectBaseId}
-          selectedBaseId={this.state.selectedBaseId}
-          onSelectProvinceId={this.onSelectProvinceId}
-          selectedProvinceId={this.state.selectedProvinceId}
-          onSelectGenId={this.onSelectGenId}
-          selectedGenId={this.state.selectedGenId}
+          onSelectCourseId={this.props.onSelectCourseId}
+          selectedCourseId={this.props.selectedCourseId}
+          onSelectBaseId={this.props.onSelectBaseId}
+          selectedBaseId={this.props.selectedBaseId}
+          // onSelectProvinceId={this.onSelectProvinceId}
+          // selectedProvinceId={this.state.selectedProvinceId}
+          onSelectGenId={this.props.onSelectGenId}
+          selectedGenId={this.props.selectedGenId}
           closeModal={this.toggleFilterModal}
           currentGen={this.props.currentGen}
           isVisible={this.state.filterModalVisible}
           filter={this.props.filter}
-          analyticBaseId={this.props.analyticBaseId}
-          analyticGenId={this.props.analyticGenId}
           provinces={this.props.provinces}
           isLoadingProvinces={this.props.isLoadingProvinces}
         />
@@ -136,7 +118,6 @@ class ClassComponent extends React.Component {
   render() {
     if (
       this.props.isLoadingCourse ||
-      this.props.isLoadingClass ||
       this.props.isLoadingBase ||
       this.props.isLoadingGen ||
       this.props.isLoadingProvinces
@@ -146,7 +127,7 @@ class ClassComponent extends React.Component {
     return (
       <Container>
         <List
-          dataArray={this.searchClass(this.getDataClass())}
+          dataArray={this.props.classData}
           ListHeaderComponent={this.headerComponent}
           refreshControl={
             <RefreshControl
@@ -159,23 +140,28 @@ class ClassComponent extends React.Component {
               }
             />
           }
+          onEndReached={this.props.loadDataClass}
+          contentContainerStyle={{flexGrow: 1}}
           renderRow={(item, sectionID, rowID) => (
             <ListItemClass
               {...this.props}
+              key={item.id}
               nameClass={item.name}
-              avatar={item.avatar_url}
+              avatar={item.course ? item.course.icon_url : null} // CHANGED
               studyTime={item.study_time}
-              address={item.address}
+              address={
+                item.room ? `${item.room.name} - ${item.room.address}` : null
+              } // CHANGED
               totalPaid={item.total_paid}
-              totalRegisters={item.total_registers}
-              paidTarget={item.paid_target}
-              registerTarget={item.register_target}
+              totalRegisters={item.total_register}
+              paidTarget={item.target}
+              registerTarget={item.regis_target}
               onPress={this.props.onSelectedItem}
               classId={item.id}
               teach={item.teacher}
               assist={item.teacher_assistant}
-              courseId={item.course_id}
-              baseId={item.base.id}
+              courseId={item.course ? item.course.id : null} // CHANGED
+              baseId={item.room ? item.room.base_id : null} // CHANGED
               changeClassStatus={this.props.changeClassStatus}
               classStatus={item.status}
               user={this.props.user}
@@ -186,6 +172,23 @@ class ClassComponent extends React.Component {
               date_end={item.date_end}
             />
           )}
+          ListEmptyComponent={
+            this.props.isLoadingClass ? (
+              this.props.isRefreshing ? (
+                <View />
+              ) : (
+                <Loading size={width / 8} />
+              )
+            ) : this.props.isRefreshing ? (
+              <View />
+            ) : (
+              <View style={styles.container}>
+                <Text style={{color: theme.dangerColor, fontSize: 16}}>
+                  Không có kết quả
+                </Text>
+              </View>
+            )
+          }
         />
       </Container>
     );
@@ -195,6 +198,11 @@ class ClassComponent extends React.Component {
 const styles = {
   containerPicker: {
     flexDirection: 'row',
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   filterContainer: {
     width: 40,

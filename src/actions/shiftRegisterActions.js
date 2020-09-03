@@ -3,6 +3,7 @@
  */
 import * as types from '../constants/actionTypes';
 import * as shiftRegisterApi from '../apis/shiftRegisterApi';
+import {Alert} from 'react-native';
 
 export function beginDataShiftRegisterLoad() {
   return {
@@ -13,14 +14,14 @@ export function beginDataShiftRegisterLoad() {
 }
 
 export function loadDataShiftRegister(baseId, genId, token) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginDataShiftRegisterLoad());
     shiftRegisterApi
       .loadShiftRegister(baseId, genId, token)
-      .then(function(res) {
+      .then(function (res) {
         dispatch(loadDataShiftRegisterSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadDataShiftRegisterError());
         throw error;
       });
@@ -66,22 +67,34 @@ export function selectedGenId(genId) {
 }
 
 export function register(registerId, token) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(postShiftRegister(registerId));
     shiftRegisterApi
       .register(registerId, token)
-      .then(function(res) {
-        dispatch(
-          updateDataRegister(
-            JSON.stringify({
-              id: registerId,
-              user: res.data.data.user,
-            }),
-          ),
-        );
-        dispatch(shiftRegisterSuccessful(registerId, res));
+      .then(function (res) {
+        if (res.data.status === 1) {
+          dispatch(
+            updateDataRegister(
+              JSON.stringify({
+                id: registerId,
+                user: res.data.data.user,
+              }),
+            ),
+          );
+          dispatch(shiftRegisterSuccessful(registerId, res));
+        } else {
+          dispatch(
+            updateDataRegister(
+              JSON.stringify({
+                id: registerId,
+              }),
+            ),
+          );
+          dispatch(ShiftRegisterError());
+          Alert.alert('Thông báo', res.data.message);
+        }
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(ShiftRegisterError());
         throw error;
       });
@@ -116,14 +129,21 @@ export function ShiftRegisterError(registerId) {
 }
 
 export function unRegister(registerId, token) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(postShiftUnRegister(registerId));
     shiftRegisterApi
       .unregister(registerId, token)
-      .then(function(res) {
+      .then(function (res) {
+        dispatch(
+          updateDataRegister(
+            JSON.stringify({
+              id: registerId,
+            }),
+          ),
+        );
         dispatch(shiftUnRegisterSuccessful(registerId, res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(ShiftUnRegisterError());
         throw error;
       });

@@ -21,14 +21,11 @@ class FilterClassModal extends React.Component {
     super(props, context);
     this.state = {
       search: '',
-      selectedCourseId: this.props.selectedCourseId,
-      selectedBaseId: this.props.selectedBaseId,
-      selectedProvinceId: this.props.selectedProvinceId,
-      selectedGenId: this.props.selectedGenId,
+      // selectedProvinceId: this.props.selectedProvinceId,
     };
   }
 
-  renderPickerField = settings => {
+  renderPickerField = (settings) => {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
@@ -66,7 +63,7 @@ class FilterClassModal extends React.Component {
     );
   };
 
-  renderPickerOption = settings => {
+  renderPickerOption = (settings) => {
     const {item, getLabel} = settings;
     return (
       <View style={styles.options}>
@@ -75,13 +72,13 @@ class FilterClassModal extends React.Component {
     );
   };
 
-  renderPickerHeader = title => {
+  renderPickerHeader = (title) => {
     return (
       <View style={styles.headerFooterContainer}>
         <Text style={styles.headerFooterText}>{title}</Text>
         <Search
           placeholder="Tìm kiếm"
-          onChangeText={search => {
+          onChangeText={(search) => {
             this.setState({search});
           }}
           value={this.state.search}
@@ -102,7 +99,7 @@ class FilterClassModal extends React.Component {
     );
   }
 
-  getData = array => {
+  getData = (array) => {
     let defaultOption = {
       id: -1,
       name: 'Tất cả',
@@ -120,9 +117,9 @@ class FilterClassModal extends React.Component {
     return array[0];
   };
 
-  getDefaultGen = gens => {
+  getDefaultGen = (gens) => {
     for (let gen of gens) {
-      if (gen.id === this.state.selectedGenId) {
+      if (gen.id === this.props.selectedGenId) {
         return gen;
       }
     }
@@ -145,7 +142,7 @@ class FilterClassModal extends React.Component {
     return genData;
   };
 
-  getSearchedResults = array => {
+  getSearchedResults = (array) => {
     let list = [];
     if (this.state.search === '') {
       return array;
@@ -164,30 +161,28 @@ class FilterClassModal extends React.Component {
     }
   };
 
-  applyFilter = () => {
-    this.props.onSelectCourseId(this.state.selectedCourseId);
-    this.props.onSelectProvinceId(this.state.selectedProvinceId);
-    this.props.onSelectBaseId(this.state.selectedBaseId);
-    this.props.onSelectGenId(this.state.selectedGenId);
-  };
+  // applyFilter = () => {
+  //   this.props.onSelectProvinceId(this.state.selectedProvinceId);
+  //   this.props.filter();
+  // };
 
-  filterProvinces = bases => {
-    let baseData = [];
-    if (this.state.selectedProvinceId !== -1) {
-      for (let base of bases) {
-        if (base.id !== -1) {
-          if (base.district.province.id === this.state.selectedProvinceId) {
-            baseData.push(base);
-          }
-        } else {
-          baseData.push(base);
-        }
-      }
-      return baseData;
-    } else {
-      return bases;
-    }
-  };
+  // filterProvinces = (bases) => {
+  //   let baseData = [];
+  //   if (this.state.selectedProvinceId !== -1) {
+  //     for (let base of bases) {
+  //       if (base.id !== -1) {
+  //         if (base.district.province.id === this.state.selectedProvinceId) {
+  //           baseData.push(base);
+  //         }
+  //       } else {
+  //         baseData.push(base);
+  //       }
+  //     }
+  //     return baseData;
+  //   } else {
+  //     return bases;
+  //   }
+  // };
 
   render() {
     return (
@@ -214,9 +209,9 @@ class FilterClassModal extends React.Component {
                   )}
                   defaultValue={this.getDefault(
                     this.getData(this.props.courseData),
-                    this.state.selectedCourseId,
+                    this.props.selectedCourseId,
                   )}
-                  getLabel={item => item.name}
+                  getLabel={(item) => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
                   fieldTemplate={this.renderPickerField}
@@ -228,35 +223,8 @@ class FilterClassModal extends React.Component {
                   modalStyle={{
                     borderRadius: 6,
                   }}
-                  onValueChange={value => {
-                    this.setState({search: '', selectedCourseId: value.id});
-                  }}
-                />
-              </View>
-              <View style={styles.filterTitle}>
-                <Text style={{fontSize: 16}}>Tỉnh thành</Text>
-                <CustomPicker
-                  options={this.getSearchedResults(
-                    this.getData(this.props.provinces),
-                  )}
-                  defaultValue={this.getDefault(
-                    this.getData(this.props.provinces),
-                    this.state.selectedProvinceId,
-                  )}
-                  getLabel={item => item.name}
-                  modalAnimationType={'fade'}
-                  optionTemplate={this.renderPickerOption}
-                  fieldTemplate={this.renderPickerField}
-                  headerTemplate={() =>
-                    this.renderPickerHeader('Chọn tình thành')
-                  }
-                  footerTemplate={this.renderPickerFooter}
-                  onBlur={() => this.setState({search: ''})}
-                  modalStyle={{
-                    borderRadius: 6,
-                  }}
-                  onValueChange={value => {
-                    this.setState({search: '', selectedProvinceId: value.id});
+                  onValueChange={(value) => {
+                    this.props.onSelectCourseId(value.id);
                   }}
                 />
               </View>
@@ -264,13 +232,13 @@ class FilterClassModal extends React.Component {
                 <Text style={{fontSize: 16}}>Cơ sở</Text>
                 <CustomPicker
                   options={this.getSearchedResults(
-                    this.filterProvinces(this.getData(this.props.baseData)),
+                    this.getData(this.props.baseData),
                   )}
                   defaultValue={this.getDefault(
                     this.getData(this.props.baseData),
-                    this.state.selectedBaseId,
+                    this.props.selectedBaseId,
                   )}
-                  getLabel={item =>
+                  getLabel={(item) =>
                     item.id === -1
                       ? item.name
                       : item.name + ' - ' + item.address
@@ -284,8 +252,8 @@ class FilterClassModal extends React.Component {
                   modalStyle={{
                     borderRadius: 6,
                   }}
-                  onValueChange={value => {
-                    this.setState({search: '', selectedBaseId: value.id});
+                  onValueChange={(value) => {
+                    this.props.onSelectBaseId(value.id);
                   }}
                 />
               </View>
@@ -294,7 +262,7 @@ class FilterClassModal extends React.Component {
                 <CustomPicker
                   options={this.getSearchedResults(this.getGenData())}
                   defaultValue={this.getDefaultGen(this.getGenData())}
-                  getLabel={item => item.name}
+                  getLabel={(item) => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
                   fieldTemplate={this.renderPickerField}
@@ -306,19 +274,15 @@ class FilterClassModal extends React.Component {
                   modalStyle={{
                     borderRadius: 6,
                   }}
-                  onValueChange={value => {
+                  onValueChange={(value) => {
                     this.setState({search: ''});
-                    this.setState({selectedGenId: value.id});
+                    this.props.onSelectGenId(value.id);
                   }}
                 />
               </View>
               <TouchableOpacity
                 onPress={() => {
-                  this.applyFilter();
-                  this.props.filter(
-                    this.state.selectedBaseId,
-                    this.state.selectedGenId,
-                  );
+                  this.props.filter();
                   this.props.closeModal();
                 }}>
                 <View style={styles.submit}>
@@ -348,7 +312,7 @@ class FilterClassModal extends React.Component {
 const styles = {
   modal: {
     backgroundColor: 'white',
-    height: 440,
+    height: 380,
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
     paddingHorizontal: theme.mainHorizontal,

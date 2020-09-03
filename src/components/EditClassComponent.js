@@ -39,17 +39,17 @@ class EditClassComponent extends React.Component {
       id: !classData.id ? '' : classData.id,
       name: !classData.name ? '' : classData.name,
       description: !classData.description ? '' : classData.description,
-      target: !classData.paid_target ? '' : '' + classData.paid_target,
-      regis_target: !classData.register_target
+      target: !classData.target ? '' : '' + classData.target,
+      regis_target: !classData.regis_target
         ? ''
-        : '' + classData.register_target,
+        : '' + classData.regis_target,
       link_drive: !classData.link_drive ? '' : classData.link_drive,
       study_time: !classData.study_time ? '' : classData.study_time,
       datestart: !classData.datestart_en ? '' : moment(classData.datestart_en),
-      room_id: !classData.room_id ? '' : classData.room_id,
+      room_id: !classData.room ? '' : classData.room.id,
       schedule_id: !classData.schedule_id ? '' : classData.schedule_id,
       type: !classData.type ? '' : classData.type,
-      course_id: !classData.course_id ? '' : classData.course_id,
+      course_id: !classData.course ? '' : classData.course.id,
       gen_id: !classData.gen.id ? '' : classData.gen.id,
       teacher_id:
         !classData.teacher || !classData.teacher.id ? '' : classData.teacher.id,
@@ -60,7 +60,7 @@ class EditClassComponent extends React.Component {
       status: !classData.status ? '' : classData.status,
       teachers: [],
       teaching_assistants: [],
-      date_end: !classData.date_end_en ? '' : moment(classData.date_end_en),
+      date_end: !classData.datestart_en ? '' : moment(classData.datestart_en),
       enroll_start_date: !classData.enroll_start_date
         ? ''
         : moment(classData.enroll_start_date),

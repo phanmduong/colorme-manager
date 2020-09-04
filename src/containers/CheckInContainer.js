@@ -10,6 +10,7 @@ import {bindActionCreators} from 'redux';
 import {NavigationActions} from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from "../styles";
+import Geolocation from "react-native-geolocation-service";
 
 class CheckInContainer extends React.Component {
   constructor(props, context) {
@@ -36,6 +37,7 @@ class CheckInContainer extends React.Component {
 
   componentWillMount() {
     this.onCheck();
+    Geolocation.requestAuthorization();
   }
 
   onCheck() {

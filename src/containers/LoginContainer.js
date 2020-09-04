@@ -11,6 +11,7 @@ import LoginComponent from '../components/LoginComponent';
 import * as loginActions from '../actions/loginActions';
 import * as autoLoginActions from '../actions/autoLoginActions';
 import SplashScreen from 'react-native-splash-screen';
+import Geolocation from 'react-native-geolocation-service';
 
 class LoginContainer extends React.Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class LoginContainer extends React.Component {
 
   componentWillMount() {
     this.props.loginActions.getDataLogin();
+    Geolocation.requestAuthorization();
   }
 
   saveDataLogin() {
@@ -106,7 +108,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(LoginContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);

@@ -3,6 +3,9 @@
  */
 import * as types from '../constants/actionTypes';
 import initialState from './initialState';
+import {filteredData} from '../helper';
+
+let filterData;
 
 export default function registerListReducer(
   state = initialState.registerList,
@@ -15,10 +18,14 @@ export default function registerListReducer(
         errorMy: action.errorMy,
       });
     case types.LOAD_DATA_REGISTER_LIST_SUCCESSFUL_MY:
+      filterData = filteredData(
+        state.registerListDataMy,
+        action.registerListDataMy,
+      );
       let registerListDataMy =
         action.currentPageMy === 1
           ? action.registerListDataMy
-          : [...state.registerListDataMy, ...action.registerListDataMy];
+          : [...state.registerListDataMy, ...filterData];
       return Object.assign({}, state, {
         isLoadingMy: action.isLoadingMy,
         errorMy: action.errorMy,

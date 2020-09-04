@@ -117,21 +117,21 @@ class DashboardComponent extends React.Component {
               </TouchableOpacity>
             </View>
           </View>
-          {/*<TouchableOpacity*/}
-          {/*  onPress={() => {*/}
-          {/*    this.props.setAutoFocusRegisterListSearch(true);*/}
-          {/*    this.props.navigation.navigate('RegisterList');*/}
-          {/*  }}>*/}
-          {/*  <View style={styles.searchContainer}>*/}
-          {/*    <Icon*/}
-          {/*      name={'ios-search'}*/}
-          {/*      color={'black'}*/}
-          {/*      size={20}*/}
-          {/*      style={styles.searchIcon}*/}
-          {/*    />*/}
-          {/*    <Text style={styles.searchInput}>Tìm kiếm học viên</Text>*/}
-          {/*  </View>*/}
-          {/*</TouchableOpacity>*/}
+          <TouchableOpacity
+            onPress={() => {
+              this.props.setAutoFocusRegisterListSearch(true);
+              this.props.navigation.navigate('RegisterList');
+            }}>
+            <View style={styles.searchContainer}>
+              <Icon
+                name={'ios-search'}
+                color={'black'}
+                size={20}
+                style={styles.searchIcon}
+              />
+              <Text style={styles.searchInput}>Tìm kiếm học viên</Text>
+            </View>
+          </TouchableOpacity>
           <View style={styles.mainFeatureLine}>
             <CardMenu
               colorOne={'#E26800'}
@@ -199,11 +199,18 @@ class DashboardComponent extends React.Component {
             {/*    this.props.navigation.navigate('Meeting');*/}
             {/*  }}*/}
             {/*/>*/}
+            {/*<CircleTab*/}
+            {/*  iconImage={require('../../assets/img/icons8-writer_male.png')}*/}
+            {/*  title={'Tạo đăng ký'}*/}
+            {/*  onPress={() => {*/}
+            {/*    this.props.navigation.navigate('SaveRegister');*/}
+            {/*  }}*/}
+            {/*/>*/}
             <CircleTab
-              iconImage={require('../../assets/img/icons8-writer_male.png')}
-              title={'Tạo đăng ký'}
+              iconImage={require('../../assets/img/icons8-scholarship.png')}
+              title={'Học viên'}
               onPress={() => {
-                this.props.navigation.navigate('SaveRegister');
+                this.props.navigation.navigate('RegisterList');
               }}
             />
             <CircleTab
@@ -231,13 +238,13 @@ class DashboardComponent extends React.Component {
             {/*    this.props.navigation.navigate('MakeupClass');*/}
             {/*  }}*/}
             {/*/>*/}
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-new_window.png')}
-              title={'Tạo lớp học'}
-              onPress={() => {
-                this.props.navigation.navigate('AddClass');
-              }}
-            />
+            {/*<CircleTab*/}
+            {/*  iconImage={require('../../assets/img/icons8-new_window.png')}*/}
+            {/*  title={'Tạo lớp học'}*/}
+            {/*  onPress={() => {*/}
+            {/*    this.props.navigation.navigate('AddClass');*/}
+            {/*  }}*/}
+            {/*/>*/}
             <CircleTab
               iconImage={require('../../assets/img/icons8-user_account.png')}
               title={'Leads'}
@@ -245,13 +252,13 @@ class DashboardComponent extends React.Component {
                 this.props.navigation.navigate('Leads');
               }}
             />
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-add_user_group_man_man.png')}
-              title={'Tạo lead'}
-              onPress={() => {
-                this.props.navigation.navigate('AddLead');
-              }}
-            />
+            {/*<CircleTab*/}
+            {/*  iconImage={require('../../assets/img/icons8-add_user_group_man_man.png')}*/}
+            {/*  title={'Tạo lead'}*/}
+            {/*  onPress={() => {*/}
+            {/*    this.props.navigation.navigate('AddLead');*/}
+            {/*  }}*/}
+            {/*/>*/}
           </View>
           <View style={styles.otherFeatureLine}>
             {/*<CircleTab*/}

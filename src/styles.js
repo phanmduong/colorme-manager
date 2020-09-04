@@ -53,4 +53,13 @@ export default (styles = {
     marginVertical: 5,
     marginLeft: 10,
   },
+  headerIconContainer: {
+    width: 40,
+    height: 40,
+    backgroundColor: '#F6F6F6',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 20,
+    marginRight: 16,
+  },
 });

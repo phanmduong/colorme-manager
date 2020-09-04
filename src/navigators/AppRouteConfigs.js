@@ -475,6 +475,13 @@ const TabDashboard = createStackNavigator(
         headerTitleStyle: {color: 'black'},
       }),
     },
+    RegisterList: {
+      screen: RegisterListContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
   },
   {
     defaultNavigationOptions: {

@@ -21,7 +21,7 @@ class ListItemLeads extends React.Component {
     };
   }
 
-  renderStars = number => {
+  renderStars = (number) => {
     switch (number) {
       case 1:
         return (
@@ -195,6 +195,8 @@ class ListItemLeads extends React.Component {
       city,
       token,
       notes,
+      father_name,
+      interest,
     } = this.props;
     return (
       <TouchableOpacity
@@ -315,6 +317,16 @@ class ListItemLeads extends React.Component {
                     url={'tel:' + phone}
                     phone={phone}
                   />
+                ) : null}
+                {father_name ? (
+                  <Text numberOfLines={1} style={styles.classInfoContainer}>
+                    {father_name}
+                  </Text>
+                ) : null}
+                {interest ? (
+                  <Text numberOfLines={1} style={styles.classInfoContainer}>
+                    {interest}
+                  </Text>
                 ) : null}
                 {city ? (
                   <Text numberOfLines={1} style={styles.classInfoContainer}>

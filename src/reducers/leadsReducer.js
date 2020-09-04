@@ -1,5 +1,8 @@
 import * as types from '../constants/actionTypes';
 import initialState from './initialState';
+import {filteredData} from '../helper';
+
+let filterData;
 
 export default function leadsReducer(state = initialState.leads, action) {
   switch (action.type) {
@@ -14,10 +17,11 @@ export default function leadsReducer(state = initialState.leads, action) {
         errorLeads: action.errorLeads,
       });
     case types.LOAD_LEADS_SUCCESSFUL:
+      filterData = filteredData(state.leads, action.leads);
       let leads =
         action.currentPageLeads === 1
           ? action.leads
-          : [...state.leads, ...action.leads];
+          : [...state.leads, ...filterData];
       return Object.assign({}, state, {
         isLoadingLeads: action.isLoadingLeads,
         errorLeads: action.errorLeads,

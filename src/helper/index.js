@@ -270,3 +270,13 @@ export function itemExist(item, array) {
 export function findSum(numLst) {
   return numLst.reduce((a, b) => a + b, 0);
 }
+
+export function filteredData(state, data) {
+  let filterData = [];
+  for (let item of data) {
+    if (!itemExist(item, state)) {
+      filterData.push(item);
+    }
+  }
+  return filterData;
+}

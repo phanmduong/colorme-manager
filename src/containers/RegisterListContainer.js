@@ -11,6 +11,10 @@ import * as genActions from '../actions/genActions';
 import * as saveRegisterActions from '../actions/saveRegisterActions';
 import RegisterListComponent from '../components/RegisterListComponent';
 import {isEmptyInput} from '../helper';
+import {Text, TouchableOpacity, View} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MatIcon from 'react-native-vector-icons/MaterialIcons';
+import theme from '../styles';
 
 class RegisterListContainer extends React.Component {
   constructor(props, context) {
@@ -351,6 +355,31 @@ class RegisterListContainer extends React.Component {
     this.props.registerListActions.setAutoFocusRegisterListSearch(bool);
   };
 
+  static navigationOptions = ({navigation}) => ({
+    headerLeft: () => (
+      <View style={styles.headerLeftContainer}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Icon
+            name={'chevron-left'}
+            size={33}
+            color={'black'}
+            onPress={() => navigation.goBack()}
+          />
+          <Text style={styles.name}>Học viên</Text>
+        </View>
+      </View>
+    ),
+    headerRight: () => (
+      <View style={{flexDirection: 'row'}}>
+        <TouchableOpacity onPress={() => navigation.navigate('SaveRegister')}>
+          <View style={styles.headerIconContainer}>
+            <MatIcon name={'add-circle'} size={20} color={'black'} />
+          </View>
+        </TouchableOpacity>
+      </View>
+    ),
+  });
+
   render() {
     return (
       <RegisterListComponent
@@ -421,6 +450,12 @@ class RegisterListContainer extends React.Component {
     );
   }
 }
+
+const styles = {
+  name: theme.header,
+  headerLeftContainer: theme.headerNavigateLeftContainer,
+  headerIconContainer: theme.headerIconContainer,
+};
 
 function mapStateToProps(state) {
   return {

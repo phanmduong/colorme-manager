@@ -4,8 +4,10 @@ import {
   TouchableOpacity,
   Image,
   RefreshControl,
+  View,
+  Text,
 } from 'react-native';
-import {View, List, Text} from 'native-base';
+import {List} from 'native-base';
 import theme from '../styles';
 import ListItemRegisterStudent from './registerList/ListItemRegisterStudent';
 import Loading from './common/Loading';
@@ -14,6 +16,7 @@ import {getStatusBarHeight, isIphoneX} from 'react-native-iphone-x-helper';
 import FilterModal from './infoStudent/FilterModal';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 var {height, width} = Dimensions.get('window');
 class RegisterListComponent extends React.Component {
@@ -30,9 +33,10 @@ class RegisterListComponent extends React.Component {
   };
 
   componentDidMount = () => {
-    this.props.navigation.addListener('didFocus', route => {
-      this.props.autoFocus ? this.searchRegisterList.focus() : null;
-    });
+    // this.props.navigation.addListener('didFocus', route => {
+    //   this.props.autoFocus ? this.searchRegisterList.focus() : null;
+    // });
+    this.props.autoFocus ? this.searchRegisterList.focus() : () => null;
   };
 
   resetModal = () => {
@@ -50,7 +54,7 @@ class RegisterListComponent extends React.Component {
           placeholder="Tìm kiếm (Email, tên, số điện thoại)"
           onChangeText={updateFormAndLoadDataSearch}
           value={search}
-          refer={input => {
+          refer={(input) => {
             this.searchRegisterList = input;
           }}
           extraStyle={{width: width - (theme.mainHorizontal * 2 + 40 + 10)}}
@@ -128,7 +132,7 @@ class RegisterListComponent extends React.Component {
       {id: -1, name: 'Tất cả'},
       {id: this.props.user.id, name: 'Đơn của bạn'},
     ];
-    return salerLst.map(saler => (
+    return salerLst.map((saler) => (
       <TouchableOpacity
         onPress={() => {
           this.setState({salerId: saler.id});
@@ -155,26 +159,32 @@ class RegisterListComponent extends React.Component {
   headerComponent = () => {
     return (
       <View style={{flex: 1}}>
-        <View style={styles.headerContainer}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Profile')}>
-              <Image
-                source={{uri: this.props.user.avatar_url}}
-                style={styles.headerAva}
-              />
-            </TouchableOpacity>
-            <Text style={styles.headerTitle}>Đăng kí học</Text>
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('SaveRegister')}>
-              <View style={styles.headerIconContainer}>
-                <MatIcon name={'add-circle'} size={20} color={'black'} />
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
+        {/*<View style={styles.headerContainer}>*/}
+        {/*  <View style={{flexDirection: 'row', alignItems: 'center'}}>*/}
+        {/*    <Icon*/}
+        {/*      name={'chevron-left'}*/}
+        {/*      size={33}*/}
+        {/*      color={'black'}*/}
+        {/*      onPress={() => this.props.navigation.goBack()}*/}
+        {/*    />*/}
+        {/*    /!*<TouchableOpacity*!/*/}
+        {/*    /!*  onPress={() => this.props.navigation.navigate('Profile')}>*!/*/}
+        {/*    /!*  <Image*!/*/}
+        {/*    /!*    source={{uri: this.props.user.avatar_url}}*!/*/}
+        {/*    /!*    style={styles.headerAva}*!/*/}
+        {/*    /!*  />*!/*/}
+        {/*    /!*</TouchableOpacity>*!/*/}
+        {/*    <Text style={styles.headerTitle}>Học viên</Text>*/}
+        {/*  </View>*/}
+        {/*  <View style={{flexDirection: 'row'}}>*/}
+        {/*    <TouchableOpacity*/}
+        {/*      onPress={() => this.props.navigation.navigate('SaveRegister')}>*/}
+        {/*      <View style={styles.headerIconContainer}>*/}
+        {/*        <MatIcon name={'add-circle'} size={20} color={'black'} />*/}
+        {/*      </View>*/}
+        {/*    </TouchableOpacity>*/}
+        {/*  </View>*/}
+        {/*</View>*/}
         {this.renderSearch()}
         <View style={styles.containerTag}>{this.renderTabs()}</View>
       </View>
@@ -183,78 +193,77 @@ class RegisterListComponent extends React.Component {
 
   renderContent() {
     return (
-      <View style={{flex: 1}}>
-        <List
-          style={styles.list}
-          onEndReached={this.props.loadDataRegisterList}
-          onEndReachedThreshold={height / 2}
-          dataArray={this.props.registerList}
-          contentContainerStyle={{flexGrow: 1}}
-          ListHeaderComponent={this.headerComponent}
-          ListEmptyComponent={
-            this.props.isLoading ? (
-              this.props.refreshing ? (
-                <View />
-              ) : (
-                <Loading size={width / 8} />
-              )
+      <List
+        style={styles.list}
+        onEndReached={this.props.loadDataRegisterList}
+        dataArray={this.props.registerList}
+        contentContainerStyle={{flexGrow: 1}}
+        ListHeaderComponent={this.headerComponent}
+        ListEmptyComponent={
+          this.props.isLoading ? (
+            this.props.refreshing ? (
+              <View />
             ) : (
-              <View style={styles.container}>
-                <Text style={{color: theme.dangerColor, fontSize: 16}}>
-                  Không có kết quả
-                </Text>
-              </View>
+              <Loading size={width / 8} />
             )
-          }
-          refreshControl={
-            <RefreshControl
-              refreshing={this.props.refreshing}
-              onRefresh={() => this.props.onRefresh(this.props.search_coupon)}
-            />
-          }
-          renderRow={(item, sectionID, rowID) => (
-            <ListItemRegisterStudent
-              {...this.props}
-              name={item.name}
-              avatar={item.course_avatar_url}
-              email={item.email}
-              phone={item.phone}
-              saler={item.saler}
-              campaign={item.campaign}
-              source={item.source}
-              register_status={item.register_status}
-              callStatus={item.call_status}
-              paidStatus={item.paid_status}
-              money={item.money}
-              studentId={item.student_id}
-              setStudentId={this.props.setStudentId}
-              avatar_url={item.avatar_url}
-              classInfo={item.class}
-              token={this.props.token}
-              next_code={item.next_code}
-              next_waiting_code={item.next_waiting_code}
-              created_at_cal={item.created_at_cal}
-              registerId={item.id}
-              errorChangeCallStatus={this.props.errorChangeCallStatus}
-              errorSubmitMoney={this.props.errorSubmitMoney}
-              changeCallStatus={this.props.changeCallStatus}
-              submitMoney={this.props.submitMoney}
-              paidTime={item.paid_time}
-            />
-          )}
-        />
-      </View>
+          ) : (
+            <View style={styles.container}>
+              <Text style={{color: theme.dangerColor, fontSize: 16}}>
+                Không có kết quả
+              </Text>
+            </View>
+          )
+        }
+        refreshControl={
+          <RefreshControl
+            refreshing={this.props.refreshing}
+            onRefresh={() => this.props.onRefresh(this.props.search_coupon)}
+          />
+        }
+        renderRow={(item, sectionID, rowID) => (
+          <ListItemRegisterStudent
+            {...this.props}
+            key={item.id}
+            name={item.name}
+            avatar={item.course_avatar_url}
+            email={item.email}
+            phone={item.phone}
+            saler={item.saler}
+            campaign={item.campaign}
+            source={item.source}
+            register_status={item.register_status}
+            callStatus={item.call_status}
+            paidStatus={item.paid_status}
+            money={item.money}
+            studentId={item.student_id}
+            setStudentId={this.props.setStudentId}
+            avatar_url={item.avatar_url}
+            classInfo={item.class}
+            token={this.props.token}
+            next_code={item.next_code}
+            next_waiting_code={item.next_waiting_code}
+            created_at_cal={item.created_at_cal}
+            registerId={item.id}
+            errorChangeCallStatus={this.props.errorChangeCallStatus}
+            errorSubmitMoney={this.props.errorSubmitMoney}
+            changeCallStatus={this.props.changeCallStatus}
+            submitMoney={this.props.submitMoney}
+            paidTime={item.paid_time}
+          />
+        )}
+      />
     );
   }
 
   render() {
     return (
       <View
-        style={
-          isIphoneX()
-            ? {flex: 1, marginTop: getStatusBarHeight() + 10}
-            : {flex: 1, marginTop: 20}
-        }>
+      // style={
+      //   isIphoneX()
+      //     ? {flex: 1, marginTop: getStatusBarHeight() + 10}
+      //     : {flex: 1, marginTop: 20}
+      // }
+      >
         {this.renderContent()}
       </View>
     );
@@ -295,18 +304,13 @@ const styles = {
   },
   headerContainer: {
     marginHorizontal: theme.mainHorizontal,
-    marginTop: 20,
-    marginBottom: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-  },
-  headerTitle: {
-    color: theme.mainTextColor,
-    fontSize: theme.header.fontSize,
-    fontWeight: theme.header.fontWeight,
     marginLeft: 10,
+    marginVertical: 5,
   },
+  headerTitle: theme.header,
   headerAva: theme.mainAvatar,
   filterContainer: {
     width: 40,

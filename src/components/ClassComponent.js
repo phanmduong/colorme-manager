@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, List, Text, View} from 'native-base';
+import {Container, List, View} from 'native-base';
 import ListItemClass from './listItem/ListItemClass';
 import Loading from './common/Loading';
 import {
@@ -7,11 +7,14 @@ import {
   Image,
   RefreshControl,
   TouchableOpacity,
+  ScrollView,
+  Text,
 } from 'react-native';
 import Search from './common/Search';
 import {convertVietText} from '../helper';
 import FilterClassModal from './class/FilterClassModal';
 import theme from '../styles';
+import LinearGradient from 'react-native-linear-gradient';
 var {height, width} = Dimensions.get('window');
 
 class ClassComponent extends React.Component {
@@ -20,6 +23,7 @@ class ClassComponent extends React.Component {
     this.state = {
       // selectedProvinceId: -1,
       filterModalVisible: false,
+      courseId: -1,
     };
   }
 
@@ -43,6 +47,30 @@ class ClassComponent extends React.Component {
       }
       return searchedClassList;
     }
+  };
+
+  selectTab = (course) => {
+    this.setState({courseId: course.id});
+    this.props.onSelectCourseId(course.id);
+    setTimeout(() => this.props.onRefresh(), 50);
+  };
+
+  renderTabs = () => {
+    return this.props.courseData.map((course) => (
+      <TouchableOpacity onPress={() => this.selectTab(course)}>
+        <LinearGradient
+          colors={
+            this.state.courseId === course.id
+              ? ['#F6F6F6', '#F6F6F6']
+              : ['white', 'white']
+          }
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 0}}
+          style={styles.tag}>
+          <Text style={{color: 'black'}}>{course.name}</Text>
+        </LinearGradient>
+      </TouchableOpacity>
+    ));
   };
 
   // getDataClass = () => {
@@ -70,47 +98,52 @@ class ClassComponent extends React.Component {
 
   headerComponent = () => {
     return (
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Search
-          placeholder="Tìm kiếm lớp học"
-          onChangeText={this.props.searchClass}
-          value={this.props.search}
-          autoFocus={false}
-          extraStyle={{width: width - (theme.mainHorizontal * 2 + 40 + 10)}}
-          extraInputStyle={{
-            width: width - (theme.mainHorizontal * 2 + 40 + 10) - 48,
-          }}
-        />
-        <TouchableOpacity onPress={this.toggleFilterModal}>
-          <View style={styles.filterContainer}>
-            <Image
-              source={require('../../assets/img/icons8-sorting_options_filled.png')}
-              style={{width: 18, height: 18}}
-            />
-          </View>
-        </TouchableOpacity>
-        <FilterClassModal
-          isLoadingGen={this.props.isLoadingGen}
-          isLoadingBase={this.props.isLoadingBase}
-          isLoadingCourse={this.props.isLoadingCourse}
-          genData={this.props.genData}
-          baseData={this.props.baseData}
-          courseData={this.props.courseData}
-          onSelectCourseId={this.props.onSelectCourseId}
-          selectedCourseId={this.props.selectedCourseId}
-          onSelectBaseId={this.props.onSelectBaseId}
-          selectedBaseId={this.props.selectedBaseId}
-          // onSelectProvinceId={this.onSelectProvinceId}
-          // selectedProvinceId={this.state.selectedProvinceId}
-          onSelectGenId={this.props.onSelectGenId}
-          selectedGenId={this.props.selectedGenId}
-          closeModal={this.toggleFilterModal}
-          currentGen={this.props.currentGen}
-          isVisible={this.state.filterModalVisible}
-          filter={this.props.filter}
-          provinces={this.props.provinces}
-          isLoadingProvinces={this.props.isLoadingProvinces}
-        />
+      <View>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Search
+            placeholder="Tìm kiếm lớp học"
+            onChangeText={this.props.searchClass}
+            value={this.props.search}
+            autoFocus={false}
+            extraStyle={{width: width - (theme.mainHorizontal * 2 + 40 + 10)}}
+            extraInputStyle={{
+              width: width - (theme.mainHorizontal * 2 + 40 + 10) - 48,
+            }}
+          />
+          <TouchableOpacity onPress={this.toggleFilterModal}>
+            <View style={styles.filterContainer}>
+              <Image
+                source={require('../../assets/img/icons8-sorting_options_filled.png')}
+                style={{width: 18, height: 18}}
+              />
+            </View>
+          </TouchableOpacity>
+          <FilterClassModal
+            isLoadingGen={this.props.isLoadingGen}
+            isLoadingBase={this.props.isLoadingBase}
+            isLoadingCourse={this.props.isLoadingCourse}
+            genData={this.props.genData}
+            baseData={this.props.baseData}
+            courseData={this.props.courseData}
+            onSelectCourseId={this.props.onSelectCourseId}
+            selectedCourseId={this.props.selectedCourseId}
+            onSelectBaseId={this.props.onSelectBaseId}
+            selectedBaseId={this.props.selectedBaseId}
+            // onSelectProvinceId={this.onSelectProvinceId}
+            // selectedProvinceId={this.state.selectedProvinceId}
+            onSelectGenId={this.props.onSelectGenId}
+            selectedGenId={this.props.selectedGenId}
+            closeModal={this.toggleFilterModal}
+            currentGen={this.props.currentGen}
+            isVisible={this.state.filterModalVisible}
+            filter={this.props.filter}
+            provinces={this.props.provinces}
+            isLoadingProvinces={this.props.isLoadingProvinces}
+          />
+        </View>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <View style={styles.tabContainer}>{this.renderTabs()}</View>
+        </ScrollView>
       </View>
     );
   };
@@ -212,6 +245,17 @@ const styles = {
     alignItems: 'center',
     borderRadius: 20,
     marginLeft: 10,
+  },
+  tag: {
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  tabContainer: {
+    paddingHorizontal: theme.mainHorizontal,
+    flexDirection: 'row',
   },
 };
 

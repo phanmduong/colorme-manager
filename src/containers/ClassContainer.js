@@ -9,9 +9,10 @@ import * as classActions from '../actions/classActions';
 import * as saveRegisterActions from '../actions/saveRegisterActions';
 import * as genActions from '../actions/genActions';
 import * as analyticsActions from '../actions/analyticsActions';
-import {Text, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../styles';
+import MatIcon from 'react-native-vector-icons/MaterialIcons';
 
 class ClassContainer extends React.Component {
   constructor(props) {
@@ -37,6 +38,15 @@ class ClassContainer extends React.Component {
         </View>
       </View>
     ),
+    headerRight: () => (
+      <View style={{flexDirection: 'row'}}>
+        <TouchableOpacity onPress={() => navigation.navigate('AddClass')}>
+          <View style={styles.headerIconContainer}>
+            <MatIcon name={'add-circle'} size={20} color={'black'} />
+          </View>
+        </TouchableOpacity>
+      </View>
+    ),
   });
 
   componentDidMount() {
@@ -44,8 +54,8 @@ class ClassContainer extends React.Component {
     this.props.classActions.loadDataCourse(this.props.token, this.props.domain);
     this.props.classActions.loadBaseData(this.props.token, this.props.domain);
     this.props.saveRegisterActions.loadProvinces(
-        this.props.token,
-        this.props.domain,
+      this.props.token,
+      this.props.domain,
     );
     this.loadDataClass();
   }
@@ -172,6 +182,7 @@ class ClassContainer extends React.Component {
 const styles = {
   name: theme.header,
   headerLeftContainer: theme.headerNavigateLeftContainer,
+  headerIconContainer: theme.headerIconContainer,
 };
 
 function mapStateToProps(state) {

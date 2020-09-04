@@ -101,6 +101,7 @@ class LeadsComponent extends React.Component {
       setStudentId={this.props.setStudentId}
       interest={item.interest}
       father_name={item.father_name}
+      source_id={item.source_id}
     />
   );
 

@@ -231,6 +231,7 @@ class RegisterListComponent extends React.Component {
             saler={item.saler}
             campaign={item.campaign}
             source={item.source}
+            source_id={item.source_id}
             register_status={item.register_status}
             callStatus={item.call_status}
             paidStatus={item.paid_status}

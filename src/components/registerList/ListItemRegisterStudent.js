@@ -10,7 +10,7 @@ import {
 import {View, Thumbnail} from 'native-base';
 import theme from '../../styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {dotNumber, getShortName} from '../../helper';
+import {dotNumber, getShortName, isEmptyInput} from '../../helper';
 import CallRegisterModal from '../infoStudent/CallRegisterModal';
 import SubmitMoneyModal from '../infoStudent/SubmitMoneyModal';
 import Call from '../common/Call';
@@ -30,6 +30,12 @@ class ListItemStudent extends React.Component {
 
   toggleMoneyModal = () => {
     this.setState({moneyModalVisible: !this.state.moneyModalVisible});
+  };
+
+  getSource = () => {
+    return this.props.sources.find(
+      (source) => source.id === this.props.source_id,
+    );
   };
 
   content() {
@@ -52,6 +58,7 @@ class ListItemStudent extends React.Component {
       created_at_cal,
       paidTime,
       source,
+      source_id,
       register_status,
     } = this.props;
     return (
@@ -139,19 +146,21 @@ class ListItemStudent extends React.Component {
               ) : (
                 <View />
               )}
-              {source ? (
+              {!isEmptyInput(source_id) ? (
                 <View
                   style={{
                     ...styles.card,
                     ...{
                       backgroundColor:
-                        !source.color || source.color === ''
+                        !this.getSource().color || this.getSource().color === ''
                           ? theme.processColor1
                           : source.color,
                       marginRight: 5,
                     },
                   }}>
-                  <Text style={styles.campaign}>{source.name.trim()}</Text>
+                  <Text style={styles.campaign}>
+                    {this.getSource().name.trim()}
+                  </Text>
                 </View>
               ) : (
                 <View />

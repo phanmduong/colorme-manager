@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {Thumbnail} from 'native-base';
 import theme from '../../styles';
-import {getShortName} from '../../helper';
+import {getShortName, isEmptyInput} from '../../helper';
 import Call from '../common/Call';
 import CallRegisterModal from '../infoStudent/CallRegisterModal';
 
@@ -180,6 +180,12 @@ class ListItemLeads extends React.Component {
     this.setState({callModalVisible: !this.state.callModalVisible});
   };
 
+  getSource = () => {
+    return this.props.sources.find(
+      (source) => source.id === this.props.source_id,
+    );
+  };
+
   render() {
     const {
       id,
@@ -197,6 +203,7 @@ class ListItemLeads extends React.Component {
       notes,
       father_name,
       interest,
+      source_id,
     } = this.props;
     return (
       <TouchableOpacity
@@ -268,19 +275,22 @@ class ListItemLeads extends React.Component {
                 ) : (
                   <View />
                 )}
-                {source && source.name && source.color ? (
+                {!isEmptyInput(source_id) ? (
                   <View
                     style={{
                       ...styles.card,
                       ...{
                         backgroundColor:
-                          !source.color || source.color === ''
+                          !this.getSource().color ||
+                          !this.getSource().color === ''
                             ? theme.processColor1
-                            : source.color,
+                            : this.getSource().color,
                         marginRight: 5,
                       },
                     }}>
-                    <Text style={styles.campaign}>{source.name.trim()}</Text>
+                    <Text style={styles.campaign}>
+                      {this.getSource().name.trim()}
+                    </Text>
                   </View>
                 ) : (
                   <View />

@@ -136,7 +136,7 @@ class AnalyticsContainer extends React.Component {
 
   onSelectStartDate = async (startDate) => {
     try {
-      const dateString = startDate.format('YYYY-MM-DD');
+      const dateString = String(startDate.format('YYYY-MM-DD'));
       await AsyncStorage.setItem('@analytics_start_date', dateString);
       this.props.analyticsActions.selectedStartDate(startDate);
     } catch (e) {
@@ -146,7 +146,7 @@ class AnalyticsContainer extends React.Component {
 
   onSelectEndDate = async (endDate) => {
     try {
-      const dateString = endDate.format('YYYY-MM-DD');
+      const dateString = String(endDate.format('YYYY-MM-DD'));
       await AsyncStorage.setItem('@analytics_end_date', dateString);
       this.props.analyticsActions.selectedEndDate(endDate);
     } catch (e) {
@@ -176,7 +176,7 @@ class AnalyticsContainer extends React.Component {
 
   onSelectGenId = async (genId) => {
     try {
-      await AsyncStorage.setItem('@analytics_gen_id', genId);
+      await AsyncStorage.setItem('@analytics_gen_id', String(genId));
       this.props.analyticsActions.selectedGenId(genId);
     } catch (e) {
       // saving error

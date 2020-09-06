@@ -275,7 +275,7 @@ class ListItemLeads extends React.Component {
                 ) : (
                   <View />
                 )}
-                {!isEmptyInput(source_id) ? (
+                {!isEmptyInput(this.getSource()) ? (
                   <View
                     style={{
                       ...styles.card,

@@ -146,7 +146,7 @@ class ListItemStudent extends React.Component {
               ) : (
                 <View />
               )}
-              {!isEmptyInput(source_id) ? (
+              {!isEmptyInput(this.getSource()) ? (
                 <View
                   style={{
                     ...styles.card,
@@ -154,7 +154,7 @@ class ListItemStudent extends React.Component {
                       backgroundColor:
                         !this.getSource().color || this.getSource().color === ''
                           ? theme.processColor1
-                          : source.color,
+                          : this.getSource().color,
                       marginRight: 5,
                     },
                   }}>

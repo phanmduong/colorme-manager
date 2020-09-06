@@ -12,12 +12,17 @@ function ListStudentAttendanceRegisterItem({
   setHwStatus,
   setStatus,
 }) {
+  const [isStatusSelected, setStatusSelection] = useState(attendance_lesson_status !== 0);
+  const [isHwStatusSelected, setHwStatusSelection] = useState(attendance_homework_status !== 0);
+
   function setToggleStatusCheckBox(newValue) {
     setStatus(newValue, id);
+    setStatusSelection(newValue);
   }
 
   function setToggleHwCheckBox(newValue) {
     setHwStatus(newValue, id);
+    setHwStatusSelection(newValue);
   }
 
   return (
@@ -25,14 +30,14 @@ function ListStudentAttendanceRegisterItem({
       <View style={styles.checkBoxContainer}>
         <CheckBox
           disabled={false}
-          value={attendance_lesson_status}
+          value={isStatusSelected}
           boxType={'square'}
           style={styles.checkBox}
           tintColor={'#C8E6C9'}
           onCheckColor={'#4CAF50'}
           onFillColor={'#C8E6C9'}
           onTintColor={'#C8E6C9'}
-          tintColors={{true: '#C8E6C9', false: '#C8E6C9'}}
+          tintColors={{true: '#4CAF50', false: '#C8E6C9'}}
           onValueChange={(newValue) => setToggleStatusCheckBox(newValue)}
           onAnimationType={'bounce'}
           offAnimationType={'bounce'}
@@ -41,14 +46,14 @@ function ListStudentAttendanceRegisterItem({
       <View style={styles.checkBoxContainer}>
         <CheckBox
           disabled={false}
-          value={attendance_homework_status}
+          value={isHwStatusSelected}
           boxType={'square'}
           style={styles.checkBox}
           tintColor={'#C8E6C9'}
           onCheckColor={'#4CAF50'}
           onFillColor={'#C8E6C9'}
           onTintColor={'#C8E6C9'}
-          tintColors={{true: '#C8E6C9', false: '#C8E6C9'}}
+          tintColors={{true: '#4CAF50', false: '#C8E6C9'}}
           onValueChange={(newValue) => setToggleHwCheckBox(newValue)}
           onAnimationType={'bounce'}
           offAnimationType={'bounce'}

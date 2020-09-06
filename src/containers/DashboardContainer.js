@@ -46,18 +46,18 @@ class DashboardContainer extends React.Component {
   };
 
   getAnalyticsGenData = async () => {
-    // try {
-    //   const genId = await AsyncStorage.getItem('@analytics_gen_id');
-    //   const startDate = await AsyncStorage.getItem('@analytics_start_date');
-    //   const endDate = await AsyncStorage.getItem('@analytics_end_date');
-    //   if (genId !== null && startDate != null && endDate != null) {
-    //     this.props.analyticsActions.selectedStartDate(moment(startDate));
-    //     this.props.analyticsActions.selectedEndDate(moment(endDate));
-    //     this.props.analyticsActions.selectedGenId(parseInt(genId));
-    //   }
-    // } catch (e) {
-    //   // error reading value
-    // }
+    try {
+      const genId = await AsyncStorage.getItem('@analytics_gen_id');
+      const startDate = await AsyncStorage.getItem('@analytics_start_date');
+      const endDate = await AsyncStorage.getItem('@analytics_end_date');
+      if (genId !== null && startDate != null && endDate != null) {
+        this.props.analyticsActions.selectedStartDate(moment(startDate));
+        this.props.analyticsActions.selectedEndDate(moment(endDate));
+        this.props.analyticsActions.selectedGenId(parseInt(genId));
+      }
+    } catch (e) {
+      // error reading value
+    }
   };
 
   render() {

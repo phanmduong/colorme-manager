@@ -31,7 +31,7 @@ class WorkShiftRegisterComponent extends React.Component {
     };
   }
 
-  renderShiftWeek = index => {
+  renderShiftWeek = (index) => {
     return (
       <WorkShiftRegisterWeek
         week={this.props.workShiftRegisterData.weeks[index]}
@@ -42,7 +42,7 @@ class WorkShiftRegisterComponent extends React.Component {
     );
   };
 
-  showShift = index => {
+  showShift = (index) => {
     return (
       <View style={{marginBottom: 50}}>{this.renderShiftWeek(index)}</View>
     );
@@ -80,7 +80,7 @@ class WorkShiftRegisterComponent extends React.Component {
     return total;
   };
 
-  renderCoursePickerField = settings => {
+  renderCoursePickerField = (settings) => {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
@@ -110,7 +110,7 @@ class WorkShiftRegisterComponent extends React.Component {
     }
   };
 
-  renderCoursePickerOption = settings => {
+  renderCoursePickerOption = (settings) => {
     const {item, getLabel} = settings;
     return (
       <View style={styles.options}>
@@ -145,7 +145,7 @@ class WorkShiftRegisterComponent extends React.Component {
     );
   };
 
-  renderBasePickerField = settings => {
+  renderBasePickerField = (settings) => {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
@@ -167,7 +167,7 @@ class WorkShiftRegisterComponent extends React.Component {
     );
   };
 
-  renderBasePickerOption = settings => {
+  renderBasePickerOption = (settings) => {
     const {item, getLabel} = settings;
     return (
       <View style={styles.options}>
@@ -176,7 +176,7 @@ class WorkShiftRegisterComponent extends React.Component {
     );
   };
 
-  renderWeekPickerOption = settings => {
+  renderWeekPickerOption = (settings) => {
     const {item} = settings;
     return (
       <View style={styles.options}>
@@ -193,7 +193,7 @@ class WorkShiftRegisterComponent extends React.Component {
     );
   };
 
-  renderWeekPickerField = settings => {
+  renderWeekPickerField = (settings) => {
     const {selectedItem, defaultText} = settings;
     let weekOptions = [];
     for (
@@ -242,7 +242,7 @@ class WorkShiftRegisterComponent extends React.Component {
     );
   }
 
-  greenBarLength = index => {
+  greenBarLength = (index) => {
     let barLen = 0;
     let totalHours = this.totalHours(index, this.props.user);
     if (totalHours > 20) {
@@ -320,7 +320,7 @@ class WorkShiftRegisterComponent extends React.Component {
               <CustomPicker
                 options={courseOptions}
                 defaultValue={courseOptions[0]}
-                getLabel={item => item.name}
+                getLabel={(item) => item.name}
                 modalAnimationType={'fade'}
                 optionTemplate={this.renderCoursePickerOption}
                 fieldTemplate={this.renderCoursePickerField}
@@ -329,7 +329,7 @@ class WorkShiftRegisterComponent extends React.Component {
                 modalStyle={{
                   borderRadius: 6,
                 }}
-                onValueChange={value => {
+                onValueChange={(value) => {
                   this.props.onSelectGenId(value.id);
                   this.setState({index: 0, resetIndex: true});
                 }}
@@ -337,7 +337,7 @@ class WorkShiftRegisterComponent extends React.Component {
               <CustomPicker
                 options={baseOptions}
                 defaultValue={baseOptions[0]}
-                getLabel={item => item.name}
+                getLabel={(item) => item.name}
                 modalAnimationType={'fade'}
                 optionTemplate={this.renderBasePickerOption}
                 fieldTemplate={this.renderBasePickerField}
@@ -346,7 +346,7 @@ class WorkShiftRegisterComponent extends React.Component {
                 modalStyle={{
                   borderRadius: 6,
                 }}
-                onValueChange={value => {
+                onValueChange={(value) => {
                   this.props.onSelectBaseId(value.id);
                   this.setState({index: 0, resetIndex: true});
                 }}
@@ -362,7 +362,7 @@ class WorkShiftRegisterComponent extends React.Component {
                 modalStyle={{
                   borderRadius: 6,
                 }}
-                onValueChange={value => {
+                onValueChange={(value) => {
                   this.setWeekIndex(value, weekOptions);
                   this.setState({resetIndex: false});
                 }}

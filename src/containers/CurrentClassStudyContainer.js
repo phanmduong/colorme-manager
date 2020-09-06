@@ -50,6 +50,13 @@ class CurrentClassStudyContainer extends React.Component {
     this.props.navigation.navigate('QRCode');
   };
 
+  openListAttendanceRegister = (classItem) => {
+    this.props.currentClassStudyActions.selectedCurrentClassStudy(classItem);
+    this.props.navigation.navigate('ListStudentAttendanceRegister', {
+      classItem: classItem,
+    });
+  };
+
   onRefresh = () => {
     this.props.currentClassStudyActions.refreshDataCurrentClassStudy(
       this.props.selectedDate,
@@ -81,6 +88,7 @@ class CurrentClassStudyContainer extends React.Component {
         isLoadingBase={this.props.isLoadingBase}
         isLoadingProvinces={this.props.isLoadingProvinces}
         provinces={this.props.provinces}
+        openListAttendanceRegister={this.openListAttendanceRegister}
       />
     );
   }

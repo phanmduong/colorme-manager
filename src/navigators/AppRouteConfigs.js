@@ -62,6 +62,7 @@ import AddLeadsContainer from '../containers/AddLeadsContainer';
 import StaffContainer from '../containers/StaffContainer';
 import ClockManageContainer from '../containers/ClockManageContainer';
 import ClockManageWorkShiftDetailsContainer from '../containers/ClockManageWorkShiftDetailsContainer';
+import ListStudentAttendanceRegisterContainer from "../containers/ListStudentAttendanceRegisterContainer";
 
 const navigationOptionsDefault = {
   defaultNavigationOptions: {
@@ -128,6 +129,13 @@ const TabAttendance = createStackNavigator(
     },
     ListStudentClass: {
       screen: ListStudentClassContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    ListStudentAttendanceRegister: {
+      screen: ListStudentAttendanceRegisterContainer,
       navigationOptions: () => ({
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},

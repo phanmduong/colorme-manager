@@ -53,13 +53,9 @@ class CurrentClassItem extends React.Component {
         ? total_attendances
         : total_took_attendances;
     let nameSelectedDate = !isEmptyInput(currentLesson)
-      ? moment(this.props.selectedDate)
-          .locale('vi')
-          .format('dddd') +
+      ? moment(this.props.selectedDate).locale('vi').format('dddd') +
         ' ' +
-        moment(this.props.selectedDate)
-          .locale('vi')
-          .format('L')
+        moment(this.props.selectedDate).locale('vi').format('L')
       : null;
     nameSelectedDate = !isEmptyInput(nameSelectedDate)
       ? nameSelectedDate.charAt(0).toUpperCase() + nameSelectedDate.slice(1)
@@ -214,10 +210,22 @@ class CurrentClassItem extends React.Component {
                       ...classItem,
                       lesson: [this.getCurrentLesson()],
                     };
-                    this.props.openQrCode(classModifiedItem);
+                    this.props.openListAttendanceRegister(classModifiedItem);
                   }}>
                   <View style={styles.button}>
-                    <Text style={{fontSize: 16}}>Điểm danh</Text>
+                    <Text>Điểm danh</Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    let classModifiedItem = {
+                      ...classItem,
+                      lesson: [this.getCurrentLesson()],
+                    };
+                    this.props.openQrCode(classModifiedItem);
+                  }}>
+                  <View style={[styles.button, {marginLeft: 10}]}>
+                    <Text>Điểm danh QRCode</Text>
                   </View>
                 </TouchableOpacity>
               </View>

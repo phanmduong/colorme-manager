@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.6.1",
+    "@react-native-community/checkbox": "^0.5.1",
     "@react-native-community/netinfo": "^4.4.0",
     "appcenter": "^3.0.0",
     "appcenter-analytics": "^3.0.0",

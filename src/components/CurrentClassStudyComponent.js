@@ -85,6 +85,7 @@ class ClassComponent extends React.Component {
         selectedDate={this.props.selectedDate}
         class_lesson={classItem.class_lesson}
         onSelectedItem={this.props.onSelectedItem}
+        openListAttendanceRegister={this.props.openListAttendanceRegister}
       />
     ));
   };

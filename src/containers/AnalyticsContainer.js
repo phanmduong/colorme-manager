@@ -15,6 +15,7 @@ import * as classActions from '../actions/classActions';
 import * as baseActions from '../actions/baseActions';
 import * as genActions from '../actions/genActions';
 import {ENROLLING, STUDYING} from '../constants/constant';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class AnalyticsContainer extends React.Component {
   constructor(props, context) {
@@ -22,7 +23,7 @@ class AnalyticsContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.loadAnalytics();
+    setTimeout(() => this.loadAnalytics(), 50);
     this.loadCampaigns();
     this.loadSources();
     this.loadStaff('');
@@ -133,12 +134,24 @@ class AnalyticsContainer extends React.Component {
     );
   };
 
-  onSelectStartDate = (startDate) => {
-    this.props.analyticsActions.selectedStartDate(startDate);
+  onSelectStartDate = async (startDate) => {
+    try {
+      const dateString = startDate.format('YYYY-MM-DD');
+      await AsyncStorage.setItem('@analytics_start_date', dateString);
+      this.props.analyticsActions.selectedStartDate(startDate);
+    } catch (e) {
+      // saving error
+    }
   };
 
-  onSelectEndDate = (endDate) => {
-    this.props.analyticsActions.selectedEndDate(endDate);
+  onSelectEndDate = async (endDate) => {
+    try {
+      const dateString = endDate.format('YYYY-MM-DD');
+      await AsyncStorage.setItem('@analytics_end_date', dateString);
+      this.props.analyticsActions.selectedEndDate(endDate);
+    } catch (e) {
+      // saving error
+    }
   };
 
   onSelectBaseId = (baseId) => {
@@ -161,8 +174,13 @@ class AnalyticsContainer extends React.Component {
     this.props.analyticsActions.selectedCourseId(courseId);
   };
 
-  onSelectGenId = (genId) => {
-    this.props.analyticsActions.selectedGenId(genId);
+  onSelectGenId = async (genId) => {
+    try {
+      await AsyncStorage.setItem('@analytics_gen_id', genId);
+      this.props.analyticsActions.selectedGenId(genId);
+    } catch (e) {
+      // saving error
+    }
   };
 
   loadCampaigns = () => {

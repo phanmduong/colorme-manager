@@ -182,6 +182,7 @@ class DashboardComponent extends React.Component {
               iconImage={require('../../assets/img/icons8-ratings-90.png')}
               title={'Thống kê'}
               onPress={() => {
+                this.props.getAnalyticsGenData();
                 this.props.navigation.navigate('Analytics');
               }}
             />

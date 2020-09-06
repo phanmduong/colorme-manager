@@ -46,7 +46,6 @@ export function loadCurrentClassStudyApi(date, token, domain) {
     date +
     '&include=class_lesson.analytics_attendance,class_lesson.lesson,base.district.province,room,course,teacher,teacher_assistant,schedule&token=' +
     token;
-  console.log(url);
   return axios.get(url);
 }
 

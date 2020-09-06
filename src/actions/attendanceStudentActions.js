@@ -159,3 +159,46 @@ export function scannedQRCode(studentCode) {
     studentCode: studentCode,
   };
 }
+
+export function changeClassAttendance(attendances, token, domain) {
+  const attendanceJson = JSON.stringify(attendances);
+  return function (dispatch) {
+    dispatch(beginChangeClassAttendance());
+    attendanceStudentApi
+      .changeAttendances(attendanceJson, token, domain)
+      .then((res) => {
+        dispatch(changeClassAttendanceSuccessful());
+        Alert.alert('Thông báo', res.data.data.message);
+      })
+      .catch((error) => {
+        dispatch(changeClassAttendanceError());
+        console.log(error);
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
+        throw error;
+      });
+  };
+}
+
+function beginChangeClassAttendance() {
+  return {
+    type: types.BEGIN_CHANGE_CLASS_ATTENDANCE,
+    isChangingClassAttendance: true,
+    errorClassAttendance: false,
+  };
+}
+
+function changeClassAttendanceSuccessful() {
+  return {
+    type: types.CHANGE_CLASS_ATTENDANCE_SUCCESSFUL,
+    isChangingClassAttendance: false,
+    errorClassAttendance: false,
+  };
+}
+
+function changeClassAttendanceError() {
+  return {
+    type: types.CHANGE_CLASS_ATTENDANCE_ERROR,
+    isChangingClassAttendance: false,
+    errorClassAttendance: true,
+  };
+}

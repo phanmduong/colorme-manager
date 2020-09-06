@@ -5,19 +5,19 @@ import CheckBox from '@react-native-community/checkbox';
 const {width, height} = Dimensions.get('window');
 
 function ListStudentAttendanceRegisterItem({
+  id,
   name,
   attendance_lesson_status,
   attendance_homework_status,
+  setHwStatus,
+  setStatus,
 }) {
-  const [status, setStatus] = useState(attendance_lesson_status);
-  const [hw_status, setHwStatus] = useState(attendance_homework_status);
-
   function setToggleStatusCheckBox(newValue) {
-    setStatus(newValue);
+    setStatus(newValue, id);
   }
 
   function setToggleHwCheckBox(newValue) {
-    setHwStatus(newValue);
+    setHwStatus(newValue, id);
   }
 
   return (
@@ -25,7 +25,7 @@ function ListStudentAttendanceRegisterItem({
       <View style={styles.checkBoxContainer}>
         <CheckBox
           disabled={false}
-          value={status}
+          value={attendance_lesson_status}
           boxType={'square'}
           style={styles.checkBox}
           tintColor={'#C8E6C9'}
@@ -41,7 +41,7 @@ function ListStudentAttendanceRegisterItem({
       <View style={styles.checkBoxContainer}>
         <CheckBox
           disabled={false}
-          value={hw_status}
+          value={attendance_homework_status}
           boxType={'square'}
           style={styles.checkBox}
           tintColor={'#C8E6C9'}

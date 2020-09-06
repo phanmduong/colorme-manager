@@ -91,6 +91,21 @@ export default function attendanceStudentReducer(
           },
         },
       };
+    case types.BEGIN_CHANGE_CLASS_ATTENDANCE:
+      return Object.assign({}, state, {
+        isChangingClassAttendance: action.isChangingClassAttendance,
+        errorClassAttendance: action.errorClassAttendance,
+      });
+    case types.CHANGE_CLASS_ATTENDANCE_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isChangingClassAttendance: action.isChangingClassAttendance,
+        errorClassAttendance: action.errorClassAttendance,
+      });
+    case types.CHANGE_CLASS_ATTENDANCE_ERROR:
+      return Object.assign({}, state, {
+        isChangingClassAttendance: action.isChangingClassAttendance,
+        errorClassAttendance: action.errorClassAttendance,
+      });
     default:
       return state;
   }

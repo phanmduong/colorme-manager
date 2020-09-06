@@ -7,6 +7,7 @@ import {Image, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {getShortName, isEmptyInput} from '../helper';
 import theme from '../styles';
+import * as attendanceStudentActions from '../actions/attendanceStudentActions';
 
 class ListStudentAttendanceRegisterContainer extends React.Component {
   constructor(props) {
@@ -37,7 +38,7 @@ class ListStudentAttendanceRegisterContainer extends React.Component {
           )}
           <Text style={[styles.name, {marginLeft: 10}]}>
             {navigation.state.params && navigation.state.params.classItem
-              ? getShortName(navigation.state.params.classItem.name)
+              ? navigation.state.params.classItem.name
               : null}
           </Text>
         </View>
@@ -59,11 +60,20 @@ class ListStudentAttendanceRegisterContainer extends React.Component {
     );
   };
 
+  changeAttendances = (attendances) => {
+    this.props.attendanceStudentActions.changeClassAttendance(
+      attendances,
+      this.props.token,
+      this.props.domain,
+    );
+  };
+
   render() {
     return (
       <ListStudentAttendanceRegisterComponent
         {...this.props}
         loadAttendances={this.loadAttendances}
+        changeAttendances={this.changeAttendances}
       />
     );
   }
@@ -84,6 +94,9 @@ function mapStateToProps(state) {
       state.listStudentAttendance.listStudentAttendanceData,
     error: state.listStudentAttendance.error,
     domain: state.login.domain,
+    isChangingClassAttendance:
+      state.attendanceStudent.isChangingClassAttendance,
+    errorClassAttendance: state.attendanceStudent.errorClassAttendance,
   };
 }
 
@@ -91,6 +104,10 @@ function mapDispatchToProps(dispatch) {
   return {
     listStudentAttendanceActions: bindActionCreators(
       listStudentAttendanceActions,
+      dispatch,
+    ),
+    attendanceStudentActions: bindActionCreators(
+      attendanceStudentActions,
       dispatch,
     ),
   };

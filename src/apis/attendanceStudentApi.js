@@ -28,3 +28,11 @@ export function studentChangeStatusBlock(studentId, token, status, domain) {
     token;
   return axios.put(url, {status});
 }
+
+export function changeAttendances(attendances, token, domain) {
+  let url =
+    env.manageApiUrlV3(domain) + '/v2/course/change-attendances?token=' + token;
+  return axios.post(url, {
+    attendances: attendances,
+  });
+}

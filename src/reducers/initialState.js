@@ -107,6 +107,8 @@ export default {
     statusRequestUpdated: -1,
     messageError: undefined,
     isChangeStatusBlocking: false,
+    isChangingClassAttendance: false,
+    errorClassAttendance: false,
   },
   shiftRegister: {
     isLoading: false,

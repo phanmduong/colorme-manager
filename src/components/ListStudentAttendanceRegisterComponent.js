@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Text,
   Dimensions,
+  ActivityIndicator,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import theme from '../styles';
@@ -12,18 +13,56 @@ const {width, height} = Dimensions.get('window');
 import ListStudentAttendanceRegisterItem from './listStudentAttendanceRegister/ListStudentAttendanceRegisterItem';
 import Loading from './common/Loading';
 import FA5Icon from 'react-native-vector-icons/Ionicons';
+import {isEmptyInput} from '../helper';
 
 class ListStudentAttendanceRegisterComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       lessonId: this.props.classSelected.lesson.id,
+      attendances: [],
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!isEmptyInput(nextProps.listStudentAttendanceData)) {
+      const attendances = nextProps.listStudentAttendanceData.map(
+        (attendance) => {
+          return {
+            attendance_id: attendance.attendance_id,
+            attendance_lesson_status: attendance.attendance_lesson_status,
+            attendance_homework_status: attendance.attendance_homework_status,
+            note: '',
+          };
+        },
+      );
+      this.setState({attendances});
+    }
   }
 
   selectTab = (lesson) => {
     this.setState({lessonId: lesson.id});
     this.props.loadAttendances(lesson.id);
+  };
+
+  setStatus = (statusValue, id) => {
+    const attendances = this.state.attendances.map((attendance) => {
+      if (attendance.attendance_id === id) {
+        return {...attendance, attendance_lesson_status: statusValue ? 1 : 0};
+      }
+      return {...attendance};
+    });
+    this.setState({attendances});
+  };
+
+  setHwStatus = (statusValue, id) => {
+    const attendances = this.state.attendances.map((attendance) => {
+      if (attendance.attendance_id === id) {
+        return {...attendance, attendance_homework_status: statusValue ? 1 : 0};
+      }
+      return {...attendance};
+    });
+    this.setState({attendances});
   };
 
   renderTabs = () => {
@@ -47,9 +86,12 @@ class ListStudentAttendanceRegisterComponent extends React.Component {
   renderAttendanceItems = () => {
     return this.props.listStudentAttendanceData.map((attendance) => (
       <ListStudentAttendanceRegisterItem
+        id={attendance.attendance_id}
         name={attendance.name}
         attendance_lesson_status={attendance.attendance_lesson_status}
         attendance_homework_status={attendance.attendance_homework_status}
+        setStatus={this.setStatus}
+        setHwStatus={this.setHwStatus}
       />
     ));
   };
@@ -82,16 +124,25 @@ class ListStudentAttendanceRegisterComponent extends React.Component {
         </ScrollView>
         {this.props.isLoading ? null : (
           <View style={styles.buttonContainer}>
-            <TouchableOpacity>
+            {!this.props.isChangingClassAttendance ? (
+              <TouchableOpacity
+                onPress={() =>
+                  this.props.changeAttendances(this.state.attendances)
+                }>
+                <View style={styles.submitButton}>
+                  <FA5Icon
+                    color={'white'}
+                    name={'ios-checkmark-circle'}
+                    size={18}
+                  />
+                  <Text style={styles.submitTitle}>Hoàn tất và quay lại</Text>
+                </View>
+              </TouchableOpacity>
+            ) : (
               <View style={styles.submitButton}>
-                <FA5Icon
-                  color={'white'}
-                  name={'ios-checkmark-circle'}
-                  size={18}
-                />
-                <Text style={styles.submitTitle}>Hoàn tất và quay lại</Text>
+                <ActivityIndicator size={'small'} color={'white'} />
               </View>
-            </TouchableOpacity>
+            )}
           </View>
         )}
       </View>

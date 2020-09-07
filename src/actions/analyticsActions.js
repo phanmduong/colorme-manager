@@ -12,7 +12,16 @@ export function beginLoadAnalyticsRegister() {
   };
 }
 
+export function beginRefreshAnalyticsRegister() {
+  return {
+    type: types.BEGIN_DATA_ANALYTICS_REGISTER_REFRESH,
+    refreshingAnalyticsRegister: true,
+    errorAnalyticsRegister: false,
+  };
+}
+
 export function loadAnalyticsRegister(
+  refreshing,
   baseId,
   staffId,
   startTime,
@@ -23,7 +32,11 @@ export function loadAnalyticsRegister(
   token,
 ) {
   return function (dispatch) {
-    dispatch(beginLoadAnalyticsRegister());
+    if (!refreshing) {
+      dispatch(beginLoadAnalyticsRegister());
+    } else {
+      dispatch(beginRefreshAnalyticsRegister());
+    }
     analyticsApi
       .loadAnalyticsRegister(
         baseId,
@@ -51,6 +64,7 @@ export function loadAnalyticsRegisterSuccessful(res) {
     analyticsRegister: res.data.analytics,
     isLoadingAnalyticsRegister: false,
     errorAnalyticsRegister: false,
+    refreshingAnalyticsRegister: false,
   };
 }
 
@@ -59,10 +73,12 @@ export function loadAnalyticsRegisterError() {
     type: types.LOAD_DATA_ANALYTICS_REGISTER_ERROR,
     isLoadingAnalyticsRegister: false,
     errorAnalyticsRegister: true,
+    refreshingAnalyticsRegister: false,
   };
 }
 
 export function loadAnalyticsRevenue(
+  refreshing,
   startTime,
   endTime,
   staffId,
@@ -73,7 +89,11 @@ export function loadAnalyticsRevenue(
   token,
 ) {
   return function (dispatch) {
-    dispatch(beginLoadAnalyticsRevenue());
+    if (!refreshing) {
+      dispatch(beginLoadAnalyticsRevenue());
+    } else {
+      dispatch(beginRefreshAnalyticsRevenue());
+    }
     analyticsApi
       .loadAnalyticsRevenue(
         startTime,
@@ -103,12 +123,21 @@ function beginLoadAnalyticsRevenue() {
   };
 }
 
+function beginRefreshAnalyticsRevenue() {
+  return {
+    type: types.BEGIN_DATA_ANALYTICS_REVENUE_REFRESH,
+    refreshingAnalyticsRevenue: true,
+    errorAnalyticsRevenue: false,
+  };
+}
+
 function loadAnalyticsRevenueSuccessful(res) {
   return {
     type: types.LOAD_DATA_ANALYTICS_REVENUE_SUCCESSFUL,
     isLoadingAnalyticsRevenue: false,
     errorAnalyticsRevenue: false,
     analyticsRevenue: res.data.analytics,
+    refreshingAnalyticsRevenue: false,
   };
 }
 
@@ -117,6 +146,7 @@ function loadAnalyticsRevenueError() {
     type: types.LOAD_DATA_ANALYTICS_REVENUE_ERROR,
     isLoadingAnalyticsRevenue: false,
     errorAnalyticsRevenue: true,
+    refreshingAnalyticsRevenue: false,
   };
 }
 
@@ -186,6 +216,7 @@ export function selectedClassType(type) {
 }
 
 export function loadAnalyticsKPI(
+  refreshing,
   startTime,
   endTime,
   baseId,
@@ -196,7 +227,11 @@ export function loadAnalyticsKPI(
   token,
 ) {
   return function (dispatch) {
-    dispatch(beginLoadAnalyticsKPI());
+    if (!refreshing) {
+      dispatch(beginLoadAnalyticsKPI());
+    } else {
+      dispatch(beginRefreshAnalyticsKPI());
+    }
     analyticsApi
       .loadAnalyticsKPI(
         startTime,
@@ -226,12 +261,21 @@ function beginLoadAnalyticsKPI() {
   };
 }
 
+function beginRefreshAnalyticsKPI() {
+  return {
+    type: types.BEGIN_DATA_ANALYTICS_KPI_REFRESH,
+    refreshingAnalyticsKPI: true,
+    errorAnalyticsKPI: false,
+  };
+}
+
 function loadAnalyticsKPISuccessful(res) {
   return {
     type: types.LOAD_DATA_ANALYTICS_KPI_SUCCESSFUL,
     isLoadingAnalyticsKPI: false,
     errorAnalyticsKPI: false,
     analyticsKpis: res.data.analytics,
+    refreshingAnalyticsKPI: false,
   };
 }
 
@@ -240,10 +284,12 @@ function loadAnalyticsKPIError() {
     type: types.LOAD_DATA_ANALYTICS_KPI_ERROR,
     isLoadingAnalyticsKPI: false,
     errorAnalyticsKPI: true,
+    refreshingAnalyticsKPI: false,
   };
 }
 
 export function loadAnalyticsClasses(
+  refreshing,
   startDate,
   endDate,
   staffId,
@@ -256,7 +302,11 @@ export function loadAnalyticsClasses(
   token,
 ) {
   return function (dispatch) {
-    dispatch(beginLoadAnalyticsClasses());
+    if (!refreshing) {
+      dispatch(beginLoadAnalyticsClasses());
+    } else {
+      dispatch(beginRefreshAnalyticsClasses());
+    }
     analyticsApi
       .loadAnalyticsClasses(
         startDate,
@@ -288,12 +338,21 @@ function beginLoadAnalyticsClasses() {
   };
 }
 
+function beginRefreshAnalyticsClasses() {
+  return {
+    type: types.BEGIN_DATA_ANALYTICS_CLASSES_REFRESH,
+    refreshingAnalyticsClasses: true,
+    errorAnalyticsClasses: false,
+  };
+}
+
 function loadAnalyticsClassesSuccessful(res) {
   return {
     type: types.LOAD_DATA_ANALYTICS_CLASSES_SUCCESSFUL,
     isLoadingAnalyticsClasses: false,
     errorAnalyticsClasses: false,
     analyticsClasses: res.data.classes,
+    refreshingAnalyticsClasses: false,
   };
 }
 
@@ -302,5 +361,6 @@ function loadAnalyticsClassesError() {
     type: types.LOAD_DATA_ANALYTICS_CLASSES_ERROR,
     isLoadingAnalyticsClasses: false,
     errorAnalyticsClasses: true,
+    refreshingAnalyticsClasses: false,
   };
 }

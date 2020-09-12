@@ -255,8 +255,8 @@ class AnalyticsRegisterBarChart extends React.Component {
       <View>
         <View style={styles.infoRow}>
           <View style={[styles.infoContainer, {marginRight: 8}]}>
-            <View style={styles.row}>
-              <Text style={{marginRight: 10}}>Số lượng đăng kí</Text>
+            <View style={styles.infoTitleContainer}>
+              <Text>Số lượng đăng kí</Text>
               <View
                 style={[
                   styles.iconContainer,
@@ -272,8 +272,8 @@ class AnalyticsRegisterBarChart extends React.Component {
             </Text>
           </View>
           <View style={[styles.infoContainer, {marginLeft: 8}]}>
-            <View style={styles.row}>
-              <Text style={{marginRight: 10}}>Đã đóng học phí</Text>
+            <View style={styles.infoTitleContainer}>
+              <Text>Đã đóng học phí</Text>
               <View
                 style={[styles.iconContainer, {backgroundColor: '#65DA3A'}]}>
                 <FA5Icon name={'money-bill-alt'} size={12} color={'white'} />
@@ -374,6 +374,11 @@ const styles = {
   row: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  infoTitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   barRow: {
     flexDirection: 'row',

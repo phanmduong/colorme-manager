@@ -239,8 +239,8 @@ class AnalyticsRevenueBarChart extends React.Component {
       <View>
         <View style={styles.infoRow}>
           <View style={[styles.infoContainer, {marginRight: 8}]}>
-            <View style={styles.row}>
-              <Text style={{marginRight: 10}}>Tổng doanh thu</Text>
+            <View style={styles.infoTitleContainer}>
+              <Text>Tổng doanh thu</Text>
               <View
                 style={[
                   styles.iconContainer,
@@ -254,8 +254,8 @@ class AnalyticsRevenueBarChart extends React.Component {
             <Text style={styles.infoNum}>{dotNumber(this.props.revenue)}đ</Text>
           </View>
           <View style={[styles.infoContainer, {marginLeft: 8}]}>
-            <View style={styles.row}>
-              <Text style={{marginRight: 10}}>D.thu hôm nay</Text>
+            <View style={styles.infoTitleContainer}>
+              <Text>D.thu hôm nay</Text>
               <View
                 style={[
                   styles.iconContainer,
@@ -370,6 +370,11 @@ const styles = {
     fontWeight: 'bold',
     fontSize: 18,
     marginTop: 10,
+  },
+  infoTitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   row: {
     flexDirection: 'row',

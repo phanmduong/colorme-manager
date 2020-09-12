@@ -255,8 +255,8 @@ class AnalyticsStudentBarChart extends React.Component {
       <View>
         <View style={styles.infoRow}>
           <View style={[styles.infoContainer, {marginRight: 8}]}>
-            <View style={styles.row}>
-              <Text style={{marginRight: 10}}>Học viên mới</Text>
+            <View style={styles.infoTitleContainer}>
+              <Text>Học viên mới</Text>
               <View
                 style={[
                   styles.iconContainer,
@@ -274,8 +274,8 @@ class AnalyticsStudentBarChart extends React.Component {
             </Text>
           </View>
           <View style={[styles.infoContainer, {marginLeft: 8}]}>
-            <View style={styles.row}>
-              <Text style={{marginRight: 10}}>Học viên cũ</Text>
+            <View style={styles.infoTitleContainer}>
+              <Text>Học viên cũ</Text>
               <View
                 style={[
                   styles.iconContainer,
@@ -408,6 +408,11 @@ const styles = {
   row: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  infoTitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   barContainer: {
     flexDirection: 'row',

@@ -40,7 +40,8 @@ class AnalyticsCalenderPicker extends React.Component {
                     loadAnalytics();
                   }
                 : () => null
-            }>
+            }
+            style={styles.buttonContainer}>
             <View
               style={
                 startDate && endDate
@@ -63,7 +64,7 @@ const styles = {
   },
   calendarContainer: {
     backgroundColor: 'white',
-    paddingBottom: getBottomSpace(),
+    height: 420,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     alignItems: 'center',
@@ -74,14 +75,16 @@ const styles = {
     paddingVertical: 10,
     backgroundColor: '#2ACC4C',
     borderRadius: 8,
-    marginTop: 10,
   },
   disabledButton: {
     paddingHorizontal: 20,
     paddingVertical: 10,
     backgroundColor: '#b0b0b0',
     borderRadius: 8,
-    marginTop: 10,
+  },
+  buttonContainer: {
+    position: 'absolute',
+    bottom: getBottomSpace(),
   },
 };
 

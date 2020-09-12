@@ -14,20 +14,32 @@ export default function dashboardReducer(
         isLoadingAnalyticsRegister: action.isLoadingAnalyticsRegister,
         errorAnalyticsRegister: action.errorAnalyticsRegister,
       });
+    case types.BEGIN_DATA_ANALYTICS_REGISTER_REFRESH:
+      return Object.assign({}, state, {
+        refreshingAnalyticsRegister: action.refreshingAnalyticsRegister,
+        errorAnalyticsRegister: action.errorAnalyticsRegister,
+      });
     case types.LOAD_DATA_ANALYTICS_REGISTER_SUCCESSFUL:
       return Object.assign({}, state, {
         isLoadingAnalyticsRegister: action.isLoadingAnalyticsRegister,
         errorAnalyticsRegister: action.errorAnalyticsRegister,
         analyticsRegister: action.analyticsRegister,
+        refreshingAnalyticsRegister: action.refreshingAnalyticsRegister,
       });
     case types.LOAD_DATA_ANALYTICS_REGISTER_ERROR:
       return Object.assign({}, state, {
         isLoadingAnalyticsRegister: action.isLoadingAnalyticsRegister,
         errorAnalyticsRegister: action.errorAnalyticsRegister,
+        refreshingAnalyticsRegister: action.refreshingAnalyticsRegister,
       });
     case types.BEGIN_DATA_ANALYTICS_REVENUE_LOAD:
       return Object.assign({}, state, {
         isLoadingAnalyticsRevenue: action.isLoadingAnalyticsRevenue,
+        errorAnalyticsRevenue: action.errorAnalyticsRevenue,
+      });
+    case types.BEGIN_DATA_ANALYTICS_REVENUE_REFRESH:
+      return Object.assign({}, state, {
+        refreshingAnalyticsRevenue: action.refreshingAnalyticsRevenue,
         errorAnalyticsRevenue: action.errorAnalyticsRevenue,
       });
     case types.LOAD_DATA_ANALYTICS_REVENUE_SUCCESSFUL:
@@ -35,15 +47,22 @@ export default function dashboardReducer(
         isLoadingAnalyticsRevenue: action.isLoadingAnalyticsRevenue,
         errorAnalyticsRevenue: action.errorAnalyticsRevenue,
         analyticsRevenue: action.analyticsRevenue,
+        refreshingAnalyticsRevenue: action.refreshingAnalyticsRevenue,
       });
     case types.LOAD_DATA_ANALYTICS_REVENUE_ERROR:
       return Object.assign({}, state, {
         isLoadingAnalyticsRevenue: action.isLoadingAnalyticsRevenue,
         errorAnalyticsRevenue: action.errorAnalyticsRevenue,
+        refreshingAnalyticsRevenue: action.refreshingAnalyticsRevenue,
       });
     case types.BEGIN_DATA_ANALYTICS_KPI_LOAD:
       return Object.assign({}, state, {
         isLoadingAnalyticsKPI: action.isLoadingAnalyticsKPI,
+        errorAnalyticsKPI: action.errorAnalyticsKPI,
+      });
+    case types.BEGIN_DATA_ANALYTICS_KPI_REFRESH:
+      return Object.assign({}, state, {
+        refreshingAnalyticsKPI: action.refreshingAnalyticsKPI,
         errorAnalyticsKPI: action.errorAnalyticsKPI,
       });
     case types.LOAD_DATA_ANALYTICS_KPI_SUCCESSFUL:
@@ -51,15 +70,22 @@ export default function dashboardReducer(
         isLoadingAnalyticsKPI: action.isLoadingAnalyticsKPI,
         errorAnalyticsKPI: action.errorAnalyticsKPI,
         analyticsKpis: action.analyticsKpis,
+        refreshingAnalyticsKPI: action.refreshingAnalyticsKPI,
       });
     case types.LOAD_DATA_ANALYTICS_KPI_ERROR:
       return Object.assign({}, state, {
         isLoadingAnalyticsKPI: action.isLoadingAnalyticsKPI,
         errorAnalyticsKPI: action.errorAnalyticsKPI,
+        refreshingAnalyticsKPI: action.refreshingAnalyticsKPI,
       });
     case types.BEGIN_DATA_ANALYTICS_CLASSES_LOAD:
       return Object.assign({}, state, {
         isLoadingAnalyticsClasses: action.isLoadingAnalyticsClasses,
+        errorAnalyticsClasses: action.errorAnalyticsClasses,
+      });
+    case types.BEGIN_DATA_ANALYTICS_CLASSES_REFRESH:
+      return Object.assign({}, state, {
+        refreshingAnalyticsClasses: action.refreshingAnalyticsClasses,
         errorAnalyticsClasses: action.errorAnalyticsClasses,
       });
     case types.LOAD_DATA_ANALYTICS_CLASSES_SUCCESSFUL:
@@ -67,11 +93,13 @@ export default function dashboardReducer(
         isLoadingAnalyticsClasses: action.isLoadingAnalyticsClasses,
         errorAnalyticsClasses: action.errorAnalyticsClasses,
         analyticsClasses: action.analyticsClasses,
+        refreshingAnalyticsClasses: action.refreshingAnalyticsClasses,
       });
     case types.LOAD_DATA_ANALYTICS_CLASSES_ERROR:
       return Object.assign({}, state, {
         isLoadingAnalyticsClasses: action.isLoadingAnalyticsClasses,
         errorAnalyticsClasses: action.errorAnalyticsClasses,
+        refreshingAnalyticsClasses: action.refreshingAnalyticsClasses,
       });
     case types.SELECTED_BASE_ID_ANALYTICS:
       return Object.assign({}, state, {

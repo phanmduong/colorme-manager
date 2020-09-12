@@ -280,3 +280,9 @@ export function filteredData(state, data) {
   }
   return filterData;
 }
+
+export function shortVND(number) {
+  let roundedNum = Math.round(number);
+  let strNum = String(roundedNum);
+  return strNum.slice(0, strNum.length - 3);
+}

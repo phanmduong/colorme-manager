@@ -51,7 +51,7 @@ class AnalyticsContainer extends React.Component {
     ),
   });
 
-  loadAnalyticsRegister = () => {
+  loadAnalyticsRegister = (refreshing) => {
     let baseId =
       this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
     let staffId =
@@ -65,6 +65,7 @@ class AnalyticsContainer extends React.Component {
     let campaignId =
       this.props.selectedCampaignId === -1 ? '' : this.props.selectedCampaignId;
     this.props.analyticsActions.loadAnalyticsRegister(
+      refreshing,
       baseId,
       staffId,
       startTime,
@@ -77,7 +78,7 @@ class AnalyticsContainer extends React.Component {
     );
   };
 
-  loadAnalyticsRevenue = () => {
+  loadAnalyticsRevenue = (refreshing) => {
     let baseId =
       this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
     let staffId =
@@ -91,6 +92,7 @@ class AnalyticsContainer extends React.Component {
     let campaignId =
       this.props.selectedCampaignId === -1 ? '' : this.props.selectedCampaignId;
     this.props.analyticsActions.loadAnalyticsRevenue(
+      refreshing,
       startTime,
       endTime,
       staffId,
@@ -104,13 +106,20 @@ class AnalyticsContainer extends React.Component {
   };
 
   loadAnalytics = () => {
-    this.loadAnalyticsRegister();
-    this.loadAnalyticsRevenue();
-    this.loadAnalyticsKPI();
-    this.loadDataClass();
+    this.loadAnalyticsRegister(false);
+    this.loadAnalyticsRevenue(false);
+    this.loadAnalyticsKPI(false);
+    this.loadDataClass(false);
   };
 
-  loadAnalyticsKPI = () => {
+  refreshAnalytics = () => {
+    this.loadAnalyticsRegister(true);
+    this.loadAnalyticsRevenue(true);
+    this.loadAnalyticsKPI(true);
+    this.loadDataClass(true);
+  };
+
+  loadAnalyticsKPI = (refreshing) => {
     let baseId =
       this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
     let staffId =
@@ -124,6 +133,7 @@ class AnalyticsContainer extends React.Component {
     let campaignId =
       this.props.selectedCampaignId === -1 ? '' : this.props.selectedCampaignId;
     this.props.analyticsActions.loadAnalyticsKPI(
+      refreshing,
       startTime,
       endTime,
       baseId,
@@ -202,7 +212,7 @@ class AnalyticsContainer extends React.Component {
     this.props.baseActions.loadDataBase(this.props.token, this.props.domain);
   };
 
-  loadDataClass = () => {
+  loadDataClass = (refreshing) => {
     const baseId =
       this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
     const courseId =
@@ -230,6 +240,7 @@ class AnalyticsContainer extends React.Component {
     let campaignId =
       this.props.selectedCampaignId === -1 ? '' : this.props.selectedCampaignId;
     this.props.analyticsActions.loadAnalyticsClasses(
+      refreshing,
       startDate,
       endDate,
       staffId,
@@ -259,6 +270,7 @@ class AnalyticsContainer extends React.Component {
         onSelectCampaignId={this.onSelectCampaignId}
         onSelectGenId={this.onSelectGenId}
         loadDataClass={this.loadDataClass}
+        onRefresh={this.refreshAnalytics}
       />
     );
   }
@@ -299,6 +311,10 @@ function mapStateToProps(state) {
     enrollStart: state.analytics.enrollStart,
     enrollEnd: state.analytics.enrollEnd,
     classType: state.analytics.classType,
+    refreshingAnalyticsRegister: state.analytics.refreshingAnalyticsRegister,
+    refreshingAnalyticsRevenue: state.analytics.refreshingAnalyticsRevenue,
+    refreshingAnalyticsKPI: state.analytics.refreshingAnalyticsKPI,
+    refreshingAnalyticsClasses: state.analytics.refreshingAnalyticsClasses,
   };
 }
 

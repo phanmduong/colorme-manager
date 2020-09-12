@@ -6,6 +6,7 @@ import {
   ScrollView,
   Image,
   Alert,
+  RefreshControl,
 } from 'react-native';
 import AnalyticsRegisterContainer from '../containers/analytics/AnalyticsRegisterContainer';
 import AnalyticsKPIContainer from '../containers/analytics/AnalyticsKPIContainer';
@@ -50,7 +51,19 @@ class AnalyticsComponent extends React.Component {
 
   render() {
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        refreshControl={
+          <RefreshControl
+            refreshing={
+              this.props.refreshingAnalyticsRegister ||
+              this.props.refreshingAnalyticsRevenue ||
+              this.props.refreshingAnalyticsKPI ||
+              this.props.refreshingAnalyticsClasses
+            }
+            onRefresh={this.props.onRefresh}
+          />
+        }>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <View style={styles.containerTag}>
             <TouchableOpacity onPress={() => this.setState({tabIdx: 0})}>

@@ -55,7 +55,7 @@ class AnalyticsStudentBarChart extends React.Component {
       return item[0];
     });
     const unitWidth =
-      (width - theme.mainHorizontal * 2) / Object.keys(groupedByDate).length;
+      (width - theme.mainHorizontal * 6) / Object.keys(groupedByDate).length;
     const barWidth = unitWidth / 2;
     const pairNewOldRegis = this.groupedPairNewOldRegis(groupedByDate);
     const maxValue = this.getMaxValue(pairNewOldRegis);
@@ -79,7 +79,7 @@ class AnalyticsStudentBarChart extends React.Component {
       return acc;
     }, {});
     const unitWidth =
-      (width - theme.mainHorizontal * 2) / Object.keys(groupedByWeek).length;
+      (width - theme.mainHorizontal * 6) / Object.keys(groupedByWeek).length;
     const barWidth = unitWidth / 2;
     const pairNewOldRegis = this.groupedPairNewOldRegis(groupedByWeek);
     const maxValue = this.getMaxValue(pairNewOldRegis);
@@ -92,7 +92,7 @@ class AnalyticsStudentBarChart extends React.Component {
       return item[0].substring(0, 7);
     });
     const unitWidth =
-      (width - theme.mainHorizontal * 2) / Object.keys(groupedByMonth).length;
+      (width - theme.mainHorizontal * 6) / Object.keys(groupedByMonth).length;
     const barWidth = unitWidth / 2;
     const pairNewOldRegis = this.groupedPairNewOldRegis(groupedByMonth);
     const maxValue = this.getMaxValue(pairNewOldRegis);
@@ -116,7 +116,7 @@ class AnalyticsStudentBarChart extends React.Component {
       return acc;
     }, {});
     const unitWidth =
-      (width - theme.mainHorizontal * 2) / Object.keys(groupedByQuarter).length;
+      (width - theme.mainHorizontal * 6) / Object.keys(groupedByQuarter).length;
     const barWidth = unitWidth / 2;
     const pairNewOldRegis = this.groupedPairNewOldRegis(groupedByQuarter);
     const maxValue = this.getMaxValue(pairNewOldRegis);
@@ -129,7 +129,7 @@ class AnalyticsStudentBarChart extends React.Component {
       return item[0].substring(0, 4);
     });
     const unitWidth =
-      (width - theme.mainHorizontal * 2) / Object.keys(groupedByYear).length;
+      (width - theme.mainHorizontal * 6) / Object.keys(groupedByYear).length;
     const barWidth = unitWidth / 2;
     const pairNewOldRegis = this.groupedPairNewOldRegis(groupedByYear);
     const maxValue = this.getMaxValue(pairNewOldRegis);
@@ -137,34 +137,100 @@ class AnalyticsStudentBarChart extends React.Component {
   };
 
   barChartGraph = (pairsOfRegisPaid, maxValue, barWidth) => {
-    return pairsOfRegisPaid.map(function (pair) {
-      const totalHeight =
-        maxValue === 0
-          ? fixedHeight
-          : fixedHeight * ((pair[0] + pair[1]) / maxValue);
-      const newRegisHeight =
-        pair[0] + pair[1] === 0
-          ? 0
-          : totalHeight * (pair[0] / (pair[0] + pair[1]));
-      return (
-        <View style={styles.barRow}>
-          <View
-            style={{
-              width: barWidth,
-              height: totalHeight,
-              backgroundColor: maxValue === 0 ? 'white' : '#FFDB5A',
-            }}>
-            <View
-              style={{
-                width: barWidth,
-                height: newRegisHeight,
-                backgroundColor: newRegisHeight === 0 ? 'white' : '#69C553',
-              }}
-            />
+    return (
+      <View>
+        <View style={styles.barContainer}>
+          <View style={[styles.lineEstimateContainer, {bottom: -6}]}>
+            <View style={styles.row}>
+              <Text style={styles.lineValue}>0</Text>
+              <View style={styles.lineEstimate} />
+            </View>
           </View>
+          <View
+            style={[
+              styles.lineEstimateContainer,
+              {bottom: fixedHeight / 4 - 6},
+            ]}>
+            <View style={styles.row}>
+              <Text style={styles.lineValue}>
+                {dotNumber(Math.round(maxValue / 4))}
+              </Text>
+              <View style={styles.lineEstimate} />
+            </View>
+          </View>
+          <View
+            style={[
+              styles.lineEstimateContainer,
+              {bottom: fixedHeight / 2 - 6},
+            ]}>
+            <View style={styles.row}>
+              <Text style={styles.lineValue}>
+                {dotNumber(Math.round(maxValue / 2))}
+              </Text>
+              <View style={styles.lineEstimate} />
+            </View>
+          </View>
+          <View
+            style={[
+              styles.lineEstimateContainer,
+              {bottom: (fixedHeight * 3) / 4 - 6},
+            ]}>
+            <View style={styles.row}>
+              <Text style={styles.lineValue}>
+                {dotNumber(Math.round((maxValue * 3) / 4))}
+              </Text>
+              <View style={styles.lineEstimate} />
+            </View>
+          </View>
+          <View
+            style={[styles.lineEstimateContainer, {bottom: fixedHeight - 6}]}>
+            <View style={styles.row}>
+              <Text style={styles.lineValue}>
+                {dotNumber(Math.round(maxValue))}
+              </Text>
+              <View style={styles.lineEstimate} />
+            </View>
+          </View>
+          {pairsOfRegisPaid.map(function (pair) {
+            const totalHeight =
+              maxValue === 0
+                ? fixedHeight
+                : fixedHeight * ((pair[0] + pair[1]) / maxValue);
+            const newRegisHeight =
+              pair[0] + pair[1] === 0
+                ? 0
+                : totalHeight * (pair[0] / (pair[0] + pair[1]));
+            return (
+              <View style={styles.barRow}>
+                <View
+                  style={{
+                    width: barWidth,
+                    height: totalHeight,
+                    backgroundColor: maxValue === 0 ? 'white' : '#FFDB5A',
+                  }}>
+                  <View
+                    style={{
+                      width: barWidth,
+                      height: newRegisHeight,
+                      backgroundColor:
+                        newRegisHeight === 0 ? 'white' : '#69C553',
+                    }}
+                  />
+                </View>
+              </View>
+            );
+          })}
         </View>
-      );
-    });
+        <View style={styles.xAxisContainer}>
+          <Text style={styles.xAxisDate}>
+            {this.props.startDate.format('YYYY-MM-DD')}
+          </Text>
+          <Text style={styles.xAxisDate}>
+            {this.props.endDate.format('YYYY-MM-DD')}
+          </Text>
+        </View>
+      </View>
+    );
   };
 
   renderBarChart = () => {
@@ -189,8 +255,8 @@ class AnalyticsStudentBarChart extends React.Component {
       <View>
         <View style={styles.infoRow}>
           <View style={[styles.infoContainer, {marginRight: 8}]}>
-            <View style={styles.row}>
-              <Text style={{marginRight: 10}}>Học viên mới</Text>
+            <View style={styles.infoTitleContainer}>
+              <Text>Học viên mới</Text>
               <View
                 style={[
                   styles.iconContainer,
@@ -208,8 +274,8 @@ class AnalyticsStudentBarChart extends React.Component {
             </Text>
           </View>
           <View style={[styles.infoContainer, {marginLeft: 8}]}>
-            <View style={styles.row}>
-              <Text style={{marginRight: 10}}>Học viên cũ</Text>
+            <View style={styles.infoTitleContainer}>
+              <Text>Học viên cũ</Text>
               <View
                 style={[
                   styles.iconContainer,
@@ -242,7 +308,7 @@ class AnalyticsStudentBarChart extends React.Component {
           </View>
         </View>
 
-        <View style={styles.barContainer}>{this.renderBarChart()}</View>
+        <View>{this.renderBarChart()}</View>
 
         <View style={styles.tabContainer}>
           <TouchableOpacity onPress={() => this.setState({mode: DAILY})}>
@@ -343,11 +409,18 @@ const styles = {
     flexDirection: 'row',
     alignItems: 'center',
   },
+  infoTitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   barContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginHorizontal: theme.mainHorizontal,
-    marginTop: 15,
+    paddingLeft: theme.mainHorizontal * 3,
+    paddingRight: theme.mainHorizontal,
+    marginTop: 30,
   },
   tabContainer: {
     flexDirection: 'row',
@@ -376,6 +449,33 @@ const styles = {
   barRow: {
     flexDirection: 'row',
     alignItems: 'flex-end',
+  },
+  lineEstimate: {
+    width: width - theme.mainHorizontal * 3 - 15,
+    height: 0.4,
+    backgroundColor: 'black',
+    opacity: 0.1,
+  },
+  lineEstimateContainer: {
+    position: 'absolute',
+    right: 0,
+  },
+  lineValue: {
+    color: 'black',
+    fontSize: 10,
+    marginRight: 5,
+  },
+  xAxisContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+    marginHorizontal: theme.mainHorizontal,
+    paddingLeft: theme.mainHorizontal * 3,
+    paddingRight: theme.mainHorizontal,
+  },
+  xAxisDate: {
+    color: 'black',
+    fontSize: 10,
   },
 };
 

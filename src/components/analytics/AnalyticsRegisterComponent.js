@@ -23,20 +23,20 @@ class AnalyticsRegisterComponent extends React.Component {
         height={480}
         activeDotColor={'black'}
         loop={false}>
+        <AnalyticsRevenueBarChart
+          revenue={this.props.analyticsRevenue.revenue}
+          revenueToday={this.props.analyticsRevenue.revenue_today}
+          dates={this.props.analyticsRegister.dates}
+          revenueNums={this.props.analyticsRegister.money_by_date}
+          startDate={this.props.startDate}
+          endDate={this.props.endDate}
+        />
         <AnalyticsRegisterBarChart
           dates={this.props.analyticsRegister.dates}
           regisNums={this.props.analyticsRegister.registers_by_date}
           paidNums={this.props.analyticsRegister.paid_by_date}
           totalRegister={this.props.analyticsRevenue.total_register}
           totalPaid={this.props.analyticsRevenue.total_paid_register}
-          startDate={this.props.startDate}
-          endDate={this.props.endDate}
-        />
-        <AnalyticsRevenueBarChart
-          revenue={this.props.analyticsRevenue.revenue}
-          revenueToday={this.props.analyticsRevenue.revenue_today}
-          dates={this.props.analyticsRegister.dates}
-          revenueNums={this.props.analyticsRegister.money_by_date}
           startDate={this.props.startDate}
           endDate={this.props.endDate}
         />

@@ -438,7 +438,7 @@ const styles = {
     width: width - theme.mainHorizontal * 3 - 15,
     height: 0.4,
     backgroundColor: 'black',
-    opacity: 0.2,
+    opacity: 0.1,
   },
   lineEstimateContainer: {
     position: 'absolute',

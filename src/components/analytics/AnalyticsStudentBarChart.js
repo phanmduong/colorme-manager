@@ -140,35 +140,6 @@ class AnalyticsStudentBarChart extends React.Component {
     return (
       <View>
         <View style={styles.barContainer}>
-          {pairsOfRegisPaid.map(function (pair) {
-            const totalHeight =
-              maxValue === 0
-                ? fixedHeight
-                : fixedHeight * ((pair[0] + pair[1]) / maxValue);
-            const newRegisHeight =
-              pair[0] + pair[1] === 0
-                ? 0
-                : totalHeight * (pair[0] / (pair[0] + pair[1]));
-            return (
-              <View style={styles.barRow}>
-                <View
-                  style={{
-                    width: barWidth,
-                    height: totalHeight,
-                    backgroundColor: maxValue === 0 ? 'white' : '#FFDB5A',
-                  }}>
-                  <View
-                    style={{
-                      width: barWidth,
-                      height: newRegisHeight,
-                      backgroundColor:
-                        newRegisHeight === 0 ? 'white' : '#69C553',
-                    }}
-                  />
-                </View>
-              </View>
-            );
-          })}
           <View style={[styles.lineEstimateContainer, {bottom: -6}]}>
             <View style={styles.row}>
               <Text style={styles.lineValue}>0</Text>
@@ -220,6 +191,35 @@ class AnalyticsStudentBarChart extends React.Component {
               <View style={styles.lineEstimate} />
             </View>
           </View>
+          {pairsOfRegisPaid.map(function (pair) {
+            const totalHeight =
+              maxValue === 0
+                ? fixedHeight
+                : fixedHeight * ((pair[0] + pair[1]) / maxValue);
+            const newRegisHeight =
+              pair[0] + pair[1] === 0
+                ? 0
+                : totalHeight * (pair[0] / (pair[0] + pair[1]));
+            return (
+              <View style={styles.barRow}>
+                <View
+                  style={{
+                    width: barWidth,
+                    height: totalHeight,
+                    backgroundColor: maxValue === 0 ? 'white' : '#FFDB5A',
+                  }}>
+                  <View
+                    style={{
+                      width: barWidth,
+                      height: newRegisHeight,
+                      backgroundColor:
+                        newRegisHeight === 0 ? 'white' : '#69C553',
+                    }}
+                  />
+                </View>
+              </View>
+            );
+          })}
         </View>
         <View style={styles.xAxisContainer}>
           <Text style={styles.xAxisDate}>
@@ -449,7 +449,7 @@ const styles = {
     width: width - theme.mainHorizontal * 3 - 15,
     height: 0.4,
     backgroundColor: 'black',
-    opacity: 0.2,
+    opacity: 0.1,
   },
   lineEstimateContainer: {
     position: 'absolute',

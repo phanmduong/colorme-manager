@@ -138,21 +138,6 @@ class AnalyticsRevenueBarChart extends React.Component {
     return (
       <View>
         <View style={styles.barContainer}>
-          {revenueLst.map(function (revenue) {
-            const revenueHeight =
-              maxValue === 0 ? fixedHeight : fixedHeight * (revenue / maxValue);
-            return (
-              <View style={styles.barRow}>
-                <View
-                  style={{
-                    width: barWidth,
-                    height: revenueHeight,
-                    backgroundColor: maxValue === 0 ? 'white' : '#69C553',
-                  }}
-                />
-              </View>
-            );
-          })}
           <View style={[styles.lineEstimateContainer, {bottom: -6}]}>
             <View style={styles.row}>
               <Text style={styles.lineValue}>0</Text>
@@ -204,6 +189,21 @@ class AnalyticsRevenueBarChart extends React.Component {
               <View style={styles.lineEstimate} />
             </View>
           </View>
+          {revenueLst.map(function (revenue) {
+            const revenueHeight =
+              maxValue === 0 ? fixedHeight : fixedHeight * (revenue / maxValue);
+            return (
+              <View style={styles.barRow}>
+                <View
+                  style={{
+                    width: barWidth,
+                    height: revenueHeight,
+                    backgroundColor: maxValue === 0 ? 'white' : '#69C553',
+                  }}
+                />
+              </View>
+            );
+          })}
         </View>
         <View style={styles.xAxisContainer}>
           <Text style={styles.xAxisDate}>
@@ -403,7 +403,7 @@ const styles = {
     width: width - theme.mainHorizontal * 3 - 35,
     height: 0.4,
     backgroundColor: 'black',
-    opacity: 0.2,
+    opacity: 0.1,
   },
   lineEstimateContainer: {
     position: 'absolute',

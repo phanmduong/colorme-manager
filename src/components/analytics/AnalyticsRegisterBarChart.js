@@ -144,31 +144,6 @@ class AnalyticsRegisterBarChart extends React.Component {
     return (
       <View>
         <View style={styles.barContainer}>
-          {pairsOfRegisPaid.map(function (pair) {
-            const regisHeight =
-              maxValue === 0 ? fixedHeight : fixedHeight * (pair[0] / maxValue);
-            const paidHeight =
-              maxValue === 0 ? fixedHeight : fixedHeight * (pair[1] / maxValue);
-            return (
-              <View style={styles.barRow}>
-                <View
-                  style={{
-                    width: barWidth,
-                    height: regisHeight,
-                    backgroundColor: maxValue === 0 ? 'white' : '#FFDB5A',
-                  }}
-                />
-                <View style={{width: barWidth / 10}} />
-                <View
-                  style={{
-                    width: barWidth,
-                    height: paidHeight,
-                    backgroundColor: maxValue === 0 ? 'white' : '#65DA3A',
-                  }}
-                />
-              </View>
-            );
-          })}
           <View style={[styles.lineEstimateContainer, {bottom: -6}]}>
             <View style={styles.row}>
               <Text style={styles.lineValue}>0</Text>
@@ -220,6 +195,31 @@ class AnalyticsRegisterBarChart extends React.Component {
               <View style={styles.lineEstimate} />
             </View>
           </View>
+          {pairsOfRegisPaid.map(function (pair) {
+            const regisHeight =
+              maxValue === 0 ? fixedHeight : fixedHeight * (pair[0] / maxValue);
+            const paidHeight =
+              maxValue === 0 ? fixedHeight : fixedHeight * (pair[1] / maxValue);
+            return (
+              <View style={styles.barRow}>
+                <View
+                  style={{
+                    width: barWidth,
+                    height: regisHeight,
+                    backgroundColor: maxValue === 0 ? 'white' : '#FFDB5A',
+                  }}
+                />
+                <View style={{width: barWidth / 10}} />
+                <View
+                  style={{
+                    width: barWidth,
+                    height: paidHeight,
+                    backgroundColor: maxValue === 0 ? 'white' : '#65DA3A',
+                  }}
+                />
+              </View>
+            );
+          })}
         </View>
         <View style={styles.xAxisContainer}>
           <Text style={styles.xAxisDate}>

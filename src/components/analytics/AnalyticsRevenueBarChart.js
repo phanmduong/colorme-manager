@@ -207,10 +207,10 @@ class AnalyticsRevenueBarChart extends React.Component {
         </View>
         <View style={styles.xAxisContainer}>
           <Text style={styles.xAxisDate}>
-            {this.props.startDate.format('YYYY-MM-DD')}
+            {this.props.startDate ? this.props.startDate.format('YYYY-MM-DD') : null}
           </Text>
           <Text style={styles.xAxisDate}>
-            {this.props.endDate.format('YYYY-MM-DD')}
+            {this.props.endDate ? this.props.endDate.format('YYYY-MM-DD') : null}
           </Text>
         </View>
       </View>

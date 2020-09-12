@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, View, Dimensions, TouchableOpacity} from 'react-native';
 import theme from '../../styles';
-import {dotNumber} from '../../helper';
+import {dotNumber, shortVND} from '../../helper';
 import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 import {DAILY, MONTH, QUARTER, WEEK, YEAR} from '../../constants/constant';
 import _ from 'lodash';
@@ -53,7 +53,7 @@ class AnalyticsRevenueBarChart extends React.Component {
       return item[0];
     });
     const unitWidth =
-      (width - theme.mainHorizontal * 2) / Object.keys(groupedByDate).length;
+      (width - theme.mainHorizontal * 7) / Object.keys(groupedByDate).length;
     const barWidth = unitWidth / 2;
     const revenueLst = this.revenueLst(groupedByDate);
     const maxValue = this.getMaxValue(revenueLst);
@@ -77,7 +77,7 @@ class AnalyticsRevenueBarChart extends React.Component {
       return acc;
     }, {});
     const unitWidth =
-      (width - theme.mainHorizontal * 2) / Object.keys(groupedByWeek).length;
+      (width - theme.mainHorizontal * 7) / Object.keys(groupedByWeek).length;
     const barWidth = unitWidth / 2;
     const revenueLst = this.revenueLst(groupedByWeek);
     const maxValue = this.getMaxValue(revenueLst);
@@ -90,7 +90,7 @@ class AnalyticsRevenueBarChart extends React.Component {
       return item[0].substring(0, 7);
     });
     const unitWidth =
-      (width - theme.mainHorizontal * 2) / Object.keys(groupedByMonth).length;
+      (width - theme.mainHorizontal * 7) / Object.keys(groupedByMonth).length;
     const barWidth = unitWidth / 2;
     const revenueLst = this.revenueLst(groupedByMonth);
     const maxValue = this.getMaxValue(revenueLst);
@@ -114,7 +114,7 @@ class AnalyticsRevenueBarChart extends React.Component {
       return acc;
     }, {});
     const unitWidth =
-      (width - theme.mainHorizontal * 2) / Object.keys(groupedByQuarter).length;
+      (width - theme.mainHorizontal * 7) / Object.keys(groupedByQuarter).length;
     const barWidth = unitWidth / 2;
     const revenueLst = this.revenueLst(groupedByQuarter);
     const maxValue = this.getMaxValue(revenueLst);
@@ -127,7 +127,7 @@ class AnalyticsRevenueBarChart extends React.Component {
       return item[0].substring(0, 4);
     });
     const unitWidth =
-      (width - theme.mainHorizontal * 2) / Object.keys(groupedByYear).length;
+      (width - theme.mainHorizontal * 7) / Object.keys(groupedByYear).length;
     const barWidth = unitWidth / 2;
     const revenueLst = this.revenueLst(groupedByYear);
     const maxValue = this.getMaxValue(revenueLst);
@@ -135,21 +135,86 @@ class AnalyticsRevenueBarChart extends React.Component {
   };
 
   barChartGraph = (revenueLst, maxValue, barWidth) => {
-    return revenueLst.map(function (revenue) {
-      const revenueHeight =
-        maxValue === 0 ? fixedHeight : fixedHeight * (revenue / maxValue);
-      return (
-        <View style={styles.barRow}>
+    return (
+      <View>
+        <View style={styles.barContainer}>
+          {revenueLst.map(function (revenue) {
+            const revenueHeight =
+              maxValue === 0 ? fixedHeight : fixedHeight * (revenue / maxValue);
+            return (
+              <View style={styles.barRow}>
+                <View
+                  style={{
+                    width: barWidth,
+                    height: revenueHeight,
+                    backgroundColor: maxValue === 0 ? 'white' : '#69C553',
+                  }}
+                />
+              </View>
+            );
+          })}
+          <View style={[styles.lineEstimateContainer, {bottom: -6}]}>
+            <View style={styles.row}>
+              <Text style={styles.lineValue}>0</Text>
+              <View style={styles.lineEstimate} />
+            </View>
+          </View>
           <View
-            style={{
-              width: barWidth,
-              height: revenueHeight,
-              backgroundColor: maxValue === 0 ? 'white' : '#69C553',
-            }}
-          />
+            style={[
+              styles.lineEstimateContainer,
+              {bottom: fixedHeight / 4 - 6},
+            ]}>
+            <View style={styles.row}>
+              <Text style={styles.lineValue}>
+                {dotNumber(shortVND(maxValue / 4))}K
+              </Text>
+              <View style={styles.lineEstimate} />
+            </View>
+          </View>
+          <View
+            style={[
+              styles.lineEstimateContainer,
+              {bottom: fixedHeight / 2 - 6},
+            ]}>
+            <View style={styles.row}>
+              <Text style={styles.lineValue}>
+                {dotNumber(shortVND(maxValue / 2))}K
+              </Text>
+              <View style={styles.lineEstimate} />
+            </View>
+          </View>
+          <View
+            style={[
+              styles.lineEstimateContainer,
+              {bottom: (fixedHeight * 3) / 4 - 6},
+            ]}>
+            <View style={styles.row}>
+              <Text style={styles.lineValue}>
+                {dotNumber(shortVND((maxValue * 3) / 4))}K
+              </Text>
+              <View style={styles.lineEstimate} />
+            </View>
+          </View>
+          <View
+            style={[styles.lineEstimateContainer, {bottom: fixedHeight - 6}]}>
+            <View style={styles.row}>
+              <Text style={styles.lineValue}>
+                {dotNumber(shortVND(maxValue))}K
+              </Text>
+              <View style={styles.lineEstimate} />
+            </View>
+          </View>
         </View>
-      );
-    });
+        <View style={styles.xAxisContainer}>
+          <Text style={styles.xAxisDate}>
+            {this.props.startDate.format('YYYY-MM-DD')}
+          </Text>
+          <Text style={styles.xAxisDate}>
+            {this.props.endDate.format('YYYY-MM-DD')}
+          </Text>
+        </View>
+      </View>
+    );
   };
 
   renderBarChart = () => {
@@ -209,7 +274,7 @@ class AnalyticsRevenueBarChart extends React.Component {
           </View>
         </View>
 
-        <View style={styles.barContainer}>{this.renderBarChart()}</View>
+        <View>{this.renderBarChart()}</View>
 
         <View style={styles.tabContainer}>
           <TouchableOpacity onPress={() => this.setState({mode: DAILY})}>
@@ -275,9 +340,7 @@ class AnalyticsRevenueBarChart extends React.Component {
         </View>
 
         <View style={{alignItems: 'center', marginTop: 15}}>
-          <Text style={{fontSize: 13}}>
-            Doanh thu
-          </Text>
+          <Text style={{fontSize: 13}}>Doanh thu</Text>
         </View>
       </View>
     );
@@ -316,7 +379,9 @@ const styles = {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginHorizontal: theme.mainHorizontal,
-    marginTop: 15,
+    paddingLeft: theme.mainHorizontal * 4,
+    paddingRight: theme.mainHorizontal,
+    marginTop: 30,
   },
   tabContainer: {
     flexDirection: 'row',
@@ -333,6 +398,33 @@ const styles = {
   barRow: {
     flexDirection: 'row',
     alignItems: 'flex-end',
+  },
+  lineEstimate: {
+    width: width - theme.mainHorizontal * 3 - 35,
+    height: 0.4,
+    backgroundColor: 'black',
+    opacity: 0.2,
+  },
+  lineEstimateContainer: {
+    position: 'absolute',
+    right: 0,
+  },
+  lineValue: {
+    color: 'black',
+    fontSize: 10,
+    marginRight: 5,
+  },
+  xAxisContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+    marginHorizontal: theme.mainHorizontal,
+    paddingLeft: theme.mainHorizontal * 3,
+    paddingRight: theme.mainHorizontal,
+  },
+  xAxisDate: {
+    color: 'black',
+    fontSize: 10,
   },
 };
 

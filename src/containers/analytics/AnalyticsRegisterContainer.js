@@ -24,6 +24,8 @@ function mapStateToProps(state) {
     analyticsRevenue: state.analytics.analyticsRevenue,
     isLoadingAnalyticsRevenue: state.analytics.isLoadingAnalyticsRevenue,
     errorAnalyticsRevenue: state.analytics.errorAnalyticsRevenue,
+    startDate: state.analytics.startDate,
+    endDate: state.analytics.endDate,
   };
 }
 

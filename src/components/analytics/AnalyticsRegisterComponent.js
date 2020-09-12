@@ -20,7 +20,7 @@ class AnalyticsRegisterComponent extends React.Component {
       <Swiper
         style={styles.wrapper}
         showsPagination={true}
-        height={450}
+        height={480}
         activeDotColor={'black'}
         loop={false}>
         <AnalyticsRegisterBarChart
@@ -29,17 +29,23 @@ class AnalyticsRegisterComponent extends React.Component {
           paidNums={this.props.analyticsRegister.paid_by_date}
           totalRegister={this.props.analyticsRevenue.total_register}
           totalPaid={this.props.analyticsRevenue.total_paid_register}
+          startDate={this.props.startDate}
+          endDate={this.props.endDate}
         />
         <AnalyticsRevenueBarChart
           revenue={this.props.analyticsRevenue.revenue}
           revenueToday={this.props.analyticsRevenue.revenue_today}
           dates={this.props.analyticsRegister.dates}
           revenueNums={this.props.analyticsRegister.money_by_date}
+          startDate={this.props.startDate}
+          endDate={this.props.endDate}
         />
         <AnalyticsStudentBarChart
           dates={this.props.analyticsRegister.dates}
           newRegis={this.props.analyticsRegister.new_register_by_date}
           oldRegis={this.props.analyticsRegister.old_register_by_date}
+          startDate={this.props.startDate}
+          endDate={this.props.endDate}
         />
       </Swiper>
     );

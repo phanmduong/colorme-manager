@@ -8,18 +8,15 @@ export const MANAGE_API_URL_V3 = BASE_URL + '/manageapi/v3';
 export const API_NODE_URL = 'http://colorme.vn:8000';
 
 export function apiUrl(domain) {
-  let domainParts = domain.split('.');
-  return `http://${domainParts[0]}.eduto.net/api/v3`;
+  return `http://${domain}.eduto.net/api/v3`;
 }
 
 export function manageApiUrl(domain) {
-  let domainParts = domain.split('.');
-  return `http://${domainParts[0]}.eduto.net/manageapi/v3`;
+  return `http://${domain}.eduto.net/manageapi/v3`;
 }
 
 export function baseUrl(domain) {
-  let domainParts = domain.split('.');
-  return `http://${domainParts[0]}.eduto.net`;
+  return `http://${domain}.eduto.net`;
 }
 
 export function manageApiUrlV3(domain) {
@@ -27,8 +24,7 @@ export function manageApiUrlV3(domain) {
 }
 
 export function apiNodeUrl(domain) {
-  let domainParts = domain.split('.');
-  return `http://${domainParts[0]}.eduto.net:8000`;
+  return `http://${domain}.eduto.net:8000`;
 }
 
 export function manageApiUrlV4(domain) {

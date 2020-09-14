@@ -23,6 +23,9 @@ export default {
     isCheckIn: false,
     deviceUser: {},
     domain: null,
+    domains: [],
+    isLoadingDomains: false,
+    errorDomains: false,
   },
   base: {
     baseData: [],

@@ -21,3 +21,8 @@ export function loadCheckDevice(device, token, domain) {
     device_os: device.os,
   });
 }
+
+export function loadDomains() {
+  let url = 'http://manage.eduto.net/api/auth/merchant/list';
+  return axios.get(url);
+}

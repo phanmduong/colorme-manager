@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import Spinkit from 'react-native-spinkit';
 import theme from '../styles';
+import Autocomplete from 'react-native-autocomplete-input';
 
 let self;
 
@@ -24,6 +25,7 @@ class LoginComponent extends React.Component {
     this.state = {
       isKeyboardShow: false,
       isResetPasswordModalVisible: false,
+      hideResults: true,
     };
     self = this;
   }
@@ -71,7 +73,47 @@ class LoginComponent extends React.Component {
           />
         </View>
         <View style={styles.loginContainer}>
-          <View>
+          <Autocomplete
+            data={this.props.domains}
+            inputContainerStyle={{borderWidth: 0}}
+            hideResults={this.state.hideResults}
+            renderItem={({item, i}) => (
+              <TouchableOpacity
+                onPress={() => {
+                  this.props.updateDomainForm(item.domain);
+                  this.setState({hideResults: true});
+                }}>
+                <Text>{item.domain}</Text>
+              </TouchableOpacity>
+            )}
+            renderTextInput={() => (
+              <View>
+                <Text style={styles.titleForm}>Chọn trung tâm</Text>
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    value={this.props.domain}
+                    ref={'domain'}
+                    onChangeText={(data) => {
+                      this.props.updateDomainForm(data);
+                      this.setState({hideResults: false});
+                    }}
+                    returnKeyType={'next'}
+                    placeholder="Chọn trung tâm"
+                    blurOnSubmit={false}
+                    onFocus={() => this.setState({hideResults: false})}
+                    onSubmitEditing={(event) => {
+                      this.refs.username.focus();
+                      this.setState({hideResults: true});
+                    }}
+                    editable={!this.props.isLoading}
+                    autoCapitalize={'none'}
+                    style={{fontSize: 15}}
+                  />
+                </View>
+              </View>
+            )}
+          />
+          <View style={{marginTop: 30}}>
             <Text style={styles.titleForm}>Tên đăng nhập</Text>
             <View style={styles.inputContainer}>
               <TextInput
@@ -101,31 +143,12 @@ class LoginComponent extends React.Component {
                 onChangeText={(data) =>
                   this.props.updateFormData('password', data)
                 }
-                returnKeyType={'next'}
+                returnKeyType={'done'}
                 placeholder="password"
                 blurOnSubmit={false}
-                onSubmitEditing={(event) => {
-                  this.refs.domain.focus();
-                }}
+                onSubmitEditing={this.props.onClickLogin}
                 secureTextEntry
                 editable={!this.props.isLoading}
-                style={{fontSize: 15}}
-              />
-            </View>
-          </View>
-          <View style={{marginTop: 30}}>
-            <Text style={styles.titleForm}>Tên miền doanh nghiệp</Text>
-            <View style={styles.inputContainer}>
-              <TextInput
-                value={this.props.domain}
-                ref={'domain'}
-                onChangeText={(data) => this.props.updateDomainForm(data)}
-                returnKeyType={'done'}
-                placeholder="Ví dụ: demo.eduto.net"
-                blurOnSubmit={false}
-                onSubmitEditing={this.props.onClickLogin}
-                editable={!this.props.isLoading}
-                autoCapitalize={'none'}
                 style={{fontSize: 15}}
               />
             </View>

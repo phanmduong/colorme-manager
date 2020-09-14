@@ -62,7 +62,7 @@ class ProfileComponent extends React.Component {
   };
 
   async clearAll(navigation) {
-    const keys = ['@ColorME:username', '@ColorME:password'];
+    const keys = ['@ColorME:username', '@ColorME:password', '@ColorME:domain'];
     try {
       await AsyncStorage.multiRemove(keys);
       navigation.navigate('Login');

@@ -63,13 +63,31 @@ class LoginComponent extends React.Component {
 
   filterSearch = () => {
     if (isEmptyInput(this.props.domain)) {
-      return this.props.domains;
+      return this.props.domains.sort(function (a, b) {
+        if (a.domain < b.domain) {
+          return -1;
+        }
+        if (a.domain > b.domain) {
+          return 1;
+        }
+        return 0;
+      });
     }
-    return this.props.domains.filter((item) => {
-      return item.domain
-        .toLowerCase()
-        .includes(this.props.domain.toLowerCase());
-    });
+    return this.props.domains
+      .filter((item) => {
+        return item.domain
+          .toLowerCase()
+          .includes(this.props.domain.toLowerCase());
+      })
+      .sort(function (a, b) {
+        if (a.domain < b.domain) {
+          return -1;
+        }
+        if (a.domain > b.domain) {
+          return 1;
+        }
+        return 0;
+      });
   };
 
   render() {
@@ -89,13 +107,14 @@ class LoginComponent extends React.Component {
             data={this.filterSearch()}
             inputContainerStyle={{borderWidth: 0}}
             hideResults={this.state.hideResults}
+            listStyle={styles.listStyle}
             renderItem={({item, i}) => (
               <TouchableOpacity
                 onPress={() => {
                   this.props.updateDomainForm(item.domain);
                   this.setState({hideResults: true});
                 }}>
-                <Text>{item.domain}</Text>
+                <Text style={styles.listName}>{item.domain}</Text>
               </TouchableOpacity>
             )}
             renderTextInput={() => (
@@ -216,6 +235,15 @@ const styles = {
   },
   loginContainer: {
     flex: 2,
+  },
+  listName: {
+    fontSize: 15,
+    paddingTop: 15,
+    paddingLeft: 20,
+  },
+  listStyle: {
+    borderWidth: 0,
+    paddingBottom: 15,
   },
 };
 

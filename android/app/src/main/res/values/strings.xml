@@ -2,7 +2,7 @@
     <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">Pa6sWUXZXkboJUCmNuhN-AzKtC5D4JZk4WIpz</string>
     <string moduleConfig="true" name="mobileCenterCrashes_whenToSendCrashes">ALWAYS_SEND</string>
     <string moduleConfig="true" name="mobileCenterAnalytics_whenToEnableAnalytics">ALWAYS_SEND</string>
-    <string name="app_name">Eduto</string>
+    <string name="app_name">Eduto Manage</string>
     <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true">ALWAYS_SEND</string>
     <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true">ALWAYS_SEND</string>
 </resources>

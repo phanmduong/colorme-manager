@@ -15,6 +15,7 @@ import {
 import Spinkit from 'react-native-spinkit';
 import theme from '../styles';
 import Autocomplete from 'react-native-autocomplete-input';
+import {isEmptyInput} from '../helper';
 
 let self;
 
@@ -60,6 +61,17 @@ class LoginComponent extends React.Component {
     self.props.changeStatusBarColor('light-content');
   }
 
+  filterSearch = () => {
+    if (isEmptyInput(this.props.domain)) {
+      return this.props.domains;
+    }
+    return this.props.domains.filter((item) => {
+      return item.domain
+        .toLowerCase()
+        .includes(this.props.domain.toLowerCase());
+    });
+  };
+
   render() {
     return (
       <KeyboardAvoidingView
@@ -74,7 +86,7 @@ class LoginComponent extends React.Component {
         </View>
         <View style={styles.loginContainer}>
           <Autocomplete
-            data={this.props.domains}
+            data={this.filterSearch()}
             inputContainerStyle={{borderWidth: 0}}
             hideResults={this.state.hideResults}
             renderItem={({item, i}) => (

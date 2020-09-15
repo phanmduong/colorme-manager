@@ -74,7 +74,7 @@ class ClassComponent extends React.Component {
     return classList.map((classItem) => (
       <CurrentClassItem
         name={classItem.name}
-        icon={classItem.course.icon_url}
+        icon={classItem.course ? classItem.course.icon_url : null}
         teacher={classItem.teacher}
         teacher_assistant={classItem.teacher_assistant}
         base={classItem.base}

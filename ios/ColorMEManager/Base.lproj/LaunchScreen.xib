@@ -13,17 +13,17 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Image" translatesAutoresizingMaskIntoConstraints="NO" id="wo4-aa-HRU">
-                    <rect key="frame" x="172" y="176" width="136" height="128"/>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Image" translatesAutoresizingMaskIntoConstraints="NO" id="ECT-1P-N9J">
+                    <rect key="frame" x="120" y="176" width="240" height="128"/>
                 </imageView>
             </subviews>
             <color key="backgroundColor" red="0.070588235289999995" green="0.4039215686" blue="0.92941176469999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
             <color key="tintColor" red="0.070588235289999995" green="0.4039215686" blue="0.92941176469999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="wo4-aa-HRU" secondAttribute="trailing" constant="172" id="J5W-Np-IVO"/>
-                <constraint firstItem="wo4-aa-HRU" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="176" id="JD5-rS-CGe"/>
-                <constraint firstAttribute="bottom" secondItem="wo4-aa-HRU" secondAttribute="bottom" constant="176" id="LTD-iL-M11"/>
-                <constraint firstItem="wo4-aa-HRU" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="172" id="PUo-1z-wHY"/>
+                <constraint firstItem="ECT-1P-N9J" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="176" id="4tb-xJ-5Y7"/>
+                <constraint firstAttribute="bottom" secondItem="ECT-1P-N9J" secondAttribute="bottom" constant="176" id="SBz-mO-qur"/>
+                <constraint firstItem="ECT-1P-N9J" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="120" id="dBQ-jn-lQ4"/>
+                <constraint firstAttribute="trailing" secondItem="ECT-1P-N9J" secondAttribute="trailing" constant="120" id="gMi-IC-Oh8"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

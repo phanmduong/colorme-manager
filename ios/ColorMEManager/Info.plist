@@ -59,8 +59,6 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>For QR code scan to extract student attendance data, upload ID and avatar pictures</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Determine current location for punch in and punch out</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Determine current location for punch in and punch out</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

@@ -11,6 +11,7 @@ import {
   TextInput,
   Image,
   Dimensions,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import Spinkit from 'react-native-spinkit';
 import theme from '../styles';
@@ -92,111 +93,117 @@ class LoginComponent extends React.Component {
 
   render() {
     return (
-      <KeyboardAvoidingView
-        behavior={'padding'}
-        enabled
-        style={styles.container}>
-        <View style={styles.logoContainer}>
-          <Image
-            source={require('../../assets/img/edutoLogo.png')}
-            style={{transform: [{scale: 0.2}]}}
-          />
-        </View>
-        <View style={styles.loginContainer}>
-          <Autocomplete
-            data={this.filterSearch()}
-            inputContainerStyle={{borderWidth: 0}}
-            hideResults={this.state.hideResults}
-            listStyle={styles.listStyle}
-            renderItem={({item, i}) => (
-              <TouchableOpacity
-                onPress={() => {
-                  this.props.updateDomainForm(item.domain);
-                  this.setState({hideResults: true});
-                }}>
-                <Text style={styles.listName}>{item.domain}</Text>
-              </TouchableOpacity>
-            )}
-            renderTextInput={() => (
-              <View>
-                <Text style={styles.titleForm}>Chọn trung tâm</Text>
-                <View style={styles.inputContainer}>
-                  <TextInput
-                    value={this.props.domain}
-                    ref={'domain'}
-                    onChangeText={(data) => {
-                      this.props.updateDomainForm(data);
-                      this.setState({hideResults: false});
-                    }}
-                    returnKeyType={'next'}
-                    placeholder="Chọn trung tâm"
-                    blurOnSubmit={false}
-                    onFocus={() => this.setState({hideResults: false})}
-                    onSubmitEditing={(event) => {
-                      this.refs.username.focus();
-                      this.setState({hideResults: true});
-                    }}
-                    editable={!this.props.isLoading}
-                    autoCapitalize={'none'}
-                    style={{fontSize: 15}}
-                  />
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss();
+          this.setState({hideResults: true});
+        }}>
+        <KeyboardAvoidingView
+          behavior={'padding'}
+          enabled
+          style={styles.container}>
+          <View style={styles.logoContainer}>
+            <Image
+              source={require('../../assets/img/edutoLogo.png')}
+              style={{transform: [{scale: 0.2}]}}
+            />
+          </View>
+          <View style={styles.loginContainer}>
+            <Autocomplete
+              data={this.filterSearch()}
+              inputContainerStyle={{borderWidth: 0}}
+              hideResults={this.state.hideResults}
+              listStyle={styles.listStyle}
+              renderItem={({item, i}) => (
+                <TouchableOpacity
+                  onPress={() => {
+                    this.props.updateDomainForm(item.domain);
+                    this.setState({hideResults: true});
+                  }}>
+                  <Text style={styles.listName}>{item.domain}</Text>
+                </TouchableOpacity>
+              )}
+              renderTextInput={() => (
+                <View>
+                  <Text style={styles.titleForm}>Chọn trung tâm</Text>
+                  <View style={styles.inputContainer}>
+                    <TextInput
+                      value={this.props.domain}
+                      ref={'domain'}
+                      onChangeText={(data) => {
+                        this.props.updateDomainForm(data);
+                        this.setState({hideResults: false});
+                      }}
+                      returnKeyType={'next'}
+                      placeholder="Chọn trung tâm"
+                      blurOnSubmit={false}
+                      onFocus={() => this.setState({hideResults: false})}
+                      onSubmitEditing={(event) => {
+                        this.refs.username.focus();
+                        this.setState({hideResults: true});
+                      }}
+                      editable={!this.props.isLoading}
+                      autoCapitalize={'none'}
+                      style={{fontSize: 15}}
+                    />
+                  </View>
                 </View>
+              )}
+            />
+            <View style={{marginTop: 30}}>
+              <Text style={styles.titleForm}>Tên đăng nhập</Text>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  value={this.props.username}
+                  ref={'username'}
+                  onChangeText={(data) =>
+                    this.props.updateFormData('username', data)
+                  }
+                  returnKeyType={'next'}
+                  placeholder="username"
+                  blurOnSubmit={false}
+                  onSubmitEditing={(event) => {
+                    this.refs.password.focus();
+                  }}
+                  style={{fontSize: 15}}
+                  autoCapitalize={'none'}
+                  editable={!this.props.isLoading}
+                />
+              </View>
+            </View>
+            <View style={{marginTop: 30}}>
+              <Text style={styles.titleForm}>Mật khẩu</Text>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  value={this.props.password}
+                  ref={'password'}
+                  onChangeText={(data) =>
+                    this.props.updateFormData('password', data)
+                  }
+                  returnKeyType={'done'}
+                  placeholder="password"
+                  blurOnSubmit={false}
+                  onSubmitEditing={this.props.onClickLogin}
+                  secureTextEntry
+                  editable={!this.props.isLoading}
+                  style={{fontSize: 15}}
+                />
+              </View>
+            </View>
+            {!this.props.isLoading ? (
+              <TouchableOpacity onPress={() => this.onPressLogin()}>
+                <View style={styles.btnSubmit} onPress={this.onPressLogin}>
+                  <Text style={{color: 'white'}}>Đăng nhập</Text>
+                </View>
+              </TouchableOpacity>
+            ) : (
+              <View style={styles.btnSubmit}>
+                <Spinkit isVisible color="white" type="ThreeBounce" size={40} />
               </View>
             )}
-          />
-          <View style={{marginTop: 30}}>
-            <Text style={styles.titleForm}>Tên đăng nhập</Text>
-            <View style={styles.inputContainer}>
-              <TextInput
-                value={this.props.username}
-                ref={'username'}
-                onChangeText={(data) =>
-                  this.props.updateFormData('username', data)
-                }
-                returnKeyType={'next'}
-                placeholder="username"
-                blurOnSubmit={false}
-                onSubmitEditing={(event) => {
-                  this.refs.password.focus();
-                }}
-                style={{fontSize: 15}}
-                autoCapitalize={'none'}
-                editable={!this.props.isLoading}
-              />
-            </View>
           </View>
-          <View style={{marginTop: 30}}>
-            <Text style={styles.titleForm}>Mật khẩu</Text>
-            <View style={styles.inputContainer}>
-              <TextInput
-                value={this.props.password}
-                ref={'password'}
-                onChangeText={(data) =>
-                  this.props.updateFormData('password', data)
-                }
-                returnKeyType={'done'}
-                placeholder="password"
-                blurOnSubmit={false}
-                onSubmitEditing={this.props.onClickLogin}
-                secureTextEntry
-                editable={!this.props.isLoading}
-                style={{fontSize: 15}}
-              />
-            </View>
-          </View>
-          {!this.props.isLoading ? (
-            <TouchableOpacity onPress={() => this.onPressLogin()}>
-              <View style={styles.btnSubmit} onPress={this.onPressLogin}>
-                <Text style={{color: 'white'}}>Đăng nhập</Text>
-              </View>
-            </TouchableOpacity>
-          ) : (
-            <View style={styles.btnSubmit}>
-              <Spinkit isVisible color="white" type="ThreeBounce" size={40} />
-            </View>
-          )}
-        </View>
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
     );
   }
 }

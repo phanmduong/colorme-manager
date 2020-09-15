@@ -138,6 +138,7 @@ class LoginComponent extends React.Component {
                       placeholder="Chọn trung tâm"
                       blurOnSubmit={false}
                       onFocus={() => this.setState({hideResults: false})}
+                      onBlur={() => this.setState({hideResults: true})}
                       onSubmitEditing={(event) => {
                         this.refs.username.focus();
                         this.setState({hideResults: true});

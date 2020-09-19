@@ -32,7 +32,7 @@
     "react-native-code-push": "^5.7.0",
     "react-native-custom-picker": "^0.4.0",
     "react-native-device-info": "^2.3.2",
-    "react-native-geolocation-service": "^3.1.0",
+    "react-native-geolocation-service": "^5.0.0",
     "react-native-gesture-handler": "^1.4.1",
     "react-native-html-to-text": "0.0.5",
     "react-native-image-picker": "^1.1.0",

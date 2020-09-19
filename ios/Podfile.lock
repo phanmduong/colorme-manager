@@ -93,6 +93,8 @@ PODS:
     - React
   - react-native-camera/RN (3.31.0):
     - React
+  - react-native-geolocation-service (5.0.0):
+    - React
   - react-native-image-picker (1.1.0):
     - React
   - react-native-image-resizer (1.2.3):
@@ -167,6 +169,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-camera (from `../node_modules/react-native-camera`)
+  - react-native-geolocation-service (from `../node_modules/react-native-geolocation-service`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-image-resizer (from `../node_modules/react-native-image-resizer`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
@@ -237,6 +240,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-camera:
     :path: "../node_modules/react-native-camera"
+  react-native-geolocation-service:
+    :path: "../node_modules/react-native-geolocation-service"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
   react-native-image-resizer:
@@ -313,6 +318,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 90ad2f9db09513fc763bc757fdc3c4ff8bde2a30
   React-jsinspector: e08662d1bf5b129a3d556eb9ea343a3f40353ae4
   react-native-camera: 679479bfe0f59103aca704e8dc39b0cedf5e2f65
+  react-native-geolocation-service: 141e33bdb179bcba10b216ee13962611e21f2be4
   react-native-image-picker: 3637d63fef7e32a230141ab4660d3ceb773c824f
   react-native-image-resizer: 3a0a2ab15953b2aec5dda20338e3c6bd6c26e528
   react-native-netinfo: 3dd993921571d01b78a8f91f1caaffcab7a1e1c7

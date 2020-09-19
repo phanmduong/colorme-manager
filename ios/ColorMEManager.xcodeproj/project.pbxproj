@@ -41,7 +41,6 @@
 		7B5018058A7AC489366FA299 /* libPods-ColorMEManagerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 33CF5FA2C00BB3C093D067D0 /* libPods-ColorMEManagerTests.a */; };
 		9DA9BC712310D0DD00F4C4FF /* libPods-ColorMEManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DA9BC702310D0DD00F4C4FF /* libPods-ColorMEManager.a */; };
 		9DF4812422EFFDEE0033A6E8 /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17157B4E1EFEC3C900B712CE /* libART.a */; };
-		9DF4818722F063890033A6E8 /* libRNCGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF4818622F063720033A6E8 /* libRNCGeolocation.a */; };
 		A680D33C41CC4D3E968E59DA /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D388E442559F4625B885988B /* Foundation.ttf */; };
 		AA1A8057C49D4F629489285E /* SegoeUI-Blank.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 13CEA1EA591E4D16A0F2B19B /* SegoeUI-Blank.ttf */; };
 		AC6C0EF32515E7E8001B29A0 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6C0EF22515E7E8001B29A0 /* File.swift */; };
@@ -436,7 +435,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9DA9BC712310D0DD00F4C4FF /* libPods-ColorMEManager.a in Frameworks */,
-				9DF4818722F063890033A6E8 /* libRNCGeolocation.a in Frameworks */,
 				9DF4812422EFFDEE0033A6E8 /* libART.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1519,7 +1517,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ColorMEManager/ColorMEManager.entitlements;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 6BZ59393SB;
 				HEADER_SEARCH_PATHS = (
@@ -1536,7 +1534,7 @@
 				INFOPLIST_FILE = ColorMEManager/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.4.3;
+				MARKETING_VERSION = 2.4.4;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1560,7 +1558,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ColorMEManager/ColorMEManager.entitlements;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6BZ59393SB;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1576,7 +1574,7 @@
 				INFOPLIST_FILE = ColorMEManager/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.4.3;
+				MARKETING_VERSION = 2.4.4;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1637,7 +1635,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ColorMEManager/ColorMEManager.entitlements;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6BZ59393SB;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1653,7 +1651,7 @@
 				INFOPLIST_FILE = ColorMEManager/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.4.3;
+				MARKETING_VERSION = 2.4.4;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

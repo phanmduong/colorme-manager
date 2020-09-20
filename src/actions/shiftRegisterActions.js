@@ -91,7 +91,6 @@ export function register(registerId, token) {
             ),
           );
           dispatch(ShiftRegisterError());
-          Alert.alert('Thông báo', res.data.message);
         }
       })
       .catch((error) => {

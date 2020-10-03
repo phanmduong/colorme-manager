@@ -102,6 +102,10 @@ class LeadsComponent extends React.Component {
       interest={item.interest}
       father_name={item.father_name}
       source_id={item.source_id}
+      campaigns={this.props.campaigns}
+      staff={this.props.staff}
+      sources={this.props.sources}
+      statuses={this.props.statuses}
     />
   );
 

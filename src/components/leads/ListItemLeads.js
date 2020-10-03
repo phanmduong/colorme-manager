@@ -12,12 +12,14 @@ import theme from '../../styles';
 import {getShortName, isEmptyInput} from '../../helper';
 import Call from '../common/Call';
 import CallRegisterModal from '../infoStudent/CallRegisterModal';
+import LeadAssignModal from './LeadAssignModal';
 
 class ListItemLeads extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
       callModalVisible: false,
+      assignModalVisible: false,
     };
   }
 
@@ -180,6 +182,10 @@ class ListItemLeads extends React.Component {
     this.setState({callModalVisible: !this.state.callModalVisible});
   };
 
+  toggleAssignModal = () => {
+    this.setState({assignModalVisible: !this.state.assignModalVisible});
+  };
+
   getSource = () => {
     return this.props.sources.find(
       (source) => source.id === this.props.source_id,
@@ -195,9 +201,13 @@ class ListItemLeads extends React.Component {
       rate,
       phone,
       campaign,
+      campaigns,
       source,
+      sources,
       carer,
+      staff,
       lead_status,
+      statuses,
       city,
       token,
       notes,
@@ -256,7 +266,16 @@ class ListItemLeads extends React.Component {
                     <Text style={styles.saler}>{getShortName(carer.name)}</Text>
                   </View>
                 ) : (
-                  <View />
+                  <View
+                    style={{
+                      ...styles.card,
+                      ...{
+                        backgroundColor: '#999',
+                        marginRight: 5,
+                      },
+                    }}>
+                    <Text style={styles.saler}>No P.I.C</Text>
+                  </View>
                 )}
                 {campaign && campaign.name && campaign.color ? (
                   <View
@@ -273,7 +292,16 @@ class ListItemLeads extends React.Component {
                     <Text style={styles.campaign}>{campaign.name.trim()}</Text>
                   </View>
                 ) : (
-                  <View />
+                  <View
+                    style={{
+                      ...styles.card,
+                      ...{
+                        backgroundColor: '#999',
+                        marginRight: 5,
+                      },
+                    }}>
+                    <Text style={styles.saler}>No Source</Text>
+                  </View>
                 )}
                 {!isEmptyInput(this.getSource()) ? (
                   <View
@@ -293,7 +321,16 @@ class ListItemLeads extends React.Component {
                     </Text>
                   </View>
                 ) : (
-                  <View />
+                  <View
+                    style={{
+                      ...styles.card,
+                      ...{
+                        backgroundColor: '#999',
+                        marginRight: 5,
+                      },
+                    }}>
+                    <Text style={styles.saler}>No Campaign</Text>
+                  </View>
                 )}
                 {lead_status && lead_status.name && lead_status.color ? (
                   <View
@@ -311,7 +348,16 @@ class ListItemLeads extends React.Component {
                     </Text>
                   </View>
                 ) : (
-                  <View />
+                  <View
+                    style={{
+                      ...styles.card,
+                      ...{
+                        backgroundColor: '#999',
+                        marginRight: 5,
+                      },
+                    }}>
+                    <Text style={styles.saler}>No status</Text>
+                  </View>
                 )}
               </View>
               <View>
@@ -361,11 +407,19 @@ class ListItemLeads extends React.Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
+                    this.toggleAssignModal();
+                  }}>
+                  <View style={[{marginLeft: 10}, styles.button]}>
+                    <Text style={{fontSize: 16}}>Tag</Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
                     this.props.setStudentId(id);
                     this.props.navigation.navigate('InfoStudentDetails');
                   }}>
                   <View style={[{marginLeft: 10}, styles.button]}>
-                    <Text style={{fontSize: 16}}>Chỉnh sửa</Text>
+                    <Text style={{fontSize: 16}}>Sửa</Text>
                   </View>
                 </TouchableOpacity>
               </View>
@@ -380,6 +434,19 @@ class ListItemLeads extends React.Component {
               student_id={id}
               token={token}
               errorChangeCallStatus={this.props.errorChangeCallStatus}
+            />
+            <LeadAssignModal
+              isVisible={this.state.assignModalVisible}
+              closeModal={this.toggleAssignModal}
+              name={name}
+              source={this.getSource()}
+              campaign={campaign}
+              status={lead_status}
+              carer={carer}
+              campaigns={campaigns}
+              staff={staff}
+              sources={sources}
+              statuses={statuses}
             />
           </View>
         </View>

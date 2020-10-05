@@ -308,10 +308,10 @@ export const getData = (array, id, placeholder, color) => {
   return data;
 };
 
-export const getDefault = (array, comparedItem) => {
-  if (comparedItem) {
+export const getDefault = (array, comparedId) => {
+  if (comparedId) {
     for (let item of array) {
-      if (item.id === comparedItem.id) {
+      if (item.id === comparedId) {
         return item;
       }
     }

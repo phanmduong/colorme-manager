@@ -16,6 +16,7 @@ import ScalableImage from 'react-native-scalable-image';
 import Call from '../common/Call';
 import {isEmptyInput} from '../../helper';
 import ImagePicker from 'react-native-image-picker';
+import TagItem from '../common/TagItem';
 var {height, width} = Dimensions.get('window');
 
 export const GENDER = [
@@ -44,7 +45,7 @@ class InfoStudentDetailsComponent extends React.Component {
     super(props, context);
   }
 
-  getGender = genderId => {
+  getGender = (genderId) => {
     for (let gender of GENDER) {
       if (gender.id === genderId) {
         return gender.name;
@@ -53,7 +54,7 @@ class InfoStudentDetailsComponent extends React.Component {
     return 'Khác';
   };
 
-  renderStars = number => {
+  renderStars = (number) => {
     switch (number) {
       case 1:
         return (
@@ -208,9 +209,9 @@ class InfoStudentDetailsComponent extends React.Component {
     }
   };
 
-  uploadImage = imageField => {
+  uploadImage = (imageField) => {
     const options = {};
-    ImagePicker.showImagePicker(options, response => {
+    ImagePicker.showImagePicker(options, (response) => {
       if (response.uri) {
         let imageUri = response.uri;
         this.props.uploadImage(imageField, imageUri);
@@ -225,7 +226,11 @@ class InfoStudentDetailsComponent extends React.Component {
     if (
       !this.props.isLoadingStudent &&
       !this.props.isUploadingImage &&
-      !this.props.isUpdatingProfile
+      !this.props.isUpdatingProfile &&
+      !this.props.isLoadingStatuses &&
+      !this.props.isLoadingCampaigns &&
+      !this.props.isLoadingSources &&
+      !this.props.isLoadingStaff
     ) {
       return (
         <ScrollView
@@ -275,6 +280,48 @@ class InfoStudentDetailsComponent extends React.Component {
               </View>
             </TouchableOpacity>
           </View>
+
+          <TagItem
+            title={'P.I.C'}
+            placeholder={'No P.I.C'}
+            defaultValue={this.props.student.staff_id}
+            options={this.props.staff}
+            hasHashInHexColor={false}
+            onValueChange={(value) =>
+              this.props.changePICTag(value.id, this.props.student.id)
+            }
+          />
+          <TagItem
+            title={'Nguồn'}
+            placeholder={'No Source'}
+            defaultValue={this.props.student.source_id}
+            options={this.props.sources}
+            hasHashInHexColor={true}
+            onValueChange={(value) =>
+              this.props.changeSourceTag(value.id, this.props.student.id)
+            }
+          />
+          <TagItem
+            title={'Chiến dịch'}
+            placeholder={'No Campaign'}
+            defaultValue={this.props.student.campaign_id}
+            options={this.props.campaigns}
+            hasHashInHexColor={false}
+            onValueChange={(value) =>
+              this.props.changeCampaignTag(value.id, this.props.student.id)
+            }
+          />
+          <TagItem
+            title={'Trạng thái'}
+            placeholder={'No status'}
+            defaultValue={this.props.student.status_id}
+            options={this.props.statuses}
+            hasHashInHexColor={true}
+            onValueChange={(value) =>
+              this.props.changeStatusTag(value.id, this.props.student.id)
+            }
+          />
+
           <View style={{marginTop: 25}}>
             <Text style={{fontSize: 16}}>Ngày sinh</Text>
             <Text

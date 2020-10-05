@@ -84,7 +84,7 @@ const TagItem = ({
   const getDefaultValue = () => {
     return getDefault(
       getData(options, null, placeholder, hasHashInHexColor ? '#999' : '999'),
-      defaultValue,
+      defaultValue ? defaultValue : null,
     );
   };
 

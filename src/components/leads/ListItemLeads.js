@@ -277,32 +277,6 @@ class ListItemLeads extends React.Component {
                     <Text style={styles.saler}>No P.I.C</Text>
                   </View>
                 )}
-                {campaign && campaign.name && campaign.color ? (
-                  <View
-                    style={{
-                      ...styles.card,
-                      ...{
-                        backgroundColor:
-                          !campaign.color || campaign.color === ''
-                            ? theme.processColor1
-                            : '#' + campaign.color,
-                        marginRight: 5,
-                      },
-                    }}>
-                    <Text style={styles.campaign}>{campaign.name.trim()}</Text>
-                  </View>
-                ) : (
-                  <View
-                    style={{
-                      ...styles.card,
-                      ...{
-                        backgroundColor: '#999',
-                        marginRight: 5,
-                      },
-                    }}>
-                    <Text style={styles.saler}>No Source</Text>
-                  </View>
-                )}
                 {!isEmptyInput(this.getSource()) ? (
                   <View
                     style={{
@@ -330,6 +304,32 @@ class ListItemLeads extends React.Component {
                       },
                     }}>
                     <Text style={styles.saler}>No Campaign</Text>
+                  </View>
+                )}
+                {campaign && campaign.name && campaign.color ? (
+                  <View
+                    style={{
+                      ...styles.card,
+                      ...{
+                        backgroundColor:
+                          !campaign.color || campaign.color === ''
+                            ? theme.processColor1
+                            : '#' + campaign.color,
+                        marginRight: 5,
+                      },
+                    }}>
+                    <Text style={styles.campaign}>{campaign.name.trim()}</Text>
+                  </View>
+                ) : (
+                  <View
+                    style={{
+                      ...styles.card,
+                      ...{
+                        backgroundColor: '#999',
+                        marginRight: 5,
+                      },
+                    }}>
+                    <Text style={styles.saler}>No Source</Text>
                   </View>
                 )}
                 {lead_status && lead_status.name && lead_status.color ? (

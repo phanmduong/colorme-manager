@@ -5,6 +5,8 @@ import {bindActionCreators} from 'redux';
 import InfoStudentDetailsComponent from '../../components/infoStudent/InfoStudentDetailsComponent';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import * as leadsActions from '../../actions/leadsActions';
+import * as saveRegisterActions from '../../actions/saveRegisterActions';
 
 class InfoStudentDetailsContainer extends React.Component {
   constructor(props, context) {
@@ -13,6 +15,10 @@ class InfoStudentDetailsContainer extends React.Component {
 
   componentDidMount = () => {
     this.loadStudent();
+    this.loadStaff('');
+    this.loadStatuses();
+    this.loadCampaigns();
+    this.loadCampaigns();
   };
 
   static navigationOptions = ({navigation}) => ({
@@ -39,6 +45,36 @@ class InfoStudentDetailsContainer extends React.Component {
     );
   };
 
+  loadStaff = (search) => {
+    this.props.leadsActions.getStaff(
+      search,
+      this.props.token,
+      this.props.domain,
+    );
+  };
+
+  loadStatuses = () => {
+    this.props.saveRegisterActions.loadStatuses(
+      'leads',
+      this.props.token,
+      this.props.domain,
+    );
+  };
+
+  loadCampaigns = () => {
+    this.props.saveRegisterActions.loadCampaigns(
+      this.props.token,
+      this.props.domain,
+    );
+  };
+
+  loadSources = () => {
+    this.props.saveRegisterActions.loadSources(
+      this.props.token,
+      this.props.domain,
+    );
+  };
+
   uploadImage = (imageField, imageUri) => {
     this.props.infoStudentActions.uploadImage(
       imageUri,
@@ -49,7 +85,44 @@ class InfoStudentDetailsContainer extends React.Component {
     );
   };
 
+  changeCampaignTag = (campaign_id, user_id) => {
+    this.props.leadsActions.changeCampaignTag(
+      campaign_id,
+      user_id,
+      this.props.token,
+      this.props.domain,
+    );
+  };
+
+  changeSourceTag = (source_id, user_id) => {
+    this.props.leadsActions.changeSourceTag(
+      source_id,
+      user_id,
+      this.props.token,
+      this.props.domain,
+    );
+  };
+
+  changeStatusTag = (status_id, id) => {
+    this.props.leadsActions.changeStatusTag(
+      status_id,
+      id,
+      this.props.token,
+      this.props.domain,
+    );
+  };
+
+  changePICTag = (staff_id, lead_id) => {
+    this.props.leadsActions.changePICTag(
+      staff_id,
+      lead_id,
+      this.props.token,
+      this.props.domain,
+    );
+  };
+
   render() {
+    console.log(this.props.student)
     return (
       <InfoStudentDetailsComponent
         {...this.props}
@@ -60,6 +133,10 @@ class InfoStudentDetailsContainer extends React.Component {
         errorUploadingImage={this.props.errorUploadingImage}
         isUpdatingProfile={this.props.isUpdatingProfile}
         onRefresh={this.loadStudent}
+        changeCampaignTag={this.changeCampaignTag}
+        changeSourceTag={this.changeSourceTag}
+        changeStatusTag={this.changeStatusTag}
+        changePICTag={this.changePICTag}
       />
     );
   }
@@ -90,12 +167,34 @@ function mapStateToProps(state) {
     isUpdatingProfile: state.infoStudent.isUpdatingProfile,
     errorUpdatingProfile: state.infoStudent.errorUpdatingProfile,
     domain: state.login.domain,
+    isChangingCampaignTag: state.leads.isChangingCampaignTag,
+    errorChangeCampaignTag: state.leads.errorChangeCampaignTag,
+    isChangingStatusTag: state.leads.isChangingStatusTag,
+    errorChangeStatusTag: state.leads.errorChangeStatusTag,
+    isChangingPICTag: state.leads.isChangingPICTag,
+    errorChangePICTag: state.leads.errorChangePICTag,
+    isChangingSourceTag: state.leads.isChangingSourceTag,
+    errorChangeSourceTag: state.leads.errorChangeSourceTag,
+    isLoadingStatuses: state.saveRegister.isLoadingStatuses,
+    errorLoadingStatuses: state.saveRegister.errorLoadingStatuses,
+    statuses: state.saveRegister.statuses,
+    isLoadingCampaigns: state.saveRegister.isLoadingCampaigns,
+    errorLoadingCampaigns: state.saveRegister.errorLoadingCampaigns,
+    campaigns: state.saveRegister.campaigns,
+    isLoadingSources: state.saveRegister.isLoadingSources,
+    errorLoadingSources: state.saveRegister.errorLoadingSources,
+    sources: state.saveRegister.sources,
+    staff: state.leads.staff,
+    isLoadingStaff: state.leads.isLoadingStaff,
+    errorStaff: state.leads.errorStaff,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     infoStudentActions: bindActionCreators(infoStudentActions, dispatch),
+    leadsActions: bindActionCreators(leadsActions, dispatch),
+    saveRegisterActions: bindActionCreators(saveRegisterActions, dispatch),
   };
 }
 

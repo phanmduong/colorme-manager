@@ -338,6 +338,8 @@ function mapStateToProps(state) {
     errorChangeStatusTag: state.leads.errorChangeStatusTag,
     isChangingPICTag: state.leads.isChangingPICTag,
     errorChangePICTag: state.leads.errorChangePICTag,
+    isChangingSourceTag: state.leads.isChangingSourceTag,
+    errorChangeSourceTag: state.leads.errorChangeSourceTag,
   };
 }
 

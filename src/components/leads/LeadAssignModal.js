@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, View} from 'react-native';
 import Modal from 'react-native-modal';
 import theme from '../../styles';
@@ -18,7 +18,25 @@ const LeadAssignModal = ({
   statuses,
   carer,
   staff,
+  changeTags,
+  user_id,
 }) => {
+  const [campaignId, setCampaignId] = useState(null);
+  const [sourceId, setSourceId] = useState(null);
+  const [statusId, setStatusId] = useState(null);
+  const [carerId, setCarerId] = useState(null);
+
+  useEffect(() => {
+    setCampaignId(campaign ? campaign.id : null);
+    setSourceId(source ? source.id : null);
+    setStatusId(!isEmptyInput(status) ? status.id : null);
+    setCarerId(carer ? carer.id : null);
+  }, []);
+
+  const applyTagChange = () => {
+    changeTags(user_id, campaignId, sourceId, statusId, carerId);
+  };
+
   return (
     <Modal
       isVisible={isVisible}
@@ -36,20 +54,23 @@ const LeadAssignModal = ({
           defaultValue={carer}
           options={staff}
           hasHashInHexColor={false}
-        />
-        <TagItem
-          title={'Chiến dịch'}
-          placeholder={'No Source'}
-          defaultValue={campaign}
-          options={campaigns}
-          hasHashInHexColor={false}
+          onValueChange={(value) => setCarerId(value.id)}
         />
         <TagItem
           title={'Nguồn'}
-          placeholder={'No Campaign'}
+          placeholder={'No Source'}
           defaultValue={source}
           options={sources}
           hasHashInHexColor={true}
+          onValueChange={(value) => setSourceId(value.id)}
+        />
+        <TagItem
+          title={'Chiến dịch'}
+          placeholder={'No Campaign'}
+          defaultValue={campaign}
+          options={campaigns}
+          hasHashInHexColor={false}
+          onValueChange={(value) => setCampaignId(value.id)}
         />
         <TagItem
           title={'Trạng thái'}
@@ -57,10 +78,14 @@ const LeadAssignModal = ({
           defaultValue={!isEmptyInput(status) ? status : null}
           options={statuses}
           hasHashInHexColor={true}
+          onValueChange={(value) => setStatusId(value.id)}
         />
         <SubmitButton
           containerStyle={styles.submitButton}
-          onPress={closeModal}
+          onPress={() => {
+            applyTagChange();
+            closeModal();
+          }}
         />
       </View>
     </Modal>

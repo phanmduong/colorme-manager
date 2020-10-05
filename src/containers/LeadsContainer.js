@@ -222,6 +222,50 @@ class LeadsContainer extends React.Component {
     ),
   });
 
+  changeCampaignTag = (campaign_id, user_id) => {
+    this.props.leadsActions.changeCampaignTag(
+      campaign_id,
+      user_id,
+      this.props.token,
+      this.props.domain,
+    );
+  };
+
+  changeSourceTag = (source_id, user_id) => {
+    this.props.leadsActions.changeSourceTag(
+      source_id,
+      user_id,
+      this.props.token,
+      this.props.domain,
+    );
+  };
+
+  changeStatusTag = (status_id, id) => {
+    this.props.leadsActions.changeStatusTag(
+      status_id,
+      id,
+      this.props.token,
+      this.props.domain,
+    );
+  };
+
+  changePICTag = (staff_id, lead_id) => {
+    this.props.leadsActions.changePICTag(
+      staff_id,
+      lead_id,
+      this.props.token,
+      this.props.domain,
+    );
+  };
+
+  changeTags = (user_id, campaign_id, source_id, status_id, staff_id) => {
+    this.changeCampaignTag(campaign_id, user_id);
+    this.changeSourceTag(source_id, user_id);
+    this.changeStatusTag(status_id, user_id);
+    this.changePICTag(staff_id, user_id);
+    setTimeout(() => this.onRefresh(this.props.searchLeads), 500);
+  };
+
   render() {
     return (
       <LeadsComponent
@@ -241,6 +285,7 @@ class LeadsContainer extends React.Component {
         loadStaff={this.loadStaff}
         changeCallStatus={this.changeCallStatus}
         setStudentId={this.setStudentId}
+        changeTags={this.changeTags}
       />
     );
   }
@@ -287,6 +332,12 @@ function mapStateToProps(state) {
     errorStaff: state.leads.errorStaff,
     errorChangeCallStatus: state.infoStudent.errorChangeCallStatus,
     domain: state.login.domain,
+    isChangingCampaignTag: state.leads.isChangingCampaignTag,
+    errorChangeCampaignTag: state.leads.errorChangeCampaignTag,
+    isChangingStatusTag: state.leads.isChangingStatusTag,
+    errorChangeStatusTag: state.leads.errorChangeStatusTag,
+    isChangingPICTag: state.leads.isChangingPICTag,
+    errorChangePICTag: state.leads.errorChangePICTag,
   };
 }
 

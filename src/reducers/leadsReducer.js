@@ -116,6 +116,66 @@ export default function leadsReducer(state = initialState.leads, action) {
         isSavingLead: action.isSavingLead,
         errorSaveLead: action.errorSaveLead,
       });
+    case types.BEGIN_CHANGE_CAMPAIGN_TAG:
+      return Object.assign({}, state, {
+        isChangingCampaignTag: action.isChangingCampaignTag,
+        errorChangeCampaignTag: action.errorChangeCampaignTag,
+      });
+    case types.CHANGE_CAMPAIGN_TAG_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isChangingCampaignTag: action.isChangingCampaignTag,
+        errorChangeCampaignTag: action.errorChangeCampaignTag,
+      });
+    case types.CHANGE_CAMPAIGN_TAG_ERROR:
+      return Object.assign({}, state, {
+        isChangingCampaignTag: action.isChangingCampaignTag,
+        errorChangeCampaignTag: action.errorChangeCampaignTag,
+      });
+    case types.BEGIN_CHANGE_SOURCE_TAG:
+      return Object.assign({}, state, {
+        isChangingSourceTag: action.isChangingSourceTag,
+        errorChangeSourceTag: action.errorChangeSourceTag,
+      });
+    case types.CHANGE_SOURCE_TAG_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isChangingSourceTag: action.isChangingSourceTag,
+        errorChangeSourceTag: action.errorChangeSourceTag,
+      });
+    case types.CHANGE_SOURCE_TAG_ERROR:
+      return Object.assign({}, state, {
+        isChangingSourceTag: action.isChangingSourceTag,
+        errorChangeSourceTag: action.errorChangeSourceTag,
+      });
+    case types.BEGIN_CHANGE_STATUS_TAG:
+      return Object.assign({}, state, {
+        isChangingStatusTag: action.isChangingStatusTag,
+        errorChangeStatusTag: action.errorChangeStatusTag,
+      });
+    case types.CHANGE_STATUS_TAG_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isChangingStatusTag: action.isChangingStatusTag,
+        errorChangeStatusTag: action.errorChangeStatusTag,
+      });
+    case types.CHANGE_STATUS_TAG_ERROR:
+      return Object.assign({}, state, {
+        isChangingStatusTag: action.isChangingStatusTag,
+        errorChangeStatusTag: action.errorChangeStatusTag,
+      });
+    case types.BEGIN_CHANGE_PIC_TAG:
+      return Object.assign({}, state, {
+        isChangingPICTag: action.isChangingPICTag,
+        errorChangePICTag: action.errorChangePICTag,
+      });
+    case types.CHANGE_PIC_TAG_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isChangingPICTag: action.isChangingPICTag,
+        errorChangePICTag: action.errorChangePICTag,
+      });
+    case types.CHANGE_PIC_TAG_ERROR:
+      return Object.assign({}, state, {
+        isChangingPICTag: action.isChangingPICTag,
+        errorChangePICTag: action.errorChangePICTag,
+      });
     default:
       return state;
   }

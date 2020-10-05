@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, View, TouchableOpacity, Dimensions} from 'react-native';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import Search from './Search';
@@ -12,34 +12,29 @@ const TagItem = ({
   defaultValue,
   hasHashInHexColor,
   placeholder,
+  onValueChange,
 }) => {
   const [search, setSearch] = useState('');
 
   const renderPickerField = (settings) => {
-    const {selectedItem, defaultText, getLabel} = settings;
+    const {selectedItem, getLabel} = settings;
     return (
-      <View>
-        {!selectedItem && (
-          <View style={[styles.tagContainer, {backgroundColor: '#999'}]}>
-            <Text style={styles.tagName}>{getLabel(defaultText)}</Text>
-            <EntypoIcon name={'triangle-down'} size={20} color={'white'} />
-          </View>
-        )}
-        {selectedItem && (
-          <View
-            style={[
-              styles.tagContainer,
-              {
-                backgroundColor: hasHashInHexColor
+      selectedItem && (
+        <View
+          style={[
+            styles.tagContainer,
+            {
+              backgroundColor: selectedItem.color
+                ? hasHashInHexColor
                   ? selectedItem.color
-                  : `#${selectedItem.color}`,
-              },
-            ]}>
-            <Text style={styles.tagName}>{getLabel(selectedItem)}</Text>
-            <EntypoIcon name={'triangle-down'} size={20} color={'white'} />
-          </View>
-        )}
-      </View>
+                  : `#${selectedItem.color}`
+                : '#999',
+            },
+          ]}>
+          <Text style={styles.tagName}>{getLabel(selectedItem)}</Text>
+          <EntypoIcon name={'triangle-down'} size={20} color={'white'} />
+        </View>
+      )
     );
   };
 
@@ -81,14 +76,14 @@ const TagItem = ({
 
   const getOptions = () => {
     return getSearchedResults(
-      getData(options, placeholder, hasHashInHexColor ? '#999' : '999'),
+      getData(options, null, placeholder, hasHashInHexColor ? '#999' : '999'),
       search,
     );
   };
 
   const getDefaultValue = () => {
     return getDefault(
-      getData(options, placeholder, hasHashInHexColor ? '#999' : '999'),
+      getData(options, null, placeholder, hasHashInHexColor ? '#999' : '999'),
       defaultValue,
     );
   };
@@ -106,6 +101,7 @@ const TagItem = ({
         headerTemplate={() => renderPickerHeader('Chọn chiến dịch')}
         footerTemplate={renderPickerFooter}
         modalStyle={styles.modalStyle}
+        onValueChange={onValueChange}
       />
     </View>
   );

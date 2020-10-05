@@ -302,8 +302,8 @@ export const getSearchedResults = (array, search) => {
   }
 };
 
-export const getData = (array, placeholder, color) => {
-  let defaultOption = {id: -1, name: placeholder, color: color};
+export const getData = (array, id, placeholder, color) => {
+  let defaultOption = {id: id, name: placeholder, color: color};
   const data = [defaultOption].concat(array);
   return data;
 };

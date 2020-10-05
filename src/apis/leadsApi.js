@@ -81,3 +81,38 @@ export function saveLead(lead, token, domain) {
     address: lead.address,
   });
 }
+
+export function assignCampaign(campaign_id, user_id, token, domain) {
+  let url =
+    env.manageApiUrlV3(domain) + '/marketing-campaign/assign?token=' + token;
+  return axios.post(url, {
+    campaign_id,
+    user_id,
+  });
+}
+
+export function assignSource(source_id, user_id, token, domain) {
+  let url = env.manageApiUrlV3(domain) + '/source/assign?token=' + token;
+  return axios.post(url, {
+    source_id,
+    user_id,
+  });
+}
+
+export function assignStatus(status_id, id, token, domain) {
+  let url = env.manageApiUrlV4(domain) + '/statuses/assign?token=' + token;
+  return axios.post(url, {
+    statusRef: 'leads',
+    id,
+    status_id,
+  });
+}
+
+export function assignPIC(staff_id, lead_id, token, domain) {
+  let url =
+    env.manageApiUrlV3(domain) + '/lead/assign-lead-staff?token=' + token;
+  return axios.put(url, {
+    lead_id,
+    staff_id,
+  });
+}

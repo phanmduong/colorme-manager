@@ -449,6 +449,7 @@ class ListItemLeads extends React.Component {
               statuses={statuses}
               user_id={id}
               changeTags={this.props.changeTags}
+              loadStaff={this.props.loadStaff}
             />
           </View>
         </View>

@@ -68,9 +68,9 @@ class AddLeadsContainer extends React.Component {
 
   loadStaff = (search) => {
     this.props.leadsActions.getStaff(
-        search,
-        this.props.token,
-        this.props.domain,
+      search,
+      this.props.token,
+      this.props.domain,
     );
   };
 
@@ -79,7 +79,13 @@ class AddLeadsContainer extends React.Component {
   };
 
   render() {
-    return <AddLeadsComponent {...this.props} saveLead={this.saveLead} />;
+    return (
+      <AddLeadsComponent
+        {...this.props}
+        saveLead={this.saveLead}
+        loadStaff={this.loadStaff}
+      />
+    );
   }
 }
 

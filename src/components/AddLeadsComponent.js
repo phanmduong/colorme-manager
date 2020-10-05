@@ -508,6 +508,7 @@ class AddLeadsComponent extends React.Component {
                   options={this.props.staff}
                   hasHashInHexColor={false}
                   onValueChange={(value) => this.setState({carer_id: value.id})}
+                  externalSearch={(search) => this.props.loadStaff(search)}
                 />
                 <TagItem
                   title={'Trạng thái'}

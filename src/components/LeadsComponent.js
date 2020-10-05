@@ -107,6 +107,7 @@ class LeadsComponent extends React.Component {
       sources={this.props.sources}
       statuses={this.props.statuses}
       changeTags={this.props.changeTags}
+      loadStaff={this.props.loadStaff}
     />
   );
 

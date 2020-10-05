@@ -13,6 +13,7 @@ const TagItem = ({
   hasHashInHexColor,
   placeholder,
   onValueChange,
+  externalSearch,
 }) => {
   const [search, setSearch] = useState('');
 
@@ -54,6 +55,9 @@ const TagItem = ({
         <Search
           placeholder="Tìm kiếm"
           onChangeText={(search) => {
+            if (externalSearch) {
+              externalSearch(search);
+            }
             setSearch(search);
           }}
           value={search}

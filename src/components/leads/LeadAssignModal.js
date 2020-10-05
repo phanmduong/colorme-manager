@@ -20,6 +20,7 @@ const LeadAssignModal = ({
   staff,
   changeTags,
   user_id,
+  loadStaff,
 }) => {
   const [campaignId, setCampaignId] = useState(null);
   const [sourceId, setSourceId] = useState(null);
@@ -51,15 +52,16 @@ const LeadAssignModal = ({
         <TagItem
           title={'P.I.C'}
           placeholder={'No P.I.C'}
-          defaultValue={carer}
+          defaultValue={carer ? carer.id : null}
           options={staff}
           hasHashInHexColor={false}
           onValueChange={(value) => setCarerId(value.id)}
+          externalSearch={(search) => loadStaff(search)}
         />
         <TagItem
           title={'Nguồn'}
           placeholder={'No Source'}
-          defaultValue={source}
+          defaultValue={source ? source.id : null}
           options={sources}
           hasHashInHexColor={true}
           onValueChange={(value) => setSourceId(value.id)}
@@ -67,7 +69,7 @@ const LeadAssignModal = ({
         <TagItem
           title={'Chiến dịch'}
           placeholder={'No Campaign'}
-          defaultValue={campaign}
+          defaultValue={campaign ? campaign.id : null}
           options={campaigns}
           hasHashInHexColor={false}
           onValueChange={(value) => setCampaignId(value.id)}
@@ -75,7 +77,7 @@ const LeadAssignModal = ({
         <TagItem
           title={'Trạng thái'}
           placeholder={'No status'}
-          defaultValue={!isEmptyInput(status) ? status : null}
+          defaultValue={!isEmptyInput(status) ? status.id : null}
           options={statuses}
           hasHashInHexColor={true}
           onValueChange={(value) => setStatusId(value.id)}

@@ -122,7 +122,6 @@ class InfoStudentDetailsContainer extends React.Component {
   };
 
   render() {
-    console.log(this.props.student)
     return (
       <InfoStudentDetailsComponent
         {...this.props}
@@ -137,6 +136,7 @@ class InfoStudentDetailsContainer extends React.Component {
         changeSourceTag={this.changeSourceTag}
         changeStatusTag={this.changeStatusTag}
         changePICTag={this.changePICTag}
+        loadStaff={this.loadStaff}
       />
     );
   }

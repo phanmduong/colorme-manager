@@ -226,11 +226,7 @@ class InfoStudentDetailsComponent extends React.Component {
     if (
       !this.props.isLoadingStudent &&
       !this.props.isUploadingImage &&
-      !this.props.isUpdatingProfile &&
-      !this.props.isLoadingStatuses &&
-      !this.props.isLoadingCampaigns &&
-      !this.props.isLoadingSources &&
-      !this.props.isLoadingStaff
+      !this.props.isUpdatingProfile
     ) {
       return (
         <ScrollView
@@ -290,6 +286,7 @@ class InfoStudentDetailsComponent extends React.Component {
             onValueChange={(value) =>
               this.props.changePICTag(value.id, this.props.student.id)
             }
+            externalSearch={(search) => this.props.loadStaff(search)}
           />
           <TagItem
             title={'Nguồn'}

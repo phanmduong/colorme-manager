@@ -16,6 +16,9 @@ class AddLeadsContainer extends React.Component {
   componentDidMount = () => {
     this.loadProvinces();
     this.loadStatuses();
+    this.loadCampaigns();
+    this.loadSources();
+    this.loadStaff('');
   };
 
   static navigationOptions = ({navigation}) => ({
@@ -49,6 +52,28 @@ class AddLeadsContainer extends React.Component {
     );
   };
 
+  loadCampaigns = () => {
+    this.props.saveRegisterActions.loadCampaigns(
+      this.props.token,
+      this.props.domain,
+    );
+  };
+
+  loadSources = () => {
+    this.props.saveRegisterActions.loadSources(
+      this.props.token,
+      this.props.domain,
+    );
+  };
+
+  loadStaff = (search) => {
+    this.props.leadsActions.getStaff(
+        search,
+        this.props.token,
+        this.props.domain,
+    );
+  };
+
   saveLead = (lead) => {
     this.props.leadsActions.saveLead(lead, this.props.token, this.props.domain);
   };
@@ -75,6 +100,15 @@ function mapStateToProps(state) {
     errorLoadingStatuses: state.saveRegister.errorLoadingStatuses,
     statuses: state.saveRegister.statuses,
     domain: state.login.domain,
+    isLoadingCampaigns: state.saveRegister.isLoadingCampaigns,
+    errorLoadingCampaigns: state.saveRegister.errorLoadingCampaigns,
+    campaigns: state.saveRegister.campaigns,
+    isLoadingSources: state.saveRegister.isLoadingSources,
+    errorLoadingSources: state.saveRegister.errorLoadingSources,
+    sources: state.saveRegister.sources,
+    staff: state.leads.staff,
+    isLoadingStaff: state.leads.isLoadingStaff,
+    errorStaff: state.leads.errorStaff,
   };
 }
 

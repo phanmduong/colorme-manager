@@ -79,6 +79,9 @@ export function saveLead(lead, token, domain) {
     gender: lead.gender,
     status_id: lead.status_id,
     address: lead.address,
+    campaign_id: lead.campaign_id,
+    source_id: lead.source_id,
+    carer_id: lead.carer_id,
   });
 }
 

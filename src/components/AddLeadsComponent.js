@@ -18,6 +18,7 @@ import {CITY, GENDER, RATE} from '../constants/constant';
 import Spinkit from 'react-native-spinkit';
 import {convertVietText, isEmptyInput} from '../helper';
 import theme from '../styles';
+import TagItem from './common/TagItem';
 var {height, width} = Dimensions.get('window');
 
 class AddLeadsComponent extends React.Component {
@@ -38,12 +39,15 @@ class AddLeadsComponent extends React.Component {
       gender: '',
       status_id: '',
       address: '',
+      campaign_id: '',
+      carer_id: '',
+      source_id: '',
       search: '',
       expanded: false,
     };
   }
 
-  renderPickerOption = settings => {
+  renderPickerOption = (settings) => {
     const {item, getLabel} = settings;
     return (
       <View style={styles.options}>
@@ -62,13 +66,13 @@ class AddLeadsComponent extends React.Component {
     );
   }
 
-  renderPickerHeader = title => {
+  renderPickerHeader = (title) => {
     return (
       <View style={styles.headerFooterContainer}>
         <Text style={styles.headerFooterText}>{title}</Text>
         <Search
           placeholder="Tìm kiếm"
-          onChangeText={search => {
+          onChangeText={(search) => {
             this.setState({search});
           }}
           value={this.state.search}
@@ -79,7 +83,7 @@ class AddLeadsComponent extends React.Component {
     );
   };
 
-  renderPickerField = settings => {
+  renderPickerField = (settings) => {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
@@ -114,7 +118,7 @@ class AddLeadsComponent extends React.Component {
     return array[0];
   };
 
-  getSearchedResults = array => {
+  getSearchedResults = (array) => {
     let list = [];
     if (this.state.search === '') {
       return array;
@@ -145,17 +149,13 @@ class AddLeadsComponent extends React.Component {
     }
     let address = [];
 
-    this.props.provinces.forEach(province => {
-      province.districts.forEach(district => {
+    this.props.provinces.forEach((province) => {
+      province.districts.forEach((district) => {
         address = [
           ...address,
           {
-            id: `${district.type} ${district.name}, ${province.type} ${
-              province.name
-            }`,
-            name: `${district.type} ${district.name}, ${province.type} ${
-              province.name
-            }`,
+            id: `${district.type} ${district.name}, ${province.type} ${province.name}`,
+            name: `${district.type} ${district.name}, ${province.type} ${province.name}`,
           },
         ];
       });
@@ -183,6 +183,12 @@ class AddLeadsComponent extends React.Component {
         interest: this.state.interest,
         university: this.state.university,
         city: this.state.city,
+        gender: this.state.gender,
+        status_id: this.state.status_id,
+        address: this.state.address,
+        campaign_id: this.state.campaign_id,
+        source_id: this.state.source_id,
+        carer_id: this.state.carer_id,
       };
       this.props.saveLead(lead);
       if (this.props.errorSaveLead) {
@@ -227,11 +233,11 @@ class AddLeadsComponent extends React.Component {
                 <TextInput
                   {...this.props}
                   value={this.state.name}
-                  onChangeText={data => this.setState({name: data})}
+                  onChangeText={(data) => this.setState({name: data})}
                   returnKeyType={'next'}
                   placeholder="Tên"
                   blurOnSubmit={false}
-                  onSubmitEditing={event => {
+                  onSubmitEditing={(event) => {
                     this.refs.email.focus();
                   }}
                   style={{fontSize: 15}}
@@ -248,11 +254,11 @@ class AddLeadsComponent extends React.Component {
                   value={this.state.email}
                   autoCapitalize={'none'}
                   ref={'email'}
-                  onChangeText={data => this.setState({email: data})}
+                  onChangeText={(data) => this.setState({email: data})}
                   returnKeyType={'next'}
                   placeholder="Email"
                   blurOnSubmit={false}
-                  onSubmitEditing={event => {
+                  onSubmitEditing={(event) => {
                     this.refs.phone.focus();
                   }}
                   style={{fontSize: 15}}
@@ -268,11 +274,11 @@ class AddLeadsComponent extends React.Component {
                   {...this.props}
                   value={this.state.phone}
                   ref={'phone'}
-                  onChangeText={data => this.setState({phone: data})}
+                  onChangeText={(data) => this.setState({phone: data})}
                   returnKeyType={'next'}
                   placeholder="Số điện thoại"
                   blurOnSubmit={false}
-                  onSubmitEditing={event => {
+                  onSubmitEditing={(event) => {
                     this.refs.phone.blur();
                   }}
                   style={{fontSize: 15}}
@@ -283,7 +289,7 @@ class AddLeadsComponent extends React.Component {
               <Text style={styles.titleForm}>Chọn thành phố</Text>
               <CustomPicker
                 options={this.getSearchedResults(CITY)}
-                getLabel={item => item.name}
+                getLabel={(item) => item.name}
                 placeholder={'Chọn thành phố'}
                 modalAnimationType={'fade'}
                 optionTemplate={this.renderPickerOption}
@@ -294,7 +300,7 @@ class AddLeadsComponent extends React.Component {
                 modalStyle={{
                   borderRadius: 6,
                 }}
-                onValueChange={value => {
+                onValueChange={(value) => {
                   this.setState({
                     city: value.id,
                     search: '',
@@ -307,7 +313,7 @@ class AddLeadsComponent extends React.Component {
               <CustomPicker
                 options={this.getSearchedResults(RATE)}
                 defaultValue={this.getDefault(this.state.rate, RATE)}
-                getLabel={item => item.name}
+                getLabel={(item) => item.name}
                 placeholder={'Chọn đánh giá'}
                 modalAnimationType={'fade'}
                 optionTemplate={this.renderPickerOption}
@@ -318,7 +324,7 @@ class AddLeadsComponent extends React.Component {
                 modalStyle={{
                   borderRadius: 6,
                 }}
-                onValueChange={value => {
+                onValueChange={(value) => {
                   this.setState({
                     rate: value.id,
                     search: '',
@@ -344,6 +350,26 @@ class AddLeadsComponent extends React.Component {
             </TouchableOpacity>
             {this.state.expanded ? (
               <View>
+                <TagItem
+                  title={'Nguồn'}
+                  placeholder={'No Source'}
+                  defaultValue={null}
+                  options={this.props.sources}
+                  hasHashInHexColor={true}
+                  onValueChange={(value) =>
+                    this.setState({source_id: value.id})
+                  }
+                />
+                <TagItem
+                  title={'Chiến dịch'}
+                  placeholder={'No Campaign'}
+                  defaultValue={null}
+                  options={this.props.campaigns}
+                  hasHashInHexColor={false}
+                  onValueChange={(value) =>
+                    this.setState({campaign_id: value.id})
+                  }
+                />
                 <View style={{marginTop: 30}}>
                   <Text style={styles.titleForm}>Tên phụ huynh</Text>
                   <View style={styles.inputContainer}>
@@ -351,11 +377,13 @@ class AddLeadsComponent extends React.Component {
                       {...this.props}
                       value={this.state.father_name}
                       ref={'father_name'}
-                      onChangeText={data => this.setState({father_name: data})}
+                      onChangeText={(data) =>
+                        this.setState({father_name: data})
+                      }
                       returnKeyType={'next'}
                       placeholder="Tên phụ huynh"
                       blurOnSubmit={false}
-                      onSubmitEditing={event => {
+                      onSubmitEditing={(event) => {
                         this.refs.father_name.blur();
                       }}
                       style={{fontSize: 15}}
@@ -366,7 +394,7 @@ class AddLeadsComponent extends React.Component {
                   <Text style={styles.titleForm}>Địa chỉ</Text>
                   <CustomPicker
                     options={this.getSearchedResults(this.getDataAddress())}
-                    getLabel={item => item.name}
+                    getLabel={(item) => item.name}
                     placeholder={'Chọn địa chỉ'}
                     modalAnimationType={'fade'}
                     onBlur={() => this.setState({search: ''})}
@@ -379,7 +407,7 @@ class AddLeadsComponent extends React.Component {
                     modalStyle={{
                       borderRadius: 6,
                     }}
-                    onValueChange={value => {
+                    onValueChange={(value) => {
                       this.setState({
                         address: value.id,
                         search: '',
@@ -391,7 +419,7 @@ class AddLeadsComponent extends React.Component {
                   <Text style={styles.titleForm}>Chọn giới tính</Text>
                   <CustomPicker
                     options={this.getSearchedResults(GENDER)}
-                    getLabel={item => item.name}
+                    getLabel={(item) => item.name}
                     placeholder={'Chọn giới tính'}
                     modalAnimationType={'fade'}
                     optionTemplate={this.renderPickerOption}
@@ -404,7 +432,7 @@ class AddLeadsComponent extends React.Component {
                     modalStyle={{
                       borderRadius: 6,
                     }}
-                    onValueChange={value => {
+                    onValueChange={(value) => {
                       this.setState({
                         gender: value.id,
                         search: '',
@@ -419,11 +447,11 @@ class AddLeadsComponent extends React.Component {
                       {...this.props}
                       value={this.state.university}
                       ref={'university'}
-                      onChangeText={data => this.setState({university: data})}
+                      onChangeText={(data) => this.setState({university: data})}
                       returnKeyType={'next'}
                       placeholder="Trường học"
                       blurOnSubmit={false}
-                      onSubmitEditing={event => {
+                      onSubmitEditing={(event) => {
                         this.refs.interest.focus();
                       }}
                       style={{fontSize: 15}}
@@ -437,11 +465,11 @@ class AddLeadsComponent extends React.Component {
                       {...this.props}
                       value={this.state.interest}
                       ref={'interest'}
-                      onChangeText={data => this.setState({interest: data})}
+                      onChangeText={(data) => this.setState({interest: data})}
                       returnKeyType={'next'}
                       placeholder="Quan tâm"
                       blurOnSubmit={false}
-                      onSubmitEditing={event => {
+                      onSubmitEditing={(event) => {
                         this.refs.interest.blur();
                       }}
                       style={{fontSize: 15}}
@@ -452,7 +480,7 @@ class AddLeadsComponent extends React.Component {
                   <Text style={styles.titleForm}>Chọn trạng thái</Text>
                   <CustomPicker
                     options={this.getSearchedResults(this.props.statuses)}
-                    getLabel={item => item.name}
+                    getLabel={(item) => item.name}
                     placeholder={'Chọn trạng thái'}
                     modalAnimationType={'fade'}
                     optionTemplate={this.renderPickerOption}
@@ -465,7 +493,7 @@ class AddLeadsComponent extends React.Component {
                     modalStyle={{
                       borderRadius: 6,
                     }}
-                    onValueChange={value => {
+                    onValueChange={(value) => {
                       this.setState({
                         status_id: value.id,
                         search: '',
@@ -473,6 +501,24 @@ class AddLeadsComponent extends React.Component {
                     }}
                   />
                 </View>
+                <TagItem
+                  title={'P.I.C'}
+                  placeholder={'No P.I.C'}
+                  defaultValue={null}
+                  options={this.props.staff}
+                  hasHashInHexColor={false}
+                  onValueChange={(value) => this.setState({carer_id: value.id})}
+                />
+                <TagItem
+                  title={'Trạng thái'}
+                  placeholder={'No status'}
+                  defaultValue={null}
+                  options={this.props.statuses}
+                  hasHashInHexColor={true}
+                  onValueChange={(value) =>
+                    this.setState({status_id: value.id})
+                  }
+                />
                 <View style={{marginTop: 30}}>
                   <Text style={styles.titleForm}>Ghi chú</Text>
                   <View style={styles.inputContainer}>
@@ -480,11 +526,11 @@ class AddLeadsComponent extends React.Component {
                       {...this.props}
                       value={this.state.note}
                       ref={'note'}
-                      onChangeText={data => this.setState({note: data})}
+                      onChangeText={(data) => this.setState({note: data})}
                       returnKeyType={'next'}
                       placeholder="Ghi chú"
                       blurOnSubmit={false}
-                      onSubmitEditing={event => {
+                      onSubmitEditing={(event) => {
                         this.refs.note.blur();
                       }}
                       style={{fontSize: 15}}

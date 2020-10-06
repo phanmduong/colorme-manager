@@ -1,4 +1,4 @@
-package vn.colorme.manage.eduto;
+package vn.colorme.ieg.eduto;
 
 import androidx.multidex.MultiDexApplication;
 import android.content.Context;

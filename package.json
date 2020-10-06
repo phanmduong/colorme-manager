@@ -6,8 +6,10 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
+    "start-packager": "env REACT_DEBUGGER=\"$([ -d '/Applications/React Native Debugger.app' ] && echo \"open 'rndebugger://set-debugger-loc?host=localhost&port=8081' --args\")\" node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "postinstall": "rndebugger-open"
   },
   "dependencies": {
     "@react-native-community/art": "^1.2.0",
@@ -85,6 +87,7 @@
     "jetifier": "^1.6.4",
     "metro-react-native-babel-preset": "^0.59.0",
     "prettier": "2.0.5",
+    "react-native-debugger-open": "^0.3.25",
     "react-test-renderer": "16.13.1",
     "remote-redux-devtools": "^0.5.16"
   },

@@ -37,7 +37,7 @@ class CheckInContainer extends React.Component {
 
   componentWillMount() {
     this.onCheck();
-    Geolocation.requestAuthorization();
+    Geolocation.requestAuthorization('whenInUse');
   }
 
   onCheck() {

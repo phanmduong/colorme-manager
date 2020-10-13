@@ -5,7 +5,7 @@ import {dotNumber, getShortName, isEmptyInput} from '../../helper';
 import * as Progress from 'react-native-progress';
 import theme from '../../styles';
 
-const KPICollapsibleItem = ({quantity, saler, total_done_kpi}) => {
+const KPICollapsibleItem = ({quantity, saler, total_done_kpi, unit}) => {
   const getPercentage = () => {
     if (quantity !== 0) {
       const percentage = Math.round((total_done_kpi / quantity) * 100);
@@ -37,7 +37,7 @@ const KPICollapsibleItem = ({quantity, saler, total_done_kpi}) => {
           )}
           <View style={styles.statsContainer}>
             <Text style={styles.stats}>
-              {dotNumber(total_done_kpi)} đ / {dotNumber(quantity)} đ
+              {dotNumber(total_done_kpi)} / {dotNumber(quantity)} {unit}
             </Text>
             <Text style={styles.stats}>{getPercentage()}%</Text>
           </View>

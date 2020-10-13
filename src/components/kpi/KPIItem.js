@@ -42,14 +42,14 @@ const KPIItem = ({name, calculate_by, detail_kpis, type}) => {
     return 0;
   };
 
-  const getTypeName = () => {
-    return FILTER_KPI_TYPE.find((typeItem) => typeItem.id === type).name;
+  const getType = () => {
+    return FILTER_KPI_TYPE.find((typeItem) => typeItem.id === type);
   };
 
-  const getCalByName = () => {
+  const getCal = () => {
     return FILTER_KPI_CALCULATE_BY.find(
       (calItem) => calItem.id === calculate_by,
-    ).name;
+    );
   };
 
   const renderKPIDetails = () => {
@@ -58,6 +58,7 @@ const KPIItem = ({name, calculate_by, detail_kpis, type}) => {
         quantity={kpi.quantity}
         total_done_kpi={kpi.total_done_kpi}
         saler={kpi.data}
+        unit={getType().unit}
       />
     ));
   };
@@ -75,8 +76,8 @@ const KPIItem = ({name, calculate_by, detail_kpis, type}) => {
         </View>
         <View style={styles.statsContainer}>
           <Text style={styles.stats}>
-            {dotNumber(pairQuantityKPI().totalDoneKPI)} đ /{' '}
-            {dotNumber(pairQuantityKPI().quantity)} đ
+            {dotNumber(pairQuantityKPI().totalDoneKPI)} /{' '}
+            {dotNumber(pairQuantityKPI().quantity)} {getType().unit}
           </Text>
           <Text style={styles.stats}>{getPercentage()}%</Text>
         </View>
@@ -92,11 +93,11 @@ const KPIItem = ({name, calculate_by, detail_kpis, type}) => {
         />
         <Text style={styles.dateText}>01/08/2020-31/08/2020</Text>
         <View style={styles.tagContainer}>
-          <View style={styles.typeTag}>
-            <Text style={styles.tagText}>{getTypeName()}</Text>
+          <View style={[styles.typeTag, {backgroundColor: getType().color}]}>
+            <Text style={styles.tagText}>{getType().name}</Text>
           </View>
-          <View style={styles.calTag}>
-            <Text style={styles.tagText}>{getCalByName()}</Text>
+          <View style={[styles.calTag, {backgroundColor: getCal().color}]}>
+            <Text style={styles.tagText}>{getCal().name}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -132,13 +133,11 @@ const styles = {
   typeTag: {
     paddingHorizontal: 15,
     paddingVertical: 5,
-    backgroundColor: '#4C4DC3',
     borderRadius: 6,
   },
   calTag: {
     paddingHorizontal: 15,
     paddingVertical: 5,
-    backgroundColor: '#4B90F5',
     borderRadius: 6,
     marginLeft: 5,
   },

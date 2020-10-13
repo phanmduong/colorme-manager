@@ -295,6 +295,17 @@ class DashboardComponent extends React.Component {
               }}
             />
           </View>
+          <View style={styles.otherFeatureLine}>
+            <CircleTab
+              iconImage={require('../../assets/img/icons8-bar_chart.png')}
+              title={'KPI'}
+              onPress={() => {
+                this.props.navigation.navigate('KPI');
+              }}
+            />
+            <View style={{width: width / 3}} />
+            <View style={{width: width / 3}} />
+          </View>
           <MeetingComponent
             store={this.props.store}
             {...this.props}

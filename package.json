@@ -32,6 +32,7 @@
     "react-native-busy-indicator": "^1.1.0",
     "react-native-calendar-picker": "^7.0.0",
     "react-native-camera": "^3.3.0",
+    "react-native-collapsible": "^1.5.3",
     "react-native-custom-picker": "^0.4.0",
     "react-native-device-info": "^2.3.2",
     "react-native-geolocation-service": "^5.0.0",

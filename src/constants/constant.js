@@ -91,7 +91,47 @@ export const DAILY = 'DAILY';
 export const WEEK = 'WEEK';
 export const MONTH = 'MONTH';
 export const QUARTER = 'QUARTER';
-export const YEAR = 'YEAR'
+export const YEAR = 'YEAR';
 
 export const ENROLLING = 'ENROLLING';
-export const STUDYING = 'STUDYING'
+export const STUDYING = 'STUDYING';
+
+export const FILTER_KPI_TYPE = [
+  {id: '', name: 'Tất cả loại KPI'},
+  {
+    id: 'revenue',
+    name: 'KPI doanh thu',
+  },
+  {
+    id: 'lead',
+    name: 'KPI số lượng lead',
+  },
+  {
+    id: 'enrollment',
+    name: 'KPI số lượng học viên',
+  },
+];
+
+export const FILTER_KPI_CALCULATE_BY = [
+  {id: '', name: 'Tất cả tính cách'},
+  {
+    id: 'employee',
+    name: 'Theo nhân viên',
+  },
+  {
+    id: 'campaign',
+    name: 'Theo chiến dịch',
+  },
+  {
+    id: 'source',
+    name: 'Theo nguồn',
+  },
+  {
+    id: 'course',
+    name: 'Theo môn học',
+  },
+  {
+    id: 'program',
+    name: 'Theo chương trình học',
+  },
+];

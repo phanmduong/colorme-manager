@@ -131,10 +131,6 @@ export default {
     selectedCourseId: -1,
     selectedSourceId: -1,
     selectedCampaignId: -1,
-    analyticsKpis: [],
-    isLoadingAnalyticsKPI: false,
-    errorAnalyticsKPI: false,
-    refreshingAnalyticsKPI: false,
     analyticsClasses: [],
     isLoadingAnalyticsClasses: false,
     errorAnalyticsClasses: false,
@@ -495,4 +491,17 @@ export default {
     selectedEmployee: null,
     employeeSelectedDate: null,
   },
+  kpi: {
+    kpis: [],
+    loading: false,
+    error: false,
+    refreshing: false,
+    currentPage: 0,
+    totalPage: 1,
+    search: '',
+    type: '',
+    calculateBy: '',
+    startTime: '',
+    endTime: '',
+  }
 };

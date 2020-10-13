@@ -107,7 +107,6 @@ class AnalyticsContainer extends React.Component {
   loadAnalytics = () => {
     this.loadAnalyticsRegister(false);
     this.loadAnalyticsRevenue(false);
-    this.loadAnalyticsKPI(false);
     this.loadDataClass(false);
   };
 

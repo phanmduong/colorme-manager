@@ -9,7 +9,6 @@ import {
   RefreshControl,
 } from 'react-native';
 import AnalyticsRegisterContainer from '../containers/analytics/AnalyticsRegisterContainer';
-import AnalyticsKPIContainer from '../containers/analytics/AnalyticsKPIContainer';
 import AnalyticsClassContainer from '../containers/analytics/AnalyticsClassContainer';
 import theme from '../styles';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
@@ -87,18 +86,6 @@ class AnalyticsComponent extends React.Component {
                       this.state.tabIdx === 1 ? '#F6F6F6' : 'white',
                   },
                 ]}>
-                <Text style={{color: 'black'}}>KPI doanh thu</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => this.setState({tabIdx: 2})}>
-              <View
-                style={[
-                  styles.tag,
-                  {
-                    backgroundColor:
-                      this.state.tabIdx === 2 ? '#F6F6F6' : 'white',
-                  },
-                ]}>
                 <Text style={{color: 'black'}}>Lớp học</Text>
               </View>
             </TouchableOpacity>
@@ -140,8 +127,7 @@ class AnalyticsComponent extends React.Component {
         />
 
         {this.state.tabIdx === 0 ? <AnalyticsRegisterContainer /> : null}
-        {this.state.tabIdx === 1 ? <AnalyticsKPIContainer /> : null}
-        {this.state.tabIdx === 2 ? (
+        {this.state.tabIdx === 1 ? (
           <AnalyticsClassContainer
             navigation={this.props.navigation}
             loadDataClass={this.props.loadDataClass}

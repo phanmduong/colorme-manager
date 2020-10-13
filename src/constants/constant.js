@@ -91,7 +91,56 @@ export const DAILY = 'DAILY';
 export const WEEK = 'WEEK';
 export const MONTH = 'MONTH';
 export const QUARTER = 'QUARTER';
-export const YEAR = 'YEAR'
+export const YEAR = 'YEAR';
 
 export const ENROLLING = 'ENROLLING';
-export const STUDYING = 'STUDYING'
+export const STUDYING = 'STUDYING';
+
+export const FILTER_KPI_TYPE = [
+  {
+    id: 'revenue',
+    name: 'KPI doanh thu',
+    color: 'rgb(76, 77, 195)',
+    unit: 'VNĐ',
+  },
+  {
+    id: 'lead',
+    name: 'KPI số lượng lead',
+    color: 'rgb(68, 150, 236)',
+    unit: 'Lead',
+  },
+  {
+    id: 'enrollment',
+    name: 'KPI số lượng học viên',
+    color: 'rgb(255, 123, 66)',
+    unit: 'Lượt',
+  },
+];
+
+export const FILTER_KPI_CALCULATE_BY = [
+  {
+    id: 'employee',
+    name: 'Theo nhân viên',
+    color: 'rgb(238, 66, 140)',
+  },
+  {
+    id: 'campaign',
+    name: 'Theo chiến dịch',
+    color: 'rgb(68, 150, 236)',
+  },
+  {
+    id: 'source',
+    name: 'Theo nguồn',
+    color: 'rgb(255, 123, 66)',
+  },
+  {
+    id: 'course',
+    name: 'Theo môn học',
+    color: 'rgb(50, 202, 65)',
+  },
+  {
+    id: 'program',
+    name: 'Theo chương trình học',
+    color: 'rgb(255, 123, 66)',
+  },
+];

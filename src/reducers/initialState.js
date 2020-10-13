@@ -2,7 +2,7 @@ import HistoryAttendanceTeachingContainer from '../containers/historyAttendanceT
 import React from 'react';
 import InfoStudentRegistersContainer from '../containers/infoStudent/InfoStudentRegistersContainer';
 import moment from 'moment';
-import {ENROLLING} from "../constants/constant";
+import {ENROLLING} from '../constants/constant';
 /**
  * Created by phanmduong on 4/5/17.
  */
@@ -137,10 +137,6 @@ export default {
     selectedCourseId: -1,
     selectedSourceId: -1,
     selectedCampaignId: -1,
-    analyticsKpis: [],
-    isLoadingAnalyticsKPI: false,
-    errorAnalyticsKPI: false,
-    refreshingAnalyticsKPI: false,
     analyticsClasses: [],
     isLoadingAnalyticsClasses: false,
     errorAnalyticsClasses: false,
@@ -509,4 +505,17 @@ export default {
     selectedEmployee: null,
     employeeSelectedDate: null,
   },
+  kpi: {
+    kpis: [],
+    loading: false,
+    error: false,
+    refreshing: false,
+    currentPage: 0,
+    totalPage: 1,
+    search: '',
+    type: '',
+    calculateBy: '',
+    startTime: moment().startOf('month'),
+    endTime: moment().endOf('month'),
+  }
 };

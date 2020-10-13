@@ -60,7 +60,7 @@ class EditClassComponent extends React.Component {
       status: !classData.status ? '' : classData.status,
       teachers: [],
       teaching_assistants: [],
-      date_end: !classData.date_end_en ? '' : moment(classData.date_end_en),
+      date_end: !classData.datestart_en ? '' : moment(classData.datestart_en),
       enroll_start_date: !classData.enroll_start_date
         ? ''
         : moment(classData.enroll_start_date),

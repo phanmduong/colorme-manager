@@ -10,6 +10,8 @@ import MeetingStore from './meeting/MeetingStore';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import moment from 'moment';
+import AsyncStorage from '@react-native-community/async-storage';
+import * as analyticsActions from '../actions/analyticsActions';
 
 class DashboardContainer extends React.Component {
   constructor(props, context) {
@@ -52,6 +54,21 @@ class DashboardContainer extends React.Component {
     this.props.registerListActions.setAutoFocusRegisterListSearch(bool);
   };
 
+  getAnalyticsGenData = async () => {
+    try {
+      const genId = await AsyncStorage.getItem('@analytics_gen_id');
+      const startDate = await AsyncStorage.getItem('@analytics_start_date');
+      const endDate = await AsyncStorage.getItem('@analytics_end_date');
+      if (genId !== null && startDate != null && endDate != null) {
+        this.props.analyticsActions.selectedStartDate(moment(startDate));
+        this.props.analyticsActions.selectedEndDate(moment(endDate));
+        this.props.analyticsActions.selectedGenId(parseInt(genId));
+      }
+    } catch (e) {
+      // error reading value
+    }
+  };
+
   render() {
     return (
       <DashboardComponent
@@ -60,6 +77,7 @@ class DashboardContainer extends React.Component {
         refreshNotifications={this.refreshNotifications}
         refreshTasks={this.loadTasks}
         setAutoFocusRegisterListSearch={this.setAutoFocusRegisterListSearch}
+        getAnalyticsGenData={this.getAnalyticsGenData}
       />
     );
   }
@@ -91,6 +109,7 @@ function mapDispatchToProps(dispatch) {
     taskActions: bindActionCreators(taskActions, dispatch),
     notificationActions: bindActionCreators(notificationActions, dispatch),
     registerListActions: bindActionCreators(registerListActions, dispatch),
+    analyticsActions: bindActionCreators(analyticsActions, dispatch),
   };
 }
 

@@ -13,10 +13,9 @@ export function loadAnalyticsRegister(
   sourceId,
   campaignId,
   token,
-  domain,
 ) {
   let url =
-    env.manageApiUrlV4(domain) +
+    env.MANAGE_API_URL_V4 +
     '/dashboard/analytics-register?start_time=' +
     startTime +
     '&end_time=' +
@@ -45,10 +44,9 @@ export function loadAnalyticsRevenue(
   sourceId,
   campaignId,
   token,
-  domain,
 ) {
   let url =
-    env.manageApiUrlV4(domain) +
+    env.MANAGE_API_URL_V4 +
     '/dashboard/analytics-revenue?start_time=' +
     startTime +
     '&end_time=' +
@@ -68,39 +66,6 @@ export function loadAnalyticsRevenue(
   return axios.get(url);
 }
 
-export function loadAnalyticsKPI(
-  startTime,
-  endTime,
-  baseId,
-  courseId,
-  sourceId,
-  campaignId,
-  staffId,
-  token,
-  domain,
-) {
-  let url =
-    env.manageApiUrlV4(domain) +
-    '/dashboard/analytics-kpi?start_time=' +
-    startTime +
-    '&end_time=' +
-    endTime +
-    '&base_id=' +
-    baseId +
-    '&course_id=' +
-    courseId +
-    '&source_id=' +
-    sourceId +
-    '&campaign_id=' +
-    campaignId +
-    '&staff_id=' +
-    staffId +
-    '&token=' +
-    token +
-    '&include=base,base.district.province';
-  return axios.get(url);
-}
-
 export function loadAnalyticsClasses(
   startDate,
   endDate,
@@ -112,10 +77,9 @@ export function loadAnalyticsClasses(
   sourceId,
   campaignId,
   token,
-  domain,
 ) {
   let url =
-    env.manageApiUrlV4(domain) +
+    env.MANAGE_API_URL_V4 +
     '/class/all?start_date=' +
     startDate +
     '&end_date=' +
@@ -137,6 +101,5 @@ export function loadAnalyticsClasses(
     '&token=' +
     token +
     '&include=course,base,target,register_target,schedule,room,teacher,teacher_assistant';
-  console.log(url);
   return axios.get(url);
 }

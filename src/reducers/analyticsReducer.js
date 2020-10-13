@@ -60,24 +60,6 @@ export default function dashboardReducer(
         isLoadingAnalyticsKPI: action.isLoadingAnalyticsKPI,
         errorAnalyticsKPI: action.errorAnalyticsKPI,
       });
-    case types.BEGIN_DATA_ANALYTICS_KPI_REFRESH:
-      return Object.assign({}, state, {
-        refreshingAnalyticsKPI: action.refreshingAnalyticsKPI,
-        errorAnalyticsKPI: action.errorAnalyticsKPI,
-      });
-    case types.LOAD_DATA_ANALYTICS_KPI_SUCCESSFUL:
-      return Object.assign({}, state, {
-        isLoadingAnalyticsKPI: action.isLoadingAnalyticsKPI,
-        errorAnalyticsKPI: action.errorAnalyticsKPI,
-        analyticsKpis: action.analyticsKpis,
-        refreshingAnalyticsKPI: action.refreshingAnalyticsKPI,
-      });
-    case types.LOAD_DATA_ANALYTICS_KPI_ERROR:
-      return Object.assign({}, state, {
-        isLoadingAnalyticsKPI: action.isLoadingAnalyticsKPI,
-        errorAnalyticsKPI: action.errorAnalyticsKPI,
-        refreshingAnalyticsKPI: action.refreshingAnalyticsKPI,
-      });
     case types.BEGIN_DATA_ANALYTICS_CLASSES_LOAD:
       return Object.assign({}, state, {
         isLoadingAnalyticsClasses: action.isLoadingAnalyticsClasses,

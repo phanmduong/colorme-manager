@@ -501,7 +501,7 @@ export default {
     search: '',
     type: '',
     calculateBy: '',
-    startTime: '',
-    endTime: '',
+    startTime: moment().startOf('month'),
+    endTime: moment().endOf('month'),
   }
 };

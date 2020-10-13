@@ -6,6 +6,7 @@ import {bindActionCreators} from 'redux';
 import theme from '../styles';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import FilterKPIModal from '../components/kpi/FilterKPIModal';
 
 class KPIContainer extends React.Component {
   constructor(props) {
@@ -43,8 +44,8 @@ class KPIContainer extends React.Component {
       this.props.currentPage + 1,
       this.props.type,
       this.props.calculateBy,
-      this.props.startTime,
-      this.props.endTime,
+      this.props.startTime.unix(),
+      this.props.endTime.unix(),
       this.props.token,
     );
   };
@@ -54,8 +55,8 @@ class KPIContainer extends React.Component {
       this.props.search,
       this.props.type,
       this.props.calculateBy,
-      this.props.startTime,
-      this.props.endTime,
+      this.props.startTime.unix(),
+      this.props.endTime.unix(),
       this.props.token,
     );
   };
@@ -65,10 +66,26 @@ class KPIContainer extends React.Component {
       search,
       this.props.type,
       this.props.calculateBy,
-      this.props.startTime,
-      this.props.endTime,
+      this.props.startTime.unix(),
+      this.props.endTime.unix(),
       this.props.token,
     );
+  };
+
+  onSelectKPIType = (type) => {
+    this.props.kpiActions.selectedKPIType(type);
+  };
+
+  onSelectKPICalculateBy = (calculateBy) => {
+    this.props.kpiActions.selectedKPICalculateBy(calculateBy);
+  };
+
+  onSelectKPIStartTime = (time) => {
+    this.props.kpiActions.selectedKPIStartTime(time);
+  };
+
+  onSelectKPIEndTime = (time) => {
+    this.props.kpiActions.selectedKPIEndTime(time);
   };
 
   render() {
@@ -77,6 +94,12 @@ class KPIContainer extends React.Component {
         {...this.props}
         onRefresh={this.refreshKPI}
         searchKPI={this.searchKPI}
+        onSelectKPIType={this.onSelectKPIType}
+        onSelectKPICalculateBy={this.onSelectKPICalculateBy}
+        apply={this.refreshKPI}
+        onSelectKPIStartTime={this.onSelectKPIStartTime}
+        onSelectKPIEndTime={this.onSelectKPIEndTime}
+        loadKPI={this.loadKPI}
       />
     );
   }

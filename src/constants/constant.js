@@ -97,7 +97,6 @@ export const ENROLLING = 'ENROLLING';
 export const STUDYING = 'STUDYING';
 
 export const FILTER_KPI_TYPE = [
-  {id: '', name: 'Tất cả loại KPI'},
   {
     id: 'revenue',
     name: 'KPI doanh thu',
@@ -113,7 +112,6 @@ export const FILTER_KPI_TYPE = [
 ];
 
 export const FILTER_KPI_CALCULATE_BY = [
-  {id: '', name: 'Tất cả tính cách'},
   {
     id: 'employee',
     name: 'Theo nhân viên',

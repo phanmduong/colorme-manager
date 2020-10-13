@@ -101,7 +101,7 @@ export function searchKPI(
   sourceCancel.cancel('Cancelled by KPI api');
   sourceCancel = CancelToken.source();
   return function (dispatch) {
-    dispatch(beginSearchKPI());
+    dispatch(beginSearchKPI(search));
     dispatch(
       loadKPI(
         false,
@@ -140,5 +140,35 @@ export function reset() {
     currentPage: 0,
     totalPage: 1,
     search: '',
+    kpiType: '',
+    calculateBy: '',
+  };
+}
+
+export function selectedKPIType(kpiType) {
+  return {
+    type: types.SELECTED_KPI_TYPE,
+    kpiType,
+  };
+}
+
+export function selectedKPICalculateBy(calculateBy) {
+  return {
+    type: types.SELECTED_KPI_CALCULATE_BY,
+    calculateBy,
+  };
+}
+
+export function selectedKPIStartTime(startTime) {
+  return {
+    type: types.SELECTED_KPI_START_TIME,
+    startTime,
+  };
+}
+
+export function selectedKPIEndTime(endTime) {
+  return {
+    type: types.SELECTED_KPI_END_TIME,
+    endTime,
   };
 }

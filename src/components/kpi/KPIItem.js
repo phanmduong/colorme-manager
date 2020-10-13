@@ -12,7 +12,7 @@ import KPICollapsibleItem from './KPICollapsibleItem';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 const KPIItem = ({name, calculate_by, detail_kpis, type}) => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);

@@ -276,3 +276,35 @@ export function shortVND(number) {
   let strNum = String(roundedNum);
   return strNum.slice(0, strNum.length - 3);
 }
+
+export const getSearchedResults = (array, search) => {
+  let list = [];
+  if (search === '') {
+    return array;
+  } else {
+    for (let item of array) {
+      let normalizedName = item.name;
+      if (convertVietText(normalizedName).includes(convertVietText(search))) {
+        list.push(item);
+      }
+    }
+    return list;
+  }
+};
+
+export const getData = (array, id, placeholder, color) => {
+  let defaultOption = {id: id, name: placeholder, color: color};
+  const data = [defaultOption].concat(array);
+  return data;
+};
+
+export const getDefault = (array, comparedId) => {
+  if (comparedId) {
+    for (let item of array) {
+      if (item.id === comparedId) {
+        return item;
+      }
+    }
+  }
+  return array[0];
+};

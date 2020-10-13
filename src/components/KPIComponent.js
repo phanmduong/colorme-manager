@@ -41,6 +41,15 @@ class KPIComponent extends React.Component {
         <FilterKPIModal
           isVisible={this.state.isVisible}
           closeModal={this.toggleModal}
+          type={this.props.type}
+          calculateBy={this.props.calculateBy}
+          onSelectKPIType={this.props.onSelectKPIType}
+          onSelectKPICalculateBy={this.props.onSelectKPICalculateBy}
+          apply={this.props.apply}
+          startTime={this.props.startTime}
+          endTime={this.props.endTime}
+          onSelectKPIStartTime={this.props.onSelectKPIStartTime}
+          onSelectKPIEndTime={this.props.onSelectKPIEndTime}
         />
       </View>
     );
@@ -53,6 +62,7 @@ class KPIComponent extends React.Component {
         renderRow={this.renderKPIs}
         ListHeaderComponent={this.headerComponent}
         contentContainerStyle={{flexGrow: 1}}
+        onEndReached={this.props.loadKPI}
         refreshControl={
           <RefreshControl
             onRefresh={this.props.onRefresh}

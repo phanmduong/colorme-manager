@@ -47,6 +47,7 @@ class KPIContainer extends React.Component {
       this.props.startTime.unix(),
       this.props.endTime.unix(),
       this.props.token,
+      this.props.domain,
     );
   };
 
@@ -58,6 +59,7 @@ class KPIContainer extends React.Component {
       this.props.startTime.unix(),
       this.props.endTime.unix(),
       this.props.token,
+      this.props.domain,
     );
   };
 
@@ -69,6 +71,7 @@ class KPIContainer extends React.Component {
       this.props.startTime.unix(),
       this.props.endTime.unix(),
       this.props.token,
+      this.props.domain,
     );
   };
 
@@ -113,6 +116,7 @@ const styles = {
 function mapStateToProps(state) {
   return {
     token: state.login.token,
+    domain: state.login.domain,
     kpis: state.kpi.kpis,
     loading: state.kpi.loading,
     error: state.kpi.error,

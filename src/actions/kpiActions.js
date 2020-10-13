@@ -14,6 +14,7 @@ export function loadKPI(
   start_time,
   end_time,
   token,
+  domain,
 ) {
   return function (dispatch) {
     if (refreshing) {
@@ -32,6 +33,7 @@ export function loadKPI(
         start_time,
         end_time,
         token,
+        domain,
       )
       .then((res) => {
         dispatch(loadKPISuccess(res));
@@ -97,6 +99,7 @@ export function searchKPI(
   start_time,
   end_time,
   token,
+  domain,
 ) {
   sourceCancel.cancel('Cancelled by KPI api');
   sourceCancel = CancelToken.source();
@@ -112,6 +115,7 @@ export function searchKPI(
         start_time,
         end_time,
         token,
+        domain,
       ),
     );
   };
@@ -124,11 +128,22 @@ export function refreshKPI(
   start_time,
   end_time,
   token,
+  domain,
 ) {
   return function (dispatch) {
     dispatch(beginSearchKPI(search));
     dispatch(
-      loadKPI(true, search, 1, type, calculate_by, start_time, end_time, token),
+      loadKPI(
+        true,
+        search,
+        1,
+        type,
+        calculate_by,
+        start_time,
+        end_time,
+        token,
+        domain,
+      ),
     );
   };
 }

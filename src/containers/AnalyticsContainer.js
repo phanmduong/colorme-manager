@@ -108,42 +108,13 @@ class AnalyticsContainer extends React.Component {
   loadAnalytics = () => {
     this.loadAnalyticsRegister(false);
     this.loadAnalyticsRevenue(false);
-    this.loadAnalyticsKPI(false);
     this.loadDataClass(false);
   };
 
   refreshAnalytics = () => {
     this.loadAnalyticsRegister(true);
     this.loadAnalyticsRevenue(true);
-    this.loadAnalyticsKPI(true);
     this.loadDataClass(true);
-  };
-
-  loadAnalyticsKPI = (refreshing) => {
-    let baseId =
-      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
-    let staffId =
-      this.props.selectedStaffId === -1 ? '' : this.props.selectedStaffId;
-    let startTime = this.props.startDate.format('YYYY-MM-DD');
-    let endTime = this.props.endDate.format('YYYY-MM-DD');
-    let courseId =
-      this.props.selectedCourseId === -1 ? '' : this.props.selectedCourseId;
-    let sourceId =
-      this.props.selectedSourceId === -1 ? '' : this.props.selectedSourceId;
-    let campaignId =
-      this.props.selectedCampaignId === -1 ? '' : this.props.selectedCampaignId;
-    this.props.analyticsActions.loadAnalyticsKPI(
-      refreshing,
-      startTime,
-      endTime,
-      baseId,
-      courseId,
-      sourceId,
-      campaignId,
-      staffId,
-      this.props.token,
-      this.props.domain,
-    );
   };
 
   onSelectStartDate = (startDate) => {
@@ -313,7 +284,6 @@ function mapStateToProps(state) {
     classType: state.analytics.classType,
     refreshingAnalyticsRegister: state.analytics.refreshingAnalyticsRegister,
     refreshingAnalyticsRevenue: state.analytics.refreshingAnalyticsRevenue,
-    refreshingAnalyticsKPI: state.analytics.refreshingAnalyticsKPI,
     refreshingAnalyticsClasses: state.analytics.refreshingAnalyticsClasses,
   };
 }

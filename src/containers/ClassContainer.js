@@ -43,9 +43,7 @@ class ClassContainer extends React.Component {
     this.props.genActions.loadDataGen(this.props.token, this.props.domain);
     this.props.classActions.loadDataCourse(this.props.token, this.props.domain);
     this.props.classActions.loadBaseData(this.props.token, this.props.domain);
-    this.props.saveRegisterActions.loadProvinces(
-        this.props.token,
-    );
+    this.props.saveRegisterActions.loadProvinces(this.props.token);
     this.loadDataClass();
   }
 
@@ -87,16 +85,16 @@ class ClassContainer extends React.Component {
     );
   };
 
-  onSelectedItem(classId) {
-    this.props.classActions.selectedClassId(classId);
-    this.props.navigation.navigate('ListStudentClass');
+  onSelectedItem(classData) {
+    this.props.classActions.selectedClassId(classData.id);
+    this.props.navigation.navigate('ListStudentClass', {
+      name: classData.name,
+      avatar_url: classData.course && classData.course.icon_url,
+    });
   }
 
   changeClassStatus = (classId) => {
-    this.props.classActions.changeClassStatus(
-      classId,
-      this.props.token,
-    );
+    this.props.classActions.changeClassStatus(classId, this.props.token);
   };
 
   searchClass = (search) => {

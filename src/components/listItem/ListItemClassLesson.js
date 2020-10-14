@@ -21,7 +21,9 @@ const ListItemClassLesson = ({
 }) => {
   const numRegisters = registers.filter((register) => register.status).length;
   const attendPercentage =
-    numRegisters > 0 ? total_attendance / numRegisters : 0;
+    numRegisters && numRegisters > 0 && total_attendance
+      ? total_attendance / numRegisters
+      : 0;
 
   return (
     <View style={styles.container}>

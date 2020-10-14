@@ -24,7 +24,7 @@ class CurrentClassStudyContainer extends React.Component {
     this.loadDataCurrentClassStudy(this.props.selectedDate);
   }
 
-  loadDataCurrentClassStudy = date => {
+  loadDataCurrentClassStudy = (date) => {
     this.props.currentClassStudyActions.loadDataCurrentClassStudy(
       date,
       this.props.token,
@@ -38,10 +38,13 @@ class CurrentClassStudyContainer extends React.Component {
   onSelectedItem(classItem) {
     this.props.currentClassStudyActions.selectedCurrentClassStudy(classItem);
     this.props.classActions.selectedClassId(classItem.id);
-    this.props.navigation.navigate('ListStudentClass');
+    this.props.navigation.navigate('ListStudentClass', {
+      name: classItem.name,
+      avatar_url: classItem.course && classItem.course.icon_url,
+    });
   }
 
-  openQrCode = classItem => {
+  openQrCode = (classItem) => {
     this.props.currentClassStudyActions.selectedCurrentClassStudy(classItem);
     this.props.navigation.navigate('QRCode');
   };
@@ -53,7 +56,7 @@ class CurrentClassStudyContainer extends React.Component {
     );
   };
 
-  onSelectDate = date => {
+  onSelectDate = (date) => {
     this.props.currentClassStudyActions.onSelectDate(date);
   };
 

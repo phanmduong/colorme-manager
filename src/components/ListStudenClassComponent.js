@@ -123,6 +123,9 @@ class ListStudenClassComponent extends React.Component {
                 errorSubmitMoney={this.props.errorSubmitMoney}
                 submitMoney={this.props.submitMoney}
                 setStudentId={this.props.setStudentId}
+                register_status={item.register_status}
+                source={item.source}
+                attendances={item.attendances}
               />
             )}
           />

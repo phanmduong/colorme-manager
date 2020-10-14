@@ -1,16 +1,20 @@
 import React from 'react';
-import {Dimensions, Platform, RefreshControl} from 'react-native';
+import {
+  Dimensions,
+  Platform,
+  RefreshControl,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import {Container, Button, View, List, Text} from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Swiper from 'react-native-swiper';
 import Spinkit from 'react-native-spinkit';
 import theme from '../styles';
 import * as alert from '../constants/alert';
 import ListItemStudent from './listItem/ListItemStudent';
-import _ from 'lodash';
 import Search from './common/Search';
 import {convertVietText} from '../helper';
-import SubmitMoneyModal from './infoStudent/SubmitMoneyModal';
+import ListItemClassLesson from './listItem/ListItemClassLesson';
 
 var {height, width} = Dimensions.get('window');
 const heightSwiper = Platform.OS === 'ios' ? height - 170 : height - 125;
@@ -19,21 +23,58 @@ class ListStudenClassComponent extends React.Component {
     super(props, context);
     this.state = {
       search: '',
+      tabIdx: 0,
     };
   }
 
   headerComponent = () => {
     return (
-      <Search
-        placeholder="Tìm kiếm (Email, tên, số điện thoại)"
-        onChangeText={search => this.setState({search})}
-        value={this.state.search}
-        autoFocus={false}
-      />
+      <View>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <View style={styles.containerTag}>
+            <TouchableOpacity onPress={() => this.setState({tabIdx: 0})}>
+              <View
+                style={[
+                  styles.tag,
+                  {
+                    backgroundColor:
+                      this.state.tabIdx === 0 ? '#F6F6F6' : 'white',
+                  },
+                ]}>
+                <Text style={styles.tabText}>
+                  Học viên ({this.props.listStudentClass.length})
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.setState({tabIdx: 1})}>
+              <View
+                style={[
+                  styles.tag,
+                  {
+                    backgroundColor:
+                      this.state.tabIdx === 1 ? '#F6F6F6' : 'white',
+                  },
+                ]}>
+                <Text style={styles.tabText}>
+                  Chương trình học ({this.props.lessons.length})
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+        {this.state.tabIdx === 0 && (
+          <Search
+            placeholder="Tìm kiếm (Email, tên, số điện thoại)"
+            onChangeText={(search) => this.setState({search})}
+            value={this.state.search}
+            autoFocus={false}
+          />
+        )}
+      </View>
     );
   };
 
-  searchStudent = stdLst => {
+  searchStudent = (stdLst) => {
     if (this.state.search === '') {
       return stdLst;
     } else {
@@ -53,8 +94,76 @@ class ListStudenClassComponent extends React.Component {
     }
   };
 
+  data = () => {
+    switch (this.state.tabIdx) {
+      case 0:
+        return this.searchStudent(this.props.listStudentClass);
+      case 1:
+        return this.props.lessons;
+      default:
+        return [];
+    }
+  };
+
+  renderRow = (item) => {
+    switch (this.state.tabIdx) {
+      case 0:
+        return (
+          <ListItemStudent
+            {...this.props}
+            name={item.name}
+            avatar={item.avatar_url}
+            phone={item.phone}
+            email={item.email}
+            status={item.status}
+            money={item.money}
+            saler={item.saler}
+            campaign={item.campaign}
+            classInfo={this.props.classInfo}
+            studentId={item.id}
+            next_code={this.props.classInfo.next_code}
+            next_waiting_code={this.props.classInfo.next_waiting_code}
+            registerId={item.register_id}
+            changeCallStatus={this.props.changeCallStatus}
+            token={this.props.token}
+            errorChangeCallStatus={this.props.errorChangeCallStatus}
+            errorSubmitMoney={this.props.errorSubmitMoney}
+            submitMoney={this.props.submitMoney}
+            setStudentId={this.props.setStudentId}
+            register_status={item.register_status}
+            source={item.source}
+            attendances={item.attendances}
+          />
+        );
+      case 1:
+        return (
+          <ListItemClassLesson
+            avatar_url={this.props.classInfo.icon_url}
+            name={item.name}
+            teacher={item.teacher}
+            teacher_assistant={item.teacher_assistant}
+            start_time={item.start_time}
+            end_time={item.end_time}
+            time={item.time}
+            lesson={item.lesson}
+            registers={this.props.listStudentClass}
+            total_attendance={item.total_attendance}
+            class_id={item.class_id}
+            openQrCode={this.props.openQrCode}
+            address={
+              this.props.classInfo.room.name +
+              ' - ' +
+              this.props.classInfo.base.address
+            }
+          />
+        );
+      default:
+        return null;
+    }
+  };
+
   render() {
-    if (this.props.isLoading) {
+    if (this.props.isLoading || this.props.isLoadingLessons) {
       return (
         <Container>
           <View style={styles.container}>
@@ -93,7 +202,7 @@ class ListStudenClassComponent extends React.Component {
         return (
           <List
             style={styles.list}
-            dataArray={this.searchStudent(this.props.listStudentClass)}
+            dataArray={this.data()}
             ListHeaderComponent={this.headerComponent}
             refreshControl={
               <RefreshControl
@@ -101,33 +210,7 @@ class ListStudenClassComponent extends React.Component {
                 onRefresh={() => this.props.onRefresh()}
               />
             }
-            renderRow={(item, sectionID, rowID) => (
-              <ListItemStudent
-                {...this.props}
-                name={item.name}
-                avatar={item.avatar_url}
-                phone={item.phone}
-                email={item.email}
-                status={item.status}
-                money={item.money}
-                saler={item.saler}
-                campaign={item.campaign}
-                classInfo={this.props.classInfo}
-                studentId={item.id}
-                next_code={this.props.classInfo.next_code}
-                next_waiting_code={this.props.classInfo.next_waiting_code}
-                registerId={item.register_id}
-                changeCallStatus={this.props.changeCallStatus}
-                token={this.props.token}
-                errorChangeCallStatus={this.props.errorChangeCallStatus}
-                errorSubmitMoney={this.props.errorSubmitMoney}
-                submitMoney={this.props.submitMoney}
-                setStudentId={this.props.setStudentId}
-                register_status={item.register_status}
-                source={item.source}
-                attendances={item.attendances}
-              />
-            )}
+            renderRow={this.renderRow}
           />
         );
       }
@@ -163,6 +246,20 @@ const styles = {
   },
   slide: {
     height: heightSwiper,
+  },
+  tag: {
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  tabText: {
+    color: 'black',
+  },
+  containerTag: {
+    flexDirection: 'row',
+    paddingHorizontal: theme.mainHorizontal,
   },
 };
 

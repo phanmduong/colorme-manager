@@ -483,6 +483,12 @@ const TabDashboard = createStackNavigator(
         headerTitleStyle: {color: 'black'},
       }),
     },
+    QRCode: {
+      screen: QRCodeContainer,
+    },
+    AttendanceStudent: {
+      screen: AttendanceStudentContainer,
+    },
   },
   {
     defaultNavigationOptions: {

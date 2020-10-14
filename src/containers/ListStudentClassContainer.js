@@ -5,11 +5,12 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as listStudentClassActions from '../actions/listStudentClassActions';
+import * as currentClassStudyActions from '../actions/currentClassStudyActions';
 import ListStudenClassComponent from '../components/ListStudenClassComponent';
 import * as infoStudentActions from '../actions/infoStudentActions';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import theme from "../styles";
+import theme from '../styles';
 
 class ListStudentClassContainer extends React.Component {
   constructor(props, context) {
@@ -42,6 +43,11 @@ class ListStudentClassContainer extends React.Component {
       this.props.selectedClassId,
       this.props.token,
     );
+    this.props.listStudentClassActions.loadListStudentClassLessons(
+      false,
+      this.props.selectedClassId,
+      this.props.token,
+    );
   }
 
   onRefresh = () => {
@@ -49,9 +55,14 @@ class ListStudentClassContainer extends React.Component {
       this.props.selectedClassId,
       this.props.token,
     );
+    this.props.listStudentClassActions.loadListStudentClassLessons(
+      true,
+      this.props.selectedClassId,
+      this.props.token,
+    );
   };
 
-  setStudentId = studentId => {
+  setStudentId = (studentId) => {
     this.props.infoStudentActions.setStudentId(studentId);
   };
 
@@ -113,6 +124,11 @@ class ListStudentClassContainer extends React.Component {
     );
   };
 
+  openQrCode = (classItem) => {
+    this.props.currentClassStudyActions.selectedCurrentClassStudy(classItem);
+    this.props.navigation.navigate('QRCode');
+  };
+
   render() {
     return (
       <ListStudenClassComponent
@@ -129,6 +145,7 @@ class ListStudentClassContainer extends React.Component {
         submitMoney={this.submitMoney}
         setStudentId={this.setStudentId}
         onRefresh={this.onRefresh}
+        openQrCode={this.openQrCode}
       />
     );
   }
@@ -166,6 +183,10 @@ function mapStateToProps(state) {
     start_time: state.registerList.start_time,
     end_time: state.registerList.end_time,
     appointmentPayment: state.registerList.appointmentPayment,
+    lessons: state.listStudentClass.lessons,
+    isLoadingLessons: state.listStudentClass.isLoadingLessons,
+    errorLessons: state.listStudentClass.errorLessons,
+    refreshingLessons: state.listStudentClass.refreshingLessons,
   };
 }
 
@@ -176,6 +197,10 @@ function mapDispatchToProps(dispatch) {
       dispatch,
     ),
     infoStudentActions: bindActionCreators(infoStudentActions, dispatch),
+    currentClassStudyActions: bindActionCreators(
+      currentClassStudyActions,
+      dispatch,
+    ),
   };
 }
 

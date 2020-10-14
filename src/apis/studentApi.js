@@ -80,6 +80,11 @@ export function loadListStudentClassApi(classId, token) {
   return axios.get(url);
 }
 
+export function loadListStudentClassLessonsApi(classId, token) {
+  let url = env.MANAGE_API_URL_V3 + '/class/' + classId + '?token=' + token;
+  return axios.get(url);
+}
+
 export function searchStudentApi(
   sourceCancel,
   search,

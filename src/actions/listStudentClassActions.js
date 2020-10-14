@@ -21,14 +21,14 @@ export function beginDataListStudentClassRefresh() {
 }
 
 export function loadDataListStudentClass(classId, token) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginDataListStudentClassLoad());
     studentApi
       .loadListStudentClassApi(classId, token)
-      .then(function(res) {
+      .then(function (res) {
         dispatch(loadDataSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadDataError());
         throw error;
       });
@@ -36,14 +36,14 @@ export function loadDataListStudentClass(classId, token) {
 }
 
 export function refreshDataListStudentClass(classId, token) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginDataListStudentClassRefresh());
     studentApi
       .loadListStudentClassApi(classId, token)
-      .then(function(res) {
+      .then(function (res) {
         dispatch(loadDataSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadDataError());
         throw error;
       });
@@ -67,5 +67,57 @@ export function loadDataError() {
     isLoading: false,
     refreshing: false,
     error: true,
+  };
+}
+
+export function loadListStudentClassLessons(refreshing, classId, token) {
+  return function (dispatch) {
+    if (refreshing) {
+      dispatch(beginRefreshClassLessons());
+    } else {
+      dispatch(beginLoadClassLessons());
+    }
+    studentApi
+      .loadListStudentClassLessonsApi(classId, token)
+      .then((res) => dispatch(loadClassLessonsSuccess(res)))
+      .catch((error) => {
+        dispatch(loadClassLessonsError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadClassLessons() {
+  return {
+    type: types.BEGIN_LOAD_LIST_STUDENT_CLASS_LESSONS,
+    isLoadingLessons: true,
+    errorLessons: false,
+  };
+}
+
+function beginRefreshClassLessons() {
+  return {
+    type: types.BEGIN_REFRESH_LIST_STUDENT_CLASS_LESSONS,
+    refreshingLessons: true,
+    errorLessons: false,
+  };
+}
+
+function loadClassLessonsSuccess(res) {
+  return {
+    type: types.LOAD_LIST_STUDENT_CLASS_LESSONS_SUCCESSFUL,
+    isLoadingLessons: false,
+    errorLessons: false,
+    refreshingLessons: false,
+    lessons: res.data.data.class.lessons,
+  };
+}
+
+function loadClassLessonsError() {
+  return {
+    type: types.LOAD_LIST_STUDENT_CLASS_LESSONS_ERROR,
+    isLoadingLessons: false,
+    errorLessons: true,
+    refreshingLessons: false,
   };
 }

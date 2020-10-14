@@ -55,7 +55,9 @@ class ListStudentClassContainer extends React.Component {
     ),
     headerRight: () => (
       <View style={styles.actionContainer}>
-        <TouchableOpacity style={styles.btnContainer}>
+        <TouchableOpacity
+          style={styles.btnContainer}
+          onPress={() => navigation.navigate('ClassInfo')}>
           <Image
             source={require('../../assets/img/icons8-info_filled.png')}
             style={styles.icon}

@@ -71,6 +71,7 @@ class ListStudentClassContainer extends React.Component {
     this.props.listStudentClassActions.loadDataListStudentClass(
       this.props.selectedClassId,
       this.props.token,
+      this.props.domain,
     );
     this.props.listStudentClassActions.loadListStudentClassLessons(
       false,
@@ -90,6 +91,7 @@ class ListStudentClassContainer extends React.Component {
       true,
       this.props.selectedClassId,
       this.props.token,
+      this.props.domain,
     );
   };
 

@@ -90,8 +90,8 @@ export function addClass(classData, token, domain) {
   });
 }
 
-export function loadClassInfo(classId, token) {
-  let url = env.MANAGE_API_URL_V3 + '/class/' + classId + '?token=' + token;
+export function loadClassInfo(classId, token, domain) {
+  let url = env.manageApiUrlV3(domain) + '/class/' + classId + '?token=' + token;
   console.log(url);
   return axios.get(url);
 }

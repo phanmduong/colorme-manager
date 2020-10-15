@@ -21,11 +21,11 @@ export function beginDataListStudentClassRefresh() {
 }
 
 export function loadDataListStudentClass(classId, token, domain) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginDataListStudentClassLoad());
     studentApi
       .loadListStudentClassApi(classId, token, domain)
-      .then(function(res) {
+      .then(function (res) {
         dispatch(loadDataSuccessful(res));
       })
       .catch((error) => {
@@ -36,12 +36,10 @@ export function loadDataListStudentClass(classId, token, domain) {
 }
 
 export function refreshDataListStudentClass(classId, token, domain) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginDataListStudentClassRefresh());
     studentApi
       .loadListStudentClassApi(classId, token, domain)
-      .then(function(res) {
-      .loadListStudentClassApi(classId, token)
       .then(function (res) {
         dispatch(loadDataSuccessful(res));
       })

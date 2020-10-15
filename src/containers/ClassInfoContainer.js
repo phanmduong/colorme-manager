@@ -13,10 +13,13 @@ const ClassInfoContainer = (props) => {
   }, []);
 
   const loadClassInfo = () => {
-    props.classActions.loadClassInfo(props.selectedClassId, props.token);
+    props.classActions.loadClassInfo(
+      props.selectedClassId,
+      props.token,
+      props.domain,
+    );
   };
 
-  console.log(props.classInfo);
   return <ClassInfoComponent {...props} loadClassInfo={loadClassInfo} />;
 };
 
@@ -48,6 +51,7 @@ const styles = {
 function mapStateToProps(state) {
   return {
     token: state.login.token,
+    domain: state.login.domain,
     classInfo: state.class.classInfo,
     loadingClassInfo: state.class.loadingClassInfo,
     errorClassInfo: state.class.errorClassInfo,

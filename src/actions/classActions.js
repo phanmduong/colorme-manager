@@ -328,11 +328,11 @@ function addClassError() {
   };
 }
 
-export function loadClassInfo(classId, token) {
+export function loadClassInfo(classId, token, domain) {
   return function (dispatch) {
     dispatch(beginLoadClassInfo());
     classApi
-      .loadClassInfo(classId, token)
+      .loadClassInfo(classId, token, domain)
       .then(function (res) {
         dispatch(loadClassInfoSuccessful(res));
       })

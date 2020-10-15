@@ -100,9 +100,12 @@ class ClassContainer extends React.Component {
     );
   };
 
-  onSelectedItem(classId) {
-    this.props.classActions.selectedClassId(classId);
-    this.props.navigation.navigate('ListStudentClass');
+  onSelectedItem(classData) {
+    this.props.classActions.selectedClassId(classData.id);
+    this.props.navigation.navigate('ListStudentClass', {
+      name: classData.name,
+      avatar_url: classData.course && classData.course.icon_url,
+    });
   }
 
   changeClassStatus = (classId) => {

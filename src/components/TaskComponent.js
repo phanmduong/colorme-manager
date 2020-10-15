@@ -68,7 +68,7 @@ class TaskComponent extends React.Component {
     });
   };
 
-  onSelectDate = date => {
+  onSelectDate = (date) => {
     this.props.onSelectDate(date);
     this.props.loadTaskView(date, this.state.user_id);
   };
@@ -76,26 +76,26 @@ class TaskComponent extends React.Component {
   renderTaskItem = () => {
     if (this.state.tab === 1) {
       let tasks = this.tasksNotComplete();
-      return tasks.map(task => (
+      return tasks.map((task) => (
         <TaskItem task={task} onSelectTask={this.props.onSelectTask} />
       ));
     } else {
       let tasks = this.tasksCompleted();
-      return tasks.map(task => (
+      return tasks.map((task) => (
         <TaskItem task={task} onSelectTask={this.props.onSelectTask} />
       ));
     }
   };
 
   tasksCompleted = () => {
-    return this.props.taskView.filter(task => task.status === 1);
+    return this.props.taskView.filter((task) => task.status === 1);
   };
 
   tasksNotComplete = () => {
-    return this.props.taskView.filter(task => task.status === 0);
+    return this.props.taskView.filter((task) => task.status === 0);
   };
 
-  getSearchedResults = array => {
+  getSearchedResults = (array) => {
     let list = [];
     if (this.state.search === '') {
       return array;
@@ -114,7 +114,7 @@ class TaskComponent extends React.Component {
     }
   };
 
-  renderPickerField = settings => {
+  renderPickerField = (settings) => {
     const {selectedItem, getLabel} = settings;
     return (
       <View>
@@ -146,7 +146,7 @@ class TaskComponent extends React.Component {
     );
   };
 
-  renderPickerOption = settings => {
+  renderPickerOption = (settings) => {
     const {item} = settings;
     return (
       <View style={styles.options}>
@@ -155,13 +155,13 @@ class TaskComponent extends React.Component {
     );
   };
 
-  renderPickerHeader = title => {
+  renderPickerHeader = (title) => {
     return (
       <View style={styles.headerFooterContainer}>
         <Text style={styles.headerFooterText}>{title}</Text>
         <Search
           placeholder="Tìm kiếm"
-          onChangeText={search => {
+          onChangeText={(search) => {
             this.setState({search});
           }}
           value={this.state.search}
@@ -182,7 +182,7 @@ class TaskComponent extends React.Component {
     );
   }
 
-  getData = array => {
+  getData = (array) => {
     let defaultOption = {id: '', name: 'Tất cả'};
     let data = [defaultOption].concat(array);
     return data;
@@ -191,13 +191,9 @@ class TaskComponent extends React.Component {
   render() {
     if (!this.props.isLoadingTaskEmployees) {
       let nameSelectedDate =
-        moment(this.props.selectedDate)
-          .locale('vi')
-          .format('dddd') +
+        moment(this.props.selectedDate).locale('vi').format('dddd') +
         ' ' +
-        moment(this.props.selectedDate)
-          .locale('vi')
-          .format('L');
+        moment(this.props.selectedDate).locale('vi').format('L');
       nameSelectedDate =
         nameSelectedDate.charAt(0).toUpperCase() + nameSelectedDate.slice(1);
       return (
@@ -235,7 +231,7 @@ class TaskComponent extends React.Component {
               options={this.getSearchedResults(
                 this.getData(this.props.employees),
               )}
-              getLabel={item => item.avatar_url}
+              getLabel={(item) => item.avatar_url}
               modalAnimationType={'fade'}
               optionTemplate={this.renderPickerOption}
               fieldTemplate={this.renderPickerField}
@@ -245,7 +241,7 @@ class TaskComponent extends React.Component {
               modalStyle={{
                 borderRadius: 6,
               }}
-              onValueChange={value => {
+              onValueChange={(value) => {
                 this.setState({search: '', user_id: value.id});
                 this.props.onSelectUserId(
                   moment(this.props.selectedDate).format('YYYY-MM-DD'),
@@ -267,7 +263,7 @@ class TaskComponent extends React.Component {
                   moment(this.props.selectedDate).format('DD/MM/YYYY') ===
                   moment(date).format('DD/MM/YYYY');
                 let analyticTask = this.props.taskAnalytics.filter(
-                  analyticTask =>
+                  (analyticTask) =>
                     moment(date).format('YYYY-MM-DD') === analyticTask.date,
                 )[0];
                 analyticTask = analyticTask
@@ -282,16 +278,21 @@ class TaskComponent extends React.Component {
                       this.onSelectDate(moment(date).format('YYYY-MM-DD'))
                     }>
                     <View style={{alignItems: 'center'}}>
-                      <Text
+                      <View
                         style={[
-                          {
-                            color: isSelectedDate ? 'white' : '#999',
-                            backgroundColor: isSelectedDate ? 'red' : 'white',
-                          },
                           styles.progressCircle,
+                          {backgroundColor: isSelectedDate ? 'red' : 'white'},
                         ]}>
-                        {index < 6 ? `T${index + 2}` : 'CN'}
-                      </Text>
+                        <Text
+                          style={[
+                            {
+                              color: isSelectedDate ? 'white' : '#999',
+                            },
+                            styles.progressText,
+                          ]}>
+                          {index < 6 ? `T${index + 2}` : 'CN'}
+                        </Text>
+                      </View>
                       <ProgressCircle
                         percent={
                           analyticTask.total_completed === 0 &&
@@ -417,12 +418,14 @@ const styles = {
     justifyContent: 'space-between',
   },
   progressCircle: {
-    borderRadius: 10,
-    fontSize: 10,
-    marginBottom: 3,
-    fontWeight: '600',
     paddingVertical: 3,
     paddingHorizontal: 7,
+    marginBottom: 3,
+    borderRadius: 10,
+  },
+  progressText: {
+    fontSize: 10,
+    fontWeight: '600',
   },
   dateNumber: {
     fontSize: 12,

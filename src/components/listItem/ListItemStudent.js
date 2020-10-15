@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Dimensions,
   Platform,
   TouchableNativeFeedback,
   TouchableOpacity,
@@ -15,7 +14,7 @@ import {Thumbnail} from 'native-base';
 import {dotNumber, getShortName} from '../../helper';
 import CallRegisterModal from '../infoStudent/CallRegisterModal';
 import SubmitMoneyModal from '../infoStudent/SubmitMoneyModal';
-var {height, width} = Dimensions.get('window');
+import * as Progress from 'react-native-progress';
 
 class ListItemStudent extends React.Component {
   constructor(props, context) {
@@ -34,6 +33,22 @@ class ListItemStudent extends React.Component {
     this.setState({moneyModalVisible: !this.state.moneyModalVisible});
   };
 
+  getAttendanceInfo = () => {
+    const attended = this.props.attendances.reduce((accum, currentValue) => {
+      return (accum += currentValue.status ? 1 : 0);
+    }, 0);
+    return {attended, total_attendances: this.props.attendances.length};
+  };
+
+  getAttendancePercentage = () => {
+    const attendanceInfo = this.getAttendanceInfo();
+    if (attendanceInfo.total_attendances <= 0) {
+      return 0;
+    } else {
+      return attendanceInfo.attended / attendanceInfo.total_attendances;
+    }
+  };
+
   content() {
     const {
       name,
@@ -49,16 +64,13 @@ class ListItemStudent extends React.Component {
       next_code,
       next_waiting_code,
       registerId,
+      register_status,
+      source,
     } = this.props;
     return (
       <View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={styles.header}>
+          <View style={styles.row}>
             <View style={{position: 'relative'}}>
               <Thumbnail
                 small
@@ -79,7 +91,7 @@ class ListItemStudent extends React.Component {
           <View style={styles.classAva} />
           <View style={styles.infoContainer}>
             <View style={styles.containerSubTitle}>
-              {saler ? (
+              {saler && (
                 <View
                   style={{
                     ...styles.card,
@@ -93,10 +105,8 @@ class ListItemStudent extends React.Component {
                   }}>
                   <Text style={styles.saler}>{getShortName(saler.name)}</Text>
                 </View>
-              ) : (
-                <View />
               )}
-              {campaign ? (
+              {campaign && (
                 <View
                   style={{
                     ...styles.card,
@@ -109,8 +119,36 @@ class ListItemStudent extends React.Component {
                   }}>
                   <Text style={styles.campaign}>{campaign.name.trim()}</Text>
                 </View>
-              ) : (
-                <View />
+              )}
+              {register_status && (
+                <View
+                  style={{
+                    ...styles.card,
+                    ...{
+                      backgroundColor:
+                        !register_status.color || register_status.color === ''
+                          ? theme.processColor1
+                          : register_status.color,
+                    },
+                  }}>
+                  <Text style={styles.campaign}>
+                    {register_status.name.trim()}
+                  </Text>
+                </View>
+              )}
+              {source && (
+                <View
+                  style={{
+                    ...styles.card,
+                    ...{
+                      backgroundColor:
+                        !source.color || source.color === ''
+                          ? theme.processColor1
+                          : '#' + source.color,
+                    },
+                  }}>
+                  <Text style={styles.campaign}>{source.name.trim()}</Text>
+                </View>
               )}
             </View>
             <View>
@@ -120,6 +158,21 @@ class ListItemStudent extends React.Component {
                   {email}
                 </Text>
               ) : null}
+            </View>
+            <View style={styles.progressContainer}>
+              <Progress.Bar
+                width={120}
+                height={4}
+                progress={this.getAttendancePercentage()}
+                color={'#32CA41'}
+                unfilledColor={'#E0E0E0'}
+                borderColor={'white'}
+                borderRadius={10}
+              />
+              <Text style={styles.attendanceText}>
+                {this.getAttendanceInfo().attended}/
+                {this.getAttendanceInfo().total_attendances} buổi
+              </Text>
             </View>
             <View style={styles.buttonContainer}>
               <TouchableOpacity
@@ -217,6 +270,11 @@ class ListItemStudent extends React.Component {
 }
 
 const styles = {
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   containerAll: {
     paddingHorizontal: theme.mainHorizontal,
     paddingVertical: 16,
@@ -338,6 +396,18 @@ const styles = {
   infoContainer: {
     marginLeft: 15,
     flex: 1,
+  },
+  progressContainer: {
+    marginTop: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  attendanceText: {
+    marginLeft: 10,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 };
 

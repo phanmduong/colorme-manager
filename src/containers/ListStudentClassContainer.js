@@ -5,11 +5,13 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as listStudentClassActions from '../actions/listStudentClassActions';
+import * as currentClassStudyActions from '../actions/currentClassStudyActions';
 import ListStudenClassComponent from '../components/ListStudenClassComponent';
 import * as infoStudentActions from '../actions/infoStudentActions';
-import {Text, View} from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../styles';
+import {isEmptyInput} from '../helper';
 
 class ListStudentClassContainer extends React.Component {
   constructor(props, context) {
@@ -23,22 +25,55 @@ class ListStudentClassContainer extends React.Component {
 
   static navigationOptions = ({navigation}) => ({
     headerLeft: () => (
-      <View style={styles.headerLeftContainer}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={[styles.headerLeftContainer, {width: 180}]}>
+        <View style={styles.row}>
           <Icon
             name={'chevron-left'}
             size={33}
             color={'black'}
             onPress={() => navigation.goBack()}
           />
-          <Text style={styles.name}>Danh sách học viên</Text>
+          {!isEmptyInput(navigation.state.params) &&
+          !isEmptyInput(navigation.state.params.avatar_url) ? (
+            <Image
+              source={{uri: navigation.state.params.avatar_url}}
+              style={styles.ava}
+            />
+          ) : (
+            <Image
+              source={require('../../assets/img/icons8-male-user-96.png')}
+              style={styles.ava}
+            />
+          )}
+          <Text numberOfLines={1} style={[styles.name, {marginLeft: 10}]}>
+            {navigation.state.params && navigation.state.params.name
+              ? navigation.state.params.name
+              : null}
+          </Text>
         </View>
+      </View>
+    ),
+    headerRight: () => (
+      <View style={styles.actionContainer}>
+        <TouchableOpacity
+          style={styles.btnContainer}
+          onPress={() => navigation.navigate('ClassInfo')}>
+          <Image
+            source={require('../../assets/img/icons8-info_filled.png')}
+            style={styles.icon}
+          />
+        </TouchableOpacity>
       </View>
     ),
   });
 
   onReload() {
     this.props.listStudentClassActions.loadDataListStudentClass(
+      this.props.selectedClassId,
+      this.props.token,
+    );
+    this.props.listStudentClassActions.loadListStudentClassLessons(
+      false,
       this.props.selectedClassId,
       this.props.token,
       this.props.domain,
@@ -50,6 +85,11 @@ class ListStudentClassContainer extends React.Component {
       this.props.selectedClassId,
       this.props.token,
       this.props.domain,
+    );
+    this.props.listStudentClassActions.loadListStudentClassLessons(
+      true,
+      this.props.selectedClassId,
+      this.props.token,
     );
   };
 
@@ -117,6 +157,11 @@ class ListStudentClassContainer extends React.Component {
     );
   };
 
+  openQrCode = (classItem) => {
+    this.props.currentClassStudyActions.selectedCurrentClassStudy(classItem);
+    this.props.navigation.navigate('QRCode');
+  };
+
   render() {
     return (
       <ListStudenClassComponent
@@ -133,6 +178,7 @@ class ListStudentClassContainer extends React.Component {
         submitMoney={this.submitMoney}
         setStudentId={this.setStudentId}
         onRefresh={this.onRefresh}
+        openQrCode={this.openQrCode}
       />
     );
   }
@@ -141,6 +187,26 @@ class ListStudentClassContainer extends React.Component {
 const styles = {
   name: theme.header,
   headerLeftContainer: theme.headerNavigateLeftContainer,
+  ava: theme.mainAvatar,
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  actionContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 20,
+  },
+  btnContainer: {
+    padding: 8,
+    backgroundColor: '#F6F6F6',
+    marginLeft: 10,
+    borderRadius: 18,
+  },
+  icon: {
+    width: 18,
+    height: 18,
+  },
 };
 
 function mapStateToProps(state) {
@@ -170,6 +236,10 @@ function mapStateToProps(state) {
     start_time: state.registerList.start_time,
     end_time: state.registerList.end_time,
     appointmentPayment: state.registerList.appointmentPayment,
+    lessons: state.listStudentClass.lessons,
+    isLoadingLessons: state.listStudentClass.isLoadingLessons,
+    errorLessons: state.listStudentClass.errorLessons,
+    refreshingLessons: state.listStudentClass.refreshingLessons,
     domain: state.login.domain,
   };
 }
@@ -181,6 +251,10 @@ function mapDispatchToProps(dispatch) {
       dispatch,
     ),
     infoStudentActions: bindActionCreators(infoStudentActions, dispatch),
+    currentClassStudyActions: bindActionCreators(
+      currentClassStudyActions,
+      dispatch,
+    ),
   };
 }
 

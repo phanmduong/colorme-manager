@@ -64,6 +64,7 @@ import ClockManageContainer from '../containers/ClockManageContainer';
 import ClockManageWorkShiftDetailsContainer from '../containers/ClockManageWorkShiftDetailsContainer';
 import ListStudentAttendanceRegisterContainer from "../containers/ListStudentAttendanceRegisterContainer";
 import KPIContainer from '../containers/KPIContainer';
+import ClassInfoContainer from '../containers/ClassInfoContainer';
 
 const navigationOptionsDefault = {
   defaultNavigationOptions: {
@@ -493,6 +494,19 @@ const TabDashboard = createStackNavigator(
     },
     KPI: {
       screen: KPIContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    QRCode: {
+      screen: QRCodeContainer,
+    },
+    AttendanceStudent: {
+      screen: AttendanceStudentContainer,
+    },
+    ClassInfo: {
+      screen: ClassInfoContainer,
       navigationOptions: () => ({
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},

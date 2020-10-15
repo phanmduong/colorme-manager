@@ -227,7 +227,7 @@ class ListItemClass extends React.Component {
       return (
         <View>
           <TouchableOpacity
-            onPress={() => this.props.onPress(this.props.classId)}>
+            onPress={() => this.props.onPress(this.props.classData)}>
             {this.content()}
           </TouchableOpacity>
         </View>
@@ -236,7 +236,7 @@ class ListItemClass extends React.Component {
       return (
         <View>
           <TouchableNativeFeedback
-            onPress={() => this.props.onPress(this.props.classId)}>
+            onPress={() => this.props.onPress(this.props.classData)}>
             {this.content()}
           </TouchableNativeFeedback>
         </View>

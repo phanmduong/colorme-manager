@@ -306,16 +306,23 @@ class ClassComponent extends React.Component {
                     this.onSelectDate(moment(date).format('YYYY-MM-DD'))
                   }>
                   <View style={{alignItems: 'center'}}>
-                    <Text
+                    <View
                       style={[
+                        styles.progressCircle,
                         {
-                          color: isSelectedDate ? 'white' : '#999',
                           backgroundColor: isSelectedDate ? 'red' : 'white',
                         },
-                        styles.progressCircle,
                       ]}>
-                      {index < 6 ? `T${index + 2}` : 'CN'}
-                    </Text>
+                      <Text
+                        style={[
+                          {
+                            color: isSelectedDate ? 'white' : '#999',
+                          },
+                          styles.progressText,
+                        ]}>
+                        {index < 6 ? `T${index + 2}` : 'CN'}
+                      </Text>
+                    </View>
                     <ProgressCircle
                       percent={
                         this.props.classData.length > 0
@@ -412,12 +419,14 @@ const styles = {
     justifyContent: 'space-between',
   },
   progressCircle: {
-    borderRadius: 10,
-    fontSize: 10,
-    marginBottom: 3,
-    fontWeight: '600',
     paddingVertical: 3,
     paddingHorizontal: 7,
+    marginBottom: 3,
+    borderRadius: 10,
+  },
+  progressText: {
+    fontSize: 10,
+    fontWeight: '600',
   },
   dateNumber: {
     fontSize: 12,

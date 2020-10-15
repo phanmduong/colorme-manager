@@ -42,7 +42,10 @@ class CurrentClassStudyContainer extends React.Component {
   onSelectedItem(classItem) {
     this.props.currentClassStudyActions.selectedCurrentClassStudy(classItem);
     this.props.classActions.selectedClassId(classItem.id);
-    this.props.navigation.navigate('ListStudentClass');
+    this.props.navigation.navigate('ListStudentClass', {
+      name: classItem.name,
+      avatar_url: classItem.course && classItem.course.icon_url,
+    });
   }
 
   openQrCode = (classItem) => {

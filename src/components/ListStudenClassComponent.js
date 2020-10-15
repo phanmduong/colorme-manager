@@ -56,7 +56,7 @@ class ListStudenClassComponent extends React.Component {
                   },
                 ]}>
                 <Text style={styles.tabText}>
-                  Chương trình học ({this.props.lessons.length})
+                  Chương trình học ({this.props.lessons.length} buổi)
                 </Text>
               </View>
             </TouchableOpacity>

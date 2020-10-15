@@ -25,7 +25,7 @@ class ListStudentClassContainer extends React.Component {
 
   static navigationOptions = ({navigation}) => ({
     headerLeft: () => (
-      <View style={[styles.headerLeftContainer, {width: 200}]}>
+      <View style={[styles.headerLeftContainer, {width: 180}]}>
         <View style={styles.row}>
           <Icon
             name={'chevron-left'}

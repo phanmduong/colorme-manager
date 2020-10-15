@@ -16,6 +16,7 @@ const ClassInfoContainer = (props) => {
     props.classActions.loadClassInfo(props.selectedClassId, props.token);
   };
 
+  console.log(props.classInfo);
   return <ClassInfoComponent {...props} loadClassInfo={loadClassInfo} />;
 };
 

@@ -26,9 +26,11 @@ const ClassInfoComponent = ({loadClassInfo, ...props}) => {
       </View>
     );
   } else {
-    const type = CLASS_STATUS_FILTER.find(
-      (filter) => filter.value === props.classInfo.type,
-    ).name;
+    const type =
+      props.classInfo.type &&
+      CLASS_STATUS_FILTER.find(
+        (filter) => filter.value === props.classInfo.type,
+      ).name;
     return (
       <ScrollView
         style={{marginHorizontal: theme.mainHorizontal}}
@@ -52,7 +54,17 @@ const ClassInfoComponent = ({loadClassInfo, ...props}) => {
             />
           )}
           <View style={{marginTop: 25}}>
-            <Text style={{fontSize: 16}}>{props.classInfo.name}</Text>
+            <Text style={styles.title}>{props.classInfo.name}</Text>
+          </View>
+          <View style={{marginTop: 5}}>
+            <Text style={styles.title}>
+              {props.classInfo.room && props.classInfo.room.address}
+            </Text>
+          </View>
+          <View style={{marginTop: 5}}>
+            <Text style={styles.title}>
+              {props.classInfo.room && props.classInfo.room.name}
+            </Text>
           </View>
         </View>
         <InfoRow
@@ -109,6 +121,9 @@ const styles = {
   mainInfoContainer: {
     alignItems: 'center',
     paddingTop: 30,
+  },
+  title: {
+    fontSize: 16,
   },
 };
 

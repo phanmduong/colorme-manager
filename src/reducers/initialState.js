@@ -23,9 +23,6 @@ export default {
     isCheckIn: false,
     deviceUser: {},
     domain: 'ieg',
-    domains: [],
-    isLoadingDomains: false,
-    errorDomains: false,
   },
   base: {
     baseData: [],

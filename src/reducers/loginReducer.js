@@ -46,22 +46,6 @@ export default function loginReducer(state = initialState.login, action) {
         login: action.login,
         isGetDataLocalSuccessful: action.isGetDataLocalSuccessful,
       });
-    case types.BEGIN_LOAD_DOMAINS:
-      return Object.assign({}, state, {
-        isLoadingDomains: action.isLoadingDomains,
-        errorDomains: action.errorDomains,
-      });
-    case types.LOAD_DOMAINS_SUCCESSFUL:
-      return Object.assign({}, state, {
-        isLoadingDomains: action.isLoadingDomains,
-        errorDomains: action.errorDomains,
-        domains: action.domains,
-      });
-    case types.LOAD_DOMAINS_ERROR:
-      return Object.assign({}, state, {
-        isLoadingDomains: action.isLoadingDomains,
-        errorDomains: action.errorDomains,
-      });
     default:
       return state;
   }

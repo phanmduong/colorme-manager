@@ -63,35 +63,6 @@ class LoginComponent extends React.Component {
     self.props.changeStatusBarColor('light-content');
   }
 
-  filterSearch = () => {
-    if (isEmptyInput(this.props.domain)) {
-      return this.props.domains.sort(function (a, b) {
-        if (a.domain < b.domain) {
-          return -1;
-        }
-        if (a.domain > b.domain) {
-          return 1;
-        }
-        return 0;
-      });
-    }
-    return this.props.domains
-      .filter((item) => {
-        return item.domain
-          .toLowerCase()
-          .includes(this.props.domain.toLowerCase());
-      })
-      .sort(function (a, b) {
-        if (a.domain < b.domain) {
-          return -1;
-        }
-        if (a.domain > b.domain) {
-          return 1;
-        }
-        return 0;
-      });
-  };
-
   render() {
     return (
       <TouchableWithoutFeedback

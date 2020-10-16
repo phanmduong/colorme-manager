@@ -30,7 +30,7 @@ export function loadCheck(token, type, domain) {
           let countCheckLocation = 0;
           let called = false;
           console.log('get location');
-          if (Platform.OS == 'ios') {
+          if (Platform.OS === 'ios') {
             watchID = Geolocation.watchPosition(
               position => {
                 console.log(position);

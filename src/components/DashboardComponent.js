@@ -181,6 +181,7 @@ class DashboardComponent extends React.Component {
               iconImage={require('../../assets/img/icons8-ratings-90.png')}
               title={'Thống kê'}
               onPress={() => {
+                this.props.getAnalyticsGenData();
                 this.props.navigation.navigate('Analytics');
               }}
             />
@@ -251,6 +252,13 @@ class DashboardComponent extends React.Component {
                 this.props.navigation.navigate('Leads');
               }}
             />
+            <CircleTab
+              iconImage={require('../../assets/img/icons8-bar_chart.png')}
+              title={'KPI'}
+              onPress={() => {
+                this.props.navigation.navigate('KPI');
+              }}
+            />
             {/*<CircleTab*/}
             {/*  iconImage={require('../../assets/img/icons8-add_user_group_man_man.png')}*/}
             {/*  title={'Tạo lead'}*/}
@@ -282,7 +290,6 @@ class DashboardComponent extends React.Component {
             {/*  }}*/}
             {/*/>*/}
           </View>
-          <View style={styles.otherFeatureLine}></View>
           <View style={styles.otherFeatureLine}>
             {/*<CircleTab*/}
             {/*  iconImage={require('../../assets/img/icons8-document.png')}*/}

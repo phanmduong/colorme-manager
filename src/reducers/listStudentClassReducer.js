@@ -33,6 +33,30 @@ export default function listStudentClassReducer(
         refreshing: action.refreshing,
         error: action.error,
       });
+    case types.BEGIN_LOAD_LIST_STUDENT_CLASS_LESSONS:
+      return Object.assign({}, state, {
+        isLoadingLessons: action.isLoadingLessons,
+        errorLessons: action.errorLessons,
+      });
+    case types.LOAD_LIST_STUDENT_CLASS_LESSONS_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isLoadingLessons: action.isLoadingLessons,
+        refreshingLessons: action.refreshingLessons,
+        errorLessons: action.errorLessons,
+        lessons: action.lessons,
+      });
+    case types.LOAD_LIST_STUDENT_CLASS_LESSONS_ERROR:
+      return Object.assign({}, state, {
+        isLoadingLessons: action.isLoadingLessons,
+        refreshingLessons: action.refreshingLessons,
+        errorLessons: action.errorLessons,
+      });
+    case types.RESET_LIST_STUDENT_CLASS:
+      return Object.assign({}, state, {
+        classInfo: action.classInfo,
+        lessons: action.lessons,
+        listStudentClassData: action.listStudentClassData,
+      });
     default:
       return state;
   }

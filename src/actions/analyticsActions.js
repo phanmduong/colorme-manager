@@ -30,7 +30,6 @@ export function loadAnalyticsRegister(
   sourceId,
   campaignId,
   token,
-  domain,
 ) {
   return function (dispatch) {
     if (!refreshing) {
@@ -48,7 +47,6 @@ export function loadAnalyticsRegister(
         sourceId,
         campaignId,
         token,
-        domain,
       )
       .then(function (res) {
         dispatch(loadAnalyticsRegisterSuccessful(res));
@@ -89,7 +87,6 @@ export function loadAnalyticsRevenue(
   sourceId,
   campaignId,
   token,
-  domain,
 ) {
   return function (dispatch) {
     if (!refreshing) {
@@ -107,7 +104,6 @@ export function loadAnalyticsRevenue(
         sourceId,
         campaignId,
         token,
-        domain,
       )
       .then((res) => {
         dispatch(loadAnalyticsRevenueSuccessful(res));
@@ -219,81 +215,6 @@ export function selectedClassType(type) {
   };
 }
 
-export function loadAnalyticsKPI(
-  refreshing,
-  startTime,
-  endTime,
-  baseId,
-  courseId,
-  sourceId,
-  campaignId,
-  staffId,
-  token,
-  domain,
-) {
-  return function (dispatch) {
-    if (!refreshing) {
-      dispatch(beginLoadAnalyticsKPI());
-    } else {
-      dispatch(beginRefreshAnalyticsKPI());
-    }
-    analyticsApi
-      .loadAnalyticsKPI(
-        startTime,
-        endTime,
-        baseId,
-        courseId,
-        sourceId,
-        campaignId,
-        staffId,
-        token,
-        domain,
-      )
-      .then((res) => {
-        dispatch(loadAnalyticsKPISuccessful(res));
-      })
-      .catch((error) => {
-        dispatch(loadAnalyticsKPIError());
-        throw error;
-      });
-  };
-}
-
-function beginLoadAnalyticsKPI() {
-  return {
-    type: types.BEGIN_DATA_ANALYTICS_KPI_LOAD,
-    isLoadingAnalyticsKPI: true,
-    errorAnalyticsKPI: false,
-  };
-}
-
-function beginRefreshAnalyticsKPI() {
-  return {
-    type: types.BEGIN_DATA_ANALYTICS_KPI_REFRESH,
-    refreshingAnalyticsKPI: true,
-    errorAnalyticsKPI: false,
-  };
-}
-
-function loadAnalyticsKPISuccessful(res) {
-  return {
-    type: types.LOAD_DATA_ANALYTICS_KPI_SUCCESSFUL,
-    isLoadingAnalyticsKPI: false,
-    errorAnalyticsKPI: false,
-    analyticsKpis: res.data.analytics,
-    refreshingAnalyticsKPI: false,
-  };
-}
-
-function loadAnalyticsKPIError() {
-  return {
-    type: types.LOAD_DATA_ANALYTICS_KPI_ERROR,
-    isLoadingAnalyticsKPI: false,
-    errorAnalyticsKPI: true,
-    refreshingAnalyticsKPI: false,
-  };
-}
-
 export function loadAnalyticsClasses(
   refreshing,
   startDate,
@@ -306,7 +227,6 @@ export function loadAnalyticsClasses(
   sourceId,
   campaignId,
   token,
-  domain,
 ) {
   return function (dispatch) {
     if (!refreshing) {
@@ -326,7 +246,6 @@ export function loadAnalyticsClasses(
         sourceId,
         campaignId,
         token,
-        domain,
       )
       .then((res) => {
         dispatch(loadAnalyticsClassesSuccessful(res));

@@ -63,6 +63,8 @@ import StaffContainer from '../containers/StaffContainer';
 import ClockManageContainer from '../containers/ClockManageContainer';
 import ClockManageWorkShiftDetailsContainer from '../containers/ClockManageWorkShiftDetailsContainer';
 import ListStudentAttendanceRegisterContainer from "../containers/ListStudentAttendanceRegisterContainer";
+import KPIContainer from '../containers/KPIContainer';
+import ClassInfoContainer from '../containers/ClassInfoContainer';
 
 const navigationOptionsDefault = {
   defaultNavigationOptions: {
@@ -490,6 +492,26 @@ const TabDashboard = createStackNavigator(
         headerTitleStyle: {color: 'black'},
       }),
     },
+    KPI: {
+      screen: KPIContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    QRCode: {
+      screen: QRCodeContainer,
+    },
+    AttendanceStudent: {
+      screen: AttendanceStudentContainer,
+    },
+    ClassInfo: {
+      screen: ClassInfoContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
   },
   {
     defaultNavigationOptions: {
@@ -609,13 +631,13 @@ const TabWorkShift = createStackNavigator(
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},
       }),
-      EditProfile: {
-        screen: EditProfileContainer,
-        navigationOptions: () => ({
-          headerTintColor: 'black',
-          headerTitleStyle: {color: 'black'},
-        }),
-      },
+    },
+    EditProfile: {
+      screen: EditProfileContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
     },
   },
   navigationOptionsDefault,

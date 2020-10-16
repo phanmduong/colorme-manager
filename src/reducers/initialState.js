@@ -22,7 +22,7 @@ export default {
     isGetDataLocalSuccessful: false,
     isCheckIn: false,
     deviceUser: {},
-    domain: null,
+    domain: 'ieg',
     domains: [],
     isLoadingDomains: false,
     errorDomains: false,

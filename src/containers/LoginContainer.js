@@ -91,11 +91,9 @@ class LoginContainer extends React.Component {
   }
 
   render() {
-    console.log(this.props.domains);
     return (
       <LoginComponent
         updateFormData={this.updateFormData}
-        updateDomainForm={this.updateDomainForm}
         onClickLogin={this.onClickLogin}
         username={this.props.login.username}
         password={this.props.login.password}

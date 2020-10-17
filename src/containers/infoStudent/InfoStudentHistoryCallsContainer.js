@@ -15,6 +15,7 @@ class InfoStudentHistoryCallsContainer extends React.Component {
 
   loadHistoryCalls = () => {
     this.props.infoStudentActions.loadHistoryCalls(
+      false,
       this.props.studentId,
       this.props.token,
     );

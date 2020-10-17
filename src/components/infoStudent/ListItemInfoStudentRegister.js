@@ -4,6 +4,8 @@ import theme from '../../styles';
 import {dotNumber, getShortName} from '../../helper';
 import CallRegisterModal from './CallRegisterModal';
 import SubmitMoneyModal from './SubmitMoneyModal';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import ActionSheet from 'react-native-actionsheet';
 
 class ListItemInfoStudentRegister extends React.Component {
   constructor(props, context) {
@@ -20,6 +22,10 @@ class ListItemInfoStudentRegister extends React.Component {
 
   toggleMoneyModal = () => {
     this.setState({moneyModalVisible: !this.state.moneyModalVisible});
+  };
+
+  showActionSheet = () => {
+    this.ActionSheet.show();
   };
 
   render() {
@@ -136,9 +142,27 @@ class ListItemInfoStudentRegister extends React.Component {
                   </View>
                 </TouchableOpacity>
               )}
+              <TouchableOpacity onPress={this.showActionSheet}>
+                <View style={[{marginLeft: 10}, styles.button]}>
+                  <MaterialIcon
+                    name={'arrow-drop-down'}
+                    size={20}
+                    color={'black'}
+                  />
+                </View>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
+        <ActionSheet
+          ref={(o) => (this.ActionSheet = o)}
+          title={'Chọn hành động'}
+          options={['Đổi lớp', 'Hủy']}
+          cancelButtonIndex={1}
+          onPress={(index) => {
+            /* do something */
+          }}
+        />
         <CallRegisterModal
           isVisible={this.state.callModalVisible}
           onSwipeComplete={this.toggleCallModal}
@@ -214,15 +238,17 @@ const styles = {
   },
   button: {
     backgroundColor: '#F6F6F6',
-    paddingVertical: 10,
     paddingHorizontal: 18,
     borderRadius: 8,
+    height: 45,
+    justifyContent: 'center',
   },
   collectedButton: {
     backgroundColor: '#C50000',
-    paddingVertical: 10,
     paddingHorizontal: 18,
     borderRadius: 8,
+    height: 45,
+    justifyContent: 'center',
   },
   classInfoContainer: {
     paddingTop: 2,

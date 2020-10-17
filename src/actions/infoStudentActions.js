@@ -9,15 +9,19 @@ export function setStudentId(studentId) {
   };
 }
 
-export function loadRegisters(studentId, token) {
-  return function(dispatch) {
-    dispatch(beginLoadRegisters());
+export function loadRegisters(refreshing, studentId, token) {
+  return function (dispatch) {
+    if (refreshing) {
+      dispatch(beginRefreshRegisters());
+    } else {
+      dispatch(beginLoadRegisters());
+    }
     infoStudentApi
       .loadRegisters(studentId, token)
-      .then(function(res) {
+      .then(function (res) {
         dispatch(loadRegistersSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadRegistersError());
         throw error;
       });
@@ -32,11 +36,20 @@ function beginLoadRegisters() {
   };
 }
 
+function beginRefreshRegisters() {
+  return {
+    type: types.BEGIN_REFRESH_INFO_STUDENT_REGISTERS,
+    refreshingRegisters: true,
+    errorRegisters: false,
+  };
+}
+
 function loadRegistersSuccessful(res) {
   return {
     type: types.LOAD_INFO_STUDENT_REGISTERS_SUCCESSFUL,
     isLoadingRegisters: false,
     errorRegisters: false,
+    refreshingRegisters: false,
     registers: res.data.data.registers,
   };
 }
@@ -46,6 +59,7 @@ function loadRegistersError() {
     type: types.LOAD_INFO_STUDENT_REGISTERS_ERROR,
     isLoadingRegisters: false,
     errorRegisters: true,
+    refreshingRegisters: false,
   };
 }
 
@@ -60,7 +74,7 @@ export function changeCallStatus(
   dateTest,
   token,
 ) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginLoadChangeCallStatus());
     infoStudentApi
       .changeCallStatusStudent(
@@ -74,10 +88,10 @@ export function changeCallStatus(
         dateTest,
         token,
       )
-      .then(function(res) {
+      .then(function (res) {
         dispatch(loadChangeCallStatusSuccessful());
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadChangeCallStatusError());
         throw error;
       });
@@ -131,11 +145,11 @@ export function submitMoney(
   statusId,
   sourceId,
 ) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginLoadSubmitMoney());
     infoStudentApi
       .submitMoney(register_id, money, code, note, payment_method, token)
-      .then(function(res) {
+      .then(function (res) {
         dispatch(loadSubmitMoneySuccessful());
         dispatch(loadRegisters(studentId, token));
         dispatch(
@@ -158,7 +172,7 @@ export function submitMoney(
           ),
         );
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadSubmitMoneyError());
         throw error;
       });
@@ -190,14 +204,14 @@ function loadSubmitMoneyError() {
 }
 
 export function loadStudent(studentId, token) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginLoadStudent());
     infoStudentApi
       .loadInfoStudent(studentId, token)
-      .then(function(res) {
+      .then(function (res) {
         dispatch(loadStudentSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadStudentError());
         throw error;
       });
@@ -230,15 +244,15 @@ function loadStudentError() {
 }
 
 export function uploadImage(fileUri, studentId, imageField, token) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginUploadingImage());
     infoStudentApi
       .uploadImage(fileUri, studentId, imageField, token)
-      .then(function(res) {
+      .then(function (res) {
         dispatch(uploadImageSuccessful());
         dispatch(loadStudent(studentId, token));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(uploadImageError());
         throw error;
       });
@@ -270,15 +284,15 @@ function uploadImageError() {
 }
 
 export function updateProfile(register, token) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginUpdatingProfile());
     infoStudentApi
       .updateProfile(register, token)
-      .then(function(res) {
+      .then(function (res) {
         dispatch(updateProfileSuccessful());
         dispatch(loadStudent(register.id, token));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(updateProfileError());
         throw error;
       });
@@ -309,15 +323,19 @@ function updateProfileError() {
   };
 }
 
-export function loadHistoryCalls(studentId, token) {
-  return function(dispatch) {
-    dispatch(beginLoadHistoryCalls());
+export function loadHistoryCalls(refreshing, studentId, token) {
+  return function (dispatch) {
+    if (refreshing) {
+      dispatch(beginRefreshHistoryCalls());
+    } else {
+      dispatch(beginLoadHistoryCalls());
+    }
     infoStudentApi
       .loadHistoryCalls(studentId, token)
-      .then(function(res) {
+      .then(function (res) {
         dispatch(loadHistoryCallsSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadHistoryCallsError());
         throw error;
       });
@@ -332,11 +350,20 @@ function beginLoadHistoryCalls() {
   };
 }
 
+function beginRefreshHistoryCalls() {
+  return {
+    type: types.BEGIN_REFRESH_HISTORY_CALLS,
+    refreshingHistoryCalls: true,
+    errorLoadingHistoryCalls: false,
+  };
+}
+
 function loadHistoryCallsSuccessful(res) {
   return {
     type: types.LOAD_HISTORY_CALLS_SUCCESSFUL,
     isLoadingHistoryCalls: false,
     errorLoadingHistoryCalls: false,
+    refreshingHistoryCalls: false,
     historyCalls: res.data.data.history_calls,
   };
 }
@@ -346,18 +373,23 @@ function loadHistoryCallsError() {
     type: types.LOAD_HISTORY_CALLS_ERROR,
     isLoadingHistoryCalls: false,
     errorLoadingHistoryCalls: true,
+    refreshingHistoryCalls: false,
   };
 }
 
-export function loadHistoryCollect(studentId, token) {
-  return function(dispatch) {
-    dispatch(beginLoadHistoryCollect());
+export function loadHistoryCollect(refreshing, studentId, token) {
+  return function (dispatch) {
+    if (refreshing) {
+      dispatch(beginRefreshHistoryCollect());
+    } else {
+      dispatch(beginLoadHistoryCollect());
+    }
     infoStudentApi
       .loadHistoryCollect(studentId, token)
-      .then(function(res) {
+      .then(function (res) {
         dispatch(loadHistoryCollectSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadHistoryCollectError());
         throw error;
       });
@@ -372,12 +404,21 @@ function beginLoadHistoryCollect() {
   };
 }
 
+function beginRefreshHistoryCollect() {
+  return {
+    type: types.BEGIN_REFRESH_HISTORY_COLLECT,
+    refreshingHistoryCollect: true,
+    errorLoadingHistoryCollect: false,
+  };
+}
+
 function loadHistoryCollectSuccessful(res) {
   return {
     type: types.LOAD_HISTORY_COLLECT_SUCCESSFUL,
     historyCollect: res.data.data,
     isLoadingHistoryCollect: false,
     errorLoadingHistoryCollect: false,
+    refreshingHistoryCollect: false,
   };
 }
 
@@ -386,18 +427,23 @@ function loadHistoryCollectError() {
     type: types.LOAD_HISTORY_COLLECT_ERROR,
     isLoadingHistoryCollect: false,
     errorLoadingHistoryCollect: true,
+    refreshingHistoryCollect: false,
   };
 }
 
-export function loadProgress(studentId, token) {
-  return function(dispatch) {
-    dispatch(beginLoadProgress());
+export function loadProgress(refreshing, studentId, token) {
+  return function (dispatch) {
+    if (refreshing) {
+      dispatch(beginRefreshProgress());
+    } else {
+      dispatch(beginLoadProgress());
+    }
     infoStudentApi
       .loadProgress(studentId, token)
-      .then(function(res) {
+      .then(function (res) {
         dispatch(loadProgressSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(loadProgressError());
         throw error;
       });
@@ -412,11 +458,20 @@ function beginLoadProgress() {
   };
 }
 
+function beginRefreshProgress() {
+  return {
+    type: types.BEGIN_REFRESH_INFO_STUDENT_PROGRESS,
+    refreshingProgress: true,
+    errorLoadingProgress: false,
+  };
+}
+
 function loadProgressSuccessful(res) {
   return {
     type: types.LOAD_INFO_STUDENT_PROGRESS_SUCCESSFUL,
     isLoadingProgress: false,
     errorLoadingProgress: false,
+    refreshingProgress: false,
     progress: res.data.data.progress,
   };
 }
@@ -426,18 +481,19 @@ function loadProgressError() {
     type: types.LOAD_INFO_STUDENT_PROGRESS_ERROR,
     isLoadingProgress: false,
     errorLoadingProgress: true,
+    refreshingProgress: false,
   };
 }
 
 export function changePassword(studentId, password, token) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginChangePassword());
     infoStudentApi
       .changePassword(studentId, password, token)
-      .then(function(res) {
+      .then(function (res) {
         dispatch(changePasswordSuccessful());
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(changePasswordError());
         throw error;
       });

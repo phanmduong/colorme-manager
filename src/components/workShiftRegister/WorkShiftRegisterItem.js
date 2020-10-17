@@ -38,12 +38,9 @@ class WorkShiftRegisterItem extends React.Component {
     return false;
   };
 
-  processAuthorName = name => {
+  processAuthorName = (name) => {
     let processed = name.trim().replace('\t\t', '');
-    processed = processed
-      .split(' ')
-      .splice(-2)
-      .join(' ');
+    processed = processed.split(' ').splice(-2).join(' ');
     return processed;
   };
 
@@ -83,7 +80,7 @@ class WorkShiftRegisterItem extends React.Component {
             </View>
             <TouchableOpacity onPress={this.toggleModal}>
               <View style={styles.row}>
-                {this.props.participates.slice(0, 2).map(participate => {
+                {this.props.participates.slice(0, 2).map((participate) => {
                   return (
                     <Image
                       style={styles.participatesAvatar}
@@ -137,7 +134,7 @@ class WorkShiftRegisterItem extends React.Component {
             </Text>
             <TouchableOpacity onPress={this.toggleModal}>
               <View style={styles.row}>
-                {this.props.participates.slice(0, 2).map(participate => {
+                {this.props.participates.slice(0, 2).map((participate) => {
                   return (
                     <Image
                       style={styles.participatesAvatar}
@@ -146,9 +143,11 @@ class WorkShiftRegisterItem extends React.Component {
                   );
                 })}
                 {this.props.participates.length > 2 && (
-                  <Text style={styles.numberParticipate}>
-                    +{this.props.participates.length - 2}
-                  </Text>
+                  <View style={styles.numberContainer}>
+                    <Text style={styles.numberParticipate}>
+                      +{this.props.participates.length - 2}
+                    </Text>
+                  </View>
                 )}
               </View>
             </TouchableOpacity>
@@ -232,11 +231,13 @@ const styles = {
     borderRadius: theme.miniAvatar.borderRadius,
   },
   numberParticipate: {
+    fontSize: 12,
+  },
+  numberContainer: {
     borderRadius: 7,
     height: 14,
     alignItems: 'center',
     backgroundColor: 'white',
-    fontSize: 12,
     paddingHorizontal: 5,
   },
   textRegisteredByUser: {

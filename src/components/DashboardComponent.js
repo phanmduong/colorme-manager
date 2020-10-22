@@ -140,7 +140,6 @@ class DashboardComponent extends React.Component {
               imageSource={require('../../assets/img/dashboardCheckIn.png')}
               imageWidth={80}
               title={'Check in'}
-              // characterImgPosition={styles.checkInCharacterImgPosition}
               onPress={() => {
                 this.props.navigation.navigate('CheckIn', {
                   title: 'Check in',
@@ -155,7 +154,6 @@ class DashboardComponent extends React.Component {
               imageSource={require('../../assets/img/dashboardCheckOut.png')}
               imageWidth={80}
               title={'Check out'}
-              // characterImgPosition={styles.checkOutCharacterImgPosition}
               onPress={() => {
                 this.props.navigation.navigate('CheckOut', {
                   title: 'Check out',
@@ -170,7 +168,6 @@ class DashboardComponent extends React.Component {
               imageSource={require('../../assets/img/dashboardHistory.png')}
               imageWidth={80}
               title={'Lịch sử'}
-              // characterImgPosition={styles.historyCharacterImgPosition}
               onPress={() => {
                 this.props.navigation.navigate('HistoryAllAttendance');
               }}
@@ -178,73 +175,12 @@ class DashboardComponent extends React.Component {
           </View>
           <View style={styles.otherFeatureLine}>
             <CircleTab
-              iconImage={require('../../assets/img/icons8-ratings-90.png')}
-              title={'Thống kê'}
-              onPress={() => {
-                this.props.getAnalyticsGenData();
-                this.props.navigation.navigate('Analytics');
-              }}
-            />
-            {/*<CircleTab*/}
-            {/*  iconImage={require('../../assets/img/icons8-contact-100.png')}*/}
-            {/*  title={'Xác thực'}*/}
-            {/*  onPress={() => {*/}
-            {/*    this.props.navigation.navigate('AccurateStudent');*/}
-            {/*  }}*/}
-            {/*/>*/}
-            {/*<CircleTab*/}
-            {/*  iconImage={require('../../assets/img/icons8-idea-96-2.png')}*/}
-            {/*  title={'Họp'}*/}
-            {/*  onPress={() => {*/}
-            {/*    this.props.navigation.navigate('Meeting');*/}
-            {/*  }}*/}
-            {/*/>*/}
-            {/*<CircleTab*/}
-            {/*  iconImage={require('../../assets/img/icons8-writer_male.png')}*/}
-            {/*  title={'Tạo đăng ký'}*/}
-            {/*  onPress={() => {*/}
-            {/*    this.props.navigation.navigate('SaveRegister');*/}
-            {/*  }}*/}
-            {/*/>*/}
-            <CircleTab
               iconImage={require('../../assets/img/icons8-scholarship.png')}
               title={'Học viên'}
               onPress={() => {
                 this.props.navigation.navigate('RegisterList');
               }}
             />
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-teacher.png')}
-              title={'Lớp học'}
-              onPress={() => {
-                this.props.navigation.navigate('Class', {
-                  analyticsScreen: false,
-                });
-              }}
-            />
-          </View>
-          <View style={styles.otherFeatureLine}>
-            {/*<CircleTab*/}
-            {/*  iconImage={require('../../assets/img/icons8-rating-90.png')}*/}
-            {/*  title={'Đánh giá'}*/}
-            {/*  onPress={() => {*/}
-            {/*    this.props.navigation.navigate('TeachingRating');*/}
-            {/*  }}*/}
-            {/*/>*/}
-            {/*<CircleTab*/}
-            {/*  iconImage={require('../../assets/img/icons8-calendar.png')}*/}
-            {/*  title={'Lịch học bù'}*/}
-            {/*  onPress={() => {*/}
-            {/*    this.props.navigation.navigate('MakeupClass');*/}
-            {/*  }}*/}
-            {/*/>*/}
-            {/*<CircleTab*/}
-            {/*  iconImage={require('../../assets/img/icons8-new_window.png')}*/}
-            {/*  title={'Tạo lớp học'}*/}
-            {/*  onPress={() => {*/}
-            {/*    this.props.navigation.navigate('AddClass');*/}
-            {/*  }}*/}
-            {/*/>*/}
             <CircleTab
               iconImage={require('../../assets/img/icons8-user_account.png')}
               title={'Leads'}
@@ -259,52 +195,29 @@ class DashboardComponent extends React.Component {
                 this.props.navigation.navigate('KPI');
               }}
             />
-            {/*<CircleTab*/}
-            {/*  iconImage={require('../../assets/img/icons8-add_user_group_man_man.png')}*/}
-            {/*  title={'Tạo lead'}*/}
-            {/*  onPress={() => {*/}
-            {/*    this.props.navigation.navigate('AddLead');*/}
-            {/*  }}*/}
-            {/*/>*/}
           </View>
           <View style={styles.otherFeatureLine}>
-            {/*<CircleTab*/}
-            {/*  iconImage={require('../../assets/img/icons8-cheap_2_filled.png')}*/}
-            {/*  title={'Nộp tiền'}*/}
-            {/*  onPress={() => {*/}
-            {/*    this.props.navigation.navigate('CollectMoney');*/}
-            {/*  }}*/}
-            {/*/>*/}
-            {/*<CircleTab*/}
-            {/*  iconImage={require('../../assets/img/icons8-wallet_filled.png')}*/}
-            {/*  title={'Chuyển tiền'}*/}
-            {/*  onPress={() => {*/}
-            {/*    this.props.navigation.navigate('MoneyTransfer');*/}
-            {/*  }}*/}
-            {/*/>*/}
-            {/*<CircleTab*/}
-            {/*  iconImage={require('../../assets/img/icons8-phone_contact.png')}*/}
-            {/*  title={'Danh bạ nhân viên'}*/}
-            {/*  onPress={() => {*/}
-            {/*    this.props.navigation.navigate('Staff');*/}
-            {/*  }}*/}
-            {/*/>*/}
-          </View>
-          <View style={styles.otherFeatureLine}>
-            {/*<CircleTab*/}
-            {/*  iconImage={require('../../assets/img/icons8-document.png')}*/}
-            {/*  title={'Tài liệu'}*/}
-            {/*  onPress={() => {*/}
-            {/*    this.props.navigation.navigate('Document');*/}
-            {/*  }}*/}
-            {/*/>*/}
-            {/*<CircleTab*/}
-            {/*  iconImage={require('../../assets/img/icons8-management.png')}*/}
-            {/*  title={'Chấm công'}*/}
-            {/*  onPress={() => {*/}
-            {/*    this.props.navigation.navigate('ClockManage');*/}
-            {/*  }}*/}
-            {/*/>*/}
+            {this.props.domain !== 'capi' && (
+              <CircleTab
+                iconImage={require('../../assets/img/icons8-ratings-90.png')}
+                title={'Thống kê'}
+                onPress={() => {
+                  this.props.getAnalyticsGenData();
+                  this.props.navigation.navigate('Analytics');
+                }}
+              />
+            )}
+            {this.props.domain !== 'capi' && (
+              <CircleTab
+                iconImage={require('../../assets/img/icons8-teacher.png')}
+                title={'Lớp học'}
+                onPress={() => {
+                  this.props.navigation.navigate('Class', {
+                    analyticsScreen: false,
+                  });
+                }}
+              />
+            )}
           </View>
           <MeetingComponent
             store={this.props.store}

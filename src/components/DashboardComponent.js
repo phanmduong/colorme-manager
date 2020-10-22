@@ -240,43 +240,16 @@ const styles = {
     marginTop: 16,
     marginHorizontal: theme.mainHorizontal,
   },
-  // 32 is the total left, right margin,
-  // 0.40 is the relative ratio of container to screen width,
-  // (178/139) is the ratio between height and width
   checkInContainer: {
     height: (Dimensions.get('window').width - 32) * 0.4 * (178 / 139),
     width: (Dimensions.get('window').width - 32) * 0.4,
     borderRadius: 10,
   },
-  // 32 is the total left, right margin,
-  // 0.26 is the relative ratio of container to screen width,
-  // (178/139) is the ratio between height and width
   checkOutContainer: {
     height: (Dimensions.get('window').width - 32) * 0.26 * (178 / 139),
     width: (Dimensions.get('window').width - 32) * 0.26,
     borderRadius: 10,
   },
-  // // 32 is the total left, right margin,
-  // // 0.18, 0.08 is the relative ratio of image to screen width
-  // checkInCharacterImgPosition: {
-  //   position: 'absolute',
-  //   top: (Dimensions.get('window').width - 32) * 0.19,
-  //   left: (Dimensions.get('window').width - 32) * 0.06,
-  // },
-  // // 32 is the total left, right margin,
-  // // 0.15, 0.09 is the relative ratio of image to screen width
-  // checkOutCharacterImgPosition: {
-  //   position: 'absolute',
-  //   top: (Dimensions.get('window').width - 32) * 0.15,
-  //   left: (Dimensions.get('window').width - 32) * 0.07,
-  // },
-  // // 32 is the total left, right margin,
-  // // 0.14, 0.06 is the relative ratio of image to screen width
-  // historyCharacterImgPosition: {
-  //   position: 'absolute',
-  //   top: (Dimensions.get('window').width - 32) * 0.15,
-  //   left: (Dimensions.get('window').width - 32) * 0.05,
-  // },
   otherFeatureLine: {
     flexDirection: 'row',
     marginTop: 30,

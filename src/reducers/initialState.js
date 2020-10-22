@@ -119,6 +119,7 @@ export default {
     errorAnalyticsRegister: false,
     refreshingAnalyticsRegister: false,
     analyticsRegister: {},
+    selectedProvinceId: 0,
     selectedBaseId: -1,
     selectedGenId: -1,
     selectedStaffId: -1,
@@ -138,6 +139,8 @@ export default {
     enrollStart: moment().startOf('month'),
     enrollEnd: moment(),
     classType: ENROLLING,
+    changingProvince: false,
+    errorChangeProvince: false,
   },
   listStudentClass: {
     listStudentClassData: [],

@@ -30,6 +30,7 @@ class AnalyticsContainer extends React.Component {
     this.loadCourses();
     this.loadBases();
     this.loadGens();
+    this.loadProvinces();
   }
 
   componentWillUnmount() {
@@ -192,6 +193,11 @@ class AnalyticsContainer extends React.Component {
     }
   };
 
+  onSelectProvinceId = (provinceId) => {
+    this.props.analyticsActions.changeProvince(provinceId, this.props.token);
+    this.props.analyticsActions.selectedProvinceId(provinceId);
+  };
+
   loadCampaigns = () => {
     this.props.saveRegisterActions.loadCampaigns(this.props.token);
   };
@@ -214,6 +220,10 @@ class AnalyticsContainer extends React.Component {
 
   loadBases = () => {
     this.props.baseActions.loadDataBase(this.props.token);
+  };
+
+  loadProvinces = () => {
+    this.props.saveRegisterActions.loadProvinces(this.props.token);
   };
 
   loadDataClass = (refreshing) => {
@@ -274,6 +284,7 @@ class AnalyticsContainer extends React.Component {
         onSelectGenId={this.onSelectGenId}
         loadDataClass={this.loadDataClass}
         onRefresh={this.refreshAnalytics}
+        onSelectProvinceId={this.onSelectProvinceId}
       />
     );
   }
@@ -291,6 +302,7 @@ function mapStateToProps(state) {
     selectedStaffId: state.analytics.selectedStaffId,
     startDate: state.analytics.startDate,
     endDate: state.analytics.endDate,
+    selectedProvinceId: state.analytics.selectedProvinceId,
     selectedCourseId: state.analytics.selectedCourseId,
     selectedSourceId: state.analytics.selectedSourceId,
     selectedCampaignId: state.analytics.selectedCampaignId,
@@ -317,6 +329,11 @@ function mapStateToProps(state) {
     refreshingAnalyticsRevenue: state.analytics.refreshingAnalyticsRevenue,
     refreshingAnalyticsKPI: state.analytics.refreshingAnalyticsKPI,
     refreshingAnalyticsClasses: state.analytics.refreshingAnalyticsClasses,
+    changingProvince: state.analytics.changingProvince,
+    errorChangeProvince: state.analytics.errorChangeProvince,
+    isLoadingProvinces: state.saveRegister.isLoadingProvinces,
+    errorLoadingProvinces: state.saveRegister.errorLoadingProvinces,
+    provinces: state.saveRegister.provinces,
   };
 }
 

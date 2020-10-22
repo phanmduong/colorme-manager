@@ -14,6 +14,7 @@ import {getStatusBarHeight, isIphoneX} from 'react-native-iphone-x-helper';
 import FilterModal from './infoStudent/FilterModal';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import LinearGradient from 'react-native-linear-gradient';
+import ChangeStudentClassModal from './registerList/ChangeStudentClassModal';
 
 var {height, width} = Dimensions.get('window');
 class RegisterListComponent extends React.Component {
@@ -30,7 +31,7 @@ class RegisterListComponent extends React.Component {
   };
 
   componentDidMount = () => {
-    this.props.navigation.addListener('didFocus', route => {
+    this.props.navigation.addListener('didFocus', (route) => {
       this.props.autoFocus ? this.searchRegisterList.focus() : null;
     });
   };
@@ -50,7 +51,7 @@ class RegisterListComponent extends React.Component {
           placeholder="Tìm kiếm (Email, tên, số điện thoại)"
           onChangeText={updateFormAndLoadDataSearch}
           value={search}
-          refer={input => {
+          refer={(input) => {
             this.searchRegisterList = input;
           }}
           extraStyle={{width: width - (theme.mainHorizontal * 2 + 40 + 10)}}
@@ -128,7 +129,7 @@ class RegisterListComponent extends React.Component {
       {id: -1, name: 'Tất cả'},
       {id: this.props.user.id, name: 'Đơn của bạn'},
     ];
-    return salerLst.map(saler => (
+    return salerLst.map((saler) => (
       <TouchableOpacity
         onPress={() => {
           this.setState({salerId: saler.id});
@@ -240,6 +241,13 @@ class RegisterListComponent extends React.Component {
               changeCallStatus={this.props.changeCallStatus}
               submitMoney={this.props.submitMoney}
               paidTime={item.paid_time}
+              loadAvailableClasses={this.props.loadAvailableClasses}
+              availableClasses={this.props.availableClasses}
+              isLoadingAvailableClasses={this.props.isLoadingAvailableClasses}
+              resetAvailableClasses={this.props.resetAvailableClasses}
+              changingClass={this.props.changingClass}
+              changeClassStatus={this.props.changeClassStatus}
+              changeClass={this.props.changeClass}
             />
           )}
         />

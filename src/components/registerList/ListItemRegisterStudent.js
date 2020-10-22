@@ -14,6 +14,9 @@ import {dotNumber, getShortName} from '../../helper';
 import CallRegisterModal from '../infoStudent/CallRegisterModal';
 import SubmitMoneyModal from '../infoStudent/SubmitMoneyModal';
 import Call from '../common/Call';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import ActionSheet from 'react-native-actionsheet';
+import ChangeStudentClassModal from './ChangeStudentClassModal';
 
 class ListItemStudent extends React.Component {
   constructor(props, context) {
@@ -21,8 +24,29 @@ class ListItemStudent extends React.Component {
     this.state = {
       callModalVisible: false,
       moneyModalVisible: false,
+      changeClassModalVisible: false,
     };
   }
+
+  showActionSheet = () => {
+    this.ActionSheet.show();
+  };
+
+  executeActions = (index) => {
+    switch (index) {
+      case 0:
+        this.toggleChangeClassModal();
+        break;
+      default:
+        return;
+    }
+  };
+
+  toggleChangeClassModal = () => {
+    this.setState({
+      changeClassModalVisible: !this.state.changeClassModalVisible,
+    });
+  };
 
   toggleCallModal = () => {
     this.setState({callModalVisible: !this.state.callModalVisible});
@@ -237,8 +261,26 @@ class ListItemStudent extends React.Component {
                   </View>
                 </TouchableOpacity>
               )}
+
+              <TouchableOpacity onPress={this.showActionSheet}>
+                <View style={[{marginLeft: 10}, styles.button]}>
+                  <MaterialIcon
+                    name={'arrow-drop-down'}
+                    size={20}
+                    color={'black'}
+                  />
+                </View>
+              </TouchableOpacity>
             </View>
           </View>
+
+          <ActionSheet
+            ref={(o) => (this.ActionSheet = o)}
+            title={'Chọn hành động'}
+            options={['Đổi lớp', 'Hủy']}
+            cancelButtonIndex={1}
+            onPress={this.executeActions}
+          />
           <CallRegisterModal
             isVisible={this.state.callModalVisible}
             onSwipeComplete={this.toggleCallModal}
@@ -268,6 +310,19 @@ class ListItemStudent extends React.Component {
             study_time={classInfo.study_time}
             description={classInfo.description}
             type={classInfo.type}
+          />
+          <ChangeStudentClassModal
+            isVisible={this.state.changeClassModalVisible}
+            closeModal={this.toggleChangeClassModal}
+            registerId={registerId}
+            loadAvailableClasses={this.props.loadAvailableClasses}
+            availableClasses={this.props.availableClasses}
+            isLoadingAvailableClasses={this.props.isLoadingAvailableClasses}
+            resetAvailableClasses={this.props.resetAvailableClasses}
+            changingClass={this.props.changingClass}
+            changeClassStatus={this.props.changeClassStatus}
+            changeClass={this.props.changeClass}
+            avatar_url={avatar}
           />
         </View>
       </View>
@@ -412,15 +467,17 @@ const styles = {
   },
   button: {
     backgroundColor: '#F6F6F6',
-    paddingVertical: 10,
     paddingHorizontal: 18,
     borderRadius: 8,
+    height: 45,
+    justifyContent: 'center',
   },
   collectedButton: {
     backgroundColor: '#C50000',
-    paddingVertical: 10,
     paddingHorizontal: 18,
     borderRadius: 8,
+    height: 45,
+    justifyContent: 'center',
   },
   classInfoContainer: {
     paddingTop: 5,

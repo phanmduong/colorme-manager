@@ -38,7 +38,7 @@ export function loadDataRegisterListMy(
   genId,
   classId,
 ) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginDataRegisterListLoadMy());
     studentApi
       .loadRegisterListApi(
@@ -62,10 +62,10 @@ export function loadDataRegisterListMy(
         sourceId,
         statusId,
       )
-      .then(function(res) {
+      .then(function (res) {
         dispatch(loadDataSuccessfulMy(res, salerId, search_coupon));
       })
-      .catch(error => {
+      .catch((error) => {
         if (axios.isCancel(error)) {
           console.log('Request canceled', error.message);
         } else {
@@ -120,7 +120,7 @@ export function updateFormAndLoadDataSearchMy(
 ) {
   sourceCancelMy.cancel('Canceled by api register list (my).');
   sourceCancelMy = CancelToken.source();
-  return dispatch => {
+  return (dispatch) => {
     dispatch(updateFormSearchMy(searchMy));
     dispatch(
       loadDataRegisterListMy(
@@ -176,7 +176,7 @@ export function refreshRegisterListMy(
   genId,
   classId,
 ) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(resetRegisterListMy());
     dispatch(
       loadDataRegisterListMy(
@@ -298,7 +298,7 @@ export function onSelectClassId(classId) {
 }
 
 export function reset() {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(resetRegisterListProps());
     dispatch(selectedGenId(-1));
     dispatch(selectedBaseId(-1));
@@ -328,5 +328,92 @@ export function setAutoFocusRegisterListSearch(bool) {
   return {
     type: types.SET_AUTOFOCUS_REGISTER_LIST_SEARCH,
     autoFocusRegisterListSearch: bool,
+  };
+}
+
+export function loadAvailableClasses(registerId, search, token) {
+  return function (dispatch) {
+    dispatch(beginLoadAvailableClasses());
+    studentApi
+      .loadAvailableClasses(registerId, search, token)
+      .then((res) => {
+        dispatch(loadAvailableClassesSuccess(res));
+      })
+      .catch((error) => {
+        dispatch(loadAvailableClassesError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadAvailableClasses() {
+  return {
+    type: types.BEGIN_LOAD_REGISTER_LIST_AVAILABLE_CLASSES,
+    isLoadingClasses: true,
+    errorClasses: false,
+  };
+}
+
+function loadAvailableClassesSuccess(res) {
+  return {
+    type: types.LOAD_REGISTER_LIST_AVAILABLE_CLASSES_SUCCESSFUL,
+    classes: res.data.data.classes,
+    isLoadingClasses: false,
+    errorClasses: false,
+  };
+}
+
+function loadAvailableClassesError() {
+  return {
+    type: types.LOAD_REGISTER_LIST_AVAILABLE_CLASSES_ERROR,
+    isLoadingClasses: false,
+    errorClasses: true,
+  };
+}
+
+export function resetAvailableClasses() {
+  return {
+    type: types.RESET_REGISTER_LIST_AVAILABLE_CLASSES,
+    classes: [],
+    changeClassStatus: null,
+  };
+}
+
+export function changeClass(classId, registerId, token) {
+  return function (dispatch) {
+    dispatch(beginChangeClass());
+    studentApi
+      .changeClass(classId, registerId, token)
+      .then((res) => dispatch(changeClassSuccess(res)))
+      .catch((error) => {
+        dispatch(changeClassError(error));
+        throw error;
+      });
+  };
+}
+
+function beginChangeClass() {
+  return {
+    type: types.BEGIN_CHANGE_STUDENT_CLASS,
+    changingClass: true,
+    errorChangeClass: false,
+  };
+}
+
+function changeClassSuccess(res) {
+  return {
+    type: types.CHANGE_STUDENT_CLASS_SUCCESSFUL,
+    changingClass: false,
+    errorChangeClass: false,
+    changeClassStatus: res.status,
+  };
+}
+
+function changeClassError(error) {
+  return {
+    type: types.CHANGE_STUDENT_CLASS_ERROR,
+    changingClass: false,
+    errorChangeClass: true,
+    changeClassStatus: error.response.status,
   };
 }

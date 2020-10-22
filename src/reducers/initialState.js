@@ -177,6 +177,12 @@ export default {
     status_id: -1,
     classId: -1,
     autoFocusRegisterListSearch: false,
+    classes: [],
+    isLoadingClasses: false,
+    errorClasses: false,
+    changeClassStatus: null,
+    changingClass: false,
+    errorChangeClass: false,
   },
   collectMoney: {
     studentListData: [],
@@ -511,5 +517,5 @@ export default {
     calculateBy: '',
     startTime: moment().startOf('month'),
     endTime: moment().endOf('month'),
-  }
+  },
 };

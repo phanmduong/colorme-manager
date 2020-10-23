@@ -114,34 +114,7 @@ class AnalyticsContainer extends React.Component {
   refreshAnalytics = () => {
     this.loadAnalyticsRegister(true);
     this.loadAnalyticsRevenue(true);
-    this.loadAnalyticsKPI(true);
     this.loadDataClass(true);
-  };
-
-  loadAnalyticsKPI = (refreshing) => {
-    let baseId =
-      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
-    let staffId =
-      this.props.selectedStaffId === -1 ? '' : this.props.selectedStaffId;
-    let startTime = this.props.startDate.format('YYYY-MM-DD');
-    let endTime = this.props.endDate.format('YYYY-MM-DD');
-    let courseId =
-      this.props.selectedCourseId === -1 ? '' : this.props.selectedCourseId;
-    let sourceId =
-      this.props.selectedSourceId === -1 ? '' : this.props.selectedSourceId;
-    let campaignId =
-      this.props.selectedCampaignId === -1 ? '' : this.props.selectedCampaignId;
-    this.props.analyticsActions.loadAnalyticsKPI(
-      refreshing,
-      startTime,
-      endTime,
-      baseId,
-      courseId,
-      sourceId,
-      campaignId,
-      staffId,
-      this.props.token,
-    );
   };
 
   onSelectStartDate = async (startDate) => {

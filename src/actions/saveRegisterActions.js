@@ -320,11 +320,11 @@ function loadSalersError() {
   };
 }
 
-export function loadFilterClasses(search, token) {
+export function loadFilterClasses(search, token, domain) {
   return function(dispatch) {
     dispatch(beginLoadFilterClasses());
     saveRegisterApi
-      .loadFilterClasses(search, token)
+      .loadFilterClasses(search, token, domain)
       .then(function(res) {
         dispatch(loadFilterClassesSuccessful(res));
       })

@@ -95,6 +95,7 @@ class RegisterListContainer extends React.Component {
     this.props.saveRegisterActions.loadFilterClasses(
       search,
       this.props.token,
+      this.props.domain,
     );
   };
 

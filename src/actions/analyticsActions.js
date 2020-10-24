@@ -30,6 +30,7 @@ export function loadAnalyticsRegister(
   sourceId,
   campaignId,
   token,
+  domain,
 ) {
   return function (dispatch) {
     if (!refreshing) {
@@ -47,6 +48,7 @@ export function loadAnalyticsRegister(
         sourceId,
         campaignId,
         token,
+        domain,
       )
       .then(function (res) {
         dispatch(loadAnalyticsRegisterSuccessful(res));
@@ -87,6 +89,7 @@ export function loadAnalyticsRevenue(
   sourceId,
   campaignId,
   token,
+  domain,
 ) {
   return function (dispatch) {
     if (!refreshing) {
@@ -104,6 +107,7 @@ export function loadAnalyticsRevenue(
         sourceId,
         campaignId,
         token,
+        domain,
       )
       .then((res) => {
         dispatch(loadAnalyticsRevenueSuccessful(res));
@@ -227,6 +231,7 @@ export function loadAnalyticsClasses(
   sourceId,
   campaignId,
   token,
+  domain,
 ) {
   return function (dispatch) {
     if (!refreshing) {
@@ -246,6 +251,7 @@ export function loadAnalyticsClasses(
         sourceId,
         campaignId,
         token,
+        domain,
       )
       .then((res) => {
         dispatch(loadAnalyticsClassesSuccessful(res));
@@ -292,11 +298,11 @@ function loadAnalyticsClassesError() {
   };
 }
 
-export function changeProvince(provinceId, token) {
+export function changeProvince(provinceId, token, domain) {
   return function (dispatch) {
     dispatch(beginChangeProvince());
     analyticsApi
-      .changeProvince(provinceId, token)
+      .changeProvince(provinceId, token, domain)
       .then((res) => dispatch(changeProvinceSuccess()))
       .catch((error) => dispatch(changeProvinceError()));
   };

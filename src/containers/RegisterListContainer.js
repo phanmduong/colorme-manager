@@ -297,6 +297,7 @@ class RegisterListContainer extends React.Component {
       registerId,
       search,
       this.props.token,
+      this.props.domain,
     );
   };
 
@@ -373,6 +374,7 @@ class RegisterListContainer extends React.Component {
       classId,
       registerId,
       this.props.token,
+      this.props.domain,
     );
   };
 

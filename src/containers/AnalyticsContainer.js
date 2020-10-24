@@ -169,7 +169,11 @@ class AnalyticsContainer extends React.Component {
   };
 
   onSelectProvinceId = (provinceId) => {
-    this.props.analyticsActions.changeProvince(provinceId, this.props.token);
+    this.props.analyticsActions.changeProvince(
+      provinceId,
+      this.props.token,
+      this.props.domain,
+    );
     this.props.analyticsActions.selectedProvinceId(provinceId);
   };
 
@@ -208,7 +212,10 @@ class AnalyticsContainer extends React.Component {
   };
 
   loadProvinces = () => {
-    this.props.saveRegisterActions.loadProvinces(this.props.token, this.props.domain);
+    this.props.saveRegisterActions.loadProvinces(
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   loadDataClass = (refreshing) => {

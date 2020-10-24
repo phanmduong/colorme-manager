@@ -5,6 +5,7 @@ import Swiper from 'react-native-swiper';
 import Loading from '../common/Loading';
 import AnalyticsRevenueBarChart from './AnalyticsRevenueBarChart';
 import AnalyticsStudentBarChart from './AnalyticsStudentBarChart';
+import AnalyticsStatusBarChart from './AnalyticsStatusBarChart';
 const {width, height} = Dimensions.get('window');
 
 class AnalyticsRegisterComponent extends React.Component {
@@ -44,6 +45,20 @@ class AnalyticsRegisterComponent extends React.Component {
           dates={this.props.analyticsRegister.dates}
           newRegis={this.props.analyticsRegister.new_register_by_date}
           oldRegis={this.props.analyticsRegister.old_register_by_date}
+          startDate={this.props.startDate}
+          endDate={this.props.endDate}
+        />
+        <AnalyticsStatusBarChart
+          dates={
+            this.props.analyticsRegister.dates
+              ? this.props.analyticsRegister.dates
+              : []
+          }
+          statuses={
+            this.props.analyticsRegister.statuses
+              ? this.props.analyticsRegister.statuses
+              : []
+          }
           startDate={this.props.startDate}
           endDate={this.props.endDate}
         />

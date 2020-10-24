@@ -8,7 +8,13 @@ import Ionicon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
 const {width} = Dimensions.get('window');
 
-const AnalyticsStatusBarChart = ({dates, statuses, startDate, endDate}) => {
+const AnalyticsMultipleLayerBarChart = ({
+  dates,
+  data,
+  startDate,
+  endDate,
+  hasHexColor = true,
+}) => {
   const [mode, setMode] = useState(DAILY);
 
   const fixedHeight = 200;
@@ -16,28 +22,32 @@ const AnalyticsStatusBarChart = ({dates, statuses, startDate, endDate}) => {
   /**
    * List of date with list of entries of each status and its register on that date
    */
-  const listOfDateStatusRegister = () => {
+  const listOfDateDataRegister = () => {
     return dates.map((date, index) => {
-      const dateStatuses = statuses.map((status) => {
+      const dateData = data.map((dataItem) => {
         return {
-          name: status.name,
-          registers: status.register_by_date[index],
-          color: status.color ? status.color : '#DDDDDD',
+          name: dataItem.name,
+          registers: dataItem.register_by_date[index],
+          color: dataItem.color
+            ? hasHexColor
+              ? dataItem.color
+              : `#${dataItem.color}`
+            : '#DDDDDD',
         };
       });
-      return {date, statuses: dateStatuses};
+      return {date, data: dateData};
     });
   };
 
   /**
    * Get the max value of total registers of a date from all dates
    */
-  const getMaxValue = (dateStatusRegisterPairs) => {
+  const getMaxValue = (dateDataRegisterPairs) => {
     let maxValue = 0;
-    dateStatusRegisterPairs.forEach((dateStatuses) => {
+    dateDataRegisterPairs.forEach((dateData) => {
       let totalRegis = 0;
-      dateStatuses.statuses.forEach((status) => {
-        totalRegis += status.registers;
+      dateData.data.forEach((dataItem) => {
+        totalRegis += dataItem.registers;
       });
       maxValue = maxValue < totalRegis ? totalRegis : maxValue;
     });
@@ -47,10 +57,10 @@ const AnalyticsStatusBarChart = ({dates, statuses, startDate, endDate}) => {
   /**
    * Get the total registers for a date
    */
-  const getTotalStatusRegister = (dateStatuses) => {
+  const getTotalDataRegister = (dateData) => {
     let totalRegis = 0;
-    dateStatuses.statuses.forEach((status) => {
-      totalRegis += status.registers;
+    dateData.data.forEach((dataItem) => {
+      totalRegis += dataItem.registers;
     });
     return totalRegis;
   };
@@ -58,22 +68,19 @@ const AnalyticsStatusBarChart = ({dates, statuses, startDate, endDate}) => {
   /**
    * Return a list of statuses with its computed bar height
    */
-  const getStatusesWithHeights = (totalHeight, totalRegister, statuses) => {
-    return statuses.map((status) => {
-      const height = (totalHeight * status.registers) / totalRegister;
-      return {...status, height: height};
+  const getDataWithHeights = (totalHeight, totalRegister, data) => {
+    return data.map((dataItem) => {
+      const height = (totalHeight * dataItem.registers) / totalRegister;
+      return {...dataItem, height: height};
     });
   };
 
   /**
    * Get a list of specified date mode - statuses pairs
-   *
-   * @param dateStatusesPairs
-   * @returns {[]}
    */
-  const listOfModeStatusPairs = (dateStatusesPairs) => {
+  const listOfModeDataPairs = (dateDataPairs) => {
     // Group date - status pairs into according date mode specified like week or quarter
-    const groupedByMode = dateStatusesPairs.reduce((acc, item) => {
+    const groupedByMode = dateDataPairs.reduce((acc, item) => {
       // create a composed key: 'year-dateMode'
       const yearMode = keyGeneratedByMode(item);
 
@@ -89,32 +96,32 @@ const AnalyticsStatusBarChart = ({dates, statuses, startDate, endDate}) => {
     }, {});
 
     // Create a list of specified date mode - statuses pairs
-    let modeStatusPairs = [];
+    let modeDataPairs = [];
 
     for (const mode in groupedByMode) {
       // Generate a list of statuses for specified date mode
-      let statuses = [];
+      let data = [];
 
-      groupedByMode[mode].forEach((dateStatus) => {
-        dateStatus.statuses.forEach((status) => {
+      groupedByMode[mode].forEach((dateData) => {
+        dateData.data.forEach((dataItem) => {
           // Check to see if compared status already appended to list. If not, add to the list. If yes,
           // accumulate the registers of the existed status
-          const idxCheckStatusDoesExist = statuses.findIndex(
-            (targetStatus) => targetStatus.name === status.name,
+          const idxCheckDataItemDoesExist = data.findIndex(
+            (targetDataItem) => targetDataItem.name === dataItem.name,
           );
-          if (idxCheckStatusDoesExist === -1) {
-            statuses.push(status);
+          if (idxCheckDataItemDoesExist === -1) {
+            data.push(dataItem);
           } else {
-            statuses[idxCheckStatusDoesExist].registers += status.registers;
+            data[idxCheckDataItemDoesExist].registers += dataItem.registers;
           }
         });
       });
 
       // Push the entry date mode - statuses to the list
-      modeStatusPairs.push({date: mode, statuses: statuses});
+      modeDataPairs.push({date: mode, data: data});
     }
 
-    return modeStatusPairs;
+    return modeDataPairs;
   };
 
   /**
@@ -148,19 +155,18 @@ const AnalyticsStatusBarChart = ({dates, statuses, startDate, endDate}) => {
    * @returns {*}
    */
   const renderBarChart = () => {
-    const dateStatusesPairs = listOfDateStatusRegister();
-    const modeStatusesPairs = listOfModeStatusPairs(dateStatusesPairs);
-    const unitWidth =
-      (width - theme.mainHorizontal * 6) / modeStatusesPairs.length;
+    const dateDataPairs = listOfDateDataRegister();
+    const modeDataPairs = listOfModeDataPairs(dateDataPairs);
+    const unitWidth = (width - theme.mainHorizontal * 6) / modeDataPairs.length;
     const barWidth = unitWidth / 2;
-    const maxValue = getMaxValue(modeStatusesPairs);
-    return barChartGraph(modeStatusesPairs, maxValue, barWidth);
+    const maxValue = getMaxValue(modeDataPairs);
+    return barChartGraph(modeDataPairs, maxValue, barWidth);
   };
 
   /**
    * Sketch the entire bar chart
    */
-  const barChartGraph = (modeStatusesPairs, maxValue, barWidth) => {
+  const barChartGraph = (modeDataPairs, maxValue, barWidth) => {
     return (
       <View>
         <View style={styles.barContainer}>
@@ -215,16 +221,16 @@ const AnalyticsStatusBarChart = ({dates, statuses, startDate, endDate}) => {
               <View style={styles.lineEstimate} />
             </View>
           </View>
-          {modeStatusesPairs.map(function (pair) {
-            const totalRegister = getTotalStatusRegister(pair);
+          {modeDataPairs.map(function (pair) {
+            const totalRegister = getTotalDataRegister(pair);
             const totalHeight =
               maxValue === 0
                 ? fixedHeight
                 : (fixedHeight * totalRegister) / maxValue;
-            const statusesWithHeights = getStatusesWithHeights(
+            const dataWithHeights = getDataWithHeights(
               totalHeight,
               totalRegister,
-              pair.statuses,
+              pair.data,
             );
             return (
               <View style={styles.barRow}>
@@ -234,14 +240,14 @@ const AnalyticsStatusBarChart = ({dates, statuses, startDate, endDate}) => {
                     height: totalHeight,
                     backgroundColor: maxValue === 0 ? 'white' : '#FFDB5A',
                   }}>
-                  {statusesWithHeights.map((status) => {
+                  {dataWithHeights.map((dataItem) => {
                     return (
                       <View
                         style={{
                           width: barWidth,
-                          height: status.height,
+                          height: dataItem.height,
                           backgroundColor:
-                            status.height === 0 ? 'white' : status.color,
+                            dataItem.height === 0 ? 'white' : dataItem.color,
                         }}
                       />
                     );
@@ -485,4 +491,4 @@ const styles = {
   },
 };
 
-export default AnalyticsStatusBarChart;
+export default AnalyticsMultipleLayerBarChart;

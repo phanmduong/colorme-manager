@@ -5,7 +5,7 @@ import Swiper from 'react-native-swiper';
 import Loading from '../common/Loading';
 import AnalyticsRevenueBarChart from './AnalyticsRevenueBarChart';
 import AnalyticsStudentBarChart from './AnalyticsStudentBarChart';
-import AnalyticsStatusBarChart from './AnalyticsStatusBarChart';
+import AnalyticsMultipleLayerBarChart from './AnalyticsMultipleLayerBarChart';
 const {width, height} = Dimensions.get('window');
 
 class AnalyticsRegisterComponent extends React.Component {
@@ -48,19 +48,48 @@ class AnalyticsRegisterComponent extends React.Component {
           startDate={this.props.startDate}
           endDate={this.props.endDate}
         />
-        <AnalyticsStatusBarChart
+        <AnalyticsMultipleLayerBarChart
           dates={
             this.props.analyticsRegister.dates
               ? this.props.analyticsRegister.dates
               : []
           }
-          statuses={
+          data={
             this.props.analyticsRegister.statuses
               ? this.props.analyticsRegister.statuses
               : []
           }
           startDate={this.props.startDate}
           endDate={this.props.endDate}
+        />
+        <AnalyticsMultipleLayerBarChart
+          dates={
+            this.props.analyticsRegister.dates
+              ? this.props.analyticsRegister.dates
+              : []
+          }
+          data={
+            this.props.analyticsRegister.sources
+              ? this.props.analyticsRegister.sources
+              : []
+          }
+          startDate={this.props.startDate}
+          endDate={this.props.endDate}
+        />
+        <AnalyticsMultipleLayerBarChart
+          dates={
+            this.props.analyticsRegister.dates
+              ? this.props.analyticsRegister.dates
+              : []
+          }
+          data={
+            this.props.analyticsRegister.campaigns
+              ? this.props.analyticsRegister.campaigns
+              : []
+          }
+          startDate={this.props.startDate}
+          endDate={this.props.endDate}
+          hasHexColor={false}
         />
       </Swiper>
     );

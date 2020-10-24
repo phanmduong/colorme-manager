@@ -108,7 +108,6 @@ class RegisterListComponent extends React.Component {
           reset={this.props.reset}
           resetModal={this.resetModal}
           salers={this.props.salers}
-          isLoadingBase={this.props.isLoadingBase}
           isLoadingCampaigns={this.props.isLoadingCampaigns}
           isLoadingSources={this.props.isLoadingSources}
           isLoadingStatuses={this.props.isLoadingStatuses}
@@ -122,7 +121,7 @@ class RegisterListComponent extends React.Component {
           isLoadingFilterClasses={this.props.isLoadingFilterClasses}
           filterClasses={this.props.filterClasses}
           onSelectClassId={this.props.onSelectClassId}
-          reloadFilterClasses={this.props.reloadFilterClasses}
+          loadFilterClasses={this.props.loadFilterClasses}
         />
       </View>
     );

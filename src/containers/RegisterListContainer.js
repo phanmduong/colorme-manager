@@ -91,27 +91,10 @@ class RegisterListContainer extends React.Component {
     this.props.genActions.loadDataGen(this.props.token, this.props.domain);
   };
 
-  loadFilterClasses = () => {
-    if (this.props.selectedGenId === -1 || this.props.selectedGenId === -2) {
-      this.props.saveRegisterActions.loadFilterClasses(
-        this.props.currentGen.id,
-        this.props.token,
-        this.props.domain,
-      );
-    } else {
-      this.props.saveRegisterActions.loadFilterClasses(
-        this.props.selectedGenId,
-        this.props.token,
-        this.props.domain,
-      );
-    }
-  };
-
-  reloadFilterClasses = (genId) => {
-    this.props.saveRegisterActions.reloadFilterClasses(
-      genId,
+  loadFilterClasses = (search) => {
+    this.props.saveRegisterActions.loadFilterClasses(
+      search,
       this.props.token,
-      this.props.domain,
     );
   };
 
@@ -478,6 +461,7 @@ class RegisterListContainer extends React.Component {
         errorChangeClass={this.props.errorChangeClass}
         changeClassStatus={this.props.changeClassStatus}
         changeClass={this.changeClass}
+        loadFilterClasses={this.loadFilterClasses}
       />
     );
   }

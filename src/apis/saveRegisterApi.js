@@ -65,7 +65,12 @@ export function loadSalers(token) {
   return axios.get(url);
 }
 
-export function loadFilterClasses(genId, token) {
-  let url = env.API_URL + '/apiv2/gens/' + genId + '/class?token=' + token;
+export function loadFilterClasses(search, token) {
+  let url =
+    env.MANAGE_API_URL_V4 +
+    '/class/find-by-name?include=course&search=' +
+    search +
+    '&token=' +
+    token;
   return axios.get(url);
 }

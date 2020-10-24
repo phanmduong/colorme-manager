@@ -11,7 +11,6 @@ import * as genActions from '../actions/genActions';
 import * as saveRegisterActions from '../actions/saveRegisterActions';
 import RegisterListComponent from '../components/RegisterListComponent';
 import {isEmptyInput} from '../helper';
-import ChangeStudentClassModal from '../components/registerList/ChangeStudentClassModal';
 
 class RegisterListContainer extends React.Component {
   constructor(props, context) {
@@ -74,22 +73,11 @@ class RegisterListContainer extends React.Component {
     this.props.genActions.loadDataGen(this.props.token);
   };
 
-  loadFilterClasses = () => {
-    if (this.props.selectedGenId === -1 || this.props.selectedGenId === -2) {
-      this.props.saveRegisterActions.loadFilterClasses(
-        this.props.currentGen.id,
-        this.props.token,
-      );
-    } else {
-      this.props.saveRegisterActions.loadFilterClasses(
-        this.props.selectedGenId,
-        this.props.token,
-      );
-    }
-  };
-
-  reloadFilterClasses = (genId) => {
-    this.props.saveRegisterActions.reloadFilterClasses(genId, this.props.token);
+  loadFilterClasses = (search) => {
+    this.props.saveRegisterActions.loadFilterClasses(
+      search,
+      this.props.token,
+    );
   };
 
   loadDataRegisterListMy() {
@@ -349,6 +337,7 @@ class RegisterListContainer extends React.Component {
   };
 
   render() {
+    console.log(this.props.filterClasses);
     return (
       <RegisterListComponent
         {...this.props}
@@ -369,10 +358,7 @@ class RegisterListContainer extends React.Component {
         submitMoney={this.submitMoney}
         user={this.props.user}
         salerId={this.props.salerId}
-        baseData={this.props.baseData}
-        onSelectBaseId={this.onSelectBaseId}
         onSelectSalerId={this.onSelectSalerId}
-        selectedBaseId={this.props.selectedBaseId}
         campaigns={this.props.campaigns}
         onSelectCampaignId={this.onSelectCampaignId}
         campaignId={this.props.campaignId}
@@ -396,7 +382,6 @@ class RegisterListContainer extends React.Component {
         onSelectSource={this.onSelectSource}
         sources={this.props.sources}
         sourceId={this.props.source_id}
-        isLoadingBase={this.props.isLoadingBase}
         isLoadingSources={this.props.isLoadingSources}
         isLoadingStatuses={this.props.isLoadingStatuses}
         isLoadingCampaigns={this.props.isLoadingCampaigns}
@@ -423,6 +408,7 @@ class RegisterListContainer extends React.Component {
         errorChangeClass={this.props.errorChangeClass}
         changeClassStatus={this.props.changeClassStatus}
         changeClass={this.changeClass}
+        loadFilterClasses={this.loadFilterClasses}
       />
     );
   }

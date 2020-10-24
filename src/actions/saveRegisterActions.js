@@ -1,6 +1,5 @@
 import * as types from '../constants/actionTypes';
 import * as saveRegisterApi from '../apis/saveRegisterApi';
-import {selectedGenId} from './genActions';
 
 export function loadCourses(token) {
   return function(dispatch) {
@@ -321,11 +320,11 @@ function loadSalersError() {
   };
 }
 
-export function loadFilterClasses(genId, token) {
+export function loadFilterClasses(search, token) {
   return function(dispatch) {
     dispatch(beginLoadFilterClasses());
     saveRegisterApi
-      .loadFilterClasses(genId, token)
+      .loadFilterClasses(search, token)
       .then(function(res) {
         dispatch(loadFilterClassesSuccessful(res));
       })
@@ -349,7 +348,7 @@ function loadFilterClassesSuccessful(res) {
     type: types.LOAD_FILTER_CLASSES_SUCCESSFUL,
     isLoadingFilterClasses: false,
     errorLoadingFilterClasses: false,
-    filterClasses: res.data.data.classes,
+    filterClasses: res.data,
   };
 }
 
@@ -358,12 +357,5 @@ function loadFilterClassesError() {
     type: types.LOAD_FILTER_CLASSES_ERROR,
     isLoadingFilterClasses: false,
     errorLoadingFilterClasses: true,
-  };
-}
-
-export function reloadFilterClasses(genId, token) {
-  return function(dispatch) {
-    dispatch(selectedGenId(genId));
-    dispatch(loadFilterClasses(genId, token));
   };
 }

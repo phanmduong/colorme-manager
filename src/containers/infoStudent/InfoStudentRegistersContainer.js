@@ -15,7 +15,7 @@ class InfoStudentRegistersContainer extends React.Component {
 
   loadRegisters = (studentId) => {
     this.props.infoStudentActions.loadRegisters(
-        false,
+      false,
       studentId,
       this.props.token,
       this.props.domain,

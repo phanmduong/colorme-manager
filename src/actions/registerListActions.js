@@ -337,11 +337,11 @@ export function setAutoFocusRegisterListSearch(bool) {
   };
 }
 
-export function loadAvailableClasses(registerId, search, token) {
+export function loadAvailableClasses(registerId, search, token, domain) {
   return function (dispatch) {
     dispatch(beginLoadAvailableClasses());
     studentApi
-      .loadAvailableClasses(registerId, search, token)
+      .loadAvailableClasses(registerId, search, token, domain)
       .then((res) => {
         dispatch(loadAvailableClassesSuccess(res));
       })
@@ -385,11 +385,11 @@ export function resetAvailableClasses() {
   };
 }
 
-export function changeClass(classId, registerId, token) {
+export function changeClass(classId, registerId, token, domain) {
   return function (dispatch) {
     dispatch(beginChangeClass());
     studentApi
-      .changeClass(classId, registerId, token)
+      .changeClass(classId, registerId, token, domain)
       .then((res) => dispatch(changeClassSuccess(res)))
       .catch((error) => {
         dispatch(changeClassError(error));

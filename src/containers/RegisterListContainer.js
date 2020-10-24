@@ -74,10 +74,7 @@ class RegisterListContainer extends React.Component {
   };
 
   loadFilterClasses = (search) => {
-    this.props.saveRegisterActions.loadFilterClasses(
-      search,
-      this.props.token,
-    );
+    this.props.saveRegisterActions.loadFilterClasses(search, this.props.token);
   };
 
   loadDataRegisterListMy() {
@@ -337,7 +334,6 @@ class RegisterListContainer extends React.Component {
   };
 
   render() {
-    console.log(this.props.filterClasses);
     return (
       <RegisterListComponent
         {...this.props}
@@ -358,7 +354,10 @@ class RegisterListContainer extends React.Component {
         submitMoney={this.submitMoney}
         user={this.props.user}
         salerId={this.props.salerId}
+        baseData={this.props.baseData}
+        onSelectBaseId={this.onSelectBaseId}
         onSelectSalerId={this.onSelectSalerId}
+        selectedBaseId={this.props.selectedBaseId}
         campaigns={this.props.campaigns}
         onSelectCampaignId={this.onSelectCampaignId}
         campaignId={this.props.campaignId}
@@ -382,6 +381,7 @@ class RegisterListContainer extends React.Component {
         onSelectSource={this.onSelectSource}
         sources={this.props.sources}
         sourceId={this.props.source_id}
+        isLoadingBase={this.props.isLoadingBase}
         isLoadingSources={this.props.isLoadingSources}
         isLoadingStatuses={this.props.isLoadingStatuses}
         isLoadingCampaigns={this.props.isLoadingCampaigns}

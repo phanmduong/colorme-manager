@@ -33,6 +33,7 @@
     "react": "16.13.1",
     "react-native": "0.63.3",
     "react-native-autocomplete-input": "^4.2.0",
+    "react-native-actionsheet": "^2.4.2",
     "react-native-autoheight-webview": "^1.4.2",
     "react-native-busy-indicator": "^1.1.0",
     "react-native-calendar-picker": "^7.0.0",

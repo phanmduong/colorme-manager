@@ -30,6 +30,7 @@ export function loadAnalyticsRegister(
   sourceId,
   campaignId,
   token,
+  domain,
 ) {
   return function (dispatch) {
     if (!refreshing) {
@@ -47,6 +48,7 @@ export function loadAnalyticsRegister(
         sourceId,
         campaignId,
         token,
+        domain,
       )
       .then(function (res) {
         dispatch(loadAnalyticsRegisterSuccessful(res));
@@ -87,6 +89,7 @@ export function loadAnalyticsRevenue(
   sourceId,
   campaignId,
   token,
+  domain,
 ) {
   return function (dispatch) {
     if (!refreshing) {
@@ -104,6 +107,7 @@ export function loadAnalyticsRevenue(
         sourceId,
         campaignId,
         token,
+        domain,
       )
       .then((res) => {
         dispatch(loadAnalyticsRevenueSuccessful(res));
@@ -227,6 +231,7 @@ export function loadAnalyticsClasses(
   sourceId,
   campaignId,
   token,
+  domain,
 ) {
   return function (dispatch) {
     if (!refreshing) {
@@ -246,6 +251,7 @@ export function loadAnalyticsClasses(
         sourceId,
         campaignId,
         token,
+        domain,
       )
       .then((res) => {
         dispatch(loadAnalyticsClassesSuccessful(res));
@@ -289,5 +295,46 @@ function loadAnalyticsClassesError() {
     isLoadingAnalyticsClasses: false,
     errorAnalyticsClasses: true,
     refreshingAnalyticsClasses: false,
+  };
+}
+
+export function changeProvince(provinceId, token, domain) {
+  return function (dispatch) {
+    dispatch(beginChangeProvince());
+    analyticsApi
+      .changeProvince(provinceId, token, domain)
+      .then((res) => dispatch(changeProvinceSuccess()))
+      .catch((error) => dispatch(changeProvinceError()));
+  };
+}
+
+function beginChangeProvince() {
+  return {
+    type: types.BEGIN_CHANGE_PROVINCE,
+    changingProvince: true,
+    errorChangeProvince: false,
+  };
+}
+
+function changeProvinceSuccess() {
+  return {
+    type: types.CHANGE_PROVINCE_SUCCESSFUL,
+    changingProvince: false,
+    errorChangeProvince: false,
+  };
+}
+
+function changeProvinceError() {
+  return {
+    type: types.CHANGE_PROVINCE_ERROR,
+    changingProvince: false,
+    errorChangeProvince: true,
+  };
+}
+
+export function selectedProvinceId(provinceId) {
+  return {
+    type: types.SELECTED_PROVINCE_ID_ANALYTICS,
+    selectedProvinceId: provinceId,
   };
 }

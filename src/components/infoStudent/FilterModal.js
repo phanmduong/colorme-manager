@@ -30,7 +30,7 @@ class FilterModal extends React.Component {
     };
   }
 
-  renderPickerField = settings => {
+  renderPickerField = (settings) => {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
@@ -68,7 +68,7 @@ class FilterModal extends React.Component {
     );
   };
 
-  renderPickerOption = settings => {
+  renderPickerOption = (settings) => {
     const {item, getLabel} = settings;
     return (
       <View style={styles.options}>
@@ -77,16 +77,32 @@ class FilterModal extends React.Component {
     );
   };
 
-  renderPickerHeader = title => {
+  renderPickerHeader = (title) => {
     return (
       <View style={styles.headerFooterContainer}>
         <Text style={styles.headerFooterText}>{title}</Text>
         <Search
           placeholder="Tìm kiếm"
-          onChangeText={search => {
+          onChangeText={(search) => {
             this.setState({search});
           }}
           value={this.state.search}
+          extraStyle={{width: width - 70, marginLeft: 0}}
+          extraInputStyle={{width: width - 38 - 80}}
+        />
+      </View>
+    );
+  };
+
+  renderFilterClassPickerHeader = (title) => {
+    return (
+      <View style={styles.headerFooterContainer}>
+        <Text style={styles.headerFooterText}>{title}</Text>
+        <Search
+          placeholder="Tìm kiếm"
+          onChangeText={(search) => {
+            this.props.loadFilterClasses(search);
+          }}
           extraStyle={{width: width - 70, marginLeft: 0}}
           extraInputStyle={{width: width - 38 - 80}}
         />
@@ -104,7 +120,7 @@ class FilterModal extends React.Component {
     );
   }
 
-  getData = array => {
+  getData = (array) => {
     let defaultOption = {id: -1, name: 'Tất cả'};
     let data = [defaultOption].concat(array);
     return data;
@@ -119,7 +135,7 @@ class FilterModal extends React.Component {
     return array[0];
   };
 
-  getDefaultGen = gens => {
+  getDefaultGen = (gens) => {
     for (let gen of gens) {
       if (gen.id === this.props.selectedGenId) {
         return gen;
@@ -144,7 +160,7 @@ class FilterModal extends React.Component {
     return genData;
   };
 
-  getSearchedResults = array => {
+  getSearchedResults = (array) => {
     let list = [];
     if (this.state.search === '') {
       return array;
@@ -163,34 +179,21 @@ class FilterModal extends React.Component {
     }
   };
 
-  filterBase = classes => {
-    if (this.props.selectedBaseId !== -1) {
-      let filterClasses = [];
-      for (let _class of classes) {
-        if (_class.base_id === this.props.selectedBaseId) {
-          filterClasses.push(_class);
-        }
-      }
-      return filterClasses;
-    }
-    return classes;
-  };
-
-  handleStartDatePicked = date => {
+  handleStartDatePicked = (date) => {
     this.props.onSelectStartTime(moment(date).format('YYYY-MM-DD'));
     this.setState({
       isStartDateVisible: false,
     });
   };
 
-  handleEndDatePicked = date => {
+  handleEndDatePicked = (date) => {
     this.props.onSelectEndTime(moment(date).format('YYYY-MM-DD'));
     this.setState({
       isEndDateVisible: false,
     });
   };
 
-  handleAppointmentPaymentPicked = date => {
+  handleAppointmentPaymentPicked = (date) => {
     this.props.onSelectAppointmentPayment(moment(date).format('YYYY-MM-DD'));
     this.setState({
       isAppointmentPaymentVisible: false,
@@ -244,8 +247,7 @@ class FilterModal extends React.Component {
           !this.props.isLoadingSources &&
           !this.props.isLoadingStatuses &&
           !this.props.isLoadingSalers &&
-          !this.props.isLoadingGen &&
-          !this.props.isLoadingFilterClasses ? (
+          !this.props.isLoadingGen ? (
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.titleContainer}>
                 <Text style={styles.title}>Lọc</Text>
@@ -255,7 +257,7 @@ class FilterModal extends React.Component {
                 <CustomPicker
                   options={this.getSearchedResults(this.getGenData())}
                   defaultValue={this.getDefaultGen(this.getGenData())}
-                  getLabel={item => item.name}
+                  getLabel={(item) => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
                   fieldTemplate={this.renderPickerField}
@@ -267,9 +269,8 @@ class FilterModal extends React.Component {
                   modalStyle={{
                     borderRadius: 6,
                   }}
-                  onValueChange={value => {
+                  onValueChange={(value) => {
                     this.setState({search: ''});
-                    this.props.reloadFilterClasses(value.id);
                   }}
                 />
               </View>
@@ -302,24 +303,24 @@ class FilterModal extends React.Component {
               <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Lớp học</Text>
                 <CustomPicker
-                  options={this.getSearchedResults(
-                    this.filterBase(this.getData(this.props.filterClasses)),
-                  )}
+                  options={this.getData(this.props.filterClasses)}
                   defaultValue={this.getDefault(
                     this.getData(this.props.filterClasses),
                     this.props.classId,
                   )}
-                  getLabel={item => item.name}
+                  getLabel={(item) => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
                   fieldTemplate={this.renderPickerField}
-                  headerTemplate={() => this.renderPickerHeader('Chọn lớp học')}
+                  headerTemplate={() =>
+                    this.renderFilterClassPickerHeader('Chọn lớp học')
+                  }
                   footerTemplate={this.renderPickerFooter}
                   onBlur={() => this.setState({search: ''})}
                   modalStyle={{
                     borderRadius: 6,
                   }}
-                  onValueChange={value => {
+                  onValueChange={(value) => {
                     this.setState({search: ''});
                     this.props.onSelectClassId(value.id);
                   }}
@@ -335,7 +336,7 @@ class FilterModal extends React.Component {
                     this.getData(this.props.salers),
                     this.props.salerId,
                   )}
-                  getLabel={item => item.name}
+                  getLabel={(item) => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
                   fieldTemplate={this.renderPickerField}
@@ -345,7 +346,7 @@ class FilterModal extends React.Component {
                   modalStyle={{
                     borderRadius: 6,
                   }}
-                  onValueChange={value => {
+                  onValueChange={(value) => {
                     this.setState({search: ''});
                     this.props.onSelectSalerId(value.id);
                   }}
@@ -361,7 +362,7 @@ class FilterModal extends React.Component {
                     this.getData(this.props.campaigns),
                     this.props.campaignId,
                   )}
-                  getLabel={item => item.name}
+                  getLabel={(item) => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
                   fieldTemplate={this.renderPickerField}
@@ -373,7 +374,7 @@ class FilterModal extends React.Component {
                   modalStyle={{
                     borderRadius: 6,
                   }}
-                  onValueChange={value => {
+                  onValueChange={(value) => {
                     this.setState({search: ''});
                     this.props.onSelectCampaignId(value.id);
                   }}
@@ -387,7 +388,7 @@ class FilterModal extends React.Component {
                     moneyFilter,
                     this.props.paidStatus,
                   )}
-                  getLabel={item => item.name}
+                  getLabel={(item) => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
                   fieldTemplate={this.renderPickerField}
@@ -397,7 +398,7 @@ class FilterModal extends React.Component {
                   modalStyle={{
                     borderRadius: 6,
                   }}
-                  onValueChange={value => {
+                  onValueChange={(value) => {
                     this.setState({search: ''});
                     this.props.onSelectPaidStatus(value.id);
                   }}
@@ -441,7 +442,7 @@ class FilterModal extends React.Component {
                     classStatusFilter,
                     this.props.classStatus,
                   )}
-                  getLabel={item => item.name}
+                  getLabel={(item) => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
                   fieldTemplate={this.renderPickerField}
@@ -453,7 +454,7 @@ class FilterModal extends React.Component {
                   modalStyle={{
                     borderRadius: 6,
                   }}
-                  onValueChange={value => {
+                  onValueChange={(value) => {
                     this.setState({search: ''});
                     this.props.onSelectClassStatus(value.value);
                   }}
@@ -467,7 +468,7 @@ class FilterModal extends React.Component {
                     teleCallStatus,
                     this.props.callStatus,
                   )}
-                  getLabel={item => item.name}
+                  getLabel={(item) => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
                   fieldTemplate={this.renderPickerField}
@@ -479,7 +480,7 @@ class FilterModal extends React.Component {
                   modalStyle={{
                     borderRadius: 6,
                   }}
-                  onValueChange={value => {
+                  onValueChange={(value) => {
                     this.setState({search: ''});
                     this.props.onSelectCallStatus(value.id);
                   }}
@@ -506,7 +507,9 @@ class FilterModal extends React.Component {
                   <TextInput
                     placeholder={'Nhập coupon'}
                     autoCapitalize={false}
-                    onChangeText={text => this.setState({search_coupon: text})}
+                    onChangeText={(text) =>
+                      this.setState({search_coupon: text})
+                    }
                     value={this.state.search_coupon}
                     clearButtonMode={true}
                     style={{width: 120, fontSize: 16}}
@@ -521,7 +524,7 @@ class FilterModal extends React.Component {
                     bookmarkFilter,
                     this.props.bookmark,
                   )}
-                  getLabel={item => item.name}
+                  getLabel={(item) => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
                   fieldTemplate={this.renderPickerField}
@@ -533,7 +536,7 @@ class FilterModal extends React.Component {
                   modalStyle={{
                     borderRadius: 6,
                   }}
-                  onValueChange={value => {
+                  onValueChange={(value) => {
                     this.setState({search: ''});
                     this.props.onSelectBookmark(value.id);
                   }}
@@ -549,7 +552,7 @@ class FilterModal extends React.Component {
                     this.getData(this.props.statuses),
                     this.props.statusId,
                   )}
-                  getLabel={item => item.name}
+                  getLabel={(item) => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
                   fieldTemplate={this.renderPickerField}
@@ -561,7 +564,7 @@ class FilterModal extends React.Component {
                   modalStyle={{
                     borderRadius: 6,
                   }}
-                  onValueChange={value => {
+                  onValueChange={(value) => {
                     this.setState({search: ''});
                     this.props.onSelectStatus(value.id);
                   }}
@@ -577,7 +580,7 @@ class FilterModal extends React.Component {
                     this.getData(this.props.sources),
                     this.props.sourceId,
                   )}
-                  getLabel={item => item.name}
+                  getLabel={(item) => item.name}
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
                   fieldTemplate={this.renderPickerField}
@@ -587,7 +590,7 @@ class FilterModal extends React.Component {
                   modalStyle={{
                     borderRadius: 6,
                   }}
-                  onValueChange={value => {
+                  onValueChange={(value) => {
                     this.setState({search: ''});
                     this.props.onSelectSource(value.id);
                   }}

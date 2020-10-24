@@ -4,6 +4,7 @@ import theme from '../../styles';
 import {dotNumber, getShortName} from '../../helper';
 import CallRegisterModal from './CallRegisterModal';
 import SubmitMoneyModal from './SubmitMoneyModal';
+import ActionSheet from 'react-native-actionsheet';
 
 class ListItemInfoStudentRegister extends React.Component {
   constructor(props, context) {
@@ -214,15 +215,17 @@ const styles = {
   },
   button: {
     backgroundColor: '#F6F6F6',
-    paddingVertical: 10,
     paddingHorizontal: 18,
     borderRadius: 8,
+    height: 45,
+    justifyContent: 'center',
   },
   collectedButton: {
     backgroundColor: '#C50000',
-    paddingVertical: 10,
     paddingHorizontal: 18,
     borderRadius: 8,
+    height: 45,
+    justifyContent: 'center',
   },
   classInfoContainer: {
     paddingTop: 2,

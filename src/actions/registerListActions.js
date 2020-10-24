@@ -336,3 +336,90 @@ export function setAutoFocusRegisterListSearch(bool) {
     autoFocusRegisterListSearch: bool,
   };
 }
+
+export function loadAvailableClasses(registerId, search, token, domain) {
+  return function (dispatch) {
+    dispatch(beginLoadAvailableClasses());
+    studentApi
+      .loadAvailableClasses(registerId, search, token, domain)
+      .then((res) => {
+        dispatch(loadAvailableClassesSuccess(res));
+      })
+      .catch((error) => {
+        dispatch(loadAvailableClassesError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadAvailableClasses() {
+  return {
+    type: types.BEGIN_LOAD_REGISTER_LIST_AVAILABLE_CLASSES,
+    isLoadingClasses: true,
+    errorClasses: false,
+  };
+}
+
+function loadAvailableClassesSuccess(res) {
+  return {
+    type: types.LOAD_REGISTER_LIST_AVAILABLE_CLASSES_SUCCESSFUL,
+    classes: res.data.data.classes,
+    isLoadingClasses: false,
+    errorClasses: false,
+  };
+}
+
+function loadAvailableClassesError() {
+  return {
+    type: types.LOAD_REGISTER_LIST_AVAILABLE_CLASSES_ERROR,
+    isLoadingClasses: false,
+    errorClasses: true,
+  };
+}
+
+export function resetAvailableClasses() {
+  return {
+    type: types.RESET_REGISTER_LIST_AVAILABLE_CLASSES,
+    classes: [],
+    changeClassStatus: null,
+  };
+}
+
+export function changeClass(classId, registerId, token, domain) {
+  return function (dispatch) {
+    dispatch(beginChangeClass());
+    studentApi
+      .changeClass(classId, registerId, token, domain)
+      .then((res) => dispatch(changeClassSuccess(res)))
+      .catch((error) => {
+        dispatch(changeClassError(error));
+        throw error;
+      });
+  };
+}
+
+function beginChangeClass() {
+  return {
+    type: types.BEGIN_CHANGE_STUDENT_CLASS,
+    changingClass: true,
+    errorChangeClass: false,
+  };
+}
+
+function changeClassSuccess(res) {
+  return {
+    type: types.CHANGE_STUDENT_CLASS_SUCCESSFUL,
+    changingClass: false,
+    errorChangeClass: false,
+    changeClassStatus: res.status,
+  };
+}
+
+function changeClassError(error) {
+  return {
+    type: types.CHANGE_STUDENT_CLASS_ERROR,
+    changingClass: false,
+    errorChangeClass: true,
+    changeClassStatus: error.response.status,
+  };
+}

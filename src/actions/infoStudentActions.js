@@ -9,9 +9,13 @@ export function setStudentId(studentId) {
   };
 }
 
-export function loadRegisters(studentId, token, domain) {
+export function loadRegisters(refreshing, studentId, token, domain) {
   return function (dispatch) {
-    dispatch(beginLoadRegisters());
+    if (refreshing) {
+      dispatch(beginRefreshRegisters());
+    } else {
+      dispatch(beginLoadRegisters());
+    }
     infoStudentApi
       .loadRegisters(studentId, token, domain)
       .then(function (res) {
@@ -32,11 +36,20 @@ function beginLoadRegisters() {
   };
 }
 
+function beginRefreshRegisters() {
+  return {
+    type: types.BEGIN_REFRESH_INFO_STUDENT_REGISTERS,
+    refreshingRegisters: true,
+    errorRegisters: false,
+  };
+}
+
 function loadRegistersSuccessful(res) {
   return {
     type: types.LOAD_INFO_STUDENT_REGISTERS_SUCCESSFUL,
     isLoadingRegisters: false,
     errorRegisters: false,
+    refreshingRegisters: false,
     registers: res.data.data.registers,
   };
 }
@@ -46,6 +59,7 @@ function loadRegistersError() {
     type: types.LOAD_INFO_STUDENT_REGISTERS_ERROR,
     isLoadingRegisters: false,
     errorRegisters: true,
+    refreshingRegisters: false,
   };
 }
 
@@ -321,12 +335,16 @@ function updateProfileError() {
   };
 }
 
-export function loadHistoryCalls(studentId, token, domain) {
+export function loadHistoryCalls(refreshing, studentId, token, domain) {
   return function (dispatch) {
-    dispatch(beginLoadHistoryCalls());
+    if (refreshing) {
+      dispatch(beginRefreshHistoryCalls());
+    } else {
+      dispatch(beginLoadHistoryCalls());
+    }
     infoStudentApi
       .loadHistoryCalls(studentId, token, domain)
-      .then(function (res) {
+      .then(function(res) {
         dispatch(loadHistoryCallsSuccessful(res));
       })
       .catch((error) => {
@@ -344,11 +362,20 @@ function beginLoadHistoryCalls() {
   };
 }
 
+function beginRefreshHistoryCalls() {
+  return {
+    type: types.BEGIN_REFRESH_HISTORY_CALLS,
+    refreshingHistoryCalls: true,
+    errorLoadingHistoryCalls: false,
+  };
+}
+
 function loadHistoryCallsSuccessful(res) {
   return {
     type: types.LOAD_HISTORY_CALLS_SUCCESSFUL,
     isLoadingHistoryCalls: false,
     errorLoadingHistoryCalls: false,
+    refreshingHistoryCalls: false,
     historyCalls: res.data.data.history_calls,
   };
 }
@@ -358,12 +385,17 @@ function loadHistoryCallsError() {
     type: types.LOAD_HISTORY_CALLS_ERROR,
     isLoadingHistoryCalls: false,
     errorLoadingHistoryCalls: true,
+    refreshingHistoryCalls: false,
   };
 }
 
-export function loadHistoryCollect(studentId, token, domain) {
+export function loadHistoryCollect(refreshing, studentId, token, domain) {
   return function (dispatch) {
-    dispatch(beginLoadHistoryCollect());
+    if (refreshing) {
+      dispatch(beginRefreshHistoryCollect());
+    } else {
+      dispatch(beginLoadHistoryCollect());
+    }
     infoStudentApi
       .loadHistoryCollect(studentId, token, domain)
       .then(function (res) {
@@ -384,12 +416,21 @@ function beginLoadHistoryCollect() {
   };
 }
 
+function beginRefreshHistoryCollect() {
+  return {
+    type: types.BEGIN_REFRESH_HISTORY_COLLECT,
+    refreshingHistoryCollect: true,
+    errorLoadingHistoryCollect: false,
+  };
+}
+
 function loadHistoryCollectSuccessful(res) {
   return {
     type: types.LOAD_HISTORY_COLLECT_SUCCESSFUL,
     historyCollect: res.data.data,
     isLoadingHistoryCollect: false,
     errorLoadingHistoryCollect: false,
+    refreshingHistoryCollect: false,
   };
 }
 
@@ -398,12 +439,17 @@ function loadHistoryCollectError() {
     type: types.LOAD_HISTORY_COLLECT_ERROR,
     isLoadingHistoryCollect: false,
     errorLoadingHistoryCollect: true,
+    refreshingHistoryCollect: false,
   };
 }
 
-export function loadProgress(studentId, token, domain) {
+export function loadProgress(refreshing, studentId, token, domain) {
   return function (dispatch) {
-    dispatch(beginLoadProgress());
+    if (refreshing) {
+      dispatch(beginRefreshProgress());
+    } else {
+      dispatch(beginLoadProgress());
+    }
     infoStudentApi
       .loadProgress(studentId, token, domain)
       .then(function (res) {
@@ -424,11 +470,20 @@ function beginLoadProgress() {
   };
 }
 
+function beginRefreshProgress() {
+  return {
+    type: types.BEGIN_REFRESH_INFO_STUDENT_PROGRESS,
+    refreshingProgress: true,
+    errorLoadingProgress: false,
+  };
+}
+
 function loadProgressSuccessful(res) {
   return {
     type: types.LOAD_INFO_STUDENT_PROGRESS_SUCCESSFUL,
     isLoadingProgress: false,
     errorLoadingProgress: false,
+    refreshingProgress: false,
     progress: res.data.data.progress,
   };
 }
@@ -438,6 +493,7 @@ function loadProgressError() {
     type: types.LOAD_INFO_STUDENT_PROGRESS_ERROR,
     isLoadingProgress: false,
     errorLoadingProgress: true,
+    refreshingProgress: false,
   };
 }
 

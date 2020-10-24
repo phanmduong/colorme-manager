@@ -148,8 +148,31 @@ export function uploadImage(
   ajax.send(formdata);
 }
 
-export function loadStatuses(ref, token) {
+export function loadStatuses(ref, token, domain) {
   let url =
-    env.MANAGE_API_URL + '/v4/statuses/all?token=' + token + '&ref=' + ref;
+    env.manageApiUrlV4(domain) + '/statuses/all?token=' + token + '&ref=' + ref;
   return axios.get(url);
+}
+
+export function loadAvailableClasses(registerId, search, token, domain) {
+  let url =
+    env.manageApiUrlV3(domain) +
+    '/register-student/' +
+    registerId +
+    '/classes_without_waiting?search=' +
+    search +
+    '&token=' +
+    token;
+  return axios.get(url);
+}
+
+export function changeClass(classId, registerId, token, domain) {
+  let url =
+    env.manageApiUrlV3(domain) +
+    '/register-student/confirm-change-class?token=' +
+    token;
+  return axios.post(url, {
+    class_id: classId,
+    register_id: registerId,
+  });
 }

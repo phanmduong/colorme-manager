@@ -12,16 +12,23 @@ export function infoStudentReducer(state = initialState.infoStudent, action) {
         isLoadingRegisters: action.isLoadingRegisters,
         errorRegisters: action.errorRegisters,
       });
+    case type.BEGIN_REFRESH_INFO_STUDENT_REGISTERS:
+      return Object.assign({}, state, {
+        refreshingRegisters: action.refreshingRegisters,
+        errorRegisters: action.errorRegisters,
+      });
     case type.LOAD_INFO_STUDENT_REGISTERS_SUCCESSFUL:
       return Object.assign({}, state, {
         registers: action.registers,
         isLoadingRegisters: action.isLoadingRegisters,
         errorRegisters: action.errorRegisters,
+        refreshingRegisters: action.refreshingRegisters,
       });
     case type.LOAD_INFO_STUDENT_REGISTERS_ERROR:
       return Object.assign({}, state, {
         isLoadingRegisters: action.isLoadingRegisters,
         errorRegisters: action.errorRegisters,
+        refreshingRegisters: action.refreshingRegisters,
       });
     case type.BEGIN_LOAD_CHANGE_CALL_STATUS:
       return Object.assign({}, state, {
@@ -104,48 +111,69 @@ export function infoStudentReducer(state = initialState.infoStudent, action) {
         isLoadingHistoryCalls: action.isLoadingHistoryCalls,
         errorLoadingHistoryCalls: action.errorLoadingHistoryCalls,
       });
+    case type.BEGIN_REFRESH_HISTORY_CALLS:
+      return Object.assign({}, state, {
+        refreshingHistoryCalls: action.refreshingHistoryCalls,
+        errorLoadingHistoryCalls: action.errorLoadingHistoryCalls,
+      });
     case type.LOAD_HISTORY_CALLS_SUCCESSFUL:
       return Object.assign({}, state, {
         isLoadingHistoryCalls: action.isLoadingHistoryCalls,
         errorLoadingHistoryCalls: action.errorLoadingHistoryCalls,
+        refreshingHistoryCalls: action.refreshingHistoryCalls,
         historyCalls: action.historyCalls,
       });
     case type.LOAD_HISTORY_CALLS_ERROR:
       return Object.assign({}, state, {
         isLoadingHistoryCalls: action.isLoadingHistoryCalls,
         errorLoadingHistoryCalls: action.errorLoadingHistoryCalls,
+        refreshingHistoryCalls: action.refreshingHistoryCalls,
       });
     case type.BEGIN_LOAD_HISTORY_COLLECT:
       return Object.assign({}, state, {
         isLoadingHistoryCollect: action.isLoadingHistoryCollect,
         errorLoadingHistoryCollect: action.errorLoadingHistoryCollect,
       });
+    case type.BEGIN_REFRESH_HISTORY_COLLECT:
+      return Object.assign({}, state, {
+        refreshingHistoryCollect: action.refreshingHistoryCollect,
+        errorLoadingHistoryCollect: action.errorLoadingHistoryCollect,
+      });
     case type.LOAD_HISTORY_COLLECT_SUCCESSFUL:
       return Object.assign({}, state, {
         isLoadingHistoryCollect: action.isLoadingHistoryCollect,
         errorLoadingHistoryCollect: action.errorLoadingHistoryCollect,
+        refreshingHistoryCollect: action.refreshingHistoryCollect,
         historyCollect: action.historyCollect,
       });
     case type.LOAD_HISTORY_COLLECT_ERROR:
       return Object.assign({}, state, {
         isLoadingHistoryCollect: action.isLoadingHistoryCollect,
         errorLoadingHistoryCollect: action.errorLoadingHistoryCollect,
+        refreshingHistoryCollect: action.refreshingHistoryCollect,
       });
     case type.BEGIN_LOAD_INFO_STUDENT_PROGRESS:
       return Object.assign({}, state, {
         isLoadingProgress: action.isLoadingProgress,
         errorLoadingProgress: action.errorLoadingProgress,
       });
+    case type.BEGIN_REFRESH_INFO_STUDENT_PROGRESS:
+      return Object.assign({}, state, {
+        refreshingProgress: action.refreshingProgress,
+        errorLoadingProgress: action.errorLoadingProgress,
+      });
     case type.LOAD_INFO_STUDENT_PROGRESS_SUCCESSFUL:
       return Object.assign({}, state, {
         isLoadingProgress: action.isLoadingProgress,
         errorLoadingProgress: action.errorLoadingProgress,
+        refreshingProgress: action.refreshingProgress,
         progress: action.progress,
       });
     case type.LOAD_INFO_STUDENT_PROGRESS_ERROR:
       return Object.assign({}, state, {
         isLoadingProgress: action.isLoadingProgress,
         errorLoadingProgress: action.errorLoadingProgress,
+        refreshingProgress: action.refreshingProgress,
       });
     case type.BEGIN_CHANGE_STUDENT_PASSWORD:
       return Object.assign({}, state, {

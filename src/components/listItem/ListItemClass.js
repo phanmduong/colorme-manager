@@ -157,7 +157,7 @@ class ListItemClass extends React.Component {
                     styles.bar,
                     {
                       width:
-                        paidTarget !== 0
+                        paidTarget > 0
                           ? (maxWidthProcess * tmpTotalPaid) / paidTarget
                           : 0,
                       backgroundColor: theme.successColor,
@@ -183,10 +183,10 @@ class ListItemClass extends React.Component {
                     styles.process,
                     {
                       width:
-                        registerTarget !== 0
+                        registerTarget > 0
                           ? (maxWidthProcess * tmpTotalRegister) /
                             registerTarget
-                          : registerTarget,
+                          : 0,
                       backgroundColor: theme.processColor2,
                     },
                   ]}

@@ -65,21 +65,25 @@ class InfoStudentContainer extends React.Component {
 
   onRefresh = () => {
     this.props.infoStudentActions.loadRegisters(
+      true,
       this.props.student_id,
       this.props.token,
       this.props.domain,
     );
     this.props.infoStudentActions.loadHistoryCalls(
+      true,
       this.props.student_id,
       this.props.token,
       this.props.domain,
     );
     this.props.infoStudentActions.loadProgress(
+      true,
       this.props.student_id,
       this.props.token,
       this.props.domain,
     );
     this.props.infoStudentActions.loadHistoryCollect(
+      true,
       this.props.student_id,
       this.props.token,
       this.props.domain,
@@ -147,12 +151,16 @@ function mapStateToProps(state) {
     isLoadingStudent: state.infoStudent.isLoadingStudent,
     isLoadingRegisters: state.infoStudent.isLoadingRegisters,
     errorRegisters: state.infoStudent.errorRegisters,
+    refreshingRegisters: state.infoStudent.refreshingRegisters,
     isLoadingHistoryCalls: state.infoStudent.isLoadingHistoryCalls,
     errorLoadingHistoryCalls: state.infoStudent.errorLoadingHistoryCalls,
+    refreshingHistoryCalls: state.infoStudent.refreshingHistoryCalls,
     isLoadingHistoryCollect: state.infoStudent.isLoadingHistoryCollect,
     errorLoadingHistoryCollect: state.infoStudent.errorLoadingHistoryCollect,
+    refreshingHistoryCollect: state.infoStudent.refreshingHistoryCollect,
     isLoadingProgress: state.infoStudent.isLoadingProgress,
     errorLoadingProgress: state.infoStudent.errorLoadingProgress,
+    refreshingProgress: state.infoStudent.refreshingProgress,
     isChangingPassword: state.infoStudent.isChangingPassword,
     errorPassword: state.infoStudent.errorPassword,
     domain: state.login.domain,

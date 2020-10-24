@@ -17,6 +17,7 @@ import FilterModal from './infoStudent/FilterModal';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import ChangeStudentClassModal from './registerList/ChangeStudentClassModal';
 
 var {height, width} = Dimensions.get('window');
 class RegisterListComponent extends React.Component {
@@ -107,7 +108,6 @@ class RegisterListComponent extends React.Component {
           reset={this.props.reset}
           resetModal={this.resetModal}
           salers={this.props.salers}
-          isLoadingBase={this.props.isLoadingBase}
           isLoadingCampaigns={this.props.isLoadingCampaigns}
           isLoadingSources={this.props.isLoadingSources}
           isLoadingStatuses={this.props.isLoadingStatuses}
@@ -121,7 +121,7 @@ class RegisterListComponent extends React.Component {
           isLoadingFilterClasses={this.props.isLoadingFilterClasses}
           filterClasses={this.props.filterClasses}
           onSelectClassId={this.props.onSelectClassId}
-          reloadFilterClasses={this.props.reloadFilterClasses}
+          loadFilterClasses={this.props.loadFilterClasses}
         />
       </View>
     );
@@ -193,66 +193,73 @@ class RegisterListComponent extends React.Component {
 
   renderContent() {
     return (
-      <List
-        style={styles.list}
-        onEndReached={this.props.loadDataRegisterList}
-        dataArray={this.props.registerList}
-        contentContainerStyle={{flexGrow: 1}}
-        ListHeaderComponent={this.headerComponent}
-        ListEmptyComponent={
-          this.props.isLoading ? (
-            this.props.refreshing ? (
-              <View />
+        <List
+          style={styles.list}
+          onEndReached={this.props.loadDataRegisterList}
+          dataArray={this.props.registerList}
+          contentContainerStyle={{flexGrow: 1}}
+          ListHeaderComponent={this.headerComponent}
+          ListEmptyComponent={
+            this.props.isLoading ? (
+              this.props.refreshing ? (
+                <View />
+              ) : (
+                <Loading size={width / 8} />
+              )
             ) : (
-              <Loading size={width / 8} />
+              <View style={styles.container}>
+                <Text style={{color: theme.dangerColor, fontSize: 16}}>
+                  Không có kết quả
+                </Text>
+              </View>
             )
-          ) : (
-            <View style={styles.container}>
-              <Text style={{color: theme.dangerColor, fontSize: 16}}>
-                Không có kết quả
-              </Text>
-            </View>
-          )
-        }
-        refreshControl={
-          <RefreshControl
-            refreshing={this.props.refreshing}
-            onRefresh={() => this.props.onRefresh(this.props.search_coupon)}
-          />
-        }
-        renderRow={(item, sectionID, rowID) => (
-          <ListItemRegisterStudent
-            {...this.props}
-            key={item.id}
-            name={item.name}
-            avatar={item.course_avatar_url}
-            email={item.email}
-            phone={item.phone}
-            saler={item.saler}
-            campaign={item.campaign}
-            source={item.source}
-            source_id={item.source_id}
-            register_status={item.register_status}
-            callStatus={item.call_status}
-            paidStatus={item.paid_status}
-            money={item.money}
-            studentId={item.student_id}
-            setStudentId={this.props.setStudentId}
-            avatar_url={item.avatar_url}
-            classInfo={item.class}
-            token={this.props.token}
-            next_code={item.next_code}
-            next_waiting_code={item.next_waiting_code}
-            created_at_cal={item.created_at_cal}
-            registerId={item.id}
-            errorChangeCallStatus={this.props.errorChangeCallStatus}
-            errorSubmitMoney={this.props.errorSubmitMoney}
-            changeCallStatus={this.props.changeCallStatus}
-            submitMoney={this.props.submitMoney}
-            paidTime={item.paid_time}
-          />
-        )}
-      />
+          }
+          refreshControl={
+            <RefreshControl
+              refreshing={this.props.refreshing}
+              onRefresh={() => this.props.onRefresh(this.props.search_coupon)}
+            />
+          }
+          renderRow={(item, sectionID, rowID) => (
+            <ListItemRegisterStudent
+              {...this.props}
+              key={item.id}
+              name={item.name}
+              avatar={item.course_avatar_url}
+              email={item.email}
+              phone={item.phone}
+              saler={item.saler}
+              campaign={item.campaign}
+              source={item.source}
+              source_id={item.source_id}
+              register_status={item.register_status}
+              callStatus={item.call_status}
+              paidStatus={item.paid_status}
+              money={item.money}
+              studentId={item.student_id}
+              setStudentId={this.props.setStudentId}
+              avatar_url={item.avatar_url}
+              classInfo={item.class}
+              token={this.props.token}
+              next_code={item.next_code}
+              next_waiting_code={item.next_waiting_code}
+              created_at_cal={item.created_at_cal}
+              registerId={item.id}
+              errorChangeCallStatus={this.props.errorChangeCallStatus}
+              errorSubmitMoney={this.props.errorSubmitMoney}
+              changeCallStatus={this.props.changeCallStatus}
+              submitMoney={this.props.submitMoney}
+              paidTime={item.paid_time}
+              loadAvailableClasses={this.props.loadAvailableClasses}
+              availableClasses={this.props.availableClasses}
+              isLoadingAvailableClasses={this.props.isLoadingAvailableClasses}
+              resetAvailableClasses={this.props.resetAvailableClasses}
+              changingClass={this.props.changingClass}
+              changeClassStatus={this.props.changeClassStatus}
+              changeClass={this.props.changeClass}
+            />
+          )}
+        />
     );
   }
 

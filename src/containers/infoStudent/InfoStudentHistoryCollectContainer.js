@@ -15,6 +15,7 @@ class InfoStudentHistoryCollectContainer extends React.Component {
 
   loadHistoryCollect = () => {
     this.props.infoStudentActions.loadHistoryCollect(
+      false,
       this.props.studentId,
       this.props.token,
       this.props.domain,

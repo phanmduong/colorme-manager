@@ -3,8 +3,6 @@ import {View, Dimensions, Text, TouchableOpacity} from 'react-native';
 import {DAILY, MONTH, QUARTER, WEEK, YEAR} from '../../constants/constant';
 import theme from '../../styles';
 import {dotNumber} from '../../helper';
-import MatIcon from 'react-native-vector-icons/MaterialIcons';
-import Ionicon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
 const {width} = Dimensions.get('window');
 
@@ -272,57 +270,37 @@ const AnalyticsMultipleLayerBarChart = ({
   return (
     <View>
       <View style={styles.infoRow}>
-        <View style={[styles.infoContainer, {marginRight: 8}]}>
-          <View style={styles.infoTitleContainer}>
-            <Text>Học viên mới</Text>
-            <View
-              style={[
-                styles.iconContainer,
-                {
-                  backgroundColor: '#65DA3A',
-                },
-              ]}>
-              <MatIcon name={'add-circle'} size={18} color={'white'} />
+        <View style={styles.infoContainer}>
+          {data.slice(0, 10).map((dataItem) => (
+            <View style={[styles.row, {marginRight: 10}]}>
+              <View
+                style={[
+                  styles.legendDot,
+                  {
+                    backgroundColor: dataItem.color
+                      ? hasHexColor
+                        ? dataItem.color
+                        : `#${dataItem.color}`
+                      : '#DDDDDD',
+                  },
+                ]}
+              />
+              <Text>{dataItem.name}</Text>
             </View>
-          </View>
-          <Text style={styles.infoNum}>
-            {/*{this.props.newRegis*/}
-            {/*  ? dotNumber(findSum(this.props.newRegis))*/}
-            {/*  : null}*/}
-          </Text>
-        </View>
-        <View style={[styles.infoContainer, {marginLeft: 8}]}>
-          <View style={styles.infoTitleContainer}>
-            <Text>Học viên cũ</Text>
-            <View
-              style={[
-                styles.iconContainer,
-                {
-                  backgroundColor: '#FFDB5A',
-                },
-              ]}>
-              <Ionicon name={'ios-refresh'} size={15} color={'white'} />
+          ))}
+          {data.length > 10 && (
+            <View style={styles.row}>
+              <View
+                style={[
+                  styles.legendDot,
+                  {
+                    backgroundColor: 'black',
+                  },
+                ]}
+              />
+              <Text>+{data.length - 10} chú thích khác</Text>
             </View>
-          </View>
-          <View style={styles.row}>
-            <Text style={styles.infoNum}>
-              {/*{this.props.oldRegis*/}
-              {/*  ? dotNumber(findSum(this.props.oldRegis))*/}
-              {/*  : null}*/}
-            </Text>
-            <View style={styles.extraNumContainer}>
-              <Text style={styles.extraNum}>
-                {/*{this.props.newRegis && this.props.oldRegis*/}
-                {/*  ? Math.round(*/}
-                {/*      (findSum(this.props.oldRegis) /*/}
-                {/*        findSum(this.props.newRegis)) **/}
-                {/*        100,*/}
-                {/*    )*/}
-                {/*  : null}*/}
-                {/*%*/}
-              </Text>
-            </View>
-          </View>
+          )}
         </View>
       </View>
 
@@ -403,7 +381,11 @@ const styles = {
     backgroundColor: '#f6f6f6',
     borderRadius: 10,
     padding: 10,
-    width: (width - theme.mainHorizontal) / 2 - 16,
+    height: 77,
+    flex: 1,
+    alignSelf: 'stretch',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
   },
   iconContainer: {
     width: 25,
@@ -412,19 +394,16 @@ const styles = {
     alignItems: 'center',
     borderRadius: 20,
   },
-  infoNum: {
-    fontWeight: 'bold',
-    fontSize: 18,
-    marginTop: 10,
+  legendDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: 'red',
+    marginRight: 5,
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  infoTitleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
   },
   barContainer: {
     flexDirection: 'row',

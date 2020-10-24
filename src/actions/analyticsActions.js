@@ -291,3 +291,44 @@ function loadAnalyticsClassesError() {
     refreshingAnalyticsClasses: false,
   };
 }
+
+export function changeProvince(provinceId, token) {
+  return function (dispatch) {
+    dispatch(beginChangeProvince());
+    analyticsApi
+      .changeProvince(provinceId, token)
+      .then((res) => dispatch(changeProvinceSuccess()))
+      .catch((error) => dispatch(changeProvinceError()));
+  };
+}
+
+function beginChangeProvince() {
+  return {
+    type: types.BEGIN_CHANGE_PROVINCE,
+    changingProvince: true,
+    errorChangeProvince: false,
+  };
+}
+
+function changeProvinceSuccess() {
+  return {
+    type: types.CHANGE_PROVINCE_SUCCESSFUL,
+    changingProvince: false,
+    errorChangeProvince: false,
+  };
+}
+
+function changeProvinceError() {
+  return {
+    type: types.CHANGE_PROVINCE_ERROR,
+    changingProvince: false,
+    errorChangeProvince: true,
+  };
+}
+
+export function selectedProvinceId(provinceId) {
+  return {
+    type: types.SELECTED_PROVINCE_ID_ANALYTICS,
+    selectedProvinceId: provinceId,
+  };
+}

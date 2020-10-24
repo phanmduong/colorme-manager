@@ -153,3 +153,26 @@ export function loadStatuses(ref, token) {
     env.MANAGE_API_URL + '/v4/statuses/all?token=' + token + '&ref=' + ref;
   return axios.get(url);
 }
+
+export function loadAvailableClasses(registerId, search, token) {
+  let url =
+    env.MANAGE_API_URL_V3 +
+    '/register-student/' +
+    registerId +
+    '/classes_without_waiting?search=' +
+    search +
+    '&token=' +
+    token;
+  return axios.get(url);
+}
+
+export function changeClass(classId, registerId, token) {
+  let url =
+    env.MANAGE_API_URL_V3 +
+    '/register-student/confirm-change-class?token=' +
+    token;
+  return axios.post(url, {
+    class_id: classId,
+    register_id: registerId,
+  });
+}

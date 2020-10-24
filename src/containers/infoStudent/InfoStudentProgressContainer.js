@@ -15,6 +15,7 @@ class InfoStudentProgressContainer extends React.Component {
 
   loadProgress = () => {
     this.props.infoStudentActions.loadProgress(
+      false,
       this.props.studentId,
       this.props.token,
       this.props.domain,

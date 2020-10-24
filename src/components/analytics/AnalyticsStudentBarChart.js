@@ -391,6 +391,7 @@ const styles = {
     backgroundColor: '#f6f6f6',
     borderRadius: 10,
     padding: 10,
+    height: 77,
     width: (width - theme.mainHorizontal) / 2 - 16,
   },
   iconContainer: {

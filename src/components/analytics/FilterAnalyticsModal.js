@@ -12,7 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Loading from '../common/Loading';
 var {width, height} = Dimensions.get('window');
 import theme from '../../styles';
-import {convertVietText} from '../../helper';
+import {convertVietText, getData} from '../../helper';
 import Search from '../common/Search';
 import moment from 'moment';
 
@@ -267,6 +267,32 @@ class FilterAnalyticsModal extends React.Component {
                   onValueChange={(value) => {
                     this.setState({search: ''});
                     this.props.onSelectStaffId(value.id);
+                  }}
+                />
+              </View>
+              <View style={styles.filterTitle}>
+                <Text style={{fontSize: 16}}>Thành phố</Text>
+                <CustomPicker
+                  options={getData(this.props.provinces, 0, 'Tất cả')}
+                  defaultValue={this.getDefault(
+                    getData(this.props.provinces, 0, 'Tất cả'),
+                    this.props.selectedProvinceId,
+                  )}
+                  getLabel={(item) => item.name}
+                  modalAnimationType={'fade'}
+                  optionTemplate={this.renderPickerOption}
+                  fieldTemplate={this.renderPickerField}
+                  headerTemplate={() =>
+                    this.renderStaffPickerHeader('Chọn thành phố')
+                  }
+                  footerTemplate={this.renderPickerFooter}
+                  onBlur={() => this.setState({search: ''})}
+                  modalStyle={{
+                    borderRadius: 6,
+                  }}
+                  onValueChange={(value) => {
+                    this.setState({search: ''});
+                    this.props.onSelectProvinceId(value.id);
                   }}
                 />
               </View>

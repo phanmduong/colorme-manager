@@ -103,3 +103,11 @@ export function loadAnalyticsClasses(
     '&include=course,base,target,register_target,schedule,room,teacher,teacher_assistant';
   return axios.get(url);
 }
+
+export function changeProvince(provinceId, token) {
+  let url =
+    env.MANAGE_API_URL_V4 + '/user/staff/choice-province?token=' + token;
+  return axios.put(url, {
+    choice_province_id: provinceId,
+  });
+}

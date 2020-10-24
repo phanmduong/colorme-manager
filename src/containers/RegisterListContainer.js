@@ -15,6 +15,7 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import theme from '../styles';
+import ChangeStudentClassModal from '../components/registerList/ChangeStudentClassModal';
 
 class RegisterListContainer extends React.Component {
   constructor(props, context) {
@@ -291,6 +292,18 @@ class RegisterListContainer extends React.Component {
     );
   };
 
+  loadAvailableClasses = (registerId, search) => {
+    this.props.registerListActions.loadAvailableClasses(
+      registerId,
+      search,
+      this.props.token,
+    );
+  };
+
+  resetAvailableClasses = () => {
+    this.props.registerListActions.resetAvailableClasses();
+  };
+
   onSelectBaseId = (baseId) => {
     this.props.baseActions.selectedBaseId(baseId);
   };
@@ -353,6 +366,14 @@ class RegisterListContainer extends React.Component {
 
   setAutoFocusRegisterListSearch = (bool) => {
     this.props.registerListActions.setAutoFocusRegisterListSearch(bool);
+  };
+
+  changeClass = (classId, registerId) => {
+    this.props.registerListActions.changeClass(
+      classId,
+      registerId,
+      this.props.token,
+    );
   };
 
   static navigationOptions = ({navigation}) => ({
@@ -446,6 +467,15 @@ class RegisterListContainer extends React.Component {
         onSelectClassId={this.onSelectClassId}
         reloadFilterClasses={this.reloadFilterClasses}
         setAutoFocusRegisterListSearch={this.setAutoFocusRegisterListSearch}
+        loadAvailableClasses={this.loadAvailableClasses}
+        availableClasses={this.props.availableClasses}
+        isLoadingAvailableClasses={this.props.isLoadingAvailableClasses}
+        errorAvailableClasses={this.props.errorAvailableClasses}
+        resetAvailableClasses={this.resetAvailableClasses}
+        changingClass={this.props.changingClass}
+        errorChangeClass={this.props.errorChangeClass}
+        changeClassStatus={this.props.changeClassStatus}
+        changeClass={this.changeClass}
       />
     );
   }
@@ -501,6 +531,12 @@ function mapStateToProps(state) {
     filterClasses: state.saveRegister.filterClasses,
     classId: state.registerList.classId,
     autoFocusRegisterListSearch: state.registerList.autoFocusRegisterListSearch,
+    availableClasses: state.registerList.classes,
+    isLoadingAvailableClasses: state.registerList.isLoadingClasses,
+    errorAvailableClasses: state.registerList.errorClasses,
+    changingClass: state.registerList.changingClass,
+    errorChangeClass: state.registerList.errorChangeClass,
+    changeClassStatus: state.registerList.changeClassStatus,
     domain: state.login.domain,
   };
 }

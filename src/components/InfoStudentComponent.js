@@ -68,10 +68,10 @@ class InfoStudentComponent extends React.Component {
           refreshControl={
             <RefreshControl
               refreshing={
-                this.props.isLoadingRegisters ||
-                this.props.isLoadingHistoryCalls ||
-                this.props.isLoadingHistoryCollect ||
-                this.props.isLoadingProgress
+                this.props.refreshingRegisters ||
+                this.props.refreshingHistoryCalls ||
+                this.props.refreshingHistoryCollect ||
+                this.props.refreshingProgress
               }
               onRefresh={() => this.props.onRefresh()}
             />

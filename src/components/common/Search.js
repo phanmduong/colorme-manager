@@ -15,6 +15,7 @@ const Search = ({
   onBlur,
   refer,
   onFilterPress,
+  onSubmitEditing,
   isFilter = false,
 }) => {
   return (
@@ -44,6 +45,7 @@ const Search = ({
           ]}
           clearButtonMode={'while-editing'}
           returnKeyType={'done'}
+          onSubmitEditing={onSubmitEditing}
         />
       </View>
       {isFilter && (

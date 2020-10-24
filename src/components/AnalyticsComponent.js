@@ -148,6 +148,7 @@ class AnalyticsComponent extends React.Component {
           onSelectGenId={this.props.onSelectGenId}
           onSelectStartDate={this.props.onSelectStartDate}
           onSelectEndDate={this.props.onSelectEndDate}
+          onSelectProvinceId={this.props.onSelectProvinceId}
         />
       </ScrollView>
     );

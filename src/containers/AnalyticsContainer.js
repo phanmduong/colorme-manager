@@ -15,6 +15,7 @@ import * as classActions from '../actions/classActions';
 import * as baseActions from '../actions/baseActions';
 import * as genActions from '../actions/genActions';
 import {ENROLLING, STUDYING} from '../constants/constant';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class AnalyticsContainer extends React.Component {
   constructor(props, context) {
@@ -29,6 +30,7 @@ class AnalyticsContainer extends React.Component {
     this.loadCourses();
     this.loadBases();
     this.loadGens();
+    this.loadProvinces();
   }
 
   componentWillUnmount() {
@@ -117,12 +119,24 @@ class AnalyticsContainer extends React.Component {
     this.loadDataClass(true);
   };
 
-  onSelectStartDate = (startDate) => {
-    this.props.analyticsActions.selectedStartDate(startDate);
+  onSelectStartDate = async (startDate) => {
+    try {
+      const dateString = String(startDate.format('YYYY-MM-DD'));
+      await AsyncStorage.setItem('@analytics_start_date', dateString);
+      this.props.analyticsActions.selectedStartDate(startDate);
+    } catch (e) {
+      // saving error
+    }
   };
 
-  onSelectEndDate = (endDate) => {
-    this.props.analyticsActions.selectedEndDate(endDate);
+  onSelectEndDate = async (endDate) => {
+    try {
+      const dateString = String(endDate.format('YYYY-MM-DD'));
+      await AsyncStorage.setItem('@analytics_end_date', dateString);
+      this.props.analyticsActions.selectedEndDate(endDate);
+    } catch (e) {
+      // saving error
+    }
   };
 
   onSelectBaseId = (baseId) => {
@@ -145,8 +159,18 @@ class AnalyticsContainer extends React.Component {
     this.props.analyticsActions.selectedCourseId(courseId);
   };
 
-  onSelectGenId = (genId) => {
-    this.props.analyticsActions.selectedGenId(genId);
+  onSelectGenId = async (genId) => {
+    try {
+      await AsyncStorage.setItem('@analytics_gen_id', String(genId));
+      this.props.analyticsActions.selectedGenId(genId);
+    } catch (e) {
+      // saving error
+    }
+  };
+
+  onSelectProvinceId = (provinceId) => {
+    this.props.analyticsActions.changeProvince(provinceId, this.props.token);
+    this.props.analyticsActions.selectedProvinceId(provinceId);
   };
 
   loadCampaigns = () => {
@@ -181,6 +205,10 @@ class AnalyticsContainer extends React.Component {
 
   loadBases = () => {
     this.props.baseActions.loadDataBase(this.props.token, this.props.domain);
+  };
+
+  loadProvinces = () => {
+    this.props.saveRegisterActions.loadProvinces(this.props.token, this.props.domain);
   };
 
   loadDataClass = (refreshing) => {
@@ -242,6 +270,7 @@ class AnalyticsContainer extends React.Component {
         onSelectGenId={this.onSelectGenId}
         loadDataClass={this.loadDataClass}
         onRefresh={this.refreshAnalytics}
+        onSelectProvinceId={this.onSelectProvinceId}
       />
     );
   }
@@ -260,6 +289,7 @@ function mapStateToProps(state) {
     selectedStaffId: state.analytics.selectedStaffId,
     startDate: state.analytics.startDate,
     endDate: state.analytics.endDate,
+    selectedProvinceId: state.analytics.selectedProvinceId,
     selectedCourseId: state.analytics.selectedCourseId,
     selectedSourceId: state.analytics.selectedSourceId,
     selectedCampaignId: state.analytics.selectedCampaignId,
@@ -285,6 +315,11 @@ function mapStateToProps(state) {
     refreshingAnalyticsRegister: state.analytics.refreshingAnalyticsRegister,
     refreshingAnalyticsRevenue: state.analytics.refreshingAnalyticsRevenue,
     refreshingAnalyticsClasses: state.analytics.refreshingAnalyticsClasses,
+    changingProvince: state.analytics.changingProvince,
+    errorChangeProvince: state.analytics.errorChangeProvince,
+    isLoadingProvinces: state.saveRegister.isLoadingProvinces,
+    errorLoadingProvinces: state.saveRegister.errorLoadingProvinces,
+    provinces: state.saveRegister.provinces,
   };
 }
 

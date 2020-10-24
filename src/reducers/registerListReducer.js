@@ -122,6 +122,45 @@ export default function registerListReducer(
       return Object.assign({}, state, {
         autoFocusRegisterListSearch: action.autoFocusRegisterListSearch,
       });
+    case types.BEGIN_LOAD_REGISTER_LIST_AVAILABLE_CLASSES:
+      return Object.assign({}, state, {
+        isLoadingClasses: action.isLoadingClasses,
+        errorClasses: action.errorClasses,
+      });
+    case types.LOAD_REGISTER_LIST_AVAILABLE_CLASSES_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isLoadingClasses: action.isLoadingClasses,
+        errorClasses: action.errorClasses,
+        classes: action.classes,
+      });
+    case types.LOAD_REGISTER_LIST_AVAILABLE_CLASSES_ERROR:
+      return Object.assign({}, state, {
+        isLoadingClasses: action.isLoadingClasses,
+        errorClasses: action.errorClasses,
+      });
+    case types.RESET_REGISTER_LIST_AVAILABLE_CLASSES:
+      return Object.assign({}, state, {
+        classes: action.classes,
+        changeClassStatus: action.changeClassStatus,
+      });
+    case types.BEGIN_CHANGE_STUDENT_CLASS:
+      return Object.assign({}, state, {
+        changingClass: action.changingClass,
+        errorChangeClass: action.errorChangeClass,
+      });
+    case types.CHANGE_STUDENT_CLASS_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isLoadingClasses: action.isLoadingClasses,
+        changingClass: action.changingClass,
+        errorChangeClass: action.errorChangeClass,
+        changeClassStatus: action.changeClassStatus,
+      });
+    case types.CHANGE_STUDENT_CLASS_ERROR:
+      return Object.assign({}, state, {
+        changingClass: action.changingClass,
+        errorChangeClass: action.errorChangeClass,
+        changeClassStatus: action.changeClassStatus,
+      });
     default:
       return state;
   }

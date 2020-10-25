@@ -89,9 +89,11 @@ class WorkShiftRegisterItem extends React.Component {
                   );
                 })}
                 {this.props.participates.length > 2 && (
-                  <Text style={styles.numberParticipate}>
-                    +{this.props.participates.length - 2}
-                  </Text>
+                  <View style={styles.numberContainer}>
+                    <Text style={styles.numberParticipate}>
+                      +{this.props.participates.length - 2}
+                    </Text>
+                  </View>
                 )}
               </View>
             </TouchableOpacity>

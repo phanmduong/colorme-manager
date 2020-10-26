@@ -106,7 +106,9 @@ class MeetingItem extends React.Component {
               </View>
               <View style={style.flex1}>
                 <View style={style.row}>
-                  <Text style={style.issue}>{total_issues} vấn đề</Text>
+                  <View style={style.issueContainer}>
+                    <Text style={style.issue}>{total_issues} vấn đề</Text>
+                  </View>
                 </View>
               </View>
             </View>
@@ -128,9 +130,11 @@ class MeetingItem extends React.Component {
                       );
                     })}
                     {participates.length > 3 && (
-                      <Text style={style.numberParticipate}>
-                        +{participates.length - 3}
-                      </Text>
+                      <View style={style.numberContainer}>
+                        <Text style={style.numberParticipate}>
+                          +{participates.length - 3}
+                        </Text>
+                      </View>
                     )}
                   </View>
                 </TouchableOpacity>
@@ -269,13 +273,15 @@ const style = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
-  issue: {
+  issueContainer: {
     backgroundColor: 'white',
     borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 2,
-    fontSize: 12,
     marginVertical: 5,
+  },
+  issue: {
+    fontSize: 12,
   },
   row: {
     flexDirection: 'row',
@@ -291,11 +297,13 @@ const style = StyleSheet.create({
     borderRadius: 7,
   },
   numberParticipate: {
+    fontSize: 12,
+  },
+  numberContainer: {
     borderRadius: 7,
     height: 14,
     alignItems: 'center',
     backgroundColor: 'white',
-    fontSize: 12,
     paddingHorizontal: 5,
   },
   iconAction: {

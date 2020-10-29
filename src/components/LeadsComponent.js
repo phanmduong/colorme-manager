@@ -44,6 +44,7 @@ class LeadsComponent extends React.Component {
           extraInputStyle={{
             width: width - (theme.mainHorizontal * 2 + 40 + 10) - 48,
           }}
+          value={this.props.searchLeads}
         />
         <TouchableOpacity onPress={this.toggleFilterModal}>
           <View style={styles.filterContainer}>
@@ -81,6 +82,7 @@ class LeadsComponent extends React.Component {
   renderItem = ({item}) => (
     <ListItemLeads
       {...this.props}
+      key={item.id}
       token={this.props.token}
       avatar_url={item.avatar_url}
       name={item.name}
@@ -97,6 +99,15 @@ class LeadsComponent extends React.Component {
       errorChangeCallStatus={this.props.errorChangeCallStatus}
       notes={item.notes}
       setStudentId={this.props.setStudentId}
+      interest={item.interest}
+      father_name={item.father_name}
+      source_id={item.source_id}
+      campaigns={this.props.campaigns}
+      staff={this.props.staff}
+      sources={this.props.sources}
+      statuses={this.props.statuses}
+      changeTags={this.props.changeTags}
+      loadStaff={this.props.loadStaff}
     />
   );
 

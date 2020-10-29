@@ -334,3 +334,156 @@ function saveLeadError() {
     errorSaveLead: true,
   };
 }
+
+export function changeCampaignTag(campaign_id, user_id, token) {
+  return function (dispatch) {
+    dispatch(beginChangeCampaignTag());
+    leadsApi
+      .assignCampaign(campaign_id, user_id, token)
+      .then((res) => {
+        dispatch(changeCampaignTagSuccessful());
+      })
+      .catch((error) => {
+        dispatch(changeCampaignTagError());
+      });
+  };
+}
+
+function beginChangeCampaignTag() {
+  return {
+    type: types.BEGIN_CHANGE_CAMPAIGN_TAG,
+    isChangingCampaignTag: true,
+    errorChangeCampaignTag: false,
+  };
+}
+
+function changeCampaignTagSuccessful() {
+  return {
+    type: types.BEGIN_CHANGE_CAMPAIGN_TAG,
+    isChangingCampaignTag: false,
+    errorChangeCampaignTag: false,
+  };
+}
+
+function changeCampaignTagError() {
+  return {
+    type: types.BEGIN_CHANGE_CAMPAIGN_TAG,
+    isChangingCampaignTag: false,
+    errorChangeCampaignTag: true,
+  };
+}
+
+export function changeSourceTag(source_id, user_id, token) {
+  return function (dispatch) {
+    dispatch(beginChangeSourceTag());
+    leadsApi
+      .assignSource(source_id, user_id, token)
+      .then((res) => {
+        dispatch(changeSourceTagSuccessful());
+      })
+      .catch((error) => {
+        dispatch(changeSourceTagError());
+      });
+  };
+}
+
+function beginChangeSourceTag() {
+  return {
+    type: types.BEGIN_CHANGE_SOURCE_TAG,
+    isChangingSourceTag: true,
+    errorChangeSourceTag: false,
+  };
+}
+
+function changeSourceTagSuccessful() {
+  return {
+    type: types.CHANGE_SOURCE_TAG_SUCCESSFUL,
+    isChangingSourceTag: false,
+    errorChangeSourceTag: false,
+  };
+}
+function changeSourceTagError() {
+  return {
+    type: types.CHANGE_SOURCE_TAG_ERROR,
+    isChangingSourceTag: false,
+    errorChangeSourceTag: true,
+  };
+}
+
+export function changeStatusTag(status_id, id, token) {
+  return function (dispatch) {
+    dispatch(beginChangeStatusTag());
+    leadsApi
+      .assignStatus(status_id, id, token)
+      .then((res) => {
+        dispatch(changeStatusTagSuccessful());
+      })
+      .catch((err) => {
+        dispatch(changeStatusTagError());
+        throw err;
+      });
+  };
+}
+
+function beginChangeStatusTag() {
+  return {
+    type: types.BEGIN_CHANGE_STATUS_TAG,
+    isChangingStatusTag: true,
+    errorChangeStatusTag: false,
+  };
+}
+
+function changeStatusTagSuccessful() {
+  return {
+    type: types.BEGIN_CHANGE_STATUS_TAG,
+    isChangingStatusTag: false,
+    errorChangeStatusTag: false,
+  };
+}
+
+function changeStatusTagError() {
+  return {
+    type: types.BEGIN_CHANGE_STATUS_TAG,
+    isChangingStatusTag: false,
+    errorChangeStatusTag: true,
+  };
+}
+
+export function changePICTag(staff_id, lead_id, token) {
+  return function (dispatch) {
+    dispatch(beginChangePICTag());
+    leadsApi
+      .assignPIC(staff_id, lead_id, token)
+      .then((res) => {
+        dispatch(changePICTagSuccessful());
+      })
+      .catch((err) => {
+        dispatch(changePICTagError());
+        throw err;
+      });
+  };
+}
+
+function beginChangePICTag() {
+  return {
+    type: types.BEGIN_CHANGE_PIC_TAG,
+    isChangingPICTag: true,
+    errorChangePICTag: false,
+  };
+}
+
+function changePICTagSuccessful() {
+  return {
+    type: types.CHANGE_PIC_TAG_SUCCESSFUL,
+    isChangingPICTag: false,
+    errorChangePICTag: false,
+  };
+}
+
+function changePICTagError() {
+  return {
+    type: types.CHANGE_STATUS_TAG_ERROR,
+    isChangingPICTag: false,
+    errorChangePICTag: true,
+  };
+}

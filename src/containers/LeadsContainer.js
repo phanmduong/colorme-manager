@@ -49,7 +49,7 @@ class LeadsContainer extends React.Component {
     );
   };
 
-  searchData = searchLeads => {
+  searchData = (searchLeads) => {
     let carer_id = this.props.carer_id === -1 ? '' : this.props.carer_id;
     let rate = this.props.rate === -1 ? '' : this.props.rate;
     let leadStatusId =
@@ -74,7 +74,7 @@ class LeadsContainer extends React.Component {
     );
   };
 
-  onRefresh = searchLeads => {
+  onRefresh = (searchLeads) => {
     let carer_id = this.props.carer_id === -1 ? '' : this.props.carer_id;
     let rate = this.props.rate === -1 ? '' : this.props.rate;
     let leadStatusId =
@@ -99,7 +99,7 @@ class LeadsContainer extends React.Component {
     );
   };
 
-  loadStaff = search => {
+  loadStaff = (search) => {
     this.props.leadsActions.getStaff(search, this.props.token);
   };
 
@@ -115,35 +115,35 @@ class LeadsContainer extends React.Component {
     this.props.saveRegisterActions.loadSources(this.props.token);
   };
 
-  onSelectStartTime = startTime => {
+  onSelectStartTime = (startTime) => {
     this.props.leadsActions.onSelectStartTimeLeads(startTime);
   };
 
-  onSelectEndTime = endTime => {
+  onSelectEndTime = (endTime) => {
     this.props.leadsActions.onSelectEndTimeLeads(endTime);
   };
 
-  onSelectRate = rate => {
+  onSelectRate = (rate) => {
     this.props.leadsActions.onSelectRateLeads(rate);
   };
 
-  onSelectCampaign = campaign => {
+  onSelectCampaign = (campaign) => {
     this.props.leadsActions.onSelectCampaignLeads(campaign);
   };
 
-  onSelectStatus = status => {
+  onSelectStatus = (status) => {
     this.props.leadsActions.onSelectStatusLeads(status);
   };
 
-  onSelectSource = source => {
+  onSelectSource = (source) => {
     this.props.leadsActions.onSelectSourceLeads(source);
   };
 
-  onSelectAddress = address => {
+  onSelectAddress = (address) => {
     this.props.leadsActions.onSelectAddressLeads(address);
   };
 
-  onSelectCarer = carer_id => {
+  onSelectCarer = (carer_id) => {
     this.props.leadsActions.onSelectCarerLeads(carer_id);
   };
 
@@ -174,7 +174,7 @@ class LeadsContainer extends React.Component {
     );
   };
 
-  setStudentId = studentId => {
+  setStudentId = (studentId) => {
     this.props.infoStudentActions.setStudentId(studentId);
   };
 
@@ -193,6 +193,38 @@ class LeadsContainer extends React.Component {
       </View>
     ),
   });
+
+  changeCampaignTag = (campaign_id, user_id) => {
+    this.props.leadsActions.changeCampaignTag(
+      campaign_id,
+      user_id,
+      this.props.token,
+    );
+  };
+
+  changeSourceTag = (source_id, user_id) => {
+    this.props.leadsActions.changeSourceTag(
+      source_id,
+      user_id,
+      this.props.token,
+    );
+  };
+
+  changeStatusTag = (status_id, id) => {
+    this.props.leadsActions.changeStatusTag(status_id, id, this.props.token);
+  };
+
+  changePICTag = (staff_id, lead_id) => {
+    this.props.leadsActions.changePICTag(staff_id, lead_id, this.props.token);
+  };
+
+  changeTags = (user_id, campaign_id, source_id, status_id, staff_id) => {
+    this.changeCampaignTag(campaign_id, user_id);
+    this.changeSourceTag(source_id, user_id);
+    this.changeStatusTag(status_id, user_id);
+    this.changePICTag(staff_id, user_id);
+    setTimeout(() => this.onRefresh(this.props.searchLeads), 500);
+  };
 
   render() {
     return (
@@ -213,6 +245,7 @@ class LeadsContainer extends React.Component {
         loadStaff={this.loadStaff}
         changeCallStatus={this.changeCallStatus}
         setStudentId={this.setStudentId}
+        changeTags={this.changeTags}
       />
     );
   }
@@ -257,6 +290,14 @@ function mapStateToProps(state) {
     isLoadingStaff: state.leads.isLoadingStaff,
     errorStaff: state.leads.errorStaff,
     errorChangeCallStatus: state.infoStudent.errorChangeCallStatus,
+    isChangingCampaignTag: state.leads.isChangingCampaignTag,
+    errorChangeCampaignTag: state.leads.errorChangeCampaignTag,
+    isChangingStatusTag: state.leads.isChangingStatusTag,
+    errorChangeStatusTag: state.leads.errorChangeStatusTag,
+    isChangingPICTag: state.leads.isChangingPICTag,
+    errorChangePICTag: state.leads.errorChangePICTag,
+    isChangingSourceTag: state.leads.isChangingSourceTag,
+    errorChangeSourceTag: state.leads.errorChangeSourceTag,
   };
 }
 
@@ -268,7 +309,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(LeadsContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(LeadsContainer);

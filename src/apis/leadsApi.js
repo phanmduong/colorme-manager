@@ -74,5 +74,41 @@ export function saveLead(lead, token) {
     gender: lead.gender,
     status_id: lead.status_id,
     address: lead.address,
+    campaign_id: lead.campaign_id,
+    source_id: lead.source_id,
+    carer_id: lead.carer_id,
+  });
+}
+
+export function assignCampaign(campaign_id, user_id, token) {
+  let url = env.MANAGE_API_URL_V3 + '/marketing-campaign/assign?token=' + token;
+  return axios.post(url, {
+    campaign_id,
+    user_id,
+  });
+}
+
+export function assignSource(source_id, user_id, token) {
+  let url = env.MANAGE_API_URL_V3 + '/source/assign?token=' + token;
+  return axios.post(url, {
+    source_id,
+    user_id,
+  });
+}
+
+export function assignStatus(status_id, id, token, domain) {
+  let url = env.MANAGE_API_URL_V4 + '/statuses/assign?token=' + token;
+  return axios.post(url, {
+    statusRef: 'leads',
+    id,
+    status_id,
+  });
+}
+
+export function assignPIC(staff_id, lead_id, token, domain) {
+  let url = env.MANAGE_API_URL_V3 + '/lead/assign-lead-staff?token=' + token;
+  return axios.put(url, {
+    lead_id,
+    staff_id,
   });
 }

@@ -11,7 +11,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {Text} from 'native-base';
-var {height, width} = Dimensions.get('window');
 import CardMenu from '../containers/dashboard/CardMenu';
 import CircleTab from '../containers/dashboard/CircleTab';
 import MeetingComponent from '../containers/meeting/MeetingComponent';
@@ -21,6 +20,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import {observer} from 'mobx-react';
 import {getShortName} from '../helper';
+import Loading from './common/Loading';
+const {width} = Dimensions.get('window');
 
 @observer
 class DashboardComponent extends React.Component {
@@ -39,6 +40,92 @@ class DashboardComponent extends React.Component {
       (task) => task.status === 0,
     );
     return totalNotCompleted.length;
+  };
+
+  getFeatureList = () => {
+    const featureList = [
+      {
+        id: 'dashboard/sale',
+        element: (
+          <CircleTab
+            iconImage={require('../../assets/img/icons8-ratings-90.png')}
+            title={'Thống kê'}
+            onPress={() => {
+              this.props.getAnalyticsGenData();
+              this.props.navigation.navigate('Analytics');
+            }}
+          />
+        ),
+      },
+      {
+        id: '/kpi/list',
+        element: (
+          <CircleTab
+            iconImage={require('../../assets/img/icons8-bar_chart.png')}
+            title={'KPI'}
+            onPress={() => {
+              this.props.navigation.navigate('KPI');
+            }}
+          />
+        ),
+      },
+      {
+        id: 'sales/register-list',
+        element: (
+          <CircleTab
+            iconImage={require('../../assets/img/icons8-scholarship.png')}
+            title={'Học viên'}
+            onPress={() => {
+              this.props.navigation.navigate('RegisterList');
+            }}
+          />
+        ),
+      },
+      {
+        id: '/customer-services/leads',
+        element: (
+          <CircleTab
+            iconImage={require('../../assets/img/icons8-user_account.png')}
+            title={'Leads'}
+            onPress={() => {
+              this.props.navigation.navigate('Leads');
+            }}
+          />
+        ),
+      },
+      {
+        id: 'teaching/classes',
+        element: (
+          <CircleTab
+            iconImage={require('../../assets/img/icons8-teacher.png')}
+            title={'Lớp học'}
+            onPress={() => {
+              this.props.navigation.navigate('Class', {
+                analyticsScreen: false,
+              });
+            }}
+          />
+        ),
+      },
+    ];
+    return featureList;
+  };
+
+  filterFeatureList = () => {
+    let deepCopiedFeatureList = this.getFeatureList().slice(0);
+    deepCopiedFeatureList = deepCopiedFeatureList.filter((feature) => {
+      for (const tab of this.props.tabs) {
+        if (feature.id === tab.url) {
+          return true;
+        }
+      }
+      return false;
+    });
+    let filteredFeatureList = [];
+    while (deepCopiedFeatureList.length > 0) {
+      filteredFeatureList.push(deepCopiedFeatureList.splice(0, 3));
+    }
+    return filteredFeatureList;
   };
 
   render() {
@@ -173,52 +260,17 @@ class DashboardComponent extends React.Component {
               }}
             />
           </View>
-          <View style={styles.otherFeatureLine}>
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-scholarship.png')}
-              title={'Học viên'}
-              onPress={() => {
-                this.props.navigation.navigate('RegisterList');
-              }}
-            />
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-user_account.png')}
-              title={'Leads'}
-              onPress={() => {
-                this.props.navigation.navigate('Leads');
-              }}
-            />
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-bar_chart.png')}
-              title={'KPI'}
-              onPress={() => {
-                this.props.navigation.navigate('KPI');
-              }}
-            />
-          </View>
-          <View style={styles.otherFeatureLine}>
-            {this.props.domain !== 'capi' && (
-              <CircleTab
-                iconImage={require('../../assets/img/icons8-ratings-90.png')}
-                title={'Thống kê'}
-                onPress={() => {
-                  this.props.getAnalyticsGenData();
-                  this.props.navigation.navigate('Analytics');
-                }}
-              />
-            )}
-            {this.props.domain !== 'capi' && (
-              <CircleTab
-                iconImage={require('../../assets/img/icons8-teacher.png')}
-                title={'Lớp học'}
-                onPress={() => {
-                  this.props.navigation.navigate('Class', {
-                    analyticsScreen: false,
-                  });
-                }}
-              />
-            )}
-          </View>
+          {this.props.isLoadingTabs ? (
+            <Loading size={width / 8} />
+          ) : (
+            this.filterFeatureList().map((featureGroup) => (
+              <View style={styles.otherFeatureLine}>
+                {featureGroup.map((feature) => {
+                  return feature.element;
+                })}
+              </View>
+            ))
+          )}
           <MeetingComponent
             store={this.props.store}
             {...this.props}

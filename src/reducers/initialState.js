@@ -27,6 +27,11 @@ export default {
     isLoadingDomains: false,
     errorDomains: false,
   },
+  tab: {
+    tabs: [],
+    loading: false,
+    error: false,
+  },
   base: {
     baseData: [],
     isLoading: false,

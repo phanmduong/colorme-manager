@@ -13,7 +13,6 @@ import {
 import {Text} from 'native-base';
 import CardMenu from '../containers/dashboard/CardMenu';
 import CircleTab from '../containers/dashboard/CircleTab';
-import MeetingComponent from '../containers/meeting/MeetingComponent';
 import theme from '../styles';
 import {getStatusBarHeight, isIphoneX} from 'react-native-iphone-x-helper';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -30,7 +29,6 @@ class DashboardComponent extends React.Component {
   }
 
   handleRefresh = () => {
-    this.props.store.refreshMeetingDetail();
     this.props.refreshNotifications();
     this.props.refreshTasks();
   };
@@ -129,7 +127,6 @@ class DashboardComponent extends React.Component {
   };
 
   render() {
-    const {refreshing} = this.props.store;
     const {isRefreshingNotifications, isLoadingTaskView} = this.props;
     return (
       <ScrollView
@@ -141,9 +138,7 @@ class DashboardComponent extends React.Component {
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
-            refreshing={
-              refreshing || isRefreshingNotifications || isLoadingTaskView
-            }
+            refreshing={isRefreshingNotifications || isLoadingTaskView}
             onRefresh={this.handleRefresh}
           />
         }>
@@ -271,11 +266,6 @@ class DashboardComponent extends React.Component {
               </View>
             ))
           )}
-          <MeetingComponent
-            store={this.props.store}
-            {...this.props}
-            mainScreen={true}
-          />
         </View>
       </ScrollView>
     );

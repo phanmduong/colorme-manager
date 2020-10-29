@@ -6,7 +6,6 @@ import DashboardComponent from '../components/DashboardComponent';
 import * as taskActions from '../actions/taskActions';
 import * as notificationActions from '../actions/notificationActions';
 import * as registerListActions from '../actions/registerListActions';
-import MeetingStore from './meeting/MeetingStore';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import moment from 'moment';
@@ -17,11 +16,9 @@ import * as tabActions from '../actions/tabActions';
 class DashboardContainer extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.store = new MeetingStore(props.token, props.domain);
   }
 
   componentDidMount() {
-    this.store.loadList();
     this.loadTasks();
     this.loadNotifications();
     this.loadTabs();
@@ -78,7 +75,6 @@ class DashboardContainer extends React.Component {
   render() {
     return (
       <DashboardComponent
-        store={this.store}
         {...this.props}
         refreshNotifications={this.refreshNotifications}
         refreshTasks={this.loadTasks}

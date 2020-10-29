@@ -61,7 +61,7 @@ class AuthLoadingContainer extends React.Component {
           source={require('../../assets/img/ieg.png')}
           style={{transform: [{scale: 0.2}]}}
         />
-        <Spinkit isVisible color="#0A66E9" type="ThreeBounce" size={40} />
+        <Spinkit isVisible color="#09174D" type="ThreeBounce" size={40} />
       </View>
     );
   }

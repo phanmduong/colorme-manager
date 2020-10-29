@@ -158,7 +158,7 @@ const styles = {
     borderRadius: 25,
   },
   btnSubmit: {
-    backgroundColor: '#0A66E9',
+    backgroundColor: '#09174D',
     paddingHorizontal: 20,
     borderRadius: 25,
     height: 45,

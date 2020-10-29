@@ -24,6 +24,11 @@ export default {
     deviceUser: {},
     domain: 'ieg',
   },
+  tab: {
+    tabs: [],
+    loading: false,
+    error: false,
+  },
   base: {
     baseData: [],
     isLoading: false,

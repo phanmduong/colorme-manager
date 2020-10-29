@@ -43,6 +43,7 @@ import leadsReducer from './leadsReducer';
 import staffReducer from './staffReducer';
 import clockManageReducer from "./clockManageReducer";
 import kpiReducer from "./kpiReducer";
+import tabReducer from "./tabReducer";
 
 const appReducer = combineReducers({
   login: loginReducer,
@@ -85,6 +86,7 @@ const appReducer = combineReducers({
   staff: staffReducer,
   clockManage: clockManageReducer,
   kpi: kpiReducer,
+  tab: tabReducer,
 });
 
 const rootReducer = (state, action) => {

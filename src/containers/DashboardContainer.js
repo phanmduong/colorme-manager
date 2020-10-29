@@ -12,6 +12,7 @@ import {bindActionCreators} from 'redux';
 import moment from 'moment';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as analyticsActions from '../actions/analyticsActions';
+import * as tabActions from '../actions/tabActions';
 
 class DashboardContainer extends React.Component {
   constructor(props, context) {
@@ -23,7 +24,12 @@ class DashboardContainer extends React.Component {
     this.store.loadList();
     this.loadTasks();
     this.loadNotifications();
+    this.loadTabs();
   }
+
+  loadTabs = () => {
+    this.props.tabActions.loadTabs(this.props.token, this.props.domain);
+  };
 
   loadTasks = () => {
     this.props.taskActions.loadTaskView(
@@ -101,6 +107,9 @@ function mapStateToProps(state) {
     isReadingNotifications: state.notification.isReadingNotifications,
     errorReadingNotifications: state.notification.errorReadingNotifications,
     domain: state.login.domain,
+    tabs: state.tab.tabs,
+    isLoadingTabs: state.tab.loading,
+    errorTabs: state.tab.error,
   };
 }
 
@@ -110,6 +119,7 @@ function mapDispatchToProps(dispatch) {
     notificationActions: bindActionCreators(notificationActions, dispatch),
     registerListActions: bindActionCreators(registerListActions, dispatch),
     analyticsActions: bindActionCreators(analyticsActions, dispatch),
+    tabActions: bindActionCreators(tabActions, dispatch),
   };
 }
 

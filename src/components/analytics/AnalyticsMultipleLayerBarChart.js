@@ -68,7 +68,10 @@ const AnalyticsMultipleLayerBarChart = ({
    */
   const getDataWithHeights = (totalHeight, totalRegister, data) => {
     return data.map((dataItem) => {
-      const height = (totalHeight * dataItem.registers) / totalRegister;
+      const height =
+        totalRegister !== 0
+          ? (totalHeight * dataItem.registers) / totalRegister
+          : 0;
       return {...dataItem, height: height};
     });
   };
@@ -288,7 +291,7 @@ const AnalyticsMultipleLayerBarChart = ({
               <Text>{dataItem.name}</Text>
             </View>
           ))}
-          {data.length > 10 && (
+          {data.length > 8 && (
             <View style={styles.row}>
               <View
                 style={[
@@ -298,7 +301,7 @@ const AnalyticsMultipleLayerBarChart = ({
                   },
                 ]}
               />
-              <Text>+{data.length - 10} chú thích khác</Text>
+              <Text>+{data.length - 8} chú thích khác</Text>
             </View>
           )}
         </View>

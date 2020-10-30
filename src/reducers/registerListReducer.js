@@ -175,6 +175,10 @@ export default function registerListReducer(
       return Object.assign({}, state, {
         courseId: action.courseId,
       });
+    case types.SELECT_REGISTER_LIST_DATE_TEST:
+      return Object.assign({}, state, {
+        dateTest: action.dateTest,
+      });
     default:
       return state;
   }

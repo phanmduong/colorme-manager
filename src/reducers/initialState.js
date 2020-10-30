@@ -181,6 +181,7 @@ export default {
     classId: -1,
     courseId: -1,
     note: '',
+    dateTest: '',
     autoFocusRegisterListSearch: false,
     classes: [],
     isLoadingClasses: false,

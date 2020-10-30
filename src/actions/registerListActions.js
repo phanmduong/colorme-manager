@@ -38,6 +38,7 @@ export function loadDataRegisterListMy(
   classId,
   courseId,
   note,
+  dateTest,
 ) {
   return function (dispatch) {
     dispatch(beginDataRegisterListLoadMy());
@@ -64,6 +65,7 @@ export function loadDataRegisterListMy(
         statusId,
         courseId,
         note,
+        dateTest,
       )
       .then(function (res) {
         dispatch(loadDataSuccessfulMy(res, salerId, search_coupon, note));
@@ -122,6 +124,7 @@ export function updateFormAndLoadDataSearchMy(
   classId,
   courseId,
   note,
+  dateTest,
   token,
 ) {
   sourceCancelMy.cancel('Canceled by api register list (my).');
@@ -150,6 +153,7 @@ export function updateFormAndLoadDataSearchMy(
         classId,
         courseId,
         note,
+        dateTest,
       ),
     );
   };
@@ -185,6 +189,7 @@ export function refreshRegisterListMy(
   classId,
   courseId,
   note,
+  dateTest,
 ) {
   return (dispatch) => {
     dispatch(resetRegisterListMy());
@@ -210,6 +215,7 @@ export function refreshRegisterListMy(
         classId,
         courseId,
         note,
+        dateTest,
       ),
     );
   };
@@ -474,5 +480,12 @@ export function onSelectCourseId(courseId) {
   return {
     type: types.SELECT_REGISTER_LIST_COURSE,
     courseId: courseId,
+  };
+}
+
+export function onSelectDateTest(date) {
+  return {
+    type: types.SELECT_REGISTER_LIST_DATE_TEST,
+    dateTest: date,
   };
 }

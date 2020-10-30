@@ -27,6 +27,7 @@ class FilterModal extends React.Component {
       isStartDateVisible: false,
       isEndDateVisible: false,
       isAppointmentPaymentVisible: false,
+      isDateTestVisible: false,
       search: '',
     };
   }
@@ -176,6 +177,13 @@ class FilterModal extends React.Component {
     });
   };
 
+  handleDateTestPicked = (date) => {
+    this.props.onSelectDateTest(moment(date).format('YYYY-MM-DD'));
+    this.setState({
+      isDateTestVisible: false,
+    });
+  };
+
   openStartDatePicker = () => {
     this.setState({isStartDateVisible: true});
   };
@@ -186,6 +194,10 @@ class FilterModal extends React.Component {
 
   openAppointmentPaymentPicker = () => {
     this.setState({isAppointmentPaymentVisible: true});
+  };
+
+  openDateTestPicker = () => {
+    this.setState({isDateTestVisible: true});
   };
 
   render() {
@@ -221,7 +233,8 @@ class FilterModal extends React.Component {
           {!this.props.isLoadingCampaigns &&
           !this.props.isLoadingSources &&
           !this.props.isLoadingStatuses &&
-          !this.props.isLoadingSalers ? (
+          !this.props.isLoadingSalers &&
+          !this.props.isLoadingCourses ? (
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.titleContainer}>
                 <Text style={styles.title}>Lọc</Text>
@@ -454,6 +467,21 @@ class FilterModal extends React.Component {
                 </TouchableOpacity>
               </View>
               <View style={styles.filterTitle}>
+                <Text style={{fontSize: 16}}>Hẹn ngày test</Text>
+                <TouchableOpacity
+                  style={styles.filterContainer}
+                  onPress={() => this.openDateTestPicker()}>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                    }}>
+                    {this.props.dateTest !== ''
+                      ? this.props.dateTest
+                      : 'YYYY-MM-DD'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Coupon</Text>
                 <View style={styles.filterContainer}>
                   <TextInput
@@ -607,6 +635,11 @@ class FilterModal extends React.Component {
                 onCancel={() =>
                   this.setState({isAppointmentPaymentVisible: false})
                 }
+              />
+              <DateTimePicker
+                isVisible={this.state.isDateTestVisible}
+                onConfirm={this.handleDateTestPicked}
+                onCancel={() => this.setState({isDateTestVisible: false})}
               />
             </ScrollView>
           ) : (

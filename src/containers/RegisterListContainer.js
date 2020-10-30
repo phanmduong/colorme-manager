@@ -86,6 +86,7 @@ class RegisterListContainer extends React.Component {
         classId,
         courseId,
         this.props.note,
+        this.props.dateTest,
       );
     }
   }
@@ -131,6 +132,7 @@ class RegisterListContainer extends React.Component {
       classId,
       courseId,
       note,
+      this.props.dateTest,
     );
   };
 
@@ -166,6 +168,7 @@ class RegisterListContainer extends React.Component {
       classId,
       courseId,
       this.props.note,
+      this.props.dateTest,
       this.props.token,
     );
   }
@@ -308,6 +311,10 @@ class RegisterListContainer extends React.Component {
     this.props.registerListActions.onSelectCourseId(courseId);
   };
 
+  onSelectDateTest = (date) => {
+    this.props.registerListActions.onSelectDateTest(date);
+  };
+
   reset = () => {
     this.props.registerListActions.reset();
   };
@@ -397,6 +404,8 @@ class RegisterListContainer extends React.Component {
         courseId={this.props.courseId}
         onSelectCourseId={this.onSelectCourseId}
         note={this.props.note}
+        onSelectDateTest={this.onSelectDateTest}
+        dateTest={this.props.dateTest}
       />
     );
   }
@@ -450,6 +459,7 @@ function mapStateToProps(state) {
     errorCourses: state.registerList.errorCourses,
     courseId: state.registerList.courseId,
     note: state.registerList.note,
+    dateTest: state.registerList.dateTest,
   };
 }
 

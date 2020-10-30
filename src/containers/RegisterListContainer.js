@@ -85,11 +85,12 @@ class RegisterListContainer extends React.Component {
         genId,
         classId,
         courseId,
+        this.props.note,
       );
     }
   }
 
-  refreshRegisterListMy = (search_coupon) => {
+  refreshRegisterListMy = (search_coupon, note) => {
     let baseId =
       this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
     let salerId = this.props.salerId === -1 ? '' : this.props.salerId;
@@ -129,6 +130,7 @@ class RegisterListContainer extends React.Component {
       genId,
       classId,
       courseId,
+      note,
     );
   };
 
@@ -163,6 +165,7 @@ class RegisterListContainer extends React.Component {
       genId,
       classId,
       courseId,
+      this.props.note,
       this.props.token,
     );
   }
@@ -393,6 +396,7 @@ class RegisterListContainer extends React.Component {
         errorCourses={this.props.errorCourses}
         courseId={this.props.courseId}
         onSelectCourseId={this.onSelectCourseId}
+        note={this.props.note}
       />
     );
   }
@@ -445,6 +449,7 @@ function mapStateToProps(state) {
     isLoadingCourses: state.registerList.isLoadingCourses,
     errorCourses: state.registerList.errorCourses,
     courseId: state.registerList.courseId,
+    note: state.registerList.note,
   };
 }
 

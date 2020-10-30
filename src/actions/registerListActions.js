@@ -37,6 +37,7 @@ export function loadDataRegisterListMy(
   genId,
   classId,
   courseId,
+  note,
 ) {
   return function (dispatch) {
     dispatch(beginDataRegisterListLoadMy());
@@ -62,9 +63,10 @@ export function loadDataRegisterListMy(
         sourceId,
         statusId,
         courseId,
+        note,
       )
       .then(function (res) {
-        dispatch(loadDataSuccessfulMy(res, salerId, search_coupon));
+        dispatch(loadDataSuccessfulMy(res, salerId, search_coupon, note));
       })
       .catch((error) => {
         if (axios.isCancel(error)) {
@@ -77,7 +79,7 @@ export function loadDataRegisterListMy(
   };
 }
 
-export function loadDataSuccessfulMy(res, salerId, search_coupon) {
+export function loadDataSuccessfulMy(res, salerId, search_coupon, note) {
   return {
     type: types.LOAD_DATA_REGISTER_LIST_SUCCESSFUL_MY,
     registerListDataMy: res.data.registers,
@@ -88,6 +90,7 @@ export function loadDataSuccessfulMy(res, salerId, search_coupon) {
     refreshingMy: false,
     salerId: salerId,
     search_coupon: search_coupon,
+    note: note,
   };
 }
 
@@ -118,6 +121,7 @@ export function updateFormAndLoadDataSearchMy(
   genId,
   classId,
   courseId,
+  note,
   token,
 ) {
   sourceCancelMy.cancel('Canceled by api register list (my).');
@@ -145,6 +149,7 @@ export function updateFormAndLoadDataSearchMy(
         genId,
         classId,
         courseId,
+        note,
       ),
     );
   };
@@ -179,6 +184,7 @@ export function refreshRegisterListMy(
   genId,
   classId,
   courseId,
+  note,
 ) {
   return (dispatch) => {
     dispatch(resetRegisterListMy());
@@ -203,6 +209,7 @@ export function refreshRegisterListMy(
         genId,
         classId,
         courseId,
+        note,
       ),
     );
   };

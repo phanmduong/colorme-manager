@@ -113,6 +113,7 @@ class RegisterListComponent extends React.Component {
           errorCourses={this.props.errorCourses}
           courseId={this.props.courseId}
           onSelectCourseId={this.props.onSelectCourseId}
+          note={this.props.note}
         />
       </View>
     );

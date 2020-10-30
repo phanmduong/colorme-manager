@@ -180,6 +180,7 @@ export default {
     status_id: -1,
     classId: -1,
     courseId: -1,
+    note: '',
     autoFocusRegisterListSearch: false,
     classes: [],
     isLoadingClasses: false,

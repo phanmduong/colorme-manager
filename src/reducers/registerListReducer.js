@@ -27,6 +27,7 @@ export default function registerListReducer(
         totalPageMy: action.totalPageMy,
         salerId: action.salerId,
         search_coupon: action.search_coupon,
+        note: action.note,
       });
     case types.LOAD_DATA_REGISTER_LIST_ERROR_MY:
       return Object.assign({}, state, {

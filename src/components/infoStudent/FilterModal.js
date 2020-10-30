@@ -23,6 +23,7 @@ class FilterModal extends React.Component {
     super(props, context);
     this.state = {
       search_coupon: '',
+      note: '',
       isStartDateVisible: false,
       isEndDateVisible: false,
       isAppointmentPaymentVisible: false,
@@ -265,9 +266,7 @@ class FilterModal extends React.Component {
                   modalAnimationType={'fade'}
                   optionTemplate={this.renderPickerOption}
                   fieldTemplate={this.renderPickerField}
-                  headerTemplate={() =>
-                    this.renderPickerHeader('Chọn môn học')
-                  }
+                  headerTemplate={() => this.renderPickerHeader('Chọn môn học')}
                   footerTemplate={this.renderPickerFooter}
                   onBlur={() => this.setState({search: ''})}
                   modalStyle={{
@@ -470,6 +469,19 @@ class FilterModal extends React.Component {
                 </View>
               </View>
               <View style={styles.filterTitle}>
+                <Text style={{fontSize: 16}}>Note</Text>
+                <View style={styles.filterContainer}>
+                  <TextInput
+                    placeholder={'Nhập note'}
+                    autoCapitalize={false}
+                    onChangeText={(text) => this.setState({note: text})}
+                    value={this.state.note}
+                    clearButtonMode={true}
+                    style={{width: 120, fontSize: 16}}
+                  />
+                </View>
+              </View>
+              <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Đánh dấu</Text>
                 <CustomPicker
                   options={this.getSearchedResults(bookmarkFilter)}
@@ -551,7 +563,10 @@ class FilterModal extends React.Component {
               </View>
               <TouchableOpacity
                 onPress={() => {
-                  this.props.onRefresh(this.state.search_coupon);
+                  this.props.onRefresh(
+                    this.state.search_coupon,
+                    this.state.note,
+                  );
                   this.props.closeModal();
                 }}>
                 <View style={styles.submit}>

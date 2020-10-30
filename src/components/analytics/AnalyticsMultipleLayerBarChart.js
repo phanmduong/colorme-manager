@@ -68,7 +68,10 @@ const AnalyticsMultipleLayerBarChart = ({
    */
   const getDataWithHeights = (totalHeight, totalRegister, data) => {
     return data.map((dataItem) => {
-      const height = (totalHeight * dataItem.registers) / totalRegister;
+      const height =
+        totalRegister !== 0
+          ? (totalHeight * dataItem.registers) / totalRegister
+          : 0;
       return {...dataItem, height: height};
     });
   };

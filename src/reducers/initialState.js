@@ -179,6 +179,7 @@ export default {
     source_id: -1,
     status_id: -1,
     classId: -1,
+    courseId: -1,
     autoFocusRegisterListSearch: false,
     classes: [],
     isLoadingClasses: false,
@@ -486,6 +487,9 @@ export default {
     errorChangeStatusTag: false,
     isChangingPICTag: false,
     errorChangePICTag: false,
+    courses: [],
+    isLoadingCourses: false,
+    errorCourses: false,
   },
   staff: {
     staff: [],

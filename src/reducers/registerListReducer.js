@@ -154,6 +154,26 @@ export default function registerListReducer(
         errorChangeClass: action.errorChangeClass,
         changeClassStatus: action.changeClassStatus,
       });
+    case types.BEGIN_LOAD_REGISTER_LIST_COURSES:
+      return Object.assign({}, state, {
+        isLoadingCourses: action.isLoadingCourses,
+        errorCourses: action.errorCourses,
+      });
+    case types.LOAD_REGISTER_LIST_COURSES_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isLoadingCourses: action.isLoadingCourses,
+        errorCourses: action.errorCourses,
+        courses: action.courses,
+      });
+    case types.LOAD_REGISTER_LIST_COURSES_ERROR:
+      return Object.assign({}, state, {
+        isLoadingCourses: action.isLoadingCourses,
+        errorCourses: action.errorCourses,
+      });
+    case types.SELECT_REGISTER_LIST_COURSE:
+      return Object.assign({}, state, {
+        courseId: action.courseId,
+      });
     default:
       return state;
   }

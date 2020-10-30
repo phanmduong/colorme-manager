@@ -14,7 +14,6 @@ import {getStatusBarHeight, isIphoneX} from 'react-native-iphone-x-helper';
 import FilterModal from './infoStudent/FilterModal';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import LinearGradient from 'react-native-linear-gradient';
-import ChangeStudentClassModal from './registerList/ChangeStudentClassModal';
 
 var {height, width} = Dimensions.get('window');
 class RegisterListComponent extends React.Component {
@@ -73,10 +72,6 @@ class RegisterListComponent extends React.Component {
           closeModal={this.toggleFilterModal}
           onRefresh={this.props.onRefresh}
           user={this.props.user}
-          baseData={this.props.baseData}
-          onSelectBaseId={this.props.onSelectBaseId}
-          onSelectSalerId={this.props.onSelectSalerId}
-          selectedBaseId={this.props.selectedBaseId}
           salerId={this.props.salerId}
           campaigns={this.props.campaigns}
           onSelectCampaignId={this.props.onSelectCampaignId}
@@ -108,16 +103,16 @@ class RegisterListComponent extends React.Component {
           isLoadingSources={this.props.isLoadingSources}
           isLoadingStatuses={this.props.isLoadingStatuses}
           isLoadingSalers={this.props.isLoadingSalers}
-          genData={this.props.genData}
-          selectedGenId={this.props.selectedGenId}
-          isLoadingGen={this.props.isLoadingGen}
-          onSelectGenId={this.props.onSelectGenId}
-          currentGen={this.props.currentGen}
           classId={this.props.classId}
           isLoadingFilterClasses={this.props.isLoadingFilterClasses}
           filterClasses={this.props.filterClasses}
           onSelectClassId={this.props.onSelectClassId}
           loadFilterClasses={this.props.loadFilterClasses}
+          courses={this.props.courses}
+          isLoadingCourses={this.props.isLoadingCourses}
+          errorCourses={this.props.errorCourses}
+          courseId={this.props.courseId}
+          onSelectCourseId={this.props.onSelectCourseId}
         />
       </View>
     );

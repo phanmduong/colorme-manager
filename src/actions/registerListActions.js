@@ -7,7 +7,6 @@ import axios from 'axios';
 import {selectedGenId} from './genActions';
 import {selectedBaseId} from './baseActions';
 let CancelToken = axios.CancelToken;
-let sourceCancelAll = CancelToken.source();
 let sourceCancelMy = CancelToken.source();
 
 export function beginDataRegisterListLoadMy() {
@@ -37,6 +36,7 @@ export function loadDataRegisterListMy(
   sourceId,
   genId,
   classId,
+  courseId,
 ) {
   return function (dispatch) {
     dispatch(beginDataRegisterListLoadMy());
@@ -61,6 +61,7 @@ export function loadDataRegisterListMy(
         end_time,
         sourceId,
         statusId,
+        courseId,
       )
       .then(function (res) {
         dispatch(loadDataSuccessfulMy(res, salerId, search_coupon));
@@ -116,6 +117,7 @@ export function updateFormAndLoadDataSearchMy(
   sourceId,
   genId,
   classId,
+  courseId,
   token,
 ) {
   sourceCancelMy.cancel('Canceled by api register list (my).');
@@ -142,6 +144,7 @@ export function updateFormAndLoadDataSearchMy(
         sourceId,
         genId,
         classId,
+        courseId,
       ),
     );
   };
@@ -175,6 +178,7 @@ export function refreshRegisterListMy(
   sourceId,
   genId,
   classId,
+  courseId,
 ) {
   return (dispatch) => {
     dispatch(resetRegisterListMy());
@@ -198,6 +202,7 @@ export function refreshRegisterListMy(
         sourceId,
         genId,
         classId,
+        courseId,
       ),
     );
   };
@@ -415,5 +420,52 @@ function changeClassError(error) {
     changingClass: false,
     errorChangeClass: true,
     changeClassStatus: error.response.status,
+  };
+}
+
+export function loadCourses(token) {
+  return function (dispatch) {
+    dispatch(beginLoadCourses());
+    studentApi
+      .loadCourses(token)
+      .then((res) => {
+        dispatch(loadCoursesSuccess(res));
+      })
+      .catch((error) => {
+        dispatch(loadCoursesError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadCourses() {
+  return {
+    type: types.BEGIN_LOAD_REGISTER_LIST_COURSES,
+    isLoadingCourses: true,
+    errorCourses: false,
+  };
+}
+
+function loadCoursesSuccess(res) {
+  return {
+    type: types.LOAD_REGISTER_LIST_COURSES_SUCCESSFUL,
+    isLoadingCourses: false,
+    errorCourses: false,
+    courses: res.data.data.courses,
+  };
+}
+
+function loadCoursesError() {
+  return {
+    type: types.LOAD_REGISTER_LIST_COURSES_ERROR,
+    isLoadingCourses: false,
+    errorCourses: true,
+  };
+}
+
+export function onSelectCourseId(courseId) {
+  return {
+    type: types.SELECT_REGISTER_LIST_COURSE,
+    courseId: courseId,
   };
 }

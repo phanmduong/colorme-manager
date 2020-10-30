@@ -25,6 +25,7 @@ export function loadRegisterListApi(
   end_time = '',
   source_id = '',
   status_id = '',
+  course_id = '',
 ) {
   let url =
     env.API_URL +
@@ -62,6 +63,8 @@ export function loadRegisterListApi(
     status_id +
     '&registerSourceId=' +
     source_id +
+    '&course_id=' +
+    course_id +
     '&token=' +
     token;
   return axios.get(url, {cancelToken: sourceCancel.token});
@@ -161,4 +164,9 @@ export function changeClass(classId, registerId, token) {
     class_id: classId,
     register_id: registerId,
   });
+}
+
+export function loadCourses(token) {
+  let url = env.MANAGE_API_URL_V3 + '/v2/course/all?token=' + token;
+  return axios.get(url);
 }

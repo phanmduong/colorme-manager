@@ -135,31 +135,6 @@ class FilterModal extends React.Component {
     return array[0];
   };
 
-  getDefaultGen = (gens) => {
-    for (let gen of gens) {
-      if (gen.id === this.props.selectedGenId) {
-        return gen;
-      }
-    }
-    for (let gen of gens) {
-      if (gen.id === this.props.currentGen.id) {
-        return gen;
-      }
-    }
-    return gens[0];
-  };
-
-  getGenData = () => {
-    let defaultGen = {id: -2, name: 'Tất cả'};
-    let genData = [];
-    genData.push(defaultGen);
-    for (let gen of this.props.genData) {
-      let pushedGen = {id: gen.id, name: 'Khóa ' + gen.name};
-      genData.push(pushedGen);
-    }
-    return genData;
-  };
-
   getSearchedResults = (array) => {
     let list = [];
     if (this.state.search === '') {
@@ -242,63 +217,13 @@ class FilterModal extends React.Component {
         onBackButtonPress={this.props.closeModal}
         style={styles.modalContainer}>
         <View style={styles.modal}>
-          {!this.props.isLoadingBase &&
-          !this.props.isLoadingCampaigns &&
+          {!this.props.isLoadingCampaigns &&
           !this.props.isLoadingSources &&
           !this.props.isLoadingStatuses &&
-          !this.props.isLoadingSalers &&
-          !this.props.isLoadingGen ? (
+          !this.props.isLoadingSalers ? (
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.titleContainer}>
                 <Text style={styles.title}>Lọc</Text>
-              </View>
-              <View style={styles.filterTitle}>
-                <Text style={{fontSize: 16}}>Khóa học</Text>
-                <CustomPicker
-                  options={this.getSearchedResults(this.getGenData())}
-                  defaultValue={this.getDefaultGen(this.getGenData())}
-                  getLabel={(item) => item.name}
-                  modalAnimationType={'fade'}
-                  optionTemplate={this.renderPickerOption}
-                  fieldTemplate={this.renderPickerField}
-                  headerTemplate={() =>
-                    this.renderPickerHeader('Chọn khóa học')
-                  }
-                  footerTemplate={this.renderPickerFooter}
-                  onBlur={() => this.setState({search: ''})}
-                  modalStyle={{
-                    borderRadius: 6,
-                  }}
-                  onValueChange={(value) => {
-                    this.setState({search: ''});
-                  }}
-                />
-              </View>
-              <View style={styles.filterTitle}>
-                <Text style={{fontSize: 16}}>Cơ sở</Text>
-                <CustomPicker
-                  options={this.getSearchedResults(
-                    this.getData(this.props.baseData),
-                  )}
-                  defaultValue={this.getDefault(
-                    this.getData(this.props.baseData),
-                    this.props.selectedBaseId,
-                  )}
-                  getLabel={item => item.name}
-                  modalAnimationType={'fade'}
-                  optionTemplate={this.renderPickerOption}
-                  fieldTemplate={this.renderPickerField}
-                  headerTemplate={() => this.renderPickerHeader('Chọn cơ sở')}
-                  footerTemplate={this.renderPickerFooter}
-                  onBlur={() => this.setState({search: ''})}
-                  modalStyle={{
-                    borderRadius: 6,
-                  }}
-                  onValueChange={value => {
-                    this.setState({search: '', base_id: value.id});
-                    this.props.onSelectBaseId(value.id);
-                  }}
-                />
               </View>
               <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Lớp học</Text>
@@ -323,6 +248,34 @@ class FilterModal extends React.Component {
                   onValueChange={(value) => {
                     this.setState({search: ''});
                     this.props.onSelectClassId(value.id);
+                  }}
+                />
+              </View>
+              <View style={styles.filterTitle}>
+                <Text style={{fontSize: 16}}>Môn học</Text>
+                <CustomPicker
+                  options={this.getSearchedResults(
+                    this.getData(this.props.courses),
+                  )}
+                  defaultValue={this.getDefault(
+                    this.getData(this.props.courses),
+                    this.props.courseId,
+                  )}
+                  getLabel={(item) => item.name}
+                  modalAnimationType={'fade'}
+                  optionTemplate={this.renderPickerOption}
+                  fieldTemplate={this.renderPickerField}
+                  headerTemplate={() =>
+                    this.renderPickerHeader('Chọn môn học')
+                  }
+                  footerTemplate={this.renderPickerFooter}
+                  onBlur={() => this.setState({search: ''})}
+                  modalStyle={{
+                    borderRadius: 6,
+                  }}
+                  onValueChange={(value) => {
+                    this.setState({search: ''});
+                    this.props.onSelectCourseId(value.id);
                   }}
                 />
               </View>

@@ -1,7 +1,6 @@
 import React from 'react';
 import {Dimensions, Image, Text, TouchableOpacity, View} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-const {height, width} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 export default class CircleTab extends React.Component {
   constructor(props) {
@@ -11,12 +10,14 @@ export default class CircleTab extends React.Component {
   render() {
     return (
       <TouchableOpacity onPress={this.props.onPress}>
-        <View style={{alignItems: 'center', width: width / 3}}>
-          <LinearGradient
-            colors={['#E26800', '#E00000']}
-            style={styles.circleTab}>
-            <Image source={this.props.iconImage} style={styles.iconTab} />
-          </LinearGradient>
+        <View style={styles.circleTab}>
+          <View
+            style={[
+              styles.iconContainer,
+              {backgroundColor: this.props.backgroundColor},
+            ]}>
+            <Image source={this.props.iconImage} style={styles.icon} />
+          </View>
           <Text numberOfLines={2} style={styles.otherFeatureTitle}>
             {this.props.title}
           </Text>
@@ -28,15 +29,18 @@ export default class CircleTab extends React.Component {
 
 const styles = {
   circleTab: {
-    width: 52,
-    height: 52,
-    borderRadius: 26,
-    justifyContent: 'center',
     alignItems: 'center',
+    width: width / 3,
   },
-  iconTab: {
-    width: 29,
-    height: 29,
+  iconContainer: {
+    width: 70,
+    height: 70,
+    borderRadius: 10,
+  },
+  icon: {
+    width: 90,
+    height: 90,
+    marginLeft: -15,
   },
   otherFeatureTitle: {
     color: 'black',

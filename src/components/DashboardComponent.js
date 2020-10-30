@@ -46,8 +46,9 @@ class DashboardComponent extends React.Component {
         id: 'dashboard/sale',
         element: (
           <CircleTab
-            iconImage={require('../../assets/img/icons8-ratings-90.png')}
+            iconImage={require('../../assets/img/Group_1253.png')}
             title={'Thống kê'}
+            backgroundColor={'#A888F8'}
             onPress={() => {
               this.props.getAnalyticsGenData();
               this.props.navigation.navigate('Analytics');
@@ -59,8 +60,9 @@ class DashboardComponent extends React.Component {
         id: '/kpi/list',
         element: (
           <CircleTab
-            iconImage={require('../../assets/img/icons8-bar_chart.png')}
+            iconImage={require('../../assets/img/Group_1258.png')}
             title={'KPI'}
+            backgroundColor={'#5855E6'}
             onPress={() => {
               this.props.navigation.navigate('KPI');
             }}
@@ -71,8 +73,9 @@ class DashboardComponent extends React.Component {
         id: 'sales/register-list',
         element: (
           <CircleTab
-            iconImage={require('../../assets/img/icons8-scholarship.png')}
+            iconImage={require('../../assets/img/Group_1247.png')}
             title={'Học viên'}
+            backgroundColor={'#608DFF'}
             onPress={() => {
               this.props.navigation.navigate('RegisterList');
             }}
@@ -83,8 +86,9 @@ class DashboardComponent extends React.Component {
         id: '/customer-services/leads',
         element: (
           <CircleTab
-            iconImage={require('../../assets/img/icons8-user_account.png')}
+            iconImage={require('../../assets/img/Group_1250.png')}
             title={'Leads'}
+            backgroundColor={'#FFDC60'}
             onPress={() => {
               this.props.navigation.navigate('Leads');
             }}
@@ -95,8 +99,9 @@ class DashboardComponent extends React.Component {
         id: 'teaching/classes',
         element: (
           <CircleTab
-            iconImage={require('../../assets/img/icons8-teacher.png')}
+            iconImage={require('../../assets/img/Group_1248.png')}
             title={'Lớp học'}
+            backgroundColor={'#A888F8'}
             onPress={() => {
               this.props.navigation.navigate('Class', {
                 analyticsScreen: false,

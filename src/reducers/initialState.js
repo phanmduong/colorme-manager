@@ -182,6 +182,7 @@ export default {
     courseId: -1,
     note: '',
     dateTest: '',
+    callBackTime: '',
     autoFocusRegisterListSearch: false,
     classes: [],
     isLoadingClasses: false,

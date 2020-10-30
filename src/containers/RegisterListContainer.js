@@ -87,6 +87,7 @@ class RegisterListContainer extends React.Component {
         courseId,
         this.props.note,
         this.props.dateTest,
+        this.props.callBackTime,
       );
     }
   }
@@ -133,6 +134,7 @@ class RegisterListContainer extends React.Component {
       courseId,
       note,
       this.props.dateTest,
+      this.props.callBackTime,
     );
   };
 
@@ -169,6 +171,7 @@ class RegisterListContainer extends React.Component {
       courseId,
       this.props.note,
       this.props.dateTest,
+      this.props.callBackTime,
       this.props.token,
     );
   }
@@ -315,6 +318,10 @@ class RegisterListContainer extends React.Component {
     this.props.registerListActions.onSelectDateTest(date);
   };
 
+  onSelectCallBackTime = (date) => {
+    this.props.registerListActions.onSelectCallBackTime(date);
+  };
+
   reset = () => {
     this.props.registerListActions.reset();
   };
@@ -406,6 +413,8 @@ class RegisterListContainer extends React.Component {
         note={this.props.note}
         onSelectDateTest={this.onSelectDateTest}
         dateTest={this.props.dateTest}
+        callBackTime={this.props.callBackTime}
+        onSelectCallBackTime={this.onSelectCallBackTime}
       />
     );
   }
@@ -460,6 +469,7 @@ function mapStateToProps(state) {
     courseId: state.registerList.courseId,
     note: state.registerList.note,
     dateTest: state.registerList.dateTest,
+    callBackTime: state.registerList.callBackTime,
   };
 }
 

@@ -116,6 +116,8 @@ class RegisterListComponent extends React.Component {
           note={this.props.note}
           onSelectDateTest={this.props.onSelectDateTest}
           dateTest={this.props.dateTest}
+          onSelectCallBackTime={this.props.onSelectCallBackTime}
+          callBackTime={this.props.callBackTime}
         />
       </View>
     );

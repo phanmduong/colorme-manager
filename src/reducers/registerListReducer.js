@@ -179,6 +179,10 @@ export default function registerListReducer(
       return Object.assign({}, state, {
         dateTest: action.dateTest,
       });
+    case types.SELECT_REGISTER_LIST_CALL_BACK_TIME:
+      return Object.assign({}, state, {
+        callBackTime: action.callBackTime,
+      });
     default:
       return state;
   }

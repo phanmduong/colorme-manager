@@ -28,6 +28,7 @@ class FilterModal extends React.Component {
       isEndDateVisible: false,
       isAppointmentPaymentVisible: false,
       isDateTestVisible: false,
+      isCallBackTimeVisible: false,
       search: '',
     };
   }
@@ -184,6 +185,13 @@ class FilterModal extends React.Component {
     });
   };
 
+  handleCallBackTimePicked = (date) => {
+    this.props.onSelectCallBackTime(moment(date).format('YYYY-MM-DD'));
+    this.setState({
+      isCallBackTimeVisible: false,
+    });
+  };
+
   openStartDatePicker = () => {
     this.setState({isStartDateVisible: true});
   };
@@ -198,6 +206,10 @@ class FilterModal extends React.Component {
 
   openDateTestPicker = () => {
     this.setState({isDateTestVisible: true});
+  };
+
+  openCallBackTimePicker = () => {
+    this.setState({isCallBackTimeVisible: true});
   };
 
   render() {
@@ -482,6 +494,21 @@ class FilterModal extends React.Component {
                 </TouchableOpacity>
               </View>
               <View style={styles.filterTitle}>
+                <Text style={{fontSize: 16}}>Hẹn gọi lại</Text>
+                <TouchableOpacity
+                  style={styles.filterContainer}
+                  onPress={() => this.openCallBackTimePicker()}>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                    }}>
+                    {this.props.callBackTime !== ''
+                      ? this.props.callBackTime
+                      : 'YYYY-MM-DD'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Coupon</Text>
                 <View style={styles.filterContainer}>
                   <TextInput
@@ -640,6 +667,11 @@ class FilterModal extends React.Component {
                 isVisible={this.state.isDateTestVisible}
                 onConfirm={this.handleDateTestPicked}
                 onCancel={() => this.setState({isDateTestVisible: false})}
+              />
+              <DateTimePicker
+                isVisible={this.state.isCallBackTimeVisible}
+                onConfirm={this.handleCallBackTimePicked}
+                onCancel={() => this.setState({isCallBackTimeVisible: false})}
               />
             </ScrollView>
           ) : (

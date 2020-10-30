@@ -28,6 +28,7 @@ export function loadRegisterListApi(
   course_id = '',
   note = '',
   date_test = '',
+  call_back_time = '',
 ) {
   let url =
     env.API_URL +
@@ -71,6 +72,8 @@ export function loadRegisterListApi(
     note +
     '&date_test=' +
     date_test +
+    '&call_back_time=' +
+    call_back_time +
     '&token=' +
     token;
   return axios.get(url, {cancelToken: sourceCancel.token});

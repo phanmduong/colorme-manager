@@ -38,8 +38,8 @@ const styles = {
     borderRadius: 10,
   },
   icon: {
-    width: 90,
-    height: 90,
+    width: 100,
+    height: 80,
     marginLeft: -15,
   },
   otherFeatureTitle: {

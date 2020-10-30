@@ -12,12 +12,8 @@ import theme from '../styles';
 import ListItemRegisterStudent from './registerList/ListItemRegisterStudent';
 import Loading from './common/Loading';
 import Search from './common/Search';
-import {getStatusBarHeight, isIphoneX} from 'react-native-iphone-x-helper';
 import FilterModal from './infoStudent/FilterModal';
-import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import LinearGradient from 'react-native-linear-gradient';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import ChangeStudentClassModal from './registerList/ChangeStudentClassModal';
 
 var {height, width} = Dimensions.get('window');
 class RegisterListComponent extends React.Component {
@@ -34,9 +30,6 @@ class RegisterListComponent extends React.Component {
   };
 
   componentDidMount = () => {
-    // this.props.navigation.addListener('didFocus', route => {
-    //   this.props.autoFocus ? this.searchRegisterList.focus() : null;
-    // });
     this.props.autoFocus ? this.searchRegisterList.focus() : () => null;
   };
 
@@ -159,32 +152,6 @@ class RegisterListComponent extends React.Component {
   headerComponent = () => {
     return (
       <View style={{flex: 1}}>
-        {/*<View style={styles.headerContainer}>*/}
-        {/*  <View style={{flexDirection: 'row', alignItems: 'center'}}>*/}
-        {/*    <Icon*/}
-        {/*      name={'chevron-left'}*/}
-        {/*      size={33}*/}
-        {/*      color={'black'}*/}
-        {/*      onPress={() => this.props.navigation.goBack()}*/}
-        {/*    />*/}
-        {/*    /!*<TouchableOpacity*!/*/}
-        {/*    /!*  onPress={() => this.props.navigation.navigate('Profile')}>*!/*/}
-        {/*    /!*  <Image*!/*/}
-        {/*    /!*    source={{uri: this.props.user.avatar_url}}*!/*/}
-        {/*    /!*    style={styles.headerAva}*!/*/}
-        {/*    /!*  />*!/*/}
-        {/*    /!*</TouchableOpacity>*!/*/}
-        {/*    <Text style={styles.headerTitle}>Học viên</Text>*/}
-        {/*  </View>*/}
-        {/*  <View style={{flexDirection: 'row'}}>*/}
-        {/*    <TouchableOpacity*/}
-        {/*      onPress={() => this.props.navigation.navigate('SaveRegister')}>*/}
-        {/*      <View style={styles.headerIconContainer}>*/}
-        {/*        <MatIcon name={'add-circle'} size={20} color={'black'} />*/}
-        {/*      </View>*/}
-        {/*    </TouchableOpacity>*/}
-        {/*  </View>*/}
-        {/*</View>*/}
         {this.renderSearch()}
         <View style={styles.containerTag}>{this.renderTabs()}</View>
       </View>
@@ -193,88 +160,78 @@ class RegisterListComponent extends React.Component {
 
   renderContent() {
     return (
-        <List
-          style={styles.list}
-          onEndReached={this.props.loadDataRegisterList}
-          dataArray={this.props.registerList}
-          contentContainerStyle={{flexGrow: 1}}
-          ListHeaderComponent={this.headerComponent}
-          ListEmptyComponent={
-            this.props.isLoading ? (
-              this.props.refreshing ? (
-                <View />
-              ) : (
-                <Loading size={width / 8} />
-              )
+      <List
+        style={styles.list}
+        onEndReached={this.props.loadDataRegisterList}
+        dataArray={this.props.registerList}
+        contentContainerStyle={{flexGrow: 1}}
+        ListHeaderComponent={this.headerComponent}
+        ListEmptyComponent={
+          this.props.isLoading ? (
+            this.props.refreshing ? (
+              <View />
             ) : (
-              <View style={styles.container}>
-                <Text style={{color: theme.dangerColor, fontSize: 16}}>
-                  Không có kết quả
-                </Text>
-              </View>
+              <Loading size={width / 8} />
             )
-          }
-          refreshControl={
-            <RefreshControl
-              refreshing={this.props.refreshing}
-              onRefresh={() => this.props.onRefresh(this.props.search_coupon)}
-            />
-          }
-          renderRow={(item, sectionID, rowID) => (
-            <ListItemRegisterStudent
-              {...this.props}
-              key={item.id}
-              name={item.name}
-              avatar={item.course_avatar_url}
-              email={item.email}
-              phone={item.phone}
-              saler={item.saler}
-              campaign={item.campaign}
-              source={item.source}
-              source_id={item.source_id}
-              register_status={item.register_status}
-              callStatus={item.call_status}
-              paidStatus={item.paid_status}
-              money={item.money}
-              studentId={item.student_id}
-              setStudentId={this.props.setStudentId}
-              avatar_url={item.avatar_url}
-              classInfo={item.class}
-              token={this.props.token}
-              next_code={item.next_code}
-              next_waiting_code={item.next_waiting_code}
-              created_at_cal={item.created_at_cal}
-              registerId={item.id}
-              errorChangeCallStatus={this.props.errorChangeCallStatus}
-              errorSubmitMoney={this.props.errorSubmitMoney}
-              changeCallStatus={this.props.changeCallStatus}
-              submitMoney={this.props.submitMoney}
-              paidTime={item.paid_time}
-              loadAvailableClasses={this.props.loadAvailableClasses}
-              availableClasses={this.props.availableClasses}
-              isLoadingAvailableClasses={this.props.isLoadingAvailableClasses}
-              resetAvailableClasses={this.props.resetAvailableClasses}
-              changingClass={this.props.changingClass}
-              changeClassStatus={this.props.changeClassStatus}
-              changeClass={this.props.changeClass}
-            />
-          )}
-        />
+          ) : (
+            <View style={styles.container}>
+              <Text style={{color: theme.dangerColor, fontSize: 16}}>
+                Không có kết quả
+              </Text>
+            </View>
+          )
+        }
+        refreshControl={
+          <RefreshControl
+            refreshing={this.props.refreshing}
+            onRefresh={() => this.props.onRefresh(this.props.search_coupon)}
+          />
+        }
+        renderRow={(item, sectionID, rowID) => (
+          <ListItemRegisterStudent
+            {...this.props}
+            key={item.id}
+            name={item.name}
+            avatar={item.course_avatar_url}
+            email={item.email}
+            phone={item.phone}
+            saler={item.saler}
+            campaign={item.campaign}
+            source={item.source}
+            source_id={item.source_id}
+            register_status={item.register_status}
+            callStatus={item.call_status}
+            paidStatus={item.paid_status}
+            money={item.money}
+            studentId={item.student_id}
+            setStudentId={this.props.setStudentId}
+            avatar_url={item.avatar_url}
+            classInfo={item.class}
+            token={this.props.token}
+            next_code={item.next_code}
+            next_waiting_code={item.next_waiting_code}
+            created_at_cal={item.created_at_cal}
+            registerId={item.id}
+            errorChangeCallStatus={this.props.errorChangeCallStatus}
+            errorSubmitMoney={this.props.errorSubmitMoney}
+            changeCallStatus={this.props.changeCallStatus}
+            submitMoney={this.props.submitMoney}
+            paidTime={item.paid_time}
+            loadAvailableClasses={this.props.loadAvailableClasses}
+            availableClasses={this.props.availableClasses}
+            isLoadingAvailableClasses={this.props.isLoadingAvailableClasses}
+            resetAvailableClasses={this.props.resetAvailableClasses}
+            changingClass={this.props.changingClass}
+            changeClassStatus={this.props.changeClassStatus}
+            changeClass={this.props.changeClass}
+          />
+        )}
+      />
     );
   }
 
   render() {
-    return (
-      <View
-      // style={
-      //   isIphoneX()
-      //     ? {flex: 1, marginTop: getStatusBarHeight() + 10}
-      //     : {flex: 1, marginTop: 20}
-      // }
-      >
-        {this.renderContent()}
-      </View>
-    );
+    return <View>{this.renderContent()}</View>;
   }
 }
 

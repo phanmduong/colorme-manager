@@ -15,7 +15,6 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import theme from '../styles';
-import ChangeStudentClassModal from '../components/registerList/ChangeStudentClassModal';
 
 class RegisterListContainer extends React.Component {
   constructor(props, context) {

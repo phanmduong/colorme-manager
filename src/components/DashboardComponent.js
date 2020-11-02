@@ -223,7 +223,7 @@ class DashboardComponent extends React.Component {
             <CardMenu
               colorOne={'#FFDC60'}
               colorTwo={'#FFDC60'}
-              imageSource={require('../../assets/img/wall_clock.png')}
+              imageSource={require('../../assets/img/travel_pin.png')}
               title={'Check in'}
               onPress={() => {
                 this.props.navigation.navigate('CheckIn', {
@@ -247,7 +247,7 @@ class DashboardComponent extends React.Component {
             <CardMenu
               colorOne={'#FFDC60'}
               colorTwo={'#FFDC60'}
-              imageSource={require('../../assets/img/travel_pin.png')}
+              imageSource={require('../../assets/img/wall_clock.png')}
               title={'Lịch sử'}
               onPress={() => {
                 this.props.navigation.navigate('HistoryAllAttendance');

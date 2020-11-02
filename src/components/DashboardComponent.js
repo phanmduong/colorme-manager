@@ -221,11 +221,9 @@ class DashboardComponent extends React.Component {
           </TouchableOpacity>
           <View style={styles.mainFeatureLine}>
             <CardMenu
-              colorOne={'#F29C38'}
-              colorTwo={'#FFE588'}
-              checkInOutStyle={styles.checkInContainer}
-              imageSource={require('../../assets/img/dashboardCheckIn.png')}
-              imageWidth={80}
+              colorOne={'#FFDC60'}
+              colorTwo={'#FFDC60'}
+              imageSource={require('../../assets/img/wall_clock.png')}
               title={'Check in'}
               onPress={() => {
                 this.props.navigation.navigate('CheckIn', {
@@ -235,11 +233,9 @@ class DashboardComponent extends React.Component {
               }}
             />
             <CardMenu
-              colorOne={'#F29C38'}
-              colorTwo={'#FFE588'}
-              checkInOutStyle={styles.checkOutContainer}
-              imageSource={require('../../assets/img/dashboardCheckOut.png')}
-              imageWidth={80}
+              colorOne={'#FFDC60'}
+              colorTwo={'#FFDC60'}
+              imageSource={require('../../assets/img/heart.png')}
               title={'Check out'}
               onPress={() => {
                 this.props.navigation.navigate('CheckOut', {
@@ -249,11 +245,9 @@ class DashboardComponent extends React.Component {
               }}
             />
             <CardMenu
-              colorOne={'#F29C38'}
-              colorTwo={'#FFE588'}
-              checkInOutStyle={styles.checkOutContainer}
-              imageSource={require('../../assets/img/dashboardHistory.png')}
-              imageWidth={80}
+              colorOne={'#FFDC60'}
+              colorTwo={'#FFDC60'}
+              imageSource={require('../../assets/img/travel_pin.png')}
               title={'Lịch sử'}
               onPress={() => {
                 this.props.navigation.navigate('HistoryAllAttendance');
@@ -286,16 +280,6 @@ const styles = {
     justifyContent: 'space-between',
     marginTop: 16,
     marginHorizontal: theme.mainHorizontal,
-  },
-  checkInContainer: {
-    height: (Dimensions.get('window').width - 32) * 0.4 * (178 / 139),
-    width: (Dimensions.get('window').width - 32) * 0.4,
-    borderRadius: 10,
-  },
-  checkOutContainer: {
-    height: (Dimensions.get('window').width - 32) * 0.26 * (178 / 139),
-    width: (Dimensions.get('window').width - 32) * 0.26,
-    borderRadius: 10,
   },
   otherFeatureLine: {
     flexDirection: 'row',

@@ -61,6 +61,7 @@ class AnalyticsRegisterComponent extends React.Component {
           }
           startDate={this.props.startDate}
           endDate={this.props.endDate}
+          barName={'Tỉ lệ trạng thái'}
         />
         <AnalyticsMultipleLayerBarChart
           dates={
@@ -75,6 +76,7 @@ class AnalyticsRegisterComponent extends React.Component {
           }
           startDate={this.props.startDate}
           endDate={this.props.endDate}
+          barName={'Tỉ lệ đăng kí theo nguồn'}
         />
         <AnalyticsMultipleLayerBarChart
           dates={
@@ -90,6 +92,7 @@ class AnalyticsRegisterComponent extends React.Component {
           startDate={this.props.startDate}
           endDate={this.props.endDate}
           hasHexColor={false}
+          barName={'Tỉ lệ đăng kí theo chiến dịch'}
         />
       </Swiper>
     );

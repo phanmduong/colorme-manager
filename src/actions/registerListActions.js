@@ -345,6 +345,10 @@ function resetRegisterListProps() {
     source_id: -1,
     status_id: -1,
     classId: -1,
+    courseId: -1,
+    note: '',
+    dateTest: '',
+    callBackTime: '',
   };
 }
 

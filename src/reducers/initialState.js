@@ -493,6 +493,11 @@ export default {
     courses: [],
     isLoadingCourses: false,
     errorCourses: false,
+    callBackTime: '',
+    mockExamTime: '',
+    duplicate: '',
+    baseId: -1,
+    leadTag: '',
   },
   staff: {
     staff: [],

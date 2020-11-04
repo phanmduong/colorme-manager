@@ -16,6 +16,11 @@ export function getLeads(
   orderByType,
   source_id,
   campaign_id,
+  call_back_time,
+  mock_exam_time,
+  duplicate,
+  lead_tag,
+  base_id,
   token,
 ) {
   let url =
@@ -47,7 +52,17 @@ export function getLeads(
     '&source_id=' +
     source_id +
     '&campaign_id=' +
-    campaign_id;
+    campaign_id +
+    '&call_back_time=' +
+    call_back_time +
+    '&mock_exam_time=' +
+    mock_exam_time +
+    '&duplicate=' +
+    duplicate +
+    '&lead_tag=' +
+    lead_tag +
+    '&base_id=' +
+    base_id;
   return axios.get(url, {cancelToken: sourceCancel.token});
 }
 

@@ -80,6 +80,11 @@ export default function leadsReducer(state = initialState.leads, action) {
         campaign_id: action.campaign_id,
         leadStatusId: action.leadStatusId,
         source_id: action.source_id,
+        callBackTime: action.callBackTime,
+        mockExamTime: action.mockExamTime,
+        duplicate: action.duplicate,
+        baseId: action.baseId,
+        leadTag: action.leadTag,
       });
     case types.BEGIN_LOAD_LEAD_STAFFS:
       return Object.assign({}, state, {
@@ -171,6 +176,26 @@ export default function leadsReducer(state = initialState.leads, action) {
       return Object.assign({}, state, {
         isChangingPICTag: action.isChangingPICTag,
         errorChangePICTag: action.errorChangePICTag,
+      });
+    case types.ON_SELECT_CALL_BACK_TIME_LEADS:
+      return Object.assign({}, state, {
+        callBackTime: action.callBackTime,
+      });
+    case types.ON_SELECT_MOCK_EXAM_TIME_LEADS:
+      return Object.assign({}, state, {
+        mockExamTime: action.mockExamTime,
+      });
+    case types.ON_SELECT_DUPLICATE_LEADS:
+      return Object.assign({}, state, {
+        duplicate: action.duplicate,
+      });
+    case types.ON_SELECT_LEAD_TAG_LEADS:
+      return Object.assign({}, state, {
+        leadTag: action.leadTag,
+      });
+    case types.ON_SELECT_BASE_ID_LEADS:
+      return Object.assign({}, state, {
+        baseId: action.baseId,
       });
     default:
       return state;

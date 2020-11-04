@@ -20,6 +20,11 @@ export function getLeads(
   orderByType,
   source_id,
   campaign_id,
+  call_back_time,
+  mock_exam_time,
+  duplicate,
+  lead_tag,
+  base_id,
   token,
 ) {
   return function (dispatch) {
@@ -44,6 +49,11 @@ export function getLeads(
         orderByType,
         source_id,
         campaign_id,
+        call_back_time,
+        mock_exam_time,
+        duplicate,
+        lead_tag,
+        base_id,
         token,
       )
       .then(function (res) {
@@ -110,6 +120,11 @@ export function searchLeads(
   orderByType,
   source_id,
   campaign_id,
+  call_back_time,
+  mock_exam_time,
+  duplicate,
+  lead_tag,
+  base_id,
   token,
 ) {
   sourceCancel.cancel('Canceled by leads api.');
@@ -132,6 +147,11 @@ export function searchLeads(
         orderByType,
         source_id,
         campaign_id,
+        call_back_time,
+        mock_exam_time,
+        duplicate,
+        lead_tag,
+        base_id,
         token,
       ),
     );
@@ -151,6 +171,11 @@ export function refreshLeads(
   orderByType,
   source_id,
   campaign_id,
+  call_back_time,
+  mock_exam_time,
+  duplicate,
+  lead_tag,
+  base_id,
   token,
 ) {
   return function (dispatch) {
@@ -171,6 +196,11 @@ export function refreshLeads(
         orderByType,
         source_id,
         campaign_id,
+        call_back_time,
+        mock_exam_time,
+        duplicate,
+        lead_tag,
+        base_id,
         token,
       ),
     );
@@ -253,6 +283,11 @@ export function reset() {
     rate: -1,
     source_id: -1,
     campaign_id: -1,
+    callBackTime: '',
+    mockExamTime: '',
+    duplicate: '',
+    baseId: -1,
+    leadTag: '',
   };
 }
 
@@ -485,5 +520,40 @@ function changePICTagError() {
     type: types.CHANGE_STATUS_TAG_ERROR,
     isChangingPICTag: false,
     errorChangePICTag: true,
+  };
+}
+
+export function onSelectCallBackTime(date) {
+  return {
+    type: types.ON_SELECT_CALL_BACK_TIME_LEADS,
+    callBackTime: date,
+  };
+}
+
+export function onSelectMockExamTime(date) {
+  return {
+    type: types.ON_SELECT_MOCK_EXAM_TIME_LEADS,
+    mockExamTime: date,
+  };
+}
+
+export function onSelectDuplicate(duplicate) {
+  return {
+    type: types.ON_SELECT_DUPLICATE_LEADS,
+    duplicate: duplicate,
+  };
+}
+
+export function onSelectLeadTag(tag) {
+  return {
+    type: types.ON_SELECT_LEAD_TAG_LEADS,
+    leadTag: tag,
+  };
+}
+
+export function onSelectBaseId(baseId) {
+  return {
+    type: types.ON_SELECT_DUPLICATE_LEADS,
+    baseId: baseId,
   };
 }

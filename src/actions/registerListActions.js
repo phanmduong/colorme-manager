@@ -157,11 +157,11 @@ export function updateFormAndLoadDataSearchMy(
         sourceId,
         genId,
         classId,
+        domain,
         courseId,
         note,
         dateTest,
         callBackTime,
-        domain,
       ),
     );
   };
@@ -223,11 +223,11 @@ export function refreshRegisterListMy(
         sourceId,
         genId,
         classId,
+        domain,
         courseId,
         note,
         dateTest,
         callBackTime,
-        domain,
       ),
     );
   };

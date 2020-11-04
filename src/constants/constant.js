@@ -144,3 +144,16 @@ export const FILTER_KPI_CALCULATE_BY = [
     color: 'rgb(255, 123, 66)',
   },
 ];
+
+export const DUPLICATE_FILTER = [
+  {id: '', name: 'Tất cả'},
+  {id: 'email', name: 'Trùng email'},
+  {id: 'phone', name: 'Trùng số điện thoại'},
+];
+
+export const LEAD_TAG_FILTER = [
+  {id: '', name: 'Tất cả'},
+  {id: 'first_lead', name: 'First Lead'},
+  {id: 'old_lead', name: 'Old Lead'},
+  {id: 'new_lead', name: 'New Lead'},
+];

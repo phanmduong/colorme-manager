@@ -70,6 +70,14 @@ class LeadsComponent extends React.Component {
           onRefresh={this.props.onRefresh}
           onSelectCarer={this.props.onSelectCarer}
           loadStaff={this.props.loadStaff}
+          duplicate={this.props.duplicate}
+          onSelectDuplicate={this.props.onSelectDuplicate}
+          onSelectLeadTag={this.props.onSelectLeadTag}
+          leadTag={this.props.leadTag}
+          onSelectBaseId={this.props.onSelectBaseId}
+          baseId={this.props.baseId}
+          onSelectCallBackTime={this.props.onSelectCallBackTime}
+          onSelectMockExamTime={this.props.onSelectMockExamTime}
         />
       </View>
     );

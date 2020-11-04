@@ -7,7 +7,6 @@ import axios from 'axios';
 import {selectedGenId} from './genActions';
 import {selectedBaseId} from './baseActions';
 let CancelToken = axios.CancelToken;
-let sourceCancelAll = CancelToken.source();
 let sourceCancelMy = CancelToken.source();
 
 export function beginDataRegisterListLoadMy() {
@@ -38,6 +37,10 @@ export function loadDataRegisterListMy(
   genId,
   classId,
   domain,
+  courseId,
+  note,
+  dateTest,
+  callBackTime,
 ) {
   return function (dispatch) {
     dispatch(beginDataRegisterListLoadMy());
@@ -63,9 +66,13 @@ export function loadDataRegisterListMy(
         sourceId,
         statusId,
         domain,
+        courseId,
+        note,
+        dateTest,
+        callBackTime,
       )
       .then(function (res) {
-        dispatch(loadDataSuccessfulMy(res, salerId, search_coupon));
+        dispatch(loadDataSuccessfulMy(res, salerId, search_coupon, note));
       })
       .catch((error) => {
         if (axios.isCancel(error)) {
@@ -78,7 +85,7 @@ export function loadDataRegisterListMy(
   };
 }
 
-export function loadDataSuccessfulMy(res, salerId, search_coupon) {
+export function loadDataSuccessfulMy(res, salerId, search_coupon, note) {
   return {
     type: types.LOAD_DATA_REGISTER_LIST_SUCCESSFUL_MY,
     registerListDataMy: res.data.registers,
@@ -89,6 +96,7 @@ export function loadDataSuccessfulMy(res, salerId, search_coupon) {
     refreshingMy: false,
     salerId: salerId,
     search_coupon: search_coupon,
+    note: note,
   };
 }
 
@@ -118,6 +126,10 @@ export function updateFormAndLoadDataSearchMy(
   sourceId,
   genId,
   classId,
+  courseId,
+  note,
+  dateTest,
+  callBackTime,
   token,
   domain,
 ) {
@@ -145,6 +157,10 @@ export function updateFormAndLoadDataSearchMy(
         sourceId,
         genId,
         classId,
+        courseId,
+        note,
+        dateTest,
+        callBackTime,
         domain,
       ),
     );
@@ -180,6 +196,10 @@ export function refreshRegisterListMy(
   genId,
   classId,
   domain,
+  courseId,
+  note,
+  dateTest,
+  callBackTime,
 ) {
   return (dispatch) => {
     dispatch(resetRegisterListMy());
@@ -203,6 +223,10 @@ export function refreshRegisterListMy(
         sourceId,
         genId,
         classId,
+        courseId,
+        note,
+        dateTest,
+        callBackTime,
         domain,
       ),
     );
@@ -327,6 +351,10 @@ function resetRegisterListProps() {
     source_id: -1,
     status_id: -1,
     classId: -1,
+    courseId: -1,
+    note: '',
+    dateTest: '',
+    callBackTime: '',
   };
 }
 
@@ -421,5 +449,66 @@ function changeClassError(error) {
     changingClass: false,
     errorChangeClass: true,
     changeClassStatus: error.response.status,
+  };
+}
+
+export function loadCourses(token) {
+  return function (dispatch) {
+    dispatch(beginLoadCourses());
+    studentApi
+      .loadCourses(token)
+      .then((res) => {
+        dispatch(loadCoursesSuccess(res));
+      })
+      .catch((error) => {
+        dispatch(loadCoursesError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadCourses() {
+  return {
+    type: types.BEGIN_LOAD_REGISTER_LIST_COURSES,
+    isLoadingCourses: true,
+    errorCourses: false,
+  };
+}
+
+function loadCoursesSuccess(res) {
+  return {
+    type: types.LOAD_REGISTER_LIST_COURSES_SUCCESSFUL,
+    isLoadingCourses: false,
+    errorCourses: false,
+    courses: res.data.data.courses,
+  };
+}
+
+function loadCoursesError() {
+  return {
+    type: types.LOAD_REGISTER_LIST_COURSES_ERROR,
+    isLoadingCourses: false,
+    errorCourses: true,
+  };
+}
+
+export function onSelectCourseId(courseId) {
+  return {
+    type: types.SELECT_REGISTER_LIST_COURSE,
+    courseId: courseId,
+  };
+}
+
+export function onSelectDateTest(date) {
+  return {
+    type: types.SELECT_REGISTER_LIST_DATE_TEST,
+    dateTest: date,
+  };
+}
+
+export function onSelectCallBackTime(date) {
+  return {
+    type: types.SELECT_REGISTER_LIST_CALL_BACK_TIME,
+    callBackTime: date,
   };
 }

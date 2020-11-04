@@ -7,6 +7,7 @@ import theme from '../styles';
 import * as leadsActions from '../actions/leadsActions';
 import * as saveRegisterActions from '../actions/saveRegisterActions';
 import * as infoStudentActions from '../actions/infoStudentActions';
+import * as baseActions from '../actions/baseActions';
 import {bindActionCreators} from 'redux';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 
@@ -21,6 +22,7 @@ class LeadsContainer extends React.Component {
     this.loadCampaigns();
     this.loadSources();
     this.loadStaff('');
+    this.loadBase();
   };
 
   loadLeads = () => {
@@ -31,6 +33,7 @@ class LeadsContainer extends React.Component {
     let source_id = this.props.source_id === -1 ? '' : this.props.source_id;
     let campaign_id =
       this.props.campaign_id === -1 ? '' : this.props.campaign_id;
+    let baseId = this.props.baseId === -1 ? '' : this.props.baseId;
     this.props.leadsActions.getLeads(
       false,
       this.props.currentPageLeads + 1,
@@ -46,6 +49,11 @@ class LeadsContainer extends React.Component {
       this.props.orderByType,
       source_id,
       campaign_id,
+      this.props.callBackTime,
+      this.props.mockExamTime,
+      this.props.duplicate,
+      this.props.leadTag,
+      baseId,
       this.props.token,
       this.props.domain,
     );
@@ -59,6 +67,7 @@ class LeadsContainer extends React.Component {
     let source_id = this.props.source_id === -1 ? '' : this.props.source_id;
     let campaign_id =
       this.props.campaign_id === -1 ? '' : this.props.campaign_id;
+    let baseId = this.props.baseId === -1 ? '' : this.props.baseId;
     this.props.leadsActions.searchLeads(
       searchLeads,
       this.props.start_time,
@@ -72,6 +81,11 @@ class LeadsContainer extends React.Component {
       this.props.orderByType,
       source_id,
       campaign_id,
+      this.props.callBackTime,
+      this.props.mockExamTime,
+      this.props.duplicate,
+      this.props.leadTag,
+      baseId,
       this.props.token,
       this.props.domain,
     );
@@ -85,6 +99,7 @@ class LeadsContainer extends React.Component {
     let source_id = this.props.source_id === -1 ? '' : this.props.source_id;
     let campaign_id =
       this.props.campaign_id === -1 ? '' : this.props.campaign_id;
+    let baseId = this.props.baseId === -1 ? '' : this.props.baseId;
     this.props.leadsActions.refreshLeads(
       searchLeads,
       this.props.start_time,
@@ -98,6 +113,11 @@ class LeadsContainer extends React.Component {
       this.props.orderByType,
       source_id,
       campaign_id,
+      this.props.callBackTime,
+      this.props.mockExamTime,
+      this.props.duplicate,
+      this.props.leadTag,
+      baseId,
       this.props.token,
       this.props.domain,
     );
@@ -109,6 +129,10 @@ class LeadsContainer extends React.Component {
       this.props.token,
       this.props.domain,
     );
+  };
+
+  loadBase = () => {
+    this.props.baseActions.loadDataBase(this.props.token, this.props.domain);
   };
 
   loadStatuses = () => {
@@ -163,6 +187,26 @@ class LeadsContainer extends React.Component {
 
   onSelectCarer = (carer_id) => {
     this.props.leadsActions.onSelectCarerLeads(carer_id);
+  };
+
+  onSelectCallBackTime = (date) => {
+    this.props.leadsActions.onSelectCallBackTime(date);
+  };
+
+  onSelectMockExamTime = (date) => {
+    this.props.leadsActions.onSelectMockExamTime(date);
+  };
+
+  onSelectDuplicate = (duplicate) => {
+    this.props.leadsActions.onSelectDuplicate(duplicate);
+  };
+
+  onSelectLeadTag = (tag) => {
+    this.props.leadsActions.onSelectLeadTag(tag);
+  };
+
+  onSelectBaseId = (baseId) => {
+    this.props.leadsActions.onSelectBaseId(baseId);
   };
 
   reset = () => {
@@ -286,6 +330,11 @@ class LeadsContainer extends React.Component {
         changeCallStatus={this.changeCallStatus}
         setStudentId={this.setStudentId}
         changeTags={this.changeTags}
+        onSelectDuplicate={this.onSelectDuplicate}
+        onSelectLeadTag={this.onSelectLeadTag}
+        onSelectBaseId={this.onSelectBaseId}
+        onSelectCallBackTime={this.onSelectCallBackTime}
+        onSelectMockExamTime={this.onSelectMockExamTime}
       />
     );
   }
@@ -331,7 +380,6 @@ function mapStateToProps(state) {
     isLoadingStaff: state.leads.isLoadingStaff,
     errorStaff: state.leads.errorStaff,
     errorChangeCallStatus: state.infoStudent.errorChangeCallStatus,
-    domain: state.login.domain,
     isChangingCampaignTag: state.leads.isChangingCampaignTag,
     errorChangeCampaignTag: state.leads.errorChangeCampaignTag,
     isChangingStatusTag: state.leads.isChangingStatusTag,
@@ -340,6 +388,15 @@ function mapStateToProps(state) {
     errorChangePICTag: state.leads.errorChangePICTag,
     isChangingSourceTag: state.leads.isChangingSourceTag,
     errorChangeSourceTag: state.leads.errorChangeSourceTag,
+    callBackTime: state.leads.callBackTime,
+    mockExamTime: state.leads.mockExamTime,
+    duplicate: state.leads.duplicate,
+    baseId: state.leads.baseId,
+    leadTag: state.leads.leadTag,
+    baseData: state.base.baseData,
+    isLoadingBase: state.base.isLoading,
+    errorBase: state.base.errorBase,
+    domain: state.login.domain,
   };
 }
 
@@ -348,6 +405,7 @@ function mapDispatchToProps(dispatch) {
     leadsActions: bindActionCreators(leadsActions, dispatch),
     saveRegisterActions: bindActionCreators(saveRegisterActions, dispatch),
     infoStudentActions: bindActionCreators(infoStudentActions, dispatch),
+    baseActions: bindActionCreators(baseActions, dispatch),
   };
 }
 

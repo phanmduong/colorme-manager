@@ -250,122 +250,116 @@ class ListItemLeads extends React.Component {
           <View style={{flexDirection: 'row'}}>
             <View style={styles.classAva} />
             <View style={styles.infoContainer}>
-              <TouchableOpacity onPress={() => this.toggleAssignModal()}>
-                <View style={styles.containerSubTitle}>
-                  {carer && carer.name && carer.color ? (
-                    <View
-                      style={{
-                        ...styles.card,
-                        ...{
-                          backgroundColor:
-                            !carer.color || carer.color === ''
-                              ? theme.processColor1
-                              : '#' + carer.color,
-                          marginRight: 5,
-                        },
-                      }}>
-                      <Text style={styles.saler}>
-                        {getShortName(carer.name)}
-                      </Text>
-                    </View>
-                  ) : (
-                    <View
-                      style={{
-                        ...styles.card,
-                        ...{
-                          backgroundColor: '#999',
-                          marginRight: 5,
-                        },
-                      }}>
-                      <Text style={styles.saler}>No P.I.C</Text>
-                    </View>
-                  )}
-                  {!isEmptyInput(this.getSource()) ? (
-                    <View
-                      style={{
-                        ...styles.card,
-                        ...{
-                          backgroundColor:
-                            !this.getSource().color ||
-                            !this.getSource().color === ''
-                              ? theme.processColor1
-                              : this.getSource().color,
-                          marginRight: 5,
-                        },
-                      }}>
-                      <Text style={styles.campaign}>
-                        {this.getSource().name.trim()}
-                      </Text>
-                    </View>
-                  ) : (
-                    <View
-                      style={{
-                        ...styles.card,
-                        ...{
-                          backgroundColor: '#999',
-                          marginRight: 5,
-                        },
-                      }}>
-                      <Text style={styles.saler}>No Campaign</Text>
-                    </View>
-                  )}
-                  {campaign && campaign.name && campaign.color ? (
-                    <View
-                      style={{
-                        ...styles.card,
-                        ...{
-                          backgroundColor:
-                            !campaign.color || campaign.color === ''
-                              ? theme.processColor1
-                              : '#' + campaign.color,
-                          marginRight: 5,
-                        },
-                      }}>
-                      <Text style={styles.campaign}>
-                        {campaign.name.trim()}
-                      </Text>
-                    </View>
-                  ) : (
-                    <View
-                      style={{
-                        ...styles.card,
-                        ...{
-                          backgroundColor: '#999',
-                          marginRight: 5,
-                        },
-                      }}>
-                      <Text style={styles.saler}>No Source</Text>
-                    </View>
-                  )}
-                  {lead_status && lead_status.name && lead_status.color ? (
-                    <View
-                      style={{
-                        ...styles.card,
-                        ...{
-                          backgroundColor:
-                            !lead_status.color || lead_status.color === ''
-                              ? theme.processColor1
-                              : lead_status.color,
-                        },
-                      }}>
-                      <Text style={styles.campaign}>
-                        {lead_status.name.trim()}
-                      </Text>
-                    </View>
-                  ) : (
-                    <View
-                      style={{
-                        ...styles.card,
-                        ...{
-                          backgroundColor: '#999',
-                          marginRight: 5,
-                        },
-                      }}>
-                      <Text style={styles.saler}>No status</Text>
-                    </View>
-                  )}
-                </View>
-              </TouchableOpacity>
+              <View style={styles.containerSubTitle}>
+                {carer && carer.name && carer.color ? (
+                  <View
+                    style={{
+                      ...styles.card,
+                      ...{
+                        backgroundColor:
+                          !carer.color || carer.color === ''
+                            ? theme.processColor1
+                            : '#' + carer.color,
+                        marginRight: 5,
+                      },
+                    }}>
+                    <Text style={styles.saler}>{getShortName(carer.name)}</Text>
+                  </View>
+                ) : (
+                  <View
+                    style={{
+                      ...styles.card,
+                      ...{
+                        backgroundColor: '#999',
+                        marginRight: 5,
+                      },
+                    }}>
+                    <Text style={styles.saler}>No P.I.C</Text>
+                  </View>
+                )}
+                {!isEmptyInput(this.getSource()) ? (
+                  <View
+                    style={{
+                      ...styles.card,
+                      ...{
+                        backgroundColor:
+                          !this.getSource().color ||
+                          !this.getSource().color === ''
+                            ? theme.processColor1
+                            : this.getSource().color,
+                        marginRight: 5,
+                      },
+                    }}>
+                    <Text style={styles.campaign}>
+                      {this.getSource().name.trim()}
+                    </Text>
+                  </View>
+                ) : (
+                  <View
+                    style={{
+                      ...styles.card,
+                      ...{
+                        backgroundColor: '#999',
+                        marginRight: 5,
+                      },
+                    }}>
+                    <Text style={styles.saler}>No Campaign</Text>
+                  </View>
+                )}
+                {campaign && campaign.name && campaign.color ? (
+                  <View
+                    style={{
+                      ...styles.card,
+                      ...{
+                        backgroundColor:
+                          !campaign.color || campaign.color === ''
+                            ? theme.processColor1
+                            : '#' + campaign.color,
+                        marginRight: 5,
+                      },
+                    }}>
+                    <Text style={styles.campaign}>{campaign.name.trim()}</Text>
+                  </View>
+                ) : (
+                  <View
+                    style={{
+                      ...styles.card,
+                      ...{
+                        backgroundColor: '#999',
+                        marginRight: 5,
+                      },
+                    }}>
+                    <Text style={styles.saler}>No Source</Text>
+                  </View>
+                )}
+                {lead_status && lead_status.name && lead_status.color ? (
+                  <View
+                    style={{
+                      ...styles.card,
+                      ...{
+                        backgroundColor:
+                          !lead_status.color || lead_status.color === ''
+                            ? theme.processColor1
+                            : lead_status.color,
+                      },
+                    }}>
+                    <Text style={styles.campaign}>
+                      {lead_status.name.trim()}
+                    </Text>
+                  </View>
+                ) : (
+                  <View
+                    style={{
+                      ...styles.card,
+                      ...{
+                        backgroundColor: '#999',
+                        marginRight: 5,
+                      },
+                    }}>
+                    <Text style={styles.saler}>No status</Text>
+                  </View>
+                )}
+              </View>
               <View>
                 {this.renderStars(rate)}
                 {email ? (
@@ -409,6 +403,14 @@ class ListItemLeads extends React.Component {
                   }}>
                   <View style={styles.button}>
                     <Text style={{fontSize: 16}}>Gọi điện</Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.toggleAssignModal();
+                  }}>
+                  <View style={[{marginLeft: 10}, styles.button]}>
+                    <Text style={{fontSize: 16}}>Tag</Text>
                   </View>
                 </TouchableOpacity>
                 <TouchableOpacity

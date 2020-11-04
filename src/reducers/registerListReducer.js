@@ -34,6 +34,7 @@ export default function registerListReducer(
         totalPageMy: action.totalPageMy,
         salerId: action.salerId,
         search_coupon: action.search_coupon,
+        note: action.note,
       });
     case types.LOAD_DATA_REGISTER_LIST_ERROR_MY:
       return Object.assign({}, state, {
@@ -117,6 +118,10 @@ export default function registerListReducer(
         source_id: action.source_id,
         status_id: action.status_id,
         classId: action.classId,
+        courseId: action.courseId,
+        note: action.note,
+        dateTest: action.dateTest,
+        callBackTime: action.callBackTime,
       });
     case types.SET_AUTOFOCUS_REGISTER_LIST_SEARCH:
       return Object.assign({}, state, {
@@ -160,6 +165,34 @@ export default function registerListReducer(
         changingClass: action.changingClass,
         errorChangeClass: action.errorChangeClass,
         changeClassStatus: action.changeClassStatus,
+      });
+    case types.BEGIN_LOAD_REGISTER_LIST_COURSES:
+      return Object.assign({}, state, {
+        isLoadingCourses: action.isLoadingCourses,
+        errorCourses: action.errorCourses,
+      });
+    case types.LOAD_REGISTER_LIST_COURSES_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isLoadingCourses: action.isLoadingCourses,
+        errorCourses: action.errorCourses,
+        courses: action.courses,
+      });
+    case types.LOAD_REGISTER_LIST_COURSES_ERROR:
+      return Object.assign({}, state, {
+        isLoadingCourses: action.isLoadingCourses,
+        errorCourses: action.errorCourses,
+      });
+    case types.SELECT_REGISTER_LIST_COURSE:
+      return Object.assign({}, state, {
+        courseId: action.courseId,
+      });
+    case types.SELECT_REGISTER_LIST_DATE_TEST:
+      return Object.assign({}, state, {
+        dateTest: action.dateTest,
+      });
+    case types.SELECT_REGISTER_LIST_CALL_BACK_TIME:
+      return Object.assign({}, state, {
+        callBackTime: action.callBackTime,
       });
     default:
       return state;

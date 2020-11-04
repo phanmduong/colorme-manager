@@ -271,6 +271,7 @@ class LeadsContainer extends React.Component {
   };
 
   render() {
+    console.log(this.props.duplicate);
     return (
       <LeadsComponent
         {...this.props}

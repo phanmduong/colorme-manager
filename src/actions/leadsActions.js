@@ -528,3 +528,38 @@ function changePICTagError() {
     errorChangePICTag: true,
   };
 }
+
+export function onSelectCallBackTime(date) {
+  return {
+    type: types.ON_SELECT_CALL_BACK_TIME_LEADS,
+    callBackTime: date,
+  };
+}
+
+export function onSelectMockExamTime(date) {
+  return {
+    type: types.ON_SELECT_MOCK_EXAM_TIME_LEADS,
+    mockExamTime: date,
+  };
+}
+
+export function onSelectDuplicate(duplicate) {
+  return {
+    type: types.ON_SELECT_DUPLICATE_LEADS,
+    duplicate: duplicate,
+  };
+}
+
+export function onSelectLeadTag(tag) {
+  return {
+    type: types.ON_SELECT_LEAD_TAG_LEADS,
+    leadTag: tag,
+  };
+}
+
+export function onSelectBaseId(baseId) {
+  return {
+    type: types.ON_SELECT_DUPLICATE_LEADS,
+    baseId: baseId,
+  };
+}

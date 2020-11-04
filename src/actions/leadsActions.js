@@ -559,7 +559,7 @@ export function onSelectLeadTag(tag) {
 
 export function onSelectBaseId(baseId) {
   return {
-    type: types.ON_SELECT_DUPLICATE_LEADS,
+    type: types.ON_SELECT_BASE_ID_LEADS,
     baseId: baseId,
   };
 }

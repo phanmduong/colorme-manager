@@ -23,9 +23,12 @@ class FilterModal extends React.Component {
     super(props, context);
     this.state = {
       search_coupon: '',
+      note: '',
       isStartDateVisible: false,
       isEndDateVisible: false,
       isAppointmentPaymentVisible: false,
+      isDateTestVisible: false,
+      isCallBackTimeVisible: false,
       search: '',
     };
   }
@@ -135,31 +138,6 @@ class FilterModal extends React.Component {
     return array[0];
   };
 
-  getDefaultGen = (gens) => {
-    for (let gen of gens) {
-      if (gen.id === this.props.selectedGenId) {
-        return gen;
-      }
-    }
-    for (let gen of gens) {
-      if (gen.id === this.props.currentGen.id) {
-        return gen;
-      }
-    }
-    return gens[0];
-  };
-
-  getGenData = () => {
-    let defaultGen = {id: -2, name: 'Tất cả'};
-    let genData = [];
-    genData.push(defaultGen);
-    for (let gen of this.props.genData) {
-      let pushedGen = {id: gen.id, name: 'Khóa ' + gen.name};
-      genData.push(pushedGen);
-    }
-    return genData;
-  };
-
   getSearchedResults = (array) => {
     let list = [];
     if (this.state.search === '') {
@@ -200,6 +178,20 @@ class FilterModal extends React.Component {
     });
   };
 
+  handleDateTestPicked = (date) => {
+    this.props.onSelectDateTest(moment(date).format('YYYY-MM-DD'));
+    this.setState({
+      isDateTestVisible: false,
+    });
+  };
+
+  handleCallBackTimePicked = (date) => {
+    this.props.onSelectCallBackTime(moment(date).format('YYYY-MM-DD'));
+    this.setState({
+      isCallBackTimeVisible: false,
+    });
+  };
+
   openStartDatePicker = () => {
     this.setState({isStartDateVisible: true});
   };
@@ -210,6 +202,14 @@ class FilterModal extends React.Component {
 
   openAppointmentPaymentPicker = () => {
     this.setState({isAppointmentPaymentVisible: true});
+  };
+
+  openDateTestPicker = () => {
+    this.setState({isDateTestVisible: true});
+  };
+
+  openCallBackTimePicker = () => {
+    this.setState({isCallBackTimeVisible: true});
   };
 
   render() {
@@ -242,63 +242,14 @@ class FilterModal extends React.Component {
         onBackButtonPress={this.props.closeModal}
         style={styles.modalContainer}>
         <View style={styles.modal}>
-          {!this.props.isLoadingBase &&
-          !this.props.isLoadingCampaigns &&
+          {!this.props.isLoadingCampaigns &&
           !this.props.isLoadingSources &&
           !this.props.isLoadingStatuses &&
           !this.props.isLoadingSalers &&
-          !this.props.isLoadingGen ? (
+          !this.props.isLoadingCourses ? (
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.titleContainer}>
                 <Text style={styles.title}>Lọc</Text>
-              </View>
-              <View style={styles.filterTitle}>
-                <Text style={{fontSize: 16}}>Khóa học</Text>
-                <CustomPicker
-                  options={this.getSearchedResults(this.getGenData())}
-                  defaultValue={this.getDefaultGen(this.getGenData())}
-                  getLabel={(item) => item.name}
-                  modalAnimationType={'fade'}
-                  optionTemplate={this.renderPickerOption}
-                  fieldTemplate={this.renderPickerField}
-                  headerTemplate={() =>
-                    this.renderPickerHeader('Chọn khóa học')
-                  }
-                  footerTemplate={this.renderPickerFooter}
-                  onBlur={() => this.setState({search: ''})}
-                  modalStyle={{
-                    borderRadius: 6,
-                  }}
-                  onValueChange={(value) => {
-                    this.setState({search: ''});
-                  }}
-                />
-              </View>
-              <View style={styles.filterTitle}>
-                <Text style={{fontSize: 16}}>Cơ sở</Text>
-                <CustomPicker
-                  options={this.getSearchedResults(
-                    this.getData(this.props.baseData),
-                  )}
-                  defaultValue={this.getDefault(
-                    this.getData(this.props.baseData),
-                    this.props.selectedBaseId,
-                  )}
-                  getLabel={item => item.name}
-                  modalAnimationType={'fade'}
-                  optionTemplate={this.renderPickerOption}
-                  fieldTemplate={this.renderPickerField}
-                  headerTemplate={() => this.renderPickerHeader('Chọn cơ sở')}
-                  footerTemplate={this.renderPickerFooter}
-                  onBlur={() => this.setState({search: ''})}
-                  modalStyle={{
-                    borderRadius: 6,
-                  }}
-                  onValueChange={value => {
-                    this.setState({search: '', base_id: value.id});
-                    this.props.onSelectBaseId(value.id);
-                  }}
-                />
               </View>
               <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Lớp học</Text>
@@ -323,6 +274,32 @@ class FilterModal extends React.Component {
                   onValueChange={(value) => {
                     this.setState({search: ''});
                     this.props.onSelectClassId(value.id);
+                  }}
+                />
+              </View>
+              <View style={styles.filterTitle}>
+                <Text style={{fontSize: 16}}>Môn học</Text>
+                <CustomPicker
+                  options={this.getSearchedResults(
+                    this.getData(this.props.courses),
+                  )}
+                  defaultValue={this.getDefault(
+                    this.getData(this.props.courses),
+                    this.props.courseId,
+                  )}
+                  getLabel={(item) => item.name}
+                  modalAnimationType={'fade'}
+                  optionTemplate={this.renderPickerOption}
+                  fieldTemplate={this.renderPickerField}
+                  headerTemplate={() => this.renderPickerHeader('Chọn môn học')}
+                  footerTemplate={this.renderPickerFooter}
+                  onBlur={() => this.setState({search: ''})}
+                  modalStyle={{
+                    borderRadius: 6,
+                  }}
+                  onValueChange={(value) => {
+                    this.setState({search: ''});
+                    this.props.onSelectCourseId(value.id);
                   }}
                 />
               </View>
@@ -502,6 +479,36 @@ class FilterModal extends React.Component {
                 </TouchableOpacity>
               </View>
               <View style={styles.filterTitle}>
+                <Text style={{fontSize: 16}}>Hẹn ngày test</Text>
+                <TouchableOpacity
+                  style={styles.filterContainer}
+                  onPress={() => this.openDateTestPicker()}>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                    }}>
+                    {this.props.dateTest !== ''
+                      ? this.props.dateTest
+                      : 'YYYY-MM-DD'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.filterTitle}>
+                <Text style={{fontSize: 16}}>Hẹn gọi lại</Text>
+                <TouchableOpacity
+                  style={styles.filterContainer}
+                  onPress={() => this.openCallBackTimePicker()}>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                    }}>
+                    {this.props.callBackTime !== ''
+                      ? this.props.callBackTime
+                      : 'YYYY-MM-DD'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Coupon</Text>
                 <View style={styles.filterContainer}>
                   <TextInput
@@ -511,6 +518,19 @@ class FilterModal extends React.Component {
                       this.setState({search_coupon: text})
                     }
                     value={this.state.search_coupon}
+                    clearButtonMode={true}
+                    style={{width: 120, fontSize: 16}}
+                  />
+                </View>
+              </View>
+              <View style={styles.filterTitle}>
+                <Text style={{fontSize: 16}}>Note</Text>
+                <View style={styles.filterContainer}>
+                  <TextInput
+                    placeholder={'Nhập note'}
+                    autoCapitalize={false}
+                    onChangeText={(text) => this.setState({note: text})}
+                    value={this.state.note}
                     clearButtonMode={true}
                     style={{width: 120, fontSize: 16}}
                   />
@@ -598,7 +618,10 @@ class FilterModal extends React.Component {
               </View>
               <TouchableOpacity
                 onPress={() => {
-                  this.props.onRefresh(this.state.search_coupon);
+                  this.props.onRefresh(
+                    this.state.search_coupon,
+                    this.state.note,
+                  );
                   this.props.closeModal();
                 }}>
                 <View style={styles.submit}>
@@ -639,6 +662,16 @@ class FilterModal extends React.Component {
                 onCancel={() =>
                   this.setState({isAppointmentPaymentVisible: false})
                 }
+              />
+              <DateTimePicker
+                isVisible={this.state.isDateTestVisible}
+                onConfirm={this.handleDateTestPicked}
+                onCancel={() => this.setState({isDateTestVisible: false})}
+              />
+              <DateTimePicker
+                isVisible={this.state.isCallBackTimeVisible}
+                onConfirm={this.handleCallBackTimePicked}
+                onCancel={() => this.setState({isCallBackTimeVisible: false})}
               />
             </ScrollView>
           ) : (

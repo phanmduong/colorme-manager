@@ -23,39 +23,17 @@ class RegisterListContainer extends React.Component {
     this.updateFormAndLoadDataSearchMy = this.updateFormAndLoadDataSearchMy.bind(
       this,
     );
-    this.state = {
-      checkedCurrentGen: false,
-    };
   }
 
   componentWillMount() {
     this.loadDataRegisterListMy();
-    this.loadBases();
     this.loadCampaigns();
     this.loadStatuses();
     this.loadSources();
     this.loadSalers();
-    this.loadGens();
+    this.loadFilterClasses();
+    this.loadCourses();
   }
-
-  componentWillReceiveProps = (nextProps) => {
-    this.checkCurrentGen(nextProps);
-  };
-
-  checkCurrentGen = (props) => {
-    if (
-      !isEmptyInput(props.currentGen.id) &&
-      !isEmptyInput(this.props.currentGen.id) &&
-      !this.state.checkedCurrentGen
-    ) {
-      this.setState({checkedCurrentGen: true});
-      this.loadFilterClasses();
-    }
-  };
-
-  loadBases = () => {
-    this.props.baseActions.loadDataBase(this.props.token, this.props.domain);
-  };
 
   loadCampaigns = () => {
     this.props.saveRegisterActions.loadCampaigns(
@@ -110,6 +88,7 @@ class RegisterListContainer extends React.Component {
     let sourceId = this.props.source_id === -1 ? '' : this.props.source_id;
     let genId = this.props.selectedGenId === -1 ? '' : this.props.selectedGenId;
     let classId = this.props.classId === -1 ? '' : this.props.classId;
+    let courseId = this.props.courseId === -1 ? '' : this.props.courseId;
     if (this.props.currentPageMy < this.props.totalPageMy) {
       this.props.registerListActions.loadDataRegisterListMy(
         this.props.token,
@@ -131,11 +110,15 @@ class RegisterListContainer extends React.Component {
         genId,
         classId,
         this.props.domain,
+        courseId,
+        this.props.note,
+        this.props.dateTest,
+        this.props.callBackTime,
       );
     }
   }
 
-  refreshRegisterListMy = (search_coupon) => {
+  refreshRegisterListMy = (search_coupon, note) => {
     let baseId =
       this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
     let salerId = this.props.salerId === -1 ? '' : this.props.salerId;
@@ -145,6 +128,7 @@ class RegisterListContainer extends React.Component {
     let bookmark = this.props.bookmark === -1 ? '' : this.props.bookmark;
     let statusId = this.props.status_id === -1 ? '' : this.props.status_id;
     let sourceId = this.props.source_id === -1 ? '' : this.props.source_id;
+    let courseId = this.props.courseId === -1 ? '' : this.props.courseId;
     let genId = '';
     if (this.props.selectedGenId === -1) {
       genId = this.props.currentGen.id;
@@ -174,6 +158,10 @@ class RegisterListContainer extends React.Component {
       genId,
       classId,
       this.props.domain,
+      courseId,
+      note,
+      this.props.dateTest,
+      this.props.callBackTime,
     );
   };
 
@@ -189,6 +177,7 @@ class RegisterListContainer extends React.Component {
     let sourceId = this.props.source_id === -1 ? '' : this.props.source_id;
     let genId = this.props.selectedGenId === -1 ? '' : this.props.selectedGenId;
     let classId = this.props.classId === -1 ? '' : this.props.classId;
+    let courseId = this.props.courseId === -1 ? '' : this.props.courseId;
     this.props.registerListActions.updateFormAndLoadDataSearchMy(
       search,
       salerId,
@@ -206,6 +195,10 @@ class RegisterListContainer extends React.Component {
       sourceId,
       genId,
       classId,
+      courseId,
+      this.props.note,
+      this.props.dateTest,
+      this.props.callBackTime,
       this.props.token,
       this.props.domain,
     );
@@ -284,6 +277,13 @@ class RegisterListContainer extends React.Component {
     );
   };
 
+  loadCourses = () => {
+    this.props.registerListActions.loadCourses(
+      this.props.token,
+      this.props.domain,
+    );
+  };
+
   resetAvailableClasses = () => {
     this.props.registerListActions.resetAvailableClasses();
   };
@@ -342,6 +342,18 @@ class RegisterListContainer extends React.Component {
 
   onSelectClassId = (classId) => {
     this.props.registerListActions.onSelectClassId(classId);
+  };
+
+  onSelectCourseId = (courseId) => {
+    this.props.registerListActions.onSelectCourseId(courseId);
+  };
+
+  onSelectDateTest = (date) => {
+    this.props.registerListActions.onSelectDateTest(date);
+  };
+
+  onSelectCallBackTime = (date) => {
+    this.props.registerListActions.onSelectCallBackTime(date);
   };
 
   reset = () => {
@@ -407,10 +419,7 @@ class RegisterListContainer extends React.Component {
         submitMoney={this.submitMoney}
         user={this.props.user}
         salerId={this.props.salerId}
-        baseData={this.props.baseData}
-        onSelectBaseId={this.onSelectBaseId}
         onSelectSalerId={this.onSelectSalerId}
-        selectedBaseId={this.props.selectedBaseId}
         campaigns={this.props.campaigns}
         onSelectCampaignId={this.onSelectCampaignId}
         campaignId={this.props.campaignId}
@@ -434,18 +443,12 @@ class RegisterListContainer extends React.Component {
         onSelectSource={this.onSelectSource}
         sources={this.props.sources}
         sourceId={this.props.source_id}
-        isLoadingBase={this.props.isLoadingBase}
         isLoadingSources={this.props.isLoadingSources}
         isLoadingStatuses={this.props.isLoadingStatuses}
         isLoadingCampaigns={this.props.isLoadingCampaigns}
         isLoadingSalers={this.props.isLoadingSalers}
         reset={this.reset}
         salers={this.props.salers}
-        genData={this.props.genData}
-        selectedGenId={this.props.selectedGenId}
-        isLoadingGen={this.props.isLoadingGen}
-        onSelectGenId={this.onSelectGenId}
-        currentGen={this.props.currentGen}
         classId={this.props.classId}
         isLoadingFilterClasses={this.props.isLoadingFilterClasses}
         filterClasses={this.props.filterClasses}
@@ -462,6 +465,16 @@ class RegisterListContainer extends React.Component {
         changeClassStatus={this.props.changeClassStatus}
         changeClass={this.changeClass}
         loadFilterClasses={this.loadFilterClasses}
+        courses={this.props.courses}
+        isLoadingCourses={this.props.isLoadingCourses}
+        errorCourses={this.props.errorCourses}
+        courseId={this.props.courseId}
+        onSelectCourseId={this.onSelectCourseId}
+        note={this.props.note}
+        onSelectDateTest={this.onSelectDateTest}
+        dateTest={this.props.dateTest}
+        callBackTime={this.props.callBackTime}
+        onSelectCallBackTime={this.onSelectCallBackTime}
       />
     );
   }
@@ -487,8 +500,6 @@ function mapStateToProps(state) {
     salerId: state.registerList.salerId,
     errorChangeCallStatus: state.registerList.errorChangeCallStatus,
     errorSubmitMoney: state.registerList.errorSubmitMoney,
-    baseData: state.base.baseData,
-    selectedBaseId: state.base.selectedBaseId,
     campaigns: state.saveRegister.campaigns,
     campaignId: state.registerList.campaignId,
     paidStatus: state.registerList.paidStatus,
@@ -503,16 +514,11 @@ function mapStateToProps(state) {
     sources: state.saveRegister.sources,
     status_id: state.registerList.status_id,
     source_id: state.registerList.source_id,
-    isLoadingBase: state.base.isLoading,
     isLoadingSources: state.saveRegister.isLoadingSources,
     isLoadingStatuses: state.saveRegister.isLoadingStatuses,
     isLoadingCampaigns: state.saveRegister.isLoadingCampaigns,
     salers: state.saveRegister.salers,
     isLoadingSalers: state.saveRegister.isLoadingSalers,
-    genData: state.gen.genData,
-    isLoadingGen: state.gen.isLoading,
-    selectedGenId: state.gen.selectedGenId,
-    currentGen: state.gen.currentGen,
     isLoadingFilterClasses: state.saveRegister.isLoadingFilterClasses,
     filterClasses: state.saveRegister.filterClasses,
     classId: state.registerList.classId,
@@ -523,6 +529,13 @@ function mapStateToProps(state) {
     changingClass: state.registerList.changingClass,
     errorChangeClass: state.registerList.errorChangeClass,
     changeClassStatus: state.registerList.changeClassStatus,
+    courses: state.registerList.courses,
+    isLoadingCourses: state.registerList.isLoadingCourses,
+    errorCourses: state.registerList.errorCourses,
+    courseId: state.registerList.courseId,
+    note: state.registerList.note,
+    dateTest: state.registerList.dateTest,
+    callBackTime: state.registerList.callBackTime,
     domain: state.login.domain,
   };
 }

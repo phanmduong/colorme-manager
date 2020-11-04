@@ -278,7 +278,10 @@ class RegisterListContainer extends React.Component {
   };
 
   loadCourses = () => {
-    this.props.registerListActions.loadCourses(this.props.token);
+    this.props.registerListActions.loadCourses(
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   resetAvailableClasses = () => {

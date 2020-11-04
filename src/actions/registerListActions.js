@@ -452,11 +452,11 @@ function changeClassError(error) {
   };
 }
 
-export function loadCourses(token) {
+export function loadCourses(token, domain) {
   return function (dispatch) {
     dispatch(beginLoadCourses());
     studentApi
-      .loadCourses(token)
+      .loadCourses(token, domain)
       .then((res) => {
         dispatch(loadCoursesSuccess(res));
       })

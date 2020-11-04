@@ -189,7 +189,7 @@ export function changeClass(classId, registerId, token, domain) {
   });
 }
 
-export function loadCourses(token) {
-  let url = env.MANAGE_API_URL_V3 + '/v2/course/all?token=' + token;
+export function loadCourses(token, domain) {
+  let url = env.manageApiUrlV3(domain) + '/v2/course/all?token=' + token;
   return axios.get(url);
 }

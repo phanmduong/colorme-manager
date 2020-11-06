@@ -6,7 +6,11 @@ function InfoStudentProgressEventItem({event}) {
   return (
     <View style={styles.container}>
       <View style={styles.row}>
-        <Text style={styles.bold}>Buổi {event.order}</Text>
+        <Text>
+          <Text style={styles.bold}>Buổi {event.order}:</Text>
+          {'   '}
+          {event.status === 'done' ? 'Hoàn thành' : 'Chưa hoàn thành'}
+        </Text>
         <Text>{event.time}</Text>
       </View>
       <View style={styles.commentContainer}>

@@ -218,9 +218,9 @@ function InfoStudentProgressItem({item}) {
         attendances={item.attendances}
         examGroups={item.group_exams}
         exams={item.exams}
-        comments={currentComment(item.classLessonEvents)}
-        writing={currentWriting(item.classLessonEvents)}
-        bookworm={currentBook(item.classLessonEvents)}
+        comments={totalComment(item.classLessonEvents)}
+        writing={totalWriting(item.classLessonEvents)}
+        bookworm={totalBook(item.classLessonEvents)}
       />
     </View>
   );

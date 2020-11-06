@@ -142,7 +142,7 @@ android {
         applicationId "vn.colorme.manage.eduto"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 21
+        versionCode 22
         versionName "1.5.3"
         missingDimensionStrategy 'react-native-camera', 'general'
 

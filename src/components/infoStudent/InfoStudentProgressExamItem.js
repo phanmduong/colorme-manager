@@ -17,6 +17,7 @@ function InfoStudentProgressExamItem({exams, group}) {
 const styles = {
   container: {
     paddingHorizontal: theme.mainHorizontal,
+    marginTop: 15,
   },
   title: {
     fontWeight: 'bold',

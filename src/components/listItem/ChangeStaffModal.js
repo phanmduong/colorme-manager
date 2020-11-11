@@ -27,32 +27,36 @@ function ChangeStaffModal({
   const [isReplace, setReplace] = useState(false);
 
   function submit() {
-    if (isTeach) {
-      const changedData = {
-        id: class_lesson_id,
-        is_teacher_replace: isReplace,
-        note: note,
-        staff_id: selectedStaffId,
-      };
-      console.log(changedData);
-      changeStaff(changedData, 'teacher');
-    } else {
-      const changedData = {
-        id: class_lesson_id,
-        is_teaching_assistant_replace: isReplace,
-        note: note,
-        staff_id: selectedStaffId,
-      };
-      changeStaff(changedData, 'assist');
-    }
-    closeModal();
-    setTimeout(() => {
-      if (errorChangeClassTeach || errorChangeClassAssist) {
-        Alert.alert('Thông báo', 'Có lỗi xảy ra');
+    if (class_lesson_id) {
+      if (isTeach) {
+        const changedData = {
+          id: class_lesson_id,
+          is_teacher_replace: isReplace,
+          note: note,
+          staff_id: selectedStaffId,
+        };
+        console.log(changedData);
+        changeStaff(changedData, 'teacher');
       } else {
-        Alert.alert('Thông báo', 'Đổi lịch dạy thành công');
+        const changedData = {
+          id: class_lesson_id,
+          is_teaching_assistant_replace: isReplace,
+          note: note,
+          staff_id: selectedStaffId,
+        };
+        changeStaff(changedData, 'assist');
       }
-    }, 500);
+      closeModal();
+      setTimeout(() => {
+        if (errorChangeClassTeach || errorChangeClassAssist) {
+          Alert.alert('Thông báo', 'Có lỗi xảy ra');
+        } else {
+          Alert.alert('Thông báo', 'Đổi lịch dạy thành công');
+        }
+      }, 500);
+    } else {
+      Alert.alert('Thông báo', 'Có lỗi xảy ra');
+    }
   }
 
   return (

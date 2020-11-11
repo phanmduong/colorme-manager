@@ -158,6 +158,13 @@ class ListStudentClassContainer extends React.Component {
     this.props.navigation.navigate('QRCode');
   };
 
+  changeBegin = (lessonsArray) => {
+    this.props.listStudentClassActions.changeClassLessons(
+      lessonsArray,
+      this.props.token,
+    );
+  };
+
   render() {
     return (
       <ListStudenClassComponent
@@ -175,6 +182,7 @@ class ListStudentClassContainer extends React.Component {
         setStudentId={this.setStudentId}
         onRefresh={this.onRefresh}
         openQrCode={this.openQrCode}
+        changeBegin={this.changeBegin}
       />
     );
   }
@@ -236,6 +244,8 @@ function mapStateToProps(state) {
     isLoadingLessons: state.listStudentClass.isLoadingLessons,
     errorLessons: state.listStudentClass.errorLessons,
     refreshingLessons: state.listStudentClass.refreshingLessons,
+    changingClassLessons: state.listStudentClass.changingClassLessons,
+    errorChangeClassLessons: state.listStudentClass.errorChangeClassLessons,
   };
 }
 

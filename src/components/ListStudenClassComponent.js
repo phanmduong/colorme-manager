@@ -6,11 +6,9 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {Container, Button, View, List, Text} from 'native-base';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {Container, View, List, Text} from 'native-base';
 import Spinkit from 'react-native-spinkit';
 import theme from '../styles';
-import * as alert from '../constants/alert';
 import ListItemStudent from './listItem/ListItemStudent';
 import Search from './common/Search';
 import {convertVietText} from '../helper';
@@ -105,7 +103,7 @@ class ListStudenClassComponent extends React.Component {
     }
   };
 
-  renderRow = (item) => {
+  renderRow = (item, sectionID, rowID) => {
     switch (this.state.tabIdx) {
       case 0:
         return (
@@ -155,6 +153,12 @@ class ListStudenClassComponent extends React.Component {
               ' - ' +
               this.props.classInfo.base.address
             }
+            study_time={this.props.classInfo.study_time}
+            class_lesson_time={item.class_lesson_time}
+            lessons={this.props.lessons}
+            classIndex={rowID}
+            changeBegin={this.props.changeBegin}
+            errorChangeClassLessons={this.props.errorChangeClassLessons}
           />
         );
       default:
@@ -177,43 +181,20 @@ class ListStudenClassComponent extends React.Component {
         </Container>
       );
     } else {
-      if (this.props.error || this.props.listStudentClass.length <= 0) {
-        return (
-          <Container>
-            <View style={styles.container}>
-              <Text style={styles.textError}>
-                {this.props.error
-                  ? alert.LOAD_DATA_ERROR
-                  : alert.NO_DATA_LIST_STUDENT_CLASS}
-              </Text>
-              <Button
-                iconLeft
-                danger
-                small
-                onPress={this.props.onReload}
-                style={{marginTop: 10, alignSelf: null}}>
-                <MaterialCommunityIcons name="reload" color="white" size={20} />
-                <Text>Thử lại</Text>
-              </Button>
-            </View>
-          </Container>
-        );
-      } else {
-        return (
-          <List
-            style={styles.list}
-            dataArray={this.data()}
-            ListHeaderComponent={this.headerComponent}
-            refreshControl={
-              <RefreshControl
-                refreshing={this.props.refreshing}
-                onRefresh={() => this.props.onRefresh()}
-              />
-            }
-            renderRow={this.renderRow}
-          />
-        );
-      }
+      return (
+        <List
+          style={styles.list}
+          dataArray={this.data()}
+          ListHeaderComponent={this.headerComponent}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.props.refreshing}
+              onRefresh={() => this.props.onRefresh()}
+            />
+          }
+          renderRow={this.renderRow}
+        />
+      );
     }
   }
 }

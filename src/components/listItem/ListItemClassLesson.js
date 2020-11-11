@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import {View, Image, Text, TouchableOpacity} from 'react-native';
 import theme from '../../styles';
 import {getShortName} from '../../helper';
 import * as Progress from 'react-native-progress';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import ActionSheet from 'react-native-actionsheet';
+import ChangeBeginModal from './ChangeBeginModal';
 
 const ListItemClassLesson = ({
   avatar_url,
@@ -18,12 +21,48 @@ const ListItemClassLesson = ({
   class_id,
   openQrCode,
   address,
+  study_time,
+  class_lesson_time,
+  lessons,
+  classIndex,
+  changeBegin,
+  errorChangeClassLessons,
 }) => {
+  const CustomActionSheet = useRef(null);
+  const [isChangeBeginModalVisible, setChangeBeginModalVisible] = useState(
+    false,
+  );
+  const [isChangeDateModalVisible, setChangeDateModalVisible] = useState(false);
+  const [isChangeTeachModalVisible, setChangeTeachModalVisible] = useState(
+    false,
+  );
+  const [isChangeAssistModalVisible, setChangeAssistModalVisible] = useState(
+    false,
+  );
+
   const numRegisters = registers.filter((register) => register.status).length;
   const attendPercentage =
     numRegisters && numRegisters > 0 && total_attendance
       ? total_attendance / numRegisters
       : 0;
+
+  function showActionSheet() {
+    CustomActionSheet.current.show();
+  }
+
+  function toggleChangeBeginModal() {
+    setChangeBeginModalVisible(!isChangeBeginModalVisible);
+  }
+
+  function executeActions(index) {
+    switch (index) {
+      case 0:
+        toggleChangeBeginModal();
+        break;
+      default:
+        return;
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -108,8 +147,40 @@ const ListItemClassLesson = ({
               <Text style={{fontSize: 16}}>Điểm danh</Text>
             </View>
           </TouchableOpacity>
+          <TouchableOpacity onPress={showActionSheet}>
+            <View style={[{marginLeft: 10}, styles.button]}>
+              <MaterialIcon
+                name={'arrow-drop-down'}
+                size={20}
+                color={'black'}
+              />
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
+      <ActionSheet
+        ref={CustomActionSheet}
+        title={'Chọn hành động'}
+        options={[
+          'Dời lịch học',
+          'Đổi lịch dạy',
+          'Đổi giảng viên',
+          'Đổi trợ giảng',
+          'Hủy',
+        ]}
+        cancelButtonIndex={4}
+        onPress={executeActions}
+      />
+      <ChangeBeginModal
+        isVisible={isChangeBeginModalVisible}
+        closeModal={toggleChangeBeginModal}
+        currentStudyTime={study_time}
+        currentDate={class_lesson_time}
+        lessons={lessons}
+        classIndex={classIndex}
+        changeBegin={changeBegin}
+        errorChangeClassLessons={errorChangeClassLessons}
+      />
     </View>
   );
 };

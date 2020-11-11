@@ -152,6 +152,8 @@ export default {
     isLoadingLessons: false,
     errorLessons: false,
     refreshingLessons: false,
+    changingClassLessons: false,
+    errorChangeClassLessons: false,
   },
   listStudentAttendance: {
     listStudentAttendanceData: [],

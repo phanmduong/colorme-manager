@@ -12,6 +12,7 @@ import {Image, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../styles';
 import {isEmptyInput} from '../helper';
+import * as leadsActions from '../actions/leadsActions';
 
 class ListStudentClassContainer extends React.Component {
   constructor(props, context) {
@@ -21,6 +22,7 @@ class ListStudentClassContainer extends React.Component {
 
   componentWillMount() {
     this.onReload();
+    this.loadStaff('');
   }
 
   static navigationOptions = ({navigation}) => ({
@@ -172,6 +174,24 @@ class ListStudentClassContainer extends React.Component {
     );
   };
 
+  loadStaff = (search) => {
+    this.props.leadsActions.getStaff(search, this.props.token);
+  };
+
+  changeStaff = (changedData, type) => {
+    if (type === 'teacher') {
+      this.props.listStudentClassActions.changeClassTeach(
+        changedData,
+        this.props.token,
+      );
+    } else {
+      this.props.listStudentClassActions.changeClassAssist(
+        changedData,
+        this.props.token,
+      );
+    }
+  };
+
   render() {
     return (
       <ListStudenClassComponent
@@ -191,6 +211,8 @@ class ListStudentClassContainer extends React.Component {
         openQrCode={this.openQrCode}
         changeBegin={this.changeBegin}
         changeDate={this.changeDate}
+        searchStaff={this.loadStaff}
+        changeStaff={this.changeStaff}
       />
     );
   }
@@ -256,6 +278,13 @@ function mapStateToProps(state) {
     errorChangeClassLessons: state.listStudentClass.errorChangeClassLessons,
     changingClassLesson: state.listStudentClass.changingClassLesson,
     errorChangeClassLesson: state.listStudentClass.errorChangeClassLesson,
+    staff: state.leads.staff,
+    isLoadingStaff: state.leads.isLoadingStaff,
+    errorStaff: state.leads.errorStaff,
+    changingClassTeach: state.leads.changingClassTeach,
+    errorChangeClassTeach: state.leads.errorChangeClassTeach,
+    changingClassAssist: state.leads.changingClassAssist,
+    errorChangeClassAssist: state.leads.errorChangeClassAssist,
   };
 }
 
@@ -270,6 +299,7 @@ function mapDispatchToProps(dispatch) {
       currentClassStudyActions,
       dispatch,
     ),
+    leadsActions: bindActionCreators(leadsActions, dispatch),
   };
 }
 

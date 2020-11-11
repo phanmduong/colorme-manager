@@ -87,6 +87,36 @@ export default function listStudentClassReducer(
         changingClassLesson: action.changingClassLesson,
         errorChangeClassLesson: action.errorChangeClassLesson,
       });
+    case types.BEGIN_CHANGE_CLASS_TEACHER:
+      return Object.assign({}, state, {
+        changingClassTeach: action.changingClassTeach,
+        errorChangeClassTeach: action.errorChangeClassTeach,
+      });
+    case types.CHANGE_CLASS_TEACHER_SUCCESS:
+      return Object.assign({}, state, {
+        changingClassTeach: action.changingClassTeach,
+        errorChangeClassTeach: action.errorChangeClassTeach,
+      });
+    case types.CHANGE_CLASS_TEACHER_ERROR:
+      return Object.assign({}, state, {
+        changingClassTeach: action.changingClassTeach,
+        errorChangeClassTeach: action.errorChangeClassTeach,
+      });
+    case types.BEGIN_CHANGE_CLASS_ASSIST:
+      return Object.assign({}, state, {
+        changingClassAssist: action.changingClassAssist,
+        errorChangeClassAssist: action.errorChangeClassAssist,
+      });
+    case types.CHANGE_CLASS_ASSIST_SUCCESS:
+      return Object.assign({}, state, {
+        changingClassAssist: action.changingClassAssist,
+        errorChangeClassAssist: action.errorChangeClassAssist,
+      });
+    case types.CHANGE_CLASS_ASSIST_ERROR:
+      return Object.assign({}, state, {
+        changingClassAssist: action.changingClassAssist,
+        errorChangeClassAssist: action.errorChangeClassAssist,
+      });
     default:
       return state;
   }

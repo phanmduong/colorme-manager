@@ -156,6 +156,10 @@ export default {
     errorChangeClassLessons: false,
     changingClassLesson: false,
     errorChangeClassLesson: false,
+    changingClassTeach: false,
+    errorChangeClassTeach: false,
+    changingClassAssist: false,
+    errorChangeClassAssist: false,
   },
   listStudentAttendance: {
     listStudentAttendanceData: [],

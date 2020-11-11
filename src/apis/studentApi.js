@@ -196,3 +196,24 @@ export function changeClassLesson(lesson, token) {
     time: lesson.time,
   });
 }
+
+export function changeTeacher(changedData, token) {
+  let url = env.MANAGE_API_URL_V3 + '/class/change-teacher?token=' + token;
+  return axios.put(url, {
+    id: changedData.id,
+    is_teacher_replace: changedData.is_teacher_replace,
+    note: changedData.note,
+    staff_id: changedData.staff_id,
+  });
+}
+
+export function changeAssist(changedData, token) {
+  let url =
+    env.MANAGE_API_URL_V3 + '/class/change-teaching-assistant?token=' + token;
+  return axios.put(url, {
+    id: changedData.id,
+    is_teaching_assistant_replace: changedData.is_teaching_assistant_replace,
+    note: changedData.note,
+    staff_id: changedData.staff_id,
+  });
+}

@@ -197,3 +197,77 @@ function changeClassLessonError() {
     errorChangeClassLesson: true,
   };
 }
+
+export function changeClassTeach(data, token) {
+  return function (dispatch) {
+    dispatch(beginChangeClassTeach());
+    studentApi
+      .changeTeacher(data, token)
+      .then((res) => dispatch(changeClassTeachSuccess()))
+      .catch((error) => {
+        dispatch(changeClassTeachError());
+        throw error;
+      });
+  };
+}
+
+function beginChangeClassTeach() {
+  return {
+    type: types.BEGIN_CHANGE_CLASS_TEACHER,
+    changingClassTeach: true,
+    errorChangeClassTeach: false,
+  };
+}
+
+function changeClassTeachSuccess() {
+  return {
+    type: types.CHANGE_CLASS_TEACHER_SUCCESS,
+    changingClassTeach: false,
+    errorChangeClassTeach: false,
+  };
+}
+
+function changeClassTeachError() {
+  return {
+    type: types.CHANGE_CLASS_TEACHER_ERROR,
+    changingClassTeach: false,
+    errorChangeClassTeach: true,
+  };
+}
+
+export function changeClassAssist(data, token) {
+  return function (dispatch) {
+    dispatch(beginChangeClassAssist());
+    studentApi
+      .changeAssist(data, token)
+      .then((res) => dispatch(changeClassAssistSuccess()))
+      .catch((error) => {
+        dispatch(changeClassAssistError());
+        throw error;
+      });
+  };
+}
+
+function beginChangeClassAssist() {
+  return {
+    type: types.BEGIN_CHANGE_CLASS_ASSIST,
+    changingClassAssist: true,
+    errorChangeClassAssist: false,
+  };
+}
+
+function changeClassAssistSuccess() {
+  return {
+    type: types.CHANGE_CLASS_ASSIST_SUCCESS,
+    changingClassAssist: false,
+    errorChangeClassAssist: false,
+  };
+}
+
+function changeClassAssistError() {
+  return {
+    type: types.CHANGE_CLASS_ASSIST_ERROR,
+    changingClassAssist: false,
+    errorChangeClassAssist: true,
+  };
+}

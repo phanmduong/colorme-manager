@@ -7,6 +7,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import ActionSheet from 'react-native-actionsheet';
 import ChangeBeginModal from './ChangeBeginModal';
 import ChangeDateModal from './ChangeDateModal';
+import ChangeStaffModal from './ChangeStaffModal';
 
 const ListItemClassLesson = ({
   avatar_url,
@@ -27,10 +28,15 @@ const ListItemClassLesson = ({
   lessons,
   classIndex,
   class_lesson_id,
+  searchStaff,
   changeBegin,
   changeDate,
   errorChangeClassLessons,
   errorChangeClassLesson,
+  staff,
+  changeStaff,
+  errorChangeClassTeach,
+  errorChangeClassAssist,
 }) => {
   const CustomActionSheet = useRef(null);
   const [isChangeBeginModalVisible, setChangeBeginModalVisible] = useState(
@@ -62,6 +68,14 @@ const ListItemClassLesson = ({
     setChangeDateModalVisible(!isChangeDateModalVisible);
   }
 
+  function toggleChangeTeachModal() {
+    setChangeTeachModalVisible(!isChangeTeachModalVisible);
+  }
+
+  function toggleChangeAssistModal() {
+    setChangeAssistModalVisible(!isChangeAssistModalVisible);
+  }
+
   function executeActions(index) {
     switch (index) {
       case 0:
@@ -69,6 +83,12 @@ const ListItemClassLesson = ({
         break;
       case 1:
         toggleChangeDateModal();
+        break;
+      case 2:
+        toggleChangeTeachModal();
+        break;
+      case 3:
+        toggleChangeAssistModal();
         break;
       default:
         return;
@@ -199,6 +219,32 @@ const ListItemClassLesson = ({
         class_lesson_id={class_lesson_id}
         errorChangeClassLesson={errorChangeClassLesson}
         changeDate={changeDate}
+      />
+      <ChangeStaffModal
+        isVisible={isChangeTeachModalVisible}
+        closeModal={toggleChangeTeachModal}
+        currentStudyTime={class_lesson_time}
+        currentTeach={teacher}
+        searchStaff={searchStaff}
+        staff={staff}
+        class_lesson_id={class_lesson_id}
+        changeStaff={changeStaff}
+        errorChangeClassTeach={errorChangeClassTeach}
+        errorChangeClassAssist={errorChangeClassAssist}
+      />
+      <ChangeStaffModal
+        isVisible={isChangeAssistModalVisible}
+        closeModal={toggleChangeAssistModal}
+        currentStudyTime={class_lesson_time}
+        currentAssist={teacher_assistant}
+        searchStaff={searchStaff}
+        staff={staff}
+        isAssist={true}
+        isTeach={false}
+        class_lesson_id={class_lesson_id}
+        changeStaff={changeStaff}
+        errorChangeClassTeach={errorChangeClassTeach}
+        errorChangeClassAssist={errorChangeClassAssist}
       />
     </View>
   );

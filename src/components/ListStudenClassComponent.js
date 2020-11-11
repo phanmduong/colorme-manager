@@ -158,7 +158,10 @@ class ListStudenClassComponent extends React.Component {
             lessons={this.props.lessons}
             classIndex={rowID}
             changeBegin={this.props.changeBegin}
+            changeDate={this.props.changeDate}
             errorChangeClassLessons={this.props.errorChangeClassLessons}
+            errorChangeClassLesson={this.props.errorChangeClassLesson}
+            class_lesson_id={item.class_lesson_id}
           />
         );
       default:

@@ -187,3 +187,12 @@ export function changeClassLessons(classLessons, token) {
     classLessons,
   });
 }
+
+export function changeClassLesson(lesson, token) {
+  let url = env.MANAGE_API_URL_V3 + '/class/change-class-lesson?token=' + token;
+  return axios.put(url, {
+    id: lesson.id,
+    note: lesson.note,
+    time: lesson.time,
+  });
+}

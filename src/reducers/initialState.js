@@ -154,6 +154,8 @@ export default {
     refreshingLessons: false,
     changingClassLessons: false,
     errorChangeClassLessons: false,
+    changingClassLesson: false,
+    errorChangeClassLesson: false,
   },
   listStudentAttendance: {
     listStudentAttendanceData: [],

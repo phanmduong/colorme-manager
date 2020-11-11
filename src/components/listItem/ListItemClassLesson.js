@@ -6,6 +6,7 @@ import * as Progress from 'react-native-progress';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import ActionSheet from 'react-native-actionsheet';
 import ChangeBeginModal from './ChangeBeginModal';
+import ChangeDateModal from './ChangeDateModal';
 
 const ListItemClassLesson = ({
   avatar_url,
@@ -25,8 +26,11 @@ const ListItemClassLesson = ({
   class_lesson_time,
   lessons,
   classIndex,
+  class_lesson_id,
   changeBegin,
+  changeDate,
   errorChangeClassLessons,
+  errorChangeClassLesson,
 }) => {
   const CustomActionSheet = useRef(null);
   const [isChangeBeginModalVisible, setChangeBeginModalVisible] = useState(
@@ -54,10 +58,17 @@ const ListItemClassLesson = ({
     setChangeBeginModalVisible(!isChangeBeginModalVisible);
   }
 
+  function toggleChangeDateModal() {
+    setChangeDateModalVisible(!isChangeDateModalVisible);
+  }
+
   function executeActions(index) {
     switch (index) {
       case 0:
         toggleChangeBeginModal();
+        break;
+      case 1:
+        toggleChangeDateModal();
         break;
       default:
         return;
@@ -180,6 +191,14 @@ const ListItemClassLesson = ({
         classIndex={classIndex}
         changeBegin={changeBegin}
         errorChangeClassLessons={errorChangeClassLessons}
+      />
+      <ChangeDateModal
+        isVisible={isChangeDateModalVisible}
+        closeModal={toggleChangeDateModal}
+        currentStudyTime={class_lesson_time}
+        class_lesson_id={class_lesson_id}
+        errorChangeClassLesson={errorChangeClassLesson}
+        changeDate={changeDate}
       />
     </View>
   );

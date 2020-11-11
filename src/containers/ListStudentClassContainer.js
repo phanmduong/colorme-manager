@@ -165,6 +165,13 @@ class ListStudentClassContainer extends React.Component {
     );
   };
 
+  changeDate = (lesson) => {
+    this.props.listStudentClassActions.changeClassLesson(
+      lesson,
+      this.props.token,
+    );
+  };
+
   render() {
     return (
       <ListStudenClassComponent
@@ -183,6 +190,7 @@ class ListStudentClassContainer extends React.Component {
         onRefresh={this.onRefresh}
         openQrCode={this.openQrCode}
         changeBegin={this.changeBegin}
+        changeDate={this.changeDate}
       />
     );
   }
@@ -246,6 +254,8 @@ function mapStateToProps(state) {
     refreshingLessons: state.listStudentClass.refreshingLessons,
     changingClassLessons: state.listStudentClass.changingClassLessons,
     errorChangeClassLessons: state.listStudentClass.errorChangeClassLessons,
+    changingClassLesson: state.listStudentClass.changingClassLesson,
+    errorChangeClassLesson: state.listStudentClass.errorChangeClassLesson,
   };
 }
 

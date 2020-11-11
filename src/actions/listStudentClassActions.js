@@ -158,3 +158,42 @@ function changeClassLessonsError() {
     errorChangeClassLessons: true,
   };
 }
+
+export function changeClassLesson(lesson, token) {
+  return function (dispatch) {
+    dispatch(beginChangeClassLesson());
+    studentApi
+      .changeClassLesson(lesson, token)
+      .then((res) => {
+        dispatch(changeClassLessonSuccess());
+      })
+      .catch((error) => {
+        dispatch(changeClassLessonError());
+        throw error;
+      });
+  };
+}
+
+function beginChangeClassLesson() {
+  return {
+    type: types.BEGIN_CHANGE_CLASS_LESSON,
+    changingClassLesson: true,
+    errorChangeClassLesson: false,
+  };
+}
+
+function changeClassLessonSuccess() {
+  return {
+    type: types.CHANGE_CLASS_LESSON_SUCCESS,
+    changingClassLesson: false,
+    errorChangeClassLesson: false,
+  };
+}
+
+function changeClassLessonError() {
+  return {
+    type: types.CHANGE_CLASS_LESSON_ERROR,
+    changingClassLesson: false,
+    errorChangeClassLesson: true,
+  };
+}

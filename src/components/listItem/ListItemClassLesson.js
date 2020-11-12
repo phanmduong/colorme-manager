@@ -1,8 +1,13 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import {View, Image, Text, TouchableOpacity} from 'react-native';
 import theme from '../../styles';
 import {getShortName} from '../../helper';
 import * as Progress from 'react-native-progress';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import ActionSheet from 'react-native-actionsheet';
+import ChangeBeginModal from './ChangeBeginModal';
+import ChangeDateModal from './ChangeDateModal';
+import ChangeStaffModal from './ChangeStaffModal';
 
 const ListItemClassLesson = ({
   avatar_url,
@@ -18,12 +23,77 @@ const ListItemClassLesson = ({
   class_id,
   openQrCode,
   address,
+  study_time,
+  class_lesson_time,
+  lessons,
+  classIndex,
+  class_lesson_id,
+  searchStaff,
+  changeBegin,
+  changeDate,
+  errorChangeClassLessons,
+  errorChangeClassLesson,
+  staff,
+  changeStaff,
+  errorChangeClassTeach,
+  errorChangeClassAssist,
 }) => {
+  const CustomActionSheet = useRef(null);
+  const [isChangeBeginModalVisible, setChangeBeginModalVisible] = useState(
+    false,
+  );
+  const [isChangeDateModalVisible, setChangeDateModalVisible] = useState(false);
+  const [isChangeTeachModalVisible, setChangeTeachModalVisible] = useState(
+    false,
+  );
+  const [isChangeAssistModalVisible, setChangeAssistModalVisible] = useState(
+    false,
+  );
+
   const numRegisters = registers.filter((register) => register.status).length;
   const attendPercentage =
     numRegisters && numRegisters > 0 && total_attendance
       ? total_attendance / numRegisters
       : 0;
+
+  function showActionSheet() {
+    CustomActionSheet.current.show();
+  }
+
+  function toggleChangeBeginModal() {
+    setChangeBeginModalVisible(!isChangeBeginModalVisible);
+  }
+
+  function toggleChangeDateModal() {
+    setChangeDateModalVisible(!isChangeDateModalVisible);
+  }
+
+  function toggleChangeTeachModal() {
+    setChangeTeachModalVisible(!isChangeTeachModalVisible);
+  }
+
+  function toggleChangeAssistModal() {
+    setChangeAssistModalVisible(!isChangeAssistModalVisible);
+  }
+
+  function executeActions(index) {
+    switch (index) {
+      case 0:
+        toggleChangeBeginModal();
+        break;
+      case 1:
+        toggleChangeDateModal();
+        break;
+      case 2:
+        toggleChangeTeachModal();
+        break;
+      case 3:
+        toggleChangeAssistModal();
+        break;
+      default:
+        return;
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -108,8 +178,74 @@ const ListItemClassLesson = ({
               <Text style={{fontSize: 16}}>Điểm danh</Text>
             </View>
           </TouchableOpacity>
+          <TouchableOpacity onPress={showActionSheet}>
+            <View style={[{marginLeft: 10}, styles.button]}>
+              <MaterialIcon
+                name={'arrow-drop-down'}
+                size={20}
+                color={'black'}
+              />
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
+      <ActionSheet
+        ref={CustomActionSheet}
+        title={'Chọn hành động'}
+        options={[
+          'Dời lịch học',
+          'Đổi lịch dạy',
+          'Đổi giảng viên',
+          'Đổi trợ giảng',
+          'Hủy',
+        ]}
+        cancelButtonIndex={4}
+        onPress={executeActions}
+      />
+      <ChangeBeginModal
+        isVisible={isChangeBeginModalVisible}
+        closeModal={toggleChangeBeginModal}
+        currentStudyTime={study_time}
+        currentDate={class_lesson_time}
+        lessons={lessons}
+        classIndex={classIndex}
+        changeBegin={changeBegin}
+        errorChangeClassLessons={errorChangeClassLessons}
+      />
+      <ChangeDateModal
+        isVisible={isChangeDateModalVisible}
+        closeModal={toggleChangeDateModal}
+        currentStudyTime={class_lesson_time}
+        class_lesson_id={class_lesson_id}
+        errorChangeClassLesson={errorChangeClassLesson}
+        changeDate={changeDate}
+      />
+      <ChangeStaffModal
+        isVisible={isChangeTeachModalVisible}
+        closeModal={toggleChangeTeachModal}
+        currentStudyTime={class_lesson_time}
+        currentTeach={teacher}
+        searchStaff={searchStaff}
+        staff={staff}
+        class_lesson_id={class_lesson_id}
+        changeStaff={changeStaff}
+        errorChangeClassTeach={errorChangeClassTeach}
+        errorChangeClassAssist={errorChangeClassAssist}
+      />
+      <ChangeStaffModal
+        isVisible={isChangeAssistModalVisible}
+        closeModal={toggleChangeAssistModal}
+        currentStudyTime={class_lesson_time}
+        currentAssist={teacher_assistant}
+        searchStaff={searchStaff}
+        staff={staff}
+        isAssist={true}
+        isTeach={false}
+        class_lesson_id={class_lesson_id}
+        changeStaff={changeStaff}
+        errorChangeClassTeach={errorChangeClassTeach}
+        errorChangeClassAssist={errorChangeClassAssist}
+      />
     </View>
   );
 };

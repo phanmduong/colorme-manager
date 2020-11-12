@@ -96,8 +96,8 @@ export function loadListStudentClassApi(classId, token, domain) {
   return axios.get(url);
 }
 
-export function loadListStudentClassLessonsApi(classId, token) {
-  let url = env.MANAGE_API_URL_V3 + '/class/' + classId + '?token=' + token;
+export function loadListStudentClassLessonsApi(classId, token, domain) {
+  let url = env.manageApiUrlV3(domain) + '/class/' + classId + '?token=' + token;
   return axios.get(url);
 }
 
@@ -192,4 +192,42 @@ export function changeClass(classId, registerId, token, domain) {
 export function loadCourses(token, domain) {
   let url = env.manageApiUrlV3(domain) + '/v2/course/all?token=' + token;
   return axios.get(url);
+}
+
+export function changeClassLessons(classLessons, token, domain) {
+  let url =
+    env.manageApiUrlV3(domain) + '/class/change-class-lessons?token=' + token;
+  return axios.put(url, {
+    classLessons,
+  });
+}
+
+export function changeClassLesson(lesson, token, domain) {
+  let url = env.manageApiUrlV3(domain) + '/class/change-class-lesson?token=' + token;
+  return axios.put(url, {
+    id: lesson.id,
+    note: lesson.note,
+    time: lesson.time,
+  });
+}
+
+export function changeTeacher(changedData, token, domain) {
+  let url = env.manageApiUrlV3(domain) + '/class/change-teacher?token=' + token;
+  return axios.put(url, {
+    id: changedData.id,
+    is_teacher_replace: changedData.is_teacher_replace,
+    note: changedData.note,
+    staff_id: changedData.staff_id,
+  });
+}
+
+export function changeAssist(changedData, token, domain) {
+  let url =
+    env.manageApiUrlV3(domain) + '/class/change-teaching-assistant?token=' + token;
+  return axios.put(url, {
+    id: changedData.id,
+    is_teaching_assistant_replace: changedData.is_teaching_assistant_replace,
+    note: changedData.note,
+    staff_id: changedData.staff_id,
+  });
 }

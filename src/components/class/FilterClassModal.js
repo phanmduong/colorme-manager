@@ -161,29 +161,6 @@ class FilterClassModal extends React.Component {
     }
   };
 
-  // applyFilter = () => {
-  //   this.props.onSelectProvinceId(this.state.selectedProvinceId);
-  //   this.props.filter();
-  // };
-
-  // filterProvinces = (bases) => {
-  //   let baseData = [];
-  //   if (this.state.selectedProvinceId !== -1) {
-  //     for (let base of bases) {
-  //       if (base.id !== -1) {
-  //         if (base.district.province.id === this.state.selectedProvinceId) {
-  //           baseData.push(base);
-  //         }
-  //       } else {
-  //         baseData.push(base);
-  //       }
-  //     }
-  //     return baseData;
-  //   } else {
-  //     return bases;
-  //   }
-  // };
-
   render() {
     return (
       <Modal

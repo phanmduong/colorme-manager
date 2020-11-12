@@ -170,6 +170,7 @@ class ListStudentClassContainer extends React.Component {
     this.props.listStudentClassActions.changeClassLessons(
       lessonsArray,
       this.props.token,
+      this.props.domain,
     );
   };
 
@@ -177,11 +178,16 @@ class ListStudentClassContainer extends React.Component {
     this.props.listStudentClassActions.changeClassLesson(
       lesson,
       this.props.token,
+      this.props.domain,
     );
   };
 
   loadStaff = (search) => {
-    this.props.leadsActions.getStaff(search, this.props.token);
+    this.props.leadsActions.getStaff(
+      search,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   changeStaff = (changedData, type) => {
@@ -189,11 +195,13 @@ class ListStudentClassContainer extends React.Component {
       this.props.listStudentClassActions.changeClassTeach(
         changedData,
         this.props.token,
+        this.props.domain,
       );
     } else {
       this.props.listStudentClassActions.changeClassAssist(
         changedData,
         this.props.token,
+        this.props.domain,
       );
     }
   };

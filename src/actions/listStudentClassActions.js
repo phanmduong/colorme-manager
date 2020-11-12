@@ -70,7 +70,12 @@ export function loadDataError() {
   };
 }
 
-export function loadListStudentClassLessons(refreshing, classId, token) {
+export function loadListStudentClassLessons(
+  refreshing,
+  classId,
+  token,
+  domain,
+) {
   return function (dispatch) {
     if (refreshing) {
       dispatch(beginRefreshClassLessons());
@@ -78,7 +83,7 @@ export function loadListStudentClassLessons(refreshing, classId, token) {
       dispatch(beginLoadClassLessons());
     }
     studentApi
-      .loadListStudentClassLessonsApi(classId, token)
+      .loadListStudentClassLessonsApi(classId, token, domain)
       .then((res) => dispatch(loadClassLessonsSuccess(res)))
       .catch((error) => {
         dispatch(loadClassLessonsError());
@@ -122,11 +127,11 @@ function loadClassLessonsError() {
   };
 }
 
-export function changeClassLessons(classLessons, token) {
+export function changeClassLessons(classLessons, token, domain) {
   return function (dispatch) {
     dispatch(beginChangeClassLessons());
     studentApi
-      .changeClassLessons(classLessons, token)
+      .changeClassLessons(classLessons, token, domain)
       .then((res) => dispatch(changeClassLessonsSuccess()))
       .catch((error) => {
         changeClassLessonsError();
@@ -159,11 +164,11 @@ function changeClassLessonsError() {
   };
 }
 
-export function changeClassLesson(lesson, token) {
+export function changeClassLesson(lesson, token, domain) {
   return function (dispatch) {
     dispatch(beginChangeClassLesson());
     studentApi
-      .changeClassLesson(lesson, token)
+      .changeClassLesson(lesson, token, domain)
       .then((res) => {
         dispatch(changeClassLessonSuccess());
       })
@@ -198,11 +203,11 @@ function changeClassLessonError() {
   };
 }
 
-export function changeClassTeach(data, token) {
+export function changeClassTeach(data, token, domain) {
   return function (dispatch) {
     dispatch(beginChangeClassTeach());
     studentApi
-      .changeTeacher(data, token)
+      .changeTeacher(data, token, domain)
       .then((res) => dispatch(changeClassTeachSuccess()))
       .catch((error) => {
         dispatch(changeClassTeachError());
@@ -235,11 +240,11 @@ function changeClassTeachError() {
   };
 }
 
-export function changeClassAssist(data, token) {
+export function changeClassAssist(data, token, domain) {
   return function (dispatch) {
     dispatch(beginChangeClassAssist());
     studentApi
-      .changeAssist(data, token)
+      .changeAssist(data, token, domain)
       .then((res) => dispatch(changeClassAssistSuccess()))
       .catch((error) => {
         dispatch(changeClassAssistError());

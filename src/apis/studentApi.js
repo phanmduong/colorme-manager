@@ -193,3 +193,41 @@ export function loadCourses(token, domain) {
   let url = env.manageApiUrlV3(domain) + '/v2/course/all?token=' + token;
   return axios.get(url);
 }
+
+export function changeClassLessons(classLessons, token) {
+  let url =
+    env.MANAGE_API_URL_V3 + '/class/change-class-lessons?token=' + token;
+  return axios.put(url, {
+    classLessons,
+  });
+}
+
+export function changeClassLesson(lesson, token) {
+  let url = env.MANAGE_API_URL_V3 + '/class/change-class-lesson?token=' + token;
+  return axios.put(url, {
+    id: lesson.id,
+    note: lesson.note,
+    time: lesson.time,
+  });
+}
+
+export function changeTeacher(changedData, token) {
+  let url = env.MANAGE_API_URL_V3 + '/class/change-teacher?token=' + token;
+  return axios.put(url, {
+    id: changedData.id,
+    is_teacher_replace: changedData.is_teacher_replace,
+    note: changedData.note,
+    staff_id: changedData.staff_id,
+  });
+}
+
+export function changeAssist(changedData, token) {
+  let url =
+    env.MANAGE_API_URL_V3 + '/class/change-teaching-assistant?token=' + token;
+  return axios.put(url, {
+    id: changedData.id,
+    is_teaching_assistant_replace: changedData.is_teaching_assistant_replace,
+    note: changedData.note,
+    staff_id: changedData.staff_id,
+  });
+}

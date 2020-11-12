@@ -121,3 +121,153 @@ function loadClassLessonsError() {
     refreshingLessons: false,
   };
 }
+
+export function changeClassLessons(classLessons, token) {
+  return function (dispatch) {
+    dispatch(beginChangeClassLessons());
+    studentApi
+      .changeClassLessons(classLessons, token)
+      .then((res) => dispatch(changeClassLessonsSuccess()))
+      .catch((error) => {
+        changeClassLessonsError();
+        throw error;
+      });
+  };
+}
+
+function beginChangeClassLessons() {
+  return {
+    type: types.BEGIN_CHANGE_CLASS_LESSONS,
+    changingClassLessons: true,
+    errorChangeClassLessons: false,
+  };
+}
+
+function changeClassLessonsSuccess() {
+  return {
+    type: types.BEGIN_CHANGE_CLASS_LESSONS,
+    changingClassLessons: false,
+    errorChangeClassLessons: false,
+  };
+}
+
+function changeClassLessonsError() {
+  return {
+    type: types.BEGIN_CHANGE_CLASS_LESSONS,
+    changingClassLessons: false,
+    errorChangeClassLessons: true,
+  };
+}
+
+export function changeClassLesson(lesson, token) {
+  return function (dispatch) {
+    dispatch(beginChangeClassLesson());
+    studentApi
+      .changeClassLesson(lesson, token)
+      .then((res) => {
+        dispatch(changeClassLessonSuccess());
+      })
+      .catch((error) => {
+        dispatch(changeClassLessonError());
+        throw error;
+      });
+  };
+}
+
+function beginChangeClassLesson() {
+  return {
+    type: types.BEGIN_CHANGE_CLASS_LESSON,
+    changingClassLesson: true,
+    errorChangeClassLesson: false,
+  };
+}
+
+function changeClassLessonSuccess() {
+  return {
+    type: types.CHANGE_CLASS_LESSON_SUCCESS,
+    changingClassLesson: false,
+    errorChangeClassLesson: false,
+  };
+}
+
+function changeClassLessonError() {
+  return {
+    type: types.CHANGE_CLASS_LESSON_ERROR,
+    changingClassLesson: false,
+    errorChangeClassLesson: true,
+  };
+}
+
+export function changeClassTeach(data, token) {
+  return function (dispatch) {
+    dispatch(beginChangeClassTeach());
+    studentApi
+      .changeTeacher(data, token)
+      .then((res) => dispatch(changeClassTeachSuccess()))
+      .catch((error) => {
+        dispatch(changeClassTeachError());
+        throw error;
+      });
+  };
+}
+
+function beginChangeClassTeach() {
+  return {
+    type: types.BEGIN_CHANGE_CLASS_TEACHER,
+    changingClassTeach: true,
+    errorChangeClassTeach: false,
+  };
+}
+
+function changeClassTeachSuccess() {
+  return {
+    type: types.CHANGE_CLASS_TEACHER_SUCCESS,
+    changingClassTeach: false,
+    errorChangeClassTeach: false,
+  };
+}
+
+function changeClassTeachError() {
+  return {
+    type: types.CHANGE_CLASS_TEACHER_ERROR,
+    changingClassTeach: false,
+    errorChangeClassTeach: true,
+  };
+}
+
+export function changeClassAssist(data, token) {
+  return function (dispatch) {
+    dispatch(beginChangeClassAssist());
+    studentApi
+      .changeAssist(data, token)
+      .then((res) => dispatch(changeClassAssistSuccess()))
+      .catch((error) => {
+        dispatch(changeClassAssistError());
+        throw error;
+      });
+  };
+}
+
+function beginChangeClassAssist() {
+  return {
+    type: types.BEGIN_CHANGE_CLASS_ASSIST,
+    changingClassAssist: true,
+    errorChangeClassAssist: false,
+  };
+}
+
+function changeClassAssistSuccess() {
+  return {
+    type: types.CHANGE_CLASS_ASSIST_SUCCESS,
+    changingClassAssist: false,
+    errorChangeClassAssist: false,
+  };
+}
+
+function changeClassAssistError() {
+  return {
+    type: types.CHANGE_CLASS_ASSIST_ERROR,
+    changingClassAssist: false,
+    errorChangeClassAssist: true,
+  };
+}

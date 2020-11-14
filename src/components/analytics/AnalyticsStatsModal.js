@@ -55,7 +55,7 @@ function AnalyticsStatsModal({
                 ]}
               />
               <Text style={styles.bold}>
-                {dataItem.name}: {dataItem.registers}
+                {dataItem.name}: {dataItem.registers} {units}
               </Text>
             </View>
           ))}

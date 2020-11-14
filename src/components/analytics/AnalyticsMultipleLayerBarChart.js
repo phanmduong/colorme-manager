@@ -390,6 +390,7 @@ const AnalyticsMultipleLayerBarChart = ({
         isMultiple={true}
         dates={stats}
         closeModal={toggleModal}
+        units={'đăng kí'}
       />
     </View>
   );

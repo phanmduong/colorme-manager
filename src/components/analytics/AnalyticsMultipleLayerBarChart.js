@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Dimensions, Text, TouchableOpacity} from 'react-native';
 import {DAILY, MONTH, QUARTER, WEEK, YEAR} from '../../constants/constant';
 import theme from '../../styles';
 import {dotNumber} from '../../helper';
 import moment from 'moment';
+import AnalyticsStatsModal from './AnalyticsStatsModal';
 const {width} = Dimensions.get('window');
 
 const AnalyticsMultipleLayerBarChart = ({
@@ -14,7 +15,8 @@ const AnalyticsMultipleLayerBarChart = ({
   hasHexColor = true,
 }) => {
   const [mode, setMode] = useState(DAILY);
-
+  const [stats, setStats] = useState([]);
+  const [isStatsModalVisible, setVisible] = useState(false);
   const fixedHeight = 200;
 
   /**
@@ -35,6 +37,10 @@ const AnalyticsMultipleLayerBarChart = ({
       });
       return {date, data: dateData};
     });
+  };
+
+  const toggleModal = () => {
+    setVisible(!isStatsModalVisible);
   };
 
   /**
@@ -163,6 +169,12 @@ const AnalyticsMultipleLayerBarChart = ({
     const maxValue = getMaxValue(modeDataPairs);
     return barChartGraph(modeDataPairs, maxValue, barWidth);
   };
+
+  useEffect(() => {
+    const dateDataPairs = listOfDateDataRegister();
+    const modeDataPairs = listOfModeDataPairs(dateDataPairs);
+    setStats(modeDataPairs);
+  }, [mode]);
 
   /**
    * Sketch the entire bar chart
@@ -307,7 +319,9 @@ const AnalyticsMultipleLayerBarChart = ({
         </View>
       </View>
 
-      <View>{renderBarChart()}</View>
+      <TouchableOpacity onPress={toggleModal}>
+        <View>{renderBarChart()}</View>
+      </TouchableOpacity>
 
       <View style={styles.tabContainer}>
         <TouchableOpacity onPress={() => setMode(DAILY)}>
@@ -370,6 +384,13 @@ const AnalyticsMultipleLayerBarChart = ({
       <View style={{alignItems: 'center', marginTop: 15}}>
         <Text style={{fontSize: 13}}>Tỉ lệ học viên mới cũ</Text>
       </View>
+
+      <AnalyticsStatsModal
+        isVisible={isStatsModalVisible}
+        isMultiple={true}
+        dates={stats}
+        closeModal={toggleModal}
+      />
     </View>
   );
 };

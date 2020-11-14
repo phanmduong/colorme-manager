@@ -8,6 +8,7 @@ import {DAILY, MONTH, QUARTER, WEEK, YEAR} from '../../constants/constant';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 import {dotNumber} from '../../helper';
+import AnalyticsStatsModal from './AnalyticsStatsModal';
 
 const fixedHeight = 200;
 
@@ -16,9 +17,18 @@ class AnalyticsRegisterBarChart extends React.Component {
     super(props);
     this.state = {
       mode: DAILY,
-      maxValue: 0,
+      dates: {},
+      isStatsModalVisible: false,
     };
   }
+
+  componentDidMount() {
+    this.setDates(DAILY);
+  }
+
+  toggleModal = () => {
+    this.setState({isStatsModalVisible: !this.state.isStatsModalVisible});
+  };
 
   pairsDateRegisPaid = () => {
     const {dates, regisNums, paidNums} = this.props;
@@ -53,89 +63,76 @@ class AnalyticsRegisterBarChart extends React.Component {
     return pairRegisPaid;
   };
 
-  renderDailyBarChart = () => {
+  setDates = (mode) => {
+    this.setState({mode: mode});
     const pairsDateRegisPaid = this.pairsDateRegisPaid();
-    const groupedByDate = _.groupBy(pairsDateRegisPaid, function (item) {
-      return item[0];
-    });
-    const unitWidth =
-      (width - theme.mainHorizontal * 6) / Object.keys(groupedByDate).length;
-    const barWidth = unitWidth / 3;
-    const pairRegisPaid = this.groupedPairRegisPaid(groupedByDate);
-    const maxValue = this.getMaxValue(pairRegisPaid);
-    return this.barChartGraph(pairRegisPaid, maxValue, barWidth);
+    switch (mode) {
+      case DAILY:
+        const groupedByDate = _.groupBy(pairsDateRegisPaid, function (item) {
+          return item[0];
+        });
+        this.setState({dates: groupedByDate});
+        break;
+      case WEEK:
+        const groupedByWeek = pairsDateRegisPaid.reduce((acc, item) => {
+          // create a composed key: 'year-week'
+          const yearWeek = `${moment(item[0]).year()}-${moment(
+            item[0],
+          ).week()}`;
+
+          // add this key as a property to the result object
+          if (!acc[yearWeek]) {
+            acc[yearWeek] = [];
+          }
+
+          // push the current date that belongs to the year-week calculated before
+          acc[yearWeek].push(item);
+
+          return acc;
+        }, {});
+        this.setState({dates: groupedByWeek});
+        break;
+      case MONTH:
+        const groupedByMonth = _.groupBy(pairsDateRegisPaid, function (item) {
+          return item[0].substring(0, 7);
+        });
+        this.setState({dates: groupedByMonth});
+        break;
+      case QUARTER:
+        const groupedByQuarter = pairsDateRegisPaid.reduce((acc, item) => {
+          // create a composed key: 'year-week'
+          const yearWeek = `${moment(item[0]).year()}-${moment(
+            item[0],
+          ).quarter()}`;
+
+          // add this key as a property to the result object
+          if (!acc[yearWeek]) {
+            acc[yearWeek] = [];
+          }
+
+          // push the current date that belongs to the year-week calculated before
+          acc[yearWeek].push(item);
+
+          return acc;
+        }, {});
+        this.setState({dates: groupedByQuarter});
+        break;
+      case YEAR:
+        const groupedByYear = _.groupBy(pairsDateRegisPaid, function (item) {
+          return item[0].substring(0, 4);
+        });
+        this.setState({dates: groupedByYear});
+        break;
+      default:
+        return null;
+    }
   };
 
-  renderWeeklyBarChart = () => {
-    const pairsDateRegisPaid = this.pairsDateRegisPaid();
-    const groupedByWeek = pairsDateRegisPaid.reduce((acc, item) => {
-      // create a composed key: 'year-week'
-      const yearWeek = `${moment(item[0]).year()}-${moment(item[0]).week()}`;
-
-      // add this key as a property to the result object
-      if (!acc[yearWeek]) {
-        acc[yearWeek] = [];
-      }
-
-      // push the current date that belongs to the year-week calculated before
-      acc[yearWeek].push(item);
-
-      return acc;
-    }, {});
+  renderBarChart = () => {
     const unitWidth =
-      (width - theme.mainHorizontal * 6) / Object.keys(groupedByWeek).length;
+      (width - theme.mainHorizontal * 6) / Object.keys(this.state.dates).length;
     const barWidth = unitWidth / 3;
-    const pairRegisPaid = this.groupedPairRegisPaid(groupedByWeek);
-    const maxValue = this.getMaxValue(pairRegisPaid);
-    return this.barChartGraph(pairRegisPaid, maxValue, barWidth);
-  };
-
-  renderMonthlyBarChart = () => {
-    const pairsDateRegisPaid = this.pairsDateRegisPaid();
-    const groupedByMonth = _.groupBy(pairsDateRegisPaid, function (item) {
-      return item[0].substring(0, 7);
-    });
-    const unitWidth =
-      (width - theme.mainHorizontal * 6) / Object.keys(groupedByMonth).length;
-    const barWidth = unitWidth / 3;
-    const pairRegisPaid = this.groupedPairRegisPaid(groupedByMonth);
-    const maxValue = this.getMaxValue(pairRegisPaid);
-    return this.barChartGraph(pairRegisPaid, maxValue, barWidth);
-  };
-
-  renderQuarterlyBarChart = () => {
-    const pairsDateRegisPaid = this.pairsDateRegisPaid();
-    const groupedByQuarter = pairsDateRegisPaid.reduce((acc, item) => {
-      // create a composed key: 'year-week'
-      const yearWeek = `${moment(item[0]).year()}-${moment(item[0]).quarter()}`;
-
-      // add this key as a property to the result object
-      if (!acc[yearWeek]) {
-        acc[yearWeek] = [];
-      }
-
-      // push the current date that belongs to the year-week calculated before
-      acc[yearWeek].push(item);
-
-      return acc;
-    }, {});
-    const unitWidth =
-      (width - theme.mainHorizontal * 6) / Object.keys(groupedByQuarter).length;
-    const barWidth = unitWidth / 3;
-    const pairRegisPaid = this.groupedPairRegisPaid(groupedByQuarter);
-    const maxValue = this.getMaxValue(pairRegisPaid);
-    return this.barChartGraph(pairRegisPaid, maxValue, barWidth);
-  };
-
-  renderYearlyBarChart = () => {
-    const pairsDateRegisPaid = this.pairsDateRegisPaid();
-    const groupedByYear = _.groupBy(pairsDateRegisPaid, function (item) {
-      return item[0].substring(0, 4);
-    });
-    const unitWidth =
-      (width - theme.mainHorizontal * 6) / Object.keys(groupedByYear).length;
-    const barWidth = unitWidth / 3;
-    const pairRegisPaid = this.groupedPairRegisPaid(groupedByYear);
+    const pairRegisPaid = this.groupedPairRegisPaid(this.state.dates);
     const maxValue = this.getMaxValue(pairRegisPaid);
     return this.barChartGraph(pairRegisPaid, maxValue, barWidth);
   };
@@ -233,23 +230,6 @@ class AnalyticsRegisterBarChart extends React.Component {
     );
   };
 
-  renderBarChart = () => {
-    switch (this.state.mode) {
-      case DAILY:
-        return this.renderDailyBarChart();
-      case WEEK:
-        return this.renderWeeklyBarChart();
-      case MONTH:
-        return this.renderMonthlyBarChart();
-      case QUARTER:
-        return this.renderQuarterlyBarChart();
-      case YEAR:
-        return this.renderYearlyBarChart();
-      default:
-        return null;
-    }
-  };
-
   render() {
     return (
       <View>
@@ -295,10 +275,12 @@ class AnalyticsRegisterBarChart extends React.Component {
           </View>
         </View>
 
-        <View>{this.renderBarChart()}</View>
+        <TouchableOpacity onPress={this.toggleModal}>
+          <View>{this.renderBarChart()}</View>
+        </TouchableOpacity>
 
         <View style={styles.tabContainer}>
-          <TouchableOpacity onPress={() => this.setState({mode: DAILY})}>
+          <TouchableOpacity onPress={() => this.setDates(DAILY)}>
             <View
               style={[
                 styles.tag,
@@ -310,7 +292,7 @@ class AnalyticsRegisterBarChart extends React.Component {
               <Text style={{color: 'black'}}>Ngày</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.setState({mode: WEEK})}>
+          <TouchableOpacity onPress={() => this.setDates(WEEK)}>
             <View
               style={[
                 styles.tag,
@@ -322,7 +304,7 @@ class AnalyticsRegisterBarChart extends React.Component {
               <Text style={{color: 'black'}}>Tuần</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.setState({mode: MONTH})}>
+          <TouchableOpacity onPress={() => this.setDates(MONTH)}>
             <View
               style={[
                 styles.tag,
@@ -334,7 +316,7 @@ class AnalyticsRegisterBarChart extends React.Component {
               <Text style={{color: 'black'}}>Tháng</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.setState({mode: QUARTER})}>
+          <TouchableOpacity onPress={() => this.setDates(QUARTER)}>
             <View
               style={[
                 styles.tag,
@@ -346,7 +328,7 @@ class AnalyticsRegisterBarChart extends React.Component {
               <Text style={{color: 'black'}}>Quý</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.setState({mode: YEAR})}>
+          <TouchableOpacity onPress={() => this.setDates(YEAR)}>
             <View
               style={[
                 styles.tag,
@@ -365,6 +347,14 @@ class AnalyticsRegisterBarChart extends React.Component {
             Số lượt đăng kí và hoàn thành học phí
           </Text>
         </View>
+
+        <AnalyticsStatsModal
+          isVisible={this.state.isStatsModalVisible}
+          closeModal={this.toggleModal}
+          dates={this.state.dates}
+          isDouble={true}
+          units={['đăng kí', 'đóng học phí']}
+        />
       </View>
     );
   }

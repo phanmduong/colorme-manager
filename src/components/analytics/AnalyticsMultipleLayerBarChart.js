@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Dimensions, Text, TouchableOpacity} from 'react-native';
 import {DAILY, MONTH, QUARTER, WEEK, YEAR} from '../../constants/constant';
 import theme from '../../styles';
 import {dotNumber} from '../../helper';
 import moment from 'moment';
-import LegendsModal from './LegendsModal';
+import AnalyticsStatsModal from './AnalyticsStatsModal';
 const {width} = Dimensions.get('window');
 
 const AnalyticsMultipleLayerBarChart = ({
@@ -13,16 +13,11 @@ const AnalyticsMultipleLayerBarChart = ({
   startDate,
   endDate,
   hasHexColor = true,
-  barName,
 }) => {
   const [mode, setMode] = useState(DAILY);
-  const [isLegendsModalVisible, setLegendsModalVisible] = useState(false);
-
+  const [stats, setStats] = useState([]);
+  const [isStatsModalVisible, setVisible] = useState(false);
   const fixedHeight = 200;
-
-  const toggleLegendsModal = () => {
-    setLegendsModalVisible(!isLegendsModalVisible);
-  };
 
   /**
    * List of date with list of entries of each status and its register on that date
@@ -42,6 +37,10 @@ const AnalyticsMultipleLayerBarChart = ({
       });
       return {date, data: dateData};
     });
+  };
+
+  const toggleModal = () => {
+    setVisible(!isStatsModalVisible);
   };
 
   /**
@@ -171,6 +170,12 @@ const AnalyticsMultipleLayerBarChart = ({
     return barChartGraph(modeDataPairs, maxValue, barWidth);
   };
 
+  useEffect(() => {
+    const dateDataPairs = listOfDateDataRegister();
+    const modeDataPairs = listOfModeDataPairs(dateDataPairs);
+    setStats(modeDataPairs);
+  }, [mode]);
+
   /**
    * Sketch the entire bar chart
    */
@@ -279,44 +284,44 @@ const AnalyticsMultipleLayerBarChart = ({
 
   return (
     <View>
-      <TouchableOpacity onPress={() => toggleLegendsModal()}>
-        <View style={styles.infoRow}>
-          <View style={styles.infoContainer}>
-            {data.slice(0, 8).map((dataItem) => (
-              <View style={[styles.row, {marginRight: 10}]}>
-                <View
-                  style={[
-                    styles.legendDot,
-                    {
-                      backgroundColor: dataItem.color
-                        ? hasHexColor
-                          ? dataItem.color
-                          : `#${dataItem.color}`
-                        : '#DDDDDD',
-                    },
-                  ]}
-                />
-                <Text>{dataItem.name}</Text>
-              </View>
-            ))}
-            {data.length > 8 && (
-              <View style={styles.row}>
-                <View
-                  style={[
-                    styles.legendDot,
-                    {
-                      backgroundColor: 'black',
-                    },
-                  ]}
-                />
-                <Text>+{data.length - 8} chú thích khác</Text>
-              </View>
-            )}
-          </View>
+      <View style={styles.infoRow}>
+        <View style={styles.infoContainer}>
+          {data.slice(0, 10).map((dataItem) => (
+            <View style={[styles.row, {marginRight: 10}]}>
+              <View
+                style={[
+                  styles.legendDot,
+                  {
+                    backgroundColor: dataItem.color
+                      ? hasHexColor
+                        ? dataItem.color
+                        : `#${dataItem.color}`
+                      : '#DDDDDD',
+                  },
+                ]}
+              />
+              <Text>{dataItem.name}</Text>
+            </View>
+          ))}
+          {data.length > 10 && (
+            <View style={styles.row}>
+              <View
+                style={[
+                  styles.legendDot,
+                  {
+                    backgroundColor: 'black',
+                  },
+                ]}
+              />
+              <Text>+{data.length - 10} chú thích khác</Text>
+            </View>
+          )}
         </View>
-      </TouchableOpacity>
+      </View>
 
-      <View>{renderBarChart()}</View>
+      <TouchableOpacity onPress={toggleModal}>
+        <View>{renderBarChart()}</View>
+      </TouchableOpacity>
 
       <View style={styles.tabContainer}>
         <TouchableOpacity onPress={() => setMode(DAILY)}>
@@ -377,14 +382,15 @@ const AnalyticsMultipleLayerBarChart = ({
       </View>
 
       <View style={{alignItems: 'center', marginTop: 15}}>
-        <Text style={{fontSize: 13}}>{barName}</Text>
+        <Text style={{fontSize: 13}}>Tỉ lệ học viên mới cũ</Text>
       </View>
 
-      <LegendsModal
-        isVisible={isLegendsModalVisible}
-        closeModal={toggleLegendsModal}
-        legends={data}
-        hasHexColor={hasHexColor}
+      <AnalyticsStatsModal
+        isVisible={isStatsModalVisible}
+        isMultiple={true}
+        dates={stats}
+        closeModal={toggleModal}
+        units={'đăng kí'}
       />
     </View>
   );
@@ -397,6 +403,7 @@ const styles = {
     marginHorizontal: theme.mainHorizontal,
   },
   infoContainer: {
+    backgroundColor: '#f6f6f6',
     borderRadius: 10,
     padding: 10,
     height: 77,

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {Text, TouchableOpacity, View, Dimensions} from 'react-native';
 import {CustomPicker} from 'react-native-custom-picker';
 import LinearGradient from 'react-native-linear-gradient';
@@ -14,11 +14,12 @@ const InputPicker = ({
   isApiSearch = false,
   onApiSearch,
   placeholder,
+  refPicker,
 }) => {
   const [search, setSearch] = useState('');
 
   const renderPickerField = (settings) => {
-    const {selectedItem, defaultText, getLabel} = settings;
+    const {selectedItem, defaultText, getLabel, clear} = settings;
     return (
       <LinearGradient
         colors={['#F6F6F6', '#F6F6F6']}
@@ -87,13 +88,14 @@ const InputPicker = ({
         placeholder={placeholder}
         getLabel={(item) => item.name}
         modalAnimationType={'fade'}
+        ref={refPicker}
         optionTemplate={renderPickerOption}
         fieldTemplate={renderPickerField}
         headerTemplate={() => renderPickerHeader(header)}
         footerTemplate={renderPickerFooter}
         onBlur={() => setSearch('')}
         modalStyle={styles.modalStyle}
-        onValueChange={(value) => onChangeValue(value.id)}
+        onValueChange={(value) => value && onChangeValue(value.id)}
       />
     </View>
   );

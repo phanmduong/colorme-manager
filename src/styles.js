@@ -53,6 +53,10 @@ export default (styles = {
     marginVertical: 5,
     marginLeft: 10,
   },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   headerIconContainer: {
     width: 40,
     height: 40,

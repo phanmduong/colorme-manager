@@ -57,6 +57,101 @@ export default function kpiReducer(state = initialState.kpi, action) {
       return Object.assign({}, state, {
         endTime: action.endTime,
       });
+    case types.BEGIN_LOAD_KPI_SETTINGS:
+      return Object.assign({}, state, {
+        loadingSettings: action.loadingSettings,
+        errorSettings: action.errorSettings,
+      });
+    case types.LOAD_KPI_SETTINGS_SUCCESS:
+      return Object.assign({}, state, {
+        loadingSettings: action.loadingSettings,
+        errorSettings: action.errorSettings,
+        settings: action.settings,
+      });
+    case types.LOAD_KPI_SETTINGS_ERROR:
+      return Object.assign({}, state, {
+        loadingSettings: action.loadingSettings,
+        errorSettings: action.errorSettings,
+      });
+    case types.BEGIN_LOAD_KPI_EMPLOYEES:
+      return Object.assign({}, state, {
+        loadingEmployees: action.loadingEmployees,
+        errorEmployees: action.errorEmployees,
+      });
+    case types.LOAD_KPI_EMPLOYEES_SUCCESS:
+      return Object.assign({}, state, {
+        employees: action.employees,
+        loadingEmployees: action.loadingEmployees,
+        errorEmployees: action.errorEmployees,
+      });
+    case types.LOAD_KPI_EMPLOYEES_ERROR:
+      return Object.assign({}, state, {
+        loadingEmployees: action.loadingEmployees,
+        errorEmployees: action.errorEmployees,
+      });
+    case types.BEGIN_ADD_KPIS:
+      return Object.assign({}, state, {
+        addingKpis: action.addingKpis,
+        errorAddKpis: action.errorAddKpis,
+      });
+    case types.ADD_KPIS_SUCCESS:
+      return Object.assign({}, state, {
+        addingKpis: action.addingKpis,
+        errorAddKpis: action.errorAddKpis,
+      });
+    case types.ADD_KPIS_ERROR:
+      return Object.assign({}, state, {
+        addingKpis: action.addingKpis,
+        errorAddKpis: action.errorAddKpis,
+      });
+    case types.BEGIN_LOAD_KPI_CAMPAIGNS:
+      return Object.assign({}, state, {
+        loadingCampaigns: action.loadingCampaigns,
+        errorCampaigns: action.errorCampaigns,
+      });
+    case types.LOAD_KPI_CAMPAIGNS_SUCCESS:
+      return Object.assign({}, state, {
+        loadingCampaigns: action.loadingCampaigns,
+        errorCampaigns: action.errorCampaigns,
+        campaigns: action.campaigns,
+      });
+    case types.LOAD_KPI_CAMPAIGNS_ERROR:
+      return Object.assign({}, state, {
+        loadingCampaigns: action.loadingCampaigns,
+        errorCampaigns: action.errorCampaigns,
+      });
+    case types.BEGIN_LOAD_KPI_SOURCES:
+      return Object.assign({}, state, {
+        loadingSources: action.loadingSources,
+        errorSources: action.errorSources,
+      });
+    case types.LOAD_KPI_SOURCES_SUCCESS:
+      return Object.assign({}, state, {
+        loadingSources: action.loadingSources,
+        errorSources: action.errorSources,
+        sources: action.sources,
+      });
+    case types.LOAD_KPI_SOURCES_ERROR:
+      return Object.assign({}, state, {
+        loadingSources: action.loadingSources,
+        errorSources: action.errorSources,
+      });
+    case types.BEGIN_LOAD_KPI_COURSES:
+      return Object.assign({}, state, {
+        loadingCourses: action.loadingCourses,
+        errorCourses: action.errorCourses,
+      });
+    case types.LOAD_KPI_COURSES_SUCCESS:
+      return Object.assign({}, state, {
+        loadingCourses: action.loadingCourses,
+        errorCourses: action.errorCourses,
+        courses: action.courses,
+      });
+    case types.LOAD_KPI_COURSES_ERROR:
+      return Object.assign({}, state, {
+        loadingCourses: action.loadingCourses,
+        errorCourses: action.errorCourses,
+      });
     default:
       return state;
   }

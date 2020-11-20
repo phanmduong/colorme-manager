@@ -122,26 +122,36 @@ export const FILTER_KPI_CALCULATE_BY = [
     id: 'employee',
     name: 'Theo nhân viên',
     color: 'rgb(238, 66, 140)',
+    unit: 'nhân viên',
+    type: ['revenue', 'lead'],
   },
   {
     id: 'campaign',
     name: 'Theo chiến dịch',
     color: 'rgb(68, 150, 236)',
+    unit: 'chiến dịch',
+    type: ['revenue', 'lead'],
   },
   {
     id: 'source',
     name: 'Theo nguồn',
     color: 'rgb(255, 123, 66)',
+    unit: 'nguồn',
+    type: ['revenue', 'lead'],
   },
   {
     id: 'course',
     name: 'Theo môn học',
     color: 'rgb(50, 202, 65)',
+    unit: 'môn học',
+    type: ['revenue', 'enrollment'],
   },
   {
     id: 'program',
     name: 'Theo chương trình học',
     color: 'rgb(255, 123, 66)',
+    unit: 'chương trình học',
+    type: ['revenue', 'enrollment'],
   },
 ];
 

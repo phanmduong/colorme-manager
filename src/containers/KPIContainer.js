@@ -4,9 +4,9 @@ import KPIComponent from '../components/KPIComponent';
 import * as kpiActions from '../actions/kpiActions';
 import {bindActionCreators} from 'redux';
 import theme from '../styles';
-import {Text, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import FilterKPIModal from '../components/kpi/FilterKPIModal';
+import MatIcon from 'react-native-vector-icons/MaterialIcons';
 
 class KPIContainer extends React.Component {
   constructor(props) {
@@ -24,7 +24,7 @@ class KPIContainer extends React.Component {
   static navigationOptions = ({navigation}) => ({
     headerLeft: () => (
       <View style={styles.headerLeftContainer}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={styles.row}>
           <Icon
             name={'chevron-left'}
             size={33}
@@ -34,6 +34,13 @@ class KPIContainer extends React.Component {
           <Text style={styles.name}>KPI</Text>
         </View>
       </View>
+    ),
+    headerRight: () => (
+      <TouchableOpacity onPress={() => navigation.navigate('AddKPI')}>
+        <View style={styles.headerIconContainer}>
+          <MatIcon name={'add-circle'} size={20} color={'black'} />
+        </View>
+      </TouchableOpacity>
     ),
   });
 
@@ -108,6 +115,16 @@ class KPIContainer extends React.Component {
 const styles = {
   name: theme.header,
   headerLeftContainer: theme.headerNavigateLeftContainer,
+  row: theme.row,
+  headerIconContainer: {
+    width: 40,
+    height: 40,
+    backgroundColor: '#F6F6F6',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 20,
+    marginRight: 16,
+  },
 };
 
 function mapStateToProps(state) {

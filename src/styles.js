@@ -53,4 +53,8 @@ export default (styles = {
     marginVertical: 5,
     marginLeft: 10,
   },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 });

@@ -10,19 +10,19 @@ import theme from '../styles';
 function AddKPIContainer(props) {
   useEffect(() => {
     function loadKPISettings() {
-      props.kpiActions.loadKPISettings(props.token);
+      props.kpiActions.loadKPISettings(props.token, props.domain);
     }
     function loadKPIEmployees() {
-      props.kpiActions.loadKPIEmployees(props.token);
+      props.kpiActions.loadKPIEmployees(props.token, props.domain);
     }
     function loadKPICampaigns() {
-      props.kpiActions.loadCampaigns(props.token);
+      props.kpiActions.loadCampaigns(props.token, props.domain);
     }
     function loadKPISources() {
-      props.kpiActions.loadSources(props.token);
+      props.kpiActions.loadSources(props.token, props.domain);
     }
     function loadKPICourses() {
-      props.kpiActions.loadCourses(props.token);
+      props.kpiActions.loadCourses(props.token, props.domain);
     }
     loadKPISettings();
     loadKPIEmployees();
@@ -46,7 +46,7 @@ function AddKPIContainer(props) {
   }
 
   function addKpis(kpiData) {
-    props.kpiActions.addKpis(kpiData, props.token);
+    props.kpiActions.addKpis(kpiData, props.token, props.domain);
   }
 
   return (
@@ -102,6 +102,7 @@ function mapStateToProps(state) {
     courses: state.kpi.courses,
     loadingCourses: state.kpi.loadingCourses,
     errorCourses: state.kpi.errorCourses,
+    domain: state.login.domain,
   };
 }
 

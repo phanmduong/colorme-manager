@@ -188,11 +188,11 @@ export function selectedKPIEndTime(endTime) {
   };
 }
 
-export function loadKPISettings(token) {
+export function loadKPISettings(token, domain) {
   return function (dispatch) {
     dispatch(beginLoadKPISettings());
     kpiApi
-      .loadKPISettings(token)
+      .loadKPISettings(token, domain)
       .then((res) => {
         dispatch(loadKPISettingsSuccess(res));
       })
@@ -228,11 +228,11 @@ function loadKPISettingsError() {
   };
 }
 
-export function loadKPIEmployees(token) {
+export function loadKPIEmployees(token, domain) {
   return function (dispatch) {
     dispatch(beginLoadKPIEmployees());
     kpiApi
-      .loadKPIEmployees(token)
+      .loadKPIEmployees(token, domain)
       .then((res) => {
         dispatch(loadKPIEmployeesSuccess(res));
       })
@@ -268,11 +268,11 @@ function loadKPIEmployeesError() {
   };
 }
 
-export function addKpis(kpiData, token) {
+export function addKpis(kpiData, token, domain) {
   return function (dispatch) {
     dispatch(beginAddKpis());
     kpiApi
-      .addKpis(kpiData, token)
+      .addKpis(kpiData, token, domain)
       .then((res) => {
         dispatch(addKpisSuccess());
       })
@@ -307,11 +307,11 @@ function addKpisError() {
   };
 }
 
-export function loadCampaigns(token) {
+export function loadCampaigns(token, domain) {
   return function (dispatch) {
     dispatch(beginLoadCampaigns());
     kpiApi
-      .loadCampaigns(token)
+      .loadCampaigns(token, domain)
       .then((res) => {
         dispatch(loadCampaignsSuccess(res));
       })
@@ -347,11 +347,11 @@ function loadCampaignsError() {
   };
 }
 
-export function loadSources(token) {
+export function loadSources(token, domain) {
   return function (dispatch) {
     dispatch(beginLoadSources());
     kpiApi
-      .loadSources(token)
+      .loadSources(token, domain)
       .then((res) => {
         dispatch(loadSourcesSuccess(res));
       })
@@ -387,11 +387,11 @@ function loadSourcesError() {
   };
 }
 
-export function loadCourses(token) {
+export function loadCourses(token, domain) {
   return function (dispatch) {
     dispatch(beginLoadCourses());
     kpiApi
-      .loadCourses(token)
+      .loadCourses(token, domain)
       .then((res) => {
         dispatch(loadCoursesSuccess(res));
       })

@@ -17,7 +17,7 @@ function DatePicker({selectedDate, onDateChange, title}) {
   }
 
   return (
-    <View style={{marginTop: 30}}>
+    <View style={styles.container}>
       <Text style={styles.titleForm}>{title}</Text>
       <TouchableOpacity style={styles.inputContainer} onPress={openDatePicker}>
         <View style={styles.row}>
@@ -39,6 +39,9 @@ function DatePicker({selectedDate, onDateChange, title}) {
 }
 
 const styles = {
+  container: {
+    marginTop: 30
+  },
   inputContainer: {
     marginTop: 8,
     height: 45,

@@ -1,13 +1,23 @@
 import React from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View, ActivityIndicator} from 'react-native';
 
-const SubmitButton = ({containerStyle, titleStyle, title, onPress}) => {
+const SubmitButton = ({
+  containerStyle,
+  titleStyle,
+  title,
+  onPress,
+  loading,
+}) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={[styles.submit, containerStyle]}>
-        <Text style={[styles.submitTitle, titleStyle]}>
-          {title ? title : 'Áp dụng'}
-        </Text>
+        {loading ? (
+          <ActivityIndicator size={'small'} color={'white'} />
+        ) : (
+          <Text style={[styles.submitTitle, titleStyle]}>
+            {title ? title : 'Áp dụng'}
+          </Text>
+        )}
       </View>
     </TouchableOpacity>
   );

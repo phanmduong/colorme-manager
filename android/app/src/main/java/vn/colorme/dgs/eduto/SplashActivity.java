@@ -1,4 +1,4 @@
-package vn.colorme.ieg.eduto;
+package vn.colorme.dgs.eduto;
 
 import android.content.Intent;
 import android.os.Bundle;

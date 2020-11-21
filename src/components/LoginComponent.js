@@ -76,8 +76,8 @@ class LoginComponent extends React.Component {
           style={styles.container}>
           <View style={styles.logoContainer}>
             <Image
-              source={require('../../assets/img/ieg.png')}
-              style={{transform: [{scale: 0.2}]}}
+              source={require('../../assets/img/dgsLogo.png')}
+              style={{transform: [{scale: 0.1}]}}
             />
           </View>
           <View style={styles.loginContainer}>

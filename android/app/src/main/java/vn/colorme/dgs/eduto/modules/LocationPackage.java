@@ -1,4 +1,4 @@
-package vn.colorme.manage.eduto.modules;
+package vn.colorme.dgs.eduto.modules;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;

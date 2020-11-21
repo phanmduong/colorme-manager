@@ -1,4 +1,4 @@
-package vn.colorme.ieg.eduto;
+package vn.colorme.dgs.eduto;
 
 import androidx.multidex.MultiDexApplication;
 import android.content.Context;
@@ -17,7 +17,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.util.List;
 
-import vn.colorme.manage.eduto.modules.LocationPackage;
+import vn.colorme.dgs.eduto.modules.LocationPackage;
 
 public class MainApplication extends MultiDexApplication implements ReactApplication {
 

@@ -221,9 +221,9 @@ class DashboardComponent extends React.Component {
           </TouchableOpacity>
           <View style={styles.mainFeatureLine}>
             <CardMenu
-              colorOne={'#FFDC60'}
-              colorTwo={'#FFDC60'}
-              imageSource={require('../../assets/img/travel_pin.png')}
+              colorOne={'#FEC9BC'}
+              colorTwo={'#FEC9BC'}
+              imageSource={require('../../assets/img/Checkin_Lighter.png')}
               title={'Check in'}
               onPress={() => {
                 this.props.navigation.navigate('CheckIn', {
@@ -233,9 +233,9 @@ class DashboardComponent extends React.Component {
               }}
             />
             <CardMenu
-              colorOne={'#FFDC60'}
-              colorTwo={'#FFDC60'}
-              imageSource={require('../../assets/img/heart.png')}
+              colorOne={'#FEC9BC'}
+              colorTwo={'#FEC9BC'}
+              imageSource={require('../../assets/img/Checkinout_Lighter.png')}
               title={'Check out'}
               onPress={() => {
                 this.props.navigation.navigate('CheckOut', {
@@ -245,9 +245,9 @@ class DashboardComponent extends React.Component {
               }}
             />
             <CardMenu
-              colorOne={'#FFDC60'}
-              colorTwo={'#FFDC60'}
-              imageSource={require('../../assets/img/wall_clock.png')}
+              colorOne={'#FEC9BC'}
+              colorTwo={'#FEC9BC'}
+              imageSource={require('../../assets/img/History_Lighter.png')}
               title={'Lịch sử'}
               onPress={() => {
                 this.props.navigation.navigate('HistoryAllAttendance');

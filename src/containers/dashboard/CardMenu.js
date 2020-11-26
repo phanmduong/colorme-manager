@@ -3,6 +3,7 @@ import {Dimensions, Text, TouchableOpacity, View, Image} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 const {width} = Dimensions.get('window');
 import theme from '../../styles';
+import ScalableImage from 'react-native-scalable-image';
 
 export default class CardMenu extends React.Component {
   constructor(props) {
@@ -16,10 +17,14 @@ export default class CardMenu extends React.Component {
           colors={[this.props.colorOne, this.props.colorTwo]}
           style={styles.checkInOutStyle}>
           <View style={styles.content}>
-            <Image source={this.props.imageSource} style={styles.image} />
             <Text style={styles.featureTitle}>{this.props.title}</Text>
           </View>
         </LinearGradient>
+        <ScalableImage
+          source={this.props.imageSource}
+          style={styles.image}
+          width={140}
+        />
       </TouchableOpacity>
     );
   }
@@ -27,21 +32,22 @@ export default class CardMenu extends React.Component {
 
 const styles = {
   featureTitle: {
-    marginBottom: 10,
     fontWeight: 'bold',
-    color: 'white',
+    color: '#5E5E5E',
   },
   image: {
-    width: 100,
-    height: 100,
+    position: 'absolute',
+    top: 20,
+    left: -10,
   },
   checkInOutStyle: {
     height: 150,
     width: (width - theme.mainHorizontal) / 3 - 10,
     borderRadius: 10,
+    justifyContent: 'flex-end',
   },
   content: {
     alignItems: 'center',
-    marginTop: 20,
+    marginBottom: 10,
   },
 };

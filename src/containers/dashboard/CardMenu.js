@@ -23,7 +23,7 @@ export default class CardMenu extends React.Component {
         <ScalableImage
           source={this.props.imageSource}
           style={styles.image}
-          width={140}
+          width={(width - 10) / 3}
         />
       </TouchableOpacity>
     );
@@ -38,7 +38,7 @@ const styles = {
   image: {
     position: 'absolute',
     top: 20,
-    left: -10,
+    left: -5,
   },
   checkInOutStyle: {
     height: 150,

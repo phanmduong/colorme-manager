@@ -139,7 +139,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "vn.colorme.ieg.eduto"
+        applicationId "vn.colorme.dgs.eduto"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

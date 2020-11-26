@@ -20,6 +20,7 @@
 		1B7558D239B64765AB161F1E /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 70AF37A72102485E8532D3C7 /* MaterialCommunityIcons.ttf */; };
 		210A1A6392FAFF0F42422587 /* libPods-ColorMEManager-ColorMEManagerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E8F75345666124488FF2F4B8 /* libPods-ColorMEManager-ColorMEManagerTests.a */; };
 		27BDDB1798E14E5CBF5A47DE /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F50A140D124743A2BFE1AC61 /* Ionicons.ttf */; };
+		27FFD515F7C34D6D960F1657 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D7BF791DCA5849BFA579C3DB /* Fontisto.ttf */; };
 		2AD080B88B7F4542A5B36ECB /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1708695309804910ADA19F29 /* AntDesign.ttf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -40,7 +41,6 @@
 		D5689E22DA29434395DE6916 /* MobileCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = E86AF083633844118386A1C6 /* MobileCenter-Config.plist */; };
 		E6BD02E3AFE94ED3830E5F83 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2E9A8088CB1141A38FC0606D /* FontAwesome5_Solid.ttf */; };
 		FEFBD2B120474440B4B0C964 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 38689F5A7DE94BCD80F63A1A /* FontAwesome.ttf */; };
-		27FFD515F7C34D6D960F1657 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D7BF791DCA5849BFA579C3DB /* Fontisto.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,6 +132,7 @@
 		CC6F988EAE7D487D9F110415 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		CEAFB26191764C2D93036C1F /* libRNAnalytics.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNAnalytics.a; sourceTree = "<group>"; };
 		D388E442559F4625B885988B /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/native-base/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
+		D7BF791DCA5849BFA579C3DB /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/native-base/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		D8D656908B37459C81CBC3E3 /* Arial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Arial.ttf; path = "../node_modules/native-base/Fonts/Arial.ttf"; sourceTree = "<group>"; };
 		DDEF655AF2FA4910923356CE /* Times New Roman.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Times New Roman.ttf"; path = "../node_modules/native-base/Fonts/Times New Roman.ttf"; sourceTree = "<group>"; };
 		E4ED2E8B9E124AA3B7B16F9C /* SanFranciscoBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SanFranciscoBold.ttf; path = "../node_modules/native-base/Fonts/SanFranciscoBold.ttf"; sourceTree = "<group>"; };
@@ -152,7 +153,6 @@
 		F924FF11D0664584825DA01D /* Rubik-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-Bold.ttf"; path = "../node_modules/native-base/Fonts/Rubik-Bold.ttf"; sourceTree = "<group>"; };
 		FB6454F619644A65ADD90A8E /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		FFA8E21205B043719F015C8F /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
-		D7BF791DCA5849BFA579C3DB /* Fontisto.ttf */ = {isa = PBXFileReference; name = "Fontisto.ttf"; path = "../node_modules/native-base/Fonts/Fontisto.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -934,7 +934,7 @@
 				INFOPLIST_FILE = ColorMEManager/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -976,7 +976,7 @@
 				INFOPLIST_FILE = ColorMEManager/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1055,7 +1055,7 @@
 				INFOPLIST_FILE = ColorMEManager/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

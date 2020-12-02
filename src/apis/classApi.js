@@ -7,23 +7,53 @@ import * as env from '../constants/env';
 export function loadClassApi(
   sourceCancel,
   search,
+  enroll_start_time,
+  enroll_end_time,
+  lesson_start_time,
+  lesson_end_time,
+  start_time,
+  end_time,
+  teacher_id,
   courseId,
+  province_id,
   page,
+  type,
+  status,
+  class_status,
   genId,
   baseId,
   token,
-  teacherId = '',
 ) {
   let url =
     env.MANAGE_API_URL_V3 +
     '/class/all?search=' +
     search +
+    '&enroll_start_time=' +
+    enroll_start_time +
+    '&enroll_end_time=' +
+    enroll_end_time +
+    '&lesson_start_time=' +
+    lesson_start_time +
+    '&lesson_end_time=' +
+    lesson_end_time +
+    '&start_time=' +
+    start_time +
+    '&end_time=' +
+    end_time +
     '&teacher_id=' +
-    teacherId +
+    teacher_id +
     '&course_id=' +
     courseId +
+    '&province_id=' +
+    province_id +
     '&page=' +
     page +
+    '&type=' +
+    type +
+    '&status=' +
+    status +
+    '&class_status=' +
+    class_status +
     '&gen_id=' +
     genId +
     '&base_id=' +
@@ -58,8 +88,7 @@ export function loadBaseData(token) {
 }
 
 export function infoCreateClass(token) {
-  let url =
-    env.MANAGE_API_URL + '/class/info-create-class?token=' + token;
+  let url = env.MANAGE_API_URL + '/class/info-create-class?token=' + token;
   return axios.get(url);
 }
 

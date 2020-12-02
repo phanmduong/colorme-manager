@@ -148,7 +148,7 @@ export function uploadImage(
 
 export function loadStatuses(ref, token) {
   let url =
-    env.MANAGE_API_URL + '/v4/statuses/all?token=' + token + '&ref=' + ref;
+    env.MANAGE_API_URL_V4 + '/statuses/all?token=' + token + '&ref=' + ref;
   return axios.get(url);
 }
 

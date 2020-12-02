@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {Text, TouchableOpacity, View, Dimensions} from 'react-native';
 const {width} = Dimensions.get('window');
-import theme from '../../styles';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 

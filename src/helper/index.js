@@ -299,7 +299,7 @@ export const getData = (array, id, placeholder, color) => {
 };
 
 export const getDefault = (array, comparedId) => {
-  if (comparedId) {
+  if (!isEmptyInput(comparedId)) {
     for (let item of array) {
       if (item.id === comparedId) {
         return item;

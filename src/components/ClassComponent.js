@@ -18,7 +18,6 @@ class ClassComponent extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      // selectedProvinceId: -1,
       filterModalVisible: false,
     };
   }
@@ -44,25 +43,6 @@ class ClassComponent extends React.Component {
       return searchedClassList;
     }
   };
-
-  // getDataClass = () => {
-  //   if (this.props.classData === null || this.props.classData === undefined) {
-  //     return [];
-  //   }
-  //   let filterClasses = this.props.classData;
-  //   if (this.state.selectedCourseId !== -1) {
-  //     filterClasses = filterClasses.filter(
-  //       (classItem) => classItem.course_id === this.state.selectedCourseId,
-  //     );
-  //   }
-  //   if (this.state.selectedProvinceId !== -1) {
-  //     filterClasses = filterClasses.filter(
-  //       (classItem) =>
-  //         classItem.base.district.provinceid === this.state.selectedProvinceId,
-  //     );
-  //   }
-  //   return filterClasses;
-  // };
 
   toggleFilterModal = () => {
     this.setState({filterModalVisible: !this.state.filterModalVisible});
@@ -90,26 +70,25 @@ class ClassComponent extends React.Component {
           </View>
         </TouchableOpacity>
         <FilterClassModal
-          isLoadingGen={this.props.isLoadingGen}
-          isLoadingBase={this.props.isLoadingBase}
-          isLoadingCourse={this.props.isLoadingCourse}
-          genData={this.props.genData}
-          baseData={this.props.baseData}
-          courseData={this.props.courseData}
+          {...this.props}
           onSelectCourseId={this.props.onSelectCourseId}
-          selectedCourseId={this.props.selectedCourseId}
           onSelectBaseId={this.props.onSelectBaseId}
-          selectedBaseId={this.props.selectedBaseId}
-          // onSelectProvinceId={this.onSelectProvinceId}
-          // selectedProvinceId={this.state.selectedProvinceId}
           onSelectGenId={this.props.onSelectGenId}
-          selectedGenId={this.props.selectedGenId}
           closeModal={this.toggleFilterModal}
-          currentGen={this.props.currentGen}
           isVisible={this.state.filterModalVisible}
           filter={this.props.filter}
-          provinces={this.props.provinces}
-          isLoadingProvinces={this.props.isLoadingProvinces}
+          onSelectStatusId={this.props.onSelectStatusId}
+          onSelectType={this.props.onSelectType}
+          onSelectProvinceId={this.props.onSelectProvinceId}
+          onSelectTeacherId={this.props.onSelectTeacherId}
+          loadStaff={this.props.loadStaff}
+          onSelectEnrollStartTime={this.props.onSelectEnrollStartTime}
+          onSelectEnrollEndTime={this.props.onSelectEnrollEndTime}
+          onSelectLessonStartTime={this.props.onSelectLessonStartTime}
+          onSelectLessonEndTime={this.props.onSelectLessonEndTime}
+          onSelectStartTime={this.props.onSelectStartTime}
+          onSelectEndTime={this.props.onSelectEndTime}
+          onSelectClassStatus={this.props.onSelectClassStatus}
         />
       </View>
     );

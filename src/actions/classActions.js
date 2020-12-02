@@ -3,6 +3,7 @@
  */
 import * as types from '../constants/actionTypes';
 import * as classApi from '../apis/classApi';
+import * as studentApi from '../apis/studentApi';
 import axios from 'axios';
 
 let CancelToken = axios.CancelToken;
@@ -19,8 +20,19 @@ export function beginDataClassLoad() {
 export function loadDataClass(
   refreshing,
   search,
+  enroll_start_time,
+  enroll_end_time,
+  lesson_start_time,
+  lesson_end_time,
+  start_time,
+  end_time,
+  teacher_id,
   courseId,
+  province_id,
   page,
+  type,
+  status,
+  class_status,
   genId,
   baseId,
   token,
@@ -35,8 +47,19 @@ export function loadDataClass(
       .loadClassApi(
         sourceCancel,
         search,
+        enroll_start_time,
+        enroll_end_time,
+        lesson_start_time,
+        lesson_end_time,
+        start_time,
+        end_time,
+        teacher_id,
         courseId,
+        province_id,
         page,
+        type,
+        status,
+        class_status,
         genId,
         baseId,
         token,
@@ -77,7 +100,18 @@ export function beginDataClassRefresh() {
 
 export function refreshDataClass(
   search,
+  enroll_start_time,
+  enroll_end_time,
+  lesson_start_time,
+  lesson_end_time,
+  start_time,
+  end_time,
+  teacher_id,
   courseId,
+  province_id,
+  type,
+  status,
+  class_status,
   genId,
   baseId,
   token,
@@ -85,7 +119,26 @@ export function refreshDataClass(
   return function (dispatch) {
     dispatch(beginSearchClass(search));
     dispatch(
-      loadDataClass(true, search, courseId, 1, genId, baseId, token),
+      loadDataClass(
+        true,
+        search,
+        enroll_start_time,
+        enroll_end_time,
+        lesson_start_time,
+        lesson_end_time,
+        start_time,
+        end_time,
+        teacher_id,
+        courseId,
+        province_id,
+        1,
+        type,
+        status,
+        class_status,
+        genId,
+        baseId,
+        token,
+      ),
     );
   };
 }
@@ -100,13 +153,49 @@ function beginSearchClass(search) {
   };
 }
 
-export function searchClass(search, courseId, genId, baseId, token) {
+export function searchClass(
+  search,
+  enroll_start_time,
+  enroll_end_time,
+  lesson_start_time,
+  lesson_end_time,
+  start_time,
+  end_time,
+  teacher_id,
+  courseId,
+  province_id,
+  type,
+  status,
+  class_status,
+  genId,
+  baseId,
+  token,
+) {
   sourceCancel.cancel('Canceled by class api.');
   sourceCancel = CancelToken.source();
   return function (dispatch) {
     dispatch(beginSearchClass(search));
     dispatch(
-      loadDataClass(false, search, courseId, 1, genId, baseId, token),
+      loadDataClass(
+        false,
+        search,
+        enroll_start_time,
+        enroll_end_time,
+        lesson_start_time,
+        lesson_end_time,
+        start_time,
+        end_time,
+        teacher_id,
+        courseId,
+        province_id,
+        1,
+        type,
+        status,
+        class_status,
+        genId,
+        baseId,
+        token,
+      ),
     );
   };
 }
@@ -198,7 +287,19 @@ export function reset() {
     search: '',
     selectedBaseId: -1,
     selectedCourseId: -1,
-  }
+    provinceId: '',
+    courseId: '',
+    enrollStartTime: '',
+    enrollEndTime: '',
+    lessonStartTime: '',
+    lessonEndTime: '',
+    startTime: '',
+    endTime: '',
+    teacherId: '',
+    classType: '',
+    status: '',
+    class_status: '',
+  };
 }
 
 function beginLoadBase() {
@@ -401,5 +502,122 @@ function changeClassStatusError() {
     type: types.CHANGE_CLASS_STATUS_ERROR,
     changingClassStatus: false,
     errorClassStatus: true,
+  };
+}
+
+export function selectedStatusId(id) {
+  return {
+    type: types.SELECTED_CLASS_STATUS_ID,
+    status: id,
+  };
+}
+
+export function selectedClassType(id) {
+  return {
+    type: types.SELECTED_CLASS_TYPE,
+    classType: id,
+  };
+}
+
+export function selectedProvinceId(id) {
+  return {
+    type: types.SELECTED_CLASS_PROVINCE_ID,
+    provinceId: id,
+  };
+}
+
+export function selectedTeacherId(id) {
+  return {
+    type: types.SELECTED_CLASS_TEACHER_ID,
+    teacherId: id,
+  };
+}
+
+export function selectedEnrollStartTime(time) {
+  return {
+    type: types.SELECTED_CLASS_ENROLL_START_TIME,
+    enrollStartTime: time,
+  };
+}
+
+export function selectedEnrollEndTime(time) {
+  return {
+    type: types.SELECTED_CLASS_ENROLL_END_TIME,
+    enrollEndTime: time,
+  };
+}
+
+export function selectedLessonStartTime(time) {
+  return {
+    type: types.SELECTED_CLASS_LESSON_START_TIME,
+    lessonStartTime: time,
+  };
+}
+
+export function selectedLessonEndTime(time) {
+  return {
+    type: types.SELECTED_CLASS_LESSON_END_TIME,
+    lessonEndTime: time,
+  };
+}
+
+export function selectedStartTime(time) {
+  return {
+    type: types.SELECTED_CLASS_START_TIME,
+    startTime: time,
+  };
+}
+
+export function selectedEndTime(time) {
+  return {
+    type: types.SELECTED_CLASS_END_TIME,
+    endTime: time,
+  };
+}
+
+export function loadStatuses(ref, token) {
+  return function (dispatch) {
+    dispatch(beginLoadStatuses());
+    studentApi
+      .loadStatuses(ref, token)
+      .then((res) => {
+        dispatch(loadStatusesSuccess(res));
+      })
+      .catch((error) => {
+        dispatch(loadStatusesError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadStatuses() {
+  return {
+    type: types.BEGIN_LOAD_CLASS_STATUSES,
+    isLoadingStatuses: true,
+    errorStatuses: false,
+  };
+}
+
+function loadStatusesSuccess(res) {
+  return {
+    type: types.BEGIN_LOAD_CLASS_STATUSES,
+    isLoadingStatuses: false,
+    errorStatuses: false,
+    statuses: res.data.statuses,
+  };
+}
+
+function loadStatusesError() {
+  return {
+    type: types.BEGIN_LOAD_CLASS_STATUSES,
+    isLoadingStatuses: false,
+    errorStatuses: true,
+  };
+}
+
+export function selectedClassStatus(id) {
+  return {
+    type: types.SELECTED_CLASS_CLASS_STATUS,
+    class_status: id,
   };
 }

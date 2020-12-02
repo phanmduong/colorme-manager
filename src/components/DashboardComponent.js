@@ -134,14 +134,10 @@ class DashboardComponent extends React.Component {
           </TouchableOpacity>
           <View style={styles.mainFeatureLine}>
             <CardMenu
-              colorOne={'#E26800'}
-              colorTwo={'#E2DC50'}
-              checkInOutStyle={styles.checkInContainer}
-              standOutFontSize={{fontSize: 17}}
-              imageSource={require('../../assets/img/MiM-check-in.png')}
-              imageWidth={(width - 32) * 0.38}
+              colorOne={'#FEC9BC'}
+              colorTwo={'#FEC9BC'}
+              imageSource={require('../../assets/img/Checkin_Lighter.png')}
               title={'Check in'}
-              characterImgPosition={styles.checkInCharacterImgPosition}
               onPress={() => {
                 this.props.navigation.navigate('CheckIn', {
                   title: 'Check in',
@@ -150,13 +146,10 @@ class DashboardComponent extends React.Component {
               }}
             />
             <CardMenu
-              colorOne={'#6800E2'}
-              colorTwo={'#2F94EB'}
-              checkInOutStyle={styles.checkOutContainer}
-              imageSource={require('../../assets/img/MiM-check-out.png')}
-              imageWidth={(width - 32) * 0.3 * 0.7}
+              colorOne={'#FEC9BC'}
+              colorTwo={'#FEC9BC'}
+              imageSource={require('../../assets/img/Checkinout_Lighter.png')}
               title={'Check out'}
-              characterImgPosition={styles.checkOutCharacterImgPosition}
               onPress={() => {
                 this.props.navigation.navigate('CheckOut', {
                   title: 'Check out',
@@ -165,13 +158,10 @@ class DashboardComponent extends React.Component {
               }}
             />
             <CardMenu
-              colorOne={'#E20000'}
-              colorTwo={'#E29950'}
-              checkInOutStyle={styles.checkOutContainer}
-              imageSource={require('../../assets/img/MiM-history.png')}
-              imageWidth={(width - 32) * 0.26 * 0.9}
+              colorOne={'#FEC9BC'}
+              colorTwo={'#FEC9BC'}
+              imageSource={require('../../assets/img/History_Lighter.png')}
               title={'Lịch sử'}
-              characterImgPosition={styles.historyCharacterImgPosition}
               onPress={() => {
                 this.props.navigation.navigate('HistoryAllAttendance');
               }}
@@ -332,43 +322,6 @@ const styles = {
     justifyContent: 'space-between',
     marginTop: 16,
     marginHorizontal: theme.mainHorizontal,
-  },
-  // 32 is the total left, right margin,
-  // 0.40 is the relative ratio of container to screen width,
-  // (178/139) is the ratio between height and width
-  checkInContainer: {
-    height: (Dimensions.get('window').width - 32) * 0.4 * (178 / 139),
-    width: (Dimensions.get('window').width - 32) * 0.4,
-    borderRadius: 10,
-  },
-  // 32 is the total left, right margin,
-  // 0.26 is the relative ratio of container to screen width,
-  // (178/139) is the ratio between height and width
-  checkOutContainer: {
-    height: (Dimensions.get('window').width - 32) * 0.26 * (178 / 139),
-    width: (Dimensions.get('window').width - 32) * 0.26,
-    borderRadius: 10,
-  },
-  // 32 is the total left, right margin,
-  // 0.18, 0.08 is the relative ratio of image to screen width
-  checkInCharacterImgPosition: {
-    position: 'absolute',
-    top: (Dimensions.get('window').width - 32) * 0.19,
-    left: (Dimensions.get('window').width - 32) * 0.06,
-  },
-  // 32 is the total left, right margin,
-  // 0.15, 0.09 is the relative ratio of image to screen width
-  checkOutCharacterImgPosition: {
-    position: 'absolute',
-    top: (Dimensions.get('window').width - 32) * 0.15,
-    left: (Dimensions.get('window').width - 32) * 0.07,
-  },
-  // 32 is the total left, right margin,
-  // 0.14, 0.06 is the relative ratio of image to screen width
-  historyCharacterImgPosition: {
-    position: 'absolute',
-    top: (Dimensions.get('window').width - 32) * 0.15,
-    left: (Dimensions.get('window').width - 32) * 0.05,
   },
   otherFeatureLine: {
     flexDirection: 'row',

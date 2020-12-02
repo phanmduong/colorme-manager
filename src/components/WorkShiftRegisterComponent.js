@@ -8,7 +8,6 @@ import {
   Alert,
   Image,
 } from 'react-native';
-import Swiper from 'react-native-swiper';
 import WorkShiftRegisterWeek from './workShiftRegister/WorkShiftRegisterWeek';
 import Spinkit from 'react-native-spinkit';
 import theme from '../styles';
@@ -19,7 +18,9 @@ import * as alert from '../constants/alert';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import WorkShiftRegisterHoursReviewModal from './workShiftRegister/WorkShiftRegisterHoursReviewModal';
 import {isIphoneX, getStatusBarHeight} from 'react-native-iphone-x-helper';
+import MatIcon from 'react-native-vector-icons/MaterialIcons';
 var {height, width} = Dimensions.get('window');
+import Entypo from 'react-native-vector-icons/Entypo';
 
 class WorkShiftRegisterComponent extends React.Component {
   constructor(props, context) {
@@ -31,7 +32,7 @@ class WorkShiftRegisterComponent extends React.Component {
     };
   }
 
-  renderShiftWeek = index => {
+  renderShiftWeek = (index) => {
     return (
       <WorkShiftRegisterWeek
         week={this.props.workShiftRegisterData.weeks[index]}
@@ -42,7 +43,7 @@ class WorkShiftRegisterComponent extends React.Component {
     );
   };
 
-  showShift = index => {
+  showShift = (index) => {
     return (
       <View style={{marginBottom: 50}}>{this.renderShiftWeek(index)}</View>
     );
@@ -80,28 +81,6 @@ class WorkShiftRegisterComponent extends React.Component {
     return total;
   };
 
-  renderCoursePickerField = settings => {
-    const {selectedItem, defaultText, getLabel} = settings;
-    return (
-      <LinearGradient
-        colors={['white', 'white']}
-        style={styles.gradientSize}
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 0}}>
-        {!selectedItem && (
-          <Text style={{color: 'black', fontSize: 16}}>
-            Khóa {getLabel(defaultText)} ▼
-          </Text>
-        )}
-        {selectedItem && (
-          <Text style={{color: 'black', fontSize: 16}}>
-            Khóa {getLabel(selectedItem)} ▼
-          </Text>
-        )}
-      </LinearGradient>
-    );
-  };
-
   setWeekIndex = (value, array) => {
     for (let i = 0; i < array.length; i++) {
       if (value === array[i]) {
@@ -109,33 +88,6 @@ class WorkShiftRegisterComponent extends React.Component {
       }
     }
   };
-
-  renderCoursePickerOption = settings => {
-    const {item, getLabel} = settings;
-    return (
-      <View style={styles.options}>
-        <Text style={{fontSize: 16}}>Khóa {getLabel(item)}</Text>
-      </View>
-    );
-  };
-
-  renderCoursePickerHeader = () => {
-    return (
-      <View style={styles.headerFooterContainer}>
-        <Text style={styles.headerFooterText}>Chọn khóa học</Text>
-      </View>
-    );
-  };
-
-  renderCoursePickerFooter(action) {
-    return (
-      <TouchableOpacity
-        style={styles.headerFooterContainer}
-        onPress={action.close.bind(this)}>
-        <Text style={{color: '#C50000', fontSize: 19}}>Hủy</Text>
-      </TouchableOpacity>
-    );
-  }
 
   renderBasePickerHeader = () => {
     return (
@@ -145,7 +97,7 @@ class WorkShiftRegisterComponent extends React.Component {
     );
   };
 
-  renderBasePickerField = settings => {
+  renderBasePickerField = (settings) => {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
@@ -167,7 +119,7 @@ class WorkShiftRegisterComponent extends React.Component {
     );
   };
 
-  renderBasePickerOption = settings => {
+  renderBasePickerOption = (settings) => {
     const {item, getLabel} = settings;
     return (
       <View style={styles.options}>
@@ -176,7 +128,7 @@ class WorkShiftRegisterComponent extends React.Component {
     );
   };
 
-  renderWeekPickerOption = settings => {
+  renderWeekPickerOption = (settings) => {
     const {item} = settings;
     return (
       <View style={styles.options}>
@@ -193,7 +145,7 @@ class WorkShiftRegisterComponent extends React.Component {
     );
   };
 
-  renderWeekPickerField = settings => {
+  renderWeekPickerField = (settings) => {
     const {selectedItem, defaultText} = settings;
     let weekOptions = [];
     for (
@@ -242,7 +194,7 @@ class WorkShiftRegisterComponent extends React.Component {
     );
   }
 
-  greenBarLength = index => {
+  greenBarLength = (index) => {
     let barLen = 0;
     let totalHours = this.totalHours(index, this.props.user);
     if (totalHours > 20) {
@@ -273,23 +225,16 @@ class WorkShiftRegisterComponent extends React.Component {
       this.props.workShiftRegisterData &&
       this.props.workShiftRegisterData.weeks
     ) {
-      let courseOptions = [];
-      for (let i = 0; i < this.props.genData.length; i++) {
-        courseOptions.push(this.props.genData[i]);
-      }
-
       let baseOptions = [];
       for (let i = 0; i < this.props.baseData.length; i++) {
         baseOptions.push(this.props.baseData[i]);
       }
 
       let weekOptions = [];
-      for (
-        let i = this.props.workShiftRegisterData.weeks.length - 1;
-        i >= 0;
-        i--
-      ) {
-        weekOptions.push('Tuần ' + (i + 1));
+      for (let i = 0; i < this.props.workShiftRegisterData.weeks.length; i++) {
+        weekOptions.push(
+          'Tuần ' + this.props.workShiftRegisterData.weeks[i].week,
+        );
       }
 
       return (
@@ -307,37 +252,51 @@ class WorkShiftRegisterComponent extends React.Component {
               />
             }>
             <View style={styles.headerContainer}>
-              <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Profile')}>
-                <Image
-                  source={{uri: this.props.avatar_url}}
-                  style={styles.headerAva}
-                />
-              </TouchableOpacity>
-              <Text style={styles.headerTitle}>Đăng ký làm việc</Text>
+              <View style={styles.row}>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate('Profile')}>
+                  <Image
+                    source={{uri: this.props.avatar_url}}
+                    style={styles.headerAva}
+                  />
+                </TouchableOpacity>
+                <Text style={styles.headerTitle}>Đăng ký làm việc</Text>
+              </View>
+              <View style={styles.row}>
+                <TouchableOpacity onPress={this.toggleModal}>
+                  <View style={[styles.headerIconContainer, {marginRight: 10}]}>
+                    <Entypo name={'bar-graph'} size={20} color={'black'} />
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.props.navigation.navigate(
+                      'ListDetailShiftsRegistered',
+                      {
+                        week: this.props.workShiftRegisterData.weeks[
+                          this.state.index
+                        ].week,
+                        dates: this.props.workShiftRegisterData.weeks[
+                          this.state.index
+                        ].dates,
+                      },
+                    )
+                  }>
+                  <View style={styles.headerIconContainer}>
+                    <MaterialCommunityIcons
+                      name={'information'}
+                      size={20}
+                      color={'black'}
+                    />
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
             <View style={styles.containerPicker}>
               <CustomPicker
-                options={courseOptions}
-                defaultValue={courseOptions[0]}
-                getLabel={item => item.name}
-                modalAnimationType={'fade'}
-                optionTemplate={this.renderCoursePickerOption}
-                fieldTemplate={this.renderCoursePickerField}
-                headerTemplate={this.renderCoursePickerHeader}
-                footerTemplate={this.renderCoursePickerFooter}
-                modalStyle={{
-                  borderRadius: 6,
-                }}
-                onValueChange={value => {
-                  this.props.onSelectGenId(value.id);
-                  this.setState({index: 0, resetIndex: true});
-                }}
-              />
-              <CustomPicker
                 options={baseOptions}
                 defaultValue={baseOptions[0]}
-                getLabel={item => item.name}
+                getLabel={(item) => item.name}
                 modalAnimationType={'fade'}
                 optionTemplate={this.renderBasePickerOption}
                 fieldTemplate={this.renderBasePickerField}
@@ -346,7 +305,7 @@ class WorkShiftRegisterComponent extends React.Component {
                 modalStyle={{
                   borderRadius: 6,
                 }}
-                onValueChange={value => {
+                onValueChange={(value) => {
                   this.props.onSelectBaseId(value.id);
                   this.setState({index: 0, resetIndex: true});
                 }}
@@ -362,41 +321,11 @@ class WorkShiftRegisterComponent extends React.Component {
                 modalStyle={{
                   borderRadius: 6,
                 }}
-                onValueChange={value => {
+                onValueChange={(value) => {
                   this.setWeekIndex(value, weekOptions);
                   this.setState({resetIndex: false});
                 }}
               />
-            </View>
-            <View style={[styles.containerPicker, {marginTop: 5}]}>
-              <TouchableOpacity onPress={this.toggleModal}>
-                <LinearGradient
-                  colors={['#E26800', '#E00000']}
-                  style={styles.gradientSize}
-                  start={{x: 0, y: 0}}
-                  end={{x: 1, y: 0}}>
-                  <Text style={{color: 'white'}}>Thống kê</Text>
-                </LinearGradient>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() =>
-                  this.props.navigation.navigate('ListDetailShiftsRegistered', {
-                    week: this.props.workShiftRegisterData.weeks[
-                      this.state.index
-                    ].week,
-                    dates: this.props.workShiftRegisterData.weeks[
-                      this.state.index
-                    ].dates,
-                  })
-                }>
-                <LinearGradient
-                  colors={['#E26800', '#E00000']}
-                  style={styles.gradientSize}
-                  start={{x: 0, y: 0}}
-                  end={{x: 1, y: 0}}>
-                  <Text style={{color: 'white'}}>Chi tiết</Text>
-                </LinearGradient>
-              </TouchableOpacity>
             </View>
             {this.props.workShiftRegisterData.weeks.length > 0 &&
             !this.props.errorWorkShiftRegister ? (
@@ -524,6 +453,7 @@ const styles = {
     marginBottom: 10,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
   headerTitle: {
     color: theme.mainTextColor,
@@ -532,6 +462,18 @@ const styles = {
     marginLeft: 10,
   },
   headerAva: theme.mainAvatar,
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerIconContainer: {
+    width: 40,
+    height: 40,
+    backgroundColor: '#F6F6F6',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 20,
+  },
 };
 
 export default WorkShiftRegisterComponent;

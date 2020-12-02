@@ -51,7 +51,6 @@ class WorkShiftRegisterContainer extends React.Component {
 
   loadBaseAndGenData = () => {
     this.props.baseActions.loadDataBase(this.props.token);
-    this.props.genActions.loadDataGen(this.props.token);
   };
 
   loadDataWorkShiftRegister = (baseId, genId) => {
@@ -67,11 +66,6 @@ class WorkShiftRegisterContainer extends React.Component {
     this.loadDataWorkShiftRegister(baseId, this.props.selectedGenId);
   };
 
-  onSelectGenId = (genId) => {
-    this.props.workShiftRegisterAction.selectedGenId(genId);
-    this.loadDataWorkShiftRegister(this.props.selectedBaseId, genId);
-  };
-
   onRegister = (shiftId) => {
     this.props.workShiftRegisterAction.register(shiftId, this.props.token);
   };
@@ -85,10 +79,8 @@ class WorkShiftRegisterContainer extends React.Component {
       <WorkShiftRegisterComponent
         workShiftRegisterData={this.props.workShiftRegisterData}
         isLoadingWorkShiftRegister={this.props.isLoadingWorkShiftRegister}
-        genData={this.props.genData}
         baseData={this.props.baseData}
         onSelectBaseId={this.onSelectBaseId}
-        onSelectGenId={this.onSelectGenId}
         errorWorkShiftRegister={this.props.errorWorkShiftRegister}
         user={this.props.user}
         avatar_url={this.props.user.avatar_url}

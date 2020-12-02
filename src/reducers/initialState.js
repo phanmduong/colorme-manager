@@ -566,4 +566,16 @@ export default {
     loadingCourses: false,
     errorCourses: false,
   },
+  teachingSchedule: {
+    classes: [],
+    loading: false,
+    error: false,
+    teacherId: '',
+    baseId: '',
+    courseId: '',
+    provinceId: '',
+    type: '',
+    startTime: moment().startOf('month').format('YYYY-MM-DD'),
+    endTime: moment().endOf('month').format('YYYY-MM-DD'),
+  },
 };

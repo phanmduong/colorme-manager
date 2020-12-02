@@ -1,18 +1,27 @@
 import React from 'react';
-import {View, Image, Text} from 'react-native';
+import {View, Image, Text, TouchableOpacity} from 'react-native';
 import theme from '../../styles';
 
-function TeachingScheduleItem({avatar_url, name, start_time, end_time}) {
+function TeachingScheduleItem({
+  avatar_url,
+  name,
+  start_time,
+  end_time,
+  classData,
+  onSelectClass,
+}) {
   return (
-    <View style={styles.container}>
-      <View style={styles.row}>
-        <Image source={{uri: avatar_url}} style={styles.avatar} />
-        <Text style={styles.name}>{name}</Text>
+    <TouchableOpacity onPress={() => onSelectClass(classData)}>
+      <View style={styles.container}>
+        <View style={styles.row}>
+          <Image source={{uri: avatar_url}} style={styles.avatar} />
+          <Text style={styles.name}>{name}</Text>
+        </View>
+        <Text>
+          {start_time.slice(0, 5)} - {end_time.slice(0, 5)}
+        </Text>
       </View>
-      <Text>
-        {start_time.slice(0, 5)} - {end_time.slice(0, 5)}
-      </Text>
-    </View>
+    </TouchableOpacity>
   );
 }
 

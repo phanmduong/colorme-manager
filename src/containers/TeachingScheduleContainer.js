@@ -8,6 +8,7 @@ import {bindActionCreators} from 'redux';
 import * as teachingScheduleActions from '../actions/teachingScheduleActions';
 import * as saveRegisterActions from '../actions/saveRegisterActions';
 import * as baseActions from '../actions/baseActions';
+import * as classActions from '../actions/classActions';
 
 function TeachingScheduleContainer(props) {
   useEffect(() => {
@@ -62,6 +63,14 @@ function TeachingScheduleContainer(props) {
     props.teachingScheduleActions.selectedCourseId(id);
   }
 
+  function onSelectedItem(classData) {
+    props.classActions.selectedClassId(classData.id);
+    props.navigation.navigate('ListStudentClass', {
+      name: classData.name,
+      avatar_url: classData.course && classData.course.icon_url,
+    });
+  }
+
   return (
     <TeachingScheduleComponent
       {...props}
@@ -71,6 +80,7 @@ function TeachingScheduleContainer(props) {
       loadSchedules={loadSchedules}
       onSelectBaseId={onSelectBaseId}
       onSelectCourseId={onSelectCourseId}
+      onSelectClass={onSelectedItem}
     />
   );
 }
@@ -132,6 +142,7 @@ function mapDispatchToProps(dispatch) {
     ),
     saveRegisterActions: bindActionCreators(saveRegisterActions, dispatch),
     baseActions: bindActionCreators(baseActions, dispatch),
+    classActions: bindActionCreators(classActions, dispatch),
   };
 }
 

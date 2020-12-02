@@ -31,6 +31,8 @@ function TeachingScheduleComponent(props) {
           avatar_url={classItem.course.icon_url}
           end_time={lesson.end_time}
           start_time={lesson.start_time}
+          classData={classItem}
+          onSelectClass={props.onSelectClass}
         />
       ));
     });

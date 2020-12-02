@@ -42,6 +42,14 @@ export default function teachingScheduleReducer(
       return Object.assign({}, state, {
         courseId: action.courseId,
       });
+    case types.ON_SELECT_TEACHER_SCHEDULES:
+      return Object.assign({}, state, {
+        teacherId: action.teacherId,
+      });
+    case types.ON_SELECT_TYPE_SCHEDULES:
+      return Object.assign({}, state, {
+        type: action.scheduleType,
+      });
     default:
       return state;
   }

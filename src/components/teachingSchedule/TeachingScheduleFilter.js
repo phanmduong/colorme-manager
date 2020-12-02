@@ -3,6 +3,7 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import Modal from 'react-native-modal';
 import theme from '../../styles';
 import FilterRow from '../common/FilterRow';
+import {CLASS_STATUS_FILTER_NEW} from '../../constants/constant';
 
 const TeachingScheduleFilter = ({
   isVisible,
@@ -11,6 +12,9 @@ const TeachingScheduleFilter = ({
   onSelectProvinceId,
   onSelectBaseId,
   onSelectCourseId,
+  onSelectTeacherId,
+  onSelectType,
+  loadStaff,
   ...props
 }) => {
   return (
@@ -32,6 +36,16 @@ const TeachingScheduleFilter = ({
           onChangeValue={onSelectCourseId}
         />
         <FilterRow
+          title={'Giảng viên/trợ giảng'}
+          header={'Chọn giảng viên/trợ giảng'}
+          isApiSearch={true}
+          defaultId={''}
+          selectedId={props.teacherId}
+          options={props.staff}
+          onApiSearch={loadStaff}
+          onChangeValue={onSelectTeacherId}
+        />
+        <FilterRow
           options={props.provinces}
           title={'Thành phố'}
           header={'Chọn thành phố'}
@@ -46,6 +60,14 @@ const TeachingScheduleFilter = ({
           header={'Chọn cơ sở'}
           selectedId={props.baseId}
           onChangeValue={onSelectBaseId}
+        />
+        <FilterRow
+          options={CLASS_STATUS_FILTER_NEW}
+          defaultId={''}
+          selectedId={props.type}
+          header={'Chọn trạng thái'}
+          title={'Trạng thái'}
+          onChangeValue={onSelectType}
         />
         <TouchableOpacity
           onPress={() => {
@@ -73,7 +95,7 @@ const styles = {
   },
   wrapper: {
     backgroundColor: 'white',
-    height: 380,
+    height: 500,
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
     paddingHorizontal: theme.mainHorizontal,

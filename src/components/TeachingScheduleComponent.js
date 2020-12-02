@@ -82,6 +82,9 @@ function TeachingScheduleComponent(props) {
         onSelectProvinceId={props.onSelectProvinceId}
         onSelectBaseId={props.onSelectBaseId}
         onSelectCourseId={props.onSelectCourseId}
+        onSelectTeacherId={props.onSelectTeacherId}
+        onSelectType={props.onSelectType}
+        loadStaff={props.loadStaff}
         {...props}
       />
     </SafeAreaView>

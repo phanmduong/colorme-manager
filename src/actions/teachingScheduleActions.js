@@ -91,3 +91,17 @@ export function selectedCourseId(courseId) {
     courseId: courseId,
   };
 }
+
+export function selectedTeacherId(id) {
+  return {
+    type: types.ON_SELECT_TEACHER_SCHEDULES,
+    teacherId: id,
+  };
+}
+
+export function selectedType(id) {
+  return {
+    type: types.ON_SELECT_TYPE_SCHEDULES,
+    scheduleType: id,
+  };
+}

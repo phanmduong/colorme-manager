@@ -9,6 +9,7 @@ import * as teachingScheduleActions from '../actions/teachingScheduleActions';
 import * as saveRegisterActions from '../actions/saveRegisterActions';
 import * as baseActions from '../actions/baseActions';
 import * as classActions from '../actions/classActions';
+import * as staffActions from '../actions/staffActions';
 
 function TeachingScheduleContainer(props) {
   useEffect(() => {
@@ -16,6 +17,7 @@ function TeachingScheduleContainer(props) {
     loadProvinces();
     loadDataBase();
     loadCourses();
+    loadStaff('');
   }, []);
 
   function loadSchedules() {
@@ -29,6 +31,10 @@ function TeachingScheduleContainer(props) {
       props.endTime,
       props.token,
     );
+  }
+
+  function loadStaff(search) {
+    props.staffActions.getStaff(false, 1, search, props.token);
   }
 
   function loadProvinces() {
@@ -63,6 +69,14 @@ function TeachingScheduleContainer(props) {
     props.teachingScheduleActions.selectedCourseId(id);
   }
 
+  function onSelectTeacherId(id) {
+    props.teachingScheduleActions.selectedTeacherId(id);
+  }
+
+  function onSelectType(id) {
+    props.teachingScheduleActions.selectedType(id);
+  }
+
   function onSelectedItem(classData) {
     props.classActions.selectedClassId(classData.id);
     props.navigation.navigate('ListStudentClass', {
@@ -81,6 +95,9 @@ function TeachingScheduleContainer(props) {
       onSelectBaseId={onSelectBaseId}
       onSelectCourseId={onSelectCourseId}
       onSelectClass={onSelectedItem}
+      onSelectTeacherId={onSelectTeacherId}
+      onSelectType={onSelectType}
+      loadStaff={loadStaff}
     />
   );
 }
@@ -131,6 +148,9 @@ function mapStateToProps(state) {
     isLoadingCourses: state.saveRegister.isLoadingCourses,
     errorLoadingCourses: state.saveRegister.errorLoadingCourses,
     courses: state.saveRegister.courses,
+    staff: state.staff.staff,
+    isLoadingStaff: state.staff.isLoadingStaff,
+    errorStaff: state.staff.errorStaff,
   };
 }
 
@@ -143,6 +163,7 @@ function mapDispatchToProps(dispatch) {
     saveRegisterActions: bindActionCreators(saveRegisterActions, dispatch),
     baseActions: bindActionCreators(baseActions, dispatch),
     classActions: bindActionCreators(classActions, dispatch),
+    staffActions: bindActionCreators(staffActions, dispatch),
   };
 }
 

@@ -149,6 +149,8 @@ class ClassComponent extends React.Component {
               selectedBaseId={this.state.selectedBaseId}
               description={item.description}
               date_end={item.date_end}
+              teachers={item.teachers}
+              teaching_assistants={item.teaching_assistants}
             />
           )}
           ListEmptyComponent={

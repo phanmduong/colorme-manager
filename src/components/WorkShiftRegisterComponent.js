@@ -282,7 +282,6 @@ class WorkShiftRegisterComponent extends React.Component {
                 }}
                 onValueChange={(value) => {
                   this.props.onSelectBaseId(value.id);
-                  this.setState({index: 0});
                 }}
               />
             </View>
@@ -295,27 +294,29 @@ class WorkShiftRegisterComponent extends React.Component {
                   size={30}
                 />
               </TouchableOpacity>
-              <View style={styles.dateContainer}>
-                <Text style={styles.bold}>
-                  Tuần{' '}
-                  {
-                    this.props.workShiftRegisterData.weeks[this.state.index]
-                      .week
-                  }
-                </Text>
-                <Text>
-                  {this.props.workShiftRegisterData.weeks[
-                    this.state.index
-                  ].dates[
-                    this.props.workShiftRegisterData.weeks[this.state.index]
-                      .dates.length - 1
-                  ].date.slice(-10)}{' '}
-                  -{' '}
-                  {this.props.workShiftRegisterData.weeks[
-                    this.state.index
-                  ].dates[0].date.slice(-10)}
-                </Text>
-              </View>
+              {this.props.workShiftRegisterData.weeks[this.state.index] && (
+                <View style={styles.dateContainer}>
+                  <Text style={styles.bold}>
+                    Tuần{' '}
+                    {
+                      this.props.workShiftRegisterData.weeks[this.state.index]
+                        .week
+                    }
+                  </Text>
+                  <Text>
+                    {this.props.workShiftRegisterData.weeks[
+                      this.state.index
+                    ].dates[
+                      this.props.workShiftRegisterData.weeks[this.state.index]
+                        .dates.length - 1
+                    ].date.slice(-10)}{' '}
+                    -{' '}
+                    {this.props.workShiftRegisterData.weeks[
+                      this.state.index
+                    ].dates[0].date.slice(-10)}
+                  </Text>
+                </View>
+              )}
               <TouchableOpacity onPress={() => this.setWeekIndexTest('next')}>
                 <MaterialIcons
                   name={'navigate-next'}

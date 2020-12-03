@@ -22,6 +22,7 @@ import {
   RATE,
 } from '../../constants/constant';
 import Search from '../common/Search';
+import FilterRowDate from '../common/FilterRowDate';
 
 class FilterLeadsModal extends React.Component {
   constructor(props, context) {
@@ -249,6 +250,12 @@ class FilterLeadsModal extends React.Component {
                   </Text>
                 </TouchableOpacity>
               </View>
+              <FilterRowDate
+                title={'Ngày nhập'}
+                isFormatted={true}
+                onSelectDate={this.props.onSelectImportedAt}
+                selectedDate={this.props.importedAt}
+              />
               <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Hẹn gọi lại</Text>
                 <TouchableOpacity
@@ -330,19 +337,6 @@ class FilterLeadsModal extends React.Component {
                     this.props.onSelectRate(value.id);
                   }}
                 />
-              </View>
-              <View style={styles.filterTitle}>
-                <Text style={{fontSize: 16}}>Tỉnh/thành phố</Text>
-                <View style={styles.filterContainer}>
-                  <TextInput
-                    placeholder={'Nhập tỉnh/thành phố'}
-                    autoCapitalize={false}
-                    onChangeText={this.props.onSelectAddress}
-                    value={this.props.address}
-                    clearButtonMode={true}
-                    style={{width: 120, fontSize: 16}}
-                  />
-                </View>
               </View>
               <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Trạng thái</Text>
@@ -477,6 +471,19 @@ class FilterLeadsModal extends React.Component {
                     this.props.onSelectLeadTag(value.id);
                   }}
                 />
+              </View>
+              <View style={styles.filterTitle}>
+                <Text style={{fontSize: 16}}>Tỉnh/thành phố</Text>
+                <View style={styles.filterContainer}>
+                  <TextInput
+                    placeholder={'Tỉnh/thành phố'}
+                    autoCapitalize={false}
+                    onChangeText={this.props.onSelectAddress}
+                    value={this.props.address}
+                    clearButtonMode={true}
+                    style={{width: 120, fontSize: 16}}
+                  />
+                </View>
               </View>
               <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Cơ sở</Text>

@@ -21,6 +21,7 @@ export function getLeads(
   duplicate,
   lead_tag,
   base_id,
+  imported_at,
   token,
 ) {
   let url =
@@ -62,7 +63,9 @@ export function getLeads(
     '&lead_tag=' +
     lead_tag +
     '&base_id=' +
-    base_id;
+    base_id +
+    '&imported_at=' +
+    imported_at;
   return axios.get(url, {cancelToken: sourceCancel.token});
 }
 

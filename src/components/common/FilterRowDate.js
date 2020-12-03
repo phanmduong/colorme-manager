@@ -4,7 +4,12 @@ const {width} = Dimensions.get('window');
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 
-const FilterRowDate = ({title, selectedDate, onSelectDate}) => {
+const FilterRowDate = ({
+  title,
+  selectedDate,
+  onSelectDate,
+  isFormatted = false,
+}) => {
   const [visible, setVisible] = useState(false);
 
   const togglePicker = () => {
@@ -12,21 +17,27 @@ const FilterRowDate = ({title, selectedDate, onSelectDate}) => {
   };
 
   const handleDatePicked = (date) => {
-    onSelectDate(moment(date));
+    if (!isFormatted) {
+      onSelectDate(moment(date));
+    } else {
+      onSelectDate(moment(date).format('YYYY-MM-DD'));
+    }
     togglePicker();
   };
 
   return (
     <View style={styles.filterTitle}>
       <Text style={styles.title}>{title}</Text>
-      <TouchableOpacity
-        style={styles.filterContainer}
-        onPress={togglePicker}>
+      <TouchableOpacity style={styles.filterContainer} onPress={togglePicker}>
         <Text
           style={{
             fontSize: 16,
           }}>
-          {selectedDate ? selectedDate.format('YYYY-MM-DD') : 'YYYY-MM-DD'}
+          {selectedDate
+            ? !isFormatted
+              ? selectedDate.format('YYYY-MM-DD')
+              : selectedDate
+            : 'YYYY-MM-DD'}
         </Text>
       </TouchableOpacity>
       <DateTimePicker

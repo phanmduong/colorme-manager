@@ -53,6 +53,7 @@ class LeadsContainer extends React.Component {
       this.props.duplicate,
       this.props.leadTag,
       baseId,
+      this.props.importedAt,
       this.props.token,
     );
   };
@@ -84,6 +85,7 @@ class LeadsContainer extends React.Component {
       this.props.duplicate,
       this.props.leadTag,
       baseId,
+      this.props.importedAt,
       this.props.token,
     );
   };
@@ -115,6 +117,7 @@ class LeadsContainer extends React.Component {
       this.props.duplicate,
       this.props.leadTag,
       baseId,
+      this.props.importedAt,
       this.props.token,
     );
   };
@@ -189,6 +192,10 @@ class LeadsContainer extends React.Component {
 
   onSelectBaseId = (baseId) => {
     this.props.leadsActions.onSelectBaseId(baseId);
+  };
+
+  onSelectImportedAt = (importedAt) => {
+    this.props.leadsActions.onSelectImportedAt(importedAt);
   };
 
   reset = () => {
@@ -295,6 +302,7 @@ class LeadsContainer extends React.Component {
         onSelectBaseId={this.onSelectBaseId}
         onSelectCallBackTime={this.onSelectCallBackTime}
         onSelectMockExamTime={this.onSelectMockExamTime}
+        onSelectImportedAt={this.onSelectImportedAt}
       />
     );
   }
@@ -355,6 +363,7 @@ function mapStateToProps(state) {
     baseData: state.base.baseData,
     isLoadingBase: state.base.isLoading,
     errorBase: state.base.errorBase,
+    importedAt: state.leads.importedAt,
   };
 }
 

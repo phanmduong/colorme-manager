@@ -25,6 +25,7 @@ export function getLeads(
   duplicate,
   lead_tag,
   base_id,
+  imported_at,
   token,
 ) {
   return function (dispatch) {
@@ -54,6 +55,7 @@ export function getLeads(
         duplicate,
         lead_tag,
         base_id,
+        imported_at,
         token,
       )
       .then(function (res) {
@@ -125,6 +127,7 @@ export function searchLeads(
   duplicate,
   lead_tag,
   base_id,
+  imported_at,
   token,
 ) {
   sourceCancel.cancel('Canceled by leads api.');
@@ -152,6 +155,7 @@ export function searchLeads(
         duplicate,
         lead_tag,
         base_id,
+        imported_at,
         token,
       ),
     );
@@ -176,6 +180,7 @@ export function refreshLeads(
   duplicate,
   lead_tag,
   base_id,
+  imported_at,
   token,
 ) {
   return function (dispatch) {
@@ -201,6 +206,7 @@ export function refreshLeads(
         duplicate,
         lead_tag,
         base_id,
+        imported_at,
         token,
       ),
     );
@@ -288,6 +294,7 @@ export function reset() {
     duplicate: '',
     baseId: -1,
     leadTag: '',
+    importedAt: '',
   };
 }
 
@@ -555,5 +562,12 @@ export function onSelectBaseId(baseId) {
   return {
     type: types.ON_SELECT_BASE_ID_LEADS,
     baseId: baseId,
+  };
+}
+
+export function onSelectImportedAt(importedAt) {
+  return {
+    type: types.ON_SELECT_IMPORTED_AT_LEADS,
+    importedAt: importedAt,
   };
 }

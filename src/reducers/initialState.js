@@ -521,6 +521,7 @@ export default {
     duplicate: '',
     baseId: -1,
     leadTag: '',
+    importedAt: '',
   },
   staff: {
     staff: [],

@@ -85,6 +85,7 @@ export default function leadsReducer(state = initialState.leads, action) {
         duplicate: action.duplicate,
         baseId: action.baseId,
         leadTag: action.leadTag,
+        importedAt: action.importedAt,
       });
     case types.BEGIN_LOAD_LEAD_STAFFS:
       return Object.assign({}, state, {
@@ -196,6 +197,10 @@ export default function leadsReducer(state = initialState.leads, action) {
     case types.ON_SELECT_BASE_ID_LEADS:
       return Object.assign({}, state, {
         baseId: action.baseId,
+      });
+    case types.ON_SELECT_IMPORTED_AT_LEADS:
+      return Object.assign({}, state, {
+        importedAt: action.importedAt,
       });
     default:
       return state;

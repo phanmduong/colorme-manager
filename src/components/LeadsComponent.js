@@ -78,6 +78,7 @@ class LeadsComponent extends React.Component {
           baseId={this.props.baseId}
           onSelectCallBackTime={this.props.onSelectCallBackTime}
           onSelectMockExamTime={this.props.onSelectMockExamTime}
+          onSelectImportedAt={this.props.onSelectImportedAt}
         />
       </View>
     );

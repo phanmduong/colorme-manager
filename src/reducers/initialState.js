@@ -490,7 +490,7 @@ export default {
     searchLeads: '',
     start_time: '',
     end_time: '',
-    carer_id: -1,
+    carer_id: '',
     leadStatusId: -1,
     rate: -1,
     top: '',

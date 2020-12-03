@@ -23,6 +23,7 @@ import {
 } from '../../constants/constant';
 import Search from '../common/Search';
 import FilterRowDate from '../common/FilterRowDate';
+import FilterRow from '../common/FilterRow';
 
 class FilterLeadsModal extends React.Component {
   constructor(props, context) {
@@ -93,22 +94,6 @@ class FilterLeadsModal extends React.Component {
             this.setState({search});
           }}
           value={this.state.search}
-          extraStyle={{width: width - 70, marginLeft: 0}}
-          extraInputStyle={{width: width - 38 - 80}}
-        />
-      </View>
-    );
-  };
-
-  renderStaffPickerHeader = (title) => {
-    return (
-      <View style={styles.headerFooterContainer}>
-        <Text style={styles.headerFooterText}>{title}</Text>
-        <Search
-          placeholder="Tìm kiếm"
-          onChangeText={(search) => {
-            this.props.loadStaff(search, this.props.token);
-          }}
           extraStyle={{width: width - 70, marginLeft: 0}}
           extraInputStyle={{width: width - 38 - 80}}
         />
@@ -286,32 +271,16 @@ class FilterLeadsModal extends React.Component {
                   </Text>
                 </TouchableOpacity>
               </View>
-              <View style={styles.filterTitle}>
-                <Text style={{fontSize: 16}}>Nhân viên</Text>
-                <CustomPicker
-                  options={this.getData(this.props.staff)}
-                  defaultValue={this.getDefault(
-                    this.getData(this.props.staff),
-                    this.props.carer_id,
-                  )}
-                  getLabel={(item) => item.name}
-                  modalAnimationType={'fade'}
-                  optionTemplate={this.renderPickerOption}
-                  fieldTemplate={this.renderPickerField}
-                  headerTemplate={() =>
-                    this.renderStaffPickerHeader('Chọn nhân viên')
-                  }
-                  footerTemplate={this.renderPickerFooter}
-                  onBlur={() => this.setState({search: ''})}
-                  modalStyle={{
-                    borderRadius: 6,
-                  }}
-                  onValueChange={(value) => {
-                    this.setState({search: ''});
-                    this.props.onSelectCarer(value.id);
-                  }}
-                />
-              </View>
+              <FilterRow
+                title={'Nhân viên'}
+                header={'Chọn nhân viên'}
+                defaultId={''}
+                selectedId={this.props.carer_id}
+                options={this.props.staff}
+                isApiSearch={true}
+                onChangeValue={this.props.onSelectCarer}
+                onApiSearch={this.props.loadStaff}
+              />
               <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Đánh giá</Text>
                 <CustomPicker
@@ -513,20 +482,11 @@ class FilterLeadsModal extends React.Component {
               </View>
               <TouchableOpacity
                 onPress={() => {
-                  this.props.onRefresh(this.props.searchLeads);
+                  this.props.onRefresh();
                   this.props.closeModal();
                 }}>
                 <View style={styles.submit}>
                   <Text style={styles.submitTitle}>Áp dụng</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  this.props.reset();
-                  this.props.resetModal();
-                }}>
-                <View style={styles.reset}>
-                  <Text style={styles.resetTitle}>Đặt lại</Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity

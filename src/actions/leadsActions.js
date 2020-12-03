@@ -295,6 +295,10 @@ export function reset() {
     baseId: -1,
     leadTag: '',
     importedAt: '',
+    orderBy: '',
+    carer_id: '',
+    currentPageLeads: 0,
+    leads: [],
   };
 }
 
@@ -569,5 +573,12 @@ export function onSelectImportedAt(importedAt) {
   return {
     type: types.ON_SELECT_IMPORTED_AT_LEADS,
     importedAt: importedAt,
+  };
+}
+
+export function onSelectOrderBy(orderBy) {
+  return {
+    type: types.ON_SELECT_ORDER_BY_LEADS,
+    orderBy: orderBy,
   };
 }

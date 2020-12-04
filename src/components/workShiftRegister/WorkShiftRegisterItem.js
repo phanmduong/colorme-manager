@@ -175,7 +175,7 @@ class WorkShiftRegisterItem extends React.Component {
 
 const styles = {
   available: {
-    backgroundColor: '#00B241',
+    backgroundColor: '#32CA41',
     borderRadius: 5,
     height: 40,
     marginVertical: 5,
@@ -185,7 +185,7 @@ const styles = {
     flexDirection: 'row',
   },
   availableLock: {
-    backgroundColor: '#00B241',
+    backgroundColor: '#32CA41',
     borderRadius: 5,
     height: 40,
     marginVertical: 5,

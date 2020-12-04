@@ -89,6 +89,11 @@ export default function leadsReducer(state = initialState.leads, action) {
         duplicate: action.duplicate,
         baseId: action.baseId,
         leadTag: action.leadTag,
+        importedAt: action.importedAt,
+        orderBy: action.orderBy,
+        carer_id: action.carer_id,
+        currentPageLeads: action.currentPageLeads,
+        leads: action.leads,
       });
     case types.BEGIN_LOAD_LEAD_STAFFS:
       return Object.assign({}, state, {
@@ -200,6 +205,14 @@ export default function leadsReducer(state = initialState.leads, action) {
     case types.ON_SELECT_BASE_ID_LEADS:
       return Object.assign({}, state, {
         baseId: action.baseId,
+      });
+    case types.ON_SELECT_IMPORTED_AT_LEADS:
+      return Object.assign({}, state, {
+        importedAt: action.importedAt,
+      });
+    case types.ON_SELECT_ORDER_BY_LEADS:
+      return Object.assign({}, state, {
+        orderBy: action.orderBy,
       });
     default:
       return state;

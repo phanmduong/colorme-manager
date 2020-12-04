@@ -9,7 +9,8 @@ import * as classActions from '../actions/classActions';
 import * as saveRegisterActions from '../actions/saveRegisterActions';
 import * as genActions from '../actions/genActions';
 import * as analyticsActions from '../actions/analyticsActions';
-import {Text, TouchableOpacity, View} from 'react-native';
+import * as staffActions from '../actions/staffActions';
+import {Text, View, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../styles';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
@@ -58,6 +59,8 @@ class ClassContainer extends React.Component {
       this.props.domain,
     );
     this.loadDataClass();
+    this.loadStaff('');
+    this.loadStatuses();
   }
 
   componentWillUnmount() {
@@ -74,8 +77,29 @@ class ClassContainer extends React.Component {
     this.props.classActions.loadDataClass(
       false,
       this.props.search,
+      this.props.enrollStartTime !== ''
+        ? this.props.enrollStartTime.format('YYYY-MM-DD')
+        : '',
+      this.props.enrollEndTime !== ''
+        ? this.props.enrollEndTime.format('YYYY-MM-DD')
+        : '',
+      this.props.lessonStartTime !== ''
+        ? this.props.lessonStartTime.format('YYYY-MM-DD')
+        : '',
+      this.props.lessonEndTime !== ''
+        ? this.props.lessonEndTime.format('YYYY-MM-DD')
+        : '',
+      this.props.startTime !== ''
+        ? this.props.startTime.format('YYYY-MM-DD')
+        : '',
+      this.props.endTime !== '' ? this.props.endTime.format('YYYY-MM-DD') : '',
+      this.props.teacherId,
       courseId,
+      this.props.provinceId,
       this.props.currentPage + 1,
+      this.props.type,
+      this.props.status,
+      this.props.class_status,
       selectedGenId,
       selectedBaseId,
       this.props.token,
@@ -92,7 +116,28 @@ class ClassContainer extends React.Component {
       this.props.selectedCourseId === -1 ? '' : this.props.selectedCourseId;
     this.props.classActions.refreshDataClass(
       this.props.search,
+      this.props.enrollStartTime !== ''
+        ? this.props.enrollStartTime.format('YYYY-MM-DD')
+        : '',
+      this.props.enrollEndTime !== ''
+        ? this.props.enrollEndTime.format('YYYY-MM-DD')
+        : '',
+      this.props.lessonStartTime !== ''
+        ? this.props.lessonStartTime.format('YYYY-MM-DD')
+        : '',
+      this.props.lessonEndTime !== ''
+        ? this.props.lessonEndTime.format('YYYY-MM-DD')
+        : '',
+      this.props.startTime !== ''
+        ? this.props.startTime.format('YYYY-MM-DD')
+        : '',
+      this.props.endTime !== '' ? this.props.endTime.format('YYYY-MM-DD') : '',
+      this.props.teacherId,
       courseId,
+      this.props.provinceId,
+      this.props.type,
+      this.props.status,
+      this.props.class_status,
       selectedGenId,
       selectedBaseId,
       this.props.token,
@@ -125,7 +170,28 @@ class ClassContainer extends React.Component {
       this.props.selectedCourseId === -1 ? '' : this.props.selectedCourseId;
     this.props.classActions.searchClass(
       search,
+      this.props.enrollStartTime !== ''
+        ? this.props.enrollStartTime.format('YYYY-MM-DD')
+        : '',
+      this.props.enrollEndTime !== ''
+        ? this.props.enrollEndTime.format('YYYY-MM-DD')
+        : '',
+      this.props.lessonStartTime !== ''
+        ? this.props.lessonStartTime.format('YYYY-MM-DD')
+        : '',
+      this.props.lessonEndTime !== ''
+        ? this.props.lessonEndTime.format('YYYY-MM-DD')
+        : '',
+      this.props.startTime !== ''
+        ? this.props.startTime.format('YYYY-MM-DD')
+        : '',
+      this.props.endTime !== '' ? this.props.endTime.format('YYYY-MM-DD') : '',
+      this.props.teacherId,
       courseId,
+      this.props.provinceId,
+      this.props.type,
+      this.props.status,
+      this.props.class_status,
       selectedGenId,
       selectedBaseId,
       this.props.token,
@@ -149,34 +215,93 @@ class ClassContainer extends React.Component {
     this.searchClass(this.props.search);
   };
 
+  onSelectStatusId = (id) => {
+    this.props.classActions.selectedStatusId(id);
+  };
+
+  onSelectType = (id) => {
+    this.props.classActions.selectedClassType(id);
+  };
+
+  onSelectProvinceId = (id) => {
+    this.props.classActions.selectedProvinceId(id);
+  };
+
+  onSelectTeacherId = (id) => {
+    this.props.classActions.selectedTeacherId(id);
+  };
+
+  loadStaff = (search) => {
+    this.props.staffActions.getStaff(
+      false,
+      1,
+      search,
+      this.props.token,
+      this.props.domain,
+    );
+  };
+
+  onSelectEnrollStartTime = (time) => {
+    this.props.classActions.selectedEnrollStartTime(time);
+  };
+
+  onSelectEnrollEndTime = (time) => {
+    this.props.classActions.selectedEnrollEndTime(time);
+  };
+
+  onSelectLessonStartTime = (time) => {
+    this.props.classActions.selectedLessonStartTime(time);
+  };
+
+  onSelectLessonEndTime = (time) => {
+    this.props.classActions.selectedLessonEndTime(time);
+  };
+
+  onSelectStartTime = (time) => {
+    this.props.classActions.selectedStartTime(time);
+  };
+
+  onSelectEndTime = (time) => {
+    this.props.classActions.selectedEndTime(time);
+  };
+
+  loadStatuses = () => {
+    this.props.classActions.loadStatuses(
+      'classes',
+      this.props.token,
+      this.props.domain,
+    );
+  };
+
+  onSelectClassStatus = (id) => {
+    this.props.classActions.selectedClassStatus(id);
+  };
+
   render() {
     return (
       <ClassComponent
         {...this.props}
-        classData={this.props.classData}
-        isLoadingClass={this.props.isLoadingClass}
-        courseData={this.props.courseData}
-        isLoadingCourse={this.props.isLoadingCourse}
         onSelectedItem={this.onSelectedItem}
-        genData={this.props.genData}
-        baseData={this.props.baseData}
-        isLoadingGen={this.props.isLoadingGen}
-        isLoadingBase={this.props.isLoadingBase}
-        currentGen={this.props.currentGen}
         onRefresh={this.onRefresh}
         filter={this.applyFilter}
-        refreshing={this.props.isRefreshing}
-        analyticGenId={this.props.analyticGenId}
-        analyticBaseId={this.props.analyticBaseId}
-        provinces={this.props.provinces}
-        isLoadingProvinces={this.props.isLoadingProvinces}
         changeClassStatus={this.changeClassStatus}
-        user={this.props.user}
         loadDataClass={this.loadDataClass}
         searchClass={this.searchClass}
         onSelectBaseId={this.onSelectBaseId}
         onSelectCourseId={this.onSelectCourseId}
         onSelectGenId={this.onSelectGenId}
+        onSelectStatusId={this.onSelectStatusId}
+        onSelectType={this.onSelectType}
+        onSelectProvinceId={this.onSelectProvinceId}
+        onSelectTeacherId={this.onSelectTeacherId}
+        loadStaff={this.loadStaff}
+        onSelectEnrollStartTime={this.onSelectEnrollStartTime}
+        onSelectEnrollEndTime={this.onSelectEnrollEndTime}
+        onSelectLessonStartTime={this.onSelectLessonStartTime}
+        onSelectLessonEndTime={this.onSelectLessonEndTime}
+        onSelectStartTime={this.onSelectStartTime}
+        onSelectEndTime={this.onSelectEndTime}
+        onSelectClassStatus={this.onSelectClassStatus}
       />
     );
   }
@@ -216,6 +341,24 @@ function mapStateToProps(state) {
     selectedBaseId: state.class.selectedBaseId,
     selectedCourseId: state.class.selectedCourseId,
     selectedGenId: state.class.selectedGenId,
+    provinceId: state.class.provinceId,
+    courseId: state.class.courseId,
+    enrollStartTime: state.class.enrollStartTime,
+    enrollEndTime: state.class.enrollEndTime,
+    lessonStartTime: state.class.lessonStartTime,
+    lessonEndTime: state.class.lessonEndTime,
+    startTime: state.class.startTime,
+    endTime: state.class.endTime,
+    teacherId: state.class.teacherId,
+    type: state.class.type,
+    status: state.class.status,
+    class_status: state.class.class_status,
+    staff: state.staff.staff,
+    isLoadingStaff: state.staff.isLoadingStaff,
+    errorStaff: state.staff.errorStaff,
+    statuses: state.class.statuses,
+    isLoadingStatuses: state.class.isLoadingStatuses,
+    errorStatuses: state.class.errorStatuses,
   };
 }
 
@@ -225,6 +368,7 @@ function mapDispatchToProps(dispatch) {
     genActions: bindActionCreators(genActions, dispatch),
     saveRegisterActions: bindActionCreators(saveRegisterActions, dispatch),
     analyticsActions: bindActionCreators(analyticsActions, dispatch),
+    staffActions: bindActionCreators(staffActions, dispatch),
   };
 }
 

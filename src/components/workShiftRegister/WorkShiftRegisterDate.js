@@ -17,7 +17,8 @@ class WorkShiftRegisterDate extends React.Component {
   }
 
   renderShiftItem = () => {
-    return this.props.shifts.map(shift => (
+    const shifts = [...this.props.shifts].reverse();
+    return shifts.map(shift => (
       <WorkShiftRegisterItem
         shift={shift}
         name={shift.name}

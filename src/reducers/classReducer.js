@@ -165,6 +165,78 @@ export default function classReducer(state = initialState.class, action) {
         search: action.search,
         selectedBaseId: action.selectedBaseId,
         selectedCourseId: action.selectedCourseId,
+        provinceId: action.provinceId,
+        courseId: action.courseId,
+        enrollStartTime: action.enrollStartTime,
+        enrollEndTime: action.enrollEndTime,
+        lessonStartTime: action.lessonStartTime,
+        lessonEndTime: action.lessonEndTime,
+        startTime: action.startTime,
+        endTime: action.endTime,
+        teacherId: action.teacherId,
+        type: action.classType,
+        status: action.status,
+        class_status: action.class_status,
+      });
+    case types.SELECTED_CLASS_STATUS_ID:
+      return Object.assign({}, state, {
+        status: action.status,
+      });
+    case types.SELECTED_CLASS_TYPE:
+      return Object.assign({}, state, {
+        type: action.classType,
+      });
+    case types.SELECTED_CLASS_PROVINCE_ID:
+      return Object.assign({}, state, {
+        provinceId: action.provinceId,
+      });
+    case types.SELECTED_CLASS_TEACHER_ID:
+      return Object.assign({}, state, {
+        teacherId: action.teacherId,
+      });
+    case types.SELECTED_CLASS_ENROLL_START_TIME:
+      return Object.assign({}, state, {
+        enrollStartTime: action.enrollStartTime,
+      });
+    case types.SELECTED_CLASS_ENROLL_END_TIME:
+      return Object.assign({}, state, {
+        enrollEndTime: action.enrollEndTime,
+      });
+    case types.SELECTED_CLASS_LESSON_START_TIME:
+      return Object.assign({}, state, {
+        lessonStartTime: action.lessonStartTime,
+      });
+    case types.SELECTED_CLASS_LESSON_END_TIME:
+      return Object.assign({}, state, {
+        lessonEndTime: action.lessonEndTime,
+      });
+    case types.SELECTED_CLASS_START_TIME:
+      return Object.assign({}, state, {
+        startTime: action.startTime,
+      });
+    case types.SELECTED_CLASS_END_TIME:
+      return Object.assign({}, state, {
+        endTime: action.endTime,
+      });
+    case types.BEGIN_LOAD_CLASS_STATUSES:
+      return Object.assign({}, state, {
+        isLoadingStatuses: action.isLoadingStatuses,
+        errorStatuses: action.errorStatuses,
+      });
+    case types.LOAD_CLASS_STATUSES_SUCCESS:
+      return Object.assign({}, state, {
+        isLoadingStatuses: action.isLoadingStatuses,
+        errorStatuses: action.errorStatuses,
+        statuses: action.statuses,
+      });
+    case types.LOAD_CLASS_STATUSES_ERROR:
+      return Object.assign({}, state, {
+        isLoadingStatuses: action.isLoadingStatuses,
+        errorStatuses: action.errorStatuses,
+      });
+    case types.SELECTED_CLASS_CLASS_STATUS:
+      return Object.assign({}, state, {
+        class_status: action.class_status,
       });
     default:
       return state;

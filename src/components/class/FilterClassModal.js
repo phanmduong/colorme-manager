@@ -5,7 +5,6 @@ import {
   Dimensions,
   ScrollView,
   TouchableOpacity,
-  TextInput,
 } from 'react-native';
 import Modal from 'react-native-modal';
 import {CustomPicker} from 'react-native-custom-picker';
@@ -15,6 +14,9 @@ var {width, height} = Dimensions.get('window');
 import theme from '../../styles';
 import {convertVietText} from '../../helper';
 import Search from '../common/Search';
+import FilterRow from '../common/FilterRow';
+import {CLASS_STATUS_FILTER_NEW, STATUS_FILTER} from '../../constants/constant';
+import FilterRowDate from '../common/FilterRowDate';
 
 class FilterClassModal extends React.Component {
   constructor(props, context) {
@@ -206,6 +208,101 @@ class FilterClassModal extends React.Component {
                 />
               </View>
               <View style={styles.filterTitle}>
+                <Text style={{fontSize: 16}}>Giai đoạn tuyển sinh</Text>
+                <CustomPicker
+                  options={this.getSearchedResults(this.getGenData())}
+                  defaultValue={this.getDefaultGen(this.getGenData())}
+                  getLabel={(item) => item.name}
+                  modalAnimationType={'fade'}
+                  optionTemplate={this.renderPickerOption}
+                  fieldTemplate={this.renderPickerField}
+                  headerTemplate={() =>
+                    this.renderPickerHeader('Chọn giai đoạn')
+                  }
+                  footerTemplate={this.renderPickerFooter}
+                  onBlur={() => this.setState({search: ''})}
+                  modalStyle={{
+                    borderRadius: 6,
+                  }}
+                  onValueChange={(value) => {
+                    this.setState({search: ''});
+                    this.props.onSelectGenId(value.id);
+                  }}
+                />
+              </View>
+              <FilterRow
+                defaultId={''}
+                title={'Trạng thái tuyển sinh của lớp'}
+                header={'Chọn trạng thái'}
+                options={STATUS_FILTER}
+                selectedId={this.props.status}
+                onChangeValue={this.props.onSelectStatusId}
+              />
+              <FilterRow
+                title={'Trạng thái lớp học'}
+                header={'Chọn trạng thái'}
+                options={this.props.statuses}
+                selectedId={this.props.class_status}
+                defaultId={''}
+                onChangeValue={this.props.onSelectClassStatus}
+              />
+              <FilterRow
+                title={'Thể loại lớp'}
+                header={'Chọn thể loại'}
+                options={CLASS_STATUS_FILTER_NEW}
+                selectedId={this.props.type}
+                defaultId={''}
+                onChangeValue={this.props.onSelectType}
+              />
+              <FilterRow
+                title={'Giảng viên/trợ giảng'}
+                header={'Chọn giảng viên/trợ giảng'}
+                defaultId={''}
+                selectedId={this.props.teacherId}
+                options={this.props.staff}
+                onChangeValue={this.props.onSelectTeacherId}
+                isApiSearch={true}
+                onApiSearch={this.props.loadStaff}
+              />
+              <FilterRowDate
+                title={'Thời gian bắt đầu tuyển sinh'}
+                selectedDate={this.props.enrollStartTime}
+                onSelectDate={this.props.onSelectEnrollStartTime}
+              />
+              <FilterRowDate
+                title={'Thời gian kết thúc tuyển sinh'}
+                selectedDate={this.props.enrollEndTime}
+                onSelectDate={this.props.onSelectEnrollEndTime}
+              />
+              <FilterRowDate
+                title={'Thời gian bắt đầu học'}
+                selectedDate={this.props.lessonStartTime}
+                onSelectDate={this.props.onSelectLessonStartTime}
+              />
+              <FilterRowDate
+                title={'Thời gian kết thúc học'}
+                selectedDate={this.props.lessonEndTime}
+                onSelectDate={this.props.onSelectLessonEndTime}
+              />
+              <FilterRow
+                title={'Tỉnh/thành phố'}
+                header={'Chọn tỉnh/thành phố'}
+                selectedId={this.props.provinceId}
+                defaultId={''}
+                options={this.props.provinces}
+                onChangeValue={this.props.onSelectProvinceId}
+              />
+              <FilterRowDate
+                title={'Thời gian bắt đầu khai giảng'}
+                selectedDate={this.props.startTime}
+                onSelectDate={this.props.onSelectStartTime}
+              />
+              <FilterRowDate
+                title={'Thời gian kết thúc khai giảng'}
+                selectedDate={this.props.endTime}
+                onSelectDate={this.props.onSelectEndTime}
+              />
+              <View style={styles.filterTitle}>
                 <Text style={{fontSize: 16}}>Cơ sở</Text>
                 <CustomPicker
                   options={this.getSearchedResults(
@@ -231,29 +328,6 @@ class FilterClassModal extends React.Component {
                   }}
                   onValueChange={(value) => {
                     this.props.onSelectBaseId(value.id);
-                  }}
-                />
-              </View>
-              <View style={styles.filterTitle}>
-                <Text style={{fontSize: 16}}>Khóa học</Text>
-                <CustomPicker
-                  options={this.getSearchedResults(this.getGenData())}
-                  defaultValue={this.getDefaultGen(this.getGenData())}
-                  getLabel={(item) => item.name}
-                  modalAnimationType={'fade'}
-                  optionTemplate={this.renderPickerOption}
-                  fieldTemplate={this.renderPickerField}
-                  headerTemplate={() =>
-                    this.renderPickerHeader('Chọn khóa học')
-                  }
-                  footerTemplate={this.renderPickerFooter}
-                  onBlur={() => this.setState({search: ''})}
-                  modalStyle={{
-                    borderRadius: 6,
-                  }}
-                  onValueChange={(value) => {
-                    this.setState({search: ''});
-                    this.props.onSelectGenId(value.id);
                   }}
                 />
               </View>
@@ -289,7 +363,7 @@ class FilterClassModal extends React.Component {
 const styles = {
   modal: {
     backgroundColor: 'white',
-    height: 380,
+    height: 550,
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
     paddingHorizontal: theme.mainHorizontal,

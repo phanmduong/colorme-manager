@@ -10,9 +10,10 @@ export function loadClassApi(
   startTime,
   endTime,
   token,
+  domain,
 ) {
   let url =
-    env.MANAGE_API_URL_V3 +
+    env.manageApiUrlV3(domain) +
     '/class/all?teacher_id=' +
     teacherId +
     '&course_id=' +

@@ -141,6 +141,7 @@ export function refreshDataClass(
         genId,
         baseId,
         token,
+        domain,
       ),
     );
   };
@@ -173,6 +174,7 @@ export function searchClass(
   genId,
   baseId,
   token,
+  domain,
 ) {
   sourceCancel.cancel('Canceled by class api.');
   sourceCancel = CancelToken.source();
@@ -198,6 +200,7 @@ export function searchClass(
         genId,
         baseId,
         token,
+        domain,
       ),
     );
   };
@@ -578,11 +581,11 @@ export function selectedEndTime(time) {
   };
 }
 
-export function loadStatuses(ref, token) {
+export function loadStatuses(ref, token, domain) {
   return function (dispatch) {
     dispatch(beginLoadStatuses());
     studentApi
-      .loadStatuses(ref, token)
+      .loadStatuses(ref, token, domain)
       .then((res) => {
         dispatch(loadStatusesSuccess(res));
       })

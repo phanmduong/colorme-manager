@@ -99,25 +99,25 @@ class ClassComponent extends React.Component {
             </View>
           </TouchableOpacity>
           <FilterClassModal
-              {...this.props}
-              onSelectCourseId={this.props.onSelectCourseId}
-              onSelectBaseId={this.props.onSelectBaseId}
-              onSelectGenId={this.props.onSelectGenId}
-              closeModal={this.toggleFilterModal}
-              isVisible={this.state.filterModalVisible}
-              filter={this.props.filter}
-              onSelectStatusId={this.props.onSelectStatusId}
-              onSelectType={this.props.onSelectType}
-              onSelectProvinceId={this.props.onSelectProvinceId}
-              onSelectTeacherId={this.props.onSelectTeacherId}
-              loadStaff={this.props.loadStaff}
-              onSelectEnrollStartTime={this.props.onSelectEnrollStartTime}
-              onSelectEnrollEndTime={this.props.onSelectEnrollEndTime}
-              onSelectLessonStartTime={this.props.onSelectLessonStartTime}
-              onSelectLessonEndTime={this.props.onSelectLessonEndTime}
-              onSelectStartTime={this.props.onSelectStartTime}
-              onSelectEndTime={this.props.onSelectEndTime}
-              onSelectClassStatus={this.props.onSelectClassStatus}
+            {...this.props}
+            onSelectCourseId={this.props.onSelectCourseId}
+            onSelectBaseId={this.props.onSelectBaseId}
+            onSelectGenId={this.props.onSelectGenId}
+            closeModal={this.toggleFilterModal}
+            isVisible={this.state.filterModalVisible}
+            filter={this.props.filter}
+            onSelectStatusId={this.props.onSelectStatusId}
+            onSelectType={this.props.onSelectType}
+            onSelectProvinceId={this.props.onSelectProvinceId}
+            onSelectTeacherId={this.props.onSelectTeacherId}
+            loadStaff={this.props.loadStaff}
+            onSelectEnrollStartTime={this.props.onSelectEnrollStartTime}
+            onSelectEnrollEndTime={this.props.onSelectEnrollEndTime}
+            onSelectLessonStartTime={this.props.onSelectLessonStartTime}
+            onSelectLessonEndTime={this.props.onSelectLessonEndTime}
+            onSelectStartTime={this.props.onSelectStartTime}
+            onSelectEndTime={this.props.onSelectEndTime}
+            onSelectClassStatus={this.props.onSelectClassStatus}
           />
         </View>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -143,13 +143,8 @@ class ClassComponent extends React.Component {
           ListHeaderComponent={this.headerComponent}
           refreshControl={
             <RefreshControl
-              refreshing={this.props.refreshing}
-              onRefresh={() =>
-                this.props.onRefresh(
-                  this.state.selectedBaseId,
-                  this.state.selectedGenId,
-                )
-              }
+              refreshing={this.props.isRefreshing}
+              onRefresh={() => this.props.onRefresh()}
             />
           }
           onEndReached={this.props.loadDataClass}

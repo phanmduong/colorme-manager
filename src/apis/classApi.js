@@ -23,6 +23,7 @@ export function loadClassApi(
   genId,
   baseId,
   token,
+  domain,
 ) {
   let url =
     env.manageApiUrlV3(domain) +
@@ -120,7 +121,8 @@ export function addClass(classData, token, domain) {
 }
 
 export function loadClassInfo(classId, token, domain) {
-  let url = env.manageApiUrlV3(domain) + '/class/' + classId + '?token=' + token;
+  let url =
+    env.manageApiUrlV3(domain) + '/class/' + classId + '?token=' + token;
   console.log(url);
   return axios.get(url);
 }

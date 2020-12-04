@@ -44,6 +44,7 @@ import staffReducer from './staffReducer';
 import clockManageReducer from "./clockManageReducer";
 import kpiReducer from "./kpiReducer";
 import tabReducer from "./tabReducer";
+import teachingScheduleReducer from "./teachingScheduleReducer";
 
 const appReducer = combineReducers({
   login: loginReducer,

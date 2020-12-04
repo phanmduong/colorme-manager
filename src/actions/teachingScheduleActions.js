@@ -10,6 +10,7 @@ export function loadSchedules(
   startTime,
   endTime,
   token,
+  domain,
 ) {
   return function (dispatch) {
     dispatch(beginLoadSchedules());
@@ -23,6 +24,7 @@ export function loadSchedules(
         startTime,
         endTime,
         token,
+        domain,
       )
       .then((res) => dispatch(loadSchedulesSuccess(res)))
       .catch((error) => {

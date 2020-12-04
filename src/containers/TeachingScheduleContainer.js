@@ -34,19 +34,19 @@ function TeachingScheduleContainer(props) {
   }
 
   function loadStaff(search) {
-    props.staffActions.getStaff(false, 1, search, props.token);
+    props.staffActions.getStaff(false, 1, search, props.token, props.domain);
   }
 
   function loadProvinces() {
-    props.saveRegisterActions.loadProvinces(props.token);
+    props.saveRegisterActions.loadProvinces(props.token, props.domain);
   }
 
   function loadCourses() {
-    props.saveRegisterActions.loadCourses(props.token);
+    props.saveRegisterActions.loadCourses(props.token, props.domain);
   }
 
   function loadDataBase() {
-    props.baseActions.loadDataBase(props.token);
+    props.baseActions.loadDataBase(props.token, props.domain);
   }
 
   function onSelectStartDate(date) {
@@ -151,6 +151,7 @@ function mapStateToProps(state) {
     staff: state.staff.staff,
     isLoadingStaff: state.staff.isLoadingStaff,
     errorStaff: state.staff.errorStaff,
+    domain: state.login.domain,
   };
 }
 

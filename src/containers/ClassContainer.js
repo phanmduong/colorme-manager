@@ -10,7 +10,7 @@ import * as saveRegisterActions from '../actions/saveRegisterActions';
 import * as genActions from '../actions/genActions';
 import * as analyticsActions from '../actions/analyticsActions';
 import * as staffActions from '../actions/staffActions';
-import {Text, View} from 'react-native';
+import {Text, View, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../styles';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
@@ -232,7 +232,13 @@ class ClassContainer extends React.Component {
   };
 
   loadStaff = (search) => {
-    this.props.staffActions.getStaff(false, 1, search, this.props.token);
+    this.props.staffActions.getStaff(
+      false,
+      1,
+      search,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   onSelectEnrollStartTime = (time) => {
@@ -260,7 +266,11 @@ class ClassContainer extends React.Component {
   };
 
   loadStatuses = () => {
-    this.props.classActions.loadStatuses('classes', this.props.token);
+    this.props.classActions.loadStatuses(
+      'classes',
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   onSelectClassStatus = (id) => {

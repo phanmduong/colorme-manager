@@ -87,6 +87,7 @@ const appReducer = combineReducers({
   clockManage: clockManageReducer,
   kpi: kpiReducer,
   tab: tabReducer,
+  teachingSchedule: teachingScheduleReducer,
 });
 
 const rootReducer = (state, action) => {

@@ -38,6 +38,7 @@
     "react-native-autoheight-webview": "^1.4.2",
     "react-native-busy-indicator": "^1.1.0",
     "react-native-calendar-picker": "^7.0.0",
+    "react-native-calendars": "^1.489.0",
     "react-native-camera": "^3.3.0",
     "react-native-collapsible": "^1.5.3",
     "react-native-custom-picker": "^0.4.0",

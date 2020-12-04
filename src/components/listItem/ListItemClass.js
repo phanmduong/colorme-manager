@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import {Thumbnail} from 'native-base';
 import theme from '../../styles';
-import {getShortName} from '../../helper';
+import {getShortName, isEmptyInput} from '../../helper';
 var {height, width} = Dimensions.get('window');
 
 var maxWidthProcess = width / 4;
@@ -53,6 +53,8 @@ class ListItemClass extends React.Component {
       selectedBaseId,
       description,
       date_end,
+      teachers,
+      teaching_assistants,
     } = this.props;
     var tmpTotalPaid, tmpTotalRegister;
     tmpTotalPaid = totalPaid < paidTarget ? totalPaid : paidTarget;
@@ -110,6 +112,7 @@ class ListItemClass extends React.Component {
                         !assist.color || assist.color === ''
                           ? theme.processColor1
                           : '#' + assist.color,
+                      marginRight: 5,
                     },
                   }}>
                   <Text style={styles.campaign}>{assist.name.trim()}</Text>
@@ -117,6 +120,36 @@ class ListItemClass extends React.Component {
               ) : (
                 <View />
               )}
+              {teachers.map((teacher) => (
+                <View
+                  style={{
+                    ...styles.card,
+                    ...{
+                      backgroundColor:
+                        !teacher.color || teacher.color === ''
+                          ? theme.processColor1
+                          : '#' + teacher.color,
+                      marginRight: 5,
+                    },
+                  }}>
+                  <Text style={styles.saler}>{getShortName(teacher.name)}</Text>
+                </View>
+              ))}
+              {teaching_assistants.map((teacher) => (
+                <View
+                  style={{
+                    ...styles.card,
+                    ...{
+                      backgroundColor:
+                        !teacher.color || teacher.color === ''
+                          ? theme.processColor1
+                          : '#' + teacher.color,
+                      marginRight: 5,
+                    },
+                  }}>
+                  <Text style={styles.saler}>{getShortName(teacher.name)}</Text>
+                </View>
+              ))}
             </View>
             <View>
               {studyTime ? (
@@ -319,6 +352,7 @@ const styles = {
   containerSubTitle: {
     flexDirection: 'row',
     marginBottom: 10,
+    flexWrap: 'wrap',
   },
 };
 

@@ -19,7 +19,8 @@ class WorkShiftRegisterWeek extends React.Component {
   }
 
   renderShiftDate = () => {
-    return this.props.week.dates.map(date => (
+    const dates = [...this.props.week.dates].reverse();
+    return dates.map(date => (
       <WorkShiftRegisterDate
         shifts={date.shifts}
         date={date.date}

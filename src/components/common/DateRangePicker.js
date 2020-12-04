@@ -12,6 +12,10 @@ function DateRangePicker({
   onSelectEndDate,
   onSelectStartDate,
   title,
+  mode = 'form',
+  containerStyle,
+  dateType = 'unix',
+  apply,
 }) {
   const [isVisible, setVisible] = useState(false);
 
@@ -22,11 +26,20 @@ function DateRangePicker({
    * @param type - end or start date
    */
   function onDateChange(date, type) {
-    if (type === 'END_DATE') {
-      onSelectEndDate(date.unix());
-    } else {
-      onSelectStartDate(date.unix());
-      onSelectEndDate(null);
+    if (dateType === 'unix') {
+      if (type === 'END_DATE') {
+        onSelectEndDate(date.unix());
+      } else {
+        onSelectStartDate(date.unix());
+        onSelectEndDate(null);
+      }
+    } else if (dateType === 'normal') {
+      if (type === 'END_DATE') {
+        onSelectEndDate(date.format('YYYY-MM-DD'));
+      } else {
+        onSelectStartDate(date.format('YYYY-MM-DD'));
+        onSelectEndDate(null);
+      }
     }
   }
 
@@ -35,21 +48,37 @@ function DateRangePicker({
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.titleForm}>{title}</Text>
-      <TouchableOpacity style={styles.dateContainer} onPress={toggleModal}>
-        <EntypoIcon name={'calendar'} size={17} color={'black'} />
-        <Text style={{marginLeft: 10}}>
-          {startDate ? moment.unix(startDate).format('DD/MM/YYYY') : null} -{' '}
-          {endDate ? moment.unix(endDate).format('DD/MM/YYYY') : null}
-        </Text>
-      </TouchableOpacity>
+    <View>
+      {mode === 'form' && (
+        <View style={[styles.container, containerStyle]}>
+          <Text style={styles.titleForm}>{title}</Text>
+          <TouchableOpacity style={styles.dateContainer} onPress={toggleModal}>
+            <EntypoIcon name={'calendar'} size={17} color={'black'} />
+            <Text style={{marginLeft: 10}}>
+              {startDate ? moment.unix(startDate).format('DD/MM/YYYY') : null} -{' '}
+              {endDate ? moment.unix(endDate).format('DD/MM/YYYY') : null}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
+      {mode === 'filter' && (
+        <TouchableOpacity
+          style={[styles.filterDateContainer, containerStyle]}
+          onPress={toggleModal}>
+          <EntypoIcon name={'calendar'} size={17} color={'black'} />
+          <Text style={{marginLeft: 10}}>
+            {startDate ? startDate.format('DD/MM/YYYY') : null} -{' '}
+            {endDate ? endDate.format('DD/MM/YYYY') : null}
+          </Text>
+        </TouchableOpacity>
+      )}
       <DateRangeModal
         isVisible={isVisible}
         toggleModal={toggleModal}
         onDateChange={onDateChange}
         startDate={startDate}
         endDate={endDate}
+        apply={apply}
       />
     </View>
   );
@@ -61,6 +90,7 @@ function DateRangeModal({
   onDateChange,
   startDate,
   endDate,
+  apply,
 }) {
   return (
     <Modal
@@ -81,6 +111,7 @@ function DateRangeModal({
             startDate && endDate
               ? () => {
                   toggleModal();
+                  apply();
                 }
               : () => null
           }
@@ -149,6 +180,15 @@ const styles = {
   },
   submitText: {
     color: 'white',
+  },
+  filterDateContainer: {
+    paddingHorizontal: 20,
+    backgroundColor: '#f6f6f6',
+    alignSelf: 'stretch',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
+    borderRadius: 20,
   },
 };
 

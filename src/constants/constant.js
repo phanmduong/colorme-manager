@@ -34,6 +34,13 @@ export const CLASS_STATUS_FILTER = [
   {value: 'waiting', name: 'Chờ'},
 ];
 
+export const CLASS_STATUS_FILTER_NEW = [
+  {id: 'active', name: 'Hoạt động'},
+  {id: 'waiting', name: 'Chờ'},
+  {id: 'solo', name: 'Kèm 1-1'},
+  {id: 'business', name: 'Doanh nghiệp'},
+];
+
 export const TELE_CALL_STATUS = [
   {id: -1, name: 'Tất cả̉'},
   {id: 0, name: 'Chưa gọi'},
@@ -166,4 +173,9 @@ export const LEAD_TAG_FILTER = [
   {id: 'first_lead', name: 'First Lead'},
   {id: 'old_lead', name: 'Old Lead'},
   {id: 'new_lead', name: 'New Lead'},
+];
+
+export const STATUS_FILTER = [
+  {id: 1, name: 'Đang tuyển sinh'},
+  {id: 0, name: 'Đang học'},
 ];

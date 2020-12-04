@@ -83,7 +83,7 @@ class WorkShiftRegisterComponent extends React.Component {
                 .end_time,
               'HH:mm',
             );
-            const hours = endTime.diff(startTime, 'hours');
+            const hours = moment.duration(endTime.diff(startTime)).asHours();
             total += hours;
           }
         }

@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import LeadsComponent from '../components/LeadsComponent';
-import {Text, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../styles';
 import * as leadsActions from '../actions/leadsActions';
@@ -9,6 +9,7 @@ import * as saveRegisterActions from '../actions/saveRegisterActions';
 import * as infoStudentActions from '../actions/infoStudentActions';
 import * as baseActions from '../actions/baseActions';
 import {bindActionCreators} from 'redux';
+import MatIcon from 'react-native-vector-icons/MaterialIcons';
 
 class LeadsContainer extends React.Component {
   constructor(props, context) {
@@ -248,6 +249,13 @@ class LeadsContainer extends React.Component {
         </View>
       </View>
     ),
+    headerRight: () => (
+      <TouchableOpacity onPress={() => navigation.navigate('AddLead')}>
+        <View style={styles.headerIconContainer}>
+          <MatIcon name={'add-circle'} size={20} color={'black'} />
+        </View>
+      </TouchableOpacity>
+    ),
   });
 
   changeCampaignTag = (campaign_id, user_id) => {
@@ -316,6 +324,7 @@ class LeadsContainer extends React.Component {
 const styles = {
   name: theme.header,
   headerLeftContainer: theme.headerNavigateLeftContainer,
+  headerIconContainer: theme.headerIconContainer,
 };
 
 function mapStateToProps(state) {

@@ -156,7 +156,7 @@ class RegisterListComponent extends React.Component {
     return (
       <View style={{flex: 1}}>
         <View style={styles.headerContainer}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={styles.row}>
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('Profile')}>
               <Image
@@ -331,6 +331,10 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 20,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 };
 

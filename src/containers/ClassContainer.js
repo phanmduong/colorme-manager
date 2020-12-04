@@ -10,9 +10,10 @@ import * as saveRegisterActions from '../actions/saveRegisterActions';
 import * as genActions from '../actions/genActions';
 import * as analyticsActions from '../actions/analyticsActions';
 import * as staffActions from '../actions/staffActions';
-import {Text, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../styles';
+import MatIcon from 'react-native-vector-icons/MaterialIcons';
 
 class ClassContainer extends React.Component {
   constructor(props) {
@@ -37,6 +38,13 @@ class ClassContainer extends React.Component {
           <Text style={styles.name}>Lớp học</Text>
         </View>
       </View>
+    ),
+    headerRight: () => (
+      <TouchableOpacity onPress={() => navigation.navigate('AddClass')}>
+        <View style={styles.headerIconContainer}>
+          <MatIcon name={'add-circle'} size={20} color={'black'} />
+        </View>
+      </TouchableOpacity>
     ),
   });
 
@@ -280,6 +288,7 @@ class ClassContainer extends React.Component {
 const styles = {
   name: theme.header,
   headerLeftContainer: theme.headerNavigateLeftContainer,
+  headerIconContainer: theme.headerIconContainer,
 };
 
 function mapStateToProps(state) {

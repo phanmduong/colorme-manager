@@ -116,15 +116,7 @@ const styles = {
   name: theme.header,
   headerLeftContainer: theme.headerNavigateLeftContainer,
   row: theme.row,
-  headerIconContainer: {
-    width: 40,
-    height: 40,
-    backgroundColor: '#F6F6F6',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 20,
-    marginRight: 16,
-  },
+  headerIconContainer: theme.headerIconContainer,
 };
 
 function mapStateToProps(state) {

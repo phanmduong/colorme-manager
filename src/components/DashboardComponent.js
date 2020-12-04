@@ -41,6 +41,114 @@ class DashboardComponent extends React.Component {
     return totalNotCompleted.length;
   };
 
+  filterFeatureList = () => {
+    let deepCopiedFeatureList = this.getFeatureList().slice(0);
+    let filteredFeatureList = [];
+    while (deepCopiedFeatureList.length > 0) {
+      filteredFeatureList.push(deepCopiedFeatureList.splice(0, 3));
+    }
+    return filteredFeatureList;
+  };
+
+  getFeatureList = () => {
+    return [
+      <CircleTab
+        iconImage={require('../../assets/img/icons8-ratings-90.png')}
+        title={'Thống kê'}
+        onPress={() => {
+          this.props.getAnalyticsGenData();
+          this.props.navigation.navigate('Analytics');
+        }}
+      />,
+      <CircleTab
+        iconImage={require('../../assets/img/icons8-bar_chart.png')}
+        title={'KPI'}
+        onPress={() => {
+          this.props.navigation.navigate('KPI');
+        }}
+      />,
+      <CircleTab
+        iconImage={require('../../assets/img/icons8-idea-96-2.png')}
+        title={'Họp'}
+        onPress={() => {
+          this.props.navigation.navigate('Meeting');
+        }}
+      />,
+      <CircleTab
+        iconImage={require('../../assets/img/icons8-rating-90.png')}
+        title={'Đánh giá'}
+        onPress={() => {
+          this.props.navigation.navigate('TeachingRating');
+        }}
+      />,
+      <CircleTab
+        iconImage={require('../../assets/img/icons8-calendar.png')}
+        title={'Lịch học bù'}
+        onPress={() => {
+          this.props.navigation.navigate('MakeupClass');
+        }}
+      />,
+      <CircleTab
+        iconImage={require('../../assets/img/icons8-phone_contact.png')}
+        title={'Danh bạ nhân viên'}
+        onPress={() => {
+          this.props.navigation.navigate('Staff');
+        }}
+      />,
+      <CircleTab
+        iconImage={require('../../assets/img/icons8-cheap_2_filled.png')}
+        title={'Nộp tiền'}
+        onPress={() => {
+          this.props.navigation.navigate('CollectMoney');
+        }}
+      />,
+      <CircleTab
+        iconImage={require('../../assets/img/icons8-wallet_filled.png')}
+        title={'Chuyển tiền'}
+        onPress={() => {
+          this.props.navigation.navigate('MoneyTransfer');
+        }}
+      />,
+      <CircleTab
+        iconImage={require('../../assets/img/icons8-teacher.png')}
+        title={'Lớp học'}
+        onPress={() => {
+          this.props.navigation.navigate('Class', {
+            analyticsScreen: false,
+          });
+        }}
+      />,
+      <CircleTab
+        iconImage={require('../../assets/img/icons8-user_account.png')}
+        title={'Leads'}
+        onPress={() => {
+          this.props.navigation.navigate('Leads');
+        }}
+      />,
+      <CircleTab
+        iconImage={require('../../assets/img/icons8-document.png')}
+        title={'Tài liệu'}
+        onPress={() => {
+          this.props.navigation.navigate('Document');
+        }}
+      />,
+      <CircleTab
+        iconImage={require('../../assets/img/icons8-management.png')}
+        title={'Chấm công'}
+        onPress={() => {
+          this.props.navigation.navigate('ClockManage');
+        }}
+      />,
+      <CircleTab
+        iconImage={require('../../assets/img/icons8-schedule.png')}
+        title={'Lịch dạy'}
+        onPress={() => {
+          this.props.navigation.navigate('TeachingSchedule');
+        }}
+      />,
+    ];
+  };
+
   render() {
     const {refreshing} = this.props.store;
     const {isRefreshingNotifications, isLoadingTaskView} = this.props;
@@ -167,141 +275,13 @@ class DashboardComponent extends React.Component {
               }}
             />
           </View>
-          <View style={styles.otherFeatureLine}>
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-ratings-90.png')}
-              title={'Thống kê'}
-              onPress={() => {
-                this.props.getAnalyticsGenData();
-                this.props.navigation.navigate('Analytics');
-              }}
-            />
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-contact-100.png')}
-              title={'Xác thực'}
-              onPress={() => {
-                this.props.navigation.navigate('AccurateStudent');
-              }}
-            />
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-idea-96-2.png')}
-              title={'Họp'}
-              onPress={() => {
-                this.props.navigation.navigate('Meeting');
-              }}
-            />
-          </View>
-          <View style={styles.otherFeatureLine}>
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-rating-90.png')}
-              title={'Đánh giá'}
-              onPress={() => {
-                this.props.navigation.navigate('TeachingRating');
-              }}
-            />
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-calendar.png')}
-              title={'Lịch học bù'}
-              onPress={() => {
-                this.props.navigation.navigate('MakeupClass');
-              }}
-            />
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-writer_male.png')}
-              title={'Tạo đăng ký'}
-              onPress={() => {
-                this.props.navigation.navigate('SaveRegister');
-              }}
-            />
-          </View>
-          <View style={styles.otherFeatureLine}>
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-cheap_2_filled.png')}
-              title={'Nộp tiền'}
-              onPress={() => {
-                this.props.navigation.navigate('CollectMoney');
-              }}
-            />
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-wallet_filled.png')}
-              title={'Chuyển tiền'}
-              onPress={() => {
-                this.props.navigation.navigate('MoneyTransfer');
-              }}
-            />
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-phone_contact.png')}
-              title={'Danh bạ nhân viên'}
-              onPress={() => {
-                this.props.navigation.navigate('Staff');
-              }}
-            />
-          </View>
-          <View style={styles.otherFeatureLine}>
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-teacher.png')}
-              title={'Lớp học'}
-              onPress={() => {
-                this.props.navigation.navigate('Class', {
-                  analyticsScreen: false,
-                });
-              }}
-            />
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-new_window.png')}
-              title={'Tạo lớp học'}
-              onPress={() => {
-                this.props.navigation.navigate('AddClass');
-              }}
-            />
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-user_account.png')}
-              title={'Leads'}
-              onPress={() => {
-                this.props.navigation.navigate('Leads');
-              }}
-            />
-          </View>
-          <View style={styles.otherFeatureLine}>
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-add_user_group_man_man.png')}
-              title={'Tạo lead'}
-              onPress={() => {
-                this.props.navigation.navigate('AddLead');
-              }}
-            />
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-document.png')}
-              title={'Tài liệu'}
-              onPress={() => {
-                this.props.navigation.navigate('Document');
-              }}
-            />
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-management.png')}
-              title={'Chấm công'}
-              onPress={() => {
-                this.props.navigation.navigate('ClockManage');
-              }}
-            />
-          </View>
-          <View style={styles.otherFeatureLine}>
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-bar_chart.png')}
-              title={'KPI'}
-              onPress={() => {
-                this.props.navigation.navigate('KPI');
-              }}
-            />
-            <CircleTab
-              iconImage={require('../../assets/img/icons8-schedule.png')}
-              title={'Lịch dạy'}
-              onPress={() => {
-                this.props.navigation.navigate('TeachingSchedule');
-              }}
-            />
-            <View style={{width: width / 3}} />
-          </View>
+          {this.filterFeatureList().map((featureGroup) => (
+            <View style={styles.otherFeatureLine}>
+              {featureGroup.map((feature) => {
+                return feature;
+              })}
+            </View>
+          ))}
           <MeetingComponent
             store={this.props.store}
             {...this.props}

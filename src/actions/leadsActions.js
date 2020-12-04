@@ -25,6 +25,7 @@ export function getLeads(
   duplicate,
   lead_tag,
   base_id,
+  imported_at,
   token,
   domain,
 ) {
@@ -55,6 +56,7 @@ export function getLeads(
         duplicate,
         lead_tag,
         base_id,
+        imported_at,
         token,
         domain,
       )
@@ -127,6 +129,7 @@ export function searchLeads(
   duplicate,
   lead_tag,
   base_id,
+  imported_at,
   token,
   domain,
 ) {
@@ -155,6 +158,7 @@ export function searchLeads(
         duplicate,
         lead_tag,
         base_id,
+        imported_at,
         token,
         domain,
       ),
@@ -180,6 +184,7 @@ export function refreshLeads(
   duplicate,
   lead_tag,
   base_id,
+  imported_at,
   token,
   domain,
 ) {
@@ -206,6 +211,7 @@ export function refreshLeads(
         duplicate,
         lead_tag,
         base_id,
+        imported_at,
         token,
         domain,
       ),
@@ -294,6 +300,11 @@ export function reset() {
     duplicate: '',
     baseId: -1,
     leadTag: '',
+    importedAt: '',
+    orderBy: '',
+    carer_id: '',
+    currentPageLeads: 0,
+    leads: [],
   };
 }
 
@@ -561,5 +572,19 @@ export function onSelectBaseId(baseId) {
   return {
     type: types.ON_SELECT_BASE_ID_LEADS,
     baseId: baseId,
+  };
+}
+
+export function onSelectImportedAt(importedAt) {
+  return {
+    type: types.ON_SELECT_IMPORTED_AT_LEADS,
+    importedAt: importedAt,
+  };
+}
+
+export function onSelectOrderBy(orderBy) {
+  return {
+    type: types.ON_SELECT_ORDER_BY_LEADS,
+    orderBy: orderBy,
   };
 }

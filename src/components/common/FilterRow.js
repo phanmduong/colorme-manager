@@ -16,6 +16,8 @@ const FilterRow = ({
   defaultPlaceholder = 'Tất cả',
   defaultColor = theme.processColor1,
   onChangeValue,
+  isApiSearch = false,
+  onApiSearch,
 }) => {
   const [search, setSearch] = useState('');
 
@@ -60,6 +62,9 @@ const FilterRow = ({
           placeholder="Tìm kiếm"
           onChangeText={(search) => {
             setSearch(search);
+            if (isApiSearch) {
+              onApiSearch(search);
+            }
           }}
           extraStyle={{width: width - 70, marginLeft: 0}}
           extraInputStyle={{width: width - 38 - 80}}
@@ -78,18 +83,28 @@ const FilterRow = ({
     );
   };
 
-  const data = getSearchedResults(
+  const searchedData = getSearchedResults(
     getData(options, defaultId, defaultPlaceholder, defaultColor),
     search,
   );
 
-  const defaultValue = getDefault(data, selectedId);
+  const originalData = getData(
+    options,
+    defaultId,
+    defaultPlaceholder,
+    defaultColor,
+  );
+
+  const defaultValue = getDefault(
+    isApiSearch ? originalData : searchedData,
+    selectedId,
+  );
 
   return (
     <View style={styles.filterTitle}>
       <Text style={styles.title}>{title}</Text>
       <CustomPicker
-        options={data}
+        options={isApiSearch ? originalData : searchedData}
         defaultValue={defaultValue}
         getLabel={(item) => item.name}
         modalAnimationType={'fade'}

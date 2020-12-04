@@ -25,8 +25,11 @@ class LeadsContainer extends React.Component {
     this.loadBase();
   };
 
+  componentWillUnmount() {
+    this.props.leadsActions.reset();
+  }
+
   loadLeads = () => {
-    let carer_id = this.props.carer_id === -1 ? '' : this.props.carer_id;
     let rate = this.props.rate === -1 ? '' : this.props.rate;
     let leadStatusId =
       this.props.leadStatusId === -1 ? '' : this.props.leadStatusId;
@@ -40,7 +43,7 @@ class LeadsContainer extends React.Component {
       this.props.searchLeads,
       this.props.start_time,
       this.props.end_time,
-      carer_id,
+      this.props.carer_id,
       leadStatusId,
       rate,
       this.props.top,
@@ -54,13 +57,13 @@ class LeadsContainer extends React.Component {
       this.props.duplicate,
       this.props.leadTag,
       baseId,
+      this.props.importedAt,
       this.props.token,
       this.props.domain,
     );
   };
 
   searchData = (searchLeads) => {
-    let carer_id = this.props.carer_id === -1 ? '' : this.props.carer_id;
     let rate = this.props.rate === -1 ? '' : this.props.rate;
     let leadStatusId =
       this.props.leadStatusId === -1 ? '' : this.props.leadStatusId;
@@ -72,7 +75,7 @@ class LeadsContainer extends React.Component {
       searchLeads,
       this.props.start_time,
       this.props.end_time,
-      carer_id,
+      this.props.carer_id,
       leadStatusId,
       rate,
       this.props.top,
@@ -86,13 +89,13 @@ class LeadsContainer extends React.Component {
       this.props.duplicate,
       this.props.leadTag,
       baseId,
+      this.props.importedAt,
       this.props.token,
       this.props.domain,
     );
   };
 
-  onRefresh = (searchLeads) => {
-    let carer_id = this.props.carer_id === -1 ? '' : this.props.carer_id;
+  onRefresh = () => {
     let rate = this.props.rate === -1 ? '' : this.props.rate;
     let leadStatusId =
       this.props.leadStatusId === -1 ? '' : this.props.leadStatusId;
@@ -101,10 +104,10 @@ class LeadsContainer extends React.Component {
       this.props.campaign_id === -1 ? '' : this.props.campaign_id;
     let baseId = this.props.baseId === -1 ? '' : this.props.baseId;
     this.props.leadsActions.refreshLeads(
-      searchLeads,
+      this.props.searchLeads,
       this.props.start_time,
       this.props.end_time,
-      carer_id,
+      this.props.carer_id,
       leadStatusId,
       rate,
       this.props.top,
@@ -118,6 +121,7 @@ class LeadsContainer extends React.Component {
       this.props.duplicate,
       this.props.leadTag,
       baseId,
+      this.props.importedAt,
       this.props.token,
       this.props.domain,
     );
@@ -207,6 +211,14 @@ class LeadsContainer extends React.Component {
 
   onSelectBaseId = (baseId) => {
     this.props.leadsActions.onSelectBaseId(baseId);
+  };
+
+  onSelectImportedAt = (importedAt) => {
+    this.props.leadsActions.onSelectImportedAt(importedAt);
+  };
+
+  onSelectOrderBy = (orderBy) => {
+    this.props.leadsActions.onSelectOrderBy(orderBy);
   };
 
   reset = () => {
@@ -325,7 +337,6 @@ class LeadsContainer extends React.Component {
         onSelectSource={this.onSelectSource}
         onSelectAddress={this.onSelectAddress}
         onSelectCarer={this.onSelectCarer}
-        reset={this.reset}
         loadStaff={this.loadStaff}
         changeCallStatus={this.changeCallStatus}
         setStudentId={this.setStudentId}
@@ -335,6 +346,8 @@ class LeadsContainer extends React.Component {
         onSelectBaseId={this.onSelectBaseId}
         onSelectCallBackTime={this.onSelectCallBackTime}
         onSelectMockExamTime={this.onSelectMockExamTime}
+        onSelectImportedAt={this.onSelectImportedAt}
+        onSelectOrderBy={this.onSelectOrderBy}
       />
     );
   }
@@ -396,6 +409,7 @@ function mapStateToProps(state) {
     baseData: state.base.baseData,
     isLoadingBase: state.base.isLoading,
     errorBase: state.base.errorBase,
+    importedAt: state.leads.importedAt,
     domain: state.login.domain,
   };
 }

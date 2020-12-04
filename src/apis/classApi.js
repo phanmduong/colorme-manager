@@ -7,24 +7,54 @@ import * as env from '../constants/env';
 export function loadClassApi(
   sourceCancel,
   search,
+  enroll_start_time,
+  enroll_end_time,
+  lesson_start_time,
+  lesson_end_time,
+  start_time,
+  end_time,
+  teacher_id,
   courseId,
+  province_id,
   page,
+  type,
+  status,
+  class_status,
   genId,
   baseId,
   token,
   domain,
-  teacherId = '',
 ) {
   let url =
     env.manageApiUrlV3(domain) +
     '/class/all?search=' +
     search +
+    '&enroll_start_time=' +
+    enroll_start_time +
+    '&enroll_end_time=' +
+    enroll_end_time +
+    '&lesson_start_time=' +
+    lesson_start_time +
+    '&lesson_end_time=' +
+    lesson_end_time +
+    '&start_time=' +
+    start_time +
+    '&end_time=' +
+    end_time +
     '&teacher_id=' +
-    teacherId +
+    teacher_id +
     '&course_id=' +
     courseId +
+    '&province_id=' +
+    province_id +
     '&page=' +
     page +
+    '&type=' +
+    type +
+    '&status=' +
+    status +
+    '&class_status=' +
+    class_status +
     '&gen_id=' +
     genId +
     '&base_id=' +
@@ -91,7 +121,8 @@ export function addClass(classData, token, domain) {
 }
 
 export function loadClassInfo(classId, token, domain) {
-  let url = env.manageApiUrlV3(domain) + '/class/' + classId + '?token=' + token;
+  let url =
+    env.manageApiUrlV3(domain) + '/class/' + classId + '?token=' + token;
   console.log(url);
   return axios.get(url);
 }

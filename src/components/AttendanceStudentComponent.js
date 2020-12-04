@@ -10,6 +10,7 @@ import * as alert from '../constants/alert';
 import ImageView from 'react-native-image-view';
 import ImagePicker from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
+import {isEmptyInput} from '../helper';
 
 const options = {
   title: 'Chọn ảnh',
@@ -30,14 +31,19 @@ class AttendanceStudentComponent extends React.Component {
   }
 
   updateAttendance() {
-    let attendanceId = this.props.student.attendances.filter(attendances => {
-      return attendances.order == this.props.orderLessonCourse;
-    })[0].id;
-    this.props.onUpdateAttendance(attendanceId);
+    let attendances = this.props.student.attendances.filter((attendances) => {
+      return attendances.order === this.props.orderLessonCourse;
+    });
+    if (!isEmptyInput(attendances)) {
+      const attendanceId = attendances[0].id;
+      this.props.onUpdateAttendance(attendanceId);
+    } else {
+      Alert.alert('Thông báo', 'Có lỗi xảy ra');
+    }
   }
 
-  uploadImage = imageField => {
-    ImagePicker.showImagePicker(options, response => {
+  uploadImage = (imageField) => {
+    ImagePicker.showImagePicker(options, (response) => {
       console.log('Response = ', response);
 
       if (response.didCancel) {
@@ -55,7 +61,7 @@ class AttendanceStudentComponent extends React.Component {
           100,
           0,
         )
-          .then(response => {
+          .then((response) => {
             let source = {
               uri: response.uri,
               name: response.name ? response.name : 'image.png',
@@ -63,7 +69,7 @@ class AttendanceStudentComponent extends React.Component {
             };
             this.props.uploadImage(source, imageField);
           })
-          .catch(err => {
+          .catch((err) => {
             console.log(err);
             Alert.alert('Thông báo', 'Nén thất bại');
           });

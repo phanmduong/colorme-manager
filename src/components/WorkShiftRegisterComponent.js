@@ -112,7 +112,7 @@ class WorkShiftRegisterComponent extends React.Component {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
-        colors={['white', 'white']}
+        colors={['#f6f6f6', '#f6f6f6']}
         style={styles.gradientSize}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}>
@@ -164,9 +164,9 @@ class WorkShiftRegisterComponent extends React.Component {
     let barLen = 0;
     let totalHours = this.totalHours(index, this.props.user);
     if (totalHours > 20) {
-      barLen = width - 20;
+      barLen = width - 80;
     } else {
-      barLen = (width - 20) * (totalHours / 20);
+      barLen = (width - 80) * (totalHours / 20);
     }
     return barLen;
   };
@@ -176,7 +176,7 @@ class WorkShiftRegisterComponent extends React.Component {
       width: this.greenBarLength(this.state.index),
       height: 8,
       borderRadius: 6,
-      backgroundColor: '#00B241',
+      backgroundColor: '#32CA41',
     };
   };
 
@@ -287,7 +287,7 @@ class WorkShiftRegisterComponent extends React.Component {
             </View>
 
             <View style={styles.weekNavigatorContainer}>
-              <TouchableOpacity onPress={() => this.setWeekIndexTest('back')}>
+              <TouchableOpacity onPress={() => this.setWeekIndexTest('next')}>
                 <MaterialIcons
                   name={'navigate-before'}
                   color={'black'}
@@ -317,7 +317,7 @@ class WorkShiftRegisterComponent extends React.Component {
                   </Text>
                 </View>
               )}
-              <TouchableOpacity onPress={() => this.setWeekIndexTest('next')}>
+              <TouchableOpacity onPress={() => this.setWeekIndexTest('back')}>
                 <MaterialIcons
                   name={'navigate-next'}
                   color={'black'}
@@ -350,16 +350,22 @@ class WorkShiftRegisterComponent extends React.Component {
           {this.props.workShiftRegisterData.weeks.length > 0 &&
           !this.props.errorWorkShiftRegister ? (
             <View style={styles.hoursContainer}>
-              <View style={styles.hoursText}>
-                <Text style={{fontWeight: 'bold', fontSize: 15}}>
-                  Tổng thời gian
-                </Text>
-                <Text style={{fontSize: 15, fontWeight: 'bold'}}>
-                  {this.totalHours(this.state.index, this.props.user)}H/20H
-                </Text>
-              </View>
-              <View style={styles.grayBar}>
-                <View style={this.greenBar()} />
+              <View style={styles.hoursSubContainer}>
+                <Image
+                  source={{uri: this.props.avatar_url}}
+                  style={styles.hoursAva}
+                />
+                <View>
+                  <View style={styles.hoursTextContainer}>
+                    <Text style={styles.hoursText}>Bạn đã đăng kí</Text>
+                    <Text style={styles.hoursText}>
+                      {this.totalHours(this.state.index, this.props.user)}H/20H
+                    </Text>
+                  </View>
+                  <View style={styles.grayBar}>
+                    <View style={this.greenBar()} />
+                  </View>
+                </View>
               </View>
             </View>
           ) : null}
@@ -435,16 +441,26 @@ const styles = {
     bottom: 0,
     alignSelf: 'flex-end',
   },
-  hoursText: {
+  hoursSubContainer: {
     flexDirection: 'row',
     paddingBottom: 5,
     justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  hoursTextContainer: {
+    flexDirection: 'row',
+    paddingBottom: 10,
+    justifyContent: 'space-between',
+  },
+  hoursText: {
+    fontWeight: 'bold',
+    fontSize: 15,
   },
   grayBar: {
     backgroundColor: '#CFD0CF',
     height: 8,
     borderRadius: 6,
-    width: width - 20,
+    width: width - 80,
   },
   headerContainer: {
     marginHorizontal: theme.mainHorizontal,
@@ -459,6 +475,11 @@ const styles = {
     fontSize: theme.header.fontSize,
     fontWeight: theme.header.fontWeight,
     marginLeft: 10,
+  },
+  hoursAva: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
   },
   headerAva: theme.mainAvatar,
   row: {
@@ -478,6 +499,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 5,
+    marginVertical: 10,
   },
   bold: {
     fontWeight: 'bold',

@@ -33,6 +33,7 @@ function FormComponent(props) {
     <FlatList
       data={props.forms}
       renderItem={renderForms}
+      keyExtractor={item => item.id}
       contentContainerStyle={{flexGrow: 1}}
       ListHeaderComponent={headerComponent()}
       ListEmptyComponent={

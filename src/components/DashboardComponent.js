@@ -53,65 +53,74 @@ class DashboardComponent extends React.Component {
   getFeatureList = () => {
     return [
       <CircleTab
-        iconImage={require('../../assets/img/icons8-ratings-90.png')}
+        iconImage={require('../../assets/img/Group_1300.png')}
         title={'Thống kê'}
+        backgroundColor={'#FFC5B8'}
         onPress={() => {
           this.props.getAnalyticsGenData();
           this.props.navigation.navigate('Analytics');
         }}
       />,
       <CircleTab
-        iconImage={require('../../assets/img/icons8-bar_chart.png')}
+        iconImage={require('../../assets/img/Group_1304.png')}
         title={'KPI'}
+        backgroundColor={'#FFC5B8'}
         onPress={() => {
           this.props.navigation.navigate('KPI');
         }}
       />,
       <CircleTab
-        iconImage={require('../../assets/img/icons8-idea-96-2.png')}
+        iconImage={require('../../assets/img/Group_1302.png')}
         title={'Họp'}
+        backgroundColor={'#FFEEAF'}
         onPress={() => {
           this.props.navigation.navigate('Meeting');
         }}
       />,
       <CircleTab
-        iconImage={require('../../assets/img/icons8-rating-90.png')}
+        iconImage={require('../../assets/img/Group_1301.png')}
         title={'Đánh giá'}
+        backgroundColor={'#B2B3FF'}
         onPress={() => {
           this.props.navigation.navigate('TeachingRating');
         }}
       />,
       <CircleTab
-        iconImage={require('../../assets/img/icons8-calendar.png')}
+        iconImage={require('../../assets/img/Group_1299.png')}
         title={'Lịch học bù'}
+        backgroundColor={'#FFEEAF'}
         onPress={() => {
           this.props.navigation.navigate('MakeupClass');
         }}
       />,
       <CircleTab
-        iconImage={require('../../assets/img/icons8-phone_contact.png')}
+        iconImage={require('../../assets/img/Group_1303.png')}
         title={'Danh bạ nhân viên'}
+        backgroundColor={'#B2B3FF'}
         onPress={() => {
           this.props.navigation.navigate('Staff');
         }}
       />,
       // <CircleTab
-      //   iconImage={require('../../assets/img/icons8-cheap_2_filled.png')}
+      //   iconImage={require('../../assets/img/Group_1306.png')}
       //   title={'Nộp tiền'}
+      //   backgroundColor={'#B2B3FF'}
       //   onPress={() => {
       //     this.props.navigation.navigate('CollectMoney');
       //   }}
       // />,
       <CircleTab
-        iconImage={require('../../assets/img/icons8-wallet_filled.png')}
+        iconImage={require('../../assets/img/Group_1310.png')}
         title={'Chuyển tiền'}
+        backgroundColor={'#B2B3FF'}
         onPress={() => {
           this.props.navigation.navigate('MoneyTransfer');
         }}
       />,
       <CircleTab
-        iconImage={require('../../assets/img/icons8-teacher.png')}
+        iconImage={require('../../assets/img/Group_1307.png')}
         title={'Lớp học'}
+        backgroundColor={'#FFEEAF'}
         onPress={() => {
           this.props.navigation.navigate('Class', {
             analyticsScreen: false,
@@ -119,36 +128,41 @@ class DashboardComponent extends React.Component {
         }}
       />,
       <CircleTab
-        iconImage={require('../../assets/img/icons8-user_account.png')}
+        iconImage={require('../../assets/img/Group_1311.png')}
         title={'Leads'}
+        backgroundColor={'#FFEEAF'}
         onPress={() => {
           this.props.navigation.navigate('Leads');
         }}
       />,
       <CircleTab
-        iconImage={require('../../assets/img/icons8-document.png')}
+        iconImage={require('../../assets/img/Group_1308.png')}
         title={'Tài liệu'}
+        backgroundColor={'#FFC5B8'}
         onPress={() => {
           this.props.navigation.navigate('Document');
         }}
       />,
       <CircleTab
-        iconImage={require('../../assets/img/icons8-management.png')}
+        iconImage={require('../../assets/img/Group_1309.png')}
         title={'Chấm công'}
+        backgroundColor={'#FFEEAF'}
         onPress={() => {
           this.props.navigation.navigate('ClockManage');
         }}
       />,
       <CircleTab
-        iconImage={require('../../assets/img/icons8-schedule.png')}
+        iconImage={require('../../assets/img/Group_1299.png')}
         title={'Lịch dạy'}
+        backgroundColor={'#FFEEAF'}
         onPress={() => {
           this.props.navigation.navigate('TeachingSchedule');
         }}
       />,
       <CircleTab
-        iconImage={require('../../assets/img/icons8-form.png')}
+        iconImage={require('../../assets/img/Group_1257.png')}
         title={'Form đăng kí'}
+        backgroundColor={'#B2B3FF'}
         onPress={() => {
           this.props.navigation.navigate('Form');
         }}

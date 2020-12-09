@@ -95,13 +95,13 @@ class DashboardComponent extends React.Component {
           this.props.navigation.navigate('Staff');
         }}
       />,
-      <CircleTab
-        iconImage={require('../../assets/img/icons8-cheap_2_filled.png')}
-        title={'Nộp tiền'}
-        onPress={() => {
-          this.props.navigation.navigate('CollectMoney');
-        }}
-      />,
+      // <CircleTab
+      //   iconImage={require('../../assets/img/icons8-cheap_2_filled.png')}
+      //   title={'Nộp tiền'}
+      //   onPress={() => {
+      //     this.props.navigation.navigate('CollectMoney');
+      //   }}
+      // />,
       <CircleTab
         iconImage={require('../../assets/img/icons8-wallet_filled.png')}
         title={'Chuyển tiền'}

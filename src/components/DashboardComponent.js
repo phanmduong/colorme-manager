@@ -146,6 +146,13 @@ class DashboardComponent extends React.Component {
           this.props.navigation.navigate('TeachingSchedule');
         }}
       />,
+      <CircleTab
+        iconImage={require('../../assets/img/icons8-form.png')}
+        title={'Form đăng kí'}
+        onPress={() => {
+          this.props.navigation.navigate('Form');
+        }}
+      />,
     ];
   };
 

@@ -44,6 +44,7 @@ import staffReducer from './staffReducer';
 import clockManageReducer from './clockManageReducer';
 import kpiReducer from './kpiReducer';
 import teachingScheduleReducer from './teachingScheduleReducer';
+import formReducer from "./formReducer";
 
 const appReducer = combineReducers({
   login: loginReducer,
@@ -87,6 +88,7 @@ const appReducer = combineReducers({
   clockManage: clockManageReducer,
   kpi: kpiReducer,
   teachingSchedule: teachingScheduleReducer,
+  form: formReducer,
 });
 
 const rootReducer = (state, action) => {

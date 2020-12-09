@@ -594,4 +594,13 @@ export default {
     startTime: moment().startOf('month').format('YYYY-MM-DD'),
     endTime: moment().endOf('month').format('YYYY-MM-DD'),
   },
+  form: {
+    forms: [],
+    loading: false,
+    error: false,
+    refreshing: false,
+    currentPage: 0,
+    totalPage: 1,
+    search: '',
+  },
 };

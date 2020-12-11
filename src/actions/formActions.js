@@ -181,3 +181,83 @@ function updateFormComplete() {
     updating: false,
   };
 }
+
+export function duplicateForm(id, token) {
+  return function (dispatch) {
+    dispatch(beginDuplicateForm());
+    formApi
+      .duplicateForm(id, token)
+      .then((res) => {
+        dispatch(duplicateFormSuccess(res));
+        Alert.alert('Thông báo', 'Nhân bản form thành công');
+      })
+      .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
+        throw error;
+      })
+      .finally(() => {
+        dispatch(duplicateFormComplete());
+      });
+  };
+}
+
+function beginDuplicateForm() {
+  return {
+    type: types.BEGIN_DUPLICATE_FORM,
+    duplicating: true,
+  };
+}
+
+function duplicateFormSuccess(res) {
+  return {
+    type: types.DUPLICATE_FORM_SUCCESS,
+    registerForm: res.data.registerForm,
+  };
+}
+
+function duplicateFormComplete() {
+  return {
+    type: types.DUPLICATE_FORM_COMPLETE,
+    duplicating: false,
+  };
+}
+
+export function deleteForm(id, token) {
+  return function (dispatch) {
+    dispatch(beginDeleteForm());
+    formApi
+      .deleteForm(id, token)
+      .then((res) => {
+        dispatch(deleteFormSuccess(id));
+        Alert.alert('Thông báo', 'Xóa form thành công');
+      })
+      .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
+        throw error;
+      })
+      .finally(() => {
+        dispatch(deleteFormComplete());
+      });
+  };
+}
+
+function beginDeleteForm() {
+  return {
+    type: types.BEGIN_DELETE_FORM,
+    deleting: true,
+  };
+}
+
+function deleteFormSuccess(id) {
+  return {
+    type: types.DELETE_FORM_SUCCESS,
+    formId: id,
+  };
+}
+
+function deleteFormComplete() {
+  return {
+    type: types.DELETE_FORM_COMPLETE,
+    deleting: false,
+  };
+}

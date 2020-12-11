@@ -604,5 +604,7 @@ export default {
     search: '',
     creating: false,
     updating: false,
+    duplicating: false,
+    deleting: false,
   },
 };

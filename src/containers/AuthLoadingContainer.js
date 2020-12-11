@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, Platform, Text, View} from 'react-native';
+import {Dimensions, Platform, Text, View, Image} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Spinkit from 'react-native-spinkit';
 import {connect} from 'react-redux';
@@ -42,11 +42,13 @@ class AuthLoadingContainer extends React.Component {
     const username = await AsyncStorage.getItem('@ColorME:username');
     const password = await AsyncStorage.getItem('@ColorME:password');
     if (username && password) {
-      this.props.loginActions.loginUser(
-        {username, password},
-        this._whenLoginSuccess,
-        this._logout,
-      );
+      setTimeout(() => {
+        this.props.loginActions.loginUser(
+          {username, password},
+          this._whenLoginSuccess,
+          this._logout,
+        );
+      }, 1500);
     } else {
       this._logout();
     }
@@ -55,13 +57,14 @@ class AuthLoadingContainer extends React.Component {
   render() {
     return (
       <LinearGradient
-        colors={['#ff0064', '#c51600']}
+        colors={['#FFC5B8', '#FFC5B8']}
         style={styles.containerColorME}>
         <View style={styles.contentColorME}>
-          <Text style={styles.textColor}>color</Text>
-          <Text style={styles.textME}>ME</Text>
+          <Image
+            source={require('../../assets/img/colormeanimate.gif')}
+            style={{marginLeft: 30}}
+          />
         </View>
-        <Spinkit isVisible color="white" type="ThreeBounce" size={40} />
       </LinearGradient>
     );
   }
@@ -73,10 +76,7 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  contentColorME: {
-    alignItems: 'flex-end',
-    marginBottom: width / 2,
-  },
+  contentColorME: {},
   textColor: {
     color: 'white',
     fontSize: 35,

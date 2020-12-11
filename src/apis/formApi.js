@@ -42,3 +42,15 @@ export function updateForm(data, token) {
     status: 'public',
   });
 }
+
+export function duplicateForm(id, token) {
+  let url =
+    env.MANAGE_API_URL_2222 + '/v1/register-forms/' + id + '?token=' + token;
+  return axios.post(url);
+}
+
+export function deleteForm(id, token) {
+  let url =
+    env.MANAGE_API_URL_2222 + '/v1/register-forms/' + id + '?token=' + token;
+  return axios.delete(url);
+}

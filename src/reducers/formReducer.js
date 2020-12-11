@@ -69,12 +69,12 @@ export default function formReducer(state = initialState.form, action) {
       });
     case types.UPDATE_FORM_SUCCESS:
       forms = [...state.forms];
-      const elementIdx = forms.findIndex(
+      const updateFormIdx = forms.findIndex(
         (item) => item.id === action.registerForm.id,
       );
-      if (elementIdx > -1) {
-        forms.splice(elementIdx, 1);
-        forms.splice(elementIdx, 0, action.registerForm);
+      if (updateFormIdx > -1) {
+        forms.splice(updateFormIdx, 1);
+        forms.splice(updateFormIdx, 0, action.registerForm);
       }
       return Object.assign({}, state, {
         forms: forms,
@@ -82,6 +82,39 @@ export default function formReducer(state = initialState.form, action) {
     case types.UPDATE_FORM_COMPLETE:
       return Object.assign({}, state, {
         updating: action.updating,
+      });
+    case types.BEGIN_DUPLICATE_FORM:
+      return Object.assign({}, state, {
+        duplicating: action.duplicating,
+      });
+    case types.DUPLICATE_FORM_SUCCESS:
+      forms = [...state.forms];
+      forms.unshift(action.registerForm);
+      return Object.assign({}, state, {
+        forms: forms,
+      });
+    case types.DUPLICATE_FORM_COMPLETE:
+      return Object.assign({}, state, {
+        duplicating: action.duplicating,
+      });
+    case types.BEGIN_DELETE_FORM:
+      return Object.assign({}, state, {
+        deleting: action.deleting,
+      });
+    case types.DELETE_FORM_SUCCESS:
+      forms = [...state.forms];
+      const deleteFormIdx = forms.findIndex(
+        (item) => item.id === action.formId,
+      );
+      if (deleteFormIdx > -1) {
+        forms.splice(deleteFormIdx, 1);
+      }
+      return Object.assign({}, state, {
+        forms: forms,
+      });
+    case types.DELETE_FORM_COMPLETE:
+      return Object.assign({}, state, {
+        deleting: action.deleting,
       });
     default:
       return state;

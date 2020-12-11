@@ -17,6 +17,8 @@ function ListFormItem({
   data_fields,
   title,
   id,
+  duplicateForm,
+  deleteForm,
 }) {
   const CustomActionSheet = useRef(null);
 
@@ -27,12 +29,12 @@ function ListFormItem({
   function executeActions(index) {
     switch (index) {
       case 0:
+        duplicateForm(id);
         break;
       case 1:
         break;
       case 2:
-        break;
-      case 3:
+        deleteForm(id);
         break;
       default:
         return;

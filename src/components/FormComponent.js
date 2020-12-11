@@ -21,6 +21,8 @@ function FormComponent(props) {
         data_fields={item.data_fields}
         title={item.title}
         id={item.id}
+        duplicateForm={props.duplicateForm}
+        deleteForm={props.deleteForm}
       />
     );
   }

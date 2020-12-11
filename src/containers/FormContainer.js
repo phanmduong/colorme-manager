@@ -28,12 +28,22 @@ function FormContainer(props) {
     props.formActions.searchForms(search, props.token);
   }
 
+  function duplicateForm(id) {
+    props.formActions.duplicateForm(id, props.token);
+  }
+
+  function deleteForm(id) {
+    props.formActions.deleteForm(id, props.token);
+  }
+
   return (
     <FormComponent
       {...props}
       onRefresh={refreshForms}
       loadForms={getForms}
       searchForms={searchForms}
+      duplicateForm={duplicateForm}
+      deleteForm={deleteForm}
     />
   );
 }
@@ -48,6 +58,8 @@ function mapStateToProps(state) {
     currentPage: state.form.currentPage,
     totalPage: state.form.totalPage,
     search: state.form.search,
+    duplicating: state.form.duplicating,
+    deleting: state.form.deleting,
   };
 }
 

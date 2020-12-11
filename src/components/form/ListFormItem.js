@@ -51,6 +51,8 @@ function ListFormItem({
     }
   }
 
+  console.log(moment.unix(1607659709).format('HH:mm'));
+
   return (
     <View style={styles.container}>
       <View style={styles.row}>
@@ -77,7 +79,7 @@ function ListFormItem({
             http://manage.colorme.vn:2222/pages/registers/{slug}
           </Text>
           <Text style={styles.info}>
-            {moment.unix(created_at).format('HH:MM DD/MM/YYYY')}
+            {moment.unix(created_at).format('HH:mm DD/MM/YYYY')}
           </Text>
           <View style={styles.buttonContainer}>
             <TouchableOpacity

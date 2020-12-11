@@ -5,9 +5,12 @@ import FormComponent from '../components/FormComponent';
 import * as formActions from '../actions/formActions';
 import {bindActionCreators} from 'redux';
 import AddButton from '../components/common/AddButton';
+import * as saveRegisterActions from '../actions/saveRegisterActions';
 
 function FormContainer(props) {
   useEffect(() => {
+    loadSources();
+    loadCampaigns();
     getForms();
   }, []);
 
@@ -18,6 +21,14 @@ function FormContainer(props) {
       props.search,
       props.token,
     );
+  }
+
+  function loadSources() {
+    props.saveRegisterActions.loadSources(props.token);
+  }
+
+  function loadCampaigns() {
+    props.saveRegisterActions.loadCampaigns(props.token);
   }
 
   function refreshForms() {
@@ -60,12 +71,19 @@ function mapStateToProps(state) {
     search: state.form.search,
     duplicating: state.form.duplicating,
     deleting: state.form.deleting,
+    isLoadingSources: state.saveRegister.isLoadingSources,
+    errorLoadingSources: state.saveRegister.errorLoadingSources,
+    sources: state.saveRegister.sources,
+    isLoadingCampaigns: state.saveRegister.isLoadingCampaigns,
+    errorLoadingCampaigns: state.saveRegister.errorLoadingCampaigns,
+    campaigns: state.saveRegister.campaigns,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     formActions: bindActionCreators(formActions, dispatch),
+    saveRegisterActions: bindActionCreators(saveRegisterActions, dispatch),
   };
 }
 

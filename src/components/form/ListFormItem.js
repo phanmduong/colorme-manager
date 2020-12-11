@@ -1,10 +1,11 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {View, Text, Linking, TouchableOpacity} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import theme from '../../styles';
 import moment from 'moment';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import ActionSheet from 'react-native-actionsheet';
+import UTMFormModal from './UTMFormModal';
 
 function ListFormItem({
   name,
@@ -19,8 +20,16 @@ function ListFormItem({
   id,
   duplicateForm,
   deleteForm,
+  sources,
+  campaigns,
 }) {
   const CustomActionSheet = useRef(null);
+
+  const [isVisible, setVisible] = useState(false);
+
+  function toggleModal() {
+    setVisible(!isVisible);
+  }
 
   function showActionSheet() {
     CustomActionSheet.current.show();
@@ -32,6 +41,7 @@ function ListFormItem({
         duplicateForm(id);
         break;
       case 1:
+        toggleModal();
         break;
       case 2:
         deleteForm(id);
@@ -117,6 +127,13 @@ function ListFormItem({
         options={['Nhân bản form', 'UTM Builder', 'Xóa form', 'Hủy']}
         cancelButtonIndex={3}
         onPress={executeActions}
+      />
+      <UTMFormModal
+        isVisible={isVisible}
+        closeModal={toggleModal}
+        sources={sources}
+        campaigns={campaigns}
+        slug={slug}
       />
     </View>
   );

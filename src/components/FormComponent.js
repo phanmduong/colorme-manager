@@ -23,6 +23,8 @@ function FormComponent(props) {
         id={item.id}
         duplicateForm={props.duplicateForm}
         deleteForm={props.deleteForm}
+        sources={props.sources}
+        campaigns={props.campaigns}
       />
     );
   }
@@ -41,7 +43,7 @@ function FormComponent(props) {
     <FlatList
       data={props.forms}
       renderItem={renderForms}
-      keyExtractor={item => item.id}
+      keyExtractor={(item) => item.id}
       contentContainerStyle={{flexGrow: 1}}
       ListHeaderComponent={headerComponent()}
       ListEmptyComponent={

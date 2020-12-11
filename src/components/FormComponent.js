@@ -15,6 +15,12 @@ function FormComponent(props) {
         created_at={item.created_at}
         slug={item.slug}
         description={item.description}
+        navigation={props.navigation}
+        base_id={item.base_id}
+        course_id={item.course_id}
+        data_fields={item.data_fields}
+        title={item.title}
+        id={item.id}
       />
     );
   }

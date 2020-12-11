@@ -1,8 +1,10 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, Dimensions} from 'react-native';
 import theme from '../../styles';
 import Spinkit from 'react-native-spinkit';
-const Loading = ({size}) => {
+const {width} = Dimensions.get('window');
+
+const Loading = ({size = width / 8}) => {
   return (
     <View style={styles.container}>
       <Spinkit isVisible color={theme.mainColor} type="Wave" size={size} />

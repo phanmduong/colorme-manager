@@ -602,5 +602,7 @@ export default {
     currentPage: 0,
     totalPage: 1,
     search: '',
+    creating: false,
+    updating: false,
   },
 };

@@ -2,6 +2,7 @@ import * as types from '../constants/actionTypes';
 import * as formApi from '../apis/formApi';
 
 import axios from 'axios';
+import {Alert} from 'react-native';
 let CancelToken = axios.CancelToken;
 let sourceCancel = CancelToken.source();
 
@@ -98,5 +99,85 @@ export function searchForms(search, token) {
   return function (dispatch) {
     dispatch(beginSearchForms(search));
     dispatch(getForms(false, 1, search, token));
+  };
+}
+
+export function createForm(data, token) {
+  return function (dispatch) {
+    dispatch(beginCreateForm());
+    formApi
+      .createForm(data, token)
+      .then((res) => {
+        dispatch(createFormSuccess(res));
+        Alert.alert('Thông báo', 'Thêm form thành công');
+      })
+      .catch((error) => {
+        dispatch(createFormError());
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
+        throw error;
+      })
+      .finally(() => {});
+  };
+}
+
+function beginCreateForm() {
+  return {
+    type: types.BEGIN_CREATE_FORM,
+    creating: true,
+  };
+}
+
+function createFormSuccess(res) {
+  return {
+    type: types.CREATE_FORM_SUCCESS,
+    creating: false,
+    registerForm: res.data.registerForm,
+  };
+}
+
+function createFormError() {
+  return {
+    type: types.CREATE_FORM_ERROR,
+    creating: false,
+  };
+}
+
+export function updateForm(data, token) {
+  return function (dispatch) {
+    dispatch(beginUpdateForm());
+    formApi
+      .updateForm(data, token)
+      .then((res) => {
+        dispatch(updateFormSuccess(res));
+        Alert.alert('Thông báo', 'Sửa form thành công');
+      })
+      .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
+        throw error;
+      })
+      .finally(() => {
+        dispatch(updateFormComplete());
+      });
+  };
+}
+
+function beginUpdateForm() {
+  return {
+    type: types.BEGIN_UPDATE_FORM,
+    updating: true,
+  };
+}
+
+function updateFormSuccess(res) {
+  return {
+    type: types.UPDATE_FORM_SUCCESS,
+    registerForm: res.data.registerForm,
+  };
+}
+
+function updateFormComplete() {
+  return {
+    type: types.UPDATE_FORM_COMPLETE,
+    updating: false,
   };
 }

@@ -62,7 +62,9 @@ FormContainer.navigationOptions = ({navigation}) => {
     headerLeft: () => (
       <NavigationLeftHeader name={'Form đăng kí'} navigation={navigation} />
     ),
-    headerRight: () => <AddButton />,
+    headerRight: () => (
+      <AddButton onPress={() => navigation.navigate('AddForm')} />
+    ),
   };
 };
 

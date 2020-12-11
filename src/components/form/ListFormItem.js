@@ -6,7 +6,18 @@ import moment from 'moment';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import ActionSheet from 'react-native-actionsheet';
 
-function ListFormItem({name, description, slug, created_at}) {
+function ListFormItem({
+  name,
+  description,
+  slug,
+  created_at,
+  navigation,
+  base_id,
+  course_id,
+  data_fields,
+  title,
+  id,
+}) {
   const CustomActionSheet = useRef(null);
 
   function showActionSheet() {
@@ -57,12 +68,31 @@ function ListFormItem({name, description, slug, created_at}) {
             {moment.unix(created_at).format('HH:MM DD/MM/YYYY')}
           </Text>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                Linking.openURL(
+                  `http://manage.colorme.vn:2222/pages/registers/${slug}`,
+                )
+              }>
               <View style={[styles.button, {marginRight: 10}]}>
                 <Text style={{fontSize: 16}}>Xem thử form</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('AddForm', {
+                  editMode: true,
+                  data: {
+                    id: id,
+                    base_id: base_id,
+                    course_id: course_id,
+                    slug: slug,
+                    data_fields: data_fields,
+                    title: title,
+                    description: description,
+                  },
+                })
+              }>
               <View style={[{marginRight: 10}, styles.button]}>
                 <Text style={{fontSize: 16}}>Sửa</Text>
               </View>
@@ -82,12 +112,7 @@ function ListFormItem({name, description, slug, created_at}) {
       <ActionSheet
         ref={CustomActionSheet}
         title={'Chọn hành động'}
-        options={[
-          'Nhân bản form',
-          'UTM Builder',
-          'Xóa form',
-          'Hủy',
-        ]}
+        options={['Nhân bản form', 'UTM Builder', 'Xóa form', 'Hủy']}
         cancelButtonIndex={3}
         onPress={executeActions}
       />

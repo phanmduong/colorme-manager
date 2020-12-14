@@ -130,3 +130,11 @@ export function changeClassStatus(classId, token) {
     class_id: classId,
   });
 }
+
+export function createClassSchedule(name, study_sessions, token) {
+  let url = env.MANAGE_API_URL_V4 + '/schedule/create?token=' + token;
+  return axios.post(url, {
+    name: name,
+    study_sessions: study_sessions,
+  });
+}

@@ -95,6 +95,7 @@ export default {
     statuses: [],
     isLoadingStatuses: false,
     errorStatuses: false,
+    creatingClassSchedule: false,
   },
   currentClassStudy: {
     classData: [],

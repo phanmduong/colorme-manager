@@ -308,3 +308,7 @@ export const getDefault = (array, comparedId) => {
   }
   return array[0];
 };
+
+export function isEmptyObject(obj) {
+  return Object.keys(obj).length === 0 && obj.constructor === Object;
+}

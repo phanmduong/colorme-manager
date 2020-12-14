@@ -5,6 +5,7 @@ import * as types from '../constants/actionTypes';
 import * as classApi from '../apis/classApi';
 import * as studentApi from '../apis/studentApi';
 import axios from 'axios';
+import {Alert} from 'react-native';
 
 let CancelToken = axios.CancelToken;
 let sourceCancel = CancelToken.source();
@@ -619,5 +620,38 @@ export function selectedClassStatus(id) {
   return {
     type: types.SELECTED_CLASS_CLASS_STATUS,
     class_status: id,
+  };
+}
+
+export function createSchedule(name, study_sessions, token) {
+  return function (dispatch) {
+    dispatch(beginCreateClassSchedule());
+    classApi
+      .createClassSchedule(name, study_sessions, token)
+      .then((res) => {
+        Alert.alert('Thông báo', 'Tạo lịch học thành công');
+        dispatch(infoCreateClass(token));
+      })
+      .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
+        throw error;
+      })
+      .finally(() => {
+        dispatch(createClassScheduleComplete());
+      });
+  };
+}
+
+function beginCreateClassSchedule() {
+  return {
+    type: types.BEGIN_CREATE_CLASS_SCHEDULE,
+    creatingClassSchedule: true,
+  };
+}
+
+function createClassScheduleComplete() {
+  return {
+    type: types.CREATE_CLASS_SCHEDULE_COMPLETE,
+    creatingClassSchedule: false,
   };
 }

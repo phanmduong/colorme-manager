@@ -69,6 +69,7 @@ import TeachingScheduleComponent from '../components/TeachingScheduleComponent';
 import TeachingScheduleContainer from '../containers/TeachingScheduleContainer';
 import FormContainer from '../containers/FormContainer';
 import AddFormContainer from '../containers/AddFormContainer';
+import AddClassScheduleContainer from '../containers/AddClassScheduleContainer';
 
 const navigationOptionsDefault = {
   defaultNavigationOptions: {
@@ -525,6 +526,13 @@ const TabDashboard = createStackNavigator(
     },
     AddForm: {
       screen: AddFormContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    AddClassSchedule: {
+      screen: AddClassScheduleContainer,
       navigationOptions: () => ({
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},

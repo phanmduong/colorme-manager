@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {View, Text, Linking, TouchableOpacity} from 'react-native';
+import {View, Text, Linking, TouchableOpacity, Alert} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import theme from '../../styles';
 import moment from 'moment';
@@ -38,20 +38,24 @@ function ListFormItem({
   function executeActions(index) {
     switch (index) {
       case 0:
-        duplicateForm(id);
+        Alert.alert('Nhân bản', 'Bạn thực sự muốn nhân bản?', [
+          {text: 'Hủy bỏ', style: 'cancel'},
+          {text: 'Nhân bản', onPress: () => duplicateForm(id)},
+        ]);
         break;
       case 1:
         toggleModal();
         break;
       case 2:
-        deleteForm(id);
+        Alert.alert('Xóa', 'Bạn thực sự muốn xóa?', [
+          {text: 'Hủy bỏ', style: 'cancel'},
+          {text: 'Xóa', style: 'destructive', onPress: () => deleteForm(id)},
+        ]);
         break;
       default:
         return;
     }
   }
-
-  console.log(moment.unix(1607659709).format('HH:mm'));
 
   return (
     <View style={styles.container}>

@@ -608,4 +608,9 @@ export default {
     duplicating: false,
     deleting: false,
   },
+  tab: {
+    tabs: [],
+    loading: false,
+    error: false,
+  },
 };

@@ -46,7 +46,7 @@ class DashboardComponent extends React.Component {
     let deepCopiedFeatureList = this.getFeatureList().slice(0);
     deepCopiedFeatureList = deepCopiedFeatureList.filter((feature) => {
       for (const tab of this.props.tabs) {
-        if (feature.id === tab.url || feature.all) {
+        if (feature.id === tab.url || feature.permission_all) {
           return true;
         }
       }
@@ -100,7 +100,7 @@ class DashboardComponent extends React.Component {
             }}
           />
         ),
-        all: true,
+        permission_all: true,
       },
       {
         id: 'teaching/evaluate',
@@ -127,7 +127,7 @@ class DashboardComponent extends React.Component {
             }}
           />
         ),
-        all: true,
+        permission_all: true,
       },
       {
         id: '',
@@ -141,16 +141,21 @@ class DashboardComponent extends React.Component {
             }}
           />
         ),
-        all: true,
+        permission_all: true,
       },
-      // <CircleTab
-      //   iconImage={require('../../assets/img/Group_1306.png')}
-      //   title={'Nộp tiền'}
-      //   backgroundColor={'#B2B3FF'}
-      //   onPress={() => {
-      //     this.props.navigation.navigate('CollectMoney');
-      //   }}
-      // />,
+      // {
+      //   id: 'finance/moneycollect',
+      //   element: (
+      //     <CircleTab
+      //       iconImage={require('../../assets/img/Group_1306.png')}
+      //       title={'Nộp tiền'}
+      //       backgroundColor={'#B2B3FF'}
+      //       onPress={() => {
+      //         this.props.navigation.navigate('CollectMoney');
+      //       }}
+      //     />
+      //   ),
+      // },
       {
         id: 'finance/sendmoney',
         element: (
@@ -204,7 +209,7 @@ class DashboardComponent extends React.Component {
             }}
           />
         ),
-        all: true,
+        permission_all: true,
       },
       {
         id: 'dashboard/checkin-checkout',

@@ -1,11 +1,9 @@
 import React from 'react';
-import {FlatList, View, Dimensions} from 'react-native';
+import {FlatList} from 'react-native';
 import ListFormItem from './form/ListFormItem';
 import Loading from './common/Loading';
-import {Text} from 'native-base';
-import theme from '../styles';
 import Search from './common/Search';
-const {width} = Dimensions.get('window');
+import EmptyMessage from './common/EmptyMessage';
 
 function FormComponent(props) {
   function renderForms({item}) {
@@ -48,14 +46,8 @@ function FormComponent(props) {
       ListHeaderComponent={headerComponent()}
       ListEmptyComponent={
         props.isLoadingForms
-          ? !props.refreshingForms && <Loading size={width / 8} />
-          : !props.refreshingForms && (
-              <View style={styles.container}>
-                <Text style={{color: theme.dangerColor, fontSize: 16}}>
-                  Không có kết quả
-                </Text>
-              </View>
-            )
+          ? !props.refreshingForms && <Loading />
+          : !props.refreshingForms && <EmptyMessage />
       }
       onRefresh={props.onRefresh}
       refreshing={props.refreshingForms}
@@ -63,13 +55,5 @@ function FormComponent(props) {
     />
   );
 }
-
-const styles = {
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-};
 
 export default FormComponent;

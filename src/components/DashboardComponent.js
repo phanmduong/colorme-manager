@@ -250,6 +250,20 @@ class DashboardComponent extends React.Component {
           />
         ),
       },
+      {
+        id: '',
+        element: (
+          <CircleTab
+            iconImage={require('../../assets/img/Group_1248.png')}
+            title={'Môn học'}
+            backgroundColor={'#FFC5B8'}
+            onPress={() => {
+              this.props.navigation.navigate('Course');
+            }}
+          />
+        ),
+        permission_all: true,
+      },
     ];
   };
 

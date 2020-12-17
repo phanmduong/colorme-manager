@@ -38,7 +38,6 @@ class DetailShiftsContainer extends React.Component {
   loadDetailShifts = (week, id) => {
     this.props.detailShiftsActions.loadDetailShifts(
       this.props.selectedBaseId,
-      this.props.selectedGenId,
       id,
       week,
       this.props.token,
@@ -72,7 +71,6 @@ const styles = {
 function mapStateToProps(state) {
   return {
     selectedBaseId: state.workShiftRegister.selectedBaseId,
-    selectedGenId: state.workShiftRegister.selectedGenId,
     isLoadingDetailShifts: state.detailShifts.isLoading,
     detailShifts: state.detailShifts.detailShifts,
     user: state.login.user,

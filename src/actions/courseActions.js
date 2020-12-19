@@ -437,11 +437,9 @@ export function resetCourseDetails() {
 export function editLesson(data, token) {
   return function (dispatch) {
     dispatch(beginEditLesson());
-    console.log(data);
     courseApi
       .editLesson(data, token)
       .then((res) => {
-        console.log(res);
         Alert.alert('Thông báo', 'Sửa buổi học thành công');
         dispatch(loadCourseDetails(true, data.course_id, token));
       })

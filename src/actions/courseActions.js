@@ -213,9 +213,13 @@ function createCourseComplete() {
   };
 }
 
-export function loadCourseDetails(id, token) {
+export function loadCourseDetails(refreshing, id, token) {
   return function (dispatch) {
-    dispatch(beginLoadCourseDetails());
+    if (!refreshing) {
+      dispatch(beginLoadCourseDetails());
+    } else {
+      dispatch(beginRefreshCourseDetails());
+    }
     courseApi
       .loadCourseDetails(id, token)
       .then((res) => dispatch(loadCourseDetailsSuccess(res)))
@@ -234,12 +238,21 @@ function beginLoadCourseDetails() {
   };
 }
 
+function beginRefreshCourseDetails() {
+  return {
+    type: types.BEGIN_REFRESH_COURSE_DETAILS,
+    refreshingCourseDetails: true,
+    errorCourseDetails: false,
+  };
+}
+
 function loadCourseDetailsSuccess(res) {
   return {
     type: types.LOAD_COURSE_DETAILS_SUCCESS,
     loadingCourseDetails: false,
     errorCourseDetails: false,
     course: res.data.data.course,
+    refreshingCourseDetails: false,
   };
 }
 
@@ -248,5 +261,210 @@ function loadCourseDetailsError() {
     type: types.LOAD_COURSE_DETAILS_ERROR,
     loadingCourseDetails: false,
     errorCourseDetails: true,
+    refreshingCourseDetails: false,
+  };
+}
+
+export function changeLessonEvent(id, type, token) {
+  return function (dispatch) {
+    dispatch(beginChangeLessonEvent());
+    courseApi
+      .changeLessonEvent(id, type, token)
+      .then((res) => {
+        dispatch(changeLessonEventSuccess(res));
+        Alert.alert('Thông báo', 'Thay đổi sự kiện thành công');
+      })
+      .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
+        throw error;
+      })
+      .finally(() => {
+        dispatch(changeLessonEventComplete());
+      });
+  };
+}
+
+function beginChangeLessonEvent() {
+  return {
+    type: types.BEGIN_CHANGE_LESSON_EVENT,
+    changingEvent: true,
+  };
+}
+
+function changeLessonEventSuccess(res) {
+  return {
+    type: types.CHANGE_LESSON_EVENT_SUCCESS,
+    lesson: res.data.data.lesson,
+  };
+}
+
+function changeLessonEventComplete() {
+  return {
+    type: types.CHANGE_LESSON_EVENT_COMPLETE,
+    changingEvent: false,
+  };
+}
+
+export function deleteLesson(id, token) {
+  return function (dispatch) {
+    dispatch(beginDeleteLesson());
+    courseApi
+      .deleteLesson(id, token)
+      .then((res) => {
+        dispatch(deleteLessonSuccess(id));
+      })
+      .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
+        throw error;
+      })
+      .finally(() => dispatch(deleteLessonComplete()));
+  };
+}
+
+function beginDeleteLesson() {
+  return {
+    type: types.BEGIN_DELETE_COURSE_DETAILS_LESSON,
+    deletingLesson: true,
+  };
+}
+
+function deleteLessonSuccess(id) {
+  return {
+    type: types.DELETE_COURSE_DETAILS_LESSON_SUCCESS,
+    lessonId: id,
+  };
+}
+
+function deleteLessonComplete() {
+  return {
+    type: types.DELETE_COURSE_DETAILS_LESSON_COMPLETE,
+    deletingLesson: false,
+  };
+}
+
+export function reset() {
+  return {
+    type: types.RESET_DATA_COURSE,
+    courseData: [],
+    currentPage: 0,
+    search: '',
+    parentCourses: [],
+    courseDetails: {},
+  };
+}
+
+export function duplicateLesson(id, token) {
+  return function (dispatch) {
+    dispatch(beginDuplicateLesson());
+    courseApi
+      .duplicateLesson(id, token)
+      .then((res) => dispatch(duplicateLessonSuccess(id)))
+      .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
+        throw error;
+      })
+      .finally(() => {
+        dispatch(duplicateLessonComplete());
+      });
+  };
+}
+
+function beginDuplicateLesson() {
+  return {
+    type: types.BEGIN_DUPLICATE_COURSE_DETAILS_LESSON,
+    duplicatingLesson: true,
+  };
+}
+
+function duplicateLessonSuccess(id) {
+  return {
+    type: types.DUPLICATE_COURSE_DETAILS_LESSON_SUCCESS,
+    lessonId: id,
+  };
+}
+
+function duplicateLessonComplete() {
+  return {
+    type: types.DUPLICATE_COURSE_DETAILS_LESSON_COMPLETE,
+    duplicatingLesson: false,
+  };
+}
+
+export function createLesson(data, token) {
+  return function (dispatch) {
+    dispatch(beginCreateLesson());
+    courseApi
+      .createLesson(data, token)
+      .then((res) => {
+        dispatch(createLessonSuccess(res));
+        Alert.alert('Thông báo', 'Thêm buổi học thành công');
+      })
+      .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
+        throw error;
+      })
+      .finally(() => {
+        dispatch(createLessonComplete());
+      });
+  };
+}
+
+function beginCreateLesson() {
+  return {
+    type: types.BEGIN_ADD_COURSE_DETAILS_LESSON,
+    addingLesson: true,
+  };
+}
+
+function createLessonSuccess(res) {
+  return {
+    type: types.ADD_COURSE_DETAILS_LESSON_SUCCESS,
+    lesson: res.data.data.lesson,
+  };
+}
+
+function createLessonComplete() {
+  return {type: types.ADD_COURSE_DETAILS_LESSON_COMPLETE, addingLesson: false};
+}
+
+export function resetCourseDetails() {
+  return {
+    type: types.RESET_COURSE_DETAILS,
+    courseDetails: {},
+  };
+}
+
+export function editLesson(data, token) {
+  return function (dispatch) {
+    dispatch(beginEditLesson());
+    console.log(data);
+    courseApi
+      .editLesson(data, token)
+      .then((res) => {
+        console.log(res);
+        Alert.alert('Thông báo', 'Sửa buổi học thành công');
+        dispatch(loadCourseDetails(true, data.course_id, token));
+      })
+      .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
+        throw error;
+      })
+      .finally(() => {
+        dispatch(editLessonComplete());
+      });
+  };
+}
+
+function beginEditLesson() {
+  return {
+    type: types.BEGIN_EDIT_COURSE_DETAILS_LESSON,
+    editingLesson: true,
+  };
+}
+
+function editLessonComplete() {
+  return {
+    type: types.EDIT_COURSE_DETAILS_LESSON_COMPLETE,
+    editingLesson: false,
   };
 }

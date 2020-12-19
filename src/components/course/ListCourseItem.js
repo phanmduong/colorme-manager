@@ -30,52 +30,61 @@ function ListCourseItem({
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.row}>
-        <Image source={{uri: avatar_url}} style={styles.headerAva} />
-        <View style={styles.contentColumn}>
-          <View style={styles.titleContainer}>
-            <Text style={styles.title}>{name}</Text>
-            <Switch
-              onValueChange={(value) => {
-                onStatusChange(id, value);
-                setStatus(value);
-              }}
-              value={status}
-            />
-          </View>
-          <View style={styles.row}>
-            {parent_id && (
-              <View
-                style={{
-                  ...styles.card,
-                  ...{
-                    backgroundColor: '#32CA41',
-                  },
-                }}>
-                <Text style={styles.saler}>{getParentCourse()}</Text>
-              </View>
-            )}
-          </View>
-          <Text style={styles.info}>{description}</Text>
-          <Text style={styles.info}>{lessons.length} buổi</Text>
-          <Text style={styles.info}>{dotNumber(price)}đ</Text>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('AddCourse', {
-                  editMode: true,
-                  id: id,
-                })
-              }>
-              <View style={styles.button}>
-                <Text style={{fontSize: 16}}>Sửa thông tin</Text>
-              </View>
-            </TouchableOpacity>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate('CourseInfo', {
+          id: id,
+          name: name,
+          avatar_url: avatar_url,
+        })
+      }>
+      <View style={styles.container}>
+        <View style={styles.row}>
+          <Image source={{uri: avatar_url}} style={styles.headerAva} />
+          <View style={styles.contentColumn}>
+            <View style={styles.titleContainer}>
+              <Text style={styles.title}>{name}</Text>
+              <Switch
+                onValueChange={(value) => {
+                  onStatusChange(id, value);
+                  setStatus(value);
+                }}
+                value={status}
+              />
+            </View>
+            <View style={styles.row}>
+              {parent_id && (
+                <View
+                  style={{
+                    ...styles.card,
+                    ...{
+                      backgroundColor: '#32CA41',
+                    },
+                  }}>
+                  <Text style={styles.saler}>{getParentCourse()}</Text>
+                </View>
+              )}
+            </View>
+            <Text style={styles.info}>{description}</Text>
+            <Text style={styles.info}>{lessons.length} buổi</Text>
+            <Text style={styles.info}>{dotNumber(price)}đ</Text>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('AddCourse', {
+                    editMode: true,
+                    id: id,
+                  })
+                }>
+                <View style={styles.button}>
+                  <Text style={{fontSize: 16}}>Sửa thông tin</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

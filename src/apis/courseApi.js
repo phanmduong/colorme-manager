@@ -70,3 +70,61 @@ export function loadCourseDetails(id, token) {
     env.MANAGE_API_URL_V3 + '/v2/course/get-detailed/' + id + '?token=' + token;
   return axios.get(url);
 }
+
+export function changeLessonEvent(id, type, token) {
+  let url =
+    env.MANAGE_API_URL_V3 + '/v2/lesson/create-lesson-event?token=' + token;
+  return axios.post(url, {
+    lesson_id: id,
+    type: type,
+  });
+}
+
+export function deleteLesson(id, token) {
+  let url =
+    env.MANAGE_API_URL_V3 +
+    '/v2/lesson/delete-lesson/' +
+    id +
+    '?token=' +
+    token;
+  return axios.delete(url);
+}
+
+export function duplicateLesson(id, token) {
+  let url =
+    env.MANAGE_API_URL_V3 + '/v2/lesson/' + id + '/duplicate?token=' + token;
+  return axios.post(url);
+}
+
+export function createLesson(data, token) {
+  let url =
+    env.MANAGE_API_URL_V3 +
+    '/v2/lesson/create-lesson/' +
+    data.course_id +
+    '?token=' +
+    token;
+  return axios.post(url, {
+    audio_url: data.audio_url,
+    course_id: data.course_id,
+    description: data.description,
+    detail_teacher: data.detail_teacher,
+    name: data.name,
+    order: data.order,
+    term_id: data.term_id,
+    video_url: data.video_url,
+  });
+}
+
+export function editLesson(data, token) {
+  let url = env.MANAGE_API_URL_V3 + '/v2/lesson/edit-lesson/' + data.id + '?token=' + token;
+  return axios.put(url, {
+    audio_url: data.audio_url,
+    course_id: data.course_id,
+    description: data.description,
+    detail_teacher: data.detail_teacher,
+    name: data.name,
+    order: data.order,
+    term_id: data.term_id,
+    video_url: data.video_url,
+  })
+}

@@ -10,6 +10,9 @@ function CourseContainer(props) {
   useEffect(() => {
     loadCourses();
     loadParentCourses();
+    return () => {
+      props.courseActions.reset();
+    };
   }, []);
 
   function loadCourses() {
@@ -36,8 +39,6 @@ function CourseContainer(props) {
   function loadParentCourses() {
     props.courseActions.loadParentCourses(props.token);
   }
-
-  console.log();
 
   return (
     <CourseComponent

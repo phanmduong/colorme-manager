@@ -251,7 +251,7 @@ class DashboardComponent extends React.Component {
         ),
       },
       {
-        id: '',
+        id: 'teaching/courses',
         element: (
           <CircleTab
             iconImage={require('../../assets/img/Group_1248.png')}
@@ -262,7 +262,6 @@ class DashboardComponent extends React.Component {
             }}
           />
         ),
-        permission_all: true,
       },
     ];
   };

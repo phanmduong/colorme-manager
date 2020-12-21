@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {View, ScrollView, Alert, Image} from 'react-native';
+import {
+  View,
+  ScrollView,
+  Alert,
+  Image,
+  Platform,
+  KeyboardAvoidingView,
+} from 'react-native';
 import theme from '../styles';
 import Input from './common/Input';
 import InputPicker from './common/InputPicker';
@@ -34,62 +41,68 @@ function AddCourseExamComponent(props) {
   }
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.container}>
-        <InputPicker
-          title={'Nhóm bài test'}
-          placeholder={'Nhóm bài test'}
-          onChangeValue={setGroupExam}
-          selectedId={groupExamId}
-          header={'Chọn nhóm bài test'}
-          options={props.courseDetails.group_exams}
-        />
-        <Input
-          title={'Tên bài test'}
-          onChangeText={setTitle}
-          placeholder={'Tên bài test'}
-          required
-        />
-        <Input
-          title={'Trọng số'}
-          placeholder={'Trọng số'}
-          onChangeText={setWeight}
-          required
-          keyboardType={'number-pad'}
-        />
-        <Input
-          title={'Mô tả'}
-          placeholder={'Mô tả'}
-          onChangeText={setDescription}
-        />
-        <Input
-          title={'Hạn chót'}
-          placeholder={'Số ngày'}
-          onChangeText={setDeadline}
-          keyboardType={'number-pad'}
-        />
-        <InputPicker
-          title={'Diễn ra vào buổi'}
-          placeholder={'Diễn ra vào buổi'}
-          options={props.courseDetails.lessons}
-          header={'Chọn buổi'}
-          selectedId={lessonId}
-          onChangeValue={setLesson}
-        />
-        <ImageUploader
-          avatar_url={avatar_url}
-          containerStyle={styles.uploader}
-          token={props.token}
-          onUpload={setAvatar}
-        />
-        <SubmitButton
-          title={'Lưu'}
-          containerStyle={styles.btn}
-          onPress={onSubmit}
-          loading={props.creatingExam}
-        />
-      </View>
-    </ScrollView>
+    <KeyboardAvoidingView
+      style={{flex: 1}}
+      behavior={Platform.OS === 'ios' ? 'padding' : ''}
+      enabled
+      keyboardVerticalOffset={100}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.container}>
+          <InputPicker
+            title={'Nhóm bài test'}
+            placeholder={'Nhóm bài test'}
+            onChangeValue={setGroupExam}
+            selectedId={groupExamId}
+            header={'Chọn nhóm bài test'}
+            options={props.courseDetails.group_exams}
+          />
+          <Input
+            title={'Tên bài test'}
+            onChangeText={setTitle}
+            placeholder={'Tên bài test'}
+            required
+          />
+          <Input
+            title={'Trọng số'}
+            placeholder={'Trọng số'}
+            onChangeText={setWeight}
+            required
+            keyboardType={'number-pad'}
+          />
+          <Input
+            title={'Mô tả'}
+            placeholder={'Mô tả'}
+            onChangeText={setDescription}
+          />
+          <Input
+            title={'Hạn chót'}
+            placeholder={'Số ngày'}
+            onChangeText={setDeadline}
+            keyboardType={'number-pad'}
+          />
+          <InputPicker
+            title={'Diễn ra vào buổi'}
+            placeholder={'Diễn ra vào buổi'}
+            options={props.courseDetails.lessons}
+            header={'Chọn buổi'}
+            selectedId={lessonId}
+            onChangeValue={setLesson}
+          />
+          <ImageUploader
+            avatar_url={avatar_url}
+            containerStyle={styles.uploader}
+            token={props.token}
+            onUpload={setAvatar}
+          />
+          <SubmitButton
+            title={'Lưu'}
+            containerStyle={styles.btn}
+            onPress={onSubmit}
+            loading={props.creatingExam}
+          />
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 

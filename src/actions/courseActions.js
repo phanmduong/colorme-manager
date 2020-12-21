@@ -311,7 +311,10 @@ export function deleteLesson(id, token) {
     courseApi
       .deleteLesson(id, token)
       .then((res) => {
-        dispatch(deleteLessonSuccess(id));
+        {
+          dispatch(deleteLessonSuccess(id));
+          Alert.alert('Thông báo', 'Xóa buổi học thành công');
+        }
       })
       .catch((error) => {
         Alert.alert('Thông báo', 'Có lỗi xảy ra');
@@ -358,7 +361,10 @@ export function duplicateLesson(id, token) {
     dispatch(beginDuplicateLesson());
     courseApi
       .duplicateLesson(id, token)
-      .then((res) => dispatch(duplicateLessonSuccess(id)))
+      .then((res) => {
+        dispatch(duplicateLessonSuccess(id));
+        Alert.alert('Thông báo', 'Nhân bản buổi học thành công');
+      })
       .catch((error) => {
         Alert.alert('Thông báo', 'Có lỗi xảy ra');
         throw error;
@@ -504,5 +510,85 @@ function createExamComplete() {
   return {
     type: types.ADD_COURSE_DETAILS_EXAM_COMPLETE,
     creatingExam: false,
+  };
+}
+
+export function createLink(data, token) {
+  return function (dispatch) {
+    dispatch(beginCreateLink());
+    courseApi
+      .createLink(data, token)
+      .then((res) => {
+        dispatch(createLinkSuccess(res));
+        Alert.alert('Thông báo', 'Tạo tài liệu thành công');
+      })
+      .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
+        throw error;
+      })
+      .finally(() => {
+        dispatch(createLinkComplete());
+      });
+  };
+}
+
+function beginCreateLink() {
+  return {
+    type: types.BEGIN_ADD_COURSE_DETAILS_LINK,
+    creatingLink: true,
+  };
+}
+
+function createLinkSuccess(res) {
+  return {
+    type: types.ADD_COURSE_DETAILS_LINK_SUCCESS,
+    link: res.data.data.link,
+  };
+}
+
+function createLinkComplete() {
+  return {
+    type: types.ADD_COURSE_DETAILS_LINK_COMPLETE,
+    creatingLink: false,
+  };
+}
+
+export function deleteLink(id, token) {
+  return function (dispatch) {
+    dispatch(beginDeleteLink());
+    courseApi
+      .deleteLink(id, token)
+      .then((res) => {
+        dispatch(deleteLinkSuccess(id));
+        Alert.alert('Thông báo', 'Xóa tài liệu thành công');
+      })
+      .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
+        throw error;
+      })
+      .finally(() => {
+        dispatch(deleteLinkComplete());
+      });
+  };
+}
+
+function beginDeleteLink() {
+  return {
+    type: types.BEGIN_DELETE_COURSE_DETAILS_LINK,
+    deletingLink: true,
+  };
+}
+
+function deleteLinkSuccess(id) {
+  return {
+    type: types.DELETE_COURSE_DETAILS_LINK_SUCCESS,
+    linkId: id,
+  };
+}
+
+function deleteLinkComplete() {
+  return {
+    type: types.DELETE_COURSE_DETAILS_LINK_COMPLETE,
+    deletingLink: false,
   };
 }

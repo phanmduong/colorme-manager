@@ -162,3 +162,19 @@ export function uploadImage(uri, token) {
     data: formData,
   });
 }
+
+export function createLink(data, token) {
+  let url = env.MANAGE_API_URL_V3 + '/v2/course/create-link?token=' + token;
+  return axios.post(url, {
+    course_id: data.course_id,
+    link_description: data.link_description,
+    link_name: data.link_name,
+    link_url: data.link_url,
+  });
+}
+
+export function deleteLink(id, token) {
+  let url =
+    env.MANAGE_API_URL_V3 + '/v2/course/delete-link/' + id + '?token=' + token;
+  return axios.delete(url);
+}

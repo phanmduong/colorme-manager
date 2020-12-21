@@ -75,6 +75,7 @@ import AddCourseContainer from '../containers/AddCourseContainer';
 import CourseInfoContainer from '../containers/CourseInfoContainer';
 import AddCourseLessonContainer from '../containers/AddCourseLessonContainer';
 import AddCourseExamContainer from '../containers/AddCourseExamContainer';
+import AddCourseLinkContainer from '../containers/AddCourseLinkContainer';
 
 const navigationOptionsDefault = {
   defaultNavigationOptions: {
@@ -573,6 +574,13 @@ const TabDashboard = createStackNavigator(
     },
     AddCourseExam: {
       screen: AddCourseExamContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    AddCourseLink: {
+      screen: AddCourseLinkContainer,
       navigationOptions: () => ({
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},

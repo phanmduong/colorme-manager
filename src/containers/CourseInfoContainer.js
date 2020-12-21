@@ -33,6 +33,10 @@ function CourseInfoContainer(props) {
     props.courseActions.changeLessonEvent(id, type, props.token);
   }
 
+  function deleteLink(id) {
+    props.courseActions.deleteLink(id, props.token);
+  }
+
   const courseId = props.navigation.getParam('id');
 
   return (
@@ -43,6 +47,7 @@ function CourseInfoContainer(props) {
       changeLessonEvent={changeLessonEvent}
       deleteLesson={deleteLesson}
       duplicateLesson={duplicateLesson}
+      deleteLink={deleteLink}
     />
   );
 }

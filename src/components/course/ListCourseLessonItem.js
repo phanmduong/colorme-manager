@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Image, Text, TouchableOpacity} from 'react-native';
+import {View, Image, Text, TouchableOpacity, Alert} from 'react-native';
 import theme from '../../styles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -17,7 +17,8 @@ function ListCourseLessonItem({
   deleteLesson,
   duplicateLesson,
   navigation,
-  lesson, course_id
+  lesson,
+  course_id,
 }) {
   const [isBook, setBook] = useState(false);
   const [isComment, setComment] = useState(false);
@@ -61,6 +62,33 @@ function ListCourseLessonItem({
       }
     }
     return null;
+  }
+
+  function onDuplicate() {
+    Alert.alert('Thông báo', 'Bạn có muốn nhân bản không?', [
+      {
+        text: 'Hủy bỏ',
+        style: 'cancel',
+      },
+      {
+        text: 'Nhân bản',
+        onPress: () => duplicateLesson(id),
+      },
+    ]);
+  }
+
+  function onDelete() {
+    Alert.alert('Thông báo', 'Bạn có muốn xóa không?', [
+      {
+        text: 'Hủy bỏ',
+        style: 'cancel',
+      },
+      {
+        text: 'Xóa bỏ',
+        onPress: () => deleteLesson(id),
+        style: 'destructive',
+      },
+    ]);
   }
 
   return (
@@ -139,19 +167,19 @@ function ListCourseLessonItem({
                 navigation.navigate('AddCourseLesson', {
                   lesson: lesson,
                   editMode: true,
-                  courseId: course_id
+                  courseId: course_id,
                 })
               }>
               <View style={[styles.button, {marginRight: 10}]}>
                 <Text style={{fontSize: 16}}>Sửa</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => duplicateLesson(id)}>
+            <TouchableOpacity onPress={onDuplicate}>
               <View style={[{marginRight: 10}, styles.button]}>
                 <Text style={{fontSize: 16}}>Nhân bản</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => deleteLesson(id)}>
+            <TouchableOpacity onPress={onDelete}>
               <View style={[{marginRight: 10}, styles.button]}>
                 <Text style={{fontSize: 16}}>Xóa</Text>
               </View>

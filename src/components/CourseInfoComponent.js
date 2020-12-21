@@ -7,6 +7,7 @@ import ListCourseLessonItem from './course/ListCourseLessonItem';
 import AddItemButton from './common/AddItemButton';
 import Loading from './common/Loading';
 import ListCourseExamGroupItem from './course/ListCourseExamGroupItem';
+import ListCourseLinkItem from './course/ListCourseLinkItem';
 
 function CourseInfoComponent(props) {
   const [tabIdx, setIdx] = useState(0);
@@ -109,6 +110,17 @@ function CourseInfoComponent(props) {
               }
             />
           )}
+          {tabIdx === 2 && (
+            <AddItemButton
+              title={'Thêm tài liệu'}
+              containerStyle={styles.btn}
+              onPress={() =>
+                props.navigation.navigate('AddCourseLink', {
+                  courseId: props.courseId,
+                })
+              }
+            />
+          )}
         </View>
       </View>
     );
@@ -147,6 +159,18 @@ function CourseInfoComponent(props) {
           id={item.id}
         />
       );
+    } else if (tabIdx === 2) {
+      return (
+        <ListCourseLinkItem
+          key={item.id}
+          name={item.link_name}
+          avatar_url={props.courseDetails && props.courseDetails.icon_url}
+          description={item.link_description}
+          link={item.link_url}
+          id={item.id}
+          deleteLink={props.deleteLink}
+        />
+      );
     }
   }
 
@@ -155,6 +179,8 @@ function CourseInfoComponent(props) {
       return props.courseDetails && filterLessons();
     } else if (tabIdx === 1) {
       return props.courseDetails && filterExams();
+    } else if (tabIdx === 2) {
+      return props.courseDetails && props.courseDetails.links;
     }
   }
 

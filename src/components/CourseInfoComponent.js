@@ -46,6 +46,20 @@ function CourseInfoComponent(props) {
     }
   }
 
+  function filterLinks() {
+    if (search === '') {
+      if (tabIdx === 2) {
+        return props.courseDetails.links;
+      }
+    } else {
+      if (tabIdx === 2) {
+        return props.courseDetails.links.filter((link) =>
+          convertVietText(link.link_name).includes(convertVietText(search)),
+        );
+      }
+    }
+  }
+
   function headerComponent() {
     return (
       <View>
@@ -144,6 +158,7 @@ function CourseInfoComponent(props) {
           navigation={props.navigation}
           course_id={item.course_id}
           lesson={item}
+          detail_teacher={item.detail_teacher}
         />
       );
     } else if (tabIdx === 1) {
@@ -180,7 +195,7 @@ function CourseInfoComponent(props) {
     } else if (tabIdx === 1) {
       return props.courseDetails && filterExams();
     } else if (tabIdx === 2) {
-      return props.courseDetails && props.courseDetails.links;
+      return props.courseDetails && filterLinks();
     }
   }
 

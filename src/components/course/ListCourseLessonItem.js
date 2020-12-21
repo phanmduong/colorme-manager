@@ -1,9 +1,17 @@
 import React, {useState, useEffect} from 'react';
-import {View, Image, Text, TouchableOpacity, Alert} from 'react-native';
+import {
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+  Alert,
+  Linking,
+} from 'react-native';
 import theme from '../../styles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {isEmptyInput} from '../../helper';
 
 function ListCourseLessonItem({
   avatar_url,
@@ -19,6 +27,7 @@ function ListCourseLessonItem({
   navigation,
   lesson,
   course_id,
+  detail_teacher,
 }) {
   const [isBook, setBook] = useState(false);
   const [isComment, setComment] = useState(false);
@@ -160,7 +169,16 @@ function ListCourseLessonItem({
               </View>
             </TouchableOpacity>
           </View>
-          <Text style={styles.info}>{description}</Text>
+          {!isEmptyInput(description) && (
+            <Text style={styles.info}>{description}</Text>
+          )}
+          {!isEmptyInput(detail_teacher) && (
+            <Text
+              style={styles.hyperLink}
+              onPress={() => Linking.openURL(detail_teacher)}>
+              {detail_teacher}
+            </Text>
+          )}
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               onPress={() =>
@@ -243,6 +261,10 @@ const styles = {
     borderRadius: 8,
     height: 45,
     justifyContent: 'center',
+  },
+  hyperLink: {
+    paddingTop: 5,
+    color: '#2980b9',
   },
 };
 

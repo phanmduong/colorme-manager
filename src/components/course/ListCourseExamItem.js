@@ -18,7 +18,7 @@ function ListCourseExamItem({
         return lesson.name;
       }
     }
-    return null;
+    return 'Buổi diễn ra';
   }
 
   return (
@@ -40,7 +40,7 @@ function ListCourseExamItem({
 
 const styles = {
   container: {
-    marginLeft: theme.mainAvatar.width + 10,
+    marginLeft: 20,
     marginVertical: 10,
   },
   row: {

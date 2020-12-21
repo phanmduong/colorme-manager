@@ -47,11 +47,6 @@ function ListCourseLinkItem({
             {link}
           </Text>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity>
-              <View style={[styles.button, {marginRight: 10}]}>
-                <Text style={{fontSize: 16}}>Sửa</Text>
-              </View>
-            </TouchableOpacity>
             <TouchableOpacity onPress={onDelete}>
               <View style={[{marginRight: 10}, styles.button]}>
                 <Text style={{fontSize: 16}}>Xóa</Text>

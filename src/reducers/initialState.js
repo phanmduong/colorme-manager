@@ -51,6 +51,7 @@ export default {
     duplicatingLesson: false,
     addingLesson: false,
     editingLesson: false,
+    creatingExam: false,
   },
   gen: {
     genData: [],

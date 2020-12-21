@@ -466,3 +466,43 @@ function editLessonComplete() {
     editingLesson: false,
   };
 }
+
+export function createExam(data, token) {
+  return function (dispatch) {
+    dispatch(beginCreateExam());
+    courseApi
+      .createExam(data, token)
+      .then((res) => {
+        dispatch(createExamSuccess(res));
+        Alert.alert('Thông báo', 'Tạo bài kiểm tra thành công');
+      })
+      .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
+        throw error;
+      })
+      .finally(() => {
+        dispatch(createExamComplete());
+      });
+  };
+}
+
+function beginCreateExam() {
+  return {
+    type: types.BEGIN_ADD_COURSE_DETAILS_EXAM,
+    creatingExam: true,
+  };
+}
+
+function createExamSuccess(res) {
+  return {
+    type: types.ADD_COURSE_DETAILS_EXAM_SUCCESS,
+    exam: res.data.exam_template,
+  };
+}
+
+function createExamComplete() {
+  return {
+    type: types.ADD_COURSE_DETAILS_EXAM_COMPLETE,
+    creatingExam: false,
+  };
+}

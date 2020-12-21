@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export function getForms(sourceCancel, page, search, token) {
   let url =
-    env.MANAGE_API_URL_2222 +
+    env.MANAGE_API_URL_AUTH +
     '/v1/register-forms?search=' +
     search +
     '&page=' +
@@ -14,7 +14,7 @@ export function getForms(sourceCancel, page, search, token) {
 }
 
 export function createForm(data, token) {
-  let url = env.MANAGE_API_URL_2222 + '/v1/register-forms?token=' + token;
+  let url = env.MANAGE_API_URL_AUTH + '/v1/register-forms?token=' + token;
   return axios.post(url, {
     base_id: data.base_id,
     course_id: data.course_id,
@@ -27,7 +27,7 @@ export function createForm(data, token) {
 
 export function updateForm(data, token) {
   let url =
-    env.MANAGE_API_URL_2222 +
+    env.MANAGE_API_URL_AUTH +
     '/v1/register-forms/' +
     data.id +
     '?token=' +
@@ -45,12 +45,12 @@ export function updateForm(data, token) {
 
 export function duplicateForm(id, token) {
   let url =
-    env.MANAGE_API_URL_2222 + '/v1/register-forms/' + id + '?token=' + token;
+    env.MANAGE_API_URL_AUTH + '/v1/register-forms/' + id + '?token=' + token;
   return axios.post(url);
 }
 
 export function deleteForm(id, token) {
   let url =
-    env.MANAGE_API_URL_2222 + '/v1/register-forms/' + id + '?token=' + token;
+    env.MANAGE_API_URL_AUTH + '/v1/register-forms/' + id + '?token=' + token;
   return axios.delete(url);
 }

@@ -116,7 +116,12 @@ export function createLesson(data, token) {
 }
 
 export function editLesson(data, token) {
-  let url = env.MANAGE_API_URL_V3 + '/v2/lesson/edit-lesson/' + data.id + '?token=' + token;
+  let url =
+    env.MANAGE_API_URL_V3 +
+    '/v2/lesson/edit-lesson/' +
+    data.id +
+    '?token=' +
+    token;
   return axios.put(url, {
     audio_url: data.audio_url,
     course_id: data.course_id,
@@ -126,5 +131,34 @@ export function editLesson(data, token) {
     order: data.order,
     term_id: data.term_id,
     video_url: data.video_url,
-  })
+  });
+}
+
+export function createExam(data, token) {
+  let url = env.MANAGE_API_URL_V4 + '/exam/template/create?token=' + token;
+  return axios.post(url, {
+    avatar_url: data.avatar_url,
+    course_id: data.course_id,
+    deadline: data.deadline,
+    description: data.description,
+    group_exam_id: data.group_exam_id,
+    lesson_id: data.lesson_id,
+    title: data.title,
+    weight: data.weight,
+  });
+}
+
+export function uploadImage(uri, token) {
+  let url = env.MANAGE_API_URL_V3 + '/file/upload?token=' + token;
+  let formData = new FormData();
+  formData.append('file', {
+    uri: uri,
+    type: 'image/jpeg',
+    name: 'file',
+  });
+  return axios({
+    method: 'post',
+    url: url,
+    data: formData,
+  });
 }

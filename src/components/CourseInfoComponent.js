@@ -6,6 +6,7 @@ import {convertVietText} from '../helper';
 import ListCourseLessonItem from './course/ListCourseLessonItem';
 import AddItemButton from './common/AddItemButton';
 import Loading from './common/Loading';
+import ListCourseExamGroupItem from './course/ListCourseExamGroupItem';
 
 function CourseInfoComponent(props) {
   const [tabIdx, setIdx] = useState(0);
@@ -18,9 +19,28 @@ function CourseInfoComponent(props) {
       }
     } else {
       if (tabIdx === 0) {
-        return (filterLessons = props.courseDetails.lessons.filter((lesson) =>
+        return props.courseDetails.lessons.filter((lesson) =>
           convertVietText(lesson.name).includes(convertVietText(search)),
-        ));
+        );
+      }
+    }
+  }
+
+  function filterExams() {
+    if (search === '') {
+      if (tabIdx === 1) {
+        return [
+          ...props.courseDetails.group_exams,
+          ...[{id: null, name: 'Không có nhóm'}],
+        ];
+      }
+    } else {
+      if (tabIdx === 1) {
+        const group_exams = props.courseDetails.group_exams.filter(
+          (group_exam) =>
+            convertVietText(group_exam.name).includes(convertVietText(search)),
+        );
+        return [...group_exams, ...[{id: null, name: 'Không có nhóm'}]];
       }
     }
   }
@@ -78,37 +98,63 @@ function CourseInfoComponent(props) {
               }
             />
           )}
+          {tabIdx === 1 && (
+            <AddItemButton
+              title={'Thêm bài kiểm tra'}
+              containerStyle={styles.btn}
+              onPress={() =>
+                props.navigation.navigate('AddCourseExam', {
+                  courseId: props.courseId,
+                })
+              }
+            />
+          )}
         </View>
       </View>
     );
   }
 
   function renderLessons({item}) {
-    return (
-      <ListCourseLessonItem
-        key={item.id}
-        avatar_url={item.image_url}
-        name={item.name}
-        term_id={item.term_id}
-        terms={props.courseDetails && props.courseDetails.terms}
-        description={item.description}
-        events={item.events}
-        changeLessonEvent={props.changeLessonEvent}
-        id={item.id}
-        deleteLesson={props.deleteLesson}
-        duplicateLesson={props.duplicateLesson}
-        navigation={props.navigation}
-        course_id={item.course_id}
-        lesson={item}
-      />
-    );
+    if (tabIdx === 0) {
+      return (
+        <ListCourseLessonItem
+          key={item.id}
+          avatar_url={item.image_url}
+          name={item.name}
+          term_id={item.term_id}
+          terms={props.courseDetails && props.courseDetails.terms}
+          description={item.description}
+          events={item.events}
+          changeLessonEvent={props.changeLessonEvent}
+          id={item.id}
+          deleteLesson={props.deleteLesson}
+          duplicateLesson={props.duplicateLesson}
+          navigation={props.navigation}
+          course_id={item.course_id}
+          lesson={item}
+        />
+      );
+    } else if (tabIdx === 1) {
+      return (
+        <ListCourseExamGroupItem
+          key={item.id}
+          name={item.name}
+          exam_templates={
+            props.courseDetails && props.courseDetails.exam_templates
+          }
+          lessons={props.courseDetails && props.courseDetails.lessons}
+          avatar_url={props.courseDetails && props.courseDetails.icon_url}
+          id={item.id}
+        />
+      );
+    }
   }
 
   function getData() {
     if (tabIdx === 0) {
       return props.courseDetails && filterLessons();
-    } else {
-      return [];
+    } else if (tabIdx === 1) {
+      return props.courseDetails && filterExams();
     }
   }
 

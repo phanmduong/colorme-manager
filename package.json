@@ -14,7 +14,7 @@
   "dependencies": {
     "@react-native-community/art": "^1.2.0",
     "@react-native-community/async-storage": "^1.6.1",
-    "@react-native-community/checkbox": "^0.5.1",
+    "@react-native-community/checkbox": "^0.5.6",
     "@react-native-community/datetimepicker": "^3.0.3",
     "@react-native-community/netinfo": "^4.4.0",
     "appcenter": "^4.0.0",

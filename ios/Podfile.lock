@@ -350,8 +350,8 @@ PODS:
     - React
   - RNCAsyncStorage (1.12.0):
     - React
-  - RNCCheckbox (0.5.4):
-    - React
+  - RNCCheckbox (0.5.6):
+    - React-Core
   - RNDateTimePicker (3.0.6):
     - React-Core
   - RNDeviceInfo (5.6.5):
@@ -618,7 +618,7 @@ SPEC CHECKSUMS:
   ReactCommon: 4167844018c9ed375cc01a843e9ee564399e53c3
   ReactNativeART: 78edc68dd4a1e675338cd0cd113319cf3a65f2ab
   RNCAsyncStorage: 2a692bcb9b69b76a2f1a95f33db057129700af64
-  RNCCheckbox: 7a4a65da0a2752536b38a6e635112d35cc109c17
+  RNCCheckbox: 80ee60cd2e67b46986e8e244db520655372deab4
   RNDateTimePicker: 120f8d08b19dd50c0308d30a07c1982e4618e9ad
   RNDeviceInfo: c5f8f3a456adcbba405ace475254b08febc4c095
   RNGestureHandler: b6b359bb800ae399a9c8b27032bdbf7c18f08a08
@@ -630,4 +630,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: c289db16e479b70bc5bc72beb19cf0676564bba4
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.0

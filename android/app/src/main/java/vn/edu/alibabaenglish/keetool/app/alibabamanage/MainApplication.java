@@ -1,4 +1,4 @@
-package vn.colorme.dgs.eduto;
+package vn.edu.alibabaenglish.keetool.app.alibabamanage;
 
 import androidx.multidex.MultiDexApplication;
 import android.content.Context;
@@ -14,10 +14,9 @@ import com.facebook.soloader.SoLoader;
 import com.github.yamill.orientation.OrientationPackage;
 import com.facebook.react.ReactInstanceManager;
 import java.lang.reflect.InvocationTargetException;
-
 import java.util.List;
 
-import vn.colorme.dgs.eduto.modules.LocationPackage;
+import vn.edu.alibabaenglish.keetool.app.alibabamanage.modules.LocationPackage;
 
 public class MainApplication extends MultiDexApplication implements ReactApplication {
 

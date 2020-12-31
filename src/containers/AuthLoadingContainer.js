@@ -58,10 +58,10 @@ class AuthLoadingContainer extends React.Component {
     return (
       <View style={styles.containerColorME}>
         <Image
-          source={require('../../assets/img/dgsLogo.png')}
-          style={{transform: [{scale: 0.1}]}}
+          source={require('../../assets/img/alibabaLogo.jpg')}
+          style={{transform: [{scale: 0.3}], borderRadius: 30}}
         />
-        <Spinkit isVisible color="#09174D" type="ThreeBounce" size={40} />
+        <Spinkit isVisible color="#FC7800" type="ThreeBounce" size={40} />
       </View>
     );
   }

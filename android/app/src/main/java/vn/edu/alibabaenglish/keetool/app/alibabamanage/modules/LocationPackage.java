@@ -1,4 +1,4 @@
-package vn.colorme.dgs.eduto.modules;
+package vn.edu.alibabaenglish.keetool.app.alibabamanage.modules;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;

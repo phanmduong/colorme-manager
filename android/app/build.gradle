@@ -139,11 +139,11 @@ android {
     }
 
     defaultConfig {
-        applicationId "vn.colorme.dgs.eduto"
+        applicationId "vn.edu.alibabaenglish.keetool.app.alibabamanage"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 8
+        versionName "2.0"
         missingDimensionStrategy 'react-native-camera', 'general'
 
         manifestPlaceholders = [onesignal_app_id               : "ceea18e8-322a-4748-b18b-fdf066d9a5ff",

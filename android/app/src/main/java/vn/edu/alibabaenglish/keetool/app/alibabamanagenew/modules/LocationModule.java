@@ -1,4 +1,4 @@
-package vn.edu.alibabaenglish.keetool.app.alibabamanage.modules;
+package vn.edu.alibabaenglish.keetool.app.alibabamanagenew.modules;
 
 import android.Manifest;
 import android.app.Activity;

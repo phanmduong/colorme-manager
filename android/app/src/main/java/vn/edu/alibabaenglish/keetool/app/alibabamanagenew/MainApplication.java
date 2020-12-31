@@ -1,4 +1,4 @@
-package vn.edu.alibabaenglish.keetool.app.alibabamanage;
+package vn.edu.alibabaenglish.keetool.app.alibabamanagenew;
 
 import androidx.multidex.MultiDexApplication;
 import android.content.Context;
@@ -16,7 +16,7 @@ import com.facebook.react.ReactInstanceManager;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import vn.edu.alibabaenglish.keetool.app.alibabamanage.modules.LocationPackage;
+import vn.edu.alibabaenglish.keetool.app.alibabamanagenew.modules.LocationPackage;
 
 public class MainApplication extends MultiDexApplication implements ReactApplication {
 

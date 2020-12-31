@@ -139,7 +139,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "vn.edu.alibabaenglish.keetool.app.alibabamanage"
+        applicationId "vn.edu.alibabaenglish.keetool.app.alibabamanagenew"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 8

@@ -87,6 +87,19 @@ class DashboardComponent extends React.Component {
           />
         ),
       },
+      {
+        id: '/register/list',
+        element: (
+          <CircleTab
+            iconImage={require('../../assets/img/Group_1311.png')}
+            title={'Học viên'}
+            backgroundColor={'#FFEEAF'}
+            onPress={() => {
+              this.props.navigation.navigate('RegisterList');
+            }}
+          />
+        ),
+      },
       // {
       //   id: '',
       //   element: (

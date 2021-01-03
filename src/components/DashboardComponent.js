@@ -296,28 +296,28 @@ class DashboardComponent extends React.Component {
         }>
         <View style={styles.container}>
           <View style={styles.headerContainer}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Profile')}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Profile')}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Image
                   source={{uri: this.props.avatar_url}}
                   style={styles.headerAva}
                 />
-              </TouchableOpacity>
-              <Text style={styles.headerTitle}>
-                {getShortName(this.props.user.name)}
-              </Text>
-              {this.props.user.role === 2 ? (
-                <Image
-                  source={require('../../assets/img/icons8-star-100-filled.png')}
-                  style={{
-                    width: 18,
-                    height: 18,
-                    marginLeft: 5,
-                  }}
-                />
-              ) : null}
-            </View>
+                <Text style={styles.headerTitle}>
+                  {getShortName(this.props.user.name)}
+                </Text>
+                {this.props.user.role === 2 ? (
+                  <Image
+                    source={require('../../assets/img/icons8-star-100-filled.png')}
+                    style={{
+                      width: 18,
+                      height: 18,
+                      marginLeft: 5,
+                    }}
+                  />
+                ) : null}
+              </View>
+            </TouchableOpacity>
             <View style={{flexDirection: 'row'}}>
               <TouchableOpacity
                 onPress={() => this.props.navigation.navigate('Task')}>

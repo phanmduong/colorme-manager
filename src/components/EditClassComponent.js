@@ -50,7 +50,7 @@ class EditClassComponent extends React.Component {
       schedule_id: !classData.schedule_id ? '' : classData.schedule_id,
       type: !classData.type ? '' : classData.type,
       course_id: !classData.course ? '' : classData.course.id,
-      gen_id: !classData.gen.id ? '' : classData.gen.id,
+      gen_id: !classData.gen ? '' : classData.gen.id,
       teacher_id:
         !classData.teacher || !classData.teacher.id ? '' : classData.teacher.id,
       teaching_assistant_id:

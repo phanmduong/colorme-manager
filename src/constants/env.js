@@ -27,5 +27,5 @@ export function manageApiUrlV4(domain) {
 }
 
 export function manageApiUrl2222(domain) {
-  return baseUrl(domain) + ':2222/api/auth';
+  return baseUrl(domain) + '/api/auth';
 }

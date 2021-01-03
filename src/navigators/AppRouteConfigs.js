@@ -67,7 +67,16 @@ import KPIContainer from '../containers/KPIContainer';
 import ClassInfoContainer from '../containers/ClassInfoContainer';
 import AddKPIContainer from '../containers/AddKPIContainer';
 import TeachingScheduleComponent from '../components/TeachingScheduleComponent';
-import TeachingScheduleContainer from "../containers/TeachingScheduleContainer";
+import TeachingScheduleContainer from '../containers/TeachingScheduleContainer';
+import FormContainer from '../containers/FormContainer';
+import AddFormContainer from '../containers/AddFormContainer';
+import AddClassScheduleContainer from '../containers/AddClassScheduleContainer';
+import CourseContainer from '../containers/CourseContainer';
+import AddCourseContainer from '../containers/AddCourseContainer';
+import CourseInfoContainer from '../containers/CourseInfoContainer';
+import AddCourseLessonContainer from '../containers/AddCourseLessonContainer';
+import AddCourseExamContainer from '../containers/AddCourseExamContainer';
+import AddCourseLinkContainer from '../containers/AddCourseLinkContainer';
 
 const navigationOptionsDefault = {
   defaultNavigationOptions: {
@@ -524,6 +533,69 @@ const TabDashboard = createStackNavigator(
     },
     TeachingSchedule: {
       screen: TeachingScheduleContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    Form: {
+      screen: FormContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    AddForm: {
+      screen: AddFormContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    AddClassSchedule: {
+      screen: AddClassScheduleContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    Course: {
+      screen: CourseContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    AddCourse: {
+      screen: AddCourseContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    CourseInfo: {
+      screen: CourseInfoContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    AddCourseLesson: {
+      screen: AddCourseLessonContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    AddCourseExam: {
+      screen: AddCourseExamContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    AddCourseLink: {
+      screen: AddCourseLinkContainer,
       navigationOptions: () => ({
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},

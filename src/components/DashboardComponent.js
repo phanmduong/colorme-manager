@@ -11,8 +11,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {Text} from 'native-base';
+var {height, width} = Dimensions.get('window');
 import CardMenu from '../containers/dashboard/CardMenu';
 import CircleTab from '../containers/dashboard/CircleTab';
+import MeetingComponent from '../containers/meeting/MeetingComponent';
 import theme from '../styles';
 import {getStatusBarHeight, isIphoneX} from 'react-native-iphone-x-helper';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -20,7 +22,6 @@ import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import {observer} from 'mobx-react';
 import {getShortName} from '../helper';
 import Loading from './common/Loading';
-const {width} = Dimensions.get('window');
 
 @observer
 class DashboardComponent extends React.Component {
@@ -29,6 +30,7 @@ class DashboardComponent extends React.Component {
   }
 
   handleRefresh = () => {
+    this.props.store.refreshMeetingDetail();
     this.props.refreshNotifications();
     this.props.refreshTasks();
   };
@@ -40,85 +42,11 @@ class DashboardComponent extends React.Component {
     return totalNotCompleted.length;
   };
 
-  getFeatureList = () => {
-    const featureList = [
-      {
-        id: 'dashboard/sale',
-        element: (
-          <CircleTab
-            iconImage={require('../../assets/img/Group_1253.png')}
-            title={'Thống kê'}
-            backgroundColor={'#A888F8'}
-            onPress={() => {
-              this.props.getAnalyticsGenData();
-              this.props.navigation.navigate('Analytics');
-            }}
-          />
-        ),
-      },
-      {
-        id: '/kpi/list',
-        element: (
-          <CircleTab
-            iconImage={require('../../assets/img/Group_1258.png')}
-            title={'KPI'}
-            backgroundColor={'#5855E6'}
-            onPress={() => {
-              this.props.navigation.navigate('KPI');
-            }}
-          />
-        ),
-      },
-      {
-        id: 'sales/register-list',
-        element: (
-          <CircleTab
-            iconImage={require('../../assets/img/Group_1247.png')}
-            title={'Học viên'}
-            backgroundColor={'#608DFF'}
-            onPress={() => {
-              this.props.navigation.navigate('RegisterList');
-            }}
-          />
-        ),
-      },
-      {
-        id: '/customer-services/leads',
-        element: (
-          <CircleTab
-            iconImage={require('../../assets/img/Group_1250.png')}
-            title={'Leads'}
-            backgroundColor={'#FFDC60'}
-            onPress={() => {
-              this.props.navigation.navigate('Leads');
-            }}
-          />
-        ),
-      },
-      {
-        id: 'teaching/classes',
-        element: (
-          <CircleTab
-            iconImage={require('../../assets/img/Group_1248.png')}
-            title={'Lớp học'}
-            backgroundColor={'#A888F8'}
-            onPress={() => {
-              this.props.navigation.navigate('Class', {
-                analyticsScreen: false,
-              });
-            }}
-          />
-        ),
-      },
-    ];
-    return featureList;
-  };
-
   filterFeatureList = () => {
     let deepCopiedFeatureList = this.getFeatureList().slice(0);
     deepCopiedFeatureList = deepCopiedFeatureList.filter((feature) => {
       for (const tab of this.props.tabs) {
-        if (feature.id === tab.url) {
+        if (feature.id === tab.url || feature.permission_all) {
           return true;
         }
       }
@@ -131,7 +59,215 @@ class DashboardComponent extends React.Component {
     return filteredFeatureList;
   };
 
+  getFeatureList = () => {
+    return [
+      {
+        id: 'dashboard/sale',
+        element: (
+          <CircleTab
+            iconImage={require('../../assets/img/Group_1300.png')}
+            title={'Thống kê'}
+            backgroundColor={'#FFC5B8'}
+            onPress={() => {
+              this.props.getAnalyticsGenData();
+              this.props.navigation.navigate('Analytics');
+            }}
+          />
+        ),
+      },
+      {
+        id: '/kpi/list',
+        element: (
+          <CircleTab
+            iconImage={require('../../assets/img/Group_1304.png')}
+            title={'KPI'}
+            backgroundColor={'#FFC5B8'}
+            onPress={() => {
+              this.props.navigation.navigate('KPI');
+            }}
+          />
+        ),
+      },
+      {
+        id: '',
+        element: (
+          <CircleTab
+            iconImage={require('../../assets/img/Group_1302.png')}
+            title={'Họp'}
+            backgroundColor={'#FFEEAF'}
+            onPress={() => {
+              this.props.navigation.navigate('Meeting');
+            }}
+          />
+        ),
+        permission_all: true,
+      },
+      {
+        id: 'teaching/evaluate',
+        element: (
+          <CircleTab
+            iconImage={require('../../assets/img/Group_1301.png')}
+            title={'Đánh giá'}
+            backgroundColor={'#B2B3FF'}
+            onPress={() => {
+              this.props.navigation.navigate('TeachingRating');
+            }}
+          />
+        ),
+      },
+      {
+        id: '',
+        element: (
+          <CircleTab
+            iconImage={require('../../assets/img/Group_1299.png')}
+            title={'Lịch học bù'}
+            backgroundColor={'#FFEEAF'}
+            onPress={() => {
+              this.props.navigation.navigate('MakeupClass');
+            }}
+          />
+        ),
+        permission_all: true,
+      },
+      {
+        id: '',
+        element: (
+          <CircleTab
+            iconImage={require('../../assets/img/Group_1303.png')}
+            title={'Danh bạ nhân viên'}
+            backgroundColor={'#B2B3FF'}
+            onPress={() => {
+              this.props.navigation.navigate('Staff');
+            }}
+          />
+        ),
+        permission_all: true,
+      },
+      // {
+      //   id: 'finance/moneycollect',
+      //   element: (
+      //     <CircleTab
+      //       iconImage={require('../../assets/img/Group_1306.png')}
+      //       title={'Nộp tiền'}
+      //       backgroundColor={'#B2B3FF'}
+      //       onPress={() => {
+      //         this.props.navigation.navigate('CollectMoney');
+      //       }}
+      //     />
+      //   ),
+      // },
+      {
+        id: 'finance/sendmoney',
+        element: (
+          <CircleTab
+            iconImage={require('../../assets/img/Group_1310.png')}
+            title={'Chuyển tiền'}
+            backgroundColor={'#B2B3FF'}
+            onPress={() => {
+              this.props.navigation.navigate('MoneyTransfer');
+            }}
+          />
+        ),
+      },
+      {
+        id: 'teaching/classes',
+        element: (
+          <CircleTab
+            iconImage={require('../../assets/img/Group_1307.png')}
+            title={'Lớp học'}
+            backgroundColor={'#FFEEAF'}
+            onPress={() => {
+              this.props.navigation.navigate('Class', {
+                analyticsScreen: false,
+              });
+            }}
+          />
+        ),
+      },
+      {
+        id: '/customer-services/leads',
+        element: (
+          <CircleTab
+            iconImage={require('../../assets/img/Group_1311.png')}
+            title={'Leads'}
+            backgroundColor={'#FFEEAF'}
+            onPress={() => {
+              this.props.navigation.navigate('Leads');
+            }}
+          />
+        ),
+      },
+      {
+        id: '',
+        element: (
+          <CircleTab
+            iconImage={require('../../assets/img/Group_1308.png')}
+            title={'Tài liệu'}
+            backgroundColor={'#FFC5B8'}
+            onPress={() => {
+              this.props.navigation.navigate('Document');
+            }}
+          />
+        ),
+        permission_all: true,
+      },
+      {
+        id: 'dashboard/checkin-checkout',
+        element: (
+          <CircleTab
+            iconImage={require('../../assets/img/Group_1309.png')}
+            title={'Chấm công'}
+            backgroundColor={'#FFEEAF'}
+            onPress={() => {
+              this.props.navigation.navigate('ClockManage');
+            }}
+          />
+        ),
+      },
+      {
+        id: 'teaching/teaching-schedule',
+        element: (
+          <CircleTab
+            iconImage={require('../../assets/img/Group_1299.png')}
+            title={'Lịch dạy'}
+            backgroundColor={'#FFEEAF'}
+            onPress={() => {
+              this.props.navigation.navigate('TeachingSchedule');
+            }}
+          />
+        ),
+      },
+      {
+        id: '/register-form/list',
+        element: (
+          <CircleTab
+            iconImage={require('../../assets/img/Group_1257.png')}
+            title={'Form đăng kí'}
+            backgroundColor={'#B2B3FF'}
+            onPress={() => {
+              this.props.navigation.navigate('Form');
+            }}
+          />
+        ),
+      },
+      {
+        id: 'teaching/courses',
+        element: (
+          <CircleTab
+            iconImage={require('../../assets/img/Group_1248.png')}
+            title={'Môn học'}
+            backgroundColor={'#FFC5B8'}
+            onPress={() => {
+              this.props.navigation.navigate('Course');
+            }}
+          />
+        ),
+      },
+    ];
+  };
+
   render() {
+    const {refreshing} = this.props.store;
     const {isRefreshingNotifications, isLoadingTaskView} = this.props;
     return (
       <ScrollView
@@ -143,34 +279,36 @@ class DashboardComponent extends React.Component {
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
-            refreshing={isRefreshingNotifications || isLoadingTaskView}
+            refreshing={
+              refreshing || isRefreshingNotifications || isLoadingTaskView
+            }
             onRefresh={this.handleRefresh}
           />
         }>
         <View style={styles.container}>
           <View style={styles.headerContainer}>
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Profile')}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Profile')}>
                 <Image
                   source={{uri: this.props.avatar_url}}
                   style={styles.headerAva}
                 />
-                <Text style={styles.headerTitle}>
-                  {getShortName(this.props.user.name)}
-                </Text>
-                {this.props.user.role === 2 ? (
-                  <Image
-                    source={require('../../assets/img/icons8-star-100-filled.png')}
-                    style={{
-                      width: 18,
-                      height: 18,
-                      marginLeft: 5,
-                    }}
-                  />
-                ) : null}
-              </View>
-            </TouchableOpacity>
+              </TouchableOpacity>
+              <Text style={styles.headerTitle}>
+                {getShortName(this.props.user.name)}
+              </Text>
+              {this.props.user.role === 2 ? (
+                <Image
+                  source={require('../../assets/img/icons8-star-100-filled.png')}
+                  style={{
+                    width: 18,
+                    height: 18,
+                    marginLeft: 5,
+                  }}
+                />
+              ) : null}
+            </View>
             <View style={{flexDirection: 'row'}}>
               <TouchableOpacity
                 onPress={() => this.props.navigation.navigate('Task')}>
@@ -265,6 +403,11 @@ class DashboardComponent extends React.Component {
               </View>
             ))
           )}
+          <MeetingComponent
+            store={this.props.store}
+            {...this.props}
+            mainScreen={true}
+          />
         </View>
       </ScrollView>
     );

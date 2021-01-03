@@ -4,7 +4,7 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import {isEmptyInput} from '../../helper';
 
-function DatePicker({selectedDate, onDateChange, title}) {
+function DatePicker({selectedDate, onDateChange, title, mode = 'date'}) {
   const [isVisible, setVisible] = useState(false);
 
   function openDatePicker() {
@@ -12,8 +12,28 @@ function DatePicker({selectedDate, onDateChange, title}) {
   }
 
   function handleDatePicked(date) {
-    onDateChange(moment(date).format('YYYY-MM-DD'));
+    if (mode === 'date') {
+      onDateChange(moment(date).format('YYYY-MM-DD'));
+    } else if (mode === 'time') {
+      onDateChange(moment(date));
+    }
     setVisible(false);
+  }
+
+  function displayPlaceholder() {
+    if (isEmptyInput(selectedDate)) {
+      if (mode === 'date') {
+        return 'YYYY-MM-DD';
+      } else if (mode === 'time') {
+        return '00:00';
+      }
+    } else {
+      if (mode === 'date') {
+        return moment(selectedDate).format('YYYY-MM-DD');
+      } else if (mode === 'time') {
+        return moment(selectedDate).format('HH:mm');
+      }
+    }
   }
 
   return (
@@ -21,11 +41,7 @@ function DatePicker({selectedDate, onDateChange, title}) {
       <Text style={styles.titleForm}>{title}</Text>
       <TouchableOpacity style={styles.inputContainer} onPress={openDatePicker}>
         <View style={styles.row}>
-          <Text>
-            {isEmptyInput(selectedDate)
-              ? 'YYYY-MM-DD'
-              : moment(selectedDate).format('YYYY-MM-DD')}
-          </Text>
+          <Text>{displayPlaceholder()}</Text>
           <Text>▼</Text>
         </View>
       </TouchableOpacity>
@@ -33,6 +49,7 @@ function DatePicker({selectedDate, onDateChange, title}) {
         isVisible={isVisible}
         onConfirm={handleDatePicked}
         onCancel={() => setVisible(false)}
+        mode={mode}
       />
     </View>
   );
@@ -40,7 +57,7 @@ function DatePicker({selectedDate, onDateChange, title}) {
 
 const styles = {
   container: {
-    marginTop: 30
+    marginTop: 30,
   },
   inputContainer: {
     marginTop: 8,

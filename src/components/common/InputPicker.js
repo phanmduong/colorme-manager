@@ -3,7 +3,7 @@ import {Text, TouchableOpacity, View, Dimensions} from 'react-native';
 import {CustomPicker} from 'react-native-custom-picker';
 import LinearGradient from 'react-native-linear-gradient';
 import Search from './Search';
-import {getSearchedResults} from '../../helper';
+import {getData, getDefault, getSearchedResults} from '../../helper';
 const {width} = Dimensions.get('window');
 
 const InputPicker = ({
@@ -15,6 +15,11 @@ const InputPicker = ({
   onApiSearch,
   placeholder,
   refPicker,
+  required = false,
+  isAllOptionAvailable = false,
+  allOptionId = -1,
+  allOptionName = 'Tất cả',
+  selectedId,
 }) => {
   const [search, setSearch] = useState('');
 
@@ -80,11 +85,38 @@ const InputPicker = ({
     );
   };
 
+  function finalizedOptions() {
+    if (isApiSearch) {
+      if (isAllOptionAvailable) {
+        return getData(options, allOptionId, allOptionName, null);
+      }
+      return options;
+    } else {
+      if (isAllOptionAvailable) {
+        return getSearchedResults(
+          getData(options, allOptionId, allOptionName, null),
+          search,
+        );
+      }
+      return getSearchedResults(options, search);
+    }
+  }
+
+  function getDefaultValue() {
+    if (selectedId) {
+      return getDefault(finalizedOptions(), selectedId);
+    }
+    return null;
+  }
+
   return (
     <View style={{marginTop: 30}}>
-      <Text style={styles.titleForm}>{title}</Text>
+      <Text style={styles.titleForm}>
+        {title} {required && <Text style={{color: '#C50000'}}>*</Text>}
+      </Text>
       <CustomPicker
-        options={isApiSearch ? options : getSearchedResults(options, search)}
+        options={finalizedOptions()}
+        defaultValue={getDefaultValue()}
         placeholder={placeholder}
         getLabel={(item) => item.name}
         modalAnimationType={'fade'}

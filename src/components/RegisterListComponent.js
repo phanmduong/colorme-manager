@@ -295,6 +295,10 @@ const styles = {
     alignItems: 'center',
     borderRadius: 20,
   },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 };
 
 export default RegisterListComponent;

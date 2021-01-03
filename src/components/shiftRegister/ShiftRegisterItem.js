@@ -84,7 +84,7 @@ class ShiftRegisterItem extends React.Component {
 
 const styles = {
   register: {
-    backgroundColor: '#00B241',
+    backgroundColor: '#32CA41',
     marginVertical: 5,
     paddingHorizontal: 12,
     borderRadius: 5,

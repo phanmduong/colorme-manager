@@ -14,27 +14,37 @@ function CourseInfoContainer(props) {
   }, []);
 
   function loadCourseDetails() {
-    props.courseActions.loadCourseDetails(false, courseId, props.token);
+    props.courseActions.loadCourseDetails(
+      false,
+      courseId,
+      props.token,
+      props.domain,
+    );
   }
 
   function refreshCourseDetails() {
-    props.courseActions.loadCourseDetails(true, courseId, props.token);
+    props.courseActions.loadCourseDetails(
+      true,
+      courseId,
+      props.token,
+      props.domain,
+    );
   }
 
   function deleteLesson(id) {
-    props.courseActions.deleteLesson(id, props.token);
+    props.courseActions.deleteLesson(id, props.token, props.domain);
   }
 
   function duplicateLesson(id) {
-    props.courseActions.duplicateLesson(id, props.token);
+    props.courseActions.duplicateLesson(id, props.token, props.domain);
   }
 
   function changeLessonEvent(id, type) {
-    props.courseActions.changeLessonEvent(id, type, props.token);
+    props.courseActions.changeLessonEvent(id, type, props.token, props.domain);
   }
 
   function deleteLink(id) {
-    props.courseActions.deleteLink(id, props.token);
+    props.courseActions.deleteLink(id, props.token, props.domain);
   }
 
   const courseId = props.navigation.getParam('id');
@@ -71,6 +81,7 @@ function mapStateToProps(state) {
     errorCourseDetails: state.course.errorCourseDetails,
     refreshingCourseDetails: state.course.refreshingCourseDetails,
     courseDetails: state.course.courseDetails,
+    domain: state.login.domain,
   };
 }
 

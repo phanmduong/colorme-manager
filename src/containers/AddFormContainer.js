@@ -14,19 +14,19 @@ function AddFormContainer(props) {
   }, []);
 
   function loadCourses() {
-    props.saveRegisterActions.loadCourses(props.token);
+    props.saveRegisterActions.loadCourses(props.token, props.domain);
   }
 
   function loadDataBase() {
-    props.baseActions.loadDataBase(props.token);
+    props.baseActions.loadDataBase(props.token, props.domain);
   }
 
   function createForm(data) {
-    props.formActions.createForm(data, props.token);
+    props.formActions.createForm(data, props.token, props.domain);
   }
 
   function updateForm(data) {
-    props.formActions.updateForm(data, props.token);
+    props.formActions.updateForm(data, props.token, props.domain);
   }
 
   const editMode = props.navigation.getParam('editMode');
@@ -63,6 +63,7 @@ function mapStateToProps(state) {
     creating: state.form.creating,
     errorCreate: state.form.errorCreate,
     updating: state.form.updating,
+    domain: state.login.domain,
   };
 }
 

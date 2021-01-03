@@ -30,7 +30,6 @@ class DashboardComponent extends React.Component {
   }
 
   handleRefresh = () => {
-    this.props.store.refreshMeetingDetail();
     this.props.refreshNotifications();
     this.props.refreshTasks();
   };
@@ -88,20 +87,20 @@ class DashboardComponent extends React.Component {
           />
         ),
       },
-      {
-        id: '',
-        element: (
-          <CircleTab
-            iconImage={require('../../assets/img/Group_1302.png')}
-            title={'Họp'}
-            backgroundColor={'#FFEEAF'}
-            onPress={() => {
-              this.props.navigation.navigate('Meeting');
-            }}
-          />
-        ),
-        permission_all: true,
-      },
+      // {
+      //   id: '',
+      //   element: (
+      //     <CircleTab
+      //       iconImage={require('../../assets/img/Group_1302.png')}
+      //       title={'Họp'}
+      //       backgroundColor={'#FFEEAF'}
+      //       onPress={() => {
+      //         this.props.navigation.navigate('Meeting');
+      //       }}
+      //     />
+      //   ),
+      //   permission_all: true,
+      // },
       {
         id: 'teaching/evaluate',
         element: (
@@ -115,34 +114,34 @@ class DashboardComponent extends React.Component {
           />
         ),
       },
-      {
-        id: '',
-        element: (
-          <CircleTab
-            iconImage={require('../../assets/img/Group_1299.png')}
-            title={'Lịch học bù'}
-            backgroundColor={'#FFEEAF'}
-            onPress={() => {
-              this.props.navigation.navigate('MakeupClass');
-            }}
-          />
-        ),
-        permission_all: true,
-      },
-      {
-        id: '',
-        element: (
-          <CircleTab
-            iconImage={require('../../assets/img/Group_1303.png')}
-            title={'Danh bạ nhân viên'}
-            backgroundColor={'#B2B3FF'}
-            onPress={() => {
-              this.props.navigation.navigate('Staff');
-            }}
-          />
-        ),
-        permission_all: true,
-      },
+      // {
+      //   id: '',
+      //   element: (
+      //     <CircleTab
+      //       iconImage={require('../../assets/img/Group_1299.png')}
+      //       title={'Lịch học bù'}
+      //       backgroundColor={'#FFEEAF'}
+      //       onPress={() => {
+      //         this.props.navigation.navigate('MakeupClass');
+      //       }}
+      //     />
+      //   ),
+      //   permission_all: true,
+      // },
+      // {
+      //   id: '',
+      //   element: (
+      //     <CircleTab
+      //       iconImage={require('../../assets/img/Group_1303.png')}
+      //       title={'Danh bạ nhân viên'}
+      //       backgroundColor={'#B2B3FF'}
+      //       onPress={() => {
+      //         this.props.navigation.navigate('Staff');
+      //       }}
+      //     />
+      //   ),
+      //   permission_all: true,
+      // },
       // {
       //   id: 'finance/moneycollect',
       //   element: (
@@ -197,20 +196,20 @@ class DashboardComponent extends React.Component {
           />
         ),
       },
-      {
-        id: '',
-        element: (
-          <CircleTab
-            iconImage={require('../../assets/img/Group_1308.png')}
-            title={'Tài liệu'}
-            backgroundColor={'#FFC5B8'}
-            onPress={() => {
-              this.props.navigation.navigate('Document');
-            }}
-          />
-        ),
-        permission_all: true,
-      },
+      // {
+      //   id: '',
+      //   element: (
+      //     <CircleTab
+      //       iconImage={require('../../assets/img/Group_1308.png')}
+      //       title={'Tài liệu'}
+      //       backgroundColor={'#FFC5B8'}
+      //       onPress={() => {
+      //         this.props.navigation.navigate('Document');
+      //       }}
+      //     />
+      //   ),
+      //   permission_all: true,
+      // },
       {
         id: 'dashboard/checkin-checkout',
         element: (
@@ -267,7 +266,6 @@ class DashboardComponent extends React.Component {
   };
 
   render() {
-    const {refreshing} = this.props.store;
     const {isRefreshingNotifications, isLoadingTaskView} = this.props;
     return (
       <ScrollView
@@ -279,9 +277,7 @@ class DashboardComponent extends React.Component {
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
-            refreshing={
-              refreshing || isRefreshingNotifications || isLoadingTaskView
-            }
+            refreshing={isRefreshingNotifications || isLoadingTaskView}
             onRefresh={this.handleRefresh}
           />
         }>
@@ -403,11 +399,6 @@ class DashboardComponent extends React.Component {
               </View>
             ))
           )}
-          <MeetingComponent
-            store={this.props.store}
-            {...this.props}
-            mainScreen={true}
-          />
         </View>
       </ScrollView>
     );

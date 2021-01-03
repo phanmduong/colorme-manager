@@ -53,7 +53,7 @@ export default {
     creating: false,
     loadingCourseDetails: false,
     errorCourseDetails: false,
-    courseDetails: null,
+    courseDetails: {},
     changingEvent: false,
     refreshingCourseDetails: false,
     deletingLesson: false,
@@ -638,10 +638,5 @@ export default {
     updating: false,
     duplicating: false,
     deleting: false,
-  },
-  tab: {
-    tabs: [],
-    loading: false,
-    error: false,
   },
 };

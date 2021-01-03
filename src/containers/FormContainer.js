@@ -20,32 +20,35 @@ function FormContainer(props) {
       props.currentPage + 1,
       props.search,
       props.token,
+      props.domain,
     );
   }
 
   function loadSources() {
-    props.saveRegisterActions.loadSources(props.token);
+    props.saveRegisterActions.loadSources(props.token, props.domain);
   }
 
   function loadCampaigns() {
-    props.saveRegisterActions.loadCampaigns(props.token);
+    props.saveRegisterActions.loadCampaigns(props.token, props.domain);
   }
 
   function refreshForms() {
-    props.formActions.refreshForms(props.search, props.token);
+    props.formActions.refreshForms(props.search, props.token, props.domain);
   }
 
   function searchForms(search) {
-    props.formActions.searchForms(search, props.token);
+    props.formActions.searchForms(search, props.token, props.domain);
   }
 
   function duplicateForm(id) {
-    props.formActions.duplicateForm(id, props.token);
+    props.formActions.duplicateForm(id, props.token, props.domain);
   }
 
   function deleteForm(id) {
-    props.formActions.deleteForm(id, props.token);
+    props.formActions.deleteForm(id, props.token, props.domain);
   }
+
+  console.log(props.forms);
 
   return (
     <FormComponent
@@ -77,6 +80,7 @@ function mapStateToProps(state) {
     isLoadingCampaigns: state.saveRegister.isLoadingCampaigns,
     errorLoadingCampaigns: state.saveRegister.errorLoadingCampaigns,
     campaigns: state.saveRegister.campaigns,
+    domain: state.login.domain,
   };
 }
 

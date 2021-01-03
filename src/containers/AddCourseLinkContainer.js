@@ -7,7 +7,7 @@ import NavigationLeftHeader from '../components/common/NavigationLeftHeader';
 
 function AddCourseLinkContainer(props) {
   function createLink(data) {
-    props.courseActions.createLink(data, props.token);
+    props.courseActions.createLink(data, props.token, props.domain);
   }
 
   const courseId = props.navigation.getParam('courseId');
@@ -34,6 +34,7 @@ function mapStateToProps(state) {
     token: state.login.token,
     courseDetails: state.course.courseDetails,
     creatingLink: state.course.creatingLink,
+    domain: state.login.domain,
   };
 }
 

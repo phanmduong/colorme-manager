@@ -25,7 +25,7 @@ export function beginDataCourseRefresh() {
   };
 }
 
-export function loadDataCourse(refreshing, page, search, token) {
+export function loadDataCourse(refreshing, page, search, token, domain) {
   return function (dispatch) {
     if (!refreshing) {
       dispatch(beginDataCourseLoad());
@@ -33,7 +33,7 @@ export function loadDataCourse(refreshing, page, search, token) {
       dispatch(beginDataCourseRefresh());
     }
     courseApi
-      .loadCourseApi(sourceCancel, page, search, token)
+      .loadCourseApi(sourceCancel, page, search, token, domain)
       .then(function (res) {
         dispatch(loadDataSuccessful(res));
       })
@@ -84,27 +84,27 @@ function beginCourseSearch(search) {
   };
 }
 
-export function onRefresh(search, token) {
+export function onRefresh(search, token, domain) {
   return function (dispatch) {
     dispatch(beginCourseSearch(search));
-    dispatch(loadDataCourse(true, 1, search, token));
+    dispatch(loadDataCourse(true, 1, search, token, domain));
   };
 }
 
-export function onSearch(search, token) {
+export function onSearch(search, token, domain) {
   sourceCancel.cancel('Canceled by course api.');
   sourceCancel = CancelToken.source();
   return function (dispatch) {
     dispatch(beginCourseSearch(search));
-    dispatch(loadDataCourse(false, 1, search, token));
+    dispatch(loadDataCourse(false, 1, search, token, domain));
   };
 }
 
-export function onStatusChange(id, status, token) {
+export function onStatusChange(id, status, token, domain) {
   return function (dispatch) {
     dispatch(beginCourseStatusChange());
     courseApi
-      .changeStatus(id, status, token)
+      .changeStatus(id, status, token, domain)
       .then((res) => {
         Alert.alert('Thông báo', 'Thay đổi trạng thái thành công');
       })
@@ -132,11 +132,11 @@ function courseStatusChangeComplete() {
   };
 }
 
-export function loadParentCourses(token) {
+export function loadParentCourses(token, domain) {
   return function (dispatch) {
     dispatch(beginLoadParentCourses());
     courseApi
-      .loadParentCourses(token)
+      .loadParentCourses(token, domain)
       .then((res) => {
         dispatch(loadParentCoursesSuccess(res));
       })
@@ -172,11 +172,11 @@ function loadParentCoursesError() {
   };
 }
 
-export function createCourse(editMode, data, token) {
+export function createCourse(editMode, data, token, domain) {
   return function (dispatch) {
     dispatch(beginCreateCourse());
     courseApi
-      .createCourse(data, token)
+      .createCourse(data, token, domain)
       .then((res) => {
         dispatch(createCourseSuccess(res, editMode));
         Alert.alert('Thông báo', 'Thêm môn học thành công');
@@ -213,7 +213,7 @@ function createCourseComplete() {
   };
 }
 
-export function loadCourseDetails(refreshing, id, token) {
+export function loadCourseDetails(refreshing, id, token, domain) {
   return function (dispatch) {
     if (!refreshing) {
       dispatch(beginLoadCourseDetails());
@@ -221,7 +221,7 @@ export function loadCourseDetails(refreshing, id, token) {
       dispatch(beginRefreshCourseDetails());
     }
     courseApi
-      .loadCourseDetails(id, token)
+      .loadCourseDetails(id, token, domain)
       .then((res) => dispatch(loadCourseDetailsSuccess(res)))
       .catch((error) => {
         dispatch(loadCourseDetailsError());
@@ -265,11 +265,11 @@ function loadCourseDetailsError() {
   };
 }
 
-export function changeLessonEvent(id, type, token) {
+export function changeLessonEvent(id, type, token, domain) {
   return function (dispatch) {
     dispatch(beginChangeLessonEvent());
     courseApi
-      .changeLessonEvent(id, type, token)
+      .changeLessonEvent(id, type, token, domain)
       .then((res) => {
         dispatch(changeLessonEventSuccess(res));
         Alert.alert('Thông báo', 'Thay đổi sự kiện thành công');
@@ -305,11 +305,11 @@ function changeLessonEventComplete() {
   };
 }
 
-export function deleteLesson(id, token) {
+export function deleteLesson(id, token, domain) {
   return function (dispatch) {
     dispatch(beginDeleteLesson());
     courseApi
-      .deleteLesson(id, token)
+      .deleteLesson(id, token, domain)
       .then((res) => {
         {
           dispatch(deleteLessonSuccess(id));
@@ -356,11 +356,11 @@ export function reset() {
   };
 }
 
-export function duplicateLesson(id, token) {
+export function duplicateLesson(id, token, domain) {
   return function (dispatch) {
     dispatch(beginDuplicateLesson());
     courseApi
-      .duplicateLesson(id, token)
+      .duplicateLesson(id, token, domain)
       .then((res) => {
         dispatch(duplicateLessonSuccess(id));
         Alert.alert('Thông báo', 'Nhân bản buổi học thành công');
@@ -396,11 +396,11 @@ function duplicateLessonComplete() {
   };
 }
 
-export function createLesson(data, token) {
+export function createLesson(data, token, domain) {
   return function (dispatch) {
     dispatch(beginCreateLesson());
     courseApi
-      .createLesson(data, token)
+      .createLesson(data, token, domain)
       .then((res) => {
         dispatch(createLessonSuccess(res));
         Alert.alert('Thông báo', 'Thêm buổi học thành công');
@@ -440,14 +440,14 @@ export function resetCourseDetails() {
   };
 }
 
-export function editLesson(data, token) {
+export function editLesson(data, token, domain) {
   return function (dispatch) {
     dispatch(beginEditLesson());
     courseApi
-      .editLesson(data, token)
+      .editLesson(data, token, domain)
       .then((res) => {
         Alert.alert('Thông báo', 'Sửa buổi học thành công');
-        dispatch(loadCourseDetails(true, data.course_id, token));
+        dispatch(loadCourseDetails(true, data.course_id, token, domain));
       })
       .catch((error) => {
         Alert.alert('Thông báo', 'Có lỗi xảy ra');
@@ -473,11 +473,11 @@ function editLessonComplete() {
   };
 }
 
-export function createExam(data, token) {
+export function createExam(data, token, domain) {
   return function (dispatch) {
     dispatch(beginCreateExam());
     courseApi
-      .createExam(data, token)
+      .createExam(data, token, domain)
       .then((res) => {
         dispatch(createExamSuccess(res));
         Alert.alert('Thông báo', 'Tạo bài kiểm tra thành công');
@@ -513,11 +513,11 @@ function createExamComplete() {
   };
 }
 
-export function createLink(data, token) {
+export function createLink(data, token, domain) {
   return function (dispatch) {
     dispatch(beginCreateLink());
     courseApi
-      .createLink(data, token)
+      .createLink(data, token, domain)
       .then((res) => {
         dispatch(createLinkSuccess(res));
         Alert.alert('Thông báo', 'Tạo tài liệu thành công');
@@ -553,11 +553,11 @@ function createLinkComplete() {
   };
 }
 
-export function deleteLink(id, token) {
+export function deleteLink(id, token, domain) {
   return function (dispatch) {
     dispatch(beginDeleteLink());
     courseApi
-      .deleteLink(id, token)
+      .deleteLink(id, token, domain)
       .then((res) => {
         dispatch(deleteLinkSuccess(id));
         Alert.alert('Thông báo', 'Xóa tài liệu thành công');

@@ -8,9 +8,9 @@ import NavigationLeftHeader from '../components/common/NavigationLeftHeader';
 function AddCourseContainer(props) {
   function createCourse(data) {
     if (editMode) {
-      props.courseActions.createCourse(true, data, props.token);
+      props.courseActions.createCourse(true, data, props.token, props.domain);
     } else {
-      props.courseActions.createCourse(false, data, props.token);
+      props.courseActions.createCourse(false, data, props.token, props.domain);
     }
   }
 
@@ -21,7 +21,7 @@ function AddCourseContainer(props) {
   }, []);
 
   function loadCourseDetails() {
-    props.courseActions.loadCourseDetails(id, props.token);
+    props.courseActions.loadCourseDetails(false, id, props.token, props.domain);
   }
 
   const editMode = props.navigation.getParam('editMode');
@@ -51,6 +51,7 @@ function mapStateToProps(state) {
     loadingCourseDetails: state.course.loadingCourseDetails,
     errorCourseDetails: state.course.errorCourseDetails,
     courseDetails: state.course.courseDetails,
+    domain: state.login.domain,
   };
 }
 

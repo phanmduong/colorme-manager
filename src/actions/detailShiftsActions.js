@@ -1,11 +1,11 @@
 import * as detailShiftsApi from '../apis/detailShiftsApi';
 import * as type from '../constants/actionTypes';
 
-export function loadDetailShifts(baseId, id, week, token) {
+export function loadDetailShifts(baseId, id, week, token, domain) {
   return function(dispatch) {
     dispatch(beginLoadDetailShifts());
     detailShiftsApi
-      .loadDetailShifts(baseId, id, week, token)
+      .loadDetailShifts(baseId, id, week, token, domain)
       .then(function(res) {
         dispatch(loadDetailShiftsSuccessful(res));
       })

@@ -7,11 +7,11 @@ import NavigationLeftHeader from '../components/common/NavigationLeftHeader';
 
 function AddCourseLessonContainer(props) {
   function addLesson(data) {
-    return props.courseActions.createLesson(data, props.token);
+    return props.courseActions.createLesson(data, props.token, props.domain);
   }
 
   function editLesson(data) {
-    props.courseActions.editLesson(data, props.token);
+    props.courseActions.editLesson(data, props.token, props.domain);
   }
 
   const courseId = props.navigation.getParam('courseId');
@@ -44,6 +44,7 @@ function mapStateToProps(state) {
     courseDetails: state.course.courseDetails,
     addingLesson: state.course.addingLesson,
     editingLesson: state.course.editingLesson,
+    domain: state.login.domain,
   };
 }
 

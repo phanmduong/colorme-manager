@@ -21,23 +21,24 @@ function CourseContainer(props) {
       props.currentPage + 1,
       props.search,
       props.token,
+      props.domain,
     );
   }
 
   function onRefresh() {
-    props.courseActions.onRefresh(props.search, props.token);
+    props.courseActions.onRefresh(props.search, props.token, props.domain);
   }
 
   function onSearch(search) {
-    props.courseActions.onSearch(search, props.token);
+    props.courseActions.onSearch(search, props.token, props.domain);
   }
 
   function onStatusChange(id, status) {
-    props.courseActions.onStatusChange(id, status, props.token);
+    props.courseActions.onStatusChange(id, status, props.token, props.domain);
   }
 
   function loadParentCourses() {
-    props.courseActions.loadParentCourses(props.token);
+    props.courseActions.loadParentCourses(props.token, props.domain);
   }
 
   return (
@@ -75,6 +76,7 @@ function mapStateToProps(state) {
     parentCourses: state.course.parentCourses,
     loadingParentCourses: state.course.loadingParentCourses,
     errorParentCourses: state.course.errorParentCourses,
+    domain: state.login.domain,
   };
 }
 

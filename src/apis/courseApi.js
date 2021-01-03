@@ -4,9 +4,9 @@
 import axios from 'axios';
 import * as env from '../constants/env';
 
-export function loadCourseApi(sourceCancel, page, search, token) {
+export function loadCourseApi(sourceCancel, page, search, token, domain) {
   let url =
-    env.MANAGE_API_URL_V3 +
+    env.manageApiUrlV3(domain) +
     '/v2/course/get-all?token=' +
     token +
     '&page=' +
@@ -17,9 +17,9 @@ export function loadCourseApi(sourceCancel, page, search, token) {
   return axios.get(url, {cancelToken: sourceCancel.token});
 }
 
-export function changeStatus(id, status, token) {
+export function changeStatus(id, status, token, domain) {
   let url =
-    env.MANAGE_API_URL_V3 +
+    env.manageApiUrlV3(domain) +
     '/v2/course/' +
     id +
     '/change-status?token=' +
@@ -29,13 +29,15 @@ export function changeStatus(id, status, token) {
   });
 }
 
-export function loadParentCourses(token) {
-  let url = env.MANAGE_API_URL_V4 + '/course/parent-courses?token=' + token;
+export function loadParentCourses(token, domain) {
+  let url =
+    env.manageApiUrlV4(domain) + '/course/parent-courses?token=' + token;
   return axios.get(url);
 }
 
-export function createCourse(data, token) {
-  let url = env.MANAGE_API_URL_V3 + '/v2/course/create-edit?token=' + token;
+export function createCourse(data, token, domain) {
+  let url =
+    env.manageApiUrlV3(domain) + '/v2/course/create-edit?token=' + token;
   return axios.post(url, {
     name: data.name,
     description: data.description,
@@ -65,24 +67,30 @@ export function createCourse(data, token) {
   });
 }
 
-export function loadCourseDetails(id, token) {
+export function loadCourseDetails(id, token, domain) {
   let url =
-    env.MANAGE_API_URL_V3 + '/v2/course/get-detailed/' + id + '?token=' + token;
+    env.manageApiUrlV3(domain) +
+    '/v2/course/get-detailed/' +
+    id +
+    '?token=' +
+    token;
   return axios.get(url);
 }
 
-export function changeLessonEvent(id, type, token) {
+export function changeLessonEvent(id, type, token, domain) {
   let url =
-    env.MANAGE_API_URL_V3 + '/v2/lesson/create-lesson-event?token=' + token;
+    env.manageApiUrlV3(domain) +
+    '/v2/lesson/create-lesson-event?token=' +
+    token;
   return axios.post(url, {
     lesson_id: id,
     type: type,
   });
 }
 
-export function deleteLesson(id, token) {
+export function deleteLesson(id, token, domain) {
   let url =
-    env.MANAGE_API_URL_V3 +
+    env.manageApiUrlV3(domain) +
     '/v2/lesson/delete-lesson/' +
     id +
     '?token=' +
@@ -90,15 +98,19 @@ export function deleteLesson(id, token) {
   return axios.delete(url);
 }
 
-export function duplicateLesson(id, token) {
+export function duplicateLesson(id, token, domain) {
   let url =
-    env.MANAGE_API_URL_V3 + '/v2/lesson/' + id + '/duplicate?token=' + token;
+    env.manageApiUrlV3(domain) +
+    '/v2/lesson/' +
+    id +
+    '/duplicate?token=' +
+    token;
   return axios.post(url);
 }
 
-export function createLesson(data, token) {
+export function createLesson(data, token, domain) {
   let url =
-    env.MANAGE_API_URL_V3 +
+    env.manageApiUrlV3(domain) +
     '/v2/lesson/create-lesson/' +
     data.course_id +
     '?token=' +
@@ -115,9 +127,9 @@ export function createLesson(data, token) {
   });
 }
 
-export function editLesson(data, token) {
+export function editLesson(data, token, domain) {
   let url =
-    env.MANAGE_API_URL_V3 +
+    env.manageApiUrlV3(domain) +
     '/v2/lesson/edit-lesson/' +
     data.id +
     '?token=' +
@@ -134,8 +146,8 @@ export function editLesson(data, token) {
   });
 }
 
-export function createExam(data, token) {
-  let url = env.MANAGE_API_URL_V4 + '/exam/template/create?token=' + token;
+export function createExam(data, token, domain) {
+  let url = env.manageApiUrlV4(domain) + '/exam/template/create?token=' + token;
   return axios.post(url, {
     avatar_url: data.avatar_url,
     course_id: data.course_id,
@@ -148,8 +160,8 @@ export function createExam(data, token) {
   });
 }
 
-export function uploadImage(uri, token) {
-  let url = env.MANAGE_API_URL_V3 + '/file/upload?token=' + token;
+export function uploadImage(uri, token, domain) {
+  let url = env.manageApiUrlV3(domain) + '/file/upload?token=' + token;
   let formData = new FormData();
   formData.append('file', {
     uri: uri,
@@ -163,8 +175,9 @@ export function uploadImage(uri, token) {
   });
 }
 
-export function createLink(data, token) {
-  let url = env.MANAGE_API_URL_V3 + '/v2/course/create-link?token=' + token;
+export function createLink(data, token, domain) {
+  let url =
+    env.manageApiUrlV3(domain) + '/v2/course/create-link?token=' + token;
   return axios.post(url, {
     course_id: data.course_id,
     link_description: data.link_description,
@@ -173,8 +186,12 @@ export function createLink(data, token) {
   });
 }
 
-export function deleteLink(id, token) {
+export function deleteLink(id, token, domain) {
   let url =
-    env.MANAGE_API_URL_V3 + '/v2/course/delete-link/' + id + '?token=' + token;
+    env.manageApiUrlV3(domain) +
+    '/v2/course/delete-link/' +
+    id +
+    '?token=' +
+    token;
   return axios.delete(url);
 }

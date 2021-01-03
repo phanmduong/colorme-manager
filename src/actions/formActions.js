@@ -6,7 +6,7 @@ import {Alert} from 'react-native';
 let CancelToken = axios.CancelToken;
 let sourceCancel = CancelToken.source();
 
-export function getForms(refreshing, page, search, token) {
+export function getForms(refreshing, page, search, token, domain) {
   return function (dispatch) {
     if (!refreshing) {
       dispatch(beginLoadForms());
@@ -14,8 +14,9 @@ export function getForms(refreshing, page, search, token) {
       dispatch(beginRefreshForms());
     }
     formApi
-      .getForms(sourceCancel, page, search, token)
+      .getForms(sourceCancel, page, search, token, domain)
       .then((res) => {
+        console.log(res.data);
         dispatch(loadFormsSuccess(res));
       })
       .catch((error) => {
@@ -76,10 +77,10 @@ function beginSearchForms(search) {
   };
 }
 
-export function refreshForms(search, token) {
+export function refreshForms(search, token, domain) {
   return function (dispatch) {
     dispatch(beginSearchForms(search));
-    dispatch(getForms(true, 1, search, token));
+    dispatch(getForms(true, 1, search, token, domain));
   };
 }
 
@@ -93,20 +94,20 @@ export function reset() {
   };
 }
 
-export function searchForms(search, token) {
+export function searchForms(search, token, domain) {
   sourceCancel.cancel('Canceled by form api.');
   sourceCancel = CancelToken.source();
   return function (dispatch) {
     dispatch(beginSearchForms(search));
-    dispatch(getForms(false, 1, search, token));
+    dispatch(getForms(false, 1, search, token, domain));
   };
 }
 
-export function createForm(data, token) {
+export function createForm(data, token, domain) {
   return function (dispatch) {
     dispatch(beginCreateForm());
     formApi
-      .createForm(data, token)
+      .createForm(data, token, domain)
       .then((res) => {
         dispatch(createFormSuccess(res));
         Alert.alert('Thông báo', 'Thêm form thành công');
@@ -142,11 +143,11 @@ function createFormError() {
   };
 }
 
-export function updateForm(data, token) {
+export function updateForm(data, token, domain) {
   return function (dispatch) {
     dispatch(beginUpdateForm());
     formApi
-      .updateForm(data, token)
+      .updateForm(data, token, domain)
       .then((res) => {
         dispatch(updateFormSuccess(res));
         Alert.alert('Thông báo', 'Sửa form thành công');
@@ -182,11 +183,11 @@ function updateFormComplete() {
   };
 }
 
-export function duplicateForm(id, token) {
+export function duplicateForm(id, token, domain) {
   return function (dispatch) {
     dispatch(beginDuplicateForm());
     formApi
-      .duplicateForm(id, token)
+      .duplicateForm(id, token, domain)
       .then((res) => {
         dispatch(duplicateFormSuccess(res));
         Alert.alert('Thông báo', 'Nhân bản form thành công');
@@ -222,11 +223,11 @@ function duplicateFormComplete() {
   };
 }
 
-export function deleteForm(id, token) {
+export function deleteForm(id, token, domain) {
   return function (dispatch) {
     dispatch(beginDeleteForm());
     formApi
-      .deleteForm(id, token)
+      .deleteForm(id, token, domain)
       .then((res) => {
         dispatch(deleteFormSuccess(id));
         Alert.alert('Thông báo', 'Xóa form thành công');

@@ -7,7 +7,7 @@ import AddCourseExamComponent from '../components/AddCourseExamComponent';
 
 function AddCourseExamContainer(props) {
   function createExam(data) {
-    props.courseActions.createExam(data, props.token);
+    props.courseActions.createExam(data, props.token, props.domain);
   }
 
   const courseId = props.navigation.getParam('courseId');
@@ -34,6 +34,7 @@ function mapStateToProps(state) {
     token: state.login.token,
     courseDetails: state.course.courseDetails,
     creatingExam: state.course.creatingExam,
+    domain: state.login.domain,
   };
 }
 

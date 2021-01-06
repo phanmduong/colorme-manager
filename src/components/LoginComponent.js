@@ -76,8 +76,8 @@ class LoginComponent extends React.Component {
           style={styles.container}>
           <View style={styles.logoContainer}>
             <Image
-              source={require('../../assets/img/alibabaLogo.jpg')}
-              style={{transform: [{scale: 0.3}], borderRadius: 30}}
+              source={require('../../assets/img/colorMeLogo.png')}
+              style={{width: 100, height: 100, borderRadius: 8}}
             />
           </View>
           <View style={styles.loginContainer}>
@@ -158,7 +158,7 @@ const styles = {
     borderRadius: 25,
   },
   btnSubmit: {
-    backgroundColor: '#FC7800',
+    backgroundColor: '#C50000',
     paddingHorizontal: 20,
     borderRadius: 25,
     height: 45,

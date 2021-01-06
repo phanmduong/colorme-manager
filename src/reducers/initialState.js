@@ -22,7 +22,7 @@ export default {
     isGetDataLocalSuccessful: false,
     isCheckIn: false,
     deviceUser: {},
-    domain: 'alibaba',
+    domain: 'colorme',
   },
   tab: {
     tabs: [],

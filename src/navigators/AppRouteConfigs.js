@@ -62,7 +62,7 @@ import AddLeadsContainer from '../containers/AddLeadsContainer';
 import StaffContainer from '../containers/StaffContainer';
 import ClockManageContainer from '../containers/ClockManageContainer';
 import ClockManageWorkShiftDetailsContainer from '../containers/ClockManageWorkShiftDetailsContainer';
-import ListStudentAttendanceRegisterContainer from "../containers/ListStudentAttendanceRegisterContainer";
+import ListStudentAttendanceRegisterContainer from '../containers/ListStudentAttendanceRegisterContainer';
 import KPIContainer from '../containers/KPIContainer';
 import ClassInfoContainer from '../containers/ClassInfoContainer';
 import AddKPIContainer from '../containers/AddKPIContainer';
@@ -596,6 +596,13 @@ const TabDashboard = createStackNavigator(
     },
     AddCourseLink: {
       screen: AddCourseLinkContainer,
+      navigationOptions: () => ({
+        headerTintColor: 'black',
+        headerTitleStyle: {color: 'black'},
+      }),
+    },
+    ShiftRegister: {
+      screen: ShiftRegisterContainer,
       navigationOptions: () => ({
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},

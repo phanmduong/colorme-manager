@@ -94,7 +94,6 @@ class RegisterListComponent extends React.Component {
           onSelectSource={this.props.onSelectSource}
           sources={this.props.sources}
           sourceId={this.props.sourceId}
-          reset={this.props.reset}
           resetModal={this.resetModal}
           salers={this.props.salers}
           isLoadingCampaigns={this.props.isLoadingCampaigns}
@@ -162,7 +161,6 @@ class RegisterListComponent extends React.Component {
   renderContent() {
     return (
       <List
-        style={styles.list}
         onEndReached={this.props.loadDataRegisterList}
         dataArray={this.props.registerList}
         contentContainerStyle={{flexGrow: 1}}
@@ -232,11 +230,14 @@ class RegisterListComponent extends React.Component {
   }
 
   render() {
-    return <View>{this.renderContent()}</View>;
+    return <View style={styles.wrapper}>{this.renderContent()}</View>;
   }
 }
 
 const styles = {
+  wrapper: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',

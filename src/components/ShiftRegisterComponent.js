@@ -108,7 +108,7 @@ class ShiftRegisterComponent extends React.Component {
     return <View />;
   }
 
-  renderCoursePickerField = settings => {
+  renderCoursePickerField = (settings) => {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
@@ -130,7 +130,7 @@ class ShiftRegisterComponent extends React.Component {
     );
   };
 
-  renderCoursePickerOption = settings => {
+  renderCoursePickerOption = (settings) => {
     const {item, getLabel} = settings;
     return (
       <View style={styles.options}>
@@ -165,7 +165,7 @@ class ShiftRegisterComponent extends React.Component {
     );
   };
 
-  renderBasePickerField = settings => {
+  renderBasePickerField = (settings) => {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
@@ -187,7 +187,7 @@ class ShiftRegisterComponent extends React.Component {
     );
   };
 
-  renderBasePickerOption = settings => {
+  renderBasePickerOption = (settings) => {
     const {item, getLabel} = settings;
     return (
       <View style={styles.options}>
@@ -225,75 +225,58 @@ class ShiftRegisterComponent extends React.Component {
       }
 
       return (
-        <Container
-          style={
-            isIphoneX()
-              ? {flex: 1, marginTop: getStatusBarHeight() + 10}
-              : {flex: 1, marginTop: 20}
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={self.props.isLoadingShiftRegister}
+              onRefresh={self.loadDataShiftRegister}
+            />
           }>
-          <ScrollView
-            refreshControl={
-              <RefreshControl
-                refreshing={self.props.isLoadingShiftRegister}
-                onRefresh={self.loadDataShiftRegister}
-              />
-            }>
-            <View style={styles.headerContainer}>
-              <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Profile')}>
-                <Image
-                  source={{uri: this.props.user.avatar_url}}
-                  style={styles.headerAva}
-                />
-              </TouchableOpacity>
-              <Text style={styles.headerTitle}>Đăng ký lịch trực</Text>
+          <View style={styles.containerPicker}>
+            <CustomPicker
+              options={courseOptions}
+              defaultValue={courseOptions[0]}
+              getLabel={(item) => item.name}
+              modalAnimationType={'fade'}
+              optionTemplate={this.renderCoursePickerOption}
+              fieldTemplate={this.renderCoursePickerField}
+              headerTemplate={this.renderCoursePickerHeader}
+              footerTemplate={this.renderCoursePickerFooter}
+              modalStyle={{
+                borderRadius: 6,
+              }}
+              onValueChange={(value) => {
+                this.props.onSelectGenId(value.id);
+              }}
+            />
+            <CustomPicker
+              options={baseOptions}
+              defaultValue={baseOptions[0]}
+              getLabel={(item) => item.name}
+              modalAnimationType={'fade'}
+              optionTemplate={this.renderBasePickerOption}
+              fieldTemplate={this.renderBasePickerField}
+              headerTemplate={this.renderBasePickerHeader}
+              footerTemplate={this.renderCoursePickerFooter}
+              modalStyle={{
+                borderRadius: 6,
+              }}
+              onValueChange={(value) => {
+                this.props.onSelectBaseId(value.id);
+              }}
+            />
+          </View>
+          {!this.props.isLoadingShiftRegister &&
+          (this.props.errorShiftRegister ||
+            (this.props.shiftRegisterData.weeks &&
+              this.props.shiftRegisterData.weeks.length <= 0)) ? (
+            this.errorData()
+          ) : (
+            <View style={{flex: 1}}>
+              <ScrollView>{this.showShiftRegister()}</ScrollView>
             </View>
-            <View style={styles.containerPicker}>
-              <CustomPicker
-                options={courseOptions}
-                defaultValue={courseOptions[0]}
-                getLabel={item => item.name}
-                modalAnimationType={'fade'}
-                optionTemplate={this.renderCoursePickerOption}
-                fieldTemplate={this.renderCoursePickerField}
-                headerTemplate={this.renderCoursePickerHeader}
-                footerTemplate={this.renderCoursePickerFooter}
-                modalStyle={{
-                  borderRadius: 6,
-                }}
-                onValueChange={value => {
-                  this.props.onSelectGenId(value.id);
-                }}
-              />
-              <CustomPicker
-                options={baseOptions}
-                defaultValue={baseOptions[0]}
-                getLabel={item => item.name}
-                modalAnimationType={'fade'}
-                optionTemplate={this.renderBasePickerOption}
-                fieldTemplate={this.renderBasePickerField}
-                headerTemplate={this.renderBasePickerHeader}
-                footerTemplate={this.renderCoursePickerFooter}
-                modalStyle={{
-                  borderRadius: 6,
-                }}
-                onValueChange={value => {
-                  this.props.onSelectBaseId(value.id);
-                }}
-              />
-            </View>
-            {!this.props.isLoadingShiftRegister &&
-            (this.props.errorShiftRegister ||
-              (this.props.shiftRegisterData.weeks &&
-                this.props.shiftRegisterData.weeks.length <= 0)) ? (
-              this.errorData()
-            ) : (
-              <View style={{flex: 1}}>
-                <ScrollView>{this.showShiftRegister()}</ScrollView>
-              </View>
-            )}
-          </ScrollView>
-        </Container>
+          )}
+        </ScrollView>
       );
     }
   }

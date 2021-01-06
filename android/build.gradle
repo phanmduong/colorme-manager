@@ -10,6 +10,7 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven { url 'https://www.jitpack.io' }
     }
     dependencies {
         classpath('com.android.tools.build:gradle:4.0.1')
@@ -25,8 +26,8 @@ allprojects {
                 project ->
                     if (project.hasProperty("android")) {
                         android {
-                            compileSdkVersion = 29
-                            buildToolsVersion = "29.0.2"
+                            compileSdkVersion = 28
+                            buildToolsVersion = "28.0.3"
                         }
                     }
             }
@@ -44,6 +45,5 @@ allprojects {
 
         google()
         jcenter()
-        maven { url 'https://www.jitpack.io' }
     }
 }

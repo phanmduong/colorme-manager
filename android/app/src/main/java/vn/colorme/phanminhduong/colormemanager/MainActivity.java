@@ -1,4 +1,4 @@
-package vn.edu.alibabaenglish.keetool.app.alibabamanagenew;
+package vn.colorme.phanminhduong.colormemanager;
 
 import android.os.Bundle;
 

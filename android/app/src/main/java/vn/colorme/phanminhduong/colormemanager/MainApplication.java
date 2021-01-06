@@ -1,11 +1,8 @@
-package vn.edu.alibabaenglish.keetool.app.alibabamanagenew;
+package vn.colorme.phanminhduong.colormemanager;
 
 import androidx.multidex.MultiDexApplication;
-import android.content.Context;
 
 import com.facebook.react.PackageList;
-import com.facebook.hermes.reactexecutor.HermesExecutorFactory;
-import com.facebook.react.bridge.JavaScriptExecutorFactory;
 import com.facebook.react.ReactApplication;
 import com.github.yamill.orientation.OrientationPackage;
 import com.facebook.react.ReactNativeHost;
@@ -13,14 +10,22 @@ import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.github.yamill.orientation.OrientationPackage;
 import com.facebook.react.ReactInstanceManager;
+
+import android.content.Context;
 import java.lang.reflect.InvocationTargetException;
+
 import java.util.List;
 
-import vn.edu.alibabaenglish.keetool.app.alibabamanagenew.modules.LocationPackage;
+import vn.colorme.phanminhduong.colormemanager.modules.LocationPackage;
 
 public class MainApplication extends MultiDexApplication implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
+
+//         @Override
+//             protected String getJSBundleFile() {
+//                 return CodePush.getJSBundleFile();
+//             }
 
     @Override
     public boolean getUseDeveloperSupport() {
@@ -55,7 +60,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
   }
 
-  /**
+   /**
      * Loads Flipper in React Native templates. Call this in the onCreate method with something like
      * initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
      *

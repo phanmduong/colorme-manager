@@ -35,6 +35,10 @@ class RegisterListContainer extends React.Component {
     this.loadCourses();
   }
 
+  componentWillUnmount() {
+    this.reset();
+  }
+
   loadCampaigns = () => {
     this.props.saveRegisterActions.loadCampaigns(
       this.props.token,
@@ -447,7 +451,6 @@ class RegisterListContainer extends React.Component {
         isLoadingStatuses={this.props.isLoadingStatuses}
         isLoadingCampaigns={this.props.isLoadingCampaigns}
         isLoadingSalers={this.props.isLoadingSalers}
-        reset={this.reset}
         salers={this.props.salers}
         classId={this.props.classId}
         isLoadingFilterClasses={this.props.isLoadingFilterClasses}

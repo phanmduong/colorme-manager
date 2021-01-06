@@ -26,6 +26,6 @@ export function manageApiUrlV4(domain) {
   return baseUrl(domain) + '/manageapi/v4';
 }
 
-export function manageApiUrl2222(domain) {
-  return baseUrl(domain) + ':2222/api/auth';
+export function manageApiUrlAuth(domain) {
+  return `https://${domain.toLowerCase()}.eduto.net/api/auth`;
 }

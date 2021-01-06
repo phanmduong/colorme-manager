@@ -15,7 +15,7 @@ function DateRangePicker({
   mode = 'form',
   containerStyle,
   dateType = 'unix',
-  apply,
+  apply = () => null,
 }) {
   const [isVisible, setVisible] = useState(false);
 

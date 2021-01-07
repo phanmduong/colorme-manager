@@ -3,10 +3,4 @@
 
     <item android:drawable="@color/red"/>
 
-    <item android:width="200dp"
-        android:height="200dp"
-        android:drawable="@mipmap/icon"
-        android:gravity="center"/>
-
-
 </layer-list>

@@ -19,6 +19,8 @@ import Spinkit from 'react-native-spinkit';
 import {convertVietText, isEmptyInput} from '../helper';
 import theme from '../styles';
 import TagItem from './common/TagItem';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import SubmitButton from './common/SubmitButton';
 var {height, width} = Dimensions.get('window');
 
 class AddLeadsComponent extends React.Component {
@@ -336,14 +338,16 @@ class AddLeadsComponent extends React.Component {
               <View style={styles.expandContainer}>
                 <Text style={styles.expandTitle}>Mở rộng</Text>
                 {!this.state.expanded ? (
-                  <Image
-                    source={require('../../assets/img/expand-arrow.png')}
-                    style={styles.expandIcon}
+                  <MaterialIcons
+                    name={'expand-more'}
+                    color={'black'}
+                    size={20}
                   />
                 ) : (
-                  <Image
-                    source={require('../../assets/img/collapse-arrow.png')}
-                    style={styles.expandIcon}
+                  <MaterialIcons
+                    name={'expand-less'}
+                    color={'black'}
+                    size={20}
                   />
                 )}
               </View>
@@ -540,24 +544,12 @@ class AddLeadsComponent extends React.Component {
                 </View>
               </View>
             ) : null}
-            <TouchableOpacity onPress={() => this.saveLead()}>
-              <LinearGradient
-                colors={['#E26800', '#E00000']}
-                start={{x: 0, y: 0}}
-                end={{x: 1, y: 0}}
-                style={styles.btnSubmit}>
-                {!this.props.isSavingLead ? (
-                  <Text style={{color: 'white'}}>Tạo lead</Text>
-                ) : (
-                  <Spinkit
-                    isVisible
-                    color="white"
-                    type="ThreeBounce"
-                    size={40}
-                  />
-                )}
-              </LinearGradient>
-            </TouchableOpacity>
+            <SubmitButton
+              title={'Hoàn tất'}
+              onPress={this.saveLead}
+              loading={this.props.isSavingLead}
+              containerStyle={styles.btnSubmit}
+            />
           </ScrollView>
         </KeyboardAvoidingView>
       );
@@ -600,11 +592,6 @@ const styles = {
     fontSize: 14,
   },
   btnSubmit: {
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
     marginTop: 40,
   },
   expandContainer: {
@@ -621,7 +608,7 @@ const styles = {
   },
   expandTitle: {
     fontSize: 18,
-    color: theme.secondColor,
+    color: 'black',
   },
 };
 

@@ -41,10 +41,11 @@ import profileReducer from './profileReducer';
 import documentReducer from './documentReducer';
 import leadsReducer from './leadsReducer';
 import staffReducer from './staffReducer';
-import clockManageReducer from "./clockManageReducer";
-import kpiReducer from "./kpiReducer";
+import clockManageReducer from './clockManageReducer';
+import kpiReducer from './kpiReducer';
+import teachingScheduleReducer from './teachingScheduleReducer';
+import formReducer from './formReducer';
 import tabReducer from "./tabReducer";
-import teachingScheduleReducer from "./teachingScheduleReducer";
 
 const appReducer = combineReducers({
   login: loginReducer,
@@ -87,8 +88,9 @@ const appReducer = combineReducers({
   staff: staffReducer,
   clockManage: clockManageReducer,
   kpi: kpiReducer,
-  tab: tabReducer,
   teachingSchedule: teachingScheduleReducer,
+  form: formReducer,
+  tab: tabReducer,
 });
 
 const rootReducer = (state, action) => {

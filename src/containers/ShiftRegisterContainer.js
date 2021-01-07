@@ -10,6 +10,7 @@ import * as genActions from '../actions/genActions';
 import * as shiftRegisterActions from '../actions/shiftRegisterActions';
 import _ from 'lodash';
 import io from 'socket.io-client';
+import NavigationLeftHeader from '../components/common/NavigationLeftHeader';
 
 class ShiftRegisterContainer extends React.Component {
   constructor(props, context) {
@@ -43,6 +44,17 @@ class ShiftRegisterContainer extends React.Component {
   componentWillMount() {
     this.loadData();
   }
+
+  static navigationOptions = ({navigation}) => {
+    return {
+      headerLeft: () => (
+        <NavigationLeftHeader
+          navigation={navigation}
+          name={'Đăng kí lịch trực'}
+        />
+      ),
+    };
+  };
 
   componentWillReceiveProps(nextProps) {
     if (!nextProps.isLoadingBase && !nextProps.isLoadingGen) {

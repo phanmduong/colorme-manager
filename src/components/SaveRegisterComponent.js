@@ -21,7 +21,9 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import {FORMAT_TIME_MYSQL} from '../constants/constant';
 import Search from './common/Search';
+import SubmitButton from './common/SubmitButton';
 var {height, width} = Dimensions.get('window');
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export const GENDER = [
   {
@@ -91,7 +93,7 @@ class SaveRegisterComponent extends React.Component {
     };
   }
 
-  renderCoursePickerField = settings => {
+  renderCoursePickerField = (settings) => {
     const {selectedItem, defaultText, getLabel} = settings;
     let courseId = this.props.navigation.getParam('courseId');
     return (
@@ -140,7 +142,7 @@ class SaveRegisterComponent extends React.Component {
     );
   };
 
-  renderBasePickerField = settings => {
+  renderBasePickerField = (settings) => {
     const {selectedItem, defaultText, getLabel} = settings;
     let baseId = this.props.navigation.getParam('baseId');
     return (
@@ -194,7 +196,7 @@ class SaveRegisterComponent extends React.Component {
     );
   };
 
-  renderClassPickerField = settings => {
+  renderClassPickerField = (settings) => {
     const {selectedItem, defaultText, getLabel} = settings;
     let classId = this.props.navigation.getParam('classId');
     return (
@@ -248,7 +250,7 @@ class SaveRegisterComponent extends React.Component {
     );
   };
 
-  renderCampaignPickerField = settings => {
+  renderCampaignPickerField = (settings) => {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
@@ -284,7 +286,7 @@ class SaveRegisterComponent extends React.Component {
     );
   };
 
-  renderGenderPickerField = settings => {
+  renderGenderPickerField = (settings) => {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
@@ -320,7 +322,7 @@ class SaveRegisterComponent extends React.Component {
     );
   };
 
-  renderProvincePickerField = settings => {
+  renderProvincePickerField = (settings) => {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
@@ -356,7 +358,7 @@ class SaveRegisterComponent extends React.Component {
     );
   };
 
-  renderSourcePickerField = settings => {
+  renderSourcePickerField = (settings) => {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
@@ -392,7 +394,7 @@ class SaveRegisterComponent extends React.Component {
     );
   };
 
-  renderSalerPickerField = settings => {
+  renderSalerPickerField = (settings) => {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
@@ -420,7 +422,7 @@ class SaveRegisterComponent extends React.Component {
     );
   };
 
-  renderStatusPickerField = settings => {
+  renderStatusPickerField = (settings) => {
     const {selectedItem, defaultText, getLabel} = settings;
     return (
       <LinearGradient
@@ -456,7 +458,7 @@ class SaveRegisterComponent extends React.Component {
     );
   };
 
-  renderPickerOption = settings => {
+  renderPickerOption = (settings) => {
     const {item, getLabel} = settings;
     return (
       <View style={styles.options}>
@@ -465,13 +467,13 @@ class SaveRegisterComponent extends React.Component {
     );
   };
 
-  renderPickerHeader = title => {
+  renderPickerHeader = (title) => {
     return (
       <View style={styles.headerFooterContainer}>
         <Text style={styles.headerFooterText}>{title}</Text>
         <Search
           placeholder="Tìm kiếm"
-          onChangeText={search => {
+          onChangeText={(search) => {
             this.setState({search});
           }}
           value={this.state.search}
@@ -492,7 +494,7 @@ class SaveRegisterComponent extends React.Component {
     );
   }
 
-  getSearchedResults = array => {
+  getSearchedResults = (array) => {
     let list = [];
     if (this.state.search === '') {
       return array;
@@ -601,7 +603,7 @@ class SaveRegisterComponent extends React.Component {
     this.setState({isDatePickerVisible: true});
   };
 
-  handleDatePicked = date => {
+  handleDatePicked = (date) => {
     this.setState({isDatePickerVisible: false, dob: moment(date)});
   };
 
@@ -611,17 +613,13 @@ class SaveRegisterComponent extends React.Component {
     }
     let address = [];
 
-    this.props.provinces.forEach(province => {
-      province.districts.forEach(district => {
+    this.props.provinces.forEach((province) => {
+      province.districts.forEach((district) => {
         address = [
           ...address,
           {
-            id: `${district.type} ${district.name}, ${province.type} ${
-              province.name
-            }`,
-            name: `${district.type} ${district.name}, ${province.type} ${
-              province.name
-            }`,
+            id: `${district.type} ${district.name}, ${province.type} ${province.name}`,
+            name: `${district.type} ${district.name}, ${province.type} ${province.name}`,
           },
         ];
       });
@@ -632,9 +630,9 @@ class SaveRegisterComponent extends React.Component {
   getSelectBase = (items, studyClasses) => {
     return (
       items &&
-      items.map(item => {
+      items.map((item) => {
         const count = studyClasses.filter(
-          sc => sc.base && sc.base.id == item.id,
+          (sc) => sc.base && sc.base.id == item.id,
         ).length;
         return {
           id: item.id,
@@ -644,10 +642,10 @@ class SaveRegisterComponent extends React.Component {
     );
   };
 
-  getClasses = items => {
+  getClasses = (items) => {
     return (
       items &&
-      items.map(item => {
+      items.map((item) => {
         let label = item.name;
         if (item.date_start) {
           label += ' - ' + item.date_start;
@@ -668,7 +666,7 @@ class SaveRegisterComponent extends React.Component {
     return {id: this.props.user.id, name: this.props.user.name};
   };
 
-  getSalerData = salerList => {
+  getSalerData = (salerList) => {
     let emptySaler = {id: '', name: ''};
     let data = [emptySaler].concat(salerList);
     return data;
@@ -680,7 +678,7 @@ class SaveRegisterComponent extends React.Component {
     });
   };
 
-  filterBase = classes => {
+  filterBase = (classes) => {
     if (this.state.base_id !== '') {
       let filterClasses = [];
       for (let _class of classes) {
@@ -727,10 +725,13 @@ class SaveRegisterComponent extends React.Component {
                   <TextInput
                     {...this.props}
                     value={this.state.name}
-                    onChangeText={data => this.setState({name: data})}
+                    onChangeText={(data) => this.setState({name: data})}
                     returnKeyType={'next'}
                     placeholder="Tên học viên"
                     blurOnSubmit={false}
+                    onSubmitEditing={(event) => {
+                      this.refs.father_name.focus();
+                    }}
                     style={{fontSize: 15}}
                   />
                 </View>
@@ -741,12 +742,12 @@ class SaveRegisterComponent extends React.Component {
                   <TextInput
                     {...this.props}
                     value={this.state.father_name}
-                    onChangeText={data => this.setState({father_name: data})}
+                    onChangeText={(data) => this.setState({father_name: data})}
                     returnKeyType={'next'}
                     ref={'father_name'}
                     placeholder="Tên phụ huynh"
                     blurOnSubmit={false}
-                    onSubmitEditing={event => {
+                    onSubmitEditing={(event) => {
                       this.refs.email.focus();
                     }}
                     style={{fontSize: 15}}
@@ -763,11 +764,11 @@ class SaveRegisterComponent extends React.Component {
                     value={this.state.email}
                     autoCapitalize={'none'}
                     ref={'email'}
-                    onChangeText={data => this.setState({email: data})}
+                    onChangeText={(data) => this.setState({email: data})}
                     returnKeyType={'next'}
                     placeholder="Email học viên"
                     blurOnSubmit={false}
-                    onSubmitEditing={event => {
+                    onSubmitEditing={(event) => {
                       this.refs.phone.focus();
                     }}
                     style={{fontSize: 15}}
@@ -784,11 +785,11 @@ class SaveRegisterComponent extends React.Component {
                     {...this.props}
                     value={this.state.phone}
                     ref={'phone'}
-                    onChangeText={data => this.setState({phone: data})}
+                    onChangeText={(data) => this.setState({phone: data})}
                     returnKeyType={'next'}
                     placeholder="Số điện thoại học viên"
                     blurOnSubmit={false}
-                    onSubmitEditing={event => {
+                    onSubmitEditing={(event) => {
                       this.refs.coupon.focus();
                     }}
                     style={{fontSize: 15}}
@@ -802,11 +803,11 @@ class SaveRegisterComponent extends React.Component {
                     {...this.props}
                     value={this.state.coupon}
                     ref={'coupon'}
-                    onChangeText={data => this.setState({coupon: data})}
+                    onChangeText={(data) => this.setState({coupon: data})}
                     returnKeyType={'next'}
                     placeholder="Mã khuyến mãi"
                     blurOnSubmit={false}
-                    onSubmitEditing={event => {
+                    onSubmitEditing={(event) => {
                       if (this.state.expanded) {
                         this.refs.university.focus();
                       } else {
@@ -823,7 +824,7 @@ class SaveRegisterComponent extends React.Component {
                 </Text>
                 <CustomPicker
                   options={this.getSearchedResults(this.props.courses)}
-                  getLabel={item => item.name}
+                  getLabel={(item) => item.name}
                   placeholder={'Chọn môn'}
                   modalAnimationType={'fade'}
                   onBlur={() => this.setState({search: ''})}
@@ -834,7 +835,7 @@ class SaveRegisterComponent extends React.Component {
                   modalStyle={{
                     borderRadius: 6,
                   }}
-                  onValueChange={value => {
+                  onValueChange={(value) => {
                     this.setState({
                       selectedCourse: true,
                       selectedCourseId: value.id,
@@ -855,7 +856,7 @@ class SaveRegisterComponent extends React.Component {
                         this.props.classes,
                       ),
                     )}
-                    getLabel={item => item.name}
+                    getLabel={(item) => item.name}
                     placeholder={'Chọn cơ sở'}
                     modalAnimationType={'fade'}
                     onBlur={() => this.setState({search: ''})}
@@ -866,7 +867,7 @@ class SaveRegisterComponent extends React.Component {
                     modalStyle={{
                       borderRadius: 6,
                     }}
-                    onValueChange={value => {
+                    onValueChange={(value) => {
                       this.setState({base_id: value.id, search: ''});
                     }}
                   />
@@ -881,7 +882,7 @@ class SaveRegisterComponent extends React.Component {
                     options={this.getSearchedResults(
                       this.filterBase(this.getClasses(this.props.classes)),
                     )}
-                    getLabel={item => item.name}
+                    getLabel={(item) => item.name}
                     placeholder={'Chọn lớp'}
                     modalAnimationType={'fade'}
                     onBlur={() => this.setState({search: ''})}
@@ -892,7 +893,7 @@ class SaveRegisterComponent extends React.Component {
                     modalStyle={{
                       borderRadius: 6,
                     }}
-                    onValueChange={value => {
+                    onValueChange={(value) => {
                       this.setState({selectedClassId: value.id, search: ''});
                     }}
                   />
@@ -902,7 +903,7 @@ class SaveRegisterComponent extends React.Component {
                 <Text style={styles.titleForm}>Chọn trạng thái</Text>
                 <CustomPicker
                   options={this.getSearchedResults(this.props.statuses)}
-                  getLabel={item => item.name}
+                  getLabel={(item) => item.name}
                   placeholder={'Chọn trạng thái'}
                   modalAnimationType={'fade'}
                   onBlur={() => this.setState({search: ''})}
@@ -915,7 +916,7 @@ class SaveRegisterComponent extends React.Component {
                   modalStyle={{
                     borderRadius: 6,
                   }}
-                  onValueChange={value => {
+                  onValueChange={(value) => {
                     this.setState({
                       selectedStatus: true,
                       status_id: value.id,
@@ -928,7 +929,7 @@ class SaveRegisterComponent extends React.Component {
                 <Text style={styles.titleForm}>Chọn nguồn</Text>
                 <CustomPicker
                   options={this.getSearchedResults(this.props.sources)}
-                  getLabel={item => item.name}
+                  getLabel={(item) => item.name}
                   placeholder={'Chọn nguồn'}
                   modalAnimationType={'fade'}
                   onBlur={() => this.setState({search: ''})}
@@ -939,7 +940,7 @@ class SaveRegisterComponent extends React.Component {
                   modalStyle={{
                     borderRadius: 6,
                   }}
-                  onValueChange={value => {
+                  onValueChange={(value) => {
                     this.setState({
                       selectedSource: true,
                       source_id: value.id,
@@ -955,7 +956,7 @@ class SaveRegisterComponent extends React.Component {
                     this.getSalerData(this.props.salers),
                   )}
                   defaultValue={this.getDefaultSaler()}
-                  getLabel={item => item.name}
+                  getLabel={(item) => item.name}
                   placeholder={'Chọn saler'}
                   modalAnimationType={'fade'}
                   onBlur={() => this.setState({search: ''})}
@@ -966,7 +967,7 @@ class SaveRegisterComponent extends React.Component {
                   modalStyle={{
                     borderRadius: 6,
                   }}
-                  onValueChange={value => {
+                  onValueChange={(value) => {
                     this.setState({
                       selectedSaler: true,
                       saler_id: value.id,
@@ -979,7 +980,7 @@ class SaveRegisterComponent extends React.Component {
                 <Text style={styles.titleForm}>Chọn chiến dịch</Text>
                 <CustomPicker
                   options={this.getSearchedResults(this.props.campaigns)}
-                  getLabel={item => item.name}
+                  getLabel={(item) => item.name}
                   placeholder={'Chọn chiến dịch'}
                   modalAnimationType={'fade'}
                   onBlur={() => this.setState({search: ''})}
@@ -992,7 +993,7 @@ class SaveRegisterComponent extends React.Component {
                   modalStyle={{
                     borderRadius: 6,
                   }}
-                  onValueChange={value => {
+                  onValueChange={(value) => {
                     this.setState({
                       selectedCampaign: true,
                       campaign_id: value.id,
@@ -1006,14 +1007,16 @@ class SaveRegisterComponent extends React.Component {
                 <View style={styles.expandContainer}>
                   <Text style={styles.expandTitle}>Mở rộng</Text>
                   {!this.state.expanded ? (
-                    <Image
-                      source={require('../../assets/img/expand-arrow.png')}
-                      style={styles.expandIcon}
+                    <MaterialIcons
+                      name={'expand-more'}
+                      color={'black'}
+                      size={20}
                     />
                   ) : (
-                    <Image
-                      source={require('../../assets/img/collapse-arrow.png')}
-                      style={styles.expandIcon}
+                    <MaterialIcons
+                      name={'expand-less'}
+                      color={'black'}
+                      size={20}
                     />
                   )}
                 </View>
@@ -1025,7 +1028,7 @@ class SaveRegisterComponent extends React.Component {
                     <Text style={styles.titleForm}>Chọn giới tính</Text>
                     <CustomPicker
                       options={this.getSearchedResults(GENDER)}
-                      getLabel={item => item.name}
+                      getLabel={(item) => item.name}
                       placeholder={'Chọn giới tính'}
                       modalAnimationType={'fade'}
                       onBlur={() => this.setState({search: ''})}
@@ -1038,7 +1041,7 @@ class SaveRegisterComponent extends React.Component {
                       modalStyle={{
                         borderRadius: 6,
                       }}
-                      onValueChange={value => {
+                      onValueChange={(value) => {
                         this.setState({
                           selectedGender: true,
                           gender: value.id,
@@ -1073,7 +1076,7 @@ class SaveRegisterComponent extends React.Component {
                     <Text style={styles.titleForm}>Địa chỉ</Text>
                     <CustomPicker
                       options={this.getSearchedResults(this.getDataAddress())}
-                      getLabel={item => item.name}
+                      getLabel={(item) => item.name}
                       placeholder={'Chọn địa chỉ'}
                       modalAnimationType={'fade'}
                       onBlur={() => this.setState({search: ''})}
@@ -1086,7 +1089,7 @@ class SaveRegisterComponent extends React.Component {
                       modalStyle={{
                         borderRadius: 6,
                       }}
-                      onValueChange={value => {
+                      onValueChange={(value) => {
                         this.setState({
                           selectedAddress: true,
                           address: value.id,
@@ -1102,11 +1105,13 @@ class SaveRegisterComponent extends React.Component {
                         {...this.props}
                         value={this.state.university}
                         ref={'university'}
-                        onChangeText={data => this.setState({university: data})}
+                        onChangeText={(data) =>
+                          this.setState({university: data})
+                        }
                         returnKeyType={'next'}
                         placeholder="Trường học"
                         blurOnSubmit={false}
-                        onSubmitEditing={event => {
+                        onSubmitEditing={(event) => {
                           this.refs.work.focus();
                         }}
                         style={{fontSize: 15}}
@@ -1120,11 +1125,11 @@ class SaveRegisterComponent extends React.Component {
                         {...this.props}
                         value={this.state.work}
                         ref={'work'}
-                        onChangeText={data => this.setState({work: data})}
+                        onChangeText={(data) => this.setState({work: data})}
                         returnKeyType={'next'}
                         placeholder="Nơi làm việc"
                         blurOnSubmit={false}
-                        onSubmitEditing={event => {
+                        onSubmitEditing={(event) => {
                           this.refs.how_know.focus();
                         }}
                         style={{fontSize: 15}}
@@ -1138,11 +1143,11 @@ class SaveRegisterComponent extends React.Component {
                         {...this.props}
                         value={this.state.how_know}
                         ref={'how_know'}
-                        onChangeText={data => this.setState({how_know: data})}
+                        onChangeText={(data) => this.setState({how_know: data})}
                         returnKeyType={'next'}
                         placeholder="Lý do biết đến"
                         blurOnSubmit={false}
-                        onSubmitEditing={event => {
+                        onSubmitEditing={(event) => {
                           this.refs.facebook.focus();
                         }}
                         style={{fontSize: 15}}
@@ -1156,11 +1161,11 @@ class SaveRegisterComponent extends React.Component {
                         {...this.props}
                         value={this.state.facebook}
                         ref={'facebook'}
-                        onChangeText={data => this.setState({facebook: data})}
+                        onChangeText={(data) => this.setState({facebook: data})}
                         returnKeyType={'next'}
                         placeholder="Link Facebook"
                         blurOnSubmit={false}
-                        onSubmitEditing={event => {
+                        onSubmitEditing={(event) => {
                           this.refs.description.focus();
                         }}
                         style={{fontSize: 15}}
@@ -1174,13 +1179,13 @@ class SaveRegisterComponent extends React.Component {
                         {...this.props}
                         value={this.state.description}
                         ref={'description'}
-                        onChangeText={data =>
+                        onChangeText={(data) =>
                           this.setState({description: data})
                         }
                         returnKeyType={'next'}
                         placeholder="Mô tả"
                         blurOnSubmit={false}
-                        onSubmitEditing={event => {
+                        onSubmitEditing={(event) => {
                           this.refs.description.blur();
                         }}
                         style={{fontSize: 15}}
@@ -1189,24 +1194,12 @@ class SaveRegisterComponent extends React.Component {
                   </View>
                 </View>
               ) : null}
-              <TouchableOpacity onPress={() => this.submitRegister()}>
-                <LinearGradient
-                  colors={['#E26800', '#E00000']}
-                  start={{x: 0, y: 0}}
-                  end={{x: 1, y: 0}}
-                  style={styles.btnSubmit}>
-                  {!this.props.isLoadingRegister ? (
-                    <Text style={{color: 'white'}}>Tạo đăng ký</Text>
-                  ) : (
-                    <Spinkit
-                      isVisible
-                      color="white"
-                      type="ThreeBounce"
-                      size={40}
-                    />
-                  )}
-                </LinearGradient>
-              </TouchableOpacity>
+              <SubmitButton
+                title={'Hoàn tất'}
+                loading={this.props.isLoadingRegister}
+                onPress={this.submitRegister}
+                containerStyle={styles.btnSubmit}
+              />
             </ScrollView>
             <DateTimePicker
               isVisible={this.state.isDatePickerVisible}
@@ -1268,11 +1261,6 @@ const styles = {
     marginHorizontal: 20,
   },
   btnSubmit: {
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
     marginTop: 40,
   },
   textForm: {
@@ -1304,7 +1292,7 @@ const styles = {
   },
   expandTitle: {
     fontSize: 18,
-    color: theme.secondColor,
+    color: 'black',
   },
 };
 

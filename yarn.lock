@@ -1194,10 +1194,10 @@
   dependencies:
     deep-assign "^3.0.0"
 
-"@react-native-community/checkbox@^0.5.1":
-  version "0.5.4"
-  resolved "https://registry.yarnpkg.com/@react-native-community/checkbox/-/checkbox-0.5.4.tgz#0b16722eef46a36df80ef24dea7cc7b58a32f379"
-  integrity sha512-dKdLuaW5YoEypGqCrwAwaG5QSJMgokaoXnDwWTaqS30UE00Gnf4yVCVGxZWGVQGNW7KKhjWBbzjciDO7U9GmqQ==
+"@react-native-community/checkbox@^0.5.5":
+  version "0.5.6"
+  resolved "https://registry.yarnpkg.com/@react-native-community/checkbox/-/checkbox-0.5.6.tgz#0be83148e9836e164d5105bb314cae286bd64061"
+  integrity sha512-mya9hPo82M2iT30jou9FDLSafS4W2E79+0XbjbDFs3pxy3Lm1DnH0cCjzFFp7AaSBK/ShRD1ubqu6905TPaU4A==
 
 "@react-native-community/cli-debugger-ui@^4.9.0":
   version "4.9.0"
@@ -1317,6 +1317,11 @@
     strip-ansi "^5.2.0"
     sudo-prompt "^9.0.0"
     wcwidth "^1.0.1"
+
+"@react-native-community/clipboard@^1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@react-native-community/clipboard/-/clipboard-1.5.1.tgz#32abb3ea2eb91ee3f9c5fb1d32d5783253c9fabe"
+  integrity sha512-AHAmrkLEH5UtPaDiRqoULERHh3oNv7Dgs0bTC0hO5Z2GdNokAMPT5w8ci8aMcRemcwbtdHjxChgtjbeA38GBdA==
 
 "@react-native-community/datetimepicker@^3.0.3":
   version "3.0.6"
@@ -1767,12 +1772,12 @@ anymatch@^3.0.3:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
-appcenter-analytics@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/appcenter-analytics/-/appcenter-analytics-4.0.0.tgz#39fca79120f2ca62b7d7afc1b1c056515b385341"
-  integrity sha512-IKLl66VUSXMMTHXJMKfL0+DV7th/AGV0dAVvS/2b0BKGsvVpy45gVPuf95ndEuWsLC7HMQJCf9K60V+vdRNvkw==
+appcenter-analytics@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/appcenter-analytics/-/appcenter-analytics-4.0.2.tgz#85cffb9c4242c3e365be4897e40b5925ffd2b2e9"
+  integrity sha512-g3CutRq67t8Xisdw5f2SHB/IDcYpRMIqbxGHCJWkI+iOhnIjZzDMsFWy3owX34k3ENj0LkhiXVuVv06nJSfsBg==
   dependencies:
-    appcenter "4.0.0"
+    appcenter "4.0.2"
 
 appcenter-cli@^2.3.3:
   version "2.6.6"
@@ -1827,12 +1832,12 @@ appcenter-cli@^2.3.3:
     xmldom "0.3.0"
     yazl "2.5.1"
 
-appcenter-crashes@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/appcenter-crashes/-/appcenter-crashes-4.0.0.tgz#25f1f2807efa06a843432b42a14054cb24dace87"
-  integrity sha512-UH/O5KKH9xiSsr73uUBsXwEyJKxSEgY+6A00YAh4hE7V2cZlaeBJuqIJJ9XyPWAIYFbSb6xm79vvTbKDFDK8Wg==
+appcenter-crashes@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/appcenter-crashes/-/appcenter-crashes-4.0.2.tgz#6fde33ed22a6d061bfbb5d8278f99f5e8af85ab1"
+  integrity sha512-DhnE6F5PpXp+vK3Zf0vfXfkofFbyVblWfCMeQ7rLnpWWmBdZjRPNCd/SSl3EsSjTDh0NMMPH+8kGtgWyYnQ6Iw==
   dependencies:
-    appcenter "4.0.0"
+    appcenter "4.0.2"
 
 appcenter-file-upload-client@0.0.24:
   version "0.0.24"
@@ -1843,10 +1848,10 @@ appcenter-file-upload-client@0.0.24:
     superagent "5.1.0"
     url-parse "^1.4.7"
 
-appcenter-link-scripts@4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/appcenter-link-scripts/-/appcenter-link-scripts-4.0.0.tgz#e37d934054eb443316a0abb66cd668603431088b"
-  integrity sha512-XsIQXkmIb7t05oilr8rtH0MEkMJqoNdcTZeYVsXp34gNRzEy/aZTnHcwmDbubTLL8dURbVcw5ByoHo5EhJxyPg==
+appcenter-link-scripts@4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/appcenter-link-scripts/-/appcenter-link-scripts-4.0.2.tgz#5e917b11cf225ac949d472c5ed26659403cee5c0"
+  integrity sha512-YOM73E+4SFth1Gda5GWglx0TlC0XyRRhSlEgrpBB8pO0VvHZ/CEVYpVhCAAaAgpqgyC5vM3MvyseKK3Ov2fglQ==
   dependencies:
     debug "4.1.1"
     glob "5.0.15"
@@ -1856,12 +1861,12 @@ appcenter-link-scripts@4.0.0:
     which "1.2.11"
     xcode "2.0.0"
 
-appcenter@4.0.0, appcenter@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/appcenter/-/appcenter-4.0.0.tgz#86122ec4eabdac8f42885dbfa3ef232ff0eca3e1"
-  integrity sha512-9TQBuC44D1W0oLximd0HrGcfpefE1+SGWLW8nZvAbPwCPEc19ugY4e+CRuoNZ7AWcFI9K5oMOJY0WFYPKvd6Sw==
+appcenter@4.0.2, appcenter@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/appcenter/-/appcenter-4.0.2.tgz#ffb5af4eae1c4806e5d485f23a881cc21959278e"
+  integrity sha512-Drd9gkpG/rtB/053SDhW9FrNIHgtJdzmlQ6uHMTx/3TsiLHIpZXXEi5WFNSO3UrYpf9gham4IMqUgpl49nsoOA==
   dependencies:
-    appcenter-link-scripts "4.0.0"
+    appcenter-link-scripts "4.0.2"
 
 argparse@^1.0.7:
   version "1.0.10"
@@ -4558,7 +4563,7 @@ hoist-non-react-statics@^2.3.1:
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
   integrity sha512-rqcy4pJo55FTTLWt+bU8ukscqHeE/e9KWvsOW2b/a3afxQZhwkQdT1rPPCJ0rYXdj4vNcasY8zHTH+jF/qStxw==
 
-hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.2:
+hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.1, hoist-non-react-statics@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
   integrity sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
@@ -4674,6 +4679,11 @@ immediate@~3.0.5:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"
   integrity sha1-nbHb0Pr43m++D13V5Wu2BigN5ps=
+
+immutable@^4.0.0-rc.12:
+  version "4.0.0-rc.12"
+  resolved "https://registry.yarnpkg.com/immutable/-/immutable-4.0.0-rc.12.tgz#ca59a7e4c19ae8d9bf74a97bdf0f6e2f2a5d0217"
+  integrity sha512-0M2XxkZLx/mi3t8NVwIm1g8nHoEmM9p9UBl/G9k4+hm0kBgOVdMV/B3CY5dQ8qG8qc80NN4gDV4HQv6FTJ5q7A==
 
 import-fresh@^2.0.0:
   version "2.0.0"
@@ -7585,6 +7595,19 @@ react-native-calendar-picker@^7.0.0:
     prop-types "^15.6.0"
     recyclerlistview "^3.0.0"
 
+react-native-calendars@^1.489.0:
+  version "1.1129.0"
+  resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.1129.0.tgz#871fcb20af98507f77ac687365f0473d7357e274"
+  integrity sha512-F5z8v/oWshtqyuZC+enBADuo/pETZNO/acX3TKcp4j4fU043Mh804tqJWw61y6eU+N4e8Z8r0GRqvUd42XCgQA==
+  dependencies:
+    hoist-non-react-statics "^3.3.1"
+    immutable "^4.0.0-rc.12"
+    lodash "^4.17.15"
+    moment "^2.24.0"
+    prop-types "^15.5.10"
+    react-native-swipe-gestures "^1.0.5"
+    xdate "^0.8.0"
+
 react-native-camera@^3.3.0:
   version "3.37.0"
   resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-3.37.0.tgz#fd0df704392735ede5935627b6358be379e97e27"
@@ -7813,6 +7836,11 @@ react-native-splash-screen@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/react-native-splash-screen/-/react-native-splash-screen-3.2.0.tgz#d47ec8557b1ba988ee3ea98d01463081b60fff45"
   integrity sha512-Ls9qiNZzW/OLFoI25wfjjAcrf2DZ975hn2vr6U9gyuxi2nooVbzQeFoQS5vQcbCt9QX5NY8ASEEAtlLdIa6KVg==
+
+react-native-swipe-gestures@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-swipe-gestures/-/react-native-swipe-gestures-1.0.5.tgz#a172cb0f3e7478ccd681fd36b8bfbcdd098bde7c"
+  integrity sha512-Ns7Bn9H/Tyw278+5SQx9oAblDZ7JixyzeOczcBK8dipQk2pD7Djkcfnf1nB/8RErAmMLL9iXgW0QHqiII8AhKw==
 
 react-native-swipeout@^2.3.6:
   version "2.3.6"
@@ -9898,6 +9926,11 @@ xcode@^2.0.0:
   dependencies:
     simple-plist "^1.0.0"
     uuid "^3.3.2"
+
+xdate@^0.8.0:
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/xdate/-/xdate-0.8.2.tgz#d7b033c00485d02695baf0044f4eacda3fc961a3"
+  integrity sha1-17AzwASF0CaVuvAET06s2j/JYaM=
 
 xdg-basedir@^4.0.0:
   version "4.0.0"

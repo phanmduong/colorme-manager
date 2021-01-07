@@ -1,26 +1,26 @@
 PODS:
-  - appcenter-analytics (4.0.0):
-    - AppCenter/Analytics
-    - AppCenterReactNativeShared
+  - appcenter-analytics (4.0.2):
+    - AppCenter/Analytics (~> 4.0)
+    - AppCenterReactNativeShared (~> 4.0)
     - React-Core
-  - appcenter-core (4.0.0):
-    - AppCenterReactNativeShared
+  - appcenter-core (4.0.2):
+    - AppCenterReactNativeShared (~> 4.0)
     - React-Core
-  - appcenter-crashes (4.0.0):
-    - AppCenter/Crashes
-    - AppCenterReactNativeShared
+  - appcenter-crashes (4.0.2):
+    - AppCenter/Crashes (~> 4.0)
+    - AppCenterReactNativeShared (~> 4.0)
     - React-Core
-  - AppCenter/Analytics (4.0.0):
+  - AppCenter/Analytics (4.1.0):
     - AppCenter/Core
-  - AppCenter/Core (4.0.0)
-  - AppCenter/Crashes (4.0.0):
+  - AppCenter/Core (4.1.0)
+  - AppCenter/Crashes (4.1.0):
     - AppCenter/Core
-  - AppCenterReactNativeShared (4.0.0):
-    - AppCenter/Core (= 4.0.0)
+  - AppCenterReactNativeShared (4.0.2):
+    - AppCenter/Core (= 4.1.0)
   - boost-for-react-native (1.63.0)
   - BVLinearGradient (2.5.6):
     - React
-  - CocoaAsyncSocket (7.6.4)
+  - CocoaAsyncSocket (7.6.5)
   - CocoaLibEvent (1.0.0)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.63.3)
@@ -350,8 +350,10 @@ PODS:
     - React
   - RNCAsyncStorage (1.12.0):
     - React
-  - RNCCheckbox (0.5.4):
-    - React
+  - RNCCheckbox (0.5.6):
+    - React-Core
+  - RNCClipboard (1.5.1):
+    - React-Core
   - RNDateTimePicker (3.0.6):
     - React-Core
   - RNDeviceInfo (5.6.5):
@@ -433,6 +435,7 @@ DEPENDENCIES:
   - "ReactNativeART (from `../node_modules/@react-native-community/art`)"
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - "RNCCheckbox (from `../node_modules/@react-native-community/checkbox`)"
+  - "RNCClipboard (from `../node_modules/@react-native-community/clipboard`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -546,6 +549,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/async-storage"
   RNCCheckbox:
     :path: "../node_modules/@react-native-community/checkbox"
+  RNCClipboard:
+    :path: "../node_modules/@react-native-community/clipboard"
   RNDateTimePicker:
     :path: "../node_modules/@react-native-community/datetimepicker"
   RNDeviceInfo:
@@ -562,14 +567,14 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  AppCenter: 51351e0121e40ba75e28ecb7de5c2e69d480df5e
-  appcenter-analytics: 3e8bf76870877c5abdfb752e1dc014be2b2030e4
-  appcenter-core: e7aa4513ee9173b82c4a4497d49abb0ec7ceb159
-  appcenter-crashes: 0052b9ae5cc6b5c184238eb6c230ed5942d91f10
-  AppCenterReactNativeShared: 69aedc15c136e5f76a0cc9eb2ad84d3cefc6e64f
+  AppCenter: 8832b158d17e54845c3b88a91076218f0b07174d
+  appcenter-analytics: f1bcf80219acb97acdabeda751a1591869f83dfd
+  appcenter-core: 92618da8986eef80bae39d1bb2b4c9fa0fc873bd
+  appcenter-crashes: 6fe933bbc9a1d2b64e451b348169640a9fea8729
+  AppCenterReactNativeShared: e1db64e8c65dfdca495efd1a1f77892cbc21342b
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
-  CocoaAsyncSocket: 694058e7c0ed05a9e217d1b3c7ded962f4180845
+  CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   CocoaLibEvent: 2fab71b8bd46dd33ddb959f7928ec5909f838e3f
   DoubleConversion: cde416483dac037923206447da6e1454df403714
   FBLazyVector: 878b59e31113e289e275165efbe4b54fa614d43d
@@ -618,7 +623,8 @@ SPEC CHECKSUMS:
   ReactCommon: 4167844018c9ed375cc01a843e9ee564399e53c3
   ReactNativeART: 78edc68dd4a1e675338cd0cd113319cf3a65f2ab
   RNCAsyncStorage: 2a692bcb9b69b76a2f1a95f33db057129700af64
-  RNCCheckbox: 7a4a65da0a2752536b38a6e635112d35cc109c17
+  RNCCheckbox: 80ee60cd2e67b46986e8e244db520655372deab4
+  RNCClipboard: 41d8d918092ae8e676f18adada19104fa3e68495
   RNDateTimePicker: 120f8d08b19dd50c0308d30a07c1982e4618e9ad
   RNDeviceInfo: c5f8f3a456adcbba405ace475254b08febc4c095
   RNGestureHandler: b6b359bb800ae399a9c8b27032bdbf7c18f08a08
@@ -630,4 +636,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: c289db16e479b70bc5bc72beb19cf0676564bba4
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.0

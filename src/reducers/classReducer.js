@@ -238,6 +238,14 @@ export default function classReducer(state = initialState.class, action) {
       return Object.assign({}, state, {
         class_status: action.class_status,
       });
+    case types.BEGIN_CREATE_CLASS_SCHEDULE:
+      return Object.assign({}, state, {
+        creatingClassSchedule: action.creatingClassSchedule,
+      });
+    case types.CREATE_CLASS_SCHEDULE_COMPLETE:
+      return Object.assign({}, state, {
+        creatingClassSchedule: action.creatingClassSchedule,
+      });
     default:
       return state;
   }

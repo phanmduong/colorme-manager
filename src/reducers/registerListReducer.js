@@ -194,6 +194,12 @@ export default function registerListReducer(
       return Object.assign({}, state, {
         callBackTime: action.callBackTime,
       });
+    case types.RESET_REGISTER_LIST_DATA:
+      return Object.assign({}, state, {
+        currentPageMy: action.currentPageMy,
+        totalPageMy: action.totalPageMy,
+        registerListDataMy: action.registerListDataMy,
+      });
     default:
       return state;
   }

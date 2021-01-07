@@ -12,13 +12,16 @@ import moment from 'moment';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as analyticsActions from '../actions/analyticsActions';
 import * as tabActions from '../actions/tabActions';
+import MeetingStore from './meeting/MeetingStore';
 
 class DashboardContainer extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.store = new MeetingStore(props.token, props.domain);
   }
 
   componentDidMount() {
+    this.store.loadList();
     this.loadTasks();
     this.loadNotifications();
     this.loadTabs();
@@ -75,6 +78,7 @@ class DashboardContainer extends React.Component {
   render() {
     return (
       <DashboardComponent
+        store={this.store}
         {...this.props}
         refreshNotifications={this.refreshNotifications}
         refreshTasks={this.loadTasks}

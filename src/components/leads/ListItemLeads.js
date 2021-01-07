@@ -396,20 +396,20 @@ class ListItemLeads extends React.Component {
                 ))}
               </View>
               <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                  onPress={() => {
-                    Linking.openURL(`tel:${phone}`);
-                    this.toggleCallModal();
-                  }}>
-                  <View style={styles.button}>
-                    <Text style={{fontSize: 16}}>Gọi điện</Text>
-                  </View>
-                </TouchableOpacity>
+                {/*<TouchableOpacity*/}
+                {/*  onPress={() => {*/}
+                {/*    Linking.openURL(`tel:${phone}`);*/}
+                {/*    this.toggleCallModal();*/}
+                {/*  }}>*/}
+                {/*  <View style={styles.button}>*/}
+                {/*    <Text style={{fontSize: 16}}>Gọi điện</Text>*/}
+                {/*  </View>*/}
+                {/*</TouchableOpacity>*/}
                 <TouchableOpacity
                   onPress={() => {
                     this.toggleAssignModal();
                   }}>
-                  <View style={[{marginLeft: 10}, styles.button]}>
+                  <View style={styles.button}>
                     <Text style={{fontSize: 16}}>Tag</Text>
                   </View>
                 </TouchableOpacity>

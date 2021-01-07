@@ -630,16 +630,6 @@ class FilterModal extends React.Component {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
-                  this.setState({search_coupon: ''});
-                  this.props.reset();
-                  this.props.resetModal();
-                }}>
-                <View style={styles.reset}>
-                  <Text style={styles.resetTitle}>Đặt lại</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
                   this.props.closeModal();
                 }}>
                 <View style={styles.cancelContainer}>

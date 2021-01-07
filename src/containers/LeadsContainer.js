@@ -268,13 +268,11 @@ class LeadsContainer extends React.Component {
       </View>
     ),
     headerRight: () => (
-      <View style={{flexDirection: 'row'}}>
-        <TouchableOpacity onPress={() => navigation.navigate('AddLead')}>
-          <View style={styles.headerIconContainer}>
-            <MatIcon name={'add-circle'} size={20} color={'black'} />
-          </View>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity onPress={() => navigation.navigate('AddLead')}>
+        <View style={styles.headerIconContainer}>
+          <MatIcon name={'add-circle'} size={20} color={'black'} />
+        </View>
+      </TouchableOpacity>
     ),
   });
 

@@ -5,8 +5,6 @@ import * as React from 'react';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import LoginContainer from '../containers/LoginContainer';
 import ClassContainer from '../containers/ClassContainer';
-// import QRCodeContainer from '../containers/QRCodeContainer';
-// import AttendanceStudentContainer from '../containers/AttendanceStudentContainer';
 import CurrentClassStudyContainer from '../containers/CurrentClassStudyContainer';
 import CollectMoneyContainer from '../containers/CollectMoneyContainer';
 import StudentRegisterClassContainer from '../containers/StudentRegisterClassContainer';
@@ -665,15 +663,6 @@ const DashboardMain = createBottomTabNavigator(
         ),
       }),
     },
-    // TabShiftRegister: {
-    //   screen: TabShiftRegister,
-    //   navigationOptions: ({navigation}) => ({
-    //     tabBarLabel: 'Lịch trực',
-    //     tabBarIcon: ({tintColor}) => (
-    //       <TabIcon nameIcon="fontawesome|edit" color={tintColor} />
-    //     ),
-    //   }),
-    // },
     TabDashboard: {
       screen: TabDashboard,
       navigationOptions: ({navigation}) => ({
@@ -683,15 +672,6 @@ const DashboardMain = createBottomTabNavigator(
         ),
       }),
     },
-    // TabRegisterList: {
-    //   screen: TabRegisterList,
-    //   navigationOptions: ({navigation}) => ({
-    //     tabBarLabel: 'Nộp tiền',
-    //     tabBarIcon: ({tintColor}) => (
-    //       <TabIcon nameIcon="fontawesome|graduation-cap" color={tintColor} />
-    //     ),
-    //   }),
-    // },
     TabWorkShift: {
       screen: TabWorkShift,
       navigationOptions: ({navigation}) => ({
@@ -703,7 +683,6 @@ const DashboardMain = createBottomTabNavigator(
     },
   },
   {
-    // tabBarComponent: TabBarTop,
     tabBarComponent: TabBar,
     swipeEnabled: false,
     animationEnabled: true,

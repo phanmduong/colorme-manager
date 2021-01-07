@@ -5,8 +5,6 @@ import * as React from 'react';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import LoginContainer from '../containers/LoginContainer';
 import ClassContainer from '../containers/ClassContainer';
-// import QRCodeContainer from '../containers/QRCodeContainer';
-// import AttendanceStudentContainer from '../containers/AttendanceStudentContainer';
 import CurrentClassStudyContainer from '../containers/CurrentClassStudyContainer';
 import CollectMoneyContainer from '../containers/CollectMoneyContainer';
 import StudentRegisterClassContainer from '../containers/StudentRegisterClassContainer';
@@ -155,29 +153,8 @@ const TabAttendance = createStackNavigator(
         headerTitleStyle: {color: 'black'},
       }),
     },
-  },
-  navigationOptionsDefault,
-);
-
-const TabShiftRegister = createStackNavigator(
-  {
-    ShiftRegister: {
-      screen: ShiftRegisterContainer,
-      navigationOptions: () => ({
-        header: null,
-        headerTintColor: 'black',
-        headerTitleStyle: {color: 'black'},
-      }),
-    },
-    Profile: {
-      screen: ProfileContainer,
-      navigationOptions: () => ({
-        headerTintColor: 'black',
-        headerTitleStyle: {color: 'black'},
-      }),
-    },
-    EditProfile: {
-      screen: EditProfileContainer,
+    ClassInfo: {
+      screen: ClassInfoContainer,
       navigationOptions: () => ({
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},
@@ -633,70 +610,6 @@ TabDashboard.navigationOptions = ({navigation}) => {
   };
 };
 
-const TabRegisterList = createStackNavigator(
-  {
-    RegisterList: {
-      screen: RegisterListContainer,
-      navigationOptions: () => ({
-        header: null,
-        headerTintColor: 'black',
-        headerTitleStyle: {color: 'black'},
-      }),
-    },
-    SaveRegister: {
-      screen: SaveRegisterContainer,
-      navigationOptions: () => ({
-        headerTintColor: 'black',
-        headerTitleStyle: {color: 'black'},
-      }),
-    },
-    InfoStudent: {
-      screen: InfoStudentContainer,
-      navigationOptions: () => ({
-        header: null,
-        headerTintColor: 'black',
-        headerTitleStyle: {color: 'black'},
-      }),
-    },
-    InfoStudentRegister: {
-      screen: InfoStudentRegistersContainer,
-      navigationOptions: () => ({
-        headerTintColor: 'black',
-        headerTitleStyle: {color: 'black'},
-      }),
-    },
-    InfoStudentDetails: {
-      screen: InfoStudentDetailsContainer,
-      navigationOptions: () => ({
-        headerTintColor: 'black',
-        headerTitleStyle: {color: 'black'},
-      }),
-    },
-    InfoStudentEditProfile: {
-      screen: InfoStudentEditProfileContainer,
-      navigationOptions: () => ({
-        headerTintColor: 'black',
-        headerTitleStyle: {color: 'black'},
-      }),
-    },
-    Profile: {
-      screen: ProfileContainer,
-      navigationOptions: () => ({
-        headerTintColor: 'black',
-        headerTitleStyle: {color: 'black'},
-      }),
-    },
-    EditProfile: {
-      screen: EditProfileContainer,
-      navigationOptions: () => ({
-        headerTintColor: 'black',
-        headerTitleStyle: {color: 'black'},
-      }),
-    },
-  },
-  navigationOptionsDefault,
-);
-
 const TabWorkShift = createStackNavigator(
   {
     WorkShiftRegister: {
@@ -750,15 +663,6 @@ const DashboardMain = createBottomTabNavigator(
         ),
       }),
     },
-    // TabShiftRegister: {
-    //   screen: TabShiftRegister,
-    //   navigationOptions: ({navigation}) => ({
-    //     tabBarLabel: 'Lịch trực',
-    //     tabBarIcon: ({tintColor}) => (
-    //       <TabIcon nameIcon="fontawesome|edit" color={tintColor} />
-    //     ),
-    //   }),
-    // },
     TabDashboard: {
       screen: TabDashboard,
       navigationOptions: ({navigation}) => ({
@@ -768,15 +672,6 @@ const DashboardMain = createBottomTabNavigator(
         ),
       }),
     },
-    // TabRegisterList: {
-    //   screen: TabRegisterList,
-    //   navigationOptions: ({navigation}) => ({
-    //     tabBarLabel: 'Nộp tiền',
-    //     tabBarIcon: ({tintColor}) => (
-    //       <TabIcon nameIcon="fontawesome|graduation-cap" color={tintColor} />
-    //     ),
-    //   }),
-    // },
     TabWorkShift: {
       screen: TabWorkShift,
       navigationOptions: ({navigation}) => ({
@@ -788,7 +683,6 @@ const DashboardMain = createBottomTabNavigator(
     },
   },
   {
-    // tabBarComponent: TabBarTop,
     tabBarComponent: TabBar,
     swipeEnabled: false,
     animationEnabled: true,

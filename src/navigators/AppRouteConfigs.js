@@ -155,29 +155,8 @@ const TabAttendance = createStackNavigator(
         headerTitleStyle: {color: 'black'},
       }),
     },
-  },
-  navigationOptionsDefault,
-);
-
-const TabShiftRegister = createStackNavigator(
-  {
-    ShiftRegister: {
-      screen: ShiftRegisterContainer,
-      navigationOptions: () => ({
-        header: null,
-        headerTintColor: 'black',
-        headerTitleStyle: {color: 'black'},
-      }),
-    },
-    Profile: {
-      screen: ProfileContainer,
-      navigationOptions: () => ({
-        headerTintColor: 'black',
-        headerTitleStyle: {color: 'black'},
-      }),
-    },
-    EditProfile: {
-      screen: EditProfileContainer,
+    ClassInfo: {
+      screen: ClassInfoContainer,
       navigationOptions: () => ({
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},
@@ -632,70 +611,6 @@ TabDashboard.navigationOptions = ({navigation}) => {
     tabBarVisible,
   };
 };
-
-const TabRegisterList = createStackNavigator(
-  {
-    RegisterList: {
-      screen: RegisterListContainer,
-      navigationOptions: () => ({
-        header: null,
-        headerTintColor: 'black',
-        headerTitleStyle: {color: 'black'},
-      }),
-    },
-    SaveRegister: {
-      screen: SaveRegisterContainer,
-      navigationOptions: () => ({
-        headerTintColor: 'black',
-        headerTitleStyle: {color: 'black'},
-      }),
-    },
-    InfoStudent: {
-      screen: InfoStudentContainer,
-      navigationOptions: () => ({
-        header: null,
-        headerTintColor: 'black',
-        headerTitleStyle: {color: 'black'},
-      }),
-    },
-    InfoStudentRegister: {
-      screen: InfoStudentRegistersContainer,
-      navigationOptions: () => ({
-        headerTintColor: 'black',
-        headerTitleStyle: {color: 'black'},
-      }),
-    },
-    InfoStudentDetails: {
-      screen: InfoStudentDetailsContainer,
-      navigationOptions: () => ({
-        headerTintColor: 'black',
-        headerTitleStyle: {color: 'black'},
-      }),
-    },
-    InfoStudentEditProfile: {
-      screen: InfoStudentEditProfileContainer,
-      navigationOptions: () => ({
-        headerTintColor: 'black',
-        headerTitleStyle: {color: 'black'},
-      }),
-    },
-    Profile: {
-      screen: ProfileContainer,
-      navigationOptions: () => ({
-        headerTintColor: 'black',
-        headerTitleStyle: {color: 'black'},
-      }),
-    },
-    EditProfile: {
-      screen: EditProfileContainer,
-      navigationOptions: () => ({
-        headerTintColor: 'black',
-        headerTitleStyle: {color: 'black'},
-      }),
-    },
-  },
-  navigationOptionsDefault,
-);
 
 const TabWorkShift = createStackNavigator(
   {

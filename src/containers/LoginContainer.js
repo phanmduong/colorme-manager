@@ -5,12 +5,11 @@ import React from 'react';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 import {bindActionCreators} from 'redux';
-import {Alert, PermissionsAndroid} from 'react-native';
+import {Alert} from 'react-native';
 import * as alert from '../constants/alert';
 import LoginComponent from '../components/LoginComponent';
 import * as loginActions from '../actions/loginActions';
 import * as autoLoginActions from '../actions/autoLoginActions';
-import SplashScreen from 'react-native-splash-screen';
 
 class LoginContainer extends React.Component {
   constructor(props) {
@@ -34,10 +33,6 @@ class LoginContainer extends React.Component {
     login[name] = value;
     this.props.loginActions.updateDataLoginForm(login, this.props.domain);
   }
-
-  updateDomainForm = (domain) => {
-    this.props.loginActions.updateDomainForm(domain);
-  };
 
   openMainScreen = () => {
     this.props.navigation.navigate('Main');
@@ -100,10 +95,6 @@ class LoginContainer extends React.Component {
     );
   }
 }
-
-// LoginContainer.navigationOptions = {
-//     title: 'Đăng nhập',
-// };
 
 function mapStateToProps(state) {
   return {

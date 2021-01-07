@@ -40,7 +40,8 @@ const styles = {
   icon: {
     width: 100,
     height: 80,
-    marginLeft: -15,
+    marginLeft: 0,
+    marginTop: 10,
   },
   otherFeatureTitle: {
     color: 'black',

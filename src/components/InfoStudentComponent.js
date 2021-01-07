@@ -181,15 +181,15 @@ class InfoStudentComponent extends React.Component {
                 style={{height: 18, width: 18}}
               />
             </View>
-            <TouchableOpacity
-              onPress={() => {
-                Linking.openURL(`tel:${phone}`);
-                this.toggleCallModal();
-              }}>
-              <View style={[styles.essentialButton, {marginLeft: 15}]}>
-                <Text style={{fontSize: 16}}>Gọi điện</Text>
-              </View>
-            </TouchableOpacity>
+            {/*<TouchableOpacity*/}
+            {/*  onPress={() => {*/}
+            {/*    Linking.openURL(`tel:${phone}`);*/}
+            {/*    this.toggleCallModal();*/}
+            {/*  }}>*/}
+            {/*  <View style={[styles.essentialButton, {marginLeft: 15}]}>*/}
+            {/*    <Text style={{fontSize: 16}}>Gọi điện</Text>*/}
+            {/*  </View>*/}
+            {/*</TouchableOpacity>*/}
             <TouchableOpacity
               onPress={() =>
                 this.props.navigation.navigate('SaveRegister', {
@@ -198,7 +198,7 @@ class InfoStudentComponent extends React.Component {
                   email: email,
                 })
               }>
-              <View style={[styles.essentialButton, {marginLeft: 10}]}>
+              <View style={[styles.essentialButton, {marginLeft: 15}]}>
                 <Text style={{fontSize: 16}}>Đăng ký</Text>
               </View>
             </TouchableOpacity>

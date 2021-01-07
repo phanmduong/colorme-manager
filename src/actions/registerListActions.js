@@ -332,7 +332,8 @@ export function reset() {
     dispatch(resetRegisterListProps());
     dispatch(selectedGenId(-1));
     dispatch(selectedBaseId(-1));
-  };
+    dispatch(resetRegisterListData());
+  }
 }
 
 function resetRegisterListProps() {
@@ -355,6 +356,15 @@ function resetRegisterListProps() {
     note: '',
     dateTest: '',
     callBackTime: '',
+  };
+}
+
+function resetRegisterListData() {
+  return {
+    type: types.RESET_REGISTER_LIST_DATA,
+    currentPageMy: 0,
+    totalPageMy: 1,
+    registerListDataMy: [],
   };
 }
 

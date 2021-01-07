@@ -12,10 +12,14 @@ function Input({
   keyboardType = 'default',
   containerStyle,
   editable,
+  required = false,
+  onBlur,
 }) {
   return (
     <View style={[styles.container, containerStyle]}>
-      <Text style={styles.titleForm}>{title}</Text>
+      <Text style={styles.titleForm}>
+        {title} {required && <Text style={{color: '#C50000'}}>*</Text>}
+      </Text>
       <View style={styles.inputContainer}>
         <TextInput
           keyboardType={keyboardType}
@@ -28,6 +32,7 @@ function Input({
           onSubmitEditing={onSubmitEditing}
           style={styles.text}
           editable={editable}
+          onBlur={onBlur}
         />
       </View>
     </View>

@@ -25,7 +25,6 @@
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* ColorMEManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ColorMEManagerTests.m */; };
 		341FCFC68696426E9BD65401 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC6F988EAE7D487D9F110415 /* FontAwesome5_Regular.ttf */; };
-		3949A9F12ED34E1188C187AF /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = CC550B9880EA42848980ACFD /* AppCenter-Config.plist */; };
 		398491407D964B159C979867 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EDEB7568D7C04BB3AC72638A /* Entypo.ttf */; };
 		3E22F160F6AE4CD1A2FF11F5 /* SegoeUI-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89CEF0479E414AEF9C52AD04 /* SegoeUI-Bold.ttf */; };
 		75BEEA936EB1475F97F16DAE /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1A4B9089D1F4D5FAC21C753 /* Fontisto.ttf */; };
@@ -128,7 +127,6 @@
 		C5C7545B12F04EBB4EEE3452 /* Pods-ColorMEManager.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColorMEManager.debug.xcconfig"; path = "Target Support Files/Pods-ColorMEManager/Pods-ColorMEManager.debug.xcconfig"; sourceTree = "<group>"; };
 		CA69DFE7621D4AD8935B1D8A /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/native-base/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		CBA8E8738BC8CCC4834F16F8 /* Pods-ColorMEManager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColorMEManager.release.xcconfig"; path = "Target Support Files/Pods-ColorMEManager/Pods-ColorMEManager.release.xcconfig"; sourceTree = "<group>"; };
-		CC550B9880EA42848980ACFD /* AppCenter-Config.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "ColorMEManager/AppCenter-Config.plist"; sourceTree = "<group>"; };
 		CC6F988EAE7D487D9F110415 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		CEAFB26191764C2D93036C1F /* libRNAnalytics.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNAnalytics.a; sourceTree = "<group>"; };
 		D388E442559F4625B885988B /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/native-base/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
@@ -262,7 +260,6 @@
 				E86AF083633844118386A1C6 /* MobileCenter-Config.plist */,
 				BA00104AC14942899DE1E91B /* Resources */,
 				1737ED451F77506100CAF1A3 /* Recovered References */,
-				CC550B9880EA42848980ACFD /* AppCenter-Config.plist */,
 				1110DBED46189863AAD9DECA /* Pods */,
 				ACA02EBE252830D100F1AB65 /* ColorMEManager-Bridging-Header.h */,
 				ACA1A7B025283C4100FDCB89 /* ColorMEManager-Bridging-Header.h */,
@@ -537,7 +534,6 @@
 				AA1A8057C49D4F629489285E /* SegoeUI-Blank.ttf in Resources */,
 				3E22F160F6AE4CD1A2FF11F5 /* SegoeUI-Bold.ttf in Resources */,
 				068C74EA9B834EB390A99F1E /* rubicon-icon-font.ttf in Resources */,
-				3949A9F12ED34E1188C187AF /* AppCenter-Config.plist in Resources */,
 				2AD080B88B7F4542A5B36ECB /* AntDesign.ttf in Resources */,
 				398491407D964B159C979867 /* Entypo.ttf in Resources */,
 				0073BD25EF8B431996FDE080 /* Feather.ttf in Resources */,

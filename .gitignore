@@ -61,4 +61,6 @@ buck-out/
 package-lock.json
 /android/local.properties
 my-upload-key.keystore
+yarn.lock
+Podfile.lock
 

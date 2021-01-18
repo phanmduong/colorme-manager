@@ -1,4 +1,4 @@
-package vn.colorme.manage.eduto.modules;
+package vn.colorme.ieg.eduto.modules;
 
 import android.Manifest;
 import android.app.Activity;

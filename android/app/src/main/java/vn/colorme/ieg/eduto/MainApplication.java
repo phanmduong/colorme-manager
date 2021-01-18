@@ -17,7 +17,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.util.List;
 
-import vn.colorme.manage.eduto.modules.LocationPackage;
+import vn.colorme.ieg.eduto.modules.LocationPackage;
 
 public class MainApplication extends MultiDexApplication implements ReactApplication {
 

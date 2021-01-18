@@ -142,7 +142,7 @@ android {
         applicationId "vn.colorme.phanminhduong.colormemanager"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 105
+        versionCode 106
         versionName "3.2"
         missingDimensionStrategy 'react-native-camera', 'general'
 

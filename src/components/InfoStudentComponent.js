@@ -6,15 +6,13 @@ import {
   StyleSheet,
   ScrollView,
   Image,
-  Linking,
   Dimensions,
-  RefreshControl,
+  RefreshControl, SafeAreaView
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import CallRegisterModal from './infoStudent/CallRegisterModal';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {getShortName, isEmptyInput} from '../helper';
-import {getStatusBarHeight} from 'react-native-iphone-x-helper';
 import Spinkit from 'react-native-spinkit';
 import theme from '../styles';
 import ChangePasswordModal from './infoStudent/ChangePasswordModal';
@@ -64,7 +62,7 @@ class InfoStudentComponent extends React.Component {
       return (
         <ScrollView
           showsVerticalScrollIndicator={false}
-          style={{flex: 1, marginTop: getStatusBarHeight() + 10}}
+          style={{flex: 1, marginTop: 10}}
           refreshControl={
             <RefreshControl
               refreshing={
@@ -76,7 +74,7 @@ class InfoStudentComponent extends React.Component {
               onRefresh={() => this.props.onRefresh()}
             />
           }>
-          <View
+          <SafeAreaView
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
@@ -111,7 +109,7 @@ class InfoStudentComponent extends React.Component {
                 />
               </TouchableOpacity>
             </View>
-          </View>
+          </SafeAreaView>
           <View style={{height: 50}}>
             <ScrollView
               horizontal={true}

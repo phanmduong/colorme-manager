@@ -139,7 +139,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "vn.colorme.phanminhduong.colormemanager"
+        applicationId "vn.colorme.phanminhduong.colormemanagernew"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 106

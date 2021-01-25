@@ -1,4 +1,4 @@
-package vn.colorme.phanminhduong.colormemanager;
+package vn.colorme.phanminhduong.colormemanagernew;
 
 import androidx.multidex.MultiDexApplication;
 
@@ -16,7 +16,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.util.List;
 
-import vn.colorme.phanminhduong.colormemanager.modules.LocationPackage;
+import vn.colorme.phanminhduong.colormemanagernew.modules.LocationPackage;
 
 public class MainApplication extends MultiDexApplication implements ReactApplication {
 

@@ -56,7 +56,6 @@ class LoginContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('hello');
     if (!_.isUndefined(nextProps.token) && nextProps.token.trim().length > 0) {
       if (!nextProps.isLoading && !nextProps.error) {
         if (nextProps.user.role <= 0) {

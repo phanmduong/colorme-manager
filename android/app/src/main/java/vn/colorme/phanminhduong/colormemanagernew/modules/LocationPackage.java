@@ -1,4 +1,4 @@
-package vn.colorme.phanminhduong.colormemanager.modules;
+package vn.colorme.phanminhduong.colormemanagernew.modules;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;

@@ -52,7 +52,7 @@ export function historyAttendanceWorkShiftApi(baseID, genID, token, domain) {
 
 export function historyAttendanceTeacherApi(genID, token, domain) {
   let url =
-    env.MANAGE_API_URL +
+    env.manageApiUrl(domain) +
     '/checkincheckout/history-checkin-checkout-teachers?token=' +
     token;
   return axios.get(url, {

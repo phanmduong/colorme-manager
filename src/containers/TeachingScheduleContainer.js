@@ -30,6 +30,7 @@ function TeachingScheduleContainer(props) {
       props.startTime,
       props.endTime,
       props.token,
+      props.domain,
     );
   }
 

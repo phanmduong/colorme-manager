@@ -12,7 +12,9 @@ export function loadShiftRegister(baseId, genId, token, domain) {
     '&gen_id=' +
     genId +
     '&token=' +
-    token;
+    token +
+    '&c=' +
+    Math.random() * 10000000000;
   return axios.get(url);
 }
 

@@ -9,10 +9,17 @@ export function loadLessonCourseApi(courseId, token) {
   return axios.get(url);
 }
 
-export function loadListStudentAttendanceByLessonApi(classID, lessonID, token, domain) {
+export function loadListStudentAttendanceByLessonApi(
+  classID,
+  lessonID,
+  token,
+  domain,
+) {
   let url =
     env.manageApiUrlV3(domain) +
-    `/v2/course/get-attendance-lesson/${classID}/${lessonID}?token=` +
+    `/v2/course/get-attendance-lesson/${classID}/${lessonID}?c=${
+      Math.random() * 10000000000
+    }&token=` +
     token;
   return axios.get(url);
 }

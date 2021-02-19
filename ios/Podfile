@@ -9,6 +9,7 @@ target 'ColorMEManager' do
   use_react_native!(:path => config["reactNativePath"])
 
   pod 'react-native-orientation', :path => '../node_modules/react-native-orientation'
+  pod 'OpenSSL-Universal', '~>1.0.2.20'
 
   target 'ColorMEManagerTests' do
     inherit! :complete

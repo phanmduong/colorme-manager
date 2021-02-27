@@ -69,7 +69,6 @@ class DashboardComponent extends React.Component {
             title={'Thống kê'}
             backgroundColor={'#FFC5B8'}
             onPress={() => {
-              this.props.getAnalyticsGenData();
               this.props.navigation.navigate('Analytics');
             }}
           />

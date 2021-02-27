@@ -25,6 +25,7 @@ class DashboardContainer extends React.Component {
     this.loadTasks();
     this.loadNotifications();
     this.loadTabs();
+    this.getAnalyticsGenData();
   }
 
   loadTabs = () => {
@@ -83,7 +84,6 @@ class DashboardContainer extends React.Component {
         refreshNotifications={this.refreshNotifications}
         refreshTasks={this.loadTasks}
         setAutoFocusRegisterListSearch={this.setAutoFocusRegisterListSearch}
-        getAnalyticsGenData={this.getAnalyticsGenData}
       />
     );
   }

@@ -51,10 +51,9 @@ class ListItemClass extends React.Component {
       classData,
       selectedGenId,
       selectedBaseId,
-      description,
       date_end,
       teachers,
-      teaching_assistants,
+      teaching_assistants, date_start,
     } = this.props;
     var tmpTotalPaid, tmpTotalRegister;
     tmpTotalPaid = totalPaid < paidTarget ? totalPaid : paidTarget;
@@ -159,9 +158,9 @@ class ListItemClass extends React.Component {
                   {studyTime}
                 </Text>
               ) : null}
-              {description ? (
+              {date_start ? (
                 <Text numberOfLines={1} style={styles.classInfoContainer}>
-                  {description}
+                  Khai giảng ngày {date_start}
                 </Text>
               ) : null}
               {date_end ? (

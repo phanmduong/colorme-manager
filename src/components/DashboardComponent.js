@@ -210,7 +210,7 @@ class DashboardComponent extends React.Component {
         ),
       },
       {
-        id: '/customer-services/leads',
+        id: '/lead/list',
         element: (
           <CircleTab
             iconImage={require('../../assets/img/Group_1311.png')}

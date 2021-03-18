@@ -124,13 +124,17 @@ class ListItemInfoStudentRegister extends React.Component {
               {/*  </View>*/}
               {/*</TouchableOpacity>*/}
               {!this.props.register.paid_status ? (
-                <TouchableOpacity onPress={() => this.toggleMoneyModal()}>
+                <TouchableOpacity
+                    // onPress={() => this.toggleMoneyModal()}
+                >
                   <View style={styles.button}>
                     <Text style={{fontSize: 16}}>Nộp học phí</Text>
                   </View>
                 </TouchableOpacity>
               ) : (
-                <TouchableOpacity onPress={() => this.toggleMoneyModal()}>
+                <TouchableOpacity
+                    // onPress={() => this.toggleMoneyModal()}
+                >
                   <View style={styles.collectedButton}>
                     <Text style={{fontSize: 16, color: 'white'}}>
                       {dotNumber(this.props.register.money)} vnđ

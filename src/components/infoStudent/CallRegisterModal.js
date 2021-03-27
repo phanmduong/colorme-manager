@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {
   View,
   Image,
@@ -26,6 +26,8 @@ function CallRegisterModal(props) {
   const [statusId, setStatus] = useState(null);
   const [teleId, setTele] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const noteRef = useRef(null);
 
   function clear() {
     setAppointmentPayment(null);
@@ -109,6 +111,8 @@ function CallRegisterModal(props) {
               onChangeText={setNote}
               value={note}
               placeholder={'Ghi chú'}
+              refName={noteRef}
+              onSubmitEditing={() => noteRef.current.blur()}
             />
             <View style={styles.callContainer}>
               <TouchableOpacity onPress={() => changeCallStatus('failed')}>

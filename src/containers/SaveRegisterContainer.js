@@ -103,74 +103,12 @@ class SaveRegisterContainer extends React.Component {
     );
   };
 
-  reloadRegisterList = () => {
-    let baseId =
-      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
-    let salerId = this.props.salerId === -1 ? '' : this.props.salerId;
-    let campaignId = this.props.campaignId === -1 ? '' : this.props.campaignId;
-    let paidStatus = this.props.paidStatus === -1 ? '' : this.props.paidStatus;
-    let callStatus = this.props.callStatus === -1 ? '' : this.props.callStatus;
-    let bookmark = this.props.bookmark === -1 ? '' : this.props.bookmark;
-    let statusId = this.props.status_id === -1 ? '' : this.props.status_id;
-    let sourceId = this.props.source_id === -1 ? '' : this.props.source_id;
-    let genId = '';
-    if (this.props.selectedGenId === -1) {
-      genId = this.props.currentGen.id;
-    } else if (
-      this.props.selectedGenId !== -1 &&
-      this.props.selectedGenId !== 2
-    ) {
-      genId = this.props.selectedGenId;
-    }
-    let classId = this.props.classId === -1 ? '' : this.props.classId;
-    this.props.registerListActions.refreshRegisterListMy(
-      this.props.searchMy,
-      this.props.token,
-      salerId,
-      baseId,
-      campaignId,
-      paidStatus,
-      this.props.classStatus,
-      callStatus,
-      bookmark,
-      this.props.search_coupon,
-      this.props.start_time,
-      this.props.end_time,
-      this.props.appointmentPayment,
-      statusId,
-      sourceId,
-      genId,
-      classId,
-      this.props.domain,
-    );
-  };
-
   render() {
     return (
       <SaveRegisterComponent
         {...this.props}
-        isLoadingCourses={this.props.isLoadingCourses}
-        courses={this.props.courses}
-        isLoadingClasses={this.props.isLoadingClasses}
-        classes={this.props.classes}
-        isLoadingCampaigns={this.props.isLoadingCampaigns}
-        campaigns={this.props.campaigns}
         onSelectCourseId={this.loadClasses}
         register={this.register}
-        isLoadingRegister={this.props.isLoadingRegister}
-        errorLoadingRegister={this.props.errorLoadingRegister}
-        provinces={this.props.provinces}
-        isLoadingProvinces={this.props.isLoadingProvinces}
-        reload={this.reloadRegisterList}
-        user={this.props.user}
-        isLoadingSources={this.props.isLoadingSources}
-        sources={this.props.sources}
-        isLoadingStatuses={this.props.isLoadingStatuses}
-        statuses={this.props.statuses}
-        isLoadingBase={this.props.isLoadingBase}
-        baseData={this.props.baseData}
-        isLoadingSalers={this.props.isLoadingSalers}
-        salers={this.props.salers}
       />
     );
   }

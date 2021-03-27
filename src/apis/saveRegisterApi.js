@@ -34,13 +34,19 @@ export function loadCoursesApi(token, domain) {
 
 export function loadClassesApi(token, course_id, domain) {
   let url =
-    env.manageApiUrl(domain) + '/v2/course/' + course_id + '/class?token=' + token;
+    env.manageApiUrl(domain) +
+    '/v2/course/' +
+    course_id +
+    '/class?token=' +
+    token;
   return axios.get(url);
 }
 
 export function loadCampaigns(token, domain) {
   let url =
-    env.manageApiUrl(domain) + '/marketing-campaign/all?limit=34&token=' + token;
+    env.manageApiUrl(domain) +
+    '/marketing-campaign/all?limit=34&token=' +
+    token;
   return axios.get(url);
 }
 
@@ -67,10 +73,18 @@ export function loadSalers(token, domain) {
 
 export function loadFilterClasses(search, token, domain) {
   let url =
-    env.manageApiUrlV4(domain) +
-    '/class/find-by-name?include=course&search=' +
+    env.manageApiUrlAuth(domain) +
+    '/v1/study-classes?limit=15&orderBy=created_at&sortedBy=desc&search=' +
     search +
     '&token=' +
+    token;
+  return axios.get(url);
+}
+
+export function loadCoupons(token, domain) {
+  let url =
+    env.manageApiUrlAuth(domain) +
+    '/v1/coupons?limit=25&orderBy=created_at&sortedBy=desc&token=' +
     token;
   return axios.get(url);
 }

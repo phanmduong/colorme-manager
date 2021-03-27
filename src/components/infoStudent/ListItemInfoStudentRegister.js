@@ -4,7 +4,7 @@ import theme from '../../styles';
 import {dotNumber, getShortName} from '../../helper';
 import CallRegisterModal from './CallRegisterModal';
 import SubmitMoneyModal from './SubmitMoneyModal';
-import ActionSheet from 'react-native-actionsheet';
+import moment from 'moment';
 
 class ListItemInfoStudentRegister extends React.Component {
   constructor(props, context) {
@@ -113,28 +113,23 @@ class ListItemInfoStudentRegister extends React.Component {
               ) : null}
             </View>
             <View style={styles.buttonContainer}>
-              {/*<TouchableOpacity*/}
-              {/*  disabled={true}*/}
-              {/*  onPress={() => {*/}
-              {/*    Linking.openURL(`tel:${this.props.register.phone}`);*/}
-              {/*    this.toggleCallModal();*/}
-              {/*  }}>*/}
-              {/*  <View style={styles.button}>*/}
-              {/*    <Text style={{fontSize: 16}}>Gọi điện</Text>*/}
-              {/*  </View>*/}
-              {/*</TouchableOpacity>*/}
+              <TouchableOpacity
+                onPress={() => {
+                  Linking.openURL(`tel:${this.props.register.phone}`);
+                  this.toggleCallModal();
+                }}>
+                <View style={styles.button}>
+                  <Text style={{fontSize: 16}}>Gọi điện</Text>
+                </View>
+              </TouchableOpacity>
               {!this.props.register.paid_status ? (
-                <TouchableOpacity
-                    // onPress={() => this.toggleMoneyModal()}
-                >
+                <TouchableOpacity onPress={() => this.toggleMoneyModal()}>
                   <View style={styles.button}>
                     <Text style={{fontSize: 16}}>Nộp học phí</Text>
                   </View>
                 </TouchableOpacity>
               ) : (
-                <TouchableOpacity
-                    // onPress={() => this.toggleMoneyModal()}
-                >
+                <TouchableOpacity onPress={() => this.toggleMoneyModal()}>
                   <View style={styles.collectedButton}>
                     <Text style={{fontSize: 16, color: 'white'}}>
                       {dotNumber(this.props.register.money)} vnđ
@@ -146,34 +141,30 @@ class ListItemInfoStudentRegister extends React.Component {
           </View>
         </View>
         <CallRegisterModal
+          {...this.props}
           isVisible={this.state.callModalVisible}
           onSwipeComplete={this.toggleCallModal}
-          imageSource={this.props.register.avatar_url}
+          avatar_url={this.props.register.avatar_url}
           email={this.props.register.email}
           phone={this.props.register.phone}
           changeCallStatus={this.props.changeCallStatus}
           student_id={this.props.register.student_id}
-          token={this.props.token}
-          errorChangeCallStatus={this.props.errorChangeCallStatus}
         />
         <SubmitMoneyModal
+          {...this.props}
           isVisible={this.state.moneyModalVisible}
           onSwipeComplete={this.toggleMoneyModal}
           avatar_url={this.props.register.avatar_url}
-          classAva={this.props.register.class.avatar_url}
           name={this.props.register.name}
-          next_code={this.props.register.next_code}
-          next_waiting_code={this.props.register.next_waiting_code}
-          token={this.props.token}
           submitMoney={this.props.submitMoney}
-          register_id={this.props.register.id}
+          registerId={this.props.register.id}
           errorSubmitMoney={this.props.errorSubmitMoney}
-          room={this.props.register.class.room}
-          base={this.props.register.class.base}
-          className={this.props.register.class.name}
-          study_time={this.props.register.class.study_time}
-          description={this.props.register.class.description}
-          type={this.props.register.class.type}
+          classItem={this.props.register.class}
+          code={this.props.register.code}
+          receivedBook={
+            this.props.register.received_book_at &&
+            moment(this.props.register.received_book_at).unix()
+          }
         />
       </View>
     );
@@ -224,6 +215,7 @@ const styles = {
     borderRadius: 8,
     height: 45,
     justifyContent: 'center',
+    marginRight: 10,
   },
   collectedButton: {
     backgroundColor: '#C50000',
@@ -231,6 +223,7 @@ const styles = {
     borderRadius: 8,
     height: 45,
     justifyContent: 'center',
+    marginRight: 10,
   },
   classInfoContainer: {
     paddingTop: 2,

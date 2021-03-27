@@ -179,3 +179,14 @@ export const STATUS_FILTER = [
   {id: 1, name: 'Đang tuyển sinh'},
   {id: 0, name: 'Đang học'},
 ];
+
+export const REGISTER_CALL_STATUS = [
+  {id: 12, name: 'Báo hủy lớp'},
+  {id: 13, name: 'Xác nhận đăng ký'},
+];
+
+export const PAYMENT_METHOD = [
+  {id: 'internet_banking', name: 'Chuyển khoản'},
+  {id: 'cash', name: 'Tiền mặt'},
+  {id: 'swipe', name: 'Quẹt thẻ'},
+];

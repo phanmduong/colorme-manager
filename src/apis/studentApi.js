@@ -6,75 +6,74 @@ import * as env from '../constants/env';
 import {isEmptyInput} from '../helper';
 
 export function loadRegisterListApi(
-  token,
+  sourceCancel,
   page = 1,
   search = '',
-  salerId = '',
-  sourceCancel,
-  genId = '',
-  campaignId = '',
-  classId = '',
-  paid_status = '',
-  baseId = '',
-  appointmentPayment = '',
-  class_status = '',
-  search_coupon = '',
+  note = '',
+  employee_ids = '',
+  course_ids = '',
+  base_ids = '',
+  province_ids = '',
+  status_ids = '',
+  class_ids = '',
+  source_ids = '',
+  campaign_ids = '',
+  coupon_ids = '',
+  class_types = '',
+  call_statuses = '',
+  tuition_status = '',
   bookmark = '',
-  tele_call_status = '',
+  call_back_time_start_time = '',
+  call_back_time_end_time = '',
+  appointment_payment_start_time = '',
+  appointment_payment_end_time = '',
   start_time = '',
   end_time = '',
-  source_id = '',
-  status_id = '',
+  orderBy = 'registers.created_at',
+  sortedBy = 'desc',
+  token,
   domain,
-  course_id = '',
-  note = '',
-  date_test = '',
-  call_back_time = '',
 ) {
   let url =
-    env.apiUrl(domain) +
-    '/register-list?page=' +
+    env.manageApiUrlAuth(domain) +
+    '/v1/registers?page=' +
     page +
     '&search=' +
     search +
-    '&saler_id=' +
-    salerId +
-    '&gen_id=' +
-    genId +
-    '&campaign_id=' +
-    campaignId +
-    '&class_id=' +
-    classId +
-    '&status=' +
-    paid_status +
-    '&base_id=' +
-    baseId +
-    '&appointment_payment=' +
-    appointmentPayment +
-    '&type=' +
-    class_status +
-    '&search_coupon=' +
-    search_coupon +
+    '&note=' +
+    note +
+    (!isEmptyInput(employee_ids) ? '&employee_ids[]=' + employee_ids : '') +
+    (!isEmptyInput(course_ids) ? '&course_ids[]=' + course_ids : '') +
+    (!isEmptyInput(base_ids) ? '&base_ids[]=' + base_ids : '') +
+    (!isEmptyInput(province_ids) ? '&province_ids[]=' + province_ids : '') +
+    (!isEmptyInput(status_ids) ? '&status_ids[]=' + status_ids : '') +
+    (!isEmptyInput(class_ids) ? '&class_ids[]=' + class_ids : '') +
+    (!isEmptyInput(source_ids) ? '&source_ids[]=' + source_ids : '') +
+    (!isEmptyInput(campaign_ids) ? '&campaign_ids[]=' + campaign_ids : '') +
+    (!isEmptyInput(coupon_ids) ? '&coupon_ids[]=' + coupon_ids : '') +
+    (!isEmptyInput(class_types) ? '&class_types[]=' + class_types : '') +
+    (!isEmptyInput(call_statuses) ? '&call_statuses[]=' + call_statuses : '') +
+    '&tuition_status=' +
+    tuition_status +
     '&bookmark=' +
     bookmark +
-    '&tele_call_status=' +
-    tele_call_status +
+    '&call_back_time_start_time=' +
+    call_back_time_start_time +
+    '&call_back_time_end_time=' +
+    call_back_time_end_time +
+    '&appointment_payment_start_time=' +
+    appointment_payment_start_time +
+    '&appointment_payment_end_time=' +
+    appointment_payment_end_time +
     '&start_time=' +
     start_time +
     '&end_time=' +
     end_time +
-    '&registerStatusId=' +
-    status_id +
-    '&registerSourceId=' +
-    source_id +
-    '&course_id=' +
-    course_id +
-    '&query_note=' +
-    note +
-    '&date_test=' +
-    date_test +
-    '&call_back_time=' +
-    call_back_time +
+    '&orderBy=' +
+    orderBy +
+    '&sortedBy=' +
+    sortedBy +
+    '&limit=15' +
     '&token=' +
     token;
   return axios.get(url, {cancelToken: sourceCancel.token});
@@ -97,7 +96,8 @@ export function loadListStudentClassApi(classId, token, domain) {
 }
 
 export function loadListStudentClassLessonsApi(classId, token, domain) {
-  let url = env.manageApiUrlV3(domain) + '/class/' + classId + '?token=' + token;
+  let url =
+    env.manageApiUrlV3(domain) + '/class/' + classId + '?token=' + token;
   return axios.get(url);
 }
 
@@ -203,7 +203,8 @@ export function changeClassLessons(classLessons, token, domain) {
 }
 
 export function changeClassLesson(lesson, token, domain) {
-  let url = env.manageApiUrlV3(domain) + '/class/change-class-lesson?token=' + token;
+  let url =
+    env.manageApiUrlV3(domain) + '/class/change-class-lesson?token=' + token;
   return axios.put(url, {
     id: lesson.id,
     note: lesson.note,
@@ -223,7 +224,9 @@ export function changeTeacher(changedData, token, domain) {
 
 export function changeAssist(changedData, token, domain) {
   let url =
-    env.manageApiUrlV3(domain) + '/class/change-teaching-assistant?token=' + token;
+    env.manageApiUrlV3(domain) +
+    '/class/change-teaching-assistant?token=' +
+    token;
   return axios.put(url, {
     id: changedData.id,
     is_teaching_assistant_replace: changedData.is_teaching_assistant_replace,

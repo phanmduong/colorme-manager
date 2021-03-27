@@ -12,10 +12,10 @@ import theme from '../styles';
 import ListItemRegisterStudent from './registerList/ListItemRegisterStudent';
 import Loading from './common/Loading';
 import Search from './common/Search';
-import FilterModal from './infoStudent/FilterModal';
+import FilterRegisterListModal from './infoStudent/FilterRegisterListModal';
 import LinearGradient from 'react-native-linear-gradient';
+const {width} = Dimensions.get('window');
 
-var {height, width} = Dimensions.get('window');
 class RegisterListComponent extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -30,24 +30,19 @@ class RegisterListComponent extends React.Component {
   };
 
   componentDidMount = () => {
-    this.props.autoFocus ? this.searchRegisterList.focus() : () => null;
-  };
-
-  resetModal = () => {
-    this.setState({filterModalVisible: false});
-    setTimeout(() => {
-      this.setState({filterModalVisible: true});
-    }, 700);
+    this.props.autoFocusRegisterListSearch
+      ? this.searchRegisterList.focus()
+      : () => null;
   };
 
   renderSearch() {
-    const {updateFormAndLoadDataSearch, search} = this.props;
+    const {updateFormAndLoadDataSearch, searchMy} = this.props;
     return (
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <Search
           placeholder="Tìm kiếm (Email, tên, số điện thoại)"
           onChangeText={updateFormAndLoadDataSearch}
-          value={search}
+          value={searchMy}
           refer={(input) => {
             this.searchRegisterList = input;
           }}
@@ -65,56 +60,37 @@ class RegisterListComponent extends React.Component {
             />
           </View>
         </TouchableOpacity>
-        <FilterModal
+        <FilterRegisterListModal
+          {...this.props}
           isVisible={this.state.filterModalVisible}
           closeModal={this.toggleFilterModal}
           onRefresh={this.props.onRefresh}
-          user={this.props.user}
-          salerId={this.props.salerId}
-          campaigns={this.props.campaigns}
           onSelectCampaignId={this.props.onSelectCampaignId}
-          campaignId={this.props.campaignId}
           onSelectPaidStatus={this.props.onSelectPaidStatus}
-          paidStatus={this.props.paidStatus}
           onSelectClassStatus={this.props.onSelectClassStatus}
-          classStatus={this.props.classStatus}
           onSelectCallStatus={this.props.onSelectCallStatus}
-          callStatus={this.props.callStatus}
           onSelectBookmark={this.props.onSelectBookmark}
-          bookmark={this.props.bookmark}
           onSelectStartTime={this.props.onSelectStartTime}
-          start_time={this.props.start_time}
           onSelectEndTime={this.props.onSelectEndTime}
-          end_time={this.props.end_time}
-          appointmentPayment={this.props.appointmentPayment}
-          onSelectAppointmentPayment={this.props.onSelectAppointmentPayment}
+          onSelectAppointmentPaymentStartTime={
+            this.props.onSelectAppointmentPaymentStartTime
+          }
+          onSelectAppointmentPaymentEndTime={
+            this.props.onSelectAppointmentPaymentEndTime
+          }
           onSelectStatus={this.props.onSelectStatus}
-          statuses={this.props.statuses}
-          statusId={this.props.statusId}
           onSelectSource={this.props.onSelectSource}
-          sources={this.props.sources}
-          sourceId={this.props.sourceId}
-          resetModal={this.resetModal}
-          salers={this.props.salers}
-          isLoadingCampaigns={this.props.isLoadingCampaigns}
-          isLoadingSources={this.props.isLoadingSources}
-          isLoadingStatuses={this.props.isLoadingStatuses}
-          isLoadingSalers={this.props.isLoadingSalers}
-          classId={this.props.classId}
-          isLoadingFilterClasses={this.props.isLoadingFilterClasses}
-          filterClasses={this.props.filterClasses}
           onSelectClassId={this.props.onSelectClassId}
           loadFilterClasses={this.props.loadFilterClasses}
-          courses={this.props.courses}
-          isLoadingCourses={this.props.isLoadingCourses}
-          errorCourses={this.props.errorCourses}
-          courseId={this.props.courseId}
           onSelectCourseId={this.props.onSelectCourseId}
-          note={this.props.note}
           onSelectDateTest={this.props.onSelectDateTest}
-          dateTest={this.props.dateTest}
-          onSelectCallBackTime={this.props.onSelectCallBackTime}
-          callBackTime={this.props.callBackTime}
+          onSelectCallBackStartTime={this.props.onSelectCallBackStartTime}
+          onSelectCallBackEndTime={this.props.onSelectCallBackEndTime}
+          onSelectProvinceId={this.props.onSelectProvinceId}
+          onSelectBaseId={this.props.onSelectBaseId}
+          onSelectSalerId={this.props.onSelectSalerId}
+          onSelectCouponId={this.props.onSelectCouponId}
+          onChangeNote={this.props.onChangeNote}
         />
       </View>
     );
@@ -122,7 +98,7 @@ class RegisterListComponent extends React.Component {
 
   renderTabs = () => {
     let salerLst = [
-      {id: -1, name: 'Tất cả'},
+      {id: '', name: 'Tất cả'},
       {id: this.props.user.id, name: 'Đơn của bạn'},
     ];
     return salerLst.map((saler) => (
@@ -162,12 +138,12 @@ class RegisterListComponent extends React.Component {
     return (
       <List
         onEndReached={this.props.loadDataRegisterList}
-        dataArray={this.props.registerList}
+        dataArray={this.props.registerListDataMy}
         contentContainerStyle={{flexGrow: 1}}
         ListHeaderComponent={this.headerComponent}
         ListEmptyComponent={
-          this.props.isLoading ? (
-            this.props.refreshing ? (
+          this.props.isLoadingMy ? (
+            this.props.refreshingMy ? (
               <View />
             ) : (
               <Loading size={width / 8} />
@@ -182,34 +158,23 @@ class RegisterListComponent extends React.Component {
         }
         refreshControl={
           <RefreshControl
-            refreshing={this.props.refreshing}
-            onRefresh={() => this.props.onRefresh(this.props.search_coupon)}
+            refreshing={this.props.refreshingMy}
+            onRefresh={this.props.onRefresh}
           />
         }
         renderRow={(item, sectionID, rowID) => (
           <ListItemRegisterStudent
             {...this.props}
             key={item.id}
-            name={item.name}
-            avatar={item.course_avatar_url}
-            email={item.email}
-            phone={item.phone}
             saler={item.saler}
             campaign={item.campaign}
             source={item.source}
-            source_id={item.source_id}
             register_status={item.register_status}
             callStatus={item.call_status}
-            paidStatus={item.paid_status}
             money={item.money}
-            studentId={item.student_id}
             setStudentId={this.props.setStudentId}
-            avatar_url={item.avatar_url}
             classInfo={item.class}
-            token={this.props.token}
-            next_code={item.next_code}
-            next_waiting_code={item.next_waiting_code}
-            created_at_cal={item.created_at_cal}
+            created_at={item.created_at}
             registerId={item.id}
             errorChangeCallStatus={this.props.errorChangeCallStatus}
             errorSubmitMoney={this.props.errorSubmitMoney}
@@ -223,6 +188,10 @@ class RegisterListComponent extends React.Component {
             changingClass={this.props.changingClass}
             changeClassStatus={this.props.changeClassStatus}
             changeClass={this.props.changeClass}
+            user={item.user}
+            classItem={item.class}
+            code={item.code}
+            receivedBook={item.received_book_at}
           />
         )}
       />

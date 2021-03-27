@@ -15,6 +15,7 @@ import {dotNumber, getShortName} from '../../helper';
 import CallRegisterModal from '../infoStudent/CallRegisterModal';
 import SubmitMoneyModal from '../infoStudent/SubmitMoneyModal';
 import * as Progress from 'react-native-progress';
+import moment from 'moment';
 
 class ListItemStudent extends React.Component {
   constructor(props, context) {
@@ -61,11 +62,11 @@ class ListItemStudent extends React.Component {
       email,
       classInfo,
       studentId,
-      next_code,
-      next_waiting_code,
       registerId,
       register_status,
       source,
+      code,
+      receivedBook,
     } = this.props;
     return (
       <View>
@@ -175,27 +176,23 @@ class ListItemStudent extends React.Component {
               </Text>
             </View>
             <View style={styles.buttonContainer}>
-              {/*<TouchableOpacity*/}
-              {/*  onPress={() => {*/}
-              {/*    Linking.openURL(`tel:${phone}`);*/}
-              {/*    this.toggleCallModal();*/}
-              {/*  }}>*/}
-              {/*  <View style={styles.button}>*/}
-              {/*    <Text style={{fontSize: 16}}>Gọi điện</Text>*/}
-              {/*  </View>*/}
-              {/*</TouchableOpacity>*/}
+              <TouchableOpacity
+                onPress={() => {
+                  Linking.openURL(`tel:${phone}`);
+                  this.toggleCallModal();
+                }}>
+                <View style={styles.button}>
+                  <Text style={{fontSize: 16}}>Gọi điện</Text>
+                </View>
+              </TouchableOpacity>
               {!status ? (
-                <TouchableOpacity
-                    // onPress={() => this.toggleMoneyModal()}
-                >
+                <TouchableOpacity onPress={() => this.toggleMoneyModal()}>
                   <View style={styles.button}>
                     <Text style={{fontSize: 16}}>Nộp học phí</Text>
                   </View>
                 </TouchableOpacity>
               ) : (
-                <TouchableOpacity
-                    // onPress={() => this.toggleMoneyModal()}
-                >
+                <TouchableOpacity onPress={() => this.toggleMoneyModal()}>
                   <View style={styles.collectedButton}>
                     <Text style={{fontSize: 16, color: 'white'}}>
                       {dotNumber(money)} vnđ
@@ -206,34 +203,27 @@ class ListItemStudent extends React.Component {
             </View>
           </View>
           <CallRegisterModal
+            {...this.props}
             isVisible={this.state.callModalVisible}
             onSwipeComplete={this.toggleCallModal}
-            imageSource={avatar}
+            avatar_url={avatar}
             email={email}
             phone={phone}
             changeCallStatus={this.props.changeCallStatus}
-            student_id={studentId}
-            token={this.props.token}
-            errorChangeCallStatus={this.props.errorChangeCallStatus}
+            studentId={studentId}
           />
           <SubmitMoneyModal
+            {...this.props}
             isVisible={this.state.moneyModalVisible}
             onSwipeComplete={this.toggleMoneyModal}
             avatar_url={avatar}
-            classAva={classInfo.icon_url}
             name={name}
-            next_code={next_code}
-            next_waiting_code={next_waiting_code}
-            token={this.props.token}
             submitMoney={this.props.submitMoney}
-            register_id={registerId}
+            registerId={registerId}
             errorSubmitMoney={this.props.errorSubmitMoney}
-            room={classInfo.room.name}
-            base={classInfo.base.address}
-            className={classInfo.name}
-            study_time={classInfo.study_time}
-            description={classInfo.description}
-            type={classInfo.type}
+            classItem={classInfo}
+            code={code}
+            receivedBook={receivedBook && moment(receivedBook).unix()}
           />
         </View>
       </View>
@@ -384,12 +374,14 @@ const styles = {
     paddingVertical: 10,
     paddingHorizontal: 18,
     borderRadius: 8,
+    marginRight: 10,
   },
   collectedButton: {
     backgroundColor: '#C50000',
     paddingVertical: 10,
     paddingHorizontal: 18,
     borderRadius: 8,
+    marginRight: 10,
   },
   classInfoContainer: {
     paddingTop: 5,

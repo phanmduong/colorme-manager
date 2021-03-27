@@ -563,7 +563,6 @@ class SaveRegisterComponent extends React.Component {
         this.reset();
         Alert.alert('Thông báo', 'Đăng ký thành công!');
         this.props.navigation.navigate('RegisterList');
-        this.props.reload();
       }
     }
   };

@@ -321,11 +321,11 @@ function loadSalersError() {
 }
 
 export function loadFilterClasses(search, token, domain) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginLoadFilterClasses());
     saveRegisterApi
       .loadFilterClasses(search, token, domain)
-      .then(function(res) {
+      .then(function (res) {
         dispatch(loadFilterClassesSuccessful(res));
       })
       .catch((error) => {
@@ -348,7 +348,7 @@ function loadFilterClassesSuccessful(res) {
     type: types.LOAD_FILTER_CLASSES_SUCCESSFUL,
     isLoadingFilterClasses: false,
     errorLoadingFilterClasses: false,
-    filterClasses: res.data,
+    filterClasses: res.data.study_classes.items,
   };
 }
 
@@ -357,5 +357,46 @@ function loadFilterClassesError() {
     type: types.LOAD_FILTER_CLASSES_ERROR,
     isLoadingFilterClasses: false,
     errorLoadingFilterClasses: true,
+  };
+}
+
+export function loadCoupons(token, domain) {
+  return function (dispatch) {
+    dispatch(beginLoadCoupons());
+    saveRegisterApi
+      .loadCoupons(token, domain)
+      .then((res) => {
+        dispatch(loadCouponsSuccess(res));
+      })
+      .catch((error) => {
+        dispatch(loadCouponsError());
+        console.log(error);
+        throw error;
+      });
+  };
+}
+
+function beginLoadCoupons() {
+  return {
+    type: types.BEGIN_LOAD_COUPONS,
+    isLoadingCoupons: true,
+    errorCoupons: false,
+  };
+}
+
+function loadCouponsSuccess(res) {
+  return {
+    type: types.LOAD_COUPONS_SUCCESS,
+    isLoadingCoupons: false,
+    errorCoupons: false,
+    coupons: res.data.coupons.items,
+  };
+}
+
+function loadCouponsError() {
+  return {
+    type: types.LOAD_COUPONS_ERROR,
+    isLoadingCoupons: false,
+    errorCoupons: true,
   };
 }

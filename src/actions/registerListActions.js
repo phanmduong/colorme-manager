@@ -18,61 +18,67 @@ export function beginDataRegisterListLoadMy() {
 }
 
 export function loadDataRegisterListMy(
-  token,
   page,
   search,
-  salerId,
-  baseId,
-  campaignId,
-  paidStatus,
-  classStatus,
-  callStatus,
+  note,
+  employee_ids,
+  course_ids,
+  base_ids,
+  province_ids,
+  status_ids,
+  class_ids,
+  source_ids,
+  campaign_ids,
+  coupon_ids,
+  class_types,
+  call_statuses,
+  tuition_status,
   bookmark,
-  search_coupon,
+  call_back_time_start_time,
+  call_back_time_end_time,
+  appointment_payment_start_time,
+  appointment_payment_end_time,
   start_time,
   end_time,
-  appointmentPayment,
-  statusId,
-  sourceId,
-  genId,
-  classId,
+  orderBy,
+  sortedBy,
+  token,
   domain,
-  courseId,
-  note,
-  dateTest,
-  callBackTime,
 ) {
   return function (dispatch) {
     dispatch(beginDataRegisterListLoadMy());
     studentApi
       .loadRegisterListApi(
-        token,
+        sourceCancelMy,
         page,
         search,
-        salerId,
-        sourceCancelMy,
-        genId,
-        campaignId,
-        classId,
-        paidStatus,
-        baseId,
-        appointmentPayment,
-        classStatus,
-        search_coupon,
+        note,
+        employee_ids,
+        course_ids,
+        base_ids,
+        province_ids,
+        status_ids,
+        class_ids,
+        source_ids,
+        campaign_ids,
+        coupon_ids,
+        class_types,
+        call_statuses,
+        tuition_status,
         bookmark,
-        callStatus,
+        call_back_time_start_time,
+        call_back_time_end_time,
+        appointment_payment_start_time,
+        appointment_payment_end_time,
         start_time,
         end_time,
-        sourceId,
-        statusId,
+        orderBy,
+        sortedBy,
+        token,
         domain,
-        courseId,
-        note,
-        dateTest,
-        callBackTime,
       )
       .then(function (res) {
-        dispatch(loadDataSuccessfulMy(res, salerId, search_coupon, note));
+        dispatch(loadDataSuccessfulMy(res, employee_ids));
       })
       .catch((error) => {
         if (axios.isCancel(error)) {
@@ -85,18 +91,16 @@ export function loadDataRegisterListMy(
   };
 }
 
-export function loadDataSuccessfulMy(res, salerId, search_coupon, note) {
+export function loadDataSuccessfulMy(res, salerId) {
   return {
     type: types.LOAD_DATA_REGISTER_LIST_SUCCESSFUL_MY,
-    registerListDataMy: res.data.registers,
-    currentPageMy: res.data.paginator.current_page,
-    totalPageMy: res.data.paginator.total_pages,
+    registerListDataMy: res.data.registers.items,
+    currentPageMy: res.data.registers.meta.current_page,
+    totalPageMy: res.data.registers.meta.total_pages,
     isLoadingMy: false,
     errorMy: false,
     refreshingMy: false,
     salerId: salerId,
-    search_coupon: search_coupon,
-    note: note,
   };
 }
 
@@ -110,58 +114,64 @@ export function loadDataErrorMy() {
 }
 
 export function updateFormAndLoadDataSearchMy(
-  searchMy,
-  salerId,
-  baseId,
-  campaignId,
-  paidStatus,
-  classStatus,
-  callStatus,
+  search,
+  note,
+  employee_ids,
+  course_ids,
+  base_ids,
+  province_ids,
+  status_ids,
+  class_ids,
+  source_ids,
+  campaign_ids,
+  coupon_ids,
+  class_types,
+  call_statuses,
+  tuition_status,
   bookmark,
-  search_coupon,
+  call_back_time_start_time,
+  call_back_time_end_time,
+  appointment_payment_start_time,
+  appointment_payment_end_time,
   start_time,
   end_time,
-  appointmentPayment,
-  statusId,
-  sourceId,
-  genId,
-  classId,
-  courseId,
-  note,
-  dateTest,
-  callBackTime,
+  orderBy,
+  sortedBy,
   token,
   domain,
 ) {
   sourceCancelMy.cancel('Canceled by api register list (my).');
   sourceCancelMy = CancelToken.source();
   return (dispatch) => {
-    dispatch(updateFormSearchMy(searchMy));
+    dispatch(updateFormSearchMy(search));
     dispatch(
       loadDataRegisterListMy(
-        token,
         1,
-        searchMy,
-        salerId,
-        baseId,
-        campaignId,
-        paidStatus,
-        classStatus,
-        callStatus,
+        search,
+        note,
+        employee_ids,
+        course_ids,
+        base_ids,
+        province_ids,
+        status_ids,
+        class_ids,
+        source_ids,
+        campaign_ids,
+        coupon_ids,
+        class_types,
+        call_statuses,
+        tuition_status,
         bookmark,
-        search_coupon,
+        call_back_time_start_time,
+        call_back_time_end_time,
+        appointment_payment_start_time,
+        appointment_payment_end_time,
         start_time,
         end_time,
-        appointmentPayment,
-        statusId,
-        sourceId,
-        genId,
-        classId,
+        orderBy,
+        sortedBy,
+        token,
         domain,
-        courseId,
-        note,
-        dateTest,
-        callBackTime,
       ),
     );
   };
@@ -178,56 +188,62 @@ export function updateFormSearchMy(searchMy) {
 }
 
 export function refreshRegisterListMy(
-  searchMy,
-  token,
-  salerId,
-  baseId,
-  campaignId,
-  paidStatus,
-  classStatus,
-  callStatus,
+  search,
+  note,
+  employee_ids,
+  course_ids,
+  base_ids,
+  province_ids,
+  status_ids,
+  class_ids,
+  source_ids,
+  campaign_ids,
+  coupon_ids,
+  class_types,
+  call_statuses,
+  tuition_status,
   bookmark,
-  search_coupon,
+  call_back_time_start_time,
+  call_back_time_end_time,
+  appointment_payment_start_time,
+  appointment_payment_end_time,
   start_time,
   end_time,
-  appointmentPayment,
-  statusId,
-  sourceId,
-  genId,
-  classId,
+  orderBy,
+  sortedBy,
+  token,
   domain,
-  courseId,
-  note,
-  dateTest,
-  callBackTime,
 ) {
   return (dispatch) => {
     dispatch(resetRegisterListMy());
     dispatch(
       loadDataRegisterListMy(
-        token,
         1,
-        searchMy,
-        salerId,
-        baseId,
-        campaignId,
-        paidStatus,
-        classStatus,
-        callStatus,
+        search,
+        note,
+        employee_ids,
+        course_ids,
+        base_ids,
+        province_ids,
+        status_ids,
+        class_ids,
+        source_ids,
+        campaign_ids,
+        coupon_ids,
+        class_types,
+        call_statuses,
+        tuition_status,
         bookmark,
-        search_coupon,
+        call_back_time_start_time,
+        call_back_time_end_time,
+        appointment_payment_start_time,
+        appointment_payment_end_time,
         start_time,
         end_time,
-        appointmentPayment,
-        statusId,
-        sourceId,
-        genId,
-        classId,
+        orderBy,
+        sortedBy,
+        token,
         domain,
-        courseId,
-        note,
-        dateTest,
-        callBackTime,
       ),
     );
   };
@@ -299,10 +315,17 @@ export function onSelectEndTime(end_time) {
   };
 }
 
-export function onSelectAppointmentPayment(appointmentPayment) {
+export function onSelectAppointmentPaymentStartTime(date) {
   return {
-    type: types.SELECT_REGISTER_LIST_APPOINTMENT_PAYMENT,
-    appointmentPayment: appointmentPayment,
+    type: types.SELECT_REGISTER_LIST_APPOINTMENT_PAYMENT_START_TIME,
+    appointmentPaymentStartTime: date,
+  };
+}
+
+export function onSelectAppointmentPaymentEndTime(date) {
+  return {
+    type: types.SELECT_REGISTER_LIST_APPOINTMENT_PAYMENT_END_TIME,
+    appointmentPaymentEndTime: date,
   };
 }
 
@@ -324,47 +347,6 @@ export function onSelectClassId(classId) {
   return {
     type: types.SELECT_REGISTER_LIST_CLASS,
     classId: classId,
-  };
-}
-
-export function reset() {
-  return function (dispatch) {
-    dispatch(resetRegisterListProps());
-    dispatch(selectedGenId(-1));
-    dispatch(selectedBaseId(-1));
-    dispatch(resetRegisterListData());
-  }
-}
-
-function resetRegisterListProps() {
-  return {
-    type: types.RESET_REGISTER_LIST_FILTER,
-    salerId: -1,
-    campaignId: -1,
-    paidStatus: -1,
-    classStatus: '',
-    callStatus: -1,
-    bookmark: -1,
-    search_coupon: '',
-    start_time: '',
-    end_time: '',
-    appointmentPayment: '',
-    source_id: -1,
-    status_id: -1,
-    classId: -1,
-    courseId: -1,
-    note: '',
-    dateTest: '',
-    callBackTime: '',
-  };
-}
-
-function resetRegisterListData() {
-  return {
-    type: types.RESET_REGISTER_LIST_DATA,
-    currentPageMy: 0,
-    totalPageMy: 1,
-    registerListDataMy: [],
   };
 }
 
@@ -516,9 +498,44 @@ export function onSelectDateTest(date) {
   };
 }
 
-export function onSelectCallBackTime(date) {
+export function onSelectCallBackStartTime(date) {
   return {
-    type: types.SELECT_REGISTER_LIST_CALL_BACK_TIME,
-    callBackTime: date,
+    type: types.SELECT_REGISTER_LIST_CALL_BACK_START_TIME,
+    callBackStartTime: date,
+  };
+}
+
+export function onSelectCallBackEndTime(date) {
+  return {
+    type: types.SELECT_REGISTER_LIST_CALL_BACK_END_TIME,
+    callBackEndTime: date,
+  };
+}
+
+export function onSelectBaseId(baseId) {
+  return {
+    type: types.SELECT_REGISTER_LIST_BASE,
+    baseId,
+  };
+}
+
+export function onSelectProvinceId(provinceId) {
+  return {
+    type: types.SELECT_REGISTER_LIST_PROVINCE,
+    provinceId,
+  };
+}
+
+export function onSelectCouponId(couponId) {
+  return {
+    type: types.SELECT_REGISTER_LIST_COUPON,
+    couponId,
+  };
+}
+
+export function onChangeNote(note) {
+  return {
+    type: types.CHANGE_REGISTER_LIST_NOTE,
+    note,
   };
 }

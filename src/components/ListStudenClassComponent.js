@@ -119,8 +119,6 @@ class ListStudenClassComponent extends React.Component {
             campaign={item.campaign}
             classInfo={this.props.classInfo}
             studentId={item.id}
-            next_code={this.props.classInfo.next_code}
-            next_waiting_code={this.props.classInfo.next_waiting_code}
             registerId={item.register_id}
             changeCallStatus={this.props.changeCallStatus}
             token={this.props.token}
@@ -131,6 +129,8 @@ class ListStudenClassComponent extends React.Component {
             register_status={item.register_status}
             source={item.source}
             attendances={item.attendances}
+            code={item.code}
+            receivedBook={item.received_book_at}
           />
         );
       case 1:
@@ -175,6 +175,7 @@ class ListStudenClassComponent extends React.Component {
   };
 
   render() {
+    console.log(this.props.listStudentClass);
     if (this.props.isLoading || this.props.isLoadingLessons) {
       return (
         <Container>

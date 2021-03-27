@@ -87,9 +87,13 @@ export default function registerListReducer(
       return Object.assign({}, state, {
         end_time: action.end_time,
       });
-    case types.SELECT_REGISTER_LIST_APPOINTMENT_PAYMENT:
+    case types.SELECT_REGISTER_LIST_APPOINTMENT_PAYMENT_START_TIME:
       return Object.assign({}, state, {
-        appointmentPayment: action.appointmentPayment,
+        appointmentPaymentStartTime: action.appointmentPaymentStartTime,
+      });
+    case types.SELECT_REGISTER_LIST_APPOINTMENT_PAYMENT_END_TIME:
+      return Object.assign({}, state, {
+        appointmentPaymentEndTime: action.appointmentPaymentEndTime,
       });
     case types.SELECT_REGISTER_LIST_SOURCE:
       return Object.assign({}, state, {
@@ -102,26 +106,6 @@ export default function registerListReducer(
     case types.SELECT_REGISTER_LIST_CLASS:
       return Object.assign({}, state, {
         classId: action.classId,
-      });
-    case types.RESET_REGISTER_LIST_FILTER:
-      return Object.assign({}, state, {
-        salerId: action.salerId,
-        campaignId: action.campaignId,
-        paidStatus: action.paidStatus,
-        classStatus: action.classStatus,
-        callStatus: action.callStatus,
-        bookmark: action.bookmark,
-        search_coupon: action.search_coupon,
-        start_time: action.start_time,
-        end_time: action.end_time,
-        appointmentPayment: action.appointmentPayment,
-        source_id: action.source_id,
-        status_id: action.status_id,
-        classId: action.classId,
-        courseId: action.courseId,
-        note: action.note,
-        dateTest: action.dateTest,
-        callBackTime: action.callBackTime,
       });
     case types.SET_AUTOFOCUS_REGISTER_LIST_SEARCH:
       return Object.assign({}, state, {
@@ -190,15 +174,29 @@ export default function registerListReducer(
       return Object.assign({}, state, {
         dateTest: action.dateTest,
       });
-    case types.SELECT_REGISTER_LIST_CALL_BACK_TIME:
+    case types.SELECT_REGISTER_LIST_CALL_BACK_START_TIME:
       return Object.assign({}, state, {
-        callBackTime: action.callBackTime,
+        callBackStartTime: action.callBackStartTime,
       });
-    case types.RESET_REGISTER_LIST_DATA:
+    case types.SELECT_REGISTER_LIST_CALL_BACK_END_TIME:
       return Object.assign({}, state, {
-        currentPageMy: action.currentPageMy,
-        totalPageMy: action.totalPageMy,
-        registerListDataMy: action.registerListDataMy,
+        callBackEndTime: action.callBackEndTime,
+      });
+    case types.SELECT_REGISTER_LIST_BASE:
+      return Object.assign({}, state, {
+        baseId: action.baseId,
+      });
+    case types.SELECT_REGISTER_LIST_PROVINCE:
+      return Object.assign({}, state, {
+        provinceId: action.provinceId,
+      });
+    case types.SELECT_REGISTER_LIST_COUPON:
+      return Object.assign({}, state, {
+        couponId: action.couponId,
+      });
+    case types.CHANGE_REGISTER_LIST_NOTE:
+      return Object.assign({}, state, {
+        note: action.note,
       });
     default:
       return state;

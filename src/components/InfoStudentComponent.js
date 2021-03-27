@@ -181,15 +181,15 @@ class InfoStudentComponent extends React.Component {
                 style={{height: 18, width: 18}}
               />
             </View>
-            {/*<TouchableOpacity*/}
-            {/*  onPress={() => {*/}
-            {/*    Linking.openURL(`tel:${phone}`);*/}
-            {/*    this.toggleCallModal();*/}
-            {/*  }}>*/}
-            {/*  <View style={[styles.essentialButton, {marginLeft: 15}]}>*/}
-            {/*    <Text style={{fontSize: 16}}>Gọi điện</Text>*/}
-            {/*  </View>*/}
-            {/*</TouchableOpacity>*/}
+            <TouchableOpacity
+              onPress={() => {
+                Linking.openURL(`tel:${phone}`);
+                this.toggleCallModal();
+              }}>
+              <View style={[styles.essentialButton, {marginLeft: 15}]}>
+                <Text style={{fontSize: 16}}>Gọi điện</Text>
+              </View>
+            </TouchableOpacity>
             <TouchableOpacity
               onPress={() =>
                 this.props.navigation.navigate('SaveRegister', {
@@ -202,24 +202,33 @@ class InfoStudentComponent extends React.Component {
                 <Text style={{fontSize: 16}}>Đăng ký</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => this.toggleChangePasswordModal()}>
+            <TouchableOpacity onPress={() => this.toggleChangePasswordModal()}>
               <View style={[styles.essentialButton, {marginLeft: 10}]}>
                 <Text style={{fontSize: 16}}>Đổi MK</Text>
               </View>
             </TouchableOpacity>
           </View>
           <View style={{flex: 1}}>{this.props.tabComponent}</View>
+          {/*<CallRegisterModal*/}
+          {/*  isVisible={this.state.callModalVisible}*/}
+          {/*  onSwipeComplete={this.toggleCallModal}*/}
+          {/*  imageSource={avatar_url}*/}
+          {/*  email={email}*/}
+          {/*  phone={phone}*/}
+          {/*  changeCallStatus={this.props.changeCallStatus}*/}
+          {/*  student_id={this.props.student_id}*/}
+          {/*  token={this.props.token}*/}
+          {/*  errorChangeCallStatus={this.props.errorChangeCallStatus}*/}
+          {/*/>*/}
           <CallRegisterModal
+            {...this.props}
             isVisible={this.state.callModalVisible}
             onSwipeComplete={this.toggleCallModal}
-            imageSource={avatar_url}
+            avatar_url={avatar_url}
             email={email}
             phone={phone}
             changeCallStatus={this.props.changeCallStatus}
-            student_id={this.props.student_id}
-            token={this.props.token}
-            errorChangeCallStatus={this.props.errorChangeCallStatus}
+            studentId={this.props.student_id}
           />
           <ChangePasswordModal
             {...this.props}

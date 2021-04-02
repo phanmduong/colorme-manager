@@ -30,9 +30,7 @@ class RegisterListComponent extends React.Component {
   };
 
   componentDidMount = () => {
-    this.props.autoFocusRegisterListSearch
-      ? this.searchRegisterList.focus()
-      : () => null;
+    this.props.autoFocus ? this.searchRegisterList.focus() : () => null;
   };
 
   renderSearch() {

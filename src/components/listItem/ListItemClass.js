@@ -53,7 +53,8 @@ class ListItemClass extends React.Component {
       selectedBaseId,
       date_end,
       teachers,
-      teaching_assistants, date_start,
+      teaching_assistants,
+      date_start,
     } = this.props;
     var tmpTotalPaid, tmpTotalRegister;
     tmpTotalPaid = totalPaid < paidTarget ? totalPaid : paidTarget;
@@ -233,8 +234,6 @@ class ListItemClass extends React.Component {
                 onPress={() =>
                   this.props.navigation.navigate('SaveRegister', {
                     classId: classId,
-                    courseId: courseId,
-                    baseId: baseId,
                   })
                 }>
                 <View style={styles.button}>

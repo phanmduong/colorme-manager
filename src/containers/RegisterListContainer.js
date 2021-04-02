@@ -1,7 +1,7 @@
 /**
  * Created by phanmduong on 6/1/17.
  */
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as registerListActions from '../actions/registerListActions';
@@ -14,181 +14,165 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import theme from '../styles';
 
-class RegisterListContainer extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-    this.loadDataRegisterListMy = this.loadDataRegisterListMy.bind(this);
-    this.updateFormAndLoadDataSearchMy = this.updateFormAndLoadDataSearchMy.bind(
-      this,
-    );
+function RegisterListContainer(props) {
+  useEffect(() => {
+    loadDataRegisterListMy();
+    loadCampaigns();
+    loadStatuses();
+    loadSources();
+    loadSalers();
+    loadFilterClasses('');
+    loadCourses();
+    loadBases();
+    loadProvinces();
+    loadCoupons();
+  }, []);
+
+  useEffect(() => {
+    if (props.createdRegister) {
+      refreshRegisterListMy();
+      props.saveRegisterActions.resetCreatedRegister();
+    }
+  }, [props.createdRegister]);
+
+  function loadBases() {
+    props.baseActions.loadDataBase(props.token, props.domain);
   }
 
-  componentWillMount() {
-    this.loadDataRegisterListMy();
-    this.loadCampaigns();
-    this.loadStatuses();
-    this.loadSources();
-    this.loadSalers();
-    this.loadFilterClasses('');
-    this.loadCourses();
-    this.loadBases();
-    this.loadProvinces();
-    this.loadCoupons();
+  function loadCoupons() {
+    props.saveRegisterActions.loadCoupons(props.token, props.domain);
   }
 
-  loadBases = () => {
-    this.props.baseActions.loadDataBase(this.props.token, this.props.domain);
-  };
+  function loadProvinces() {
+    props.saveRegisterActions.loadProvinces(props.token, props.domain);
+  }
 
-  loadCoupons = () => {
-    this.props.saveRegisterActions.loadCoupons(
-      this.props.token,
-      this.props.domain,
-    );
-  };
+  function loadCampaigns() {
+    props.saveRegisterActions.loadCampaigns(props.token, props.domain);
+  }
 
-  loadProvinces = () => {
-    this.props.saveRegisterActions.loadProvinces(
-      this.props.token,
-      this.props.domain,
-    );
-  };
+  function loadSources() {
+    props.saveRegisterActions.loadSources(props.token, props.domain);
+  }
 
-  loadCampaigns = () => {
-    this.props.saveRegisterActions.loadCampaigns(
-      this.props.token,
-      this.props.domain,
-    );
-  };
-
-  loadSources = () => {
-    this.props.saveRegisterActions.loadSources(
-      this.props.token,
-      this.props.domain,
-    );
-  };
-
-  loadStatuses = () => {
-    this.props.saveRegisterActions.loadStatuses(
+  function loadStatuses() {
+    props.saveRegisterActions.loadStatuses(
       'registers',
-      this.props.token,
-      this.props.domain,
+      props.token,
+      props.domain,
     );
-  };
+  }
 
-  loadSalers = () => {
-    this.props.saveRegisterActions.loadSalers(
-      this.props.token,
-      this.props.domain,
-    );
-  };
+  function loadSalers() {
+    props.saveRegisterActions.loadSalers(props.token, props.domain);
+  }
 
-  loadFilterClasses = (search) => {
-    this.props.saveRegisterActions.loadFilterClasses(
+  function loadFilterClasses(search) {
+    props.saveRegisterActions.loadFilterClasses(
       search,
-      this.props.token,
-      this.props.domain,
+      props.token,
+      props.domain,
     );
-  };
+  }
 
-  loadDataRegisterListMy() {
-    if (this.props.currentPageMy < this.props.totalPageMy) {
-      this.props.registerListActions.loadDataRegisterListMy(
-        this.props.currentPageMy + 1,
-        this.props.searchMy,
+  function loadDataRegisterListMy() {
+    if (props.currentPageMy < props.totalPageMy) {
+      props.registerListActions.loadDataRegisterListMy(
+        props.currentPageMy + 1,
+        props.searchMy,
         '',
-        this.props.salerId,
-        this.props.courseId,
-        this.props.baseId,
-        this.props.provinceId,
-        this.props.statusId,
-        this.props.classId,
-        this.props.sourceId,
-        this.props.campaignId,
-        this.props.couponId,
-        this.props.classStatus,
-        this.props.callStatus,
-        this.props.paidStatus,
-        this.props.bookmark,
-        this.props.callBackStartTime,
-        this.props.callBackEndTime,
-        this.props.appointmentPaymentStartTime,
-        this.props.appointmentPaymentEndTime,
-        this.props.start_time,
-        this.props.end_time,
+        props.salerId,
+        props.courseId,
+        props.baseId,
+        props.provinceId,
+        props.statusId,
+        props.classId,
+        props.sourceId,
+        props.campaignId,
+        props.couponId,
+        props.classStatus,
+        props.callStatus,
+        props.paidStatus,
+        props.bookmark,
+        props.callBackStartTime,
+        props.callBackEndTime,
+        props.appointmentPaymentStartTime,
+        props.appointmentPaymentEndTime,
+        props.start_time,
+        props.end_time,
         'registers.created_at',
         'desc',
-        this.props.token,
-        this.props.domain,
+        props.token,
+        props.domain,
       );
     }
   }
 
-  refreshRegisterListMy = () => {
-    this.props.registerListActions.refreshRegisterListMy(
-      this.props.searchMy,
+  function refreshRegisterListMy() {
+    props.registerListActions.refreshRegisterListMy(
+      props.searchMy,
       '',
-      this.props.salerId,
-      this.props.courseId,
-      this.props.baseId,
-      this.props.provinceId,
-      this.props.statusId,
-      this.props.classId,
-      this.props.sourceId,
-      this.props.campaignId,
-      this.props.couponId,
-      this.props.classStatus,
-      this.props.callStatus,
-      this.props.paidStatus,
-      this.props.bookmark,
-      this.props.callBackStartTime,
-      this.props.callBackEndTime,
-      this.props.appointmentPaymentStartTime,
-      this.props.appointmentPaymentEndTime,
-      this.props.start_time,
-      this.props.end_time,
+      props.salerId,
+      props.courseId,
+      props.baseId,
+      props.provinceId,
+      props.statusId,
+      props.classId,
+      props.sourceId,
+      props.campaignId,
+      props.couponId,
+      props.classStatus,
+      props.callStatus,
+      props.paidStatus,
+      props.bookmark,
+      props.callBackStartTime,
+      props.callBackEndTime,
+      props.appointmentPaymentStartTime,
+      props.appointmentPaymentEndTime,
+      props.start_time,
+      props.end_time,
       'registers.created_at',
       'desc',
-      this.props.token,
-      this.props.domain,
-    );
-  };
-
-  updateFormAndLoadDataSearchMy(search) {
-    this.props.registerListActions.updateFormAndLoadDataSearchMy(
-      search,
-      '',
-      this.props.salerId,
-      this.props.courseId,
-      this.props.baseId,
-      this.props.provinceId,
-      this.props.statusId,
-      this.props.classId,
-      this.props.sourceId,
-      this.props.campaignId,
-      this.props.couponId,
-      this.props.classStatus,
-      this.props.callStatus,
-      this.props.paidStatus,
-      this.props.bookmark,
-      this.props.callBackStartTime,
-      this.props.callBackEndTime,
-      this.props.appointmentPaymentStartTime,
-      this.props.appointmentPaymentEndTime,
-      this.props.start_time,
-      this.props.end_time,
-      'registers.created_at',
-      'desc',
-      this.props.token,
-      this.props.domain,
+      props.token,
+      props.domain,
     );
   }
 
-  setStudentId = (studentId) => {
-    this.props.infoStudentActions.setStudentId(studentId);
-  };
+  function updateFormAndLoadDataSearchMy(search) {
+    props.registerListActions.updateFormAndLoadDataSearchMy(
+      search,
+      '',
+      props.salerId,
+      props.courseId,
+      props.baseId,
+      props.provinceId,
+      props.statusId,
+      props.classId,
+      props.sourceId,
+      props.campaignId,
+      props.couponId,
+      props.classStatus,
+      props.callStatus,
+      props.paidStatus,
+      props.bookmark,
+      props.callBackStartTime,
+      props.callBackEndTime,
+      props.appointmentPaymentStartTime,
+      props.appointmentPaymentEndTime,
+      props.start_time,
+      props.end_time,
+      'registers.created_at',
+      'desc',
+      props.token,
+      props.domain,
+    );
+  }
 
-  changeCallStatus = (
+  function setStudentId(studentId) {
+    props.infoStudentActions.setStudentId(studentId);
+  }
+
+  function changeCallStatus(
     appointmentPayment,
     callBackTime,
     callStatus,
@@ -196,8 +180,8 @@ class RegisterListContainer extends React.Component {
     statusId,
     studentId,
     teleId,
-  ) => {
-    this.props.infoStudentActions.changeCallStatus(
+  ) {
+    props.infoStudentActions.changeCallStatus(
       appointmentPayment,
       callBackTime,
       callStatus,
@@ -205,12 +189,12 @@ class RegisterListContainer extends React.Component {
       statusId,
       studentId,
       teleId,
-      this.props.token,
-      this.props.domain,
+      props.token,
+      props.domain,
     );
-  };
+  }
 
-  submitMoney = (
+  function submitMoney(
     register_id,
     actual_input_at,
     code,
@@ -218,8 +202,8 @@ class RegisterListContainer extends React.Component {
     note,
     payment_method,
     received_book_at,
-  ) => {
-    this.props.infoStudentActions.submitMoney(
+  ) {
+    props.infoStudentActions.submitMoney(
       register_id,
       actual_input_at,
       code,
@@ -227,197 +211,188 @@ class RegisterListContainer extends React.Component {
       note,
       payment_method,
       received_book_at,
-      this.props.token,
-      this.props.domain,
-    );
-  };
-
-  loadAvailableClasses = (registerId, search) => {
-    this.props.registerListActions.loadAvailableClasses(
-      registerId,
-      search,
-      this.props.token,
-      this.props.domain,
-    );
-  };
-
-  loadCourses = () => {
-    this.props.registerListActions.loadCourses(
-      this.props.token,
-      this.props.domain,
-    );
-  };
-
-  resetAvailableClasses = () => {
-    this.props.registerListActions.resetAvailableClasses();
-  };
-
-  onSelectBaseId = (baseId) => {
-    this.props.registerListActions.onSelectBaseId(baseId);
-  };
-
-  onSelectSalerId = (salerId) => {
-    this.props.registerListActions.onSelectSalerId(salerId);
-  };
-
-  onSelectCampaignId = (campaignId) => {
-    this.props.registerListActions.onSelectCampaignId(campaignId);
-  };
-
-  onSelectPaidStatus = (paidStatus) => {
-    this.props.registerListActions.onSelectPaidStatus(paidStatus);
-  };
-
-  onSelectClassStatus = (classStatus) => {
-    this.props.registerListActions.onSelectClassStatus(classStatus);
-  };
-
-  onSelectCallStatus = (callStatus) => {
-    this.props.registerListActions.onSelectCallStatus(callStatus);
-  };
-
-  onSelectBookmark = (bookmark) => {
-    this.props.registerListActions.onSelectBookmark(bookmark);
-  };
-
-  onSelectStartTime = (date) => {
-    this.props.registerListActions.onSelectStartTime(date);
-  };
-
-  onSelectEndTime = (date) => {
-    this.props.registerListActions.onSelectEndTime(date);
-  };
-
-  onSelectAppointmentPaymentStartTime = (date) => {
-    this.props.registerListActions.onSelectAppointmentPaymentStartTime(date);
-  };
-
-  onSelectAppointmentPaymentEndTime = (date) => {
-    this.props.registerListActions.onSelectAppointmentPaymentEndTime(date);
-  };
-
-  onSelectStatus = (statusId) => {
-    this.props.registerListActions.onSelectStatus(statusId);
-  };
-
-  onSelectSource = (sourceId) => {
-    this.props.registerListActions.onSelectSource(sourceId);
-  };
-
-  onSelectClassId = (classId) => {
-    this.props.registerListActions.onSelectClassId(classId);
-  };
-
-  onSelectCourseId = (courseId) => {
-    this.props.registerListActions.onSelectCourseId(courseId);
-  };
-
-  onSelectDateTest = (date) => {
-    this.props.registerListActions.onSelectDateTest(date);
-  };
-
-  onSelectCallBackStartTime = (date) => {
-    this.props.registerListActions.onSelectCallBackStartTime(date);
-  };
-
-  onSelectCallBackEndTime = (date) => {
-    this.props.registerListActions.onSelectCallBackEndTime(date);
-  };
-
-  onSelectProvinceId = (provinceId) => {
-    this.props.registerListActions.onSelectProvinceId(provinceId);
-  };
-
-  onSelectCouponId = (couponId) => {
-    this.props.registerListActions.onSelectCouponId(couponId);
-  };
-
-  onChangeNote = (note) => {
-    this.props.registerListActions.onChangeNote(note);
-  };
-
-  setAutoFocusRegisterListSearch = (bool) => {
-    this.props.registerListActions.setAutoFocusRegisterListSearch(bool);
-  };
-
-  changeClass = (classId, registerId) => {
-    this.props.registerListActions.changeClass(
-      classId,
-      registerId,
-      this.props.token,
-      this.props.domain,
-    );
-  };
-
-  static navigationOptions = ({navigation}) => ({
-    headerLeft: () => (
-      <View style={styles.headerLeftContainer}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Icon
-            name={'chevron-left'}
-            size={33}
-            color={'black'}
-            onPress={() => navigation.goBack()}
-          />
-          <Text style={styles.name}>Học viên</Text>
-        </View>
-      </View>
-    ),
-    headerRight: () => (
-      <View style={{flexDirection: 'row'}}>
-        <TouchableOpacity onPress={() => navigation.navigate('SaveRegister')}>
-          <View style={styles.headerIconContainer}>
-            <MatIcon name={'add-circle'} size={20} color={'black'} />
-          </View>
-        </TouchableOpacity>
-      </View>
-    ),
-  });
-
-  render() {
-    return (
-      <RegisterListComponent
-        {...this.props}
-        onRefresh={this.refreshRegisterListMy}
-        loadDataRegisterList={this.loadDataRegisterListMy}
-        updateFormAndLoadDataSearch={this.updateFormAndLoadDataSearchMy}
-        setStudentId={this.setStudentId}
-        changeCallStatus={this.changeCallStatus}
-        submitMoney={this.submitMoney}
-        onSelectSalerId={this.onSelectSalerId}
-        onSelectCampaignId={this.onSelectCampaignId}
-        onSelectPaidStatus={this.onSelectPaidStatus}
-        onSelectClassStatus={this.onSelectClassStatus}
-        onSelectCallStatus={this.onSelectCallStatus}
-        onSelectBookmark={this.onSelectBookmark}
-        onSelectStartTime={this.onSelectStartTime}
-        onSelectEndTime={this.onSelectEndTime}
-        onSelectAppointmentPaymentEndTime={
-          this.onSelectAppointmentPaymentEndTime
-        }
-        onSelectAppointmentPaymentStartTime={
-          this.onSelectAppointmentPaymentStartTime
-        }
-        onSelectStatus={this.onSelectStatus}
-        onSelectSource={this.onSelectSource}
-        onSelectClassId={this.onSelectClassId}
-        setAutoFocusRegisterListSearch={this.setAutoFocusRegisterListSearch}
-        loadAvailableClasses={this.loadAvailableClasses}
-        resetAvailableClasses={this.resetAvailableClasses}
-        changeClass={this.changeClass}
-        loadFilterClasses={this.loadFilterClasses}
-        onSelectCourseId={this.onSelectCourseId}
-        onSelectDateTest={this.onSelectDateTest}
-        onSelectCallBackStartTime={this.onSelectCallBackStartTime}
-        onSelectCallBackEndTime={this.onSelectCallBackEndTime}
-        onSelectProvinceId={this.onSelectProvinceId}
-        onSelectBaseId={this.onSelectBaseId}
-        onSelectCouponId={this.onSelectCouponId}
-        onChangeNote={this.onChangeNote}
-      />
+      props.token,
+      props.domain,
     );
   }
+
+  function loadAvailableClasses(registerId, search) {
+    props.registerListActions.loadAvailableClasses(
+      registerId,
+      search,
+      props.token,
+      props.domain,
+    );
+  }
+
+  function loadCourses() {
+    props.registerListActions.loadCourses(props.token, props.domain);
+  }
+
+  function resetAvailableClasses() {
+    props.registerListActions.resetAvailableClasses();
+  }
+
+  function onSelectBaseId(baseId) {
+    props.registerListActions.onSelectBaseId(baseId);
+  }
+
+  function onSelectSalerId(salerId) {
+    props.registerListActions.onSelectSalerId(salerId);
+  }
+
+  function onSelectCampaignId(campaignId) {
+    props.registerListActions.onSelectCampaignId(campaignId);
+  }
+
+  function onSelectPaidStatus(paidStatus) {
+    props.registerListActions.onSelectPaidStatus(paidStatus);
+  }
+
+  function onSelectClassStatus(classStatus) {
+    props.registerListActions.onSelectClassStatus(classStatus);
+  }
+
+  function onSelectCallStatus(callStatus) {
+    props.registerListActions.onSelectCallStatus(callStatus);
+  }
+
+  function onSelectBookmark(bookmark) {
+    props.registerListActions.onSelectBookmark(bookmark);
+  }
+
+  function onSelectStartTime(date) {
+    props.registerListActions.onSelectStartTime(date);
+  }
+
+  function onSelectEndTime(date) {
+    props.registerListActions.onSelectEndTime(date);
+  }
+
+  function onSelectAppointmentPaymentStartTime(date) {
+    props.registerListActions.onSelectAppointmentPaymentStartTime(date);
+  }
+
+  function onSelectAppointmentPaymentEndTime(date) {
+    props.registerListActions.onSelectAppointmentPaymentEndTime(date);
+  }
+
+  function onSelectStatus(statusId) {
+    props.registerListActions.onSelectStatus(statusId);
+  }
+
+  function onSelectSource(sourceId) {
+    props.registerListActions.onSelectSource(sourceId);
+  }
+
+  function onSelectClassId(classId) {
+    props.registerListActions.onSelectClassId(classId);
+  }
+
+  function onSelectCourseId(courseId) {
+    props.registerListActions.onSelectCourseId(courseId);
+  }
+
+  function onSelectDateTest(date) {
+    props.registerListActions.onSelectDateTest(date);
+  }
+
+  function onSelectCallBackStartTime(date) {
+    props.registerListActions.onSelectCallBackStartTime(date);
+  }
+
+  function onSelectCallBackEndTime(date) {
+    props.registerListActions.onSelectCallBackEndTime(date);
+  }
+
+  function onSelectProvinceId(provinceId) {
+    props.registerListActions.onSelectProvinceId(provinceId);
+  }
+
+  function onSelectCouponId(couponId) {
+    props.registerListActions.onSelectCouponId(couponId);
+  }
+
+  function onChangeNote(note) {
+    props.registerListActions.onChangeNote(note);
+  }
+
+  function setAutoFocusRegisterListSearch(bool) {
+    props.registerListActions.setAutoFocusRegisterListSearch(bool);
+  }
+
+  function changeClass(classId, registerId) {
+    props.registerListActions.changeClass(
+      classId,
+      registerId,
+      props.token,
+      props.domain,
+    );
+  }
+
+  return (
+    <RegisterListComponent
+      {...props}
+      onRefresh={refreshRegisterListMy}
+      loadDataRegisterList={loadDataRegisterListMy}
+      updateFormAndLoadDataSearch={updateFormAndLoadDataSearchMy}
+      setStudentId={setStudentId}
+      changeCallStatus={changeCallStatus}
+      submitMoney={submitMoney}
+      onSelectSalerId={onSelectSalerId}
+      onSelectCampaignId={onSelectCampaignId}
+      onSelectPaidStatus={onSelectPaidStatus}
+      onSelectClassStatus={onSelectClassStatus}
+      onSelectCallStatus={onSelectCallStatus}
+      onSelectBookmark={onSelectBookmark}
+      onSelectStartTime={onSelectStartTime}
+      onSelectEndTime={onSelectEndTime}
+      onSelectAppointmentPaymentEndTime={onSelectAppointmentPaymentEndTime}
+      onSelectAppointmentPaymentStartTime={onSelectAppointmentPaymentStartTime}
+      onSelectStatus={onSelectStatus}
+      onSelectSource={onSelectSource}
+      onSelectClassId={onSelectClassId}
+      setAutoFocusRegisterListSearch={setAutoFocusRegisterListSearch}
+      loadAvailableClasses={loadAvailableClasses}
+      resetAvailableClasses={resetAvailableClasses}
+      changeClass={changeClass}
+      loadFilterClasses={loadFilterClasses}
+      onSelectCourseId={onSelectCourseId}
+      onSelectDateTest={onSelectDateTest}
+      onSelectCallBackStartTime={onSelectCallBackStartTime}
+      onSelectCallBackEndTime={onSelectCallBackEndTime}
+      onSelectProvinceId={onSelectProvinceId}
+      onSelectBaseId={onSelectBaseId}
+      onSelectCouponId={onSelectCouponId}
+      onChangeNote={onChangeNote}
+    />
+  );
 }
+
+RegisterListContainer.navigationOptions = ({navigation}) => ({
+  headerLeft: () => (
+    <View style={styles.headerLeftContainer}>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <Icon
+          name={'chevron-left'}
+          size={33}
+          color={'black'}
+          onPress={() => navigation.goBack()}
+        />
+        <Text style={styles.name}>Học viên</Text>
+      </View>
+    </View>
+  ),
+  headerRight: () => (
+    <View style={{flexDirection: 'row'}}>
+      <TouchableOpacity onPress={() => navigation.navigate('SaveRegister')}>
+        <View style={styles.headerIconContainer}>
+          <MatIcon name={'add-circle'} size={20} color={'black'} />
+        </View>
+      </TouchableOpacity>
+    </View>
+  ),
+});
 
 const styles = {
   name: theme.header,
@@ -490,6 +465,7 @@ function mapStateToProps(state) {
     isLoadingCoupons: state.saveRegister.isLoadingCoupons,
     errorCoupons: state.saveRegister.errorCoupons,
     couponId: state.registerList.couponId,
+    createdRegister: state.saveRegister.createdRegister,
   };
 }
 

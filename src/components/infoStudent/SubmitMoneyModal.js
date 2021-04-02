@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
   View,
   Image,
@@ -25,6 +25,9 @@ function SubmitMoneyModal(props) {
   const [note, setNote] = useState('');
   const [paymentMethod, setPaymentMethod] = useState(null);
   const [receivedBook, setReceivedBook] = useState(null);
+
+  const noteRef = useRef(null);
+  const codeRef = useRef(null);
 
   useEffect(() => {
     setReceivedBook(props.receivedBook);
@@ -148,6 +151,8 @@ function SubmitMoneyModal(props) {
             value={note}
             placeholder={'Ghi chú'}
             onChangeText={setNote}
+            refName={noteRef}
+            onSubmitEditing={() => codeRef.current.focus()}
           />
           <Input
             title={'Mã đăng kí'}
@@ -155,6 +160,8 @@ function SubmitMoneyModal(props) {
             onChangeText={setCode}
             value={code}
             required
+            refName={codeRef}
+            onSubmitEditing={() => codeRef.current.blur()}
           />
           <DatePicker
             title={'Ngày thực nhận'}

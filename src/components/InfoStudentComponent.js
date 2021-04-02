@@ -7,7 +7,9 @@ import {
   ScrollView,
   Image,
   Dimensions,
-  RefreshControl, SafeAreaView
+  RefreshControl,
+  SafeAreaView,
+  Linking,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import CallRegisterModal from './infoStudent/CallRegisterModal';

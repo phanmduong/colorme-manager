@@ -35,11 +35,13 @@ export default function registerListReducer(
         salerId: action.salerId,
         search_coupon: action.search_coupon,
         note: action.note,
+        refreshingMy: action.refreshingMy,
       });
     case types.LOAD_DATA_REGISTER_LIST_ERROR_MY:
       return Object.assign({}, state, {
         isLoadingMy: action.isLoadingMy,
         errorMy: action.errorMy,
+        refreshingMy: action.refreshingMy,
       });
     case types.UPDATE_FORM_SEARCH_REGISTER_LIST_MY:
       return Object.assign({}, state, {
@@ -53,6 +55,7 @@ export default function registerListReducer(
         registerListDataMy: action.registerListDataMy,
         currentPageMy: action.currentPageMy,
         totalPageMy: action.totalPageMy,
+        refreshingMy: action.refreshingMy,
       });
     case types.SELECT_REGISTER_LIST_SALER:
       return Object.assign({}, state, {

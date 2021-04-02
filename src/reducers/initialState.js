@@ -412,6 +412,7 @@ export default {
     isLoadingCoupons: false,
     errorCoupons: false,
     coupons: [],
+    createdRegister: null,
   },
   infoStudent: {
     isLoadingRegisters: false,

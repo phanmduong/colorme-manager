@@ -44,6 +44,7 @@ export function saveRegisterReducer(state = initialState.saveRegister, action) {
       return Object.assign({}, state, {
         isLoadingRegister: action.isLoadingRegister,
         errorLoadingRegister: action.errorLoadingRegister,
+        createdRegister: action.createdRegister,
       });
     case type.REGISTER_STUDENT_ERROR:
       return Object.assign({}, state, {
@@ -161,6 +162,10 @@ export function saveRegisterReducer(state = initialState.saveRegister, action) {
       return Object.assign({}, state, {
         isLoadingCoupons: action.isLoadingCoupons,
         errorCoupons: action.errorCoupons,
+      });
+    case type.RESET_CREATED_REGISTER:
+      return Object.assign({}, state, {
+        createdRegister: action.createdRegister,
       });
     default:
       return state;

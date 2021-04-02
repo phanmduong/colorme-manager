@@ -209,17 +209,6 @@ class InfoStudentComponent extends React.Component {
             </TouchableOpacity>
           </View>
           <View style={{flex: 1}}>{this.props.tabComponent}</View>
-          {/*<CallRegisterModal*/}
-          {/*  isVisible={this.state.callModalVisible}*/}
-          {/*  onSwipeComplete={this.toggleCallModal}*/}
-          {/*  imageSource={avatar_url}*/}
-          {/*  email={email}*/}
-          {/*  phone={phone}*/}
-          {/*  changeCallStatus={this.props.changeCallStatus}*/}
-          {/*  student_id={this.props.student_id}*/}
-          {/*  token={this.props.token}*/}
-          {/*  errorChangeCallStatus={this.props.errorChangeCallStatus}*/}
-          {/*/>*/}
           <CallRegisterModal
             {...this.props}
             isVisible={this.state.callModalVisible}

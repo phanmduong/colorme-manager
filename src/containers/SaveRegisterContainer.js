@@ -38,6 +38,15 @@ class SaveRegisterContainer extends React.Component {
     this.loadStatuses();
     this.loadDataBase();
     this.loadSalers();
+    this.loadCoupons();
+    this.loadClasses(null, null, '');
+  };
+
+  loadCoupons = () => {
+    this.props.saveRegisterActions.loadCoupons(
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   loadCourses = () => {
@@ -47,10 +56,12 @@ class SaveRegisterContainer extends React.Component {
     );
   };
 
-  loadClasses = (courseId) => {
+  loadClasses = (courseId, baseId, search) => {
     this.props.saveRegisterActions.loadClasses(
-      this.props.token,
       courseId,
+      baseId,
+      search,
+      this.props.token,
       this.props.domain,
     );
   };
@@ -100,6 +111,7 @@ class SaveRegisterContainer extends React.Component {
       this.props.token,
       register,
       this.props.domain,
+      () => this.props.navigation.goBack(),
     );
   };
 
@@ -107,7 +119,7 @@ class SaveRegisterContainer extends React.Component {
     return (
       <SaveRegisterComponent
         {...this.props}
-        onSelectCourseId={this.loadClasses}
+        loadClasses={this.loadClasses}
         register={this.register}
       />
     );
@@ -137,7 +149,6 @@ function mapStateToProps(state) {
     errorLoadingProvinces: state.saveRegister.errorLoadingProvinces,
     provinces: state.saveRegister.provinces,
     user: state.login.user,
-    saler_id: state.registerList.saler_id,
     isLoadingSources: state.saveRegister.isLoadingSources,
     errorLoadingSources: state.saveRegister.errorLoadingSources,
     sources: state.saveRegister.sources,
@@ -147,27 +158,14 @@ function mapStateToProps(state) {
     isLoadingBase: state.base.isLoading,
     errorLoadingBase: state.base.error,
     baseData: state.base.baseData,
-    salerId: state.registerList.salerId,
     isLoadingSalers: state.saveRegister.isLoadingSalers,
     errorLoadingSalers: state.saveRegister.errorLoadingSalers,
     salers: state.saveRegister.salers,
     domain: state.login.domain,
     selectedBaseId: state.base.selectedBaseId,
-    campaignId: state.registerList.campaignId,
-    paidStatus: state.registerList.paidStatus,
-    callStatus: state.registerList.callStatus,
-    bookmark: state.registerList.bookmark,
-    status_id: state.registerList.status_id,
-    source_id: state.registerList.source_id,
-    selectedGenId: state.gen.selectedGenId,
-    currentGen: state.gen.currentGen,
-    classId: state.registerList.classId,
-    searchMy: state.registerList.searchMy,
-    classStatus: state.registerList.classStatus,
-    start_time: state.registerList.start_time,
-    end_time: state.registerList.end_time,
-    appointmentPayment: state.registerList.appointmentPayment,
-    search_coupon: state.registerList.search_coupon,
+    isLoadingCoupons: state.saveRegister.isLoadingCoupons,
+    errorCoupons: state.saveRegister.errorCoupons,
+    coupons: state.saveRegister.coupons,
   };
 }
 

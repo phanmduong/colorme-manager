@@ -28,7 +28,7 @@ class ListItemInfoStudentRegister extends React.Component {
       <View style={styles.listItemContainer}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Image
-            source={{uri: this.props.register.class.avatar_url}}
+            source={{uri: this.props.register.class.course.icon_url}}
             style={styles.classAva}
           />
           <Text numberOfLines={1} style={styles.className}>
@@ -39,7 +39,7 @@ class ListItemInfoStudentRegister extends React.Component {
           <View style={styles.classAva} />
           <View style={styles.infoContainer}>
             <View style={styles.containerSubTitle}>
-              {this.props.register.saler ? (
+              {this.props.register.saler && (
                 <View
                   style={{
                     ...styles.card,
@@ -48,18 +48,32 @@ class ListItemInfoStudentRegister extends React.Component {
                         !this.props.register.saler.color ||
                         this.props.register.saler.color === ''
                           ? theme.processColor1
-                          : '#' + this.props.register.saler.color,
-                      marginRight: 5,
+                          : this.props.register.saler.color,
                     },
                   }}>
                   <Text style={styles.saler}>
                     {getShortName(this.props.register.saler.name)}
                   </Text>
                 </View>
-              ) : (
-                <View />
               )}
-              {this.props.register.campaign ? (
+              {this.props.register.source && (
+                <View
+                  style={{
+                    ...styles.card,
+                    ...{
+                      backgroundColor:
+                        !this.props.register.source.color ||
+                        this.props.register.source.color === ''
+                          ? theme.processColor1
+                          : this.props.register.source.color,
+                    },
+                  }}>
+                  <Text style={styles.campaign}>
+                    {this.props.register.source.name.trim()}
+                  </Text>
+                </View>
+              )}
+              {this.props.register.campaign && (
                 <View
                   style={{
                     ...styles.card,
@@ -68,49 +82,105 @@ class ListItemInfoStudentRegister extends React.Component {
                         !this.props.register.campaign.color ||
                         this.props.register.campaign.color === ''
                           ? theme.processColor1
-                          : '#' + this.props.register.campaign.color,
+                          : this.props.register.campaign.color,
                     },
                   }}>
                   <Text style={styles.campaign}>
                     {this.props.register.campaign.name.trim()}
                   </Text>
                 </View>
-              ) : (
-                <View />
               )}
+              {this.props.register.register_status && (
+                <View
+                  style={{
+                    ...styles.card,
+                    ...{
+                      backgroundColor:
+                        !this.props.register.register_status.color ||
+                        this.props.register.register_status.color === ''
+                          ? theme.processColor1
+                          : this.props.register.register_status.color,
+                    },
+                  }}>
+                  <Text style={styles.campaign}>
+                    {this.props.register.register_status.name.trim()}
+                  </Text>
+                </View>
+              )}
+              {this.props.register.coupons.length > 0 &&
+                this.props.register.coupons.map((coupon) => (
+                  <View
+                    style={{
+                      ...styles.card,
+                      ...{
+                        backgroundColor:
+                          !coupon.color || coupon.color === ''
+                            ? theme.processColor1
+                            : coupon.color,
+                      },
+                    }}>
+                    <Text style={styles.campaign}>{coupon.name.trim()}</Text>
+                  </View>
+                ))}
             </View>
             <View>
               <Text
                 numberOfLines={1}
                 style={[styles.classInfoContainer, {paddingTop: 0}]}>
-                Đăng kí {this.props.register.created_at_cal}
+                Tạo vào lúc:{' '}
+                {moment
+                  .unix(this.props.register.created_at)
+                  .format('HH:mm DD/MM/YYYY')}
               </Text>
-              {this.props.register.paid_status ? (
+              {this.props.register.paid_time && (
                 <Text numberOfLines={1} style={styles.classInfoContainer}>
-                  Đã nộp tiền {this.props.register.paid_time}
+                  Nộp tiền lúc:{' '}
+                  {moment
+                    .unix(this.props.register.paid_time)
+                    .format('HH:mm DD/MM/YYYY')}
                 </Text>
-              ) : null}
-              {this.props.register.class.study_time ? (
+              )}
+              {this.props.register.code && (
+                <Text numberOfLines={1} style={styles.classInfoContainer}>
+                  Mã đăng kí: {this.props.register.code}
+                </Text>
+              )}
+              {this.props.register.class.datestart && (
+                <Text numberOfLines={1} style={styles.classInfoContainer}>
+                  Ngày khai giảng:{' '}
+                  {moment
+                    .unix(this.props.register.class.datestart)
+                    .format('HH:mm DD/MM/YYYY')}
+                </Text>
+              )}
+              {this.props.register.class.study_time && (
                 <Text numberOfLines={1} style={styles.classInfoContainer}>
                   {this.props.register.class.study_time}
                 </Text>
-              ) : null}
-              {this.props.register.class.base ? (
+              )}
+              {this.props.register.class.base && (
                 <Text numberOfLines={1} style={styles.classInfoContainer}>
-                  {this.props.register.class.room} -{' '}
-                  {this.props.register.class.base}
+                  {this.props.register.class.base.name}:{' '}
+                  {this.props.register.class.base.address}
                 </Text>
-              ) : null}
-              {this.props.register.class.description ? (
+              )}
+              {this.props.register.class.description && (
                 <Text numberOfLines={1} style={styles.classInfoContainer}>
                   {this.props.register.class.description}
                 </Text>
-              ) : null}
-              {this.props.register.note ? (
+              )}
+              {this.props.register.received_book_at ? (
                 <Text numberOfLines={1} style={styles.classInfoContainer}>
-                  {this.props.register.note}
+                  Đã nhận giáo trình ngày:{' '}
+                  {moment
+                    .unix(this.props.register.received_book_at)
+                    .format('DD/MM/YYYY')}
                 </Text>
-              ) : null}
+              ) : (
+                <Text numberOfLines={1} style={styles.classInfoContainer}>
+                  Chưa nhận giáo trình
+                </Text>
+              )}
             </View>
             <View style={styles.buttonContainer}>
               <TouchableOpacity
@@ -122,7 +192,7 @@ class ListItemInfoStudentRegister extends React.Component {
                   <Text style={{fontSize: 16}}>Gọi điện</Text>
                 </View>
               </TouchableOpacity>
-              {!this.props.register.paid_status ? (
+              {!this.props.register.paid_time ? (
                 <TouchableOpacity onPress={() => this.toggleMoneyModal()}>
                   <View style={styles.button}>
                     <Text style={{fontSize: 16}}>Nộp học phí</Text>
@@ -181,10 +251,14 @@ const styles = {
     fontSize: 18,
     fontWeight: '600',
     marginLeft: 15,
+    flex: 1,
+    flexWrap: 'wrap',
   },
   containerSubTitle: {
     flexDirection: 'row',
     marginBottom: 10,
+    flex: 1,
+    flexWrap: 'wrap',
   },
   card: {
     paddingVertical: 4,
@@ -193,6 +267,7 @@ const styles = {
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: 5,
   },
   saler: {
     fontSize: 10,

@@ -50,7 +50,7 @@ function loadRegistersSuccessful(res) {
     isLoadingRegisters: false,
     errorRegisters: false,
     refreshingRegisters: false,
-    registers: res.data.data.registers,
+    registers: res.data.registers.items,
   };
 }
 
@@ -213,7 +213,7 @@ function loadStudentSuccessful(res) {
     type: types.LOAD_STUDENT_SUCCESSFUL,
     isLoadingStudent: false,
     errorStudent: false,
-    student: res.data.data.student,
+    student: res.data.lead,
   };
 }
 
@@ -346,7 +346,7 @@ function loadHistoryCallsSuccessful(res) {
     isLoadingHistoryCalls: false,
     errorLoadingHistoryCalls: false,
     refreshingHistoryCalls: false,
-    historyCalls: res.data.data.history_calls,
+    historyCalls: res.data.tele_calls,
   };
 }
 
@@ -397,7 +397,7 @@ function beginRefreshHistoryCollect() {
 function loadHistoryCollectSuccessful(res) {
   return {
     type: types.LOAD_HISTORY_COLLECT_SUCCESSFUL,
-    historyCollect: res.data.data,
+    historyCollect: res.data.payments,
     isLoadingHistoryCollect: false,
     errorLoadingHistoryCollect: false,
     refreshingHistoryCollect: false,
@@ -473,9 +473,11 @@ export function changePassword(studentId, password, token, domain) {
     infoStudentApi
       .changePassword(studentId, password, token, domain)
       .then(function (res) {
+        Alert.alert('Thông báo', res.data.data.message);
         dispatch(changePasswordSuccessful());
       })
       .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
         dispatch(changePasswordError());
         throw error;
       });

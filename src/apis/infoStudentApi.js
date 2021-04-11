@@ -1,28 +1,30 @@
 import axios from 'axios';
 import * as env from '../constants/env';
+import {isEmptyInput} from '../helper';
 
 export function loadInfoStudent(studentId, token, domain) {
   let url =
-    env.manageApiUrl(domain) + '/student/' + studentId + '?token=' + token;
+    env.manageApiUrlAuth(domain) + '/v1/leads/' + studentId + '?token=' + token;
+  console.log(url);
   return axios.get(url);
 }
 
 export function loadRegisters(studentId, token, domain) {
   let url =
-    env.manageApiUrl(domain) +
-    '/student/' +
-    studentId +
-    '/registers?token=' +
+    env.manageApiUrlAuth(domain) +
+    '/v1/registers?limit=0&orderBy=registers.created_at&sortedBy=desc' +
+    (!isEmptyInput(studentId) ? '&user_ids[]=' + studentId : '') +
+    '&token=' +
     token;
   return axios.get(url);
 }
 
 export function loadHistoryCalls(studentId, token, domain) {
   let url =
-    env.manageApiUrl(domain) +
-    '/student/' +
+    env.manageApiUrlAuth(domain) +
+    '/v1/tele-calls?student_id=' +
     studentId +
-    '/history-calls?token=' +
+    '&orderBy=created_at&sortedBy=desc&limit=0&token=' +
     token;
   return axios.get(url);
 }
@@ -39,11 +41,12 @@ export function loadProgress(studentId, token, domain) {
 
 export function loadHistoryCollect(studentId, token, domain) {
   let url =
-    env.manageApiUrl(domain) +
-    '/student/' +
-    studentId +
-    '/history-collect-money?token=' +
+    env.manageApiUrlAuth(domain) +
+    '/v1/register-payments?limit=0&orderBy=created_at&sortedBy=desc' +
+    (!isEmptyInput(studentId) ? '&user_ids[]=' + studentId : '') +
+    '&token=' +
     token;
+  console.log(url);
   return axios.get(url);
 }
 
@@ -161,9 +164,12 @@ export function updateProfile(register, token, domain) {
 
 export function changePassword(studentId, newPassword, token, domain) {
   let url =
-    env.manageApiUrl(domain) + '/change-password-student?token=' + token;
-  return axios.post(url, {
-    id: studentId,
+    env.manageApiUrlAuth(domain) +
+    '/v1/leads/' +
+    studentId +
+    '/change-password?token=' +
+    token;
+  return axios.put(url, {
     new_password: newPassword,
   });
 }

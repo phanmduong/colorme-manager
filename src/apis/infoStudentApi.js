@@ -1,5 +1,6 @@
 import axios from 'axios';
 import * as env from '../constants/env';
+import {isEmptyInput} from '../helper';
 
 export function loadInfoStudent(studentId, token, domain) {
   let url =
@@ -9,10 +10,10 @@ export function loadInfoStudent(studentId, token, domain) {
 
 export function loadRegisters(studentId, token, domain) {
   let url =
-    env.manageApiUrl(domain) +
-    '/student/' +
-    studentId +
-    '/registers?token=' +
+    env.manageApiUrlAuth(domain) +
+    '/v1/registers?limit=0&orderBy=registers.created_at&sortedBy=desc' +
+    (!isEmptyInput(studentId) ? '&user_ids[]=' + studentId : '') +
+    '&token=' +
     token;
   return axios.get(url);
 }
@@ -24,7 +25,6 @@ export function loadHistoryCalls(studentId, token, domain) {
     studentId +
     '&orderBy=created_at&sortedBy=desc&limit=0&token=' +
     token;
-  console.log(url);
   return axios.get(url);
 }
 

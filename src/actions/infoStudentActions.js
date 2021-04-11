@@ -50,7 +50,7 @@ function loadRegistersSuccessful(res) {
     isLoadingRegisters: false,
     errorRegisters: false,
     refreshingRegisters: false,
-    registers: res.data.data.registers,
+    registers: res.data.registers.items,
   };
 }
 

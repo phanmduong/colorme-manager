@@ -3,49 +3,55 @@ import {View, Dimensions, Image, Text} from 'react-native';
 import Loading from '../common/Loading';
 import {dotNumber} from '../../helper';
 import theme from '../../styles';
-var {width, height} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
+import moment from 'moment';
 
 class InfoStudentHistoryCollectComponent extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
 
-  convertPaymentMothod = method => {
+  convertPaymentMethod = (method) => {
     switch (method) {
       case 'internet_banking':
         return 'Chuyển khoản';
       case 'cash':
         return 'Tiền mặt';
+      case 'swipe':
+        return 'Quẹt thẻ';
       default:
         return '';
     }
   };
 
   renderCollect = () => {
-    return this.props.historyCollect.map(collect => (
+    return this.props.historyCollect.map((collect) => (
       <View style={styles.listItemContainer}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Image
-            source={{uri: collect.class.icon_url}}
+            source={{uri: collect.register.class.course.icon_url}}
             style={styles.classAva}
           />
           <Text numberOfLines={1} style={styles.className}>
-            {collect.class.name}
+            {collect.register.class.name}
           </Text>
         </View>
         <View style={{flexDirection: 'row'}}>
           <View style={styles.classAva} />
           <View style={styles.infoContainer}>
-            <Text
-              numberOfLines={1}
-              style={[styles.classInfoContainer, {fontWeight: '600'}]}>
-              {collect.paid_time}
-            </Text>
-            <Text style={styles.classInfoContainer}>
-              Ghi chú: {collect.note}
+            <Text numberOfLines={1} style={styles.classInfoContainer}>
+              Tạo vào lúc:{' '}
+              {moment.unix(collect.created_at).format('HH:mm DD/MM/YYYY')}
             </Text>
             <Text numberOfLines={1} style={styles.classInfoContainer}>
-              Người thu: {collect.collector.name}
+              Ngày thực thu tiền:{' '}
+              {moment.unix(collect.actual_input_at).format('DD/MM/YYYY')}
+            </Text>
+            <Text style={styles.classInfoContainer}>
+              Ghi chú: {collect.register.note && collect.register.note}
+            </Text>
+            <Text numberOfLines={1} style={styles.classInfoContainer}>
+              Người thu: {collect.staff.name}
             </Text>
           </View>
         </View>
@@ -70,7 +76,7 @@ class InfoStudentHistoryCollectComponent extends React.Component {
                 },
               }}>
               <Text style={styles.saler}>
-                {this.convertPaymentMothod(collect.payment_method)}
+                {this.convertPaymentMethod(collect.payment_method)}
               </Text>
             </View>
           </View>
@@ -102,6 +108,8 @@ const styles = {
     fontSize: 18,
     fontWeight: '600',
     marginLeft: 15,
+    flex: 1,
+    flexWrap: 'wrap',
   },
   classInfoContainer: {
     paddingTop: 2,

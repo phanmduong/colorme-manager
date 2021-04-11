@@ -57,7 +57,6 @@ class AnalyticsComponent extends React.Component {
             refreshing={
               this.props.refreshingAnalyticsRegister ||
               this.props.refreshingAnalyticsRevenue ||
-              this.props.refreshingAnalyticsKPI ||
               this.props.refreshingAnalyticsClasses
             }
             onRefresh={this.props.onRefresh}

@@ -232,7 +232,6 @@ class AnalyticsStudentBarChart extends React.Component {
   };
 
   render() {
-    console.log(this.state.dates);
     return (
       <View>
         <View style={styles.infoRow}>

@@ -144,7 +144,10 @@ class AnalyticsClassItem extends React.Component {
                     styles.process,
                     styles.bar,
                     {
-                      width: (maxWidthProcess * tmpTotalPaid) / paidTarget,
+                      width:
+                        paidTarget > 0
+                          ? (maxWidthProcess * tmpTotalPaid) / paidTarget
+                          : maxWidthProcess,
                       backgroundColor: theme.successColor,
                     },
                   ]}
@@ -168,7 +171,10 @@ class AnalyticsClassItem extends React.Component {
                     styles.process,
                     {
                       width:
-                        (maxWidthProcess * tmpTotalRegister) / registerTarget,
+                        registerTarget > 0
+                          ? (maxWidthProcess * tmpTotalRegister) /
+                            registerTarget
+                          : maxWidthProcess,
                       backgroundColor: theme.processColor2,
                     },
                   ]}

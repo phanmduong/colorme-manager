@@ -16,13 +16,15 @@ function DatePicker({selectedDate, onDateChange, title, mode = 'date'}) {
       onDateChange(moment(date).format('YYYY-MM-DD'));
     } else if (mode === 'time') {
       onDateChange(moment(date));
+    } else if (mode === 'unix') {
+      onDateChange(moment(date).unix());
     }
     setVisible(false);
   }
 
   function displayPlaceholder() {
     if (isEmptyInput(selectedDate)) {
-      if (mode === 'date') {
+      if (mode === 'date' || mode === 'unix') {
         return 'YYYY-MM-DD';
       } else if (mode === 'time') {
         return '00:00';
@@ -32,6 +34,8 @@ function DatePicker({selectedDate, onDateChange, title, mode = 'date'}) {
         return moment(selectedDate).format('YYYY-MM-DD');
       } else if (mode === 'time') {
         return moment(selectedDate).format('HH:mm');
+      } else if (mode === 'unix') {
+        return moment.unix(selectedDate).format('YYYY-MM-DD');
       }
     }
   }
@@ -49,7 +53,7 @@ function DatePicker({selectedDate, onDateChange, title, mode = 'date'}) {
         isVisible={isVisible}
         onConfirm={handleDatePicked}
         onCancel={() => setVisible(false)}
-        mode={mode}
+        mode={mode !== 'unix' ? mode : 'date'}
       />
     </View>
   );

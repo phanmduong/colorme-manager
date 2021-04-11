@@ -11,14 +11,12 @@ class InfoStudentRegistersComponent extends React.Component {
   }
 
   renderRegisters = () => {
-    return this.props.registers.map(register => (
+    return this.props.registers.map((register) => (
       <ListItemInfoStudentRegister
+        {...this.props}
         register={register}
         changeCallStatus={this.props.changeCallStatus}
         submitMoney={this.props.submitMoney}
-        errorSubmitMoney={this.props.errorSubmitMoney}
-        token={this.props.token}
-        errorChangeCallStatus={this.props.errorChangeCallStatus}
       />
     ));
   };

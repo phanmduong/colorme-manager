@@ -38,6 +38,15 @@ class SaveRegisterContainer extends React.Component {
     this.loadStatuses();
     this.loadDataBase();
     this.loadSalers();
+    this.loadCoupons();
+    this.loadClasses(null, null, '');
+  };
+
+  loadCoupons = () => {
+    this.props.saveRegisterActions.loadCoupons(
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   loadCourses = () => {
@@ -47,10 +56,12 @@ class SaveRegisterContainer extends React.Component {
     );
   };
 
-  loadClasses = (courseId) => {
+  loadClasses = (courseId, baseId, search) => {
     this.props.saveRegisterActions.loadClasses(
-      this.props.token,
       courseId,
+      baseId,
+      search,
+      this.props.token,
       this.props.domain,
     );
   };
@@ -100,48 +111,7 @@ class SaveRegisterContainer extends React.Component {
       this.props.token,
       register,
       this.props.domain,
-    );
-  };
-
-  reloadRegisterList = () => {
-    let baseId =
-      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
-    let salerId = this.props.salerId === -1 ? '' : this.props.salerId;
-    let campaignId = this.props.campaignId === -1 ? '' : this.props.campaignId;
-    let paidStatus = this.props.paidStatus === -1 ? '' : this.props.paidStatus;
-    let callStatus = this.props.callStatus === -1 ? '' : this.props.callStatus;
-    let bookmark = this.props.bookmark === -1 ? '' : this.props.bookmark;
-    let statusId = this.props.status_id === -1 ? '' : this.props.status_id;
-    let sourceId = this.props.source_id === -1 ? '' : this.props.source_id;
-    let genId = '';
-    if (this.props.selectedGenId === -1) {
-      genId = this.props.currentGen.id;
-    } else if (
-      this.props.selectedGenId !== -1 &&
-      this.props.selectedGenId !== 2
-    ) {
-      genId = this.props.selectedGenId;
-    }
-    let classId = this.props.classId === -1 ? '' : this.props.classId;
-    this.props.registerListActions.refreshRegisterListMy(
-      this.props.searchMy,
-      this.props.token,
-      salerId,
-      baseId,
-      campaignId,
-      paidStatus,
-      this.props.classStatus,
-      callStatus,
-      bookmark,
-      this.props.search_coupon,
-      this.props.start_time,
-      this.props.end_time,
-      this.props.appointmentPayment,
-      statusId,
-      sourceId,
-      genId,
-      classId,
-      this.props.domain,
+      () => this.props.navigation.goBack(),
     );
   };
 
@@ -149,28 +119,8 @@ class SaveRegisterContainer extends React.Component {
     return (
       <SaveRegisterComponent
         {...this.props}
-        isLoadingCourses={this.props.isLoadingCourses}
-        courses={this.props.courses}
-        isLoadingClasses={this.props.isLoadingClasses}
-        classes={this.props.classes}
-        isLoadingCampaigns={this.props.isLoadingCampaigns}
-        campaigns={this.props.campaigns}
-        onSelectCourseId={this.loadClasses}
+        loadClasses={this.loadClasses}
         register={this.register}
-        isLoadingRegister={this.props.isLoadingRegister}
-        errorLoadingRegister={this.props.errorLoadingRegister}
-        provinces={this.props.provinces}
-        isLoadingProvinces={this.props.isLoadingProvinces}
-        reload={this.reloadRegisterList}
-        user={this.props.user}
-        isLoadingSources={this.props.isLoadingSources}
-        sources={this.props.sources}
-        isLoadingStatuses={this.props.isLoadingStatuses}
-        statuses={this.props.statuses}
-        isLoadingBase={this.props.isLoadingBase}
-        baseData={this.props.baseData}
-        isLoadingSalers={this.props.isLoadingSalers}
-        salers={this.props.salers}
       />
     );
   }
@@ -199,7 +149,6 @@ function mapStateToProps(state) {
     errorLoadingProvinces: state.saveRegister.errorLoadingProvinces,
     provinces: state.saveRegister.provinces,
     user: state.login.user,
-    saler_id: state.registerList.saler_id,
     isLoadingSources: state.saveRegister.isLoadingSources,
     errorLoadingSources: state.saveRegister.errorLoadingSources,
     sources: state.saveRegister.sources,
@@ -209,27 +158,14 @@ function mapStateToProps(state) {
     isLoadingBase: state.base.isLoading,
     errorLoadingBase: state.base.error,
     baseData: state.base.baseData,
-    salerId: state.registerList.salerId,
     isLoadingSalers: state.saveRegister.isLoadingSalers,
     errorLoadingSalers: state.saveRegister.errorLoadingSalers,
     salers: state.saveRegister.salers,
     domain: state.login.domain,
     selectedBaseId: state.base.selectedBaseId,
-    campaignId: state.registerList.campaignId,
-    paidStatus: state.registerList.paidStatus,
-    callStatus: state.registerList.callStatus,
-    bookmark: state.registerList.bookmark,
-    status_id: state.registerList.status_id,
-    source_id: state.registerList.source_id,
-    selectedGenId: state.gen.selectedGenId,
-    currentGen: state.gen.currentGen,
-    classId: state.registerList.classId,
-    searchMy: state.registerList.searchMy,
-    classStatus: state.registerList.classStatus,
-    start_time: state.registerList.start_time,
-    end_time: state.registerList.end_time,
-    appointmentPayment: state.registerList.appointmentPayment,
-    search_coupon: state.registerList.search_coupon,
+    isLoadingCoupons: state.saveRegister.isLoadingCoupons,
+    errorCoupons: state.saveRegister.errorCoupons,
+    coupons: state.saveRegister.coupons,
   };
 }
 

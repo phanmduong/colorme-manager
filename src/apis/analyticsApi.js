@@ -12,6 +12,7 @@ export function loadAnalyticsRegister(
   courseId,
   sourceId,
   campaignId,
+  provinceId,
   token,
   domain,
 ) {
@@ -31,6 +32,8 @@ export function loadAnalyticsRegister(
     sourceId +
     '&campaign_id=' +
     campaignId +
+    '&province_id=' +
+    provinceId +
     '&token=' +
     token;
   return axios.get(url);
@@ -44,6 +47,7 @@ export function loadAnalyticsRevenue(
   courseId,
   sourceId,
   campaignId,
+  provinceId,
   token,
   domain,
 ) {
@@ -63,6 +67,8 @@ export function loadAnalyticsRevenue(
     sourceId +
     '&campaign_id=' +
     campaignId +
+    '&province_id=' +
+    provinceId +
     '&token=' +
     token;
   return axios.get(url);
@@ -78,6 +84,7 @@ export function loadAnalyticsClasses(
   courseId,
   sourceId,
   campaignId,
+  provinceId,
   token,
   domain,
 ) {
@@ -101,16 +108,10 @@ export function loadAnalyticsClasses(
     sourceId +
     '&campaign_id=' +
     campaignId +
+    '&province_id=' +
+    provinceId +
     '&token=' +
     token +
     '&include=course,base,target,register_target,schedule,room,teacher,teacher_assistant';
   return axios.get(url);
-}
-
-export function changeProvince(provinceId, token, domain) {
-  let url =
-    env.manageApiUrlV4(domain) + '/user/staff/choice-province?token=' + token;
-  return axios.put(url, {
-    choice_province_id: provinceId,
-  });
 }

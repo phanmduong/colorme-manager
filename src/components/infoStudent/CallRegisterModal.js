@@ -1,151 +1,121 @@
-import React from 'react';
+import React, {useState, useRef} from 'react';
 import {
   View,
   Image,
   Text,
-  TextInput,
   Dimensions,
+  ScrollView,
   TouchableOpacity,
   Alert,
-  ScrollView,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import DateTimePicker from 'react-native-modal-datetime-picker';
-import moment from 'moment';
 import Call from '../common/Call';
-var {height, width} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 import theme from '../../styles';
+import DatePicker from '../common/DatePicker';
+import Input from '../common/Input';
+import InputPicker from '../common/InputPicker';
+import {REGISTER_CALL_STATUS} from '../../constants/constant';
+import * as infoStudentApi from '../../apis/infoStudentApi';
+import Loading from '../common/Loading';
 
-class CallRegisterModal extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-    this.state = {
-      isAppointmentDatePickerVisible: false,
-      isTestDatePickerVisible: false,
-      appointmentDate: '',
-      testDate: '',
-      note: '',
-    };
+function CallRegisterModal(props) {
+  const [appointmentPayment, setAppointmentPayment] = useState(null);
+  const [callBackTime, setCallBackTime] = useState(null);
+  const [note, setNote] = useState('');
+  const [statusId, setStatus] = useState(null);
+  const [teleId, setTele] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const noteRef = useRef(null);
+
+  function clear() {
+    setAppointmentPayment(null);
+    setCallBackTime(null);
+    setNote('');
+    setStatus(null);
   }
 
-  openAppointmentDatePicker = () => {
-    this.setState({isAppointmentDatePickerVisible: true});
-  };
-
-  openTestDatePicker = () => {
-    this.setState({isTestDatePickerVisible: true});
-  };
-
-  handleAppointmentDatePicked = date => {
-    this.setState({
-      isAppointmentDatePickerVisible: false,
-      appointmentDate: moment(date),
-    });
-  };
-
-  handleTestDatePicked = date => {
-    this.setState({
-      isTestDatePickerVisible: false,
-      testDate: moment(date),
-    });
-  };
-
-  reset = () => {
-    this.setState({
-      note: '',
-      appointmentDate: '',
-      testDate: '',
-    });
-  };
-
-  changeCallStatus = status => {
-    this.props.changeCallStatus(
-      status,
-      this.props.student_id,
-      '',
-      '',
-      this.state.note,
-      '',
-      this.state.appointmentDate,
-      this.state.testDate,
-      this.props.token,
-    );
-    this.reset();
-    this.props.onSwipeComplete();
-    setTimeout(() => {
-      if (this.props.errorChangeCallStatus) {
+  function loadTele() {
+    setLoading(true);
+    infoStudentApi
+      .getTeleCall(props.studentId, props.token, props.domain)
+      .then((res) => {
+        setTele(res.data.tele_call.id);
+      })
+      .catch((error) => {
         Alert.alert('Thông báo', 'Có lỗi xảy ra');
-      } else {
-        Alert.alert('Thông báo', 'Ghi nhận thành công');
-      }
-    }, 600);
-  };
+        console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
 
-  render() {
-    return (
-      <Modal
-        isVisible={this.props.isVisible}
-        onBackdropPress={this.props.onSwipeComplete}
-        onBackButtonPress={this.props.onSwipeComplete}
-        style={{margin: 0, justifyContent: 'flex-end'}}>
-        <View style={styles.modal}>
+  function changeCallStatus(callStatus) {
+    props.changeCallStatus(
+      appointmentPayment,
+      callBackTime,
+      callStatus,
+      note,
+      statusId,
+      props.studentId,
+      teleId,
+    );
+    props.onSwipeComplete();
+  }
+
+  return (
+    <Modal
+      isVisible={props.isVisible}
+      onBackdropPress={props.onSwipeComplete}
+      onModalWillHide={clear}
+      onModalWillShow={loadTele}
+      onBackButtonPress={props.onSwipeComplete}
+      avoidKeyboard={true}
+      style={{margin: 0, justifyContent: 'flex-end'}}>
+      <View style={styles.modal}>
+        {!loading ? (
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.mainInfoContainer}>
-              <Image
-                source={{uri: this.props.imageSource}}
-                style={styles.ava}
-              />
-              <Text style={styles.email}>{this.props.email}</Text>
+              <Image source={{uri: props.avatar_url}} style={styles.ava} />
+              <Text style={styles.email}>{props.email}</Text>
               <Call
                 extraPadding={{paddingTop: 5, fontSize: 16}}
-                url={'tel:' + this.props.phone}
-                phone={this.props.phone}
+                url={'tel:' + props.phone}
+                phone={props.phone}
               />
             </View>
-            <View style={{marginTop: 25}}>
-              <Text style={styles.titleForm}>Ghi chú</Text>
-              <View style={styles.inputContainer}>
-                <TextInput
-                  value={this.state.note}
-                  onChangeText={data => this.setState({note: data})}
-                  placeholder="Ghi chú"
-                  blurOnSubmit={false}
-                  style={{fontSize: 16}}
-                />
-              </View>
-            </View>
-            <View style={{marginTop: 25}}>
-              <Text style={{fontSize: 16}}>Hẹn nộp tiền</Text>
-              <TouchableOpacity
-                style={styles.dateContainer}
-                onPress={() => this.openAppointmentDatePicker()}>
-                <Text
-                  style={{
-                    fontSize: 16,
-                  }}>
-                  {this.state.appointmentDate !== ''
-                    ? this.state.appointmentDate.format('DD-MM-YYYY')
-                    : 'DD-MM-YYYY'}
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View style={{marginTop: 25}}>
-              <Text style={{fontSize: 16}}>Hẹn kiểm tra</Text>
-              <TouchableOpacity
-                style={styles.dateContainer}
-                onPress={() => this.openTestDatePicker()}>
-                <Text
-                  style={{
-                    fontSize: 16,
-                  }}>
-                  {this.state.testDate !== ''
-                    ? this.state.testDate.format('DD-MM-YYYY')
-                    : 'DD-MM-YYYY'}
-                </Text>
-              </TouchableOpacity>
-            </View>
+            <DatePicker
+              title={'Hẹn nộp tiền'}
+              selectedDate={appointmentPayment}
+              mode={'unix'}
+              onDateChange={setAppointmentPayment}
+            />
+            <DatePicker
+              title={'Hẹn gọi lại'}
+              selectedDate={callBackTime}
+              onDateChange={setCallBackTime}
+              mode={'unix'}
+            />
+            <InputPicker
+              title={'Tag'}
+              placeholder={'Chọn tag'}
+              options={REGISTER_CALL_STATUS}
+              onChangeValue={setStatus}
+              selectedId={statusId}
+              header={'Chọn tag'}
+            />
+            <Input
+              title={'Ghi chú'}
+              onChangeText={setNote}
+              value={note}
+              placeholder={'Ghi chú'}
+              refName={noteRef}
+              onSubmitEditing={() => noteRef.current.blur()}
+            />
             <View style={styles.callContainer}>
-              <TouchableOpacity onPress={() => this.changeCallStatus(0)}>
+              <TouchableOpacity onPress={() => changeCallStatus('failed')}>
                 <View
                   style={[
                     styles.callButton,
@@ -160,7 +130,7 @@ class CallRegisterModal extends React.Component {
                   />
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => this.changeCallStatus(1)}>
+              <TouchableOpacity onPress={() => changeCallStatus('success')}>
                 <View
                   style={[
                     styles.callButton,
@@ -178,29 +148,19 @@ class CallRegisterModal extends React.Component {
             </View>
             <TouchableOpacity
               onPress={() => {
-                this.props.onSwipeComplete();
+                props.onSwipeComplete();
               }}>
               <View style={styles.cancelContainer}>
                 <Text style={styles.cancelTitle}>Hủy</Text>
               </View>
             </TouchableOpacity>
-            <DateTimePicker
-              isVisible={this.state.isAppointmentDatePickerVisible}
-              onConfirm={this.handleAppointmentDatePicked}
-              onCancel={() =>
-                this.setState({isAppointmentDatePickerVisible: false})
-              }
-            />
-            <DateTimePicker
-              isVisible={this.state.isTestDatePickerVisible}
-              onConfirm={this.handleTestDatePicked}
-              onCancel={() => this.setState({isTestDatePickerVisible: false})}
-            />
           </ScrollView>
-        </View>
-      </Modal>
-    );
-  }
+        ) : (
+          <Loading />
+        )}
+      </View>
+    </Modal>
+  );
 }
 
 const styles = {
@@ -210,15 +170,6 @@ const styles = {
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
     paddingHorizontal: theme.mainHorizontal,
-  },
-  dateContainer: {
-    marginTop: 8,
-    fontSize: 16,
-    height: 40,
-    backgroundColor: '#F6F6F6',
-    paddingLeft: 10,
-    borderRadius: 8,
-    justifyContent: 'center',
   },
   callContainer: {
     flexDirection: 'row',
@@ -233,22 +184,6 @@ const styles = {
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 15,
-  },
-  note: {
-    fontSize: 16,
-    backgroundColor: '#F6F6F6',
-    height: 100,
-    paddingLeft: 10,
-    borderRadius: 8,
-  },
-  rateIcon: {
-    width: 10,
-    height: 10,
-    marginRight: 2,
-  },
-  rateRow: {
-    flexDirection: 'row',
-    marginTop: 3,
   },
   cancelContainer: {
     marginTop: 25,
@@ -278,18 +213,6 @@ const styles = {
   },
   confirm: {
     color: 'white',
-    fontSize: 16,
-  },
-  inputContainer: {
-    marginTop: 8,
-    height: 45,
-    backgroundColor: '#F6F6F6',
-    justifyContent: 'center',
-    paddingHorizontal: 10,
-    borderRadius: 8,
-  },
-  titleForm: {
-    color: 'black',
     fontSize: 16,
   },
 };

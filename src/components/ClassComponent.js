@@ -175,10 +175,10 @@ class ClassComponent extends React.Component {
               classData={item}
               selectedGenId={this.state.selectedGenId}
               selectedBaseId={this.state.selectedBaseId}
-              description={item.description}
-              date_end={item.date_end}
+              date_end={item.date_end_vi}
               teachers={item.teachers}
               teaching_assistants={item.teaching_assistants}
+              date_start={item.datestart_vi}
             />
           )}
           ListEmptyComponent={

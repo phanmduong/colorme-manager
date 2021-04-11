@@ -1,29 +1,29 @@
 import axios from 'axios';
 import * as env from '../constants/env';
+import {isEmptyInput} from '../helper';
 
 export function saveRegisterApi(token, register, domain) {
-  let url = env.manageApiUrl(domain) + '/v2/register?token=' + token;
+  let url = env.manageApiUrlAuth(domain) + '/v1/registers?token=' + token;
   return axios.post(url, {
     name: register.name,
     phone: register.phone,
     email: register.email,
     class_id: register.class_id,
-    coupon: register.coupon,
     dob: register.dob,
-    address: register.address,
     facebook: register.facebook,
     gender: register.gender,
     how_know: register.how_know,
     university: register.university,
     work: register.work,
     campaign_id: register.campaign_id,
-    description: register.description,
     father_name: register.father_name,
     saler_id: register.saler_id,
-    course_id: register.course_id,
     status_id: register.status_id,
     source_id: register.source_id,
-    base_id: register.base_id,
+    coupon_ids: register.coupon_ids,
+    identity_code: register.identity_code,
+    mother_name: register.mother_name,
+    nationality: register.nationality,
   });
 }
 
@@ -32,15 +32,24 @@ export function loadCoursesApi(token, domain) {
   return axios.get(url);
 }
 
-export function loadClassesApi(token, course_id, domain) {
+export function loadClassesApi(course_id, base_id, search, token, domain) {
   let url =
-    env.manageApiUrl(domain) + '/v2/course/' + course_id + '/class?token=' + token;
+    env.manageApiUrlAuth(domain) +
+    '/v1/study-classes?limit=15&orderBy=created_at&sortedBy=desc' +
+    (!isEmptyInput(course_id) ? '&course_ids[]=' + course_id : '') +
+    (!isEmptyInput(base_id) ? '&base_ids[]=' + base_id : '') +
+    '&search=' +
+    search +
+    '&token=' +
+    token;
   return axios.get(url);
 }
 
 export function loadCampaigns(token, domain) {
   let url =
-    env.manageApiUrl(domain) + '/marketing-campaign/all?limit=34&token=' + token;
+    env.manageApiUrlAuth(domain) +
+    '/v1/marketing-campaigns?orderBy=name&sortedBy=asc&token=' +
+    token;
   return axios.get(url);
 }
 
@@ -50,7 +59,10 @@ export function loadProvinces(token, domain) {
 }
 
 export function loadSources(token, domain) {
-  let url = env.manageApiUrl(domain) + '/source/all?token=' + token;
+  let url =
+    env.manageApiUrlAuth(domain) +
+    '/v1/sources?orderBy=name&sortedBy=asc&token=' +
+    token;
   return axios.get(url);
 }
 
@@ -67,10 +79,18 @@ export function loadSalers(token, domain) {
 
 export function loadFilterClasses(search, token, domain) {
   let url =
-    env.manageApiUrlV4(domain) +
-    '/class/find-by-name?include=course&search=' +
+    env.manageApiUrlAuth(domain) +
+    '/v1/study-classes?limit=15&orderBy=created_at&sortedBy=desc&search=' +
     search +
     '&token=' +
+    token;
+  return axios.get(url);
+}
+
+export function loadCoupons(token, domain) {
+  let url =
+    env.manageApiUrlAuth(domain) +
+    '/v1/coupons?limit=25&orderBy=created_at&sortedBy=desc&token=' +
     token;
   return axios.get(url);
 }

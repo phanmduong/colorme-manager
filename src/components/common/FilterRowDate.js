@@ -9,6 +9,7 @@ const FilterRowDate = ({
   selectedDate,
   onSelectDate,
   isFormatted = false,
+  isUnix = false,
 }) => {
   const [visible, setVisible] = useState(false);
 
@@ -17,13 +18,25 @@ const FilterRowDate = ({
   };
 
   const handleDatePicked = (date) => {
-    if (!isFormatted) {
-      onSelectDate(moment(date));
-    } else {
+    if (isFormatted) {
       onSelectDate(moment(date).format('YYYY-MM-DD'));
+    } else if (isUnix) {
+      onSelectDate(moment(date).unix());
+    } else {
+      onSelectDate(moment(date));
     }
     togglePicker();
   };
+
+  function displayDate() {
+    if (isFormatted) {
+      return selectedDate;
+    } else if (isUnix) {
+      return moment.unix(selectedDate).format('YYYY-MM-DD');
+    } else {
+      return selectedDate.format('YYYY-MM-DD');
+    }
+  }
 
   return (
     <View style={styles.filterTitle}>
@@ -33,11 +46,7 @@ const FilterRowDate = ({
           style={{
             fontSize: 16,
           }}>
-          {selectedDate
-            ? !isFormatted
-              ? selectedDate.format('YYYY-MM-DD')
-              : selectedDate
-            : 'YYYY-MM-DD'}
+          {selectedDate ? displayDate() : 'YYYY-MM-DD'}
         </Text>
       </TouchableOpacity>
       <DateTimePicker

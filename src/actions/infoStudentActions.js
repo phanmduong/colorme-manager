@@ -1,6 +1,6 @@
 import * as types from '../constants/actionTypes';
 import * as infoStudentApi from '../apis/infoStudentApi';
-import {refreshRegisterListMy} from './registerListActions';
+import {Alert} from 'react-native';
 
 export function setStudentId(studentId) {
   return {
@@ -50,7 +50,7 @@ function loadRegistersSuccessful(res) {
     isLoadingRegisters: false,
     errorRegisters: false,
     refreshingRegisters: false,
-    registers: res.data.data.registers,
+    registers: res.data.registers.items,
   };
 }
 
@@ -64,14 +64,13 @@ function loadRegistersError() {
 }
 
 export function changeCallStatus(
-  callStatus,
-  studentId,
-  telecallId,
-  genId,
-  note,
-  callerId,
   appointmentPayment,
-  dateTest,
+  callBackTime,
+  callStatus,
+  note,
+  statusId,
+  studentId,
+  teleId,
   token,
   domain,
 ) {
@@ -79,21 +78,22 @@ export function changeCallStatus(
     dispatch(beginLoadChangeCallStatus());
     infoStudentApi
       .changeCallStatusStudent(
-        callStatus,
-        studentId,
-        telecallId,
-        genId,
-        note,
-        callerId,
         appointmentPayment,
-        dateTest,
+        callBackTime,
+        callStatus,
+        note,
+        statusId,
+        studentId,
+        teleId,
         token,
         domain,
       )
       .then(function (res) {
+        Alert.alert('Thông báo', 'Ghi nhận thành công');
         dispatch(loadChangeCallStatusSuccessful());
       })
       .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
         dispatch(loadChangeCallStatusError());
         throw error;
       });
@@ -126,26 +126,13 @@ function loadChangeCallStatusError() {
 
 export function submitMoney(
   register_id,
-  money,
+  actual_input_at,
   code,
+  money,
   note,
   payment_method,
-  studentId,
+  received_book_at,
   token,
-  searchMy,
-  salerId,
-  baseId,
-  campaignId,
-  paidStatus,
-  classStatus,
-  callStatus,
-  bookmark,
-  search_coupon,
-  start_time,
-  end_time,
-  appointmentPayment,
-  statusId,
-  sourceId,
   domain,
 ) {
   return function (dispatch) {
@@ -153,38 +140,21 @@ export function submitMoney(
     infoStudentApi
       .submitMoney(
         register_id,
-        money,
+        actual_input_at,
         code,
+        money,
         note,
         payment_method,
+        received_book_at,
         token,
         domain,
       )
       .then(function (res) {
+        Alert.alert('Thông báo', 'Ghi nhận thành công');
         dispatch(loadSubmitMoneySuccessful());
-        dispatch(loadRegisters(studentId, token, domain));
-        dispatch(
-          refreshRegisterListMy(
-            searchMy,
-            token,
-            salerId,
-            baseId,
-            campaignId,
-            paidStatus,
-            classStatus,
-            callStatus,
-            bookmark,
-            search_coupon,
-            start_time,
-            end_time,
-            appointmentPayment,
-            statusId,
-            sourceId,
-            domain,
-          ),
-        );
       })
       .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
         dispatch(loadSubmitMoneyError());
         throw error;
       });
@@ -243,7 +213,7 @@ function loadStudentSuccessful(res) {
     type: types.LOAD_STUDENT_SUCCESSFUL,
     isLoadingStudent: false,
     errorStudent: false,
-    student: res.data.data.student,
+    student: res.data.lead,
   };
 }
 
@@ -344,7 +314,7 @@ export function loadHistoryCalls(refreshing, studentId, token, domain) {
     }
     infoStudentApi
       .loadHistoryCalls(studentId, token, domain)
-      .then(function(res) {
+      .then(function (res) {
         dispatch(loadHistoryCallsSuccessful(res));
       })
       .catch((error) => {
@@ -376,7 +346,7 @@ function loadHistoryCallsSuccessful(res) {
     isLoadingHistoryCalls: false,
     errorLoadingHistoryCalls: false,
     refreshingHistoryCalls: false,
-    historyCalls: res.data.data.history_calls,
+    historyCalls: res.data.tele_calls,
   };
 }
 
@@ -427,7 +397,7 @@ function beginRefreshHistoryCollect() {
 function loadHistoryCollectSuccessful(res) {
   return {
     type: types.LOAD_HISTORY_COLLECT_SUCCESSFUL,
-    historyCollect: res.data.data,
+    historyCollect: res.data.payments,
     isLoadingHistoryCollect: false,
     errorLoadingHistoryCollect: false,
     refreshingHistoryCollect: false,
@@ -503,9 +473,11 @@ export function changePassword(studentId, password, token, domain) {
     infoStudentApi
       .changePassword(studentId, password, token, domain)
       .then(function (res) {
+        Alert.alert('Thông báo', res.data.data.message);
         dispatch(changePasswordSuccessful());
       })
       .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
         dispatch(changePasswordError());
         throw error;
       });

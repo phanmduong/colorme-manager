@@ -29,6 +29,7 @@ export function loadAnalyticsRegister(
   courseId,
   sourceId,
   campaignId,
+  provinceId,
   token,
   domain,
 ) {
@@ -47,6 +48,7 @@ export function loadAnalyticsRegister(
         courseId,
         sourceId,
         campaignId,
+        provinceId,
         token,
         domain,
       )
@@ -88,6 +90,7 @@ export function loadAnalyticsRevenue(
   courseId,
   sourceId,
   campaignId,
+  provinceId,
   token,
   domain,
 ) {
@@ -106,6 +109,7 @@ export function loadAnalyticsRevenue(
         courseId,
         sourceId,
         campaignId,
+        provinceId,
         token,
         domain,
       )
@@ -230,6 +234,7 @@ export function loadAnalyticsClasses(
   courseId,
   sourceId,
   campaignId,
+  provinceId,
   token,
   domain,
 ) {
@@ -250,6 +255,7 @@ export function loadAnalyticsClasses(
         courseId,
         sourceId,
         campaignId,
+        provinceId,
         token,
         domain,
       )
@@ -295,40 +301,6 @@ function loadAnalyticsClassesError() {
     isLoadingAnalyticsClasses: false,
     errorAnalyticsClasses: true,
     refreshingAnalyticsClasses: false,
-  };
-}
-
-export function changeProvince(provinceId, token, domain) {
-  return function (dispatch) {
-    dispatch(beginChangeProvince());
-    analyticsApi
-      .changeProvince(provinceId, token, domain)
-      .then((res) => dispatch(changeProvinceSuccess()))
-      .catch((error) => dispatch(changeProvinceError()));
-  };
-}
-
-function beginChangeProvince() {
-  return {
-    type: types.BEGIN_CHANGE_PROVINCE,
-    changingProvince: true,
-    errorChangeProvince: false,
-  };
-}
-
-function changeProvinceSuccess() {
-  return {
-    type: types.CHANGE_PROVINCE_SUCCESSFUL,
-    changingProvince: false,
-    errorChangeProvince: false,
-  };
-}
-
-function changeProvinceError() {
-  return {
-    type: types.CHANGE_PROVINCE_ERROR,
-    changingProvince: false,
-    errorChangeProvince: true,
   };
 }
 

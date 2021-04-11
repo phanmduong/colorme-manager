@@ -3,7 +3,8 @@ import {View, Dimensions, Image, Text} from 'react-native';
 import Loading from '../common/Loading';
 import theme from '../../styles';
 import {getShortName, isEmptyInput} from '../../helper';
-var {width, height} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
+import moment from 'moment';
 
 class InfoStudentHistoryCallsComponent extends React.Component {
   constructor(props, context) {
@@ -11,7 +12,7 @@ class InfoStudentHistoryCallsComponent extends React.Component {
   }
 
   renderCalls = () => {
-    return this.props.historyCalls.map(call => (
+    return this.props.historyCalls.map((call) => (
       <View style={styles.listItemContainer}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           {call.call_status === 'success' ? (
@@ -38,7 +39,7 @@ class InfoStudentHistoryCallsComponent extends React.Component {
                     backgroundColor:
                       !call.caller.color || call.caller.color === ''
                         ? theme.processColor1
-                        : '#' + call.caller.color,
+                        : call.caller.color,
                     marginRight: 5,
                   },
                 }}>
@@ -49,7 +50,7 @@ class InfoStudentHistoryCallsComponent extends React.Component {
             ) : (
               <View />
             )}
-            {call.updated_at ? (
+            {call.created_at ? (
               <View
                 style={{
                   ...styles.card,
@@ -57,7 +58,10 @@ class InfoStudentHistoryCallsComponent extends React.Component {
                     backgroundColor: '#707070',
                   },
                 }}>
-                <Text style={styles.saler}>{call.updated_at.trim()}</Text>
+                <Text style={styles.saler}>
+                  Gọi vào lúc:{' '}
+                  {moment.unix(call.created_at).format('HH:mm DD/MM/YYYY')}
+                </Text>
               </View>
             ) : (
               <View />
@@ -69,16 +73,6 @@ class InfoStudentHistoryCallsComponent extends React.Component {
           <View style={{marginLeft: 15, marginTop: 8}}>
             {!isEmptyInput(call.note) ? (
               <Text style={styles.classInfoContainer}>{call.note}</Text>
-            ) : null}
-            {!isEmptyInput(call.appointment_payment) ? (
-              <Text style={styles.classInfoContainer}>
-                Hẹn nộp tiền: {call.appointment_payment}
-              </Text>
-            ) : null}
-            {!isEmptyInput(call.date_test) ? (
-              <Text style={styles.classInfoContainer}>
-                Hẹn kiểm tra: {call.date_test}
-              </Text>
             ) : null}
           </View>
         </View>

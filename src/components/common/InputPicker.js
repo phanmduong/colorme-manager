@@ -13,7 +13,7 @@ const InputPicker = ({
   onChangeValue,
   isApiSearch = false,
   onApiSearch,
-  placeholder,
+  placeholder = 'Lựa chọn',
   refPicker,
   required = false,
   isAllOptionAvailable = false,

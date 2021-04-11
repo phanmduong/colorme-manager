@@ -63,7 +63,6 @@ class InfoStudentRegistersContainer extends React.Component {
       received_book_at,
       this.props.token,
       this.props.domain,
-      () => this.loadRegisters(this.props.studentId),
     );
   };
 

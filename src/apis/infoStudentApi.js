@@ -19,11 +19,12 @@ export function loadRegisters(studentId, token, domain) {
 
 export function loadHistoryCalls(studentId, token, domain) {
   let url =
-    env.manageApiUrl(domain) +
-    '/student/' +
+    env.manageApiUrlAuth(domain) +
+    '/v1/tele-calls?student_id=' +
     studentId +
-    '/history-calls?token=' +
+    '&orderBy=created_at&sortedBy=desc&limit=0&token=' +
     token;
+  console.log(url);
   return axios.get(url);
 }
 

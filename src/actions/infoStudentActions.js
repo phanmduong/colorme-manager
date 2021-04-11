@@ -346,7 +346,7 @@ function loadHistoryCallsSuccessful(res) {
     isLoadingHistoryCalls: false,
     errorLoadingHistoryCalls: false,
     refreshingHistoryCalls: false,
-    historyCalls: res.data.data.history_calls,
+    historyCalls: res.data.tele_calls,
   };
 }
 

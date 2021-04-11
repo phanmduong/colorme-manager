@@ -66,6 +66,8 @@ class AnalyticsContainer extends React.Component {
       this.props.selectedSourceId === -1 ? '' : this.props.selectedSourceId;
     let campaignId =
       this.props.selectedCampaignId === -1 ? '' : this.props.selectedCampaignId;
+    let provinceId =
+      this.props.selectedProvinceId === -1 ? '' : this.props.selectedProvinceId;
     this.props.analyticsActions.loadAnalyticsRegister(
       refreshing,
       baseId,
@@ -75,6 +77,7 @@ class AnalyticsContainer extends React.Component {
       courseId,
       sourceId,
       campaignId,
+      provinceId,
       this.props.token,
       this.props.domain,
     );
@@ -93,6 +96,8 @@ class AnalyticsContainer extends React.Component {
       this.props.selectedSourceId === -1 ? '' : this.props.selectedSourceId;
     let campaignId =
       this.props.selectedCampaignId === -1 ? '' : this.props.selectedCampaignId;
+    let provinceId =
+      this.props.selectedProvinceId === -1 ? '' : this.props.selectedProvinceId;
     this.props.analyticsActions.loadAnalyticsRevenue(
       refreshing,
       startTime,
@@ -102,6 +107,7 @@ class AnalyticsContainer extends React.Component {
       courseId,
       sourceId,
       campaignId,
+      provinceId,
       this.props.token,
       this.props.domain,
     );
@@ -169,11 +175,6 @@ class AnalyticsContainer extends React.Component {
   };
 
   onSelectProvinceId = (provinceId) => {
-    this.props.analyticsActions.changeProvince(
-      provinceId,
-      this.props.token,
-      this.props.domain,
-    );
     this.props.analyticsActions.selectedProvinceId(provinceId);
   };
 
@@ -245,6 +246,8 @@ class AnalyticsContainer extends React.Component {
       this.props.selectedSourceId === -1 ? '' : this.props.selectedSourceId;
     let campaignId =
       this.props.selectedCampaignId === -1 ? '' : this.props.selectedCampaignId;
+    let provinceId =
+      this.props.selectedProvinceId === -1 ? '' : this.props.selectedProvinceId;
     this.props.analyticsActions.loadAnalyticsClasses(
       refreshing,
       startDate,
@@ -256,12 +259,14 @@ class AnalyticsContainer extends React.Component {
       courseId,
       sourceId,
       campaignId,
+      provinceId,
       this.props.token,
       this.props.domain,
     );
   };
 
   render() {
+    console.log(this.props.startDate);
     return (
       <AnalyticsComponent
         {...this.props}
@@ -322,8 +327,6 @@ function mapStateToProps(state) {
     refreshingAnalyticsRegister: state.analytics.refreshingAnalyticsRegister,
     refreshingAnalyticsRevenue: state.analytics.refreshingAnalyticsRevenue,
     refreshingAnalyticsClasses: state.analytics.refreshingAnalyticsClasses,
-    changingProvince: state.analytics.changingProvince,
-    errorChangeProvince: state.analytics.errorChangeProvince,
     isLoadingProvinces: state.saveRegister.isLoadingProvinces,
     errorLoadingProvinces: state.saveRegister.errorLoadingProvinces,
     provinces: state.saveRegister.provinces,

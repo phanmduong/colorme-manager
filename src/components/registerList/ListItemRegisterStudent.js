@@ -17,6 +17,7 @@ import Call from '../common/Call';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import ActionSheet from 'react-native-actionsheet';
 import ChangeStudentClassModal from './ChangeStudentClassModal';
+import * as moment from 'moment';
 
 class ListItemStudent extends React.Component {
   constructor(props, context) {
@@ -64,48 +65,38 @@ class ListItemStudent extends React.Component {
 
   content() {
     const {
-      name,
-      avatar,
       saler,
       campaign,
       callStatus,
-      classInfo,
-      paidStatus,
       money,
-      phone,
-      email,
-      avatar_url,
-      studentId,
-      next_code,
-      next_waiting_code,
       registerId,
-      created_at_cal,
+      created_at,
       paidTime,
       source,
-      source_id,
       register_status,
+      user,
+      classItem,
+      code,
+      receivedBook,
     } = this.props;
     return (
-      <View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <>
+        <View style={styles.container}>
+          <View style={styles.row}>
             <View style={{position: 'relative'}}>
-              <Thumbnail
-                small
-                source={{uri: avatar}}
-                style={theme.mainAvatar}
-              />
+              {classItem && classItem.course && (
+                <Thumbnail
+                  small
+                  source={{uri: classItem.course.icon_url}}
+                  style={theme.mainAvatar}
+                />
+              )}
               <View
                 style={{
                   ...styles.dotCall,
                   ...{
                     backgroundColor:
-                      callStatus === 'uncall'
+                      callStatus === 'not-yet'
                         ? '#bdbdbd'
                         : callStatus === 'success'
                         ? '#4dc151'
@@ -115,16 +106,14 @@ class ListItemStudent extends React.Component {
               />
             </View>
             <Text numberOfLines={1} style={styles.className}>
-              {name}
+              {user && user.name}
             </Text>
-            {paidStatus ? (
+            {paidTime && (
               <MaterialCommunityIcons
                 name="checkbox-marked-circle"
                 color={money <= 0 ? '#bdbdbd' : '#4dc151'}
                 size={12}
               />
-            ) : (
-              <View />
             )}
           </View>
           <Image
@@ -136,7 +125,7 @@ class ListItemStudent extends React.Component {
           <View style={styles.classAva} />
           <View style={styles.infoContainer}>
             <View style={styles.containerSubTitle}>
-              {saler ? (
+              {saler && !isEmptyInput(saler.name) && (
                 <View
                   style={{
                     ...styles.card,
@@ -144,16 +133,14 @@ class ListItemStudent extends React.Component {
                       backgroundColor:
                         !saler.color || saler.color === ''
                           ? theme.processColor1
-                          : '#' + saler.color,
+                          : saler.color,
                       marginRight: 5,
                     },
                   }}>
                   <Text style={styles.saler}>{getShortName(saler.name)}</Text>
                 </View>
-              ) : (
-                <View />
               )}
-              {campaign ? (
+              {campaign && !isEmptyInput(campaign.name) && (
                 <View
                   style={{
                     ...styles.card,
@@ -161,101 +148,102 @@ class ListItemStudent extends React.Component {
                       backgroundColor:
                         !campaign.color || campaign.color === ''
                           ? theme.processColor1
-                          : '#' + campaign.color,
+                          : campaign.color,
                       marginRight: 5,
                     },
                   }}>
                   <Text style={styles.campaign}>{campaign.name.trim()}</Text>
                 </View>
-              ) : (
-                <View />
               )}
-              {!isEmptyInput(this.getSource()) ? (
+              {source && !isEmptyInput(source.name) && (
                 <View
                   style={{
                     ...styles.card,
                     ...{
                       backgroundColor:
-                        !this.getSource().color || this.getSource().color === ''
+                        !source.color || source.color === ''
                           ? theme.processColor1
-                          : this.getSource().color,
+                          : source.color,
                       marginRight: 5,
                     },
                   }}>
-                  <Text style={styles.campaign}>
-                    {this.getSource().name.trim()}
-                  </Text>
+                  <Text style={styles.campaign}>{source.name.trim()}</Text>
                 </View>
-              ) : (
-                <View />
               )}
               {register_status &&
-              register_status.name &&
-              register_status.color ? (
-                <View
-                  style={{
-                    ...styles.card,
-                    ...{
-                      backgroundColor:
-                        !register_status.color || register_status.color === ''
-                          ? theme.processColor1
-                          : register_status.color,
-                    },
-                  }}>
-                  <Text style={styles.campaign}>
-                    {register_status.name.trim()}
-                  </Text>
-                </View>
-              ) : (
-                <View />
-              )}
+                !isEmptyInput(register_status.name) &&
+                !isEmptyInput(register_status.color) && (
+                  <View
+                    style={{
+                      ...styles.card,
+                      ...{
+                        backgroundColor:
+                          !register_status.color || register_status.color === ''
+                            ? theme.processColor1
+                            : register_status.color,
+                      },
+                    }}>
+                    <Text style={styles.campaign}>
+                      {register_status.name.trim()}
+                    </Text>
+                  </View>
+                )}
             </View>
             <View>
-              <Call
-                extraPadding={{paddingTop: 0, fontSize: 15}}
-                url={'tel:' + phone}
-                phone={phone}
-              />
-              <Text numberOfLines={1} style={styles.classInfoContainer}>
-                Đăng kí {created_at_cal}
-              </Text>
-              {paidStatus ? (
+              {user && !isEmptyInput(user.phone.trim()) && (
+                <Call
+                  extraPadding={{paddingTop: 0, fontSize: 15}}
+                  url={'tel:' + user.phone}
+                  phone={user.phone}
+                />
+              )}
+              {created_at && (
                 <Text numberOfLines={1} style={styles.classInfoContainer}>
-                  Đã nộp tiền {paidTime}
+                  Đăng kí {moment.unix(created_at).format('DD/MM/YYYY')}
+                </Text>
+              )}
+              {paidTime ? (
+                <Text numberOfLines={1} style={styles.classInfoContainer}>
+                  Đã nộp tiền {moment.unix(paidTime).format('DD/MM/YYYY')}
                 </Text>
               ) : null}
-              {classInfo.name ? (
+              {classItem && !isEmptyInput(classItem.name) ? (
                 <Text numberOfLines={1} style={styles.classInfoContainer}>
-                  {classInfo.name}
+                  {classItem.name}
                 </Text>
               ) : null}
-              {classInfo.study_time ? (
+              {classItem && !isEmptyInput(classItem.study_time) ? (
                 <Text numberOfLines={1} style={styles.classInfoContainer}>
-                  {classInfo.study_time}
+                  {classItem.study_time}
                 </Text>
               ) : null}
-              {classInfo.base ? (
+              {classItem &&
+              classItem.base &&
+              !isEmptyInput(classItem.base.name) &&
+              !isEmptyInput(classItem.base.address) ? (
                 <Text numberOfLines={1} style={styles.classInfoContainer}>
-                  {classInfo.room} - {classInfo.base}
+                  {classItem.base.name} - {classItem.base.address}
                 </Text>
               ) : null}
-              {classInfo.description ? (
+              {classItem && !isEmptyInput(classItem.description) ? (
                 <Text numberOfLines={1} style={styles.classInfoContainer}>
-                  {classInfo.description}
+                  {classItem.description}
                 </Text>
               ) : null}
             </View>
             <View style={styles.buttonContainer}>
-              {/*<TouchableOpacity*/}
-              {/*  onPress={() => {*/}
-              {/*    Linking.openURL(`tel:${phone}`);*/}
-              {/*    this.toggleCallModal();*/}
-              {/*  }}>*/}
-              {/*  <View style={styles.button}>*/}
-              {/*    <Text style={{fontSize: 16}}>Gọi điện</Text>*/}
-              {/*  </View>*/}
-              {/*</TouchableOpacity>*/}
-              {!paidStatus ? (
+              <TouchableOpacity
+                onPress={() => {
+                  if (user && !isEmptyInput(user.phone)) {
+                    Linking.openURL(`tel:${user.phone}`);
+                  }
+                  this.toggleCallModal();
+                }}>
+                <View style={styles.button}>
+                  <Text style={{fontSize: 16}}>Gọi điện</Text>
+                </View>
+              </TouchableOpacity>
+              {!paidTime ? (
                 <TouchableOpacity onPress={() => this.toggleMoneyModal()}>
                   <View style={styles.button}>
                     <Text style={{fontSize: 16}}>Nộp học phí</Text>
@@ -272,7 +260,7 @@ class ListItemStudent extends React.Component {
               )}
 
               <TouchableOpacity onPress={this.showActionSheet}>
-                <View style={[{marginLeft: 10}, styles.button]}>
+                <View style={styles.button}>
                   <MaterialIcon
                     name={'arrow-drop-down'}
                     size={20}
@@ -291,34 +279,31 @@ class ListItemStudent extends React.Component {
             onPress={this.executeActions}
           />
           <CallRegisterModal
+            {...this.props}
             isVisible={this.state.callModalVisible}
             onSwipeComplete={this.toggleCallModal}
-            imageSource={avatar_url}
-            email={email}
-            phone={phone}
+            avatar_url={
+              user && !isEmptyInput(user.avatar_url) && user.avatar_url
+            }
+            email={user && !isEmptyInput(user.email) && user.email}
+            phone={user && !isEmptyInput(user.phone) && user.phone}
             changeCallStatus={this.props.changeCallStatus}
-            student_id={studentId}
-            token={this.props.token}
-            errorChangeCallStatus={this.props.errorChangeCallStatus}
+            studentId={user && user.id}
           />
           <SubmitMoneyModal
+            {...this.props}
             isVisible={this.state.moneyModalVisible}
             onSwipeComplete={this.toggleMoneyModal}
-            avatar_url={avatar_url}
-            classAva={classInfo.avatar_url}
-            name={name}
-            next_code={next_code}
-            next_waiting_code={next_waiting_code}
-            token={this.props.token}
+            avatar_url={
+              user && !isEmptyInput(user.avatar_url) && user.avatar_url
+            }
+            name={user && !isEmptyInput(user.name) && user.name}
             submitMoney={this.props.submitMoney}
-            register_id={registerId}
+            registerId={registerId}
             errorSubmitMoney={this.props.errorSubmitMoney}
-            room={classInfo.room}
-            base={classInfo.base}
-            className={classInfo.name}
-            study_time={classInfo.study_time}
-            description={classInfo.description}
-            type={classInfo.type}
+            classItem={classItem}
+            code={code}
+            receivedBook={receivedBook}
           />
           <ChangeStudentClassModal
             isVisible={this.state.changeClassModalVisible}
@@ -331,24 +316,26 @@ class ListItemStudent extends React.Component {
             changingClass={this.props.changingClass}
             changeClassStatus={this.props.changeClassStatus}
             changeClass={this.props.changeClass}
-            avatar_url={avatar}
+            avatar_url={user && user.avatar_url && user.avatar_url}
           />
         </View>
-      </View>
+      </>
     );
   }
 
   render() {
-    let studentId = this.props.studentId;
+    const {user} = this.props;
     if (Platform.OS === 'ios') {
       return (
         <View>
           <TouchableOpacity
             onPress={() => {
-              this.props.setStudentId(studentId);
-              this.props.navigation.navigate('InfoStudent', {
-                studentId: studentId,
-              });
+              if (user && user.id) {
+                this.props.setStudentId(user.id);
+                this.props.navigation.navigate('InfoStudent', {
+                  studentId: user.id,
+                });
+              }
             }}>
             <View style={styles.containerAll}>{this.content()}</View>
           </TouchableOpacity>
@@ -359,10 +346,12 @@ class ListItemStudent extends React.Component {
         <View>
           <TouchableNativeFeedback
             onPress={() => {
-              this.props.setStudentId(studentId);
-              this.props.navigation.navigate('InfoStudent', {
-                studentId: studentId,
-              });
+              if (user && user.id) {
+                this.props.setStudentId(user.id);
+                this.props.navigation.navigate('InfoStudent', {
+                  studentId: user.id,
+                });
+              }
             }}>
             <View style={styles.containerAll}>{this.content()}</View>
           </TouchableNativeFeedback>
@@ -373,6 +362,15 @@ class ListItemStudent extends React.Component {
 }
 
 const styles = {
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   containerAll: {
     paddingHorizontal: theme.mainHorizontal,
     paddingVertical: 16,
@@ -480,6 +478,7 @@ const styles = {
     borderRadius: 8,
     height: 45,
     justifyContent: 'center',
+    marginRight: 10,
   },
   collectedButton: {
     backgroundColor: '#C50000',
@@ -487,6 +486,7 @@ const styles = {
     borderRadius: 8,
     height: 45,
     justifyContent: 'center',
+    marginRight: 10,
   },
   classInfoContainer: {
     paddingTop: 5,

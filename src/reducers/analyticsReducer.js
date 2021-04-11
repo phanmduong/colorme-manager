@@ -126,16 +126,6 @@ export default function dashboardReducer(
         changingProvince: action.changingProvince,
         errorChangeProvince: action.errorChangeProvince,
       });
-    case types.CHANGE_PROVINCE_SUCCESSFUL:
-      return Object.assign({}, state, {
-        changingProvince: action.changingProvince,
-        errorChangeProvince: action.errorChangeProvince,
-      });
-    case types.CHANGE_PROVINCE_ERROR:
-      return Object.assign({}, state, {
-        changingProvince: action.changingProvince,
-        errorChangeProvince: action.errorChangeProvince,
-      });
     case types.SELECTED_PROVINCE_ID_ANALYTICS:
       return Object.assign({}, state, {
         selectedProvinceId: action.selectedProvinceId,

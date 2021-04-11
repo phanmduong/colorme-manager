@@ -102,61 +102,45 @@ class ListStudentClassContainer extends React.Component {
   };
 
   changeCallStatus = (
-    callStatus,
-    studentId,
-    telecallId,
-    genId,
-    note,
-    callerId,
     appointmentPayment,
-    dateTest,
+    callBackTime,
+    callStatus,
+    note,
+    statusId,
+    studentId,
+    teleId,
   ) => {
     this.props.infoStudentActions.changeCallStatus(
-      callStatus,
-      studentId,
-      telecallId,
-      genId,
-      note,
-      callerId,
       appointmentPayment,
-      dateTest,
+      callBackTime,
+      callStatus,
+      note,
+      statusId,
+      studentId,
+      teleId,
       this.props.token,
       this.props.domain,
     );
   };
 
-  submitMoney = (register_id, money, code, note, payment_method, token) => {
-    let baseId =
-      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
-    let salerId = this.props.salerId === -1 ? '' : this.props.salerId;
-    let campaignId = this.props.campaignId === -1 ? '' : this.props.campaignId;
-    let paidStatus = this.props.paidStatus === -1 ? '' : this.props.paidStatus;
-    let callStatus = this.props.callStatus === -1 ? '' : this.props.callStatus;
-    let bookmark = this.props.bookmark === -1 ? '' : this.props.bookmark;
-    let statusId = this.props.status_id === -1 ? '' : this.props.status_id;
-    let sourceId = this.props.source_id === -1 ? '' : this.props.source_id;
+  submitMoney = (
+    register_id,
+    actual_input_at,
+    code,
+    money,
+    note,
+    payment_method,
+    received_book_at,
+  ) => {
     this.props.infoStudentActions.submitMoney(
       register_id,
-      money,
+      actual_input_at,
       code,
+      money,
       note,
       payment_method,
-      '',
-      token,
-      this.props.searchMy,
-      salerId,
-      baseId,
-      campaignId,
-      paidStatus,
-      this.props.classStatus,
-      callStatus,
-      bookmark,
-      this.props.search_coupon,
-      this.props.start_time,
-      this.props.end_time,
-      this.props.appointmentPayment,
-      statusId,
-      sourceId,
+      received_book_at,
+      this.props.token,
       this.props.domain,
     );
   };
@@ -211,14 +195,8 @@ class ListStudentClassContainer extends React.Component {
       <ListStudenClassComponent
         {...this.props}
         listStudentClass={this.props.listStudentClassData}
-        classInfo={this.props.classInfo}
-        error={this.props.error}
-        isLoading={this.props.isLoading}
         onReload={this.onReload}
         changeCallStatus={this.changeCallStatus}
-        token={this.props.token}
-        errorChangeCallStatus={this.props.errorChangeCallStatus}
-        errorSubmitMoney={this.props.errorSubmitMoney}
         submitMoney={this.submitMoney}
         setStudentId={this.setStudentId}
         onRefresh={this.onRefresh}

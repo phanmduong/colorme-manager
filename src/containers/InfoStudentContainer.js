@@ -40,24 +40,22 @@ class InfoStudentContainer extends React.Component {
   };
 
   changeCallStatus = (
-    callStatus,
-    studentId,
-    telecallId,
-    genId,
-    note,
-    callerId,
     appointmentPayment,
-    dateTest,
+    callBackTime,
+    callStatus,
+    note,
+    statusId,
+    studentId,
+    teleId,
   ) => {
     this.props.infoStudentActions.changeCallStatus(
-      callStatus,
-      studentId,
-      telecallId,
-      genId,
-      note,
-      callerId,
       appointmentPayment,
-      dateTest,
+      callBackTime,
+      callStatus,
+      note,
+      statusId,
+      studentId,
+      teleId,
       this.props.token,
       this.props.domain,
     );
@@ -111,13 +109,7 @@ class InfoStudentContainer extends React.Component {
         progressTextColor={this.props.progress.textColor}
         historyCollectMoneyGradient={this.props.historyCollectMoney.gradient}
         historyCollectMoneyTextColor={this.props.historyCollectMoney.textColor}
-        tabComponent={this.props.tabComponent}
-        token={this.props.token}
-        student_id={this.props.student_id}
-        student={this.props.student}
-        isLoadingStudent={this.props.isLoadingStudent}
         changeCallStatus={this.changeCallStatus}
-        errorChangeCallStatus={this.props.errorChangeCallStatus}
         tabRegisters={() => {
           this.tabRegisters();
         }}

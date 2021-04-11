@@ -1,5 +1,6 @@
 import * as types from '../constants/actionTypes';
 import * as saveRegisterApi from '../apis/saveRegisterApi';
+import {Alert} from 'react-native';
 
 export function loadCourses(token, domain) {
   return function (dispatch) {
@@ -41,11 +42,11 @@ function loadCoursesError() {
   };
 }
 
-export function loadClasses(token, courseId, domain) {
+export function loadClasses(courseId, baseId, search, token, domain) {
   return function (dispatch) {
     dispatch(beginLoadClasses());
     saveRegisterApi
-      .loadClassesApi(token, courseId, domain)
+      .loadClassesApi(courseId, baseId, search, token, domain)
       .then(function (res) {
         dispatch(loadClassesSuccessful(res));
       })
@@ -69,7 +70,7 @@ function loadClassesSuccessful(res) {
     type: types.LOAD_REGISTER_CLASSES_SUCCESSFUL,
     isLoadingClasses: false,
     errorLoadingClasses: false,
-    classes: res.data.data.classes,
+    classes: res.data.study_classes.items,
   };
 }
 
@@ -81,16 +82,21 @@ function loadClassesError() {
   };
 }
 
-export function register(token, register, domain) {
+export function register(token, register, domain, callback) {
   return function (dispatch) {
     dispatch(beginRegister());
     saveRegisterApi
       .saveRegisterApi(token, register, domain)
       .then(function (res) {
-        dispatch(registerSuccessful());
+        dispatch(registerSuccessful(res));
+        Alert.alert('Thông báo', 'Đăng ký thành công');
+        if (callback) {
+          callback();
+        }
       })
       .catch((error) => {
         dispatch(registerError());
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
         throw error;
       });
   };
@@ -104,11 +110,12 @@ function beginRegister() {
   };
 }
 
-function registerSuccessful() {
+function registerSuccessful(res) {
   return {
     type: types.REGISTER_STUDENT_SUCCESSFUL,
     isLoadingRegister: false,
     errorLoadingRegister: false,
+    createdRegister: res.data.register,
   };
 }
 
@@ -321,11 +328,11 @@ function loadSalersError() {
 }
 
 export function loadFilterClasses(search, token, domain) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginLoadFilterClasses());
     saveRegisterApi
       .loadFilterClasses(search, token, domain)
-      .then(function(res) {
+      .then(function (res) {
         dispatch(loadFilterClassesSuccessful(res));
       })
       .catch((error) => {
@@ -348,7 +355,7 @@ function loadFilterClassesSuccessful(res) {
     type: types.LOAD_FILTER_CLASSES_SUCCESSFUL,
     isLoadingFilterClasses: false,
     errorLoadingFilterClasses: false,
-    filterClasses: res.data,
+    filterClasses: res.data.study_classes.items,
   };
 }
 
@@ -357,5 +364,53 @@ function loadFilterClassesError() {
     type: types.LOAD_FILTER_CLASSES_ERROR,
     isLoadingFilterClasses: false,
     errorLoadingFilterClasses: true,
+  };
+}
+
+export function loadCoupons(token, domain) {
+  return function (dispatch) {
+    dispatch(beginLoadCoupons());
+    saveRegisterApi
+      .loadCoupons(token, domain)
+      .then((res) => {
+        dispatch(loadCouponsSuccess(res));
+      })
+      .catch((error) => {
+        dispatch(loadCouponsError());
+        console.log(error);
+        throw error;
+      });
+  };
+}
+
+function beginLoadCoupons() {
+  return {
+    type: types.BEGIN_LOAD_COUPONS,
+    isLoadingCoupons: true,
+    errorCoupons: false,
+  };
+}
+
+function loadCouponsSuccess(res) {
+  return {
+    type: types.LOAD_COUPONS_SUCCESS,
+    isLoadingCoupons: false,
+    errorCoupons: false,
+    coupons: res.data.coupons.items,
+  };
+}
+
+function loadCouponsError() {
+  return {
+    type: types.LOAD_COUPONS_ERROR,
+    isLoadingCoupons: false,
+    errorCoupons: true,
+  };
+}
+
+export function resetCreatedRegister() {
+  return {
+    type: types.RESET_CREATED_REGISTER,
+    createdRegister: null,
   };
 }

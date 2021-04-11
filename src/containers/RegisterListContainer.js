@@ -1,487 +1,398 @@
 /**
  * Created by phanmduong on 6/1/17.
  */
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as registerListActions from '../actions/registerListActions';
 import * as infoStudentActions from '../actions/infoStudentActions';
 import * as baseActions from '../actions/baseActions';
-import * as genActions from '../actions/genActions';
 import * as saveRegisterActions from '../actions/saveRegisterActions';
 import RegisterListComponent from '../components/RegisterListComponent';
-import {isEmptyInput} from '../helper';
 import {Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import theme from '../styles';
 
-class RegisterListContainer extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-    this.loadDataRegisterListMy = this.loadDataRegisterListMy.bind(this);
-    this.updateFormAndLoadDataSearchMy = this.updateFormAndLoadDataSearchMy.bind(
-      this,
-    );
+function RegisterListContainer(props) {
+  useEffect(() => {
+    loadDataRegisterListMy();
+    loadCampaigns();
+    loadStatuses();
+    loadSources();
+    loadSalers();
+    loadFilterClasses('');
+    loadCourses();
+    loadBases();
+    loadProvinces();
+    loadCoupons();
+  }, []);
+
+  useEffect(() => {
+    if (props.createdRegister) {
+      refreshRegisterListMy();
+      props.saveRegisterActions.resetCreatedRegister();
+    }
+  }, [props.createdRegister]);
+
+  function loadBases() {
+    props.baseActions.loadDataBase(props.token, props.domain);
   }
 
-  componentWillMount() {
-    this.loadDataRegisterListMy();
-    this.loadCampaigns();
-    this.loadStatuses();
-    this.loadSources();
-    this.loadSalers();
-    this.loadFilterClasses();
-    this.loadCourses();
+  function loadCoupons() {
+    props.saveRegisterActions.loadCoupons(props.token, props.domain);
   }
 
-  componentWillUnmount() {
-    this.reset();
+  function loadProvinces() {
+    props.saveRegisterActions.loadProvinces(props.token, props.domain);
   }
 
-  loadCampaigns = () => {
-    this.props.saveRegisterActions.loadCampaigns(
-      this.props.token,
-      this.props.domain,
-    );
-  };
+  function loadCampaigns() {
+    props.saveRegisterActions.loadCampaigns(props.token, props.domain);
+  }
 
-  loadSources = () => {
-    this.props.saveRegisterActions.loadSources(
-      this.props.token,
-      this.props.domain,
-    );
-  };
+  function loadSources() {
+    props.saveRegisterActions.loadSources(props.token, props.domain);
+  }
 
-  loadStatuses = () => {
-    this.props.saveRegisterActions.loadStatuses(
+  function loadStatuses() {
+    props.saveRegisterActions.loadStatuses(
       'registers',
-      this.props.token,
-      this.props.domain,
+      props.token,
+      props.domain,
     );
-  };
+  }
 
-  loadSalers = () => {
-    this.props.saveRegisterActions.loadSalers(
-      this.props.token,
-      this.props.domain,
-    );
-  };
+  function loadSalers() {
+    props.saveRegisterActions.loadSalers(props.token, props.domain);
+  }
 
-  loadGens = () => {
-    this.props.genActions.loadDataGen(this.props.token, this.props.domain);
-  };
-
-  loadFilterClasses = (search) => {
-    this.props.saveRegisterActions.loadFilterClasses(
+  function loadFilterClasses(search) {
+    props.saveRegisterActions.loadFilterClasses(
       search,
-      this.props.token,
-      this.props.domain,
+      props.token,
+      props.domain,
     );
-  };
+  }
 
-  loadDataRegisterListMy() {
-    let baseId =
-      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
-    let salerId = this.props.salerId === -1 ? '' : this.props.salerId;
-    let campaignId = this.props.campaignId === -1 ? '' : this.props.campaignId;
-    let paidStatus = this.props.paidStatus === -1 ? '' : this.props.paidStatus;
-    let callStatus = this.props.callStatus === -1 ? '' : this.props.callStatus;
-    let bookmark = this.props.bookmark === -1 ? '' : this.props.bookmark;
-    let statusId = this.props.status_id === -1 ? '' : this.props.status_id;
-    let sourceId = this.props.source_id === -1 ? '' : this.props.source_id;
-    let genId = this.props.selectedGenId === -1 ? '' : this.props.selectedGenId;
-    let classId = this.props.classId === -1 ? '' : this.props.classId;
-    let courseId = this.props.courseId === -1 ? '' : this.props.courseId;
-    if (this.props.currentPageMy < this.props.totalPageMy) {
-      this.props.registerListActions.loadDataRegisterListMy(
-        this.props.token,
-        this.props.currentPageMy + 1,
-        this.props.searchMy,
-        salerId,
-        baseId,
-        campaignId,
-        paidStatus,
-        this.props.classStatus,
-        callStatus,
-        bookmark,
-        this.props.search_coupon,
-        this.props.start_time,
-        this.props.end_time,
-        this.props.appointmentPayment,
-        statusId,
-        sourceId,
-        genId,
-        classId,
-        this.props.domain,
-        courseId,
-        this.props.note,
-        this.props.dateTest,
-        this.props.callBackTime,
+  function loadDataRegisterListMy() {
+    if (props.currentPageMy < props.totalPageMy) {
+      props.registerListActions.loadDataRegisterListMy(
+        props.currentPageMy + 1,
+        props.searchMy,
+        '',
+        props.salerId,
+        props.courseId,
+        props.baseId,
+        props.provinceId,
+        props.statusId,
+        props.classId,
+        props.sourceId,
+        props.campaignId,
+        props.couponId,
+        props.classStatus,
+        props.callStatus,
+        props.paidStatus,
+        props.bookmark,
+        props.callBackStartTime,
+        props.callBackEndTime,
+        props.appointmentPaymentStartTime,
+        props.appointmentPaymentEndTime,
+        props.start_time,
+        props.end_time,
+        'registers.created_at',
+        'desc',
+        props.token,
+        props.domain,
       );
     }
   }
 
-  refreshRegisterListMy = (search_coupon, note) => {
-    let baseId =
-      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
-    let salerId = this.props.salerId === -1 ? '' : this.props.salerId;
-    let campaignId = this.props.campaignId === -1 ? '' : this.props.campaignId;
-    let paidStatus = this.props.paidStatus === -1 ? '' : this.props.paidStatus;
-    let callStatus = this.props.callStatus === -1 ? '' : this.props.callStatus;
-    let bookmark = this.props.bookmark === -1 ? '' : this.props.bookmark;
-    let statusId = this.props.status_id === -1 ? '' : this.props.status_id;
-    let sourceId = this.props.source_id === -1 ? '' : this.props.source_id;
-    let courseId = this.props.courseId === -1 ? '' : this.props.courseId;
-    let genId = '';
-    if (this.props.selectedGenId === -1) {
-      genId = this.props.currentGen.id;
-    } else if (
-      this.props.selectedGenId !== -1 &&
-      this.props.selectedGenId !== 2
-    ) {
-      genId = this.props.selectedGenId;
-    }
-    let classId = this.props.classId === -1 ? '' : this.props.classId;
-    this.props.registerListActions.refreshRegisterListMy(
-      this.props.searchMy,
-      this.props.token,
-      salerId,
-      baseId,
-      campaignId,
-      paidStatus,
-      this.props.classStatus,
-      callStatus,
-      bookmark,
-      search_coupon,
-      this.props.start_time,
-      this.props.end_time,
-      this.props.appointmentPayment,
-      statusId,
-      sourceId,
-      genId,
-      classId,
-      this.props.domain,
-      courseId,
-      note,
-      this.props.dateTest,
-      this.props.callBackTime,
-    );
-  };
-
-  updateFormAndLoadDataSearchMy(search) {
-    let salerId = this.props.salerId === -1 ? '' : this.props.salerId;
-    let baseId =
-      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
-    let campaignId = this.props.campaignId === -1 ? '' : this.props.campaignId;
-    let paidStatus = this.props.paidStatus === -1 ? '' : this.props.paidStatus;
-    let callStatus = this.props.callStatus === -1 ? '' : this.props.callStatus;
-    let bookmark = this.props.bookmark === -1 ? '' : this.props.bookmark;
-    let statusId = this.props.status_id === -1 ? '' : this.props.status_id;
-    let sourceId = this.props.source_id === -1 ? '' : this.props.source_id;
-    let genId = this.props.selectedGenId === -1 ? '' : this.props.selectedGenId;
-    let classId = this.props.classId === -1 ? '' : this.props.classId;
-    let courseId = this.props.courseId === -1 ? '' : this.props.courseId;
-    this.props.registerListActions.updateFormAndLoadDataSearchMy(
-      search,
-      salerId,
-      baseId,
-      campaignId,
-      paidStatus,
-      this.props.classStatus,
-      callStatus,
-      bookmark,
-      this.props.search_coupon,
-      this.props.start_time,
-      this.props.end_time,
-      this.props.appointmentPayment,
-      statusId,
-      sourceId,
-      genId,
-      classId,
-      courseId,
-      this.props.note,
-      this.props.dateTest,
-      this.props.callBackTime,
-      this.props.token,
-      this.props.domain,
+  function refreshRegisterListMy() {
+    props.registerListActions.refreshRegisterListMy(
+      props.searchMy,
+      '',
+      props.salerId,
+      props.courseId,
+      props.baseId,
+      props.provinceId,
+      props.statusId,
+      props.classId,
+      props.sourceId,
+      props.campaignId,
+      props.couponId,
+      props.classStatus,
+      props.callStatus,
+      props.paidStatus,
+      props.bookmark,
+      props.callBackStartTime,
+      props.callBackEndTime,
+      props.appointmentPaymentStartTime,
+      props.appointmentPaymentEndTime,
+      props.start_time,
+      props.end_time,
+      'registers.created_at',
+      'desc',
+      props.token,
+      props.domain,
     );
   }
 
-  setStudentId = (studentId) => {
-    this.props.infoStudentActions.setStudentId(studentId);
-  };
-
-  changeCallStatus = (
-    callStatus,
-    studentId,
-    telecallId,
-    genId,
-    note,
-    callerId,
-    appointmentPayment,
-    dateTest,
-  ) => {
-    this.props.infoStudentActions.changeCallStatus(
-      callStatus,
-      studentId,
-      telecallId,
-      genId,
-      note,
-      callerId,
-      appointmentPayment,
-      dateTest,
-      this.props.token,
-      this.props.domain,
+  function updateFormAndLoadDataSearchMy(search) {
+    props.registerListActions.updateFormAndLoadDataSearchMy(
+      search,
+      '',
+      props.salerId,
+      props.courseId,
+      props.baseId,
+      props.provinceId,
+      props.statusId,
+      props.classId,
+      props.sourceId,
+      props.campaignId,
+      props.couponId,
+      props.classStatus,
+      props.callStatus,
+      props.paidStatus,
+      props.bookmark,
+      props.callBackStartTime,
+      props.callBackEndTime,
+      props.appointmentPaymentStartTime,
+      props.appointmentPaymentEndTime,
+      props.start_time,
+      props.end_time,
+      'registers.created_at',
+      'desc',
+      props.token,
+      props.domain,
     );
-  };
+  }
 
-  submitMoney = (register_id, money, code, note, payment_method, token) => {
-    let baseId =
-      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
-    let salerId = this.props.salerId === -1 ? '' : this.props.salerId;
-    let campaignId = this.props.campaignId === -1 ? '' : this.props.campaignId;
-    let paidStatus = this.props.paidStatus === -1 ? '' : this.props.paidStatus;
-    let callStatus = this.props.callStatus === -1 ? '' : this.props.callStatus;
-    let bookmark = this.props.bookmark === -1 ? '' : this.props.bookmark;
-    let statusId = this.props.status_id === -1 ? '' : this.props.status_id;
-    let sourceId = this.props.source_id === -1 ? '' : this.props.source_id;
-    this.props.infoStudentActions.submitMoney(
+  function setStudentId(studentId) {
+    props.infoStudentActions.setStudentId(studentId);
+  }
+
+  function changeCallStatus(
+    appointmentPayment,
+    callBackTime,
+    callStatus,
+    note,
+    statusId,
+    studentId,
+    teleId,
+  ) {
+    props.infoStudentActions.changeCallStatus(
+      appointmentPayment,
+      callBackTime,
+      callStatus,
+      note,
+      statusId,
+      studentId,
+      teleId,
+      props.token,
+      props.domain,
+    );
+  }
+
+  function submitMoney(
+    register_id,
+    actual_input_at,
+    code,
+    money,
+    note,
+    payment_method,
+    received_book_at,
+  ) {
+    props.infoStudentActions.submitMoney(
       register_id,
-      money,
+      actual_input_at,
       code,
+      money,
       note,
       payment_method,
-      '',
-      token,
-      this.props.searchMy,
-      salerId,
-      baseId,
-      campaignId,
-      paidStatus,
-      this.props.classStatus,
-      callStatus,
-      bookmark,
-      this.props.search_coupon,
-      this.props.start_time,
-      this.props.end_time,
-      this.props.appointmentPayment,
-      statusId,
-      sourceId,
-      this.props.domain,
-    );
-  };
-
-  loadAvailableClasses = (registerId, search) => {
-    this.props.registerListActions.loadAvailableClasses(
-      registerId,
-      search,
-      this.props.token,
-      this.props.domain,
-    );
-  };
-
-  loadCourses = () => {
-    this.props.registerListActions.loadCourses(
-      this.props.token,
-      this.props.domain,
-    );
-  };
-
-  resetAvailableClasses = () => {
-    this.props.registerListActions.resetAvailableClasses();
-  };
-
-  onSelectBaseId = (baseId) => {
-    this.props.baseActions.selectedBaseId(baseId);
-  };
-
-  onSelectSalerId = (salerId) => {
-    this.props.registerListActions.onSelectSalerId(salerId);
-  };
-
-  onSelectCampaignId = (campaignId) => {
-    this.props.registerListActions.onSelectCampaignId(campaignId);
-  };
-
-  onSelectPaidStatus = (paidStatus) => {
-    this.props.registerListActions.onSelectPaidStatus(paidStatus);
-  };
-
-  onSelectClassStatus = (classStatus) => {
-    this.props.registerListActions.onSelectClassStatus(classStatus);
-  };
-
-  onSelectCallStatus = (callStatus) => {
-    this.props.registerListActions.onSelectCallStatus(callStatus);
-  };
-
-  onSelectBookmark = (bookmark) => {
-    this.props.registerListActions.onSelectBookmark(bookmark);
-  };
-
-  onSelectStartTime = (date) => {
-    this.props.registerListActions.onSelectStartTime(date);
-  };
-
-  onSelectEndTime = (date) => {
-    this.props.registerListActions.onSelectEndTime(date);
-  };
-
-  onSelectAppointmentPayment = (date) => {
-    this.props.registerListActions.onSelectAppointmentPayment(date);
-  };
-
-  onSelectStatus = (statusId) => {
-    this.props.registerListActions.onSelectStatus(statusId);
-  };
-
-  onSelectSource = (sourceId) => {
-    this.props.registerListActions.onSelectSource(sourceId);
-  };
-
-  onSelectGenId = (genId) => {
-    this.props.genActions.selectedGenId(genId);
-  };
-
-  onSelectClassId = (classId) => {
-    this.props.registerListActions.onSelectClassId(classId);
-  };
-
-  onSelectCourseId = (courseId) => {
-    this.props.registerListActions.onSelectCourseId(courseId);
-  };
-
-  onSelectDateTest = (date) => {
-    this.props.registerListActions.onSelectDateTest(date);
-  };
-
-  onSelectCallBackTime = (date) => {
-    this.props.registerListActions.onSelectCallBackTime(date);
-  };
-
-  reset = () => {
-    this.props.registerListActions.reset();
-  };
-
-  setAutoFocusRegisterListSearch = (bool) => {
-    this.props.registerListActions.setAutoFocusRegisterListSearch(bool);
-  };
-
-  changeClass = (classId, registerId) => {
-    this.props.registerListActions.changeClass(
-      classId,
-      registerId,
-      this.props.token,
-      this.props.domain,
-    );
-  };
-
-  static navigationOptions = ({navigation}) => ({
-    headerLeft: () => (
-      <View style={styles.headerLeftContainer}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Icon
-            name={'chevron-left'}
-            size={33}
-            color={'black'}
-            onPress={() => navigation.goBack()}
-          />
-          <Text style={styles.name}>Học viên</Text>
-        </View>
-      </View>
-    ),
-    headerRight: () => (
-      <View style={{flexDirection: 'row'}}>
-        <TouchableOpacity onPress={() => navigation.navigate('SaveRegister')}>
-          <View style={styles.headerIconContainer}>
-            <MatIcon name={'add-circle'} size={20} color={'black'} />
-          </View>
-        </TouchableOpacity>
-      </View>
-    ),
-  });
-
-  render() {
-    return (
-      <RegisterListComponent
-        {...this.props}
-        registerList={this.props.registerListDataMy}
-        error={this.props.errorMy}
-        isLoading={this.props.isLoadingMy}
-        search={this.props.searchMy}
-        refreshing={this.props.refreshingMy}
-        onRefresh={this.refreshRegisterListMy}
-        loadDataRegisterList={this.loadDataRegisterListMy}
-        updateFormAndLoadDataSearch={this.updateFormAndLoadDataSearchMy}
-        setStudentId={this.setStudentId}
-        autoFocus={this.props.autoFocusRegisterListSearch}
-        token={this.props.token}
-        errorChangeCallStatus={this.props.errorChangeCallStatus}
-        errorSubmitMoney={this.props.errorSubmitMoney}
-        changeCallStatus={this.changeCallStatus}
-        submitMoney={this.submitMoney}
-        user={this.props.user}
-        salerId={this.props.salerId}
-        onSelectSalerId={this.onSelectSalerId}
-        campaigns={this.props.campaigns}
-        onSelectCampaignId={this.onSelectCampaignId}
-        campaignId={this.props.campaignId}
-        onSelectPaidStatus={this.onSelectPaidStatus}
-        paidStatus={this.props.paidStatus}
-        onSelectClassStatus={this.onSelectClassStatus}
-        classStatus={this.props.classStatus}
-        onSelectCallStatus={this.onSelectCallStatus}
-        callStatus={this.props.callStatus}
-        onSelectBookmark={this.onSelectBookmark}
-        bookmark={this.props.bookmark}
-        onSelectStartTime={this.onSelectStartTime}
-        start_time={this.props.start_time}
-        onSelectEndTime={this.onSelectEndTime}
-        end_time={this.props.end_time}
-        onSelectAppointmentPayment={this.onSelectAppointmentPayment}
-        appointmentPayment={this.props.appointmentPayment}
-        onSelectStatus={this.onSelectStatus}
-        statuses={this.props.statuses}
-        statusId={this.props.status_id}
-        onSelectSource={this.onSelectSource}
-        sources={this.props.sources}
-        sourceId={this.props.source_id}
-        isLoadingSources={this.props.isLoadingSources}
-        isLoadingStatuses={this.props.isLoadingStatuses}
-        isLoadingCampaigns={this.props.isLoadingCampaigns}
-        isLoadingSalers={this.props.isLoadingSalers}
-        salers={this.props.salers}
-        classId={this.props.classId}
-        isLoadingFilterClasses={this.props.isLoadingFilterClasses}
-        filterClasses={this.props.filterClasses}
-        onSelectClassId={this.onSelectClassId}
-        reloadFilterClasses={this.reloadFilterClasses}
-        setAutoFocusRegisterListSearch={this.setAutoFocusRegisterListSearch}
-        loadAvailableClasses={this.loadAvailableClasses}
-        availableClasses={this.props.availableClasses}
-        isLoadingAvailableClasses={this.props.isLoadingAvailableClasses}
-        errorAvailableClasses={this.props.errorAvailableClasses}
-        resetAvailableClasses={this.resetAvailableClasses}
-        changingClass={this.props.changingClass}
-        errorChangeClass={this.props.errorChangeClass}
-        changeClassStatus={this.props.changeClassStatus}
-        changeClass={this.changeClass}
-        loadFilterClasses={this.loadFilterClasses}
-        courses={this.props.courses}
-        isLoadingCourses={this.props.isLoadingCourses}
-        errorCourses={this.props.errorCourses}
-        courseId={this.props.courseId}
-        onSelectCourseId={this.onSelectCourseId}
-        note={this.props.note}
-        onSelectDateTest={this.onSelectDateTest}
-        dateTest={this.props.dateTest}
-        callBackTime={this.props.callBackTime}
-        onSelectCallBackTime={this.onSelectCallBackTime}
-      />
+      received_book_at,
+      props.token,
+      props.domain,
     );
   }
+
+  function loadAvailableClasses(registerId, search) {
+    props.registerListActions.loadAvailableClasses(
+      registerId,
+      search,
+      props.token,
+      props.domain,
+    );
+  }
+
+  function loadCourses() {
+    props.registerListActions.loadCourses(props.token, props.domain);
+  }
+
+  function resetAvailableClasses() {
+    props.registerListActions.resetAvailableClasses();
+  }
+
+  function onSelectBaseId(baseId) {
+    props.registerListActions.onSelectBaseId(baseId);
+  }
+
+  function onSelectSalerId(salerId) {
+    props.registerListActions.onSelectSalerId(salerId);
+  }
+
+  function onSelectCampaignId(campaignId) {
+    props.registerListActions.onSelectCampaignId(campaignId);
+  }
+
+  function onSelectPaidStatus(paidStatus) {
+    props.registerListActions.onSelectPaidStatus(paidStatus);
+  }
+
+  function onSelectClassStatus(classStatus) {
+    props.registerListActions.onSelectClassStatus(classStatus);
+  }
+
+  function onSelectCallStatus(callStatus) {
+    props.registerListActions.onSelectCallStatus(callStatus);
+  }
+
+  function onSelectBookmark(bookmark) {
+    props.registerListActions.onSelectBookmark(bookmark);
+  }
+
+  function onSelectStartTime(date) {
+    props.registerListActions.onSelectStartTime(date);
+  }
+
+  function onSelectEndTime(date) {
+    props.registerListActions.onSelectEndTime(date);
+  }
+
+  function onSelectAppointmentPaymentStartTime(date) {
+    props.registerListActions.onSelectAppointmentPaymentStartTime(date);
+  }
+
+  function onSelectAppointmentPaymentEndTime(date) {
+    props.registerListActions.onSelectAppointmentPaymentEndTime(date);
+  }
+
+  function onSelectStatus(statusId) {
+    props.registerListActions.onSelectStatus(statusId);
+  }
+
+  function onSelectSource(sourceId) {
+    props.registerListActions.onSelectSource(sourceId);
+  }
+
+  function onSelectClassId(classId) {
+    props.registerListActions.onSelectClassId(classId);
+  }
+
+  function onSelectCourseId(courseId) {
+    props.registerListActions.onSelectCourseId(courseId);
+  }
+
+  function onSelectDateTest(date) {
+    props.registerListActions.onSelectDateTest(date);
+  }
+
+  function onSelectCallBackStartTime(date) {
+    props.registerListActions.onSelectCallBackStartTime(date);
+  }
+
+  function onSelectCallBackEndTime(date) {
+    props.registerListActions.onSelectCallBackEndTime(date);
+  }
+
+  function onSelectProvinceId(provinceId) {
+    props.registerListActions.onSelectProvinceId(provinceId);
+  }
+
+  function onSelectCouponId(couponId) {
+    props.registerListActions.onSelectCouponId(couponId);
+  }
+
+  function onChangeNote(note) {
+    props.registerListActions.onChangeNote(note);
+  }
+
+  function setAutoFocusRegisterListSearch(bool) {
+    props.registerListActions.setAutoFocusRegisterListSearch(bool);
+  }
+
+  function changeClass(classId, registerId) {
+    props.registerListActions.changeClass(
+      classId,
+      registerId,
+      props.token,
+      props.domain,
+    );
+  }
+
+  return (
+    <RegisterListComponent
+      {...props}
+      onRefresh={refreshRegisterListMy}
+      loadDataRegisterList={loadDataRegisterListMy}
+      updateFormAndLoadDataSearch={updateFormAndLoadDataSearchMy}
+      setStudentId={setStudentId}
+      changeCallStatus={changeCallStatus}
+      submitMoney={submitMoney}
+      onSelectSalerId={onSelectSalerId}
+      onSelectCampaignId={onSelectCampaignId}
+      onSelectPaidStatus={onSelectPaidStatus}
+      onSelectClassStatus={onSelectClassStatus}
+      onSelectCallStatus={onSelectCallStatus}
+      onSelectBookmark={onSelectBookmark}
+      onSelectStartTime={onSelectStartTime}
+      onSelectEndTime={onSelectEndTime}
+      onSelectAppointmentPaymentEndTime={onSelectAppointmentPaymentEndTime}
+      onSelectAppointmentPaymentStartTime={onSelectAppointmentPaymentStartTime}
+      onSelectStatus={onSelectStatus}
+      onSelectSource={onSelectSource}
+      onSelectClassId={onSelectClassId}
+      setAutoFocusRegisterListSearch={setAutoFocusRegisterListSearch}
+      loadAvailableClasses={loadAvailableClasses}
+      resetAvailableClasses={resetAvailableClasses}
+      changeClass={changeClass}
+      loadFilterClasses={loadFilterClasses}
+      onSelectCourseId={onSelectCourseId}
+      onSelectDateTest={onSelectDateTest}
+      onSelectCallBackStartTime={onSelectCallBackStartTime}
+      onSelectCallBackEndTime={onSelectCallBackEndTime}
+      onSelectProvinceId={onSelectProvinceId}
+      onSelectBaseId={onSelectBaseId}
+      onSelectCouponId={onSelectCouponId}
+      onChangeNote={onChangeNote}
+    />
+  );
 }
+
+RegisterListContainer.navigationOptions = ({navigation}) => ({
+  headerLeft: () => (
+    <View style={styles.headerLeftContainer}>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <Icon
+          name={'chevron-left'}
+          size={33}
+          color={'black'}
+          onPress={() => navigation.goBack()}
+        />
+        <Text style={styles.name}>Học viên</Text>
+      </View>
+    </View>
+  ),
+  headerRight: () => (
+    <View style={{flexDirection: 'row'}}>
+      <TouchableOpacity onPress={() => navigation.navigate('SaveRegister')}>
+        <View style={styles.headerIconContainer}>
+          <MatIcon name={'add-circle'} size={20} color={'black'} />
+        </View>
+      </TouchableOpacity>
+    </View>
+  ),
+});
 
 const styles = {
   name: theme.header,
@@ -512,11 +423,12 @@ function mapStateToProps(state) {
     search_coupon: state.registerList.search_coupon,
     start_time: state.registerList.start_time,
     end_time: state.registerList.end_time,
-    appointmentPayment: state.registerList.appointmentPayment,
+    appointmentPaymentStartTime: state.registerList.appointmentPaymentStartTime,
+    appointmentPaymentEndTime: state.registerList.appointmentPaymentEndTime,
     statuses: state.saveRegister.statuses,
     sources: state.saveRegister.sources,
-    status_id: state.registerList.status_id,
-    source_id: state.registerList.source_id,
+    statusId: state.registerList.status_id,
+    sourceId: state.registerList.source_id,
     isLoadingSources: state.saveRegister.isLoadingSources,
     isLoadingStatuses: state.saveRegister.isLoadingStatuses,
     isLoadingCampaigns: state.saveRegister.isLoadingCampaigns,
@@ -525,7 +437,7 @@ function mapStateToProps(state) {
     isLoadingFilterClasses: state.saveRegister.isLoadingFilterClasses,
     filterClasses: state.saveRegister.filterClasses,
     classId: state.registerList.classId,
-    autoFocusRegisterListSearch: state.registerList.autoFocusRegisterListSearch,
+    autoFocus: state.registerList.autoFocusRegisterListSearch,
     availableClasses: state.registerList.classes,
     isLoadingAvailableClasses: state.registerList.isLoadingClasses,
     errorAvailableClasses: state.registerList.errorClasses,
@@ -538,8 +450,22 @@ function mapStateToProps(state) {
     courseId: state.registerList.courseId,
     note: state.registerList.note,
     dateTest: state.registerList.dateTest,
-    callBackTime: state.registerList.callBackTime,
+    callBackStartTime: state.registerList.callBackStartTime,
+    callBackEndTime: state.registerList.callBackEndTime,
     domain: state.login.domain,
+    baseId: state.registerList.baseId,
+    provinceId: state.registerList.provinceId,
+    baseData: state.base.baseData,
+    isLoadingBases: state.base.isLoading,
+    errorBases: state.base.error,
+    provinces: state.saveRegister.provinces,
+    isLoadingProvinces: state.saveRegister.isLoadingProvinces,
+    errorProvinces: state.saveRegister.errorLoadingProvinces,
+    coupons: state.saveRegister.coupons,
+    isLoadingCoupons: state.saveRegister.isLoadingCoupons,
+    errorCoupons: state.saveRegister.errorCoupons,
+    couponId: state.registerList.couponId,
+    createdRegister: state.saveRegister.createdRegister,
   };
 }
 
@@ -549,7 +475,6 @@ function mapDispatchToProps(dispatch) {
     infoStudentActions: bindActionCreators(infoStudentActions, dispatch),
     baseActions: bindActionCreators(baseActions, dispatch),
     saveRegisterActions: bindActionCreators(saveRegisterActions, dispatch),
-    genActions: bindActionCreators(genActions, dispatch),
   };
 }
 

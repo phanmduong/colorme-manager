@@ -164,9 +164,12 @@ export function updateProfile(register, token, domain) {
 
 export function changePassword(studentId, newPassword, token, domain) {
   let url =
-    env.manageApiUrl(domain) + '/change-password-student?token=' + token;
-  return axios.post(url, {
-    id: studentId,
+    env.manageApiUrlAuth(domain) +
+    '/v1/leads/' +
+    studentId +
+    '/change-password?token=' +
+    token;
+  return axios.put(url, {
     new_password: newPassword,
   });
 }

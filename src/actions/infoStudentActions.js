@@ -473,9 +473,11 @@ export function changePassword(studentId, password, token, domain) {
     infoStudentApi
       .changePassword(studentId, password, token, domain)
       .then(function (res) {
+        Alert.alert('Thông báo', res.data.data.message);
         dispatch(changePasswordSuccessful());
       })
       .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
         dispatch(changePasswordError());
         throw error;
       });

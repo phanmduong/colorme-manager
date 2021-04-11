@@ -40,11 +40,12 @@ export function loadProgress(studentId, token, domain) {
 
 export function loadHistoryCollect(studentId, token, domain) {
   let url =
-    env.manageApiUrl(domain) +
-    '/student/' +
-    studentId +
-    '/history-collect-money?token=' +
+    env.manageApiUrlAuth(domain) +
+    '/v1/register-payments?limit=0&orderBy=created_at&sortedBy=desc' +
+    (!isEmptyInput(studentId) ? '&user_ids[]=' + studentId : '') +
+    '&token=' +
     token;
+  console.log(url);
   return axios.get(url);
 }
 

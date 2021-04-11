@@ -401,7 +401,7 @@ function beginRefreshHistoryCollect() {
 function loadHistoryCollectSuccessful(res) {
   return {
     type: types.LOAD_HISTORY_COLLECT_SUCCESSFUL,
-    historyCollect: res.data.data,
+    historyCollect: res.data.payments,
     isLoadingHistoryCollect: false,
     errorLoadingHistoryCollect: false,
     refreshingHistoryCollect: false,

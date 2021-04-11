@@ -217,7 +217,7 @@ function loadStudentSuccessful(res) {
     type: types.LOAD_STUDENT_SUCCESSFUL,
     isLoadingStudent: false,
     errorStudent: false,
-    student: res.data.data.student,
+    student: res.data.lead,
   };
 }
 

@@ -4,7 +4,8 @@ import {isEmptyInput} from '../helper';
 
 export function loadInfoStudent(studentId, token, domain) {
   let url =
-    env.manageApiUrl(domain) + '/student/' + studentId + '?token=' + token;
+    env.manageApiUrlAuth(domain) + '/v1/leads/' + studentId + '?token=' + token;
+  console.log(url);
   return axios.get(url);
 }
 

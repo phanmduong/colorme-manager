@@ -56,7 +56,7 @@ class InfoStudentComponent extends React.Component {
   };
 
   render() {
-    if (!this.props.isLoadingStudent) {
+    if (!this.props.isLoadingStudent && this.props.student) {
       let name = this.props.student.name;
       let phone = this.props.student.phone;
       let email = this.props.student.email;

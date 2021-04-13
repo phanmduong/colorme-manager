@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Image, Text, TouchableOpacity, Linking} from 'react-native';
 import theme from '../../styles';
-import {dotNumber, getShortName} from '../../helper';
+import {dotNumber, getShortName, isEmptyInput} from '../../helper';
 import CallRegisterModal from './CallRegisterModal';
 import SubmitMoneyModal from './SubmitMoneyModal';
 import moment from 'moment';
@@ -124,15 +124,17 @@ class ListItemInfoStudentRegister extends React.Component {
                 ))}
             </View>
             <View>
-              <Text
-                numberOfLines={1}
-                style={[styles.classInfoContainer, {paddingTop: 0}]}>
-                Tạo vào lúc:{' '}
-                {moment
-                  .unix(this.props.register.created_at)
-                  .format('HH:mm DD/MM/YYYY')}
-              </Text>
-              {this.props.register.paid_time && (
+              {this.props.register.created_at && (
+                <Text
+                  numberOfLines={1}
+                  style={[styles.classInfoContainer, {paddingTop: 0}]}>
+                  Tạo vào lúc:{' '}
+                  {moment
+                    .unix(this.props.register.created_at)
+                    .format('HH:mm DD/MM/YYYY')}
+                </Text>
+              )}
+              {!isEmptyInput(this.props.register.paid_time) && (
                 <Text numberOfLines={1} style={styles.classInfoContainer}>
                   Nộp tiền lúc:{' '}
                   {moment
@@ -140,12 +142,12 @@ class ListItemInfoStudentRegister extends React.Component {
                     .format('HH:mm DD/MM/YYYY')}
                 </Text>
               )}
-              {this.props.register.code && (
+              {!isEmptyInput(this.props.register.code) && (
                 <Text numberOfLines={1} style={styles.classInfoContainer}>
                   Mã đăng kí: {this.props.register.code}
                 </Text>
               )}
-              {this.props.register.class.datestart && (
+              {!isEmptyInput(this.props.register.class.datestart) && (
                 <Text numberOfLines={1} style={styles.classInfoContainer}>
                   Ngày khai giảng:{' '}
                   {moment
@@ -153,23 +155,23 @@ class ListItemInfoStudentRegister extends React.Component {
                     .format('HH:mm DD/MM/YYYY')}
                 </Text>
               )}
-              {this.props.register.class.study_time && (
+              {!isEmptyInput(this.props.register.class.study_time) && (
                 <Text numberOfLines={1} style={styles.classInfoContainer}>
                   {this.props.register.class.study_time}
                 </Text>
               )}
-              {this.props.register.class.base && (
+              {!isEmptyInput(this.props.register.class.base) && (
                 <Text numberOfLines={1} style={styles.classInfoContainer}>
                   {this.props.register.class.base.name}:{' '}
                   {this.props.register.class.base.address}
                 </Text>
               )}
-              {this.props.register.class.description && (
+              {!isEmptyInput(this.props.register.class.description) && (
                 <Text numberOfLines={1} style={styles.classInfoContainer}>
                   {this.props.register.class.description}
                 </Text>
               )}
-              {this.props.register.received_book_at ? (
+              {!isEmptyInput(this.props.register.received_book_at) ? (
                 <Text numberOfLines={1} style={styles.classInfoContainer}>
                   Đã nhận giáo trình ngày:{' '}
                   {moment

@@ -46,7 +46,7 @@ class DashboardComponent extends React.Component {
     let deepCopiedFeatureList = this.getFeatureList().slice(0);
     deepCopiedFeatureList = deepCopiedFeatureList.filter((feature) => {
       for (const tab of this.props.tabs) {
-        if (feature.id === tab.url || feature.permission_all) {
+        if (feature.id === tab.id || feature.permission_all) {
           return true;
         }
       }
@@ -62,7 +62,7 @@ class DashboardComponent extends React.Component {
   getFeatureList = () => {
     return [
       {
-        id: 'dashboard/sale',
+        id: 206,
         element: (
           <CircleTab
             iconImage={require('../../assets/img/Group_1300.png')}
@@ -75,7 +75,7 @@ class DashboardComponent extends React.Component {
         ),
       },
       {
-        id: '/kpi/list',
+        id: 213,
         element: (
           <CircleTab
             iconImage={require('../../assets/img/Group_1304.png')}
@@ -88,7 +88,7 @@ class DashboardComponent extends React.Component {
         ),
       },
       {
-        id: '/register/list',
+        id: 5,
         element: (
           <CircleTab
             iconImage={require('../../assets/img/Group_1311.png')}
@@ -101,7 +101,7 @@ class DashboardComponent extends React.Component {
         ),
       },
       {
-        id: '/shift/manage/regis-shifts',
+        id: 35,
         element: (
           <CircleTab
             iconImage={require('../../assets/img/Group_1315.png')}
@@ -128,7 +128,7 @@ class DashboardComponent extends React.Component {
         permission_all: true,
       },
       {
-        id: 'teaching/evaluate',
+        id: 195,
         element: (
           <CircleTab
             iconImage={require('../../assets/img/Group_1301.png')}
@@ -182,7 +182,7 @@ class DashboardComponent extends React.Component {
       //   ),
       // },
       {
-        id: 'finance/sendmoney',
+        id: 16,
         element: (
           <CircleTab
             iconImage={require('../../assets/img/Group_1310.png')}
@@ -195,7 +195,7 @@ class DashboardComponent extends React.Component {
         ),
       },
       {
-        id: 'teaching/classes',
+        id: 9,
         element: (
           <CircleTab
             iconImage={require('../../assets/img/Group_1307.png')}
@@ -210,7 +210,7 @@ class DashboardComponent extends React.Component {
         ),
       },
       {
-        id: '/lead/list',
+        id: 151,
         element: (
           <CircleTab
             iconImage={require('../../assets/img/Group_1311.png')}
@@ -237,7 +237,7 @@ class DashboardComponent extends React.Component {
         permission_all: true,
       },
       {
-        id: 'dashboard/checkin-checkout',
+        id: 212,
         element: (
           <CircleTab
             iconImage={require('../../assets/img/Group_1309.png')}
@@ -250,7 +250,7 @@ class DashboardComponent extends React.Component {
         ),
       },
       {
-        id: 'teaching/teaching-schedule',
+        id: 176,
         element: (
           <CircleTab
             iconImage={require('../../assets/img/Group_1299.png')}
@@ -263,7 +263,7 @@ class DashboardComponent extends React.Component {
         ),
       },
       {
-        id: '/register-form/list',
+        id: 214,
         element: (
           <CircleTab
             iconImage={require('../../assets/img/Group_1257.png')}
@@ -276,7 +276,7 @@ class DashboardComponent extends React.Component {
         ),
       },
       {
-        id: 'teaching/courses',
+        id: 7,
         element: (
           <CircleTab
             iconImage={require('../../assets/img/Group_1248.png')}

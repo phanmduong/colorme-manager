@@ -8,7 +8,6 @@ import theme from '../styles';
 import {NetworkInfo} from 'react-native-network-info';
 import Call from './common/Call';
 import ListItem from './dashboard/ListItem';
-import moment from 'moment';
 
 let {height, width} = Dimensions.get('window');
 import * as helper from '../helper/index';
@@ -28,7 +27,7 @@ class CheckInComponent extends React.Component {
     //     'connectChange',
     //     this.handleConnectChange
     // );
-    NetInfo.getConnectionInfo().then((data) => {
+    NetInfo.getConnectionInfo().then(data => {
       this.getWifiName();
       this.setState({
         typeConnect: helper.typeConnect(data.type),
@@ -59,7 +58,7 @@ class CheckInComponent extends React.Component {
     this.setState({wifiName: wifiName});
   };
 
-  handleConnectChange = (data) => {
+  handleConnectChange = data => {
     this.getWifiName();
     this.setState({
       typeConnect: helper.typeConnect(data.type),
@@ -105,9 +104,7 @@ class CheckInComponent extends React.Component {
                   nameIcon="fontawesome|clock-o"
                   title="Giờ"
                   disableSubTitle
-                  number={moment
-                    .unix(this.props.checkInData.time)
-                    .format('HH:mm')}
+                  number={this.props.checkInData.time}
                 />
                 <ListItem
                   nameIcon="material|share"
@@ -120,6 +117,12 @@ class CheckInComponent extends React.Component {
                   title={'Tên wifi'}
                   disableSubTitle
                   number={this.state.wifiName}
+                />
+                <ListItem
+                  nameIcon="material|place"
+                  title={'Địa điểm'}
+                  disableSubTitle
+                  number={this.props.checkInData.base}
                 />
               </List>
             </View>

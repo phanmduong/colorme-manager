@@ -165,7 +165,7 @@ export const FILTER_KPI_CALCULATE_BY = [
 export const DUPLICATE_FILTER = [
   {id: '', name: 'Tất cả'},
   {id: 'email', name: 'Trùng email'},
-  {id: 'phone', name: 'Trùng số điện thoại'},
+  {id: 'phone', name: 'Trùng phone'},
 ];
 
 export const LEAD_TAG_FILTER = [
@@ -189,4 +189,9 @@ export const PAYMENT_METHOD = [
   {id: 'internet_banking', name: 'Chuyển khoản'},
   {id: 'cash', name: 'Tiền mặt'},
   {id: 'swipe', name: 'Quẹt thẻ'},
+];
+
+export const ADDRESS = [
+  {id: 'Hà Nội', name: 'Hà Nội'},
+  {id: 'Hồ Chí Minh', name: 'Hồ Chí Minh'},
 ];

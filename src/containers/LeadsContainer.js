@@ -25,103 +25,78 @@ class LeadsContainer extends React.Component {
     this.loadBase();
   };
 
-  componentWillUnmount() {
-    this.props.leadsActions.reset();
-  }
-
   loadLeads = () => {
-    let rate = this.props.rate === -1 ? '' : this.props.rate;
-    let leadStatusId =
-      this.props.leadStatusId === -1 ? '' : this.props.leadStatusId;
-    let source_id = this.props.source_id === -1 ? '' : this.props.source_id;
-    let campaign_id =
-      this.props.campaign_id === -1 ? '' : this.props.campaign_id;
-    let baseId = this.props.baseId === -1 ? '' : this.props.baseId;
     this.props.leadsActions.getLeads(
       false,
       this.props.currentPageLeads + 1,
       this.props.searchLeads,
       this.props.start_time,
       this.props.end_time,
-      this.props.carer_id,
-      leadStatusId,
-      rate,
-      this.props.top,
+      this.props.rate,
       this.props.address,
       this.props.orderBy,
-      this.props.orderByType,
-      source_id,
-      campaign_id,
-      this.props.callBackTime,
-      this.props.mockExamTime,
+      this.props.source_id,
+      this.props.campaign_id,
       this.props.duplicate,
       this.props.leadTag,
-      baseId,
-      this.props.importedAt,
+      this.props.baseId,
+      this.props.status_id,
+      this.props.picId,
+      this.props.callBackStartTime,
+      this.props.callBackEndTime,
+      this.props.mockExamStartTime,
+      this.props.mockExamEndTime,
+      this.props.sortedBy,
       this.props.token,
       this.props.domain,
     );
   };
 
   searchData = (searchLeads) => {
-    let rate = this.props.rate === -1 ? '' : this.props.rate;
-    let leadStatusId =
-      this.props.leadStatusId === -1 ? '' : this.props.leadStatusId;
-    let source_id = this.props.source_id === -1 ? '' : this.props.source_id;
-    let campaign_id =
-      this.props.campaign_id === -1 ? '' : this.props.campaign_id;
-    let baseId = this.props.baseId === -1 ? '' : this.props.baseId;
     this.props.leadsActions.searchLeads(
       searchLeads,
       this.props.start_time,
       this.props.end_time,
-      this.props.carer_id,
-      leadStatusId,
-      rate,
-      this.props.top,
+      this.props.rate,
       this.props.address,
       this.props.orderBy,
-      this.props.orderByType,
-      source_id,
-      campaign_id,
-      this.props.callBackTime,
-      this.props.mockExamTime,
+      this.props.source_id,
+      this.props.campaign_id,
       this.props.duplicate,
       this.props.leadTag,
-      baseId,
-      this.props.importedAt,
+      this.props.baseId,
+      this.props.status_id,
+      this.props.picId,
+      this.props.callBackStartTime,
+      this.props.callBackEndTime,
+      this.props.mockExamStartTime,
+      this.props.mockExamEndTime,
+      this.props.sortedBy,
       this.props.token,
       this.props.domain,
     );
   };
 
   onRefresh = () => {
-    let rate = this.props.rate === -1 ? '' : this.props.rate;
-    let leadStatusId =
-      this.props.leadStatusId === -1 ? '' : this.props.leadStatusId;
-    let source_id = this.props.source_id === -1 ? '' : this.props.source_id;
-    let campaign_id =
-      this.props.campaign_id === -1 ? '' : this.props.campaign_id;
-    let baseId = this.props.baseId === -1 ? '' : this.props.baseId;
     this.props.leadsActions.refreshLeads(
       this.props.searchLeads,
       this.props.start_time,
       this.props.end_time,
-      this.props.carer_id,
-      leadStatusId,
-      rate,
-      this.props.top,
+      this.props.rate,
       this.props.address,
       this.props.orderBy,
-      this.props.orderByType,
-      source_id,
-      campaign_id,
-      this.props.callBackTime,
-      this.props.mockExamTime,
+      this.props.source_id,
+      this.props.campaign_id,
       this.props.duplicate,
       this.props.leadTag,
-      baseId,
-      this.props.importedAt,
+      this.props.baseId,
+      this.props.status_id,
+      this.props.picId,
+      this.props.callBackStartTime,
+      this.props.callBackEndTime,
+      this.props.mockExamStartTime,
+      this.props.mockExamEndTime,
+      this.props.sortedBy,
       this.props.token,
       this.props.domain,
     );
@@ -177,10 +152,6 @@ class LeadsContainer extends React.Component {
     this.props.leadsActions.onSelectCampaignLeads(campaign);
   };
 
-  onSelectStatus = (status) => {
-    this.props.leadsActions.onSelectStatusLeads(status);
-  };
-
   onSelectSource = (source) => {
     this.props.leadsActions.onSelectSourceLeads(source);
   };
@@ -189,16 +160,24 @@ class LeadsContainer extends React.Component {
     this.props.leadsActions.onSelectAddressLeads(address);
   };
 
-  onSelectCarer = (carer_id) => {
-    this.props.leadsActions.onSelectCarerLeads(carer_id);
+  onSelectPICLeads = (picId) => {
+    this.props.leadsActions.onSelectPICLeads(picId);
   };
 
-  onSelectCallBackTime = (date) => {
-    this.props.leadsActions.onSelectCallBackTime(date);
+  onSelectCallBackStartTime = (date) => {
+    this.props.leadsActions.onSelectCallBackStartTime(date);
   };
 
-  onSelectMockExamTime = (date) => {
-    this.props.leadsActions.onSelectMockExamTime(date);
+  onSelectCallBackEndTime = (date) => {
+    this.props.leadsActions.onSelectCallBackEndTime(date);
+  };
+
+  onSelectMockExamStartTime = (date) => {
+    this.props.leadsActions.onSelectMockExamStartTime(date);
+  };
+
+  onSelectMockExamEndTime = (date) => {
+    this.props.leadsActions.onSelectMockExamEndTime(date);
   };
 
   onSelectDuplicate = (duplicate) => {
@@ -213,40 +192,20 @@ class LeadsContainer extends React.Component {
     this.props.leadsActions.onSelectBaseId(baseId);
   };
 
-  onSelectImportedAt = (importedAt) => {
-    this.props.leadsActions.onSelectImportedAt(importedAt);
-  };
-
   onSelectOrderBy = (orderBy) => {
     this.props.leadsActions.onSelectOrderBy(orderBy);
   };
 
-  reset = () => {
-    this.props.leadsActions.reset();
+  onSelectStatus = (status) => {
+    this.props.leadsActions.onSelectStatusLeads(status);
   };
 
-  changeCallStatus = (
-    callStatus,
-    studentId,
-    telecallId,
-    genId,
-    note,
-    callerId,
-    appointmentPayment,
-    dateTest,
-  ) => {
-    this.props.infoStudentActions.changeCallStatus(
-      callStatus,
-      studentId,
-      telecallId,
-      genId,
-      note,
-      callerId,
-      appointmentPayment,
-      dateTest,
-      this.props.token,
-      this.props.domain,
-    );
+  onSelectSortedBy = (sorted) => {
+    this.props.leadsActions.onSelectSortedByLeads(sorted);
+  };
+
+  reset = () => {
+    this.props.leadsActions.reset();
   };
 
   setStudentId = (studentId) => {
@@ -334,17 +293,17 @@ class LeadsContainer extends React.Component {
         onSelectStatus={this.onSelectStatus}
         onSelectSource={this.onSelectSource}
         onSelectAddress={this.onSelectAddress}
-        onSelectCarer={this.onSelectCarer}
+        onSelectPICLeads={this.onSelectPICLeads}
         loadStaff={this.loadStaff}
-        changeCallStatus={this.changeCallStatus}
         setStudentId={this.setStudentId}
         changeTags={this.changeTags}
         onSelectDuplicate={this.onSelectDuplicate}
         onSelectLeadTag={this.onSelectLeadTag}
         onSelectBaseId={this.onSelectBaseId}
-        onSelectCallBackTime={this.onSelectCallBackTime}
-        onSelectMockExamTime={this.onSelectMockExamTime}
-        onSelectImportedAt={this.onSelectImportedAt}
+        onSelectCallBackStartTime={this.onSelectCallBackStartTime}
+        onSelectCallBackEndTime={this.onSelectCallBackEndTime}
+        onSelectMockExamStartTime={this.onSelectMockExamStartTime}
+        onSelectMockExamEndTime={this.onSelectMockExamEndTime}
         onSelectOrderBy={this.onSelectOrderBy}
       />
     );
@@ -368,13 +327,9 @@ function mapStateToProps(state) {
     searchLeads: state.leads.searchLeads,
     start_time: state.leads.start_time,
     end_time: state.leads.end_time,
-    carer_id: state.leads.carer_id,
-    leadStatusId: state.leads.leadStatusId,
     rate: state.leads.rate,
-    top: state.leads.top,
     address: state.leads.address,
     orderBy: state.leads.orderBy,
-    orderByType: state.leads.orderByType,
     source_id: state.leads.source_id,
     campaign_id: state.leads.campaign_id,
     refreshingLeads: state.leads.refreshingLeads,
@@ -390,7 +345,6 @@ function mapStateToProps(state) {
     staff: state.leads.staff,
     isLoadingStaff: state.leads.isLoadingStaff,
     errorStaff: state.leads.errorStaff,
-    errorChangeCallStatus: state.infoStudent.errorChangeCallStatus,
     isChangingCampaignTag: state.leads.isChangingCampaignTag,
     errorChangeCampaignTag: state.leads.errorChangeCampaignTag,
     isChangingStatusTag: state.leads.isChangingStatusTag,
@@ -399,15 +353,19 @@ function mapStateToProps(state) {
     errorChangePICTag: state.leads.errorChangePICTag,
     isChangingSourceTag: state.leads.isChangingSourceTag,
     errorChangeSourceTag: state.leads.errorChangeSourceTag,
-    callBackTime: state.leads.callBackTime,
-    mockExamTime: state.leads.mockExamTime,
+    callBackStartTime: state.leads.callBackStartTime,
+    callBackEndTime: state.leads.callBackEndTime,
+    mockExamStartTime: state.leads.mockExamStartTime,
+    mockExamEndTime: state.leads.mockExamEndTime,
     duplicate: state.leads.duplicate,
     baseId: state.leads.baseId,
     leadTag: state.leads.leadTag,
+    sortedBy: state.leads.sortedBy,
+    picId: state.leads.picId,
+    status_id: state.leads.status_id,
     baseData: state.base.baseData,
     isLoadingBase: state.base.isLoading,
     errorBase: state.base.errorBase,
-    importedAt: state.leads.importedAt,
     domain: state.login.domain,
   };
 }

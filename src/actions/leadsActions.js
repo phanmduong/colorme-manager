@@ -11,21 +11,21 @@ export function getLeads(
   search,
   start_time,
   end_time,
-  carer_id,
-  leadStatusId,
   rate,
-  top,
   address,
   orderBy,
-  orderByType,
   source_id,
   campaign_id,
-  call_back_time,
-  mock_exam_time,
   duplicate,
   lead_tag,
   base_id,
-  imported_at,
+  status_id,
+  pic_id,
+  mock_exam_start_time,
+  mock_exam_end_time,
+  call_back_start_time,
+  call_back_end_time,
+  sortedBy,
   token,
   domain,
 ) {
@@ -42,21 +42,21 @@ export function getLeads(
         search,
         start_time,
         end_time,
-        carer_id,
-        leadStatusId,
         rate,
-        top,
         address,
         orderBy,
-        orderByType,
         source_id,
         campaign_id,
-        call_back_time,
-        mock_exam_time,
         duplicate,
         lead_tag,
         base_id,
-        imported_at,
+        status_id,
+        pic_id,
+        mock_exam_start_time,
+        mock_exam_end_time,
+        call_back_start_time,
+        call_back_end_time,
+        sortedBy,
         token,
         domain,
       )
@@ -95,9 +95,9 @@ function loadLeadsSuccessful(res) {
     type: types.LOAD_LEADS_SUCCESSFUL,
     isLoadingLeads: false,
     errorLeads: false,
-    leads: res.data.leads,
-    currentPageLeads: res.data.paginator.current_page,
-    totalPageLeads: res.data.paginator.total_pages,
+    leads: res.data.leads.items,
+    currentPageLeads: res.data.leads.meta.current_page,
+    totalPageLeads: res.data.leads.meta.total_pages,
     refreshingLeads: false,
   };
 }
@@ -115,21 +115,21 @@ export function searchLeads(
   search,
   start_time,
   end_time,
-  carer_id,
-  leadStatusId,
   rate,
-  top,
   address,
   orderBy,
-  orderByType,
   source_id,
   campaign_id,
-  call_back_time,
-  mock_exam_time,
   duplicate,
   lead_tag,
   base_id,
-  imported_at,
+  status_id,
+  pic_id,
+  mock_exam_start_time,
+  mock_exam_end_time,
+  call_back_start_time,
+  call_back_end_time,
+  sortedBy,
   token,
   domain,
 ) {
@@ -144,21 +144,21 @@ export function searchLeads(
         search,
         start_time,
         end_time,
-        carer_id,
-        leadStatusId,
         rate,
-        top,
         address,
         orderBy,
-        orderByType,
         source_id,
         campaign_id,
-        call_back_time,
-        mock_exam_time,
         duplicate,
         lead_tag,
         base_id,
-        imported_at,
+        status_id,
+        pic_id,
+        mock_exam_start_time,
+        mock_exam_end_time,
+        call_back_start_time,
+        call_back_end_time,
+        sortedBy,
         token,
         domain,
       ),
@@ -170,21 +170,21 @@ export function refreshLeads(
   search,
   start_time,
   end_time,
-  carer_id,
-  leadStatusId,
   rate,
-  top,
   address,
   orderBy,
-  orderByType,
   source_id,
   campaign_id,
-  call_back_time,
-  mock_exam_time,
   duplicate,
   lead_tag,
   base_id,
-  imported_at,
+  status_id,
+  pic_id,
+  mock_exam_start_time,
+  mock_exam_end_time,
+  call_back_start_time,
+  call_back_end_time,
+  sortedBy,
   token,
   domain,
 ) {
@@ -197,21 +197,21 @@ export function refreshLeads(
         search,
         start_time,
         end_time,
-        carer_id,
-        leadStatusId,
         rate,
-        top,
         address,
         orderBy,
-        orderByType,
         source_id,
         campaign_id,
-        call_back_time,
-        mock_exam_time,
         duplicate,
         lead_tag,
         base_id,
-        imported_at,
+        status_id,
+        pic_id,
+        mock_exam_start_time,
+        mock_exam_end_time,
+        call_back_start_time,
+        call_back_end_time,
+        sortedBy,
         token,
         domain,
       ),
@@ -225,85 +225,6 @@ function beginSearchLeads(search) {
     searchLeads: search,
     currentPageLeads: 1,
     totalPageLeads: 1,
-    leads: [],
-  };
-}
-
-export function onSelectStartTimeLeads(startTime) {
-  return {
-    type: types.ON_SELECT_START_TIME_LEADS,
-    start_time: startTime,
-  };
-}
-
-export function onSelectEndTimeLeads(endTime) {
-  return {
-    type: types.ON_SELECT_END_TIME_LEADS,
-    end_time: endTime,
-  };
-}
-
-export function onSelectRateLeads(rate) {
-  return {
-    type: types.ON_SELECT_RATE_LEADS,
-    rate: rate,
-  };
-}
-
-export function onSelectCampaignLeads(campaign_id) {
-  return {
-    type: types.ON_SELECT_CAMPAIGN_LEADS,
-    campaign_id: campaign_id,
-  };
-}
-
-export function onSelectStatusLeads(leadStatusId) {
-  return {
-    type: types.ON_SELECT_STATUS_LEADS,
-    leadStatusId: leadStatusId,
-  };
-}
-
-export function onSelectSourceLeads(source_id) {
-  return {
-    type: types.ON_SELECT_SOURCE_LEADS,
-    source_id: source_id,
-  };
-}
-
-export function onSelectAddressLeads(address) {
-  return {
-    type: types.ON_SELECT_ADDRESS_LEADS,
-    address: address,
-  };
-}
-
-export function onSelectCarerLeads(carer_id) {
-  return {
-    type: types.ON_SELECT_CARER_LEADS,
-    carer_id: carer_id,
-  };
-}
-
-export function reset() {
-  return {
-    type: types.RESET_FILTER_LEADS,
-    start_time: '',
-    end_time: '',
-    address: '',
-    leadStatusId: -1,
-    rate: -1,
-    source_id: -1,
-    campaign_id: -1,
-    callBackTime: '',
-    mockExamTime: '',
-    duplicate: '',
-    baseId: -1,
-    leadTag: '',
-    importedAt: '',
-    orderBy: '',
-    carer_id: '',
-    currentPageLeads: 0,
     leads: [],
   };
 }
@@ -540,17 +461,31 @@ function changePICTagError() {
   };
 }
 
-export function onSelectCallBackTime(date) {
+export function onSelectCallBackStartTime(date) {
   return {
-    type: types.ON_SELECT_CALL_BACK_TIME_LEADS,
-    callBackTime: date,
+    type: types.ON_SELECT_CALL_BACK_START_TIME_LEADS,
+    callBackStartTime: date,
   };
 }
 
-export function onSelectMockExamTime(date) {
+export function onSelectCallBackEndTime(date) {
   return {
-    type: types.ON_SELECT_MOCK_EXAM_TIME_LEADS,
-    mockExamTime: date,
+    type: types.ON_SELECT_CALL_BACK_END_TIME_LEADS,
+    callBackEndTime: date,
+  };
+}
+
+export function onSelectMockExamStartTime(date) {
+  return {
+    type: types.ON_SELECT_MOCK_EXAM_START_TIME_LEADS,
+    mockExamStartTime: date,
+  };
+}
+
+export function onSelectMockExamEndTime(date) {
+  return {
+    type: types.ON_SELECT_MOCK_EXAM_END_TIME_LEADS,
+    mockExamEndTime: date,
   };
 }
 
@@ -575,16 +510,72 @@ export function onSelectBaseId(baseId) {
   };
 }
 
-export function onSelectImportedAt(importedAt) {
-  return {
-    type: types.ON_SELECT_IMPORTED_AT_LEADS,
-    importedAt: importedAt,
-  };
-}
-
 export function onSelectOrderBy(orderBy) {
   return {
     type: types.ON_SELECT_ORDER_BY_LEADS,
     orderBy: orderBy,
+  };
+}
+
+export function onSelectStartTimeLeads(startTime) {
+  return {
+    type: types.ON_SELECT_START_TIME_LEADS,
+    start_time: startTime,
+  };
+}
+
+export function onSelectEndTimeLeads(endTime) {
+  return {
+    type: types.ON_SELECT_END_TIME_LEADS,
+    end_time: endTime,
+  };
+}
+
+export function onSelectRateLeads(rate) {
+  return {
+    type: types.ON_SELECT_RATE_LEADS,
+    rate: rate,
+  };
+}
+
+export function onSelectCampaignLeads(campaign_id) {
+  return {
+    type: types.ON_SELECT_CAMPAIGN_LEADS,
+    campaign_id: campaign_id,
+  };
+}
+
+export function onSelectSourceLeads(source_id) {
+  return {
+    type: types.ON_SELECT_SOURCE_LEADS,
+    source_id: source_id,
+  };
+}
+
+export function onSelectAddressLeads(address) {
+  return {
+    type: types.ON_SELECT_ADDRESS_LEADS,
+    address: address,
+  };
+}
+
+export function onSelectPICLeads(picId) {
+  return {
+    type: types.ON_SELECT_PIC_LEADS,
+    picId: picId,
+  };
+}
+
+export function onSelectStatusLeads(status_id) {
+  return {
+    type: types.ON_SELECT_STATUS_LEADS,
+    status_id: status_id,
+  };
+}
+
+export function onSelectSortedByLeads(sorted) {
+  return {
+    type: types.ON_SELECT_STATUS_LEADS,
+    sortedBy: sorted,
   };
 }

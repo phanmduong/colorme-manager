@@ -11,14 +11,12 @@ import {Thumbnail} from 'native-base';
 import theme from '../../styles';
 import {getShortName, isEmptyInput} from '../../helper';
 import Call from '../common/Call';
-import CallRegisterModal from '../infoStudent/CallRegisterModal';
 import LeadAssignModal from './LeadAssignModal';
 
 class ListItemLeads extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      callModalVisible: false,
       assignModalVisible: false,
     };
   }
@@ -32,22 +30,6 @@ class ListItemLeads extends React.Component {
               source={require('../../../assets/img/icons8-star-100-filled.png')}
               style={styles.rateIcon}
             />
-            <Image
-              source={require('../../../assets/img/icons8-star-100-blank.png')}
-              style={styles.rateIcon}
-            />
-            <Image
-              source={require('../../../assets/img/icons8-star-100-blank.png')}
-              style={styles.rateIcon}
-            />
-            <Image
-              source={require('../../../assets/img/icons8-star-100-blank.png')}
-              style={styles.rateIcon}
-            />
-            <Image
-              source={require('../../../assets/img/icons8-star-100-blank.png')}
-              style={styles.rateIcon}
-            />
           </View>
         );
       case 2:
@@ -59,18 +41,6 @@ class ListItemLeads extends React.Component {
             />
             <Image
               source={require('../../../assets/img/icons8-star-100-filled.png')}
-              style={styles.rateIcon}
-            />
-            <Image
-              source={require('../../../assets/img/icons8-star-100-blank.png')}
-              style={styles.rateIcon}
-            />
-            <Image
-              source={require('../../../assets/img/icons8-star-100-blank.png')}
-              style={styles.rateIcon}
-            />
-            <Image
-              source={require('../../../assets/img/icons8-star-100-blank.png')}
               style={styles.rateIcon}
             />
           </View>
@@ -88,14 +58,6 @@ class ListItemLeads extends React.Component {
             />
             <Image
               source={require('../../../assets/img/icons8-star-100-filled.png')}
-              style={styles.rateIcon}
-            />
-            <Image
-              source={require('../../../assets/img/icons8-star-100-blank.png')}
-              style={styles.rateIcon}
-            />
-            <Image
-              source={require('../../../assets/img/icons8-star-100-blank.png')}
               style={styles.rateIcon}
             />
           </View>
@@ -117,10 +79,6 @@ class ListItemLeads extends React.Component {
             />
             <Image
               source={require('../../../assets/img/icons8-star-100-filled.png')}
-              style={styles.rateIcon}
-            />
-            <Image
-              source={require('../../../assets/img/icons8-star-100-blank.png')}
               style={styles.rateIcon}
             />
           </View>
@@ -151,30 +109,7 @@ class ListItemLeads extends React.Component {
           </View>
         );
       default:
-        return (
-          <View style={styles.rateRow}>
-            <Image
-              source={require('../../../assets/img/icons8-star-100-blank.png')}
-              style={styles.rateIcon}
-            />
-            <Image
-              source={require('../../../assets/img/icons8-star-100-blank.png')}
-              style={styles.rateIcon}
-            />
-            <Image
-              source={require('../../../assets/img/icons8-star-100-blank.png')}
-              style={styles.rateIcon}
-            />
-            <Image
-              source={require('../../../assets/img/icons8-star-100-blank.png')}
-              style={styles.rateIcon}
-            />
-            <Image
-              source={require('../../../assets/img/icons8-star-100-blank.png')}
-              style={styles.rateIcon}
-            />
-          </View>
-        );
+        return null;
     }
   };
 
@@ -209,11 +144,8 @@ class ListItemLeads extends React.Component {
       lead_status,
       statuses,
       city,
-      token,
-      notes,
-      father_name,
-      interest,
-      source_id,
+      creator,
+      note,
     } = this.props;
     return (
       <TouchableOpacity
@@ -224,13 +156,8 @@ class ListItemLeads extends React.Component {
           });
         }}>
         <View style={styles.containerAll}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={styles.headerContainer}>
+            <View style={styles.row}>
               <View style={{position: 'relative'}}>
                 <Thumbnail
                   small
@@ -251,19 +178,21 @@ class ListItemLeads extends React.Component {
             <View style={styles.classAva} />
             <View style={styles.infoContainer}>
               <View style={styles.containerSubTitle}>
-                {carer && carer.name && carer.color ? (
+                {creator && creator.name && creator.color ? (
                   <View
                     style={{
                       ...styles.card,
                       ...{
                         backgroundColor:
-                          !carer.color || carer.color === ''
+                          !creator.color || creator.color === ''
                             ? theme.processColor1
-                            : '#' + carer.color,
+                            : creator.color,
                         marginRight: 5,
                       },
                     }}>
-                    <Text style={styles.saler}>{getShortName(carer.name)}</Text>
+                    <Text style={styles.saler}>
+                      {getShortName(creator.name)}
+                    </Text>
                   </View>
                 ) : (
                   <View
@@ -277,22 +206,19 @@ class ListItemLeads extends React.Component {
                     <Text style={styles.saler}>No P.I.C</Text>
                   </View>
                 )}
-                {!isEmptyInput(this.getSource()) ? (
+                {!isEmptyInput(source) ? (
                   <View
                     style={{
                       ...styles.card,
                       ...{
                         backgroundColor:
-                          !this.getSource().color ||
-                          !this.getSource().color === ''
+                          !source.color || !source.color === ''
                             ? theme.processColor1
-                            : this.getSource().color,
+                            : source.color,
                         marginRight: 5,
                       },
                     }}>
-                    <Text style={styles.campaign}>
-                      {this.getSource().name.trim()}
-                    </Text>
+                    <Text style={styles.campaign}>{source.name.trim()}</Text>
                   </View>
                 ) : (
                   <View
@@ -314,7 +240,7 @@ class ListItemLeads extends React.Component {
                         backgroundColor:
                           !campaign.color || campaign.color === ''
                             ? theme.processColor1
-                            : '#' + campaign.color,
+                            : campaign.color,
                         marginRight: 5,
                       },
                     }}>
@@ -374,83 +300,53 @@ class ListItemLeads extends React.Component {
                     phone={phone}
                   />
                 ) : null}
-                {father_name ? (
-                  <Text numberOfLines={1} style={styles.classInfoContainer}>
-                    {father_name}
-                  </Text>
-                ) : null}
-                {interest ? (
-                  <Text numberOfLines={1} style={styles.classInfoContainer}>
-                    {interest}
-                  </Text>
-                ) : null}
                 {city ? (
                   <Text numberOfLines={1} style={styles.classInfoContainer}>
                     TP. {city}
                   </Text>
                 ) : null}
-                {notes.map((note, index) => (
+                {note ? (
                   <Text numberOfLines={1} style={styles.classInfoContainer}>
-                    Ghi chú {index + 1}: {note}
+                    Ghi chú: {note}
                   </Text>
-                ))}
+                ) : null}
               </View>
-              <View style={styles.buttonContainer}>
-                {/*<TouchableOpacity*/}
-                {/*  onPress={() => {*/}
-                {/*    Linking.openURL(`tel:${phone}`);*/}
-                {/*    this.toggleCallModal();*/}
-                {/*  }}>*/}
-                {/*  <View style={styles.button}>*/}
-                {/*    <Text style={{fontSize: 16}}>Gọi điện</Text>*/}
-                {/*  </View>*/}
-                {/*</TouchableOpacity>*/}
-                <TouchableOpacity
-                  onPress={() => {
-                    this.toggleAssignModal();
-                  }}>
-                  <View style={styles.button}>
-                    <Text style={{fontSize: 16}}>Tag</Text>
-                  </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    this.props.setStudentId(id);
-                    this.props.navigation.navigate('InfoStudentDetails');
-                  }}>
-                  <View style={[{marginLeft: 10}, styles.button]}>
-                    <Text style={{fontSize: 16}}>Sửa</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
+              {/*<View style={styles.buttonContainer}>*/}
+              {/*  <TouchableOpacity*/}
+              {/*    onPress={() => {*/}
+              {/*      this.toggleAssignModal();*/}
+              {/*    }}>*/}
+              {/*    <View style={styles.button}>*/}
+              {/*      <Text style={{fontSize: 16}}>Tag</Text>*/}
+              {/*    </View>*/}
+              {/*  </TouchableOpacity>*/}
+              {/*  <TouchableOpacity*/}
+              {/*    onPress={() => {*/}
+              {/*      this.props.setStudentId(id);*/}
+              {/*      this.props.navigation.navigate('InfoStudentDetails');*/}
+              {/*    }}>*/}
+              {/*    <View style={[{marginLeft: 10}, styles.button]}>*/}
+              {/*      <Text style={{fontSize: 16}}>Sửa</Text>*/}
+              {/*    </View>*/}
+              {/*  </TouchableOpacity>*/}
+              {/*</View>*/}
             </View>
-            <CallRegisterModal
-              isVisible={this.state.callModalVisible}
-              onSwipeComplete={this.toggleCallModal}
-              imageSource={avatar_url}
-              email={email}
-              phone={phone}
-              changeCallStatus={this.props.changeCallStatus}
-              student_id={id}
-              token={token}
-              errorChangeCallStatus={this.props.errorChangeCallStatus}
-            />
-            <LeadAssignModal
-              isVisible={this.state.assignModalVisible}
-              closeModal={this.toggleAssignModal}
-              name={name}
-              source={this.getSource()}
-              campaign={campaign}
-              status={lead_status}
-              carer={carer}
-              campaigns={campaigns}
-              staff={staff}
-              sources={sources}
-              statuses={statuses}
-              user_id={id}
-              changeTags={this.props.changeTags}
-              loadStaff={this.props.loadStaff}
-            />
+            {/*<LeadAssignModal*/}
+            {/*  isVisible={this.state.assignModalVisible}*/}
+            {/*  closeModal={this.toggleAssignModal}*/}
+            {/*  name={name}*/}
+            {/*  source={this.getSource()}*/}
+            {/*  campaign={campaign}*/}
+            {/*  status={lead_status}*/}
+            {/*  carer={carer}*/}
+            {/*  campaigns={campaigns}*/}
+            {/*  staff={staff}*/}
+            {/*  sources={sources}*/}
+            {/*  statuses={statuses}*/}
+            {/*  user_id={id}*/}
+            {/*  changeTags={this.props.changeTags}*/}
+            {/*  loadStaff={this.props.loadStaff}*/}
+            {/*/>*/}
           </View>
         </View>
       </TouchableOpacity>
@@ -589,6 +485,15 @@ const styles = {
   },
   rateRow: {
     flexDirection: 'row',
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 };
 

@@ -1,5 +1,6 @@
 import * as env from '../constants/env';
 import axios from 'axios';
+import {isEmptyInput} from '../helper';
 
 export function getLeads(
   sourceCancel,
@@ -7,66 +8,61 @@ export function getLeads(
   search,
   start_time,
   end_time,
-  carer_id,
-  leadStatusId,
   rate,
-  top,
   address,
   orderBy,
-  orderByType,
   source_id,
   campaign_id,
-  call_back_time,
-  mock_exam_time,
   duplicate,
   lead_tag,
   base_id,
-  imported_at,
+  status_id,
+  pic_id,
+  mock_exam_start_time,
+  mock_exam_end_time,
+  call_back_start_time,
+  call_back_end_time,
+  sortedBy,
   token,
   domain,
 ) {
   let url =
-    env.manageApiUrlV3(domain) +
-    '/lead/all?token=' +
-    token +
-    '&page=' +
-    page +
-    '&search=' +
+    env.manageApiUrlAuth(domain) +
+    '/v1/leads?limit=20&search=' +
     search +
     '&start_time=' +
     start_time +
     '&end_time=' +
     end_time +
-    '&carer_id=' +
-    carer_id +
-    '&leadStatusId=' +
-    leadStatusId +
-    '&rate=' +
-    rate +
-    '&top=' +
-    top +
+    '&page=' +
+    page +
+    (!isEmptyInput(rate) ? '&rates[]=' + rate : '') +
     '&address=' +
     address +
+    (!isEmptyInput(status_id) ? '&status_ids[]=' + status_id : '') +
+    (!isEmptyInput(source_id) ? '&source_ids[]=' + source_id : '') +
+    (!isEmptyInput(campaign_id) ? '&campaign_ids[]=' + campaign_id : '') +
+    (!isEmptyInput(lead_tag) ? '&lead_tags[]=' + lead_tag : '') +
+    (!isEmptyInput(pic_id) ? '&pic_ids[]=' + pic_id : '') +
+    (!isEmptyInput(base_id) ? '&base_ids[]=' + base_id : '') +
+    '&duplicate_column=' +
+    duplicate +
+    '&type=' +
+    '&mock_exam_start_time=' +
+    mock_exam_start_time +
+    '&mock_exam_end_time=' +
+    mock_exam_end_time +
+    '&call_back_start_time=' +
+    call_back_start_time +
+    '&call_back_end_time=' +
+    call_back_end_time +
     '&orderBy=' +
     orderBy +
-    '&orderByType=' +
-    orderByType +
-    '&source_id=' +
-    source_id +
-    '&campaign_id=' +
-    campaign_id +
-    '&call_back_time=' +
-    call_back_time +
-    '&mock_exam_time=' +
-    mock_exam_time +
-    '&duplicate=' +
-    duplicate +
-    '&lead_tag=' +
-    lead_tag +
-    '&base_id=' +
-    base_id +
-    '&imported_at=' +
-    imported_at;
+    '&sortedBy=' +
+    sortedBy +
+    '&token=' +
+    token;
+  console.log(url);
   return axios.get(url, {cancelToken: sourceCancel.token});
 }
 

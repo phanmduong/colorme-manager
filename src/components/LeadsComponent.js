@@ -6,7 +6,6 @@ import {
   RefreshControl,
   Image,
   TouchableOpacity,
-  ScrollView,
 } from 'react-native';
 import Search from './common/Search';
 import ListItemLeads from './leads/ListItemLeads';
@@ -14,10 +13,7 @@ import Loading from './common/Loading';
 import {Text} from 'native-base';
 import theme from '../styles';
 import FilterLeadsModal from './leads/FilterLeadsModal';
-import ActionSheet from 'react-native-actionsheet';
-var {height, width} = Dimensions.get('window');
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import LinearGradient from 'react-native-linear-gradient';
+var {width} = Dimensions.get('window');
 
 class LeadsComponent extends React.Component {
   constructor(props, context) {
@@ -31,11 +27,6 @@ class LeadsComponent extends React.Component {
   toggleFilterModal = () => {
     this.setState({filterModalVisible: !this.state.filterModalVisible});
   };
-
-  showActionSheet = () => {
-    this.ActionSheet.show();
-  };
-
   executeActions = (index) => {
     switch (index) {
       case 0:
@@ -96,7 +87,7 @@ class LeadsComponent extends React.Component {
             onSelectSource={this.props.onSelectSource}
             onSelectAddress={this.props.onSelectAddress}
             onRefresh={this.props.onRefresh}
-            onSelectCarer={this.props.onSelectCarer}
+            onSelectPICLeads={this.props.onSelectPICLeads}
             loadStaff={this.props.loadStaff}
             duplicate={this.props.duplicate}
             onSelectDuplicate={this.props.onSelectDuplicate}
@@ -104,95 +95,12 @@ class LeadsComponent extends React.Component {
             leadTag={this.props.leadTag}
             onSelectBaseId={this.props.onSelectBaseId}
             baseId={this.props.baseId}
-            onSelectCallBackTime={this.props.onSelectCallBackTime}
-            onSelectMockExamTime={this.props.onSelectMockExamTime}
-            onSelectImportedAt={this.props.onSelectImportedAt}
+            onSelectCallBackStartTime={this.props.onSelectCallBackStartTime}
+            onSelectCallBackEndTime={this.props.onSelectCallBackEndTime}
+            onSelectMockExamStartTime={this.props.onSelectMockExamStartTime}
+            onSelectMockExamEndTime={this.props.onSelectMockExamEndTime}
           />
         </View>
-        <View style={styles.sortContainer}>
-          <TouchableOpacity onPress={this.showActionSheet}>
-            <LinearGradient
-              colors={['#F6F6F6', '#F6F6F6']}
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}
-              style={[styles.tag, {flexDirection: 'row'}]}>
-              <Text style={styles.tagText}>Sắp xếp theo</Text>
-              <FontAwesome name={'sort'} color={'black'} size={15} />
-            </LinearGradient>
-          </TouchableOpacity>
-        </View>
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          <View style={styles.containerTag}>
-            <TouchableOpacity
-              onPress={() => {
-                this.setState({index: 0});
-                this.props.onSelectCarer('');
-                setTimeout(() => this.props.onRefresh(), 200);
-              }}>
-              <LinearGradient
-                colors={
-                  this.state.index === 0
-                    ? ['#F6F6F6', '#F6F6F6']
-                    : ['white', 'white']
-                }
-                start={{x: 0, y: 0}}
-                end={{x: 1, y: 0}}
-                style={styles.tag}>
-                <Text style={{color: 'black'}}>Tất cả</Text>
-              </LinearGradient>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                this.setState({index: 1});
-                this.props.onSelectCarer(-1);
-                setTimeout(() => this.props.onRefresh(), 200);
-              }}>
-              <LinearGradient
-                colors={
-                  this.state.index === 1
-                    ? ['#F6F6F6', '#F6F6F6']
-                    : ['white', 'white']
-                }
-                start={{x: 0, y: 0}}
-                end={{x: 1, y: 0}}
-                style={styles.tag}>
-                <Text style={{color: 'black'}}>Lead đã phân P.I.C</Text>
-              </LinearGradient>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                this.setState({index: 2});
-                this.props.onSelectCarer(-2);
-                setTimeout(() => this.props.onRefresh(), 200);
-              }}>
-              <LinearGradient
-                colors={
-                  this.state.index === 2
-                    ? ['#F6F6F6', '#F6F6F6']
-                    : ['white', 'white']
-                }
-                start={{x: 0, y: 0}}
-                end={{x: 1, y: 0}}
-                style={styles.tag}>
-                <Text style={{color: 'black'}}>Lead chưa phân P.I.C</Text>
-              </LinearGradient>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-        <ActionSheet
-          ref={(o) => (this.ActionSheet = o)}
-          title={'Sắp xếp theo'}
-          options={[
-            'Lead chưa có P.I.C',
-            'Lead từ mới đến cũ',
-            'Ngày nhập mới đến cũ',
-            'Số sao',
-            'Tương tác gần đây',
-            'Hủy',
-          ]}
-          cancelButtonIndex={5}
-          onPress={this.executeActions}
-        />
       </View>
     );
   };
@@ -204,8 +112,6 @@ class LeadsComponent extends React.Component {
   renderItem = ({item}) => (
     <ListItemLeads
       {...this.props}
-      key={item.id}
-      token={this.props.token}
       avatar_url={item.avatar_url}
       name={item.name}
       email={item.email}
@@ -217,19 +123,15 @@ class LeadsComponent extends React.Component {
       lead_status={item.lead_status}
       city={item.city}
       id={item.id}
-      changeCallStatus={this.props.changeCallStatus}
-      errorChangeCallStatus={this.props.errorChangeCallStatus}
-      notes={item.notes}
       setStudentId={this.props.setStudentId}
-      interest={item.interest}
-      father_name={item.father_name}
+      creator={item.creator}
       source_id={item.source_id}
       campaigns={this.props.campaigns}
       staff={this.props.staff}
       sources={this.props.sources}
-      statuses={this.props.statuses}
       changeTags={this.props.changeTags}
       loadStaff={this.props.loadStaff}
+      note={item.note}
     />
   );
 
@@ -239,6 +141,7 @@ class LeadsComponent extends React.Component {
         data={this.props.leads}
         renderItem={this.renderItem}
         contentContainerStyle={{flexGrow: 1}}
+        keyExtractor={item => item.id}
         ListHeaderComponent={this.headerComponent}
         onEndReached={this.props.loadLeads}
         ListEmptyComponent={
@@ -261,7 +164,7 @@ class LeadsComponent extends React.Component {
         refreshControl={
           <RefreshControl
             refreshing={this.props.refreshingLeads}
-            onRefresh={() => this.props.onRefresh(this.props.searchLeads)}
+            onRefresh={() => this.props.onRefresh()}
           />
         }
       />

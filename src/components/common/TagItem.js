@@ -80,15 +80,15 @@ const TagItem = ({
 
   const getOptions = () => {
     return getSearchedResults(
-      getData(options, null, placeholder, hasHashInHexColor ? '#999' : '999'),
+      getData(options, '', placeholder, hasHashInHexColor ? '#999' : '999'),
       search,
     );
   };
 
   const getDefaultValue = () => {
     return getDefault(
-      getData(options, null, placeholder, hasHashInHexColor ? '#999' : '999'),
-      defaultValue ? defaultValue : null,
+      getData(options, '', placeholder, hasHashInHexColor ? '#999' : '999'),
+      defaultValue ? defaultValue : '',
     );
   };
 

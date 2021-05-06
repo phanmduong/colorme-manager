@@ -235,28 +235,28 @@ class LeadsContainer extends React.Component {
     ),
   });
 
-  changeCampaignTag = (campaign_id, user_id) => {
+  changeCampaignTag = (campaign_id, lead_id) => {
     this.props.leadsActions.changeCampaignTag(
       campaign_id,
-      user_id,
+      lead_id,
       this.props.token,
       this.props.domain,
     );
   };
 
-  changeSourceTag = (source_id, user_id) => {
+  changeSourceTag = (source_id, lead_id) => {
     this.props.leadsActions.changeSourceTag(
       source_id,
-      user_id,
+      lead_id,
       this.props.token,
       this.props.domain,
     );
   };
 
-  changeStatusTag = (status_id, id) => {
+  changeStatusTag = (status_id, lead_id) => {
     this.props.leadsActions.changeStatusTag(
       status_id,
-      id,
+      lead_id,
       this.props.token,
       this.props.domain,
     );
@@ -271,12 +271,12 @@ class LeadsContainer extends React.Component {
     );
   };
 
-  changeTags = (user_id, campaign_id, source_id, status_id, staff_id) => {
-    this.changeCampaignTag(campaign_id, user_id);
-    this.changeSourceTag(source_id, user_id);
-    this.changeStatusTag(status_id, user_id);
-    this.changePICTag(staff_id, user_id);
-    setTimeout(() => this.onRefresh(this.props.searchLeads), 500);
+  changeTags = (lead_id, campaign_id, source_id, status_id, staff_id) => {
+    this.changeCampaignTag(campaign_id, lead_id);
+    this.changeSourceTag(source_id, lead_id);
+    this.changeStatusTag(status_id, lead_id);
+    this.changePICTag(staff_id, lead_id);
+    setTimeout(() => this.onRefresh(), 800);
   };
 
   render() {

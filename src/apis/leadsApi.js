@@ -62,7 +62,6 @@ export function getLeads(
     sortedBy +
     '&token=' +
     token;
-  console.log(url);
   return axios.get(url, {cancelToken: sourceCancel.token});
 }
 
@@ -99,37 +98,30 @@ export function saveLead(lead, token, domain) {
   });
 }
 
-export function assignCampaign(campaign_id, user_id, token, domain) {
-  let url =
-    env.manageApiUrlV3(domain) + '/marketing-campaign/assign?token=' + token;
-  return axios.post(url, {
-    campaign_id,
-    user_id,
-  });
+export function assignCampaign(campaign_id, lead_id, token, domain) {
+  let url = `${env.manageApiUrlAuth(
+    domain,
+  )}/v1/leads/${lead_id}/assign-campaign/${campaign_id}?token=${token}`;
+  return axios.put(url);
 }
 
-export function assignSource(source_id, user_id, token, domain) {
-  let url = env.manageApiUrlV3(domain) + '/source/assign?token=' + token;
-  return axios.post(url, {
-    source_id,
-    user_id,
-  });
+export function assignSource(source_id, lead_id, token, domain) {
+  let url = `${env.manageApiUrlAuth(
+    domain,
+  )}/v1/leads/${lead_id}/assign-source/${source_id}?token=${token}`;
+  return axios.put(url);
 }
 
-export function assignStatus(status_id, id, token, domain) {
-  let url = env.manageApiUrlV4(domain) + '/statuses/assign?token=' + token;
-  return axios.post(url, {
-    statusRef: 'leads',
-    id,
-    status_id,
-  });
+export function assignStatus(status_id, lead_id, token, domain) {
+  let url = `${env.manageApiUrlAuth(
+    domain,
+  )}/v1/leads/${lead_id}/assign-status/${status_id}?token=${token}`;
+  return axios.put(url);
 }
 
 export function assignPIC(staff_id, lead_id, token, domain) {
-  let url =
-    env.manageApiUrlV3(domain) + '/lead/assign-lead-staff?token=' + token;
-  return axios.put(url, {
-    lead_id,
-    staff_id,
-  });
+  let url = `${env.manageApiUrlAuth(
+    domain,
+  )}/v1/leads/${lead_id}/assign-pic/${staff_id}?token=${token}`;
+  return axios.put(url);
 }

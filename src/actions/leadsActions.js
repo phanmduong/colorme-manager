@@ -308,11 +308,11 @@ function saveLeadError() {
   };
 }
 
-export function changeCampaignTag(campaign_id, user_id, token, domain) {
+export function changeCampaignTag(campaign_id, lead_id, token, domain) {
   return function (dispatch) {
     dispatch(beginChangeCampaignTag());
     leadsApi
-      .assignCampaign(campaign_id, user_id, token, domain)
+      .assignCampaign(campaign_id, lead_id, token, domain)
       .then((res) => {
         dispatch(changeCampaignTagSuccessful());
       })
@@ -346,11 +346,11 @@ function changeCampaignTagError() {
   };
 }
 
-export function changeSourceTag(source_id, user_id, token, domain) {
+export function changeSourceTag(source_id, lead_id, token, domain) {
   return function (dispatch) {
     dispatch(beginChangeSourceTag());
     leadsApi
-      .assignSource(source_id, user_id, token, domain)
+      .assignSource(source_id, lead_id, token, domain)
       .then((res) => {
         dispatch(changeSourceTagSuccessful());
       })
@@ -383,11 +383,11 @@ function changeSourceTagError() {
   };
 }
 
-export function changeStatusTag(status_id, id, token, domain) {
+export function changeStatusTag(status_id, lead_id, token, domain) {
   return function (dispatch) {
     dispatch(beginChangeStatusTag());
     leadsApi
-      .assignStatus(status_id, id, token, domain)
+      .assignStatus(status_id, lead_id, token, domain)
       .then((res) => {
         dispatch(changeStatusTagSuccessful());
       })

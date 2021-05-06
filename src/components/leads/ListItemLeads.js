@@ -139,12 +139,11 @@ class ListItemLeads extends React.Component {
       campaigns,
       source,
       sources,
-      carer,
       staff,
       lead_status,
       statuses,
       city,
-      creator,
+      pic,
       note,
     } = this.props;
     return (
@@ -177,115 +176,122 @@ class ListItemLeads extends React.Component {
           <View style={{flexDirection: 'row'}}>
             <View style={styles.classAva} />
             <View style={styles.infoContainer}>
-              <View style={styles.containerSubTitle}>
-                {creator && creator.name && creator.color ? (
-                  <View
-                    style={{
-                      ...styles.card,
-                      ...{
-                        backgroundColor:
-                          !creator.color || creator.color === ''
-                            ? theme.processColor1
-                            : creator.color,
-                        marginRight: 5,
-                      },
-                    }}>
-                    <Text style={styles.saler}>
-                      {getShortName(creator.name)}
-                    </Text>
-                  </View>
-                ) : (
-                  <View
-                    style={{
-                      ...styles.card,
-                      ...{
-                        backgroundColor: '#999',
-                        marginRight: 5,
-                      },
-                    }}>
-                    <Text style={styles.saler}>No P.I.C</Text>
-                  </View>
-                )}
-                {!isEmptyInput(source) ? (
-                  <View
-                    style={{
-                      ...styles.card,
-                      ...{
-                        backgroundColor:
-                          !source.color || !source.color === ''
-                            ? theme.processColor1
-                            : source.color,
-                        marginRight: 5,
-                      },
-                    }}>
-                    <Text style={styles.campaign}>{source.name.trim()}</Text>
-                  </View>
-                ) : (
-                  <View
-                    style={{
-                      ...styles.card,
-                      ...{
-                        backgroundColor: '#999',
-                        marginRight: 5,
-                      },
-                    }}>
-                    <Text style={styles.saler}>No Campaign</Text>
-                  </View>
-                )}
-                {campaign && campaign.name && campaign.color ? (
-                  <View
-                    style={{
-                      ...styles.card,
-                      ...{
-                        backgroundColor:
-                          !campaign.color || campaign.color === ''
-                            ? theme.processColor1
-                            : campaign.color,
-                        marginRight: 5,
-                      },
-                    }}>
-                    <Text style={styles.campaign}>{campaign.name.trim()}</Text>
-                  </View>
-                ) : (
-                  <View
-                    style={{
-                      ...styles.card,
-                      ...{
-                        backgroundColor: '#999',
-                        marginRight: 5,
-                      },
-                    }}>
-                    <Text style={styles.saler}>No Source</Text>
-                  </View>
-                )}
-                {lead_status && lead_status.name && lead_status.color ? (
-                  <View
-                    style={{
-                      ...styles.card,
-                      ...{
-                        backgroundColor:
-                          !lead_status.color || lead_status.color === ''
-                            ? theme.processColor1
-                            : lead_status.color,
-                      },
-                    }}>
-                    <Text style={styles.campaign}>
-                      {lead_status.name.trim()}
-                    </Text>
-                  </View>
-                ) : (
-                  <View
-                    style={{
-                      ...styles.card,
-                      ...{
-                        backgroundColor: '#999',
-                        marginRight: 5,
-                      },
-                    }}>
-                    <Text style={styles.saler}>No status</Text>
-                  </View>
-                )}
-              </View>
+              <TouchableOpacity
+                onPress={() => {
+                  this.toggleAssignModal();
+                }}>
+                <View style={styles.containerSubTitle}>
+                  {pic && pic.name && pic.color ? (
+                    <View
+                      style={{
+                        ...styles.card,
+                        ...{
+                          backgroundColor:
+                            !pic.color || pic.color === ''
+                              ? theme.processColor1
+                              : pic.color,
+                          marginRight: 5,
+                        },
+                      }}>
+                      <Text style={styles.saler}>
+                        {getShortName(pic.name)}
+                      </Text>
+                    </View>
+                  ) : (
+                    <View
+                      style={{
+                        ...styles.card,
+                        ...{
+                          backgroundColor: '#999',
+                          marginRight: 5,
+                        },
+                      }}>
+                      <Text style={styles.saler}>No P.I.C</Text>
+                    </View>
+                  )}
+                  {!isEmptyInput(source) ? (
+                    <View
+                      style={{
+                        ...styles.card,
+                        ...{
+                          backgroundColor:
+                            !source.color || !source.color === ''
+                              ? theme.processColor1
+                              : source.color,
+                          marginRight: 5,
+                        },
+                      }}>
+                      <Text style={styles.campaign}>{source.name.trim()}</Text>
+                    </View>
+                  ) : (
+                    <View
+                      style={{
+                        ...styles.card,
+                        ...{
+                          backgroundColor: '#999',
+                          marginRight: 5,
+                        },
+                      }}>
+                      <Text style={styles.saler}>No Campaign</Text>
+                    </View>
+                  )}
+                  {campaign && campaign.name && campaign.color ? (
+                    <View
+                      style={{
+                        ...styles.card,
+                        ...{
+                          backgroundColor:
+                            !campaign.color || campaign.color === ''
+                              ? theme.processColor1
+                              : campaign.color,
+                          marginRight: 5,
+                        },
+                      }}>
+                      <Text style={styles.campaign}>
+                        {campaign.name.trim()}
+                      </Text>
+                    </View>
+                  ) : (
+                    <View
+                      style={{
+                        ...styles.card,
+                        ...{
+                          backgroundColor: '#999',
+                          marginRight: 5,
+                        },
+                      }}>
+                      <Text style={styles.saler}>No Source</Text>
+                    </View>
+                  )}
+                  {lead_status && lead_status.name && lead_status.color ? (
+                    <View
+                      style={{
+                        ...styles.card,
+                        ...{
+                          backgroundColor:
+                            !lead_status.color || lead_status.color === ''
+                              ? theme.processColor1
+                              : lead_status.color,
+                        },
+                      }}>
+                      <Text style={styles.campaign}>
+                        {lead_status.name.trim()}
+                      </Text>
+                    </View>
+                  ) : (
+                    <View
+                      style={{
+                        ...styles.card,
+                        ...{
+                          backgroundColor: '#999',
+                          marginRight: 5,
+                        },
+                      }}>
+                      <Text style={styles.saler}>No status</Text>
+                    </View>
+                  )}
+                </View>
+              </TouchableOpacity>
               <View>
                 {this.renderStars(rate)}
                 {email ? (
@@ -311,42 +317,34 @@ class ListItemLeads extends React.Component {
                   </Text>
                 ) : null}
               </View>
-              {/*<View style={styles.buttonContainer}>*/}
-              {/*  <TouchableOpacity*/}
-              {/*    onPress={() => {*/}
-              {/*      this.toggleAssignModal();*/}
-              {/*    }}>*/}
-              {/*    <View style={styles.button}>*/}
-              {/*      <Text style={{fontSize: 16}}>Tag</Text>*/}
-              {/*    </View>*/}
-              {/*  </TouchableOpacity>*/}
-              {/*  <TouchableOpacity*/}
-              {/*    onPress={() => {*/}
-              {/*      this.props.setStudentId(id);*/}
-              {/*      this.props.navigation.navigate('InfoStudentDetails');*/}
-              {/*    }}>*/}
-              {/*    <View style={[{marginLeft: 10}, styles.button]}>*/}
-              {/*      <Text style={{fontSize: 16}}>Sửa</Text>*/}
-              {/*    </View>*/}
-              {/*  </TouchableOpacity>*/}
-              {/*</View>*/}
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.props.setStudentId(id);
+                    this.props.navigation.navigate('InfoStudentDetails');
+                  }}>
+                  <View style={styles.button}>
+                    <Text style={{fontSize: 16}}>Sửa</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
-            {/*<LeadAssignModal*/}
-            {/*  isVisible={this.state.assignModalVisible}*/}
-            {/*  closeModal={this.toggleAssignModal}*/}
-            {/*  name={name}*/}
-            {/*  source={this.getSource()}*/}
-            {/*  campaign={campaign}*/}
-            {/*  status={lead_status}*/}
-            {/*  carer={carer}*/}
-            {/*  campaigns={campaigns}*/}
-            {/*  staff={staff}*/}
-            {/*  sources={sources}*/}
-            {/*  statuses={statuses}*/}
-            {/*  user_id={id}*/}
-            {/*  changeTags={this.props.changeTags}*/}
-            {/*  loadStaff={this.props.loadStaff}*/}
-            {/*/>*/}
+            <LeadAssignModal
+              isVisible={this.state.assignModalVisible}
+              closeModal={this.toggleAssignModal}
+              name={name}
+              source={source}
+              campaign={campaign}
+              status={lead_status}
+              pic={pic}
+              campaigns={campaigns}
+              staff={staff}
+              sources={sources}
+              statuses={statuses}
+              lead_id={id}
+              changeTags={this.props.changeTags}
+              loadStaff={this.props.loadStaff}
+            />
           </View>
         </View>
       </TouchableOpacity>

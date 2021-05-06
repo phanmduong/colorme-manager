@@ -16,26 +16,26 @@ const LeadAssignModal = ({
   campaigns,
   status,
   statuses,
-  carer,
+  pic,
   staff,
   changeTags,
-  user_id,
+  lead_id,
   loadStaff,
 }) => {
   const [campaignId, setCampaignId] = useState(null);
   const [sourceId, setSourceId] = useState(null);
   const [statusId, setStatusId] = useState(null);
-  const [carerId, setCarerId] = useState(null);
+  const [creatorId, setCreatorId] = useState(null);
 
   useEffect(() => {
     setCampaignId(campaign ? campaign.id : null);
     setSourceId(source ? source.id : null);
     setStatusId(!isEmptyInput(status) ? status.id : null);
-    setCarerId(carer ? carer.id : null);
+    setCreatorId(pic ? pic.id : null);
   }, []);
 
   const applyTagChange = () => {
-    changeTags(user_id, campaignId, sourceId, statusId, carerId);
+    changeTags(lead_id, campaignId, sourceId, statusId, creatorId);
   };
 
   return (
@@ -52,10 +52,10 @@ const LeadAssignModal = ({
         <TagItem
           title={'P.I.C'}
           placeholder={'No P.I.C'}
-          defaultValue={carer ? carer.id : null}
+          defaultValue={pic ? pic.id : null}
           options={staff}
           hasHashInHexColor={false}
-          onValueChange={(value) => setCarerId(value.id)}
+          onValueChange={(value) => setCreatorId(value.id)}
           externalSearch={(search) => loadStaff(search)}
         />
         <TagItem
@@ -71,7 +71,7 @@ const LeadAssignModal = ({
           placeholder={'No Campaign'}
           defaultValue={campaign ? campaign.id : null}
           options={campaigns}
-          hasHashInHexColor={false}
+          hasHashInHexColor={true}
           onValueChange={(value) => setCampaignId(value.id)}
         />
         <TagItem

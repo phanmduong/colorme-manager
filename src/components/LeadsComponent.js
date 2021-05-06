@@ -124,7 +124,7 @@ class LeadsComponent extends React.Component {
       city={item.city}
       id={item.id}
       setStudentId={this.props.setStudentId}
-      creator={item.creator}
+      pic={item.pic}
       source_id={item.source_id}
       campaigns={this.props.campaigns}
       staff={this.props.staff}

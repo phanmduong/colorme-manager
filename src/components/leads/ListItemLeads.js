@@ -284,64 +284,6 @@ const styles = {
     paddingHorizontal: theme.mainHorizontal,
     paddingVertical: 16,
   },
-  containerExpand: {
-    marginLeft: 55,
-    paddingTop: 5,
-  },
-  content: {
-    flex: 1,
-    marginLeft: 20,
-  },
-  containerTitle: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  title: {
-    color: 'black',
-    fontWeight: '900',
-    fontSize: Platform.isPad ? 18 : 13,
-    marginRight: 5,
-  },
-  subTitle: {
-    color: '#7d7d7d',
-    fontSize: 12,
-  },
-  icon: {
-    fontSize: 20,
-    color: theme.colorTitle,
-  },
-  line: {
-    height: 1,
-    backgroundColor: theme.borderColor,
-    marginRight: 20,
-    marginLeft: 75,
-  },
-  email: {
-    color: theme.colorSubTitle,
-    marginTop: 5,
-    fontSize: Platform.isPad ? 18 : 13,
-  },
-  contentTitle: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  dotCall: {
-    position: 'absolute',
-    top: 25,
-    left: 25,
-    height: 12,
-    width: 12,
-    borderRadius: 20,
-    borderWidth: 1.5,
-    borderColor: 'white',
-  },
-
-  listItemContainer: {
-    marginHorizontal: theme.mainHorizontal,
-    marginVertical: 10,
-  },
   classAva: {
     width: 37,
     height: 37,
@@ -387,12 +329,6 @@ const styles = {
     paddingHorizontal: 18,
     borderRadius: 8,
   },
-  collectedButton: {
-    backgroundColor: '#C50000',
-    paddingVertical: 10,
-    paddingHorizontal: 18,
-    borderRadius: 8,
-  },
   classInfoContainer: {
     paddingTop: 5,
     flex: 1,
@@ -402,14 +338,6 @@ const styles = {
   infoContainer: {
     marginLeft: 15,
     flex: 1,
-  },
-  rateIcon: {
-    width: 10,
-    height: 10,
-    marginRight: 2,
-  },
-  rateRow: {
-    flexDirection: 'row',
   },
   row: {
     flexDirection: 'row',

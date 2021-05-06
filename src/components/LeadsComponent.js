@@ -186,29 +186,6 @@ const styles = {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  sortContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginHorizontal: theme.mainHorizontal,
-    marginBottom: 5,
-  },
-  tag: {
-    paddingHorizontal: 20,
-    borderRadius: 20,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  tagText: {
-    marginRight: 5,
-  },
-  containerTag: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'flex-start',
-    marginTop: 5,
-    marginHorizontal: theme.mainHorizontal,
-  },
 };
 
 export default LeadsComponent;

@@ -13,6 +13,7 @@ import Loading from './common/Loading';
 import {Text} from 'native-base';
 import theme from '../styles';
 import FilterLeadsModal from './leads/FilterLeadsModal';
+import LinearGradient from 'react-native-linear-gradient';
 var {width} = Dimensions.get('window');
 
 class LeadsComponent extends React.Component {
@@ -21,6 +22,7 @@ class LeadsComponent extends React.Component {
     this.state = {
       filterModalVisible: false,
       index: 0,
+      picId: this.props.picId,
     };
   }
 
@@ -77,6 +79,7 @@ class LeadsComponent extends React.Component {
           </TouchableOpacity>
           <FilterLeadsModal
             {...this.props}
+            isMyLead={this.state.picId === this.props.user.id}
             isVisible={this.state.filterModalVisible}
             closeModal={this.toggleFilterModal}
             onSelectStartTime={this.props.onSelectStartTime}
@@ -101,8 +104,38 @@ class LeadsComponent extends React.Component {
             onSelectMockExamEndTime={this.props.onSelectMockExamEndTime}
           />
         </View>
+        <View style={styles.containerTag}>{this.renderTabs()}</View>
       </View>
     );
+  };
+
+  renderTabs = () => {
+    let pics = [
+      {id: '', name: 'Tất cả Lead'},
+      {id: this.props.user.id, name: 'Lead của bạn'},
+    ];
+    return pics.map((pic) => (
+      <TouchableOpacity
+        onPress={() => {
+          this.setState({picId: pic.id});
+          this.props.onSelectPICLeads(pic.id);
+          setTimeout(() => {
+            this.props.onRefresh();
+          }, 500);
+        }}>
+        <LinearGradient
+          colors={
+            this.state.picId === pic.id
+              ? ['#F6F6F6', '#F6F6F6']
+              : ['white', 'white']
+          }
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 0}}
+          style={styles.tag}>
+          <Text style={{color: 'black'}}>{pic.name}</Text>
+        </LinearGradient>
+      </TouchableOpacity>
+    ));
   };
 
   headerComponent = () => {
@@ -146,15 +179,15 @@ class LeadsComponent extends React.Component {
         ListHeaderComponent={this.headerComponent}
         onEndReached={this.props.loadLeads}
         ListEmptyComponent={
-          this.props.isLoadingLeads ? (
-            !this.props.refreshingLeads && <Loading size={width / 8} />
-          ) : !this.props.refreshingLeads && (
-            <View style={styles.container}>
-              <Text style={{color: theme.dangerColor, fontSize: 16}}>
-                Không có kết quả
-              </Text>
-            </View>
-          )
+          this.props.isLoadingLeads
+            ? !this.props.refreshingLeads && <Loading size={width / 8} />
+            : !this.props.refreshingLeads && (
+                <View style={styles.container}>
+                  <Text style={{color: theme.dangerColor, fontSize: 16}}>
+                    Không có kết quả
+                  </Text>
+                </View>
+              )
         }
         refreshControl={
           <RefreshControl
@@ -185,6 +218,20 @@ const styles = {
   row: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  tag: {
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  containerTag: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+    marginTop: 5,
+    marginHorizontal: theme.mainHorizontal,
   },
 };
 

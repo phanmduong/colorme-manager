@@ -329,6 +329,7 @@ const styles = {
 function mapStateToProps(state) {
   return {
     token: state.login.token,
+    user: state.login.user,
     isLoadingLeads: state.leads.isLoadingLeads,
     errorLeads: state.leads.errorLeads,
     leads: state.leads.leads,

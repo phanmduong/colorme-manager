@@ -48,16 +48,18 @@ function FilterLeadsModal(props) {
               selectedDate={props.end_time}
               onSelectDate={props.onSelectEndTime}
             />
-            <FilterRow
-              title={'P.I.C'}
-              header={'Chọn P.I.C'}
-              isApiSearch
-              onApiSearch={props.loadStaff}
-              options={props.staff}
-              selectedId={props.picId}
-              onChangeValue={props.onSelectPICLeads}
-              defaultId={''}
-            />
+            {!props.isMyLead && (
+              <FilterRow
+                title={'P.I.C'}
+                header={'Chọn P.I.C'}
+                isApiSearch
+                onApiSearch={props.loadStaff}
+                options={props.staff}
+                selectedId={props.picId}
+                onChangeValue={props.onSelectPICLeads}
+                defaultId={''}
+              />
+            )}
             <FilterRow
               title={'Tỉnh/Thành phố'}
               options={ADDRESS}
@@ -129,22 +131,22 @@ function FilterLeadsModal(props) {
               selectedDate={props.callBackStartTime}
             />
             <FilterRowDate
-                title={'Hẹn gọi lại (kết thúc)'}
-                onSelectDate={props.onSelectCallBackEndTime}
-                isUnix
-                selectedDate={props.callBackEndTime}
+              title={'Hẹn gọi lại (kết thúc)'}
+              onSelectDate={props.onSelectCallBackEndTime}
+              isUnix
+              selectedDate={props.callBackEndTime}
             />
             <FilterRowDate
-                title={'Thi xếp lớp (bắt đầu)'}
-                onSelectDate={props.onSelectMockExamStartTime}
-                isUnix
-                selectedDate={props.mockExamStartTime}
+              title={'Thi xếp lớp (bắt đầu)'}
+              onSelectDate={props.onSelectMockExamStartTime}
+              isUnix
+              selectedDate={props.mockExamStartTime}
             />
             <FilterRowDate
-                title={'Thi xếp lớp (kết thúc)'}
-                onSelectDate={props.onSelectMockExamEndTime}
-                isUnix
-                selectedDate={props.mockExamEndTime}
+              title={'Thi xếp lớp (kết thúc)'}
+              onSelectDate={props.onSelectMockExamEndTime}
+              isUnix
+              selectedDate={props.mockExamEndTime}
             />
             <SubmitButton
               title={'Áp dụng'}

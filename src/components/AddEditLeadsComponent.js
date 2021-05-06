@@ -11,7 +11,7 @@ import {ADDRESS, GENDER} from '../constants/constant';
 import Expand from './common/Expand';
 import DatePicker from './common/DatePicker';
 
-function AddLeadsComponent(props) {
+function AddEditLeadsComponent(props) {
   const [name, setName] = useState(null);
   const [email, setEmail] = useState(null);
   const [phone, setPhone] = useState(null);
@@ -46,6 +46,32 @@ function AddLeadsComponent(props) {
   const knowRef = useRef(null);
   const facebookRef = useRef(null);
 
+  useEffect(() => {
+    if (props.mode === 'edit') {
+      setName(props.lead.name);
+      setEmail(props.lead.email);
+      setPhone(props.lead.phone);
+      setCity(props.lead.city);
+      setNote(props.lead.note);
+      setBase(props.lead.base_id);
+      setStatus(props.lead.status_id);
+      setSource(props.lead.source_id);
+      setCampaign(props.lead.campaign_id);
+      setStaff(props.lead.staff_id);
+      setGender(props.lead.gender);
+      setDob(props.lead.dob);
+      setAddress(props.lead.address);
+      setFather(props.lead.father_name);
+      setMother(props.lead.mother_name);
+      setUniversity(props.lead.university);
+      setIdentity(props.lead.identity_code);
+      setNationality(props.lead.nationality);
+      setWork(props.lead.work);
+      setKnow(props.lead.how_know);
+      setFacebook(props.lead.facebook);
+    }
+  }, []);
+
   function saveLead() {
     if (isEmptyInput(name)) {
       Alert.alert('Thông báo', 'Bạn phải điền tên học viên');
@@ -55,6 +81,7 @@ function AddLeadsComponent(props) {
       Alert.alert('Thông báo', 'Bạn phải điền email');
     } else {
       let lead = {
+        id: props.lead.id,
         address: address,
         base_id: baseId,
         campaign_id: campaignId,
@@ -77,7 +104,11 @@ function AddLeadsComponent(props) {
         university: university,
         work: work,
       };
-      props.saveLead(lead);
+      if (props.mode === 'edit') {
+        props.saveLead('edit', lead);
+      } else {
+        props.saveLead('add', lead);
+      }
     }
   }
 
@@ -151,7 +182,7 @@ function AddLeadsComponent(props) {
               <TagItem
                 title={'Trạng thái'}
                 placeholder={'No status'}
-                defaultValue={null}
+                defaultValue={statusId}
                 options={props.statuses}
                 hasHashInHexColor={true}
                 onValueChange={(value) => setStatus(value.id)}
@@ -159,7 +190,7 @@ function AddLeadsComponent(props) {
               <TagItem
                 title={'Nguồn'}
                 placeholder={'No Source'}
-                defaultValue={null}
+                defaultValue={sourceId}
                 options={props.sources}
                 hasHashInHexColor={true}
                 onValueChange={(value) => setSource(value.id)}
@@ -167,7 +198,7 @@ function AddLeadsComponent(props) {
               <TagItem
                 title={'Chiến dịch'}
                 placeholder={'No Campaign'}
-                defaultValue={null}
+                defaultValue={campaignId}
                 options={props.campaigns}
                 hasHashInHexColor={true}
                 onValueChange={(value) => setCampaign(value.id)}
@@ -175,7 +206,7 @@ function AddLeadsComponent(props) {
               <TagItem
                 title={'P.I.C'}
                 placeholder={'No P.I.C'}
-                defaultValue={null}
+                defaultValue={staffId}
                 options={props.staff}
                 hasHashInHexColor={false}
                 onValueChange={(value) => setStaff(value.id)}
@@ -291,4 +322,4 @@ const styles = {
   },
 };
 
-export default AddLeadsComponent;
+export default AddEditLeadsComponent;

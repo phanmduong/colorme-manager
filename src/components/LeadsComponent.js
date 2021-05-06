@@ -132,6 +132,7 @@ class LeadsComponent extends React.Component {
       changeTags={this.props.changeTags}
       loadStaff={this.props.loadStaff}
       note={item.note}
+      lead={item}
     />
   );
 
@@ -141,19 +142,13 @@ class LeadsComponent extends React.Component {
         data={this.props.leads}
         renderItem={this.renderItem}
         contentContainerStyle={{flexGrow: 1}}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
         ListHeaderComponent={this.headerComponent}
         onEndReached={this.props.loadLeads}
         ListEmptyComponent={
           this.props.isLoadingLeads ? (
-            this.props.refreshingLeads ? (
-              <View />
-            ) : (
-              <Loading size={width / 8} />
-            )
-          ) : this.props.refreshingLeads ? (
-            <View />
-          ) : (
+            !this.props.refreshingLeads && <Loading size={width / 8} />
+          ) : !this.props.refreshingLeads && (
             <View style={styles.container}>
               <Text style={{color: theme.dangerColor, fontSize: 16}}>
                 Không có kết quả

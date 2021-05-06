@@ -102,6 +102,35 @@ export function saveLead(lead, token, domain) {
   });
 }
 
+export function updateLead(lead, token, domain) {
+  let url = `${env.manageApiUrlAuth(domain)}/v1/leads/${
+    lead.id
+  }?token=${token}`;
+  return axios.put(url, {
+    address: lead.address,
+    base_id: lead.base_id,
+    campaign_id: lead.campaign_id,
+    city: lead.city,
+    dob: lead.dob,
+    email: lead.email,
+    facebook: lead.facebook,
+    father_name: lead.father_name,
+    gender: lead.gender,
+    how_know: lead.how_know,
+    identity_code: lead.identity_code,
+    mother_name: lead.mother_name,
+    name: lead.name,
+    nationality: lead.nationality,
+    note: lead.note,
+    phone: lead.phone,
+    source_id: lead.source_id,
+    status_id: lead.status_id,
+    staff_id: lead.staff_id,
+    university: lead.university,
+    work: lead.work,
+  });
+}
+
 export function assignCampaign(campaign_id, lead_id, token, domain) {
   let url = `${env.manageApiUrlAuth(
     domain,

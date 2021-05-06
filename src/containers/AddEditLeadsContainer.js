@@ -6,10 +6,10 @@ import theme from '../styles';
 import * as leadsActions from '../actions/leadsActions';
 import * as baseActions from '../actions/baseActions';
 import {bindActionCreators} from 'redux';
-import AddLeadsComponent from '../components/AddLeadsComponent';
+import AddEditLeadsComponent from '../components/AddEditLeadsComponent';
 import * as saveRegisterActions from '../actions/saveRegisterActions';
 
-class AddLeadsContainer extends React.Component {
+class AddEditLeadsContainer extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
@@ -80,8 +80,9 @@ class AddLeadsContainer extends React.Component {
     );
   };
 
-  saveLead = (lead) => {
+  saveLead = (mode = 'add', lead) => {
     this.props.leadsActions.saveLead(
+      mode,
       lead,
       this.props.token,
       this.props.domain,
@@ -90,11 +91,15 @@ class AddLeadsContainer extends React.Component {
   };
 
   render() {
+    const lead = this.props.navigation.getParam('lead');
+    const mode = this.props.navigation.getParam('mode');
     return (
-      <AddLeadsComponent
+      <AddEditLeadsComponent
         {...this.props}
         saveLead={this.saveLead}
         loadStaff={this.loadStaff}
+        lead={lead}
+        mode={mode}
       />
     );
   }
@@ -140,4 +145,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddLeadsContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(AddEditLeadsContainer);

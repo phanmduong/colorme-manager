@@ -270,36 +270,60 @@ function loadStaffError() {
   };
 }
 
-export function saveLead(lead, token, domain, callback) {
+export function saveLead(mode = 'add', lead, token, domain, callback) {
   return function (dispatch) {
     dispatch(beginSaveLead());
-    leadsApi
-      .saveLead(lead, token, domain)
-      .then(function (res) {
-        dispatch(saveLeadSuccessful(res));
-        Alert.alert(
-          'Thông báo',
-          res.data.message
-            ? res.data.message
-            : 'Tạo lead thành công',
-          [
-            {
-              text: 'OK',
-              onPress: () => {
-                if (callback) {
-                  callback();
-                }
+    if (mode === 'add') {
+      leadsApi
+        .saveLead(lead, token, domain)
+        .then(function (res) {
+          dispatch(saveLeadSuccessful(res));
+          Alert.alert(
+            'Thông báo',
+            res.data.message ? res.data.message : 'Tạo lead thành công',
+            [
+              {
+                text: 'OK',
+                onPress: () => {
+                  if (callback) {
+                    callback();
+                  }
+                },
               },
-            },
-          ],
-        );
-      })
-      .catch((error) => {
-        dispatch(saveLeadError());
-        console.log(error);
-        Alert.alert('Thông báo', 'Có lỗi xảy ra');
-        throw error;
-      });
+            ],
+          );
+        })
+        .catch((error) => {
+          dispatch(saveLeadError());
+          Alert.alert('Thông báo', 'Có lỗi xảy ra');
+          throw error;
+        });
+    } else if (mode === 'edit') {
+      leadsApi
+        .updateLead(lead, token, domain)
+        .then(function (res) {
+          dispatch(saveLeadSuccessful(res));
+          Alert.alert(
+            'Thông báo',
+            res.data.message ? res.data.message : 'Sửa lead thành công',
+            [
+              {
+                text: 'OK',
+                onPress: () => {
+                  if (callback) {
+                    callback();
+                  }
+                },
+              },
+            ],
+          );
+        })
+        .catch((error) => {
+          dispatch(saveLeadError());
+          Alert.alert('Thông báo', 'Có lỗi xảy ra');
+          throw error;
+        });
+    }
   };
 }
 

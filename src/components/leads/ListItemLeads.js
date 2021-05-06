@@ -145,6 +145,7 @@ class ListItemLeads extends React.Component {
       city,
       pic,
       note,
+      lead,
     } = this.props;
     return (
       <TouchableOpacity
@@ -193,9 +194,7 @@ class ListItemLeads extends React.Component {
                           marginRight: 5,
                         },
                       }}>
-                      <Text style={styles.saler}>
-                        {getShortName(pic.name)}
-                      </Text>
+                      <Text style={styles.saler}>{getShortName(pic.name)}</Text>
                     </View>
                   ) : (
                     <View
@@ -321,7 +320,10 @@ class ListItemLeads extends React.Component {
                 <TouchableOpacity
                   onPress={() => {
                     this.props.setStudentId(id);
-                    this.props.navigation.navigate('InfoStudentDetails');
+                    this.props.navigation.navigate('AddLead', {
+                      lead: lead,
+                      mode: 'edit',
+                    });
                   }}>
                   <View style={styles.button}>
                     <Text style={{fontSize: 16}}>Sửa</Text>

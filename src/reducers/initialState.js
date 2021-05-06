@@ -535,6 +535,8 @@ export default {
     errorChangeStatusTag: false,
     isChangingPICTag: false,
     errorChangePICTag: false,
+    isChangingRate: false,
+    errorChangeRate: false,
     courses: [],
     isLoadingCourses: false,
     errorCourses: false,

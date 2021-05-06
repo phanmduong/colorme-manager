@@ -159,7 +159,7 @@ class LeadsComponent extends React.Component {
         refreshControl={
           <RefreshControl
             refreshing={this.props.refreshingLeads}
-            onRefresh={() => this.props.onRefresh()}
+            onRefresh={this.props.onRefresh}
           />
         }
       />

@@ -158,3 +158,10 @@ export function assignPIC(staff_id, lead_id, token, domain) {
   )}/v1/leads/${lead_id}/assign-pic/${staff_id}?token=${token}`;
   return axios.put(url);
 }
+
+export function assignRate(rate, lead_id, token, domain) {
+  let url = `${env.manageApiUrlAuth(
+    domain,
+  )}/v1/leads/${lead_id}/assign-rate/${rate}?token=${token}`;
+  return axios.put(url);
+}

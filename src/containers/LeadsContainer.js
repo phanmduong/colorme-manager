@@ -271,11 +271,21 @@ class LeadsContainer extends React.Component {
     );
   };
 
-  changeTags = (lead_id, campaign_id, source_id, status_id, staff_id) => {
+  changeRate = (rate, lead_id) => {
+    this.props.leadsActions.changeRateTag(
+      rate,
+      lead_id,
+      this.props.token,
+      this.props.domain,
+    );
+  };
+
+  changeTags = (lead_id, campaign_id, source_id, status_id, staff_id, rate) => {
     this.changeCampaignTag(campaign_id, lead_id);
     this.changeSourceTag(source_id, lead_id);
     this.changeStatusTag(status_id, lead_id);
     this.changePICTag(staff_id, lead_id);
+    this.changeRate(rate, lead_id);
     setTimeout(() => this.onRefresh(), 800);
   };
 
@@ -353,6 +363,8 @@ function mapStateToProps(state) {
     errorChangePICTag: state.leads.errorChangePICTag,
     isChangingSourceTag: state.leads.isChangingSourceTag,
     errorChangeSourceTag: state.leads.errorChangeSourceTag,
+    isChangingRate: state.leads.isChangingRate,
+    errorChangeRate: state.leads.errorChangeRate,
     callBackStartTime: state.leads.callBackStartTime,
     callBackEndTime: state.leads.callBackEndTime,
     mockExamStartTime: state.leads.mockExamStartTime,

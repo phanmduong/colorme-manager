@@ -166,6 +166,21 @@ export default function leadsReducer(state = initialState.leads, action) {
         isChangingPICTag: action.isChangingPICTag,
         errorChangePICTag: action.errorChangePICTag,
       });
+    case types.BEGIN_CHANGE_RATE:
+      return Object.assign({}, state, {
+        isChangingRate: action.isChangingRate,
+        errorChangeRate: action.errorChangeRate,
+      });
+    case types.CHANGE_RATE_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isChangingRate: action.isChangingRate,
+        errorChangeRate: action.errorChangeRate,
+      });
+    case types.CHANGE_RATE_ERROR:
+      return Object.assign({}, state, {
+        isChangingRate: action.isChangingRate,
+        errorChangeRate: action.errorChangeRate,
+      });
     case types.ON_SELECT_CALL_BACK_START_TIME_LEADS:
       return Object.assign({}, state, {
         callBackStartTime: action.callBackStartTime,

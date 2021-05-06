@@ -504,6 +504,45 @@ function changePICTagError() {
   };
 }
 
+export function changeRateTag(rate, lead_id, token, domain) {
+  return function (dispatch) {
+    dispatch(beginChangeRateTag());
+    leadsApi
+      .assignRate(rate, lead_id, token, domain)
+      .then((res) => {
+        dispatch(changeRateTagSuccessful());
+      })
+      .catch((error) => {
+        dispatch(changeRateTagError());
+        throw error;
+      });
+  };
+}
+
+function beginChangeRateTag() {
+  return {
+    type: types.BEGIN_CHANGE_PIC_TAG,
+    isChangingRate: true,
+    errorChangeRate: false,
+  };
+}
+
+function changeRateTagSuccessful() {
+  return {
+    type: types.CHANGE_PIC_TAG_SUCCESSFUL,
+    isChangingRate: false,
+    errorChangeRate: false,
+  };
+}
+
+function changeRateTagError() {
+  return {
+    type: types.CHANGE_STATUS_TAG_ERROR,
+    isChangingRate: false,
+    errorChangeRate: true,
+  };
+}
+
 export function onSelectCallBackStartTime(date) {
   return {
     type: types.ON_SELECT_CALL_BACK_START_TIME_LEADS,

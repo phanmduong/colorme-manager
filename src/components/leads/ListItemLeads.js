@@ -21,102 +21,6 @@ class ListItemLeads extends React.Component {
     };
   }
 
-  renderStars = (number) => {
-    switch (number) {
-      case 1:
-        return (
-          <View style={styles.rateRow}>
-            <Image
-              source={require('../../../assets/img/icons8-star-100-filled.png')}
-              style={styles.rateIcon}
-            />
-          </View>
-        );
-      case 2:
-        return (
-          <View style={styles.rateRow}>
-            <Image
-              source={require('../../../assets/img/icons8-star-100-filled.png')}
-              style={styles.rateIcon}
-            />
-            <Image
-              source={require('../../../assets/img/icons8-star-100-filled.png')}
-              style={styles.rateIcon}
-            />
-          </View>
-        );
-      case 3:
-        return (
-          <View style={styles.rateRow}>
-            <Image
-              source={require('../../../assets/img/icons8-star-100-filled.png')}
-              style={styles.rateIcon}
-            />
-            <Image
-              source={require('../../../assets/img/icons8-star-100-filled.png')}
-              style={styles.rateIcon}
-            />
-            <Image
-              source={require('../../../assets/img/icons8-star-100-filled.png')}
-              style={styles.rateIcon}
-            />
-          </View>
-        );
-      case 4:
-        return (
-          <View style={styles.rateRow}>
-            <Image
-              source={require('../../../assets/img/icons8-star-100-filled.png')}
-              style={styles.rateIcon}
-            />
-            <Image
-              source={require('../../../assets/img/icons8-star-100-filled.png')}
-              style={styles.rateIcon}
-            />
-            <Image
-              source={require('../../../assets/img/icons8-star-100-filled.png')}
-              style={styles.rateIcon}
-            />
-            <Image
-              source={require('../../../assets/img/icons8-star-100-filled.png')}
-              style={styles.rateIcon}
-            />
-          </View>
-        );
-      case 5:
-        return (
-          <View style={styles.rateRow}>
-            <Image
-              source={require('../../../assets/img/icons8-star-100-filled.png')}
-              style={styles.rateIcon}
-            />
-            <Image
-              source={require('../../../assets/img/icons8-star-100-filled.png')}
-              style={styles.rateIcon}
-            />
-            <Image
-              source={require('../../../assets/img/icons8-star-100-filled.png')}
-              style={styles.rateIcon}
-            />
-            <Image
-              source={require('../../../assets/img/icons8-star-100-filled.png')}
-              style={styles.rateIcon}
-            />
-            <Image
-              source={require('../../../assets/img/icons8-star-100-filled.png')}
-              style={styles.rateIcon}
-            />
-          </View>
-        );
-      default:
-        return null;
-    }
-  };
-
-  toggleCallModal = () => {
-    this.setState({callModalVisible: !this.state.callModalVisible});
-  };
-
   toggleAssignModal = () => {
     this.setState({assignModalVisible: !this.state.assignModalVisible});
   };
@@ -182,6 +86,29 @@ class ListItemLeads extends React.Component {
                   this.toggleAssignModal();
                 }}>
                 <View style={styles.containerSubTitle}>
+                  {rate ? (
+                    <View
+                      style={{
+                        ...styles.card,
+                        ...{
+                          backgroundColor: '#FFC106',
+                          marginRight: 5,
+                        },
+                      }}>
+                      <Text style={styles.saler}>{rate} sao</Text>
+                    </View>
+                  ) : (
+                    <View
+                      style={{
+                        ...styles.card,
+                        ...{
+                          backgroundColor: '#999',
+                          marginRight: 5,
+                        },
+                      }}>
+                      <Text style={styles.saler}>No Rate</Text>
+                    </View>
+                  )}
                   {pic && pic.name && pic.color ? (
                     <View
                       style={{
@@ -291,31 +218,28 @@ class ListItemLeads extends React.Component {
                   )}
                 </View>
               </TouchableOpacity>
-              <View>
-                {this.renderStars(rate)}
-                {email ? (
-                  <Text numberOfLines={1} style={styles.classInfoContainer}>
-                    {email}
-                  </Text>
-                ) : null}
-                {phone ? (
-                  <Call
-                    extraPadding={{paddingTop: 5, fontSize: 15}}
-                    url={'tel:' + phone}
-                    phone={phone}
-                  />
-                ) : null}
-                {city ? (
-                  <Text numberOfLines={1} style={styles.classInfoContainer}>
-                    TP. {city}
-                  </Text>
-                ) : null}
-                {note ? (
-                  <Text numberOfLines={1} style={styles.classInfoContainer}>
-                    Ghi chú: {note}
-                  </Text>
-                ) : null}
-              </View>
+              {email ? (
+                <Text numberOfLines={1} style={styles.classInfoContainer}>
+                  {email}
+                </Text>
+              ) : null}
+              {phone ? (
+                <Call
+                  extraPadding={{paddingTop: 5, fontSize: 15}}
+                  url={'tel:' + phone}
+                  phone={phone}
+                />
+              ) : null}
+              {city ? (
+                <Text numberOfLines={1} style={styles.classInfoContainer}>
+                  TP. {city}
+                </Text>
+              ) : null}
+              {note ? (
+                <Text numberOfLines={1} style={styles.classInfoContainer}>
+                  Ghi chú: {note}
+                </Text>
+              ) : null}
               <View style={styles.buttonContainer}>
                 <TouchableOpacity
                   onPress={() => {
@@ -346,6 +270,7 @@ class ListItemLeads extends React.Component {
               lead_id={id}
               changeTags={this.props.changeTags}
               loadStaff={this.props.loadStaff}
+              rate={rate}
             />
           </View>
         </View>

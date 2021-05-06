@@ -4,6 +4,7 @@ import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../styles';
 import * as leadsActions from '../actions/leadsActions';
+import * as baseActions from '../actions/baseActions';
 import {bindActionCreators} from 'redux';
 import AddLeadsComponent from '../components/AddLeadsComponent';
 import * as saveRegisterActions from '../actions/saveRegisterActions';
@@ -18,6 +19,7 @@ class AddLeadsContainer extends React.Component {
     this.loadStatuses();
     this.loadCampaigns();
     this.loadSources();
+    this.loadBase();
     this.loadStaff('');
   };
 
@@ -36,6 +38,10 @@ class AddLeadsContainer extends React.Component {
       </View>
     ),
   });
+
+  loadBase = () => {
+    this.props.baseActions.loadDataBase(this.props.token, this.props.domain);
+  };
 
   loadProvinces = () => {
     this.props.saveRegisterActions.loadProvinces(
@@ -75,7 +81,12 @@ class AddLeadsContainer extends React.Component {
   };
 
   saveLead = (lead) => {
-    this.props.leadsActions.saveLead(lead, this.props.token, this.props.domain);
+    this.props.leadsActions.saveLead(
+      lead,
+      this.props.token,
+      this.props.domain,
+      () => this.props.navigation.goBack(),
+    );
   };
 
   render() {
@@ -115,6 +126,9 @@ function mapStateToProps(state) {
     staff: state.leads.staff,
     isLoadingStaff: state.leads.isLoadingStaff,
     errorStaff: state.leads.errorStaff,
+    baseData: state.base.baseData,
+    isLoadingBase: state.base.isLoading,
+    errorBase: state.base.errorBase,
   };
 }
 
@@ -122,6 +136,7 @@ function mapDispatchToProps(dispatch) {
   return {
     leadsActions: bindActionCreators(leadsActions, dispatch),
     saveRegisterActions: bindActionCreators(saveRegisterActions, dispatch),
+    baseActions: bindActionCreators(baseActions, dispatch),
   };
 }
 

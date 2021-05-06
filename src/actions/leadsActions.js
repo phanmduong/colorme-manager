@@ -1,5 +1,6 @@
 import * as types from '../constants/actionTypes';
 import * as leadsApi from '../apis/leadsApi';
+import {Alert} from 'react-native';
 
 import axios from 'axios';
 let CancelToken = axios.CancelToken;
@@ -269,16 +270,34 @@ function loadStaffError() {
   };
 }
 
-export function saveLead(lead, token, domain) {
+export function saveLead(lead, token, domain, callback) {
   return function (dispatch) {
     dispatch(beginSaveLead());
     leadsApi
       .saveLead(lead, token, domain)
       .then(function (res) {
         dispatch(saveLeadSuccessful(res));
+        Alert.alert(
+          'Thông báo',
+          res.data.message
+            ? res.data.message
+            : 'Tạo lead thành công',
+          [
+            {
+              text: 'OK',
+              onPress: () => {
+                if (callback) {
+                  callback();
+                }
+              },
+            },
+          ],
+        );
       })
       .catch((error) => {
         dispatch(saveLeadError());
+        console.log(error);
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
         throw error;
       });
   };

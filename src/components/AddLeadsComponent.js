@@ -1,559 +1,282 @@
-import React from 'react';
-import {
-  View,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  Dimensions,
-  Platform,
-  KeyboardAvoidingView,
-  TextInput,
-  Alert,
-  Image,
-} from 'react-native';
-import Search from './common/Search';
-import {CustomPicker} from 'react-native-custom-picker';
-import LinearGradient from 'react-native-linear-gradient';
-import {CITY, GENDER, RATE} from '../constants/constant';
-import Spinkit from 'react-native-spinkit';
-import {convertVietText, isEmptyInput} from '../helper';
+import React, {useState, useRef, useEffect} from 'react';
+import {ScrollView, Platform, KeyboardAvoidingView, Alert} from 'react-native';
+import {isEmptyInput} from '../helper';
 import theme from '../styles';
 import TagItem from './common/TagItem';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import SubmitButton from './common/SubmitButton';
-var {height, width} = Dimensions.get('window');
+import Loading from './common/Loading';
+import Input from './common/Input';
+import InputPicker from './common/InputPicker';
+import {ADDRESS, GENDER} from '../constants/constant';
+import Expand from './common/Expand';
+import DatePicker from './common/DatePicker';
 
-class AddLeadsComponent extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-    this.state = {
-      id: '',
-      name: '',
-      email: '',
-      phone: '',
-      rate: 5,
-      status: '',
-      note: '',
-      father_name: '',
-      interest: '',
-      university: '',
-      city: '',
-      gender: '',
-      status_id: '',
-      address: '',
-      campaign_id: '',
-      carer_id: '',
-      source_id: '',
-      search: '',
-      expanded: false,
-    };
-  }
+function AddLeadsComponent(props) {
+  const [name, setName] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [phone, setPhone] = useState(null);
+  const [city, setCity] = useState(null);
+  const [note, setNote] = useState(null);
+  const [baseId, setBase] = useState(null);
+  const [statusId, setStatus] = useState(null);
+  const [sourceId, setSource] = useState(null);
+  const [campaignId, setCampaign] = useState(null);
+  const [staffId, setStaff] = useState(null);
+  const [gender, setGender] = useState(null);
+  const [dob, setDob] = useState(null);
+  const [address, setAddress] = useState(null);
+  const [fatherName, setFather] = useState(null);
+  const [motherName, setMother] = useState(null);
+  const [university, setUniversity] = useState(null);
+  const [identityCode, setIdentity] = useState(null);
+  const [nationality, setNationality] = useState(null);
+  const [work, setWork] = useState(null);
+  const [howKnow, setKnow] = useState(null);
+  const [facebook, setFacebook] = useState(null);
+  const [expanded, setExpanded] = useState(false);
 
-  renderPickerOption = (settings) => {
-    const {item, getLabel} = settings;
-    return (
-      <View style={styles.options}>
-        <Text style={{fontSize: 16}}>{getLabel(item)}</Text>
-      </View>
-    );
-  };
+  const emailRef = useRef(null);
+  const phoneRef = useRef(null);
+  const fatherRef = useRef(null);
+  const motherRef = useRef(null);
+  const universityRef = useRef(null);
+  const identityRef = useRef(null);
+  const nationalityRef = useRef(null);
+  const workRef = useRef(null);
+  const knowRef = useRef(null);
+  const facebookRef = useRef(null);
 
-  renderPickerFooter(action) {
-    return (
-      <TouchableOpacity
-        style={styles.headerFooterContainer}
-        onPress={action.close.bind(this)}>
-        <Text style={{color: '#C50000', fontSize: 19}}>Hủy</Text>
-      </TouchableOpacity>
-    );
-  }
-
-  renderPickerHeader = (title) => {
-    return (
-      <View style={styles.headerFooterContainer}>
-        <Text style={styles.headerFooterText}>{title}</Text>
-        <Search
-          placeholder="Tìm kiếm"
-          onChangeText={(search) => {
-            this.setState({search});
-          }}
-          value={this.state.search}
-          extraStyle={{width: width - 70, marginLeft: 0}}
-          extraInputStyle={{width: width - 38 - 80}}
-        />
-      </View>
-    );
-  };
-
-  renderPickerField = (settings) => {
-    const {selectedItem, defaultText, getLabel} = settings;
-    return (
-      <LinearGradient
-        colors={['#F6F6F6', '#F6F6F6']}
-        style={styles.inputContainer}
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 0}}>
-        {!selectedItem && (
-          <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
-            <Text style={{color: '#b7b7b7', fontSize: 15}}>{defaultText}</Text>
-            <Text>▼</Text>
-          </View>
-        )}
-        {selectedItem && (
-          <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
-            <Text style={{color: 'black', fontSize: 15}}>
-              {getLabel(selectedItem)}
-            </Text>
-            <Text>▼</Text>
-          </View>
-        )}
-      </LinearGradient>
-    );
-  };
-
-  getDefault = (id, array) => {
-    for (let item of array) {
-      if (item.id === id) {
-        return item;
-      }
-    }
-    return array[0];
-  };
-
-  getSearchedResults = (array) => {
-    let list = [];
-    if (this.state.search === '') {
-      return array;
-    } else {
-      for (let item of array) {
-        let normalizedName = item.name;
-        if (
-          convertVietText(normalizedName).includes(
-            convertVietText(this.state.search),
-          )
-        ) {
-          list.push(item);
-        }
-      }
-      return list;
-    }
-  };
-
-  toggleExpand = () => {
-    this.setState({
-      expanded: !this.state.expanded,
-    });
-  };
-
-  getDataAddress = () => {
-    if (!this.props.provinces || this.props.provinces.length <= 0) {
-      return;
-    }
-    let address = [];
-
-    this.props.provinces.forEach((province) => {
-      province.districts.forEach((district) => {
-        address = [
-          ...address,
-          {
-            id: `${district.type} ${district.name}, ${province.type} ${province.name}`,
-            name: `${district.type} ${district.name}, ${province.type} ${province.name}`,
-          },
-        ];
-      });
-    });
-    return address;
-  };
-
-  saveLead = () => {
-    if (isEmptyInput(this.state.name)) {
+  function saveLead() {
+    if (isEmptyInput(name)) {
       Alert.alert('Thông báo', 'Bạn phải điền tên học viên');
-    } else if (isEmptyInput(this.state.phone)) {
+    } else if (isEmptyInput(phone)) {
       Alert.alert('Thông báo', 'Bạn phải điền số điện thoại');
-    } else if (isEmptyInput(this.state.email)) {
+    } else if (isEmptyInput(email)) {
       Alert.alert('Thông báo', 'Bạn phải điền email');
     } else {
       let lead = {
-        id: this.state.id,
-        name: this.state.name,
-        email: this.state.email,
-        phone: this.state.phone,
-        rate: this.state.rate,
-        status: this.state.status,
-        note: this.state.note,
-        father_name: this.state.father_name,
-        interest: this.state.interest,
-        university: this.state.university,
-        city: this.state.city,
-        gender: this.state.gender,
-        status_id: this.state.status_id,
-        address: this.state.address,
-        campaign_id: this.state.campaign_id,
-        source_id: this.state.source_id,
-        carer_id: this.state.carer_id,
+        address: address,
+        base_id: baseId,
+        campaign_id: campaignId,
+        city: city,
+        dob: dob,
+        email: email,
+        facebook: facebook,
+        father_name: fatherName,
+        gender: gender,
+        how_know: howKnow,
+        identity_code: identityCode,
+        mother_name: motherName,
+        name: name,
+        nationality: nationality,
+        note: note,
+        phone: phone,
+        source_id: sourceId,
+        status_id: statusId,
+        staff_id: staffId,
+        university: university,
+        work: work,
       };
-      this.props.saveLead(lead);
-      if (this.props.errorSaveLead) {
-        Alert.alert('Thông báo', 'Có lỗi xảy ra!');
-      } else {
-        Alert.alert('Thông báo', 'Đăng ký thành công!');
-        this.props.navigation.navigate('Leads');
-      }
+      props.saveLead(lead);
     }
-  };
+  }
 
-  render() {
-    if (this.props.isLoadingProvinces || this.props.isLoadingStatuses) {
-      return (
-        <View style={{flex: 1}}>
-          <View
-            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Spinkit
-              isVisible
-              color={theme.mainColor}
-              type="Wave"
-              size={width / 8}
-            />
-          </View>
-        </View>
-      );
-    } else {
-      return (
-        <KeyboardAvoidingView
-          style={{flex: 1}}
-          behavior={Platform.OS === 'ios' ? 'padding' : ''}
-          enabled
-          keyboardVerticalOffset={100}>
-          <ScrollView
-            style={styles.container}
-            showsVerticalScrollIndicator={false}>
-            <View style={{marginTop: 30}}>
-              <Text style={styles.titleForm}>
-                Tên <Text style={{color: '#C50000'}}>*</Text>
-              </Text>
-              <View style={styles.inputContainer}>
-                <TextInput
-                  {...this.props}
-                  value={this.state.name}
-                  onChangeText={(data) => this.setState({name: data})}
-                  returnKeyType={'next'}
-                  placeholder="Tên"
-                  blurOnSubmit={false}
-                  onSubmitEditing={(event) => {
-                    this.refs.email.focus();
-                  }}
-                  style={{fontSize: 15}}
-                />
-              </View>
-            </View>
-            <View style={{marginTop: 30}}>
-              <Text style={styles.titleForm}>
-                Email <Text style={{color: '#C50000'}}>*</Text>
-              </Text>
-              <View style={styles.inputContainer}>
-                <TextInput
-                  {...this.props}
-                  value={this.state.email}
-                  autoCapitalize={'none'}
-                  ref={'email'}
-                  onChangeText={(data) => this.setState({email: data})}
-                  returnKeyType={'next'}
-                  placeholder="Email"
-                  blurOnSubmit={false}
-                  onSubmitEditing={(event) => {
-                    this.refs.phone.focus();
-                  }}
-                  style={{fontSize: 15}}
-                />
-              </View>
-            </View>
-            <View style={{marginTop: 30}}>
-              <Text style={styles.titleForm}>
-                Số điện thoại <Text style={{color: '#C50000'}}>*</Text>
-              </Text>
-              <View style={styles.inputContainer}>
-                <TextInput
-                  {...this.props}
-                  value={this.state.phone}
-                  ref={'phone'}
-                  onChangeText={(data) => this.setState({phone: data})}
-                  returnKeyType={'next'}
-                  placeholder="Số điện thoại"
-                  blurOnSubmit={false}
-                  onSubmitEditing={(event) => {
-                    this.refs.phone.blur();
-                  }}
-                  style={{fontSize: 15}}
-                />
-              </View>
-            </View>
-            <View style={{marginTop: 30}}>
-              <Text style={styles.titleForm}>Chọn thành phố</Text>
-              <CustomPicker
-                options={this.getSearchedResults(CITY)}
-                getLabel={(item) => item.name}
-                placeholder={'Chọn thành phố'}
-                modalAnimationType={'fade'}
-                optionTemplate={this.renderPickerOption}
-                fieldTemplate={this.renderPickerField}
-                headerTemplate={() => this.renderPickerHeader('Chọn thành phố')}
-                footerTemplate={this.renderPickerFooter}
-                onBlur={() => this.setState({search: ''})}
-                modalStyle={{
-                  borderRadius: 6,
-                }}
-                onValueChange={(value) => {
-                  this.setState({
-                    city: value.id,
-                    search: '',
-                  });
-                }}
+  function toggleExpand() {
+    setExpanded(!expanded);
+  }
+
+  if (props.isLoadingProvinces || props.isLoadingStatuses) {
+    return <Loading />;
+  } else {
+    return (
+      <KeyboardAvoidingView
+        style={{flex: 1}}
+        behavior={Platform.OS === 'ios' ? 'padding' : ''}
+        enabled
+        keyboardVerticalOffset={100}>
+        <ScrollView
+          style={styles.container}
+          showsVerticalScrollIndicator={false}>
+          <Input
+            title={'Tên học viên'}
+            value={name}
+            onChangeText={setName}
+            placeholder={'Nhập họ và tên'}
+            required
+            onSubmitEditing={() => emailRef.current.focus()}
+          />
+          <Input
+            title={'Email'}
+            value={email}
+            onChangeText={setEmail}
+            placeholder={'Nhập email'}
+            required
+            refName={emailRef}
+            onSubmitEditing={() => phoneRef.current.focus()}
+          />
+          <Input
+            title={'Số điện thoại'}
+            value={phone}
+            onChangeText={setPhone}
+            placeholder={'Nhập số điện thoại'}
+            required
+            keyboardType={'number-pad'}
+            refName={phoneRef}
+          />
+          <InputPicker
+            title={'Thành phố'}
+            selectedId={city}
+            onChangeValue={setCity}
+            options={ADDRESS}
+            header={'Chọn thành phố'}
+          />
+          <Input
+            title={'Ghi chú'}
+            value={note}
+            onChangeText={setNote}
+            placeholder={'Nhập ghi chú'}
+          />
+          <InputPicker
+            title={'Cơ sở'}
+            header={'Chọn cơ sở'}
+            options={props.baseData}
+            onChangeValue={setBase}
+            selectedId={baseId}
+          />
+
+          <Expand isExpanded={expanded} toggleExpand={toggleExpand} />
+
+          {expanded ? (
+            <>
+              <TagItem
+                title={'Trạng thái'}
+                placeholder={'No status'}
+                defaultValue={null}
+                options={props.statuses}
+                hasHashInHexColor={true}
+                onValueChange={(value) => setStatus(value.id)}
               />
-            </View>
-            <View style={{marginTop: 30}}>
-              <Text style={styles.titleForm}>Chọn đánh giá</Text>
-              <CustomPicker
-                options={this.getSearchedResults(RATE)}
-                defaultValue={this.getDefault(this.state.rate, RATE)}
-                getLabel={(item) => item.name}
-                placeholder={'Chọn đánh giá'}
-                modalAnimationType={'fade'}
-                optionTemplate={this.renderPickerOption}
-                fieldTemplate={this.renderPickerField}
-                headerTemplate={() => this.renderPickerHeader('Chọn đánh giá')}
-                footerTemplate={this.renderPickerFooter}
-                onBlur={() => this.setState({search: ''})}
-                modalStyle={{
-                  borderRadius: 6,
-                }}
-                onValueChange={(value) => {
-                  this.setState({
-                    rate: value.id,
-                    search: '',
-                  });
-                }}
+              <TagItem
+                title={'Nguồn'}
+                placeholder={'No Source'}
+                defaultValue={null}
+                options={props.sources}
+                hasHashInHexColor={true}
+                onValueChange={(value) => setSource(value.id)}
               />
-            </View>
-            <TouchableOpacity onPress={() => this.toggleExpand()}>
-              <View style={styles.expandContainer}>
-                <Text style={styles.expandTitle}>Mở rộng</Text>
-                {!this.state.expanded ? (
-                  <MaterialIcons
-                    name={'expand-more'}
-                    color={'black'}
-                    size={20}
-                  />
-                ) : (
-                  <MaterialIcons
-                    name={'expand-less'}
-                    color={'black'}
-                    size={20}
-                  />
-                )}
-              </View>
-            </TouchableOpacity>
-            {this.state.expanded ? (
-              <View>
-                <TagItem
-                  title={'Nguồn'}
-                  placeholder={'No Source'}
-                  defaultValue={null}
-                  options={this.props.sources}
-                  hasHashInHexColor={true}
-                  onValueChange={(value) =>
-                    this.setState({source_id: value.id})
-                  }
-                />
-                <TagItem
-                  title={'Chiến dịch'}
-                  placeholder={'No Campaign'}
-                  defaultValue={null}
-                  options={this.props.campaigns}
-                  hasHashInHexColor={false}
-                  onValueChange={(value) =>
-                    this.setState({campaign_id: value.id})
-                  }
-                />
-                <View style={{marginTop: 30}}>
-                  <Text style={styles.titleForm}>Tên phụ huynh</Text>
-                  <View style={styles.inputContainer}>
-                    <TextInput
-                      {...this.props}
-                      value={this.state.father_name}
-                      ref={'father_name'}
-                      onChangeText={(data) =>
-                        this.setState({father_name: data})
-                      }
-                      returnKeyType={'next'}
-                      placeholder="Tên phụ huynh"
-                      blurOnSubmit={false}
-                      onSubmitEditing={(event) => {
-                        this.refs.father_name.blur();
-                      }}
-                      style={{fontSize: 15}}
-                    />
-                  </View>
-                </View>
-                <View style={{marginTop: 30}}>
-                  <Text style={styles.titleForm}>Địa chỉ</Text>
-                  <CustomPicker
-                    options={this.getSearchedResults(this.getDataAddress())}
-                    getLabel={(item) => item.name}
-                    placeholder={'Chọn địa chỉ'}
-                    modalAnimationType={'fade'}
-                    onBlur={() => this.setState({search: ''})}
-                    optionTemplate={this.renderPickerOption}
-                    fieldTemplate={this.renderPickerField}
-                    headerTemplate={() =>
-                      this.renderPickerHeader('Chọn địa chỉ')
-                    }
-                    footerTemplate={this.renderPickerFooter}
-                    modalStyle={{
-                      borderRadius: 6,
-                    }}
-                    onValueChange={(value) => {
-                      this.setState({
-                        address: value.id,
-                        search: '',
-                      });
-                    }}
-                  />
-                </View>
-                <View style={{marginTop: 30}}>
-                  <Text style={styles.titleForm}>Chọn giới tính</Text>
-                  <CustomPicker
-                    options={this.getSearchedResults(GENDER)}
-                    getLabel={(item) => item.name}
-                    placeholder={'Chọn giới tính'}
-                    modalAnimationType={'fade'}
-                    optionTemplate={this.renderPickerOption}
-                    fieldTemplate={this.renderPickerField}
-                    headerTemplate={() =>
-                      this.renderPickerHeader('Chọn giới tính')
-                    }
-                    footerTemplate={this.renderPickerFooter}
-                    onBlur={() => this.setState({search: ''})}
-                    modalStyle={{
-                      borderRadius: 6,
-                    }}
-                    onValueChange={(value) => {
-                      this.setState({
-                        gender: value.id,
-                        search: '',
-                      });
-                    }}
-                  />
-                </View>
-                <View style={{marginTop: 30}}>
-                  <Text style={styles.titleForm}>Trường học</Text>
-                  <View style={styles.inputContainer}>
-                    <TextInput
-                      {...this.props}
-                      value={this.state.university}
-                      ref={'university'}
-                      onChangeText={(data) => this.setState({university: data})}
-                      returnKeyType={'next'}
-                      placeholder="Trường học"
-                      blurOnSubmit={false}
-                      onSubmitEditing={(event) => {
-                        this.refs.interest.focus();
-                      }}
-                      style={{fontSize: 15}}
-                    />
-                  </View>
-                </View>
-                <View style={{marginTop: 30}}>
-                  <Text style={styles.titleForm}>Quan tâm</Text>
-                  <View style={styles.inputContainer}>
-                    <TextInput
-                      {...this.props}
-                      value={this.state.interest}
-                      ref={'interest'}
-                      onChangeText={(data) => this.setState({interest: data})}
-                      returnKeyType={'next'}
-                      placeholder="Quan tâm"
-                      blurOnSubmit={false}
-                      onSubmitEditing={(event) => {
-                        this.refs.interest.blur();
-                      }}
-                      style={{fontSize: 15}}
-                    />
-                  </View>
-                </View>
-                <View style={{marginTop: 30}}>
-                  <Text style={styles.titleForm}>Chọn trạng thái</Text>
-                  <CustomPicker
-                    options={this.getSearchedResults(this.props.statuses)}
-                    getLabel={(item) => item.name}
-                    placeholder={'Chọn trạng thái'}
-                    modalAnimationType={'fade'}
-                    optionTemplate={this.renderPickerOption}
-                    fieldTemplate={this.renderPickerField}
-                    headerTemplate={() =>
-                      this.renderPickerHeader('Chọn trạng thái')
-                    }
-                    footerTemplate={this.renderPickerFooter}
-                    onBlur={() => this.setState({search: ''})}
-                    modalStyle={{
-                      borderRadius: 6,
-                    }}
-                    onValueChange={(value) => {
-                      this.setState({
-                        status_id: value.id,
-                        search: '',
-                      });
-                    }}
-                  />
-                </View>
-                <TagItem
-                  title={'P.I.C'}
-                  placeholder={'No P.I.C'}
-                  defaultValue={null}
-                  options={this.props.staff}
-                  hasHashInHexColor={false}
-                  onValueChange={(value) => this.setState({carer_id: value.id})}
-                  externalSearch={(search) => this.props.loadStaff(search)}
-                />
-                <TagItem
-                  title={'Trạng thái'}
-                  placeholder={'No status'}
-                  defaultValue={null}
-                  options={this.props.statuses}
-                  hasHashInHexColor={true}
-                  onValueChange={(value) =>
-                    this.setState({status_id: value.id})
-                  }
-                />
-                <View style={{marginTop: 30}}>
-                  <Text style={styles.titleForm}>Ghi chú</Text>
-                  <View style={styles.inputContainer}>
-                    <TextInput
-                      {...this.props}
-                      value={this.state.note}
-                      ref={'note'}
-                      onChangeText={(data) => this.setState({note: data})}
-                      returnKeyType={'next'}
-                      placeholder="Ghi chú"
-                      blurOnSubmit={false}
-                      onSubmitEditing={(event) => {
-                        this.refs.note.blur();
-                      }}
-                      style={{fontSize: 15}}
-                    />
-                  </View>
-                </View>
-              </View>
-            ) : null}
-            <SubmitButton
-              title={'Hoàn tất'}
-              onPress={this.saveLead}
-              loading={this.props.isSavingLead}
-              containerStyle={styles.btnSubmit}
-            />
-          </ScrollView>
-        </KeyboardAvoidingView>
-      );
-    }
+              <TagItem
+                title={'Chiến dịch'}
+                placeholder={'No Campaign'}
+                defaultValue={null}
+                options={props.campaigns}
+                hasHashInHexColor={true}
+                onValueChange={(value) => setCampaign(value.id)}
+              />
+              <TagItem
+                title={'P.I.C'}
+                placeholder={'No P.I.C'}
+                defaultValue={null}
+                options={props.staff}
+                hasHashInHexColor={false}
+                onValueChange={(value) => setStaff(value.id)}
+                externalSearch={(search) => props.loadStaff(search)}
+              />
+              <InputPicker
+                title={'Giới tính'}
+                selectedId={gender}
+                onChangeValue={setGender}
+                options={GENDER}
+                header={'Chọn giới tính'}
+              />
+              <DatePicker
+                title={'Ngày sinh'}
+                selectedDate={dob}
+                onDateChange={setDob}
+                mode={'unix'}
+              />
+              <Input
+                title={'Địa chỉ'}
+                value={address}
+                onChangeText={setAddress}
+                placeholder={'Địa chỉ'}
+                onSubmitEditing={() => fatherRef.current.focus()}
+              />
+              <Input
+                title={'Phụ huynh 1'}
+                value={fatherName}
+                placeholder={'Nhập tên phụ huynh 1'}
+                onChangeText={setFather}
+                refName={fatherRef}
+                onSubmitEditing={() => motherRef.current.focus()}
+              />
+              <Input
+                title={'Phụ huynh 2'}
+                value={motherName}
+                placeholder={'Nhập tên phụ huynh 2'}
+                onChangeText={setMother}
+                refName={motherRef}
+                onSubmitEditing={() => universityRef.current.focus()}
+              />
+              <Input
+                title={'Trường học'}
+                value={university}
+                placeholder={'Nhập trường học'}
+                onChangeText={setUniversity}
+                refName={universityRef}
+                onSubmitEditing={() => identityRef.current.focus()}
+              />
+              <Input
+                title={'CMND'}
+                value={identityCode}
+                onChangeText={setIdentity}
+                placeholder={'Nhập CMND'}
+                refName={identityRef}
+                onSubmitEditing={() => nationalityRef.current.focus()}
+              />
+              <Input
+                title={'Quốc tịch'}
+                value={nationality}
+                onChangeText={setNationality}
+                placeholder={'Nhập quốc tịch'}
+                refName={nationalityRef}
+                onSubmitEditing={() => workRef.current.focus()}
+              />
+              <Input
+                title={'Công việc'}
+                value={work}
+                onChangeText={setWork}
+                placeholder={'Nhập công việc'}
+                refName={workRef}
+                onSubmitEditing={() => knowRef.current.focus()}
+              />
+              <Input
+                title={'Lý do biết đến'}
+                value={howKnow}
+                onChangeText={setKnow}
+                placeholder={'Nhập lý do biết đến'}
+                refName={knowRef}
+                onSubmitEditing={() => facebookRef.current.focus()}
+              />
+              <Input
+                title={'Facebook URL'}
+                value={facebook}
+                onChangeText={setFacebook}
+                placeholder={'Nhập Facebook URL'}
+                refName={facebookRef}
+                returnKeyType={'done'}
+                onSubmitEditing={() => facebookRef.current.blur()}
+              />
+            </>
+          ) : null}
+          <SubmitButton
+            title={'Hoàn tất'}
+            onPress={saveLead}
+            loading={props.isSavingLead}
+            containerStyle={styles.btnSubmit}
+          />
+        </ScrollView>
+      </KeyboardAvoidingView>
+    );
   }
 }
 
@@ -563,52 +286,8 @@ const styles = {
     marginBottom: 10,
     flex: 1,
   },
-  options: {
-    marginVertical: 10,
-    paddingVertical: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F0F0F0',
-    marginHorizontal: 20,
-  },
-  headerFooterContainer: {
-    padding: 10,
-    alignItems: 'center',
-  },
-  headerFooterText: {
-    fontSize: 19,
-    fontWeight: 'bold',
-    color: 'black',
-  },
-  inputContainer: {
-    marginTop: 8,
-    height: 45,
-    backgroundColor: '#F6F6F6',
-    justifyContent: 'center',
-    paddingHorizontal: 10,
-    borderRadius: 8,
-  },
-  titleForm: {
-    color: 'black',
-    fontSize: 14,
-  },
   btnSubmit: {
     marginTop: 40,
-  },
-  expandContainer: {
-    alignItems: 'center',
-    flex: 1,
-    marginTop: 30,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  expandIcon: {
-    width: 20,
-    height: 20,
-    marginLeft: 5,
-  },
-  expandTitle: {
-    fontSize: 18,
-    color: 'black',
   },
 };
 

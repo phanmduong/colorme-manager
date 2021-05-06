@@ -76,25 +76,29 @@ export function getStaff(search, token, domain) {
 }
 
 export function saveLead(lead, token, domain) {
-  let url = env.manageApiUrlV3(domain) + '/lead/edit-info?token=' + token;
-  return axios.put(url, {
-    id: lead.id,
-    name: lead.name,
-    email: lead.email,
-    phone: lead.phone,
-    rate: lead.rate,
-    status: lead.status,
-    note: lead.note,
-    father_name: lead.father_name,
-    interest: lead.interest,
-    university: lead.university,
-    city: lead.city,
-    gender: lead.gender,
-    status_id: lead.status_id,
+  let url = env.manageApiUrlAuth(domain) + '/v1/leads?token=' + token;
+  return axios.post(url, {
     address: lead.address,
+    base_id: lead.base_id,
     campaign_id: lead.campaign_id,
+    city: lead.city,
+    dob: lead.dob,
+    email: lead.email,
+    facebook: lead.facebook,
+    father_name: lead.father_name,
+    gender: lead.gender,
+    how_know: lead.how_know,
+    identity_code: lead.identity_code,
+    mother_name: lead.mother_name,
+    name: lead.name,
+    nationality: lead.nationality,
+    note: lead.note,
+    phone: lead.phone,
     source_id: lead.source_id,
-    carer_id: lead.carer_id,
+    status_id: lead.status_id,
+    staff_id: lead.staff_id,
+    university: lead.university,
+    work: lead.work,
   });
 }
 

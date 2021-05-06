@@ -81,7 +81,7 @@ function AddEditLeadsComponent(props) {
       Alert.alert('Thông báo', 'Bạn phải điền email');
     } else {
       let lead = {
-        id: props.lead.id,
+        id: props.lead ? props.lead.id : null,
         address: address,
         base_id: baseId,
         campaign_id: campaignId,

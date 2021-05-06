@@ -33,7 +33,7 @@ class AddEditLeadsContainer extends React.Component {
             color={'black'}
             onPress={() => navigation.goBack()}
           />
-          <Text style={styles.name}>Tạo lead</Text>
+          <Text style={styles.name}>Tạo sửa lead</Text>
         </View>
       </View>
     ),

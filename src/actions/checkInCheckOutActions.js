@@ -11,28 +11,33 @@ import Geolocation from 'react-native-geolocation-service';
 
 let watchID;
 
-const ignoreDevices = ['104cd46e55b546c6', '40f8929c0eb03dfe','44757c666c8d846b'];
+const ignoreDevices = [
+  '104cd46e55b546c6',
+  '40f8929c0eb03dfe',
+  '44757c666c8d846b',
+];
 const LONGITUDE = 105.801194;
 const LATITUDE = 21.022909;
 
 export function loadCheck(token, type, domain) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch({
       type: types.BEGIN_CHECK_IN,
     });
     let device = {
       device_id: DeviceInfo.getUniqueId(),
+      device_os: DeviceInfo.getBrand() + ' - ' + DeviceInfo.getSystemVersion(),
     };
 
     async.waterfall(
       [
-        function(callback) {
+        function (callback) {
           let countCheckLocation = 0;
           let called = false;
           console.log('get location');
           if (Platform.OS === 'ios') {
             watchID = Geolocation.watchPosition(
-              position => {
+              (position) => {
                 console.log(position);
                 if (countCheckLocation === 0) {
                   device.long = position.coords.longitude;
@@ -42,7 +47,7 @@ export function loadCheck(token, type, domain) {
                 }
                 countCheckLocation++;
               },
-              error => {
+              (error) => {
                 console.log('errror');
                 if (ignoreDevices.indexOf(device.device_id) > 0) {
                   device.long = LONGITUDE;
@@ -92,7 +97,13 @@ export function loadCheck(token, type, domain) {
             });
           }
         },
-        async function(callback) {
+        async function (callback) {
+          DeviceInfo.getDeviceName().then((deviceName) => {
+            device.device_name = deviceName;
+            callback(null);
+          });
+        },
+        async function (callback) {
           console.log('ok');
           const ssid = await NetworkInfo.getSSID();
           console.log(ssid);
@@ -104,7 +115,7 @@ export function loadCheck(token, type, domain) {
             callback(null);
           }
         },
-        async function(callback) {
+        async function (callback) {
           console.log('ok2');
           const bssid = await NetworkInfo.getBSSID();
 
@@ -116,7 +127,7 @@ export function loadCheck(token, type, domain) {
             callback(null);
           }
         },
-        function(callback) {
+        function (callback) {
           if (watchID) {
             Geolocation.clearWatch(watchID);
           }
@@ -124,12 +135,12 @@ export function loadCheck(token, type, domain) {
           if (type === 'checkin') {
             checkInCheckOutApi
               .checkin(device, token, domain)
-              .then(function(res) {
+              .then(function (res) {
                 // console.log(device);
                 Alert.alert('Thông báo', 'Hãy đọc nội dung thông báo');
                 callback(null, res);
               })
-              .catch(error => {
+              .catch((error) => {
                 Alert.alert(
                   'Thông báo',
                   JSON.stringify(device) + ', token' + token,
@@ -139,12 +150,12 @@ export function loadCheck(token, type, domain) {
           } else {
             checkInCheckOutApi
               .checkout(device, token, domain)
-              .then(function(res) {
+              .then(function (res) {
                 // console.log(device);
                 Alert.alert('Thông báo', 'Hãy đọc nội dung thông báo');
                 callback(null, res);
               })
-              .catch(error => {
+              .catch((error) => {
                 Alert.alert(
                   'Thông báo',
                   JSON.stringify(device) + ', token' + token,
@@ -155,29 +166,29 @@ export function loadCheck(token, type, domain) {
         },
       ],
 
-      function(err, result) {
+      function (err, result) {
         console.log(err);
         console.log(result);
         if (watchID) {
           Geolocation.clearWatch(watchID);
         }
-        if (err || result.data.status === 0) {
+        if (err || !result.data.status) {
           dispatch({
             type: types.CHECK_IN_ERROR,
             message:
-              result && result.data && result.data.data
-                ? result.data.data.message
+              result && result.data && result.data.check_in_check_out
+                ? result.data.check_in_check_out.message
                 : err,
             checkIn:
-              result && result.data && result.data.data
-                ? result.data.data.check_in
+              result && result.data && result.data.check_in_check_out
+                ? result.data.check_in_check_out
                 : {},
           });
         } else {
           dispatch({
             type: types.CHECK_IN_SUCCESS,
-            message: result.data.data.message,
-            checkIn: result.data.data.check_in,
+            message: result.data.check_in_check_out.message,
+            checkIn: result.data.check_in_check_out,
           });
         }
       },

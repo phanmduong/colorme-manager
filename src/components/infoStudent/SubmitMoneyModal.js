@@ -44,11 +44,12 @@ function SubmitMoneyModal(props) {
 
   function submitMoney() {
     if (money && code && paymentMethod) {
+      const convertedMoney = parseInt(money.split('.').join(''));
       props.submitMoney(
         props.registerId,
         actualInput,
         code,
-        money,
+        convertedMoney,
         note,
         paymentMethod,
         receivedBook,

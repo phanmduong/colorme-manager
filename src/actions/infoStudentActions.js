@@ -154,7 +154,7 @@ export function submitMoney(
         dispatch(loadSubmitMoneySuccessful());
       })
       .catch((error) => {
-        Alert.alert('Thông báo', error.response.data.message);
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
         dispatch(loadSubmitMoneyError());
         throw error;
       });

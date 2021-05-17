@@ -176,8 +176,8 @@ export function loadCheck(token, type, domain) {
           dispatch({
             type: types.CHECK_IN_ERROR,
             message:
-              result && result.data && result.data.check_in_check_out
-                ? result.data.check_in_check_out.message
+              result && result.data && result.data.message
+                ? result.data.message
                 : err,
             checkIn:
               result && result.data && result.data.check_in_check_out

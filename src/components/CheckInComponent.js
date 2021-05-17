@@ -1,5 +1,4 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
 import Loading from '../components/common/Loading';
 import {Dimensions} from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
@@ -10,8 +9,10 @@ import Call from './common/Call';
 import ListItem from './dashboard/ListItem';
 import moment from 'moment';
 
-let {height, width} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 import * as helper from '../helper/index';
+
+const CHECK_IN_NOT_FOUND = 'not-found';
 
 class CheckInComponent extends React.Component {
   constructor(props, context) {
@@ -24,30 +25,12 @@ class CheckInComponent extends React.Component {
   }
 
   componentWillMount() {
-    // NetInfo.addEventListener(
-    //     'connectChange',
-    //     this.handleConnectChange
-    // );
     NetInfo.getConnectionInfo().then((data) => {
       this.getWifiName();
       this.setState({
         typeConnect: helper.typeConnect(data.type),
       });
     });
-
-    // NetInfo.fetch().then(state => {
-    //     this.getWifiName();
-    //     this.setState({
-    //         typeConnect: helper.typeConnect(state.type)
-    //     });
-    // });
-  }
-
-  componentWillUnmount() {
-    // NetInfo.removeEventListener(
-    //     'connectChange',
-    //     this.handleConnectChange
-    // );
   }
 
   getWifiName = async () => {
@@ -77,7 +60,8 @@ class CheckInComponent extends React.Component {
               <Thumbnail
                 large
                 source={
-                  this.props.errorCheckIn
+                  this.props.errorCheckIn ||
+                  this.props.checkInData.status === CHECK_IN_NOT_FOUND
                     ? require('../../assets/img/failed.png')
                     : require('../../assets/img/success.png')
                 }
@@ -85,7 +69,8 @@ class CheckInComponent extends React.Component {
             </View>
             <View style={styles.contentInfoUser}>
               <Text style={styles.status}>
-                {this.props.errorCheckIn
+                {this.props.errorCheckIn ||
+                this.props.checkInData.status === CHECK_IN_NOT_FOUND
                   ? 'Thất bại'.toUpperCase()
                   : 'Thành công'.toUpperCase()}
               </Text>
@@ -101,14 +86,16 @@ class CheckInComponent extends React.Component {
             <Text style={styles.message}>{this.props.message}</Text>
             <View style={{flex: 1}}>
               <List style={styles.containerList}>
-                <ListItem
-                  nameIcon="fontawesome|clock-o"
-                  title="Giờ"
-                  disableSubTitle
-                  number={moment
-                    .unix(this.props.checkInData.time)
-                    .format('HH:mm')}
-                />
+                {this.props.checkInData?.time && (
+                  <ListItem
+                    nameIcon="fontawesome|clock-o"
+                    title="Giờ"
+                    disableSubTitle
+                    number={moment
+                      .unix(this.props.checkInData.time)
+                      .format('HH:mm')}
+                  />
+                )}
                 <ListItem
                   nameIcon="material|share"
                   title={'Kết nối với mạng'}

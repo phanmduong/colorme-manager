@@ -142,8 +142,8 @@ android {
         applicationId "vn.colorme.phanminhduong.colormemanagernew"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 121
-        versionName "3.7"
+        versionCode 122
+        versionName "3.7.1"
         missingDimensionStrategy 'react-native-camera', 'general'
 
         manifestPlaceholders = [onesignal_app_id               : "ceea18e8-322a-4748-b18b-fdf066d9a5ff",

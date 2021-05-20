@@ -11,12 +11,11 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import {CustomPicker} from 'react-native-custom-picker';
-import {GENDER} from '../SaveRegisterComponent';
 import LinearGradient from 'react-native-linear-gradient';
 import Spinkit from 'react-native-spinkit';
 import theme from '../../styles';
 import {convertVietText, isEmptyInput} from '../../helper';
-import {FORMAT_TIME_MYSQL} from '../../constants/constant';
+import {FORMAT_TIME_MYSQL, GENDER} from '../../constants/constant';
 var {height, width} = Dimensions.get('window');
 import moment from 'moment';
 import DateTimePicker from 'react-native-modal-datetime-picker';

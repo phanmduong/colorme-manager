@@ -1,11 +1,14 @@
 import {observable, action, computed} from 'mobx';
 import {groupBy} from '../../helper';
 import {historyShiftsApi} from '../../apis/checkInCheckOutApi';
+import moment from 'moment';
 
 class HistoryAttendanceShiftStore {
   @observable isLoading = false;
   @observable shifts = [];
   @observable error = false;
+  @observable startTime = moment().startOf('week').unix();
+  @observable endTime = moment().endOf('week').unix();
 
   @action
   loadHistoryShift = (
@@ -29,6 +32,16 @@ class HistoryAttendanceShiftStore {
       .finally(() => {
         this.isLoading = false;
       });
+  };
+
+  @action
+  onSelectStartTime = (startTime) => {
+    this.startTime = startTime;
+  };
+
+  @action
+  onSelectEndTime = (endTime) => {
+    this.endTime = endTime;
   };
 
   @computed

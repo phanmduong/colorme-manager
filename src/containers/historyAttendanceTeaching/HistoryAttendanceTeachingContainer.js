@@ -12,6 +12,7 @@ import {Button, Container, Text, View} from 'native-base';
 import ListHistoryAttendanceTeaching from './ListHistoryAttendanceTeaching';
 import * as alert from '../../constants/alert';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import moment from 'moment';
 
 const {width} = Dimensions.get('window');
 
@@ -45,6 +46,14 @@ class HistoryAttendanceTeachingContainer extends React.Component {
     this.store.onSelectEndTime(endTime);
   };
 
+  reload = () => {
+    const startTime = moment().startOf('week').unix();
+    const endTime = moment().endOf('week').unix();
+    this.onSelectStartTime(startTime);
+    this.onSelectEndTime(endTime);
+    this.loadData();
+  };
+
   errorData() {
     const {error} = this.store;
     return (
@@ -56,7 +65,7 @@ class HistoryAttendanceTeachingContainer extends React.Component {
           iconLeft
           danger
           small
-          onPress={this.loadData}
+          onPress={this.reload}
           style={{marginTop: 10, alignSelf: null}}>
           <MaterialCommunityIcons name="reload" color="white" size={20} />
           <Text>Thử lại</Text>

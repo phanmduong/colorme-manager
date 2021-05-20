@@ -1,6 +1,5 @@
 import * as env from '../constants/env';
 import axios from 'axios';
-import {isEmptyInput} from '../helper';
 
 export function getShiftClock(time, token, domain) {
   let url =

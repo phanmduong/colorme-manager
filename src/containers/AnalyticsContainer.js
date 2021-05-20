@@ -266,7 +266,6 @@ class AnalyticsContainer extends React.Component {
   };
 
   render() {
-    console.log(this.props.startDate);
     return (
       <AnalyticsComponent
         {...this.props}

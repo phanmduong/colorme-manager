@@ -1,5 +1,6 @@
 import * as env from '../constants/env';
 import axios from 'axios';
+import {isEmptyInput} from '../helper';
 
 export function getLeads(
   sourceCancel,
@@ -7,66 +8,60 @@ export function getLeads(
   search,
   start_time,
   end_time,
-  carer_id,
-  leadStatusId,
   rate,
-  top,
   address,
   orderBy,
-  orderByType,
   source_id,
   campaign_id,
-  call_back_time,
-  mock_exam_time,
   duplicate,
   lead_tag,
   base_id,
-  imported_at,
+  status_id,
+  pic_id,
+  mock_exam_start_time,
+  mock_exam_end_time,
+  call_back_start_time,
+  call_back_end_time,
+  sortedBy,
   token,
   domain,
 ) {
   let url =
-    env.manageApiUrlV3(domain) +
-    '/lead/all?token=' +
-    token +
-    '&page=' +
-    page +
-    '&search=' +
+    env.manageApiUrlAuth(domain) +
+    '/v1/leads?limit=20&search=' +
     search +
     '&start_time=' +
     start_time +
     '&end_time=' +
     end_time +
-    '&carer_id=' +
-    carer_id +
-    '&leadStatusId=' +
-    leadStatusId +
-    '&rate=' +
-    rate +
-    '&top=' +
-    top +
+    '&page=' +
+    page +
+    (!isEmptyInput(rate) ? '&rates[]=' + rate : '') +
     '&address=' +
     address +
+    (!isEmptyInput(status_id) ? '&status_ids[]=' + status_id : '') +
+    (!isEmptyInput(source_id) ? '&source_ids[]=' + source_id : '') +
+    (!isEmptyInput(campaign_id) ? '&campaign_ids[]=' + campaign_id : '') +
+    (!isEmptyInput(lead_tag) ? '&lead_tags[]=' + lead_tag : '') +
+    (!isEmptyInput(pic_id) ? '&pic_ids[]=' + pic_id : '') +
+    (!isEmptyInput(base_id) ? '&base_ids[]=' + base_id : '') +
+    '&duplicate_column=' +
+    duplicate +
+    '&type=' +
+    '&mock_exam_start_time=' +
+    mock_exam_start_time +
+    '&mock_exam_end_time=' +
+    mock_exam_end_time +
+    '&call_back_start_time=' +
+    call_back_start_time +
+    '&call_back_end_time=' +
+    call_back_end_time +
     '&orderBy=' +
     orderBy +
-    '&orderByType=' +
-    orderByType +
-    '&source_id=' +
-    source_id +
-    '&campaign_id=' +
-    campaign_id +
-    '&call_back_time=' +
-    call_back_time +
-    '&mock_exam_time=' +
-    mock_exam_time +
-    '&duplicate=' +
-    duplicate +
-    '&lead_tag=' +
-    lead_tag +
-    '&base_id=' +
-    base_id +
-    '&imported_at=' +
-    imported_at;
+    '&sortedBy=' +
+    sortedBy +
+    '&token=' +
+    token;
   return axios.get(url, {cancelToken: sourceCancel.token});
 }
 
@@ -81,59 +76,92 @@ export function getStaff(search, token, domain) {
 }
 
 export function saveLead(lead, token, domain) {
-  let url = env.manageApiUrlV3(domain) + '/lead/edit-info?token=' + token;
-  return axios.put(url, {
-    id: lead.id,
-    name: lead.name,
-    email: lead.email,
-    phone: lead.phone,
-    rate: lead.rate,
-    status: lead.status,
-    note: lead.note,
-    father_name: lead.father_name,
-    interest: lead.interest,
-    university: lead.university,
-    city: lead.city,
-    gender: lead.gender,
-    status_id: lead.status_id,
+  let url = env.manageApiUrlAuth(domain) + '/v1/leads?token=' + token;
+  return axios.post(url, {
     address: lead.address,
+    base_id: lead.base_id,
     campaign_id: lead.campaign_id,
+    city: lead.city,
+    dob: lead.dob,
+    email: lead.email,
+    facebook: lead.facebook,
+    father_name: lead.father_name,
+    gender: lead.gender,
+    how_know: lead.how_know,
+    identity_code: lead.identity_code,
+    mother_name: lead.mother_name,
+    name: lead.name,
+    nationality: lead.nationality,
+    note: lead.note,
+    phone: lead.phone,
     source_id: lead.source_id,
-    carer_id: lead.carer_id,
+    status_id: lead.status_id,
+    staff_id: lead.staff_id,
+    university: lead.university,
+    work: lead.work,
   });
 }
 
-export function assignCampaign(campaign_id, user_id, token, domain) {
-  let url =
-    env.manageApiUrlV3(domain) + '/marketing-campaign/assign?token=' + token;
-  return axios.post(url, {
-    campaign_id,
-    user_id,
+export function updateLead(lead, token, domain) {
+  let url = `${env.manageApiUrlAuth(domain)}/v1/leads/${
+    lead.id
+  }?token=${token}`;
+  return axios.put(url, {
+    address: lead.address,
+    base_id: lead.base_id,
+    campaign_id: lead.campaign_id,
+    city: lead.city,
+    dob: lead.dob,
+    email: lead.email,
+    facebook: lead.facebook,
+    father_name: lead.father_name,
+    gender: lead.gender,
+    how_know: lead.how_know,
+    identity_code: lead.identity_code,
+    mother_name: lead.mother_name,
+    name: lead.name,
+    nationality: lead.nationality,
+    note: lead.note,
+    phone: lead.phone,
+    source_id: lead.source_id,
+    status_id: lead.status_id,
+    staff_id: lead.staff_id,
+    university: lead.university,
+    work: lead.work,
   });
 }
 
-export function assignSource(source_id, user_id, token, domain) {
-  let url = env.manageApiUrlV3(domain) + '/source/assign?token=' + token;
-  return axios.post(url, {
-    source_id,
-    user_id,
-  });
+export function assignCampaign(campaign_id, lead_id, token, domain) {
+  let url = `${env.manageApiUrlAuth(
+    domain,
+  )}/v1/leads/${lead_id}/assign-campaign/${campaign_id}?token=${token}`;
+  return axios.put(url);
 }
 
-export function assignStatus(status_id, id, token, domain) {
-  let url = env.manageApiUrlV4(domain) + '/statuses/assign?token=' + token;
-  return axios.post(url, {
-    statusRef: 'leads',
-    id,
-    status_id,
-  });
+export function assignSource(source_id, lead_id, token, domain) {
+  let url = `${env.manageApiUrlAuth(
+    domain,
+  )}/v1/leads/${lead_id}/assign-source/${source_id}?token=${token}`;
+  return axios.put(url);
+}
+
+export function assignStatus(status_id, lead_id, token, domain) {
+  let url = `${env.manageApiUrlAuth(
+    domain,
+  )}/v1/leads/${lead_id}/assign-status/${status_id}?token=${token}`;
+  return axios.put(url);
 }
 
 export function assignPIC(staff_id, lead_id, token, domain) {
-  let url =
-    env.manageApiUrlV3(domain) + '/lead/assign-lead-staff?token=' + token;
-  return axios.put(url, {
-    lead_id,
-    staff_id,
-  });
+  let url = `${env.manageApiUrlAuth(
+    domain,
+  )}/v1/leads/${lead_id}/assign-pic/${staff_id}?token=${token}`;
+  return axios.put(url);
+}
+
+export function assignRate(rate, lead_id, token, domain) {
+  let url = `${env.manageApiUrlAuth(
+    domain,
+  )}/v1/leads/${lead_id}/assign-rate/${rate}?token=${token}`;
+  return axios.put(url);
 }

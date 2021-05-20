@@ -8,12 +8,13 @@ import {observer} from 'mobx-react';
 import HistoryAttendanceTeachingStore from './HistoryAttendanceTeachingStore';
 import Spinkit from 'react-native-spinkit';
 import theme from '../../styles';
-import {Button, Container, Item, Picker, Text, View} from 'native-base';
+import {Button, Container, Text, View} from 'native-base';
 import ListHistoryAttendanceTeaching from './ListHistoryAttendanceTeaching';
 import * as alert from '../../constants/alert';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import moment from 'moment';
 
-var {height, width} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 @observer
 class HistoryAttendanceTeachingContainer extends React.Component {
@@ -24,11 +25,33 @@ class HistoryAttendanceTeachingContainer extends React.Component {
 
   componentWillMount() {
     this.loadData();
-    this.store.loadGens(this.props.token, this.props.domain);
   }
 
   loadData = () => {
-    this.store.loadHistoryTeaching(this.props.token, this.props.domain);
+    const {startTime, endTime} = this.store;
+    this.store.loadHistoryTeaching(
+      this.props.user.id,
+      startTime,
+      endTime,
+      this.props.token,
+      this.props.domain,
+    );
+  };
+
+  onSelectStartTime = (startTime) => {
+    this.store.onSelectStartTime(startTime);
+  };
+
+  onSelectEndTime = (endTime) => {
+    this.store.onSelectEndTime(endTime);
+  };
+
+  reload = () => {
+    const startTime = moment().startOf('week').unix();
+    const endTime = moment().endOf('week').unix();
+    this.onSelectStartTime(startTime);
+    this.onSelectEndTime(endTime);
+    this.loadData();
   };
 
   errorData() {
@@ -42,7 +65,7 @@ class HistoryAttendanceTeachingContainer extends React.Component {
           iconLeft
           danger
           small
-          onPress={this.loadData}
+          onPress={this.reload}
           style={{marginTop: 10, alignSelf: null}}>
           <MaterialCommunityIcons name="reload" color="white" size={20} />
           <Text>Thử lại</Text>
@@ -51,29 +74,10 @@ class HistoryAttendanceTeachingContainer extends React.Component {
     );
   }
 
-  onSelectGenId = (genId) => {
-    this.store.selectedGenId = genId;
-    this.loadData();
-  };
-
   render() {
-    const {isLoading, error, attendances, gens, selectedGenId} = this.store;
+    const {isLoading, error, attendances} = this.store;
     return (
       <Container>
-        <View style={styles.containerPicker}>
-          <Picker
-            iosHeader="Chọn khóa học"
-            mode="dialog"
-            defaultLabel={'Chọn khóa'}
-            selectedValue={selectedGenId}
-            onValueChange={this.onSelectGenId}>
-            {gens.map(function (gen, index) {
-              return (
-                <Item label={'Khóa ' + gen.name} value={gen.id} key={index} />
-              );
-            })}
-          </Picker>
-        </View>
         {isLoading ? (
           <View style={styles.container}>
             <Spinkit
@@ -86,7 +90,12 @@ class HistoryAttendanceTeachingContainer extends React.Component {
         ) : error || (attendances && attendances.length <= 0) ? (
           this.errorData()
         ) : (
-          <ListHistoryAttendanceTeaching store={this.store} />
+          <ListHistoryAttendanceTeaching
+            store={this.store}
+            onSelectStartTime={this.onSelectStartTime}
+            onSelectEndTime={this.onSelectEndTime}
+            loadData={this.loadData}
+          />
         )}
       </Container>
     );

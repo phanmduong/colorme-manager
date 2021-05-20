@@ -149,9 +149,11 @@ class ListStudenClassComponent extends React.Component {
             class_id={item.class_id}
             openQrCode={this.props.openQrCode}
             address={
+              this.props.classInfo?.room?.name &&
+              this.props.classInfo?.base?.address &&
               this.props.classInfo.room.name +
-              ' - ' +
-              this.props.classInfo.base.address
+                ' - ' +
+                this.props.classInfo.base.address
             }
             study_time={this.props.classInfo.study_time}
             class_lesson_time={item.class_lesson_time}
@@ -175,7 +177,7 @@ class ListStudenClassComponent extends React.Component {
   };
 
   render() {
-    console.log(this.props.listStudentClass);
+    console.log(this.props.lessons);
     if (this.props.isLoading || this.props.isLoadingLessons) {
       return (
         <Container>

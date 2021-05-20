@@ -1,38 +1,30 @@
 import {observable, action, computed} from 'mobx';
-import {
-  historyAttendanceShiftApi,
-  historyAttendanceWorkShiftApi,
-} from '../../apis/checkInCheckOutApi';
 import {groupBy} from '../../helper';
-import {loadBaseApi} from '../../apis/baseApi';
-import {loadGenApi} from '../../apis/genApi';
+import {historyShiftsApi} from '../../apis/checkInCheckOutApi';
+import moment from 'moment';
 
 class HistoryAttendanceShiftStore {
   @observable isLoading = false;
   @observable shifts = [];
   @observable error = false;
-  @observable isLoadingBase = false;
-  @observable bases = [];
-  @observable errorBase = false;
-  @observable isLoadingGen = false;
-  @observable gens = [];
-  @observable errorGen = false;
-  @observable selectedGenId = '';
-  @observable selectedBaseId = '';
+  @observable startTime = moment().startOf('week').unix();
+  @observable endTime = moment().endOf('week').unix();
 
   @action
-  loadHistoryShift = (token, domain) => {
+  loadHistoryShift = (
+    type,
+    employee_id,
+    start_time,
+    end_time,
+    token,
+    domain,
+  ) => {
     this.isLoading = true;
     this.error = false;
 
-    historyAttendanceShiftApi(
-      this.selectedBaseId,
-      this.selectedGenId,
-      token,
-      domain,
-    )
+    historyShiftsApi(type, employee_id, start_time, end_time, token, domain)
       .then((res) => {
-        this.shifts = res.data.data.shifts;
+        this.shifts = res.data.history;
       })
       .catch(() => {
         this.error = true;
@@ -43,66 +35,29 @@ class HistoryAttendanceShiftStore {
   };
 
   @action
-  loadHistoryWorkShift = (token, domain) => {
-    this.isLoading = true;
-    this.error = false;
-
-    historyAttendanceWorkShiftApi(
-      this.selectedBaseId,
-      this.selectedGenId,
-      token,
-      domain,
-    )
-      .then((res) => {
-        this.shifts = res.data.data.work_shifts;
-      })
-      .catch(() => {
-        this.error = true;
-      })
-      .finally(() => {
-        this.isLoading = false;
-      });
+  onSelectStartTime = (startTime) => {
+    this.startTime = startTime;
   };
 
   @action
-  loadBases = (token, domain) => {
-    this.isLoadingBase = true;
-    this.errorBase = false;
-
-    loadBaseApi(token, domain)
-      .then((res) => {
-        this.bases = res.data.bases.reverse();
-        this.selectedBaseId = this.bases[0].id;
-      })
-      .catch(() => {
-        this.errorBase = false;
-      })
-      .finally(() => {
-        this.isLoadingBase = false;
-      });
-  };
-
-  @action
-  loadGens = (token, domain) => {
-    this.isLoadingGen = true;
-    this.errorGen = false;
-
-    loadGenApi(token, domain)
-      .then((res) => {
-        this.gens = res.data.data.gens;
-        this.selectedGenId = res.data.data.current_gen.id;
-      })
-      .catch(() => {
-        this.errorGen = false;
-      })
-      .finally(() => {
-        this.isLoadingGen = false;
-      });
+  onSelectEndTime = (endTime) => {
+    this.endTime = endTime;
   };
 
   @computed
+  get listWorkShift() {
+    return groupBy(this.shifts, (shift) => shift.work_shift.date, [
+      'date',
+      'shifts',
+    ]);
+  }
+
+  @computed
   get listShift() {
-    return groupBy(this.shifts, (shift) => shift.week, ['week', 'shifts']);
+    return groupBy(this.shifts, (shift) => shift.date, [
+      'date',
+      'shifts',
+    ]);
   }
 }
 

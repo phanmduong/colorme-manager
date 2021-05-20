@@ -8,12 +8,13 @@ import {observer} from 'mobx-react';
 import HistoryAttendanceShiftStore from './HistoryAttendanceShiftStore';
 import Spinkit from 'react-native-spinkit';
 import theme from '../../styles';
-import {Button, Container, Item, Picker, Text, View} from 'native-base';
+import {Button, Container, Text, View} from 'native-base';
 import ListHistoryAttendanceShift from './ListHistoryAttendanceShift';
 import * as alert from '../../constants/alert';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import moment from 'moment';
 
-var {height, width} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 @observer
 class HistoryAttendanceShiftContainer extends React.Component {
@@ -24,27 +25,48 @@ class HistoryAttendanceShiftContainer extends React.Component {
 
   componentWillMount = () => {
     this.loadData();
-    this.store.loadBases(this.props.token, this.props.domain);
-    this.store.loadGens(this.props.token, this.props.domain);
   };
 
   loadData = () => {
-    this.store.loadHistoryShift(this.props.token, this.props.domain);
+    const {startTime, endTime} = this.store;
+    this.store.loadHistoryShift(
+      'shift',
+      this.props.user.id,
+      startTime,
+      endTime,
+      this.props.token,
+      this.props.domain,
+    );
+  };
+
+  onSelectStartTime = (startTime) => {
+    this.store.onSelectStartTime(startTime);
+  };
+
+  onSelectEndTime = (endTime) => {
+    this.store.onSelectEndTime(endTime);
+  };
+
+  reload = () => {
+    const startTime = moment().startOf('week').unix();
+    const endTime = moment().endOf('week').unix();
+    this.onSelectStartTime(startTime);
+    this.onSelectEndTime(endTime);
+    this.loadData();
   };
 
   errorData() {
     const {error} = this.store;
-    const NO_DATA = alert.NO_DATA_SHIFT_REGISTER;
     return (
       <View style={styles.container}>
         <Text style={styles.textError}>
-          {error ? alert.LOAD_DATA_ERROR : NO_DATA}
+          {error ? alert.LOAD_DATA_ERROR : alert.NO_DATA_WORK_SHIFT_REGISTER}
         </Text>
         <Button
           iconLeft
           danger
           small
-          onPress={this.loadData}
+          onPress={this.reload}
           style={{marginTop: 10, alignSelf: null}}>
           <MaterialCommunityIcons name="reload" color="white" size={20} />
           <Text>Thử lại</Text>
@@ -53,54 +75,10 @@ class HistoryAttendanceShiftContainer extends React.Component {
     );
   }
 
-  onSelectBaseId = (baseId) => {
-    this.store.selectedBaseId = baseId;
-    this.loadData();
-  };
-
-  onSelectGenId = (genId) => {
-    this.store.selectedGenId = genId;
-    this.loadData();
-  };
-
   render() {
-    const {
-      isLoading,
-      error,
-      shifts,
-      bases,
-      gens,
-      selectedBaseId,
-      selectedGenId,
-    } = this.store;
+    const {isLoading, error, shifts} = this.store;
     return (
       <Container>
-        <View style={styles.containerPicker}>
-          <Picker
-            iosHeader="Chọn khóa học"
-            style={{width: width / 2}}
-            mode="dialog"
-            defaultLabel={'Chọn khóa'}
-            selectedValue={selectedGenId}
-            onValueChange={this.onSelectGenId}>
-            {gens.map(function (gen, index) {
-              return (
-                <Item label={'Khóa ' + gen.name} value={gen.id} key={index} />
-              );
-            })}
-          </Picker>
-          <Picker
-            style={{width: width / 2}}
-            iosHeader="Chọn cơ sở"
-            mode="dialog"
-            defaultLabel={'Chọn cơ sở'}
-            selectedValue={selectedBaseId}
-            onValueChange={this.onSelectBaseId}>
-            {bases.map(function (base, index) {
-              return <Item label={base.name} value={base.id} key={index} />;
-            })}
-          </Picker>
-        </View>
         {isLoading ? (
           <View style={styles.container}>
             <Spinkit
@@ -113,7 +91,13 @@ class HistoryAttendanceShiftContainer extends React.Component {
         ) : error || (shifts && shifts.length <= 0) ? (
           this.errorData()
         ) : (
-          <ListHistoryAttendanceShift store={this.store} />
+          <ListHistoryAttendanceShift
+            store={this.store}
+            onSelectStartTime={this.onSelectStartTime}
+            onSelectEndTime={this.onSelectEndTime}
+            loadData={this.loadData}
+            shiftType={'shift'}
+          />
         )}
       </Container>
     );

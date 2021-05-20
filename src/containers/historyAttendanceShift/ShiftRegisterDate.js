@@ -1,12 +1,11 @@
 import React from 'react';
 import {View, Text, Card, CardItem, Body} from 'native-base';
-import _ from 'lodash';
 import ShiftRegisterItem from './ShiftRegisterItem';
 import {observer} from 'mobx-react';
-import {Dimensions} from 'react-native';
+import moment from 'moment';
+import _ from 'lodash';
 
 var self;
-var {height, width} = Dimensions.get('window');
 
 @observer
 class ShiftRegisterDate extends React.Component {
@@ -15,15 +14,35 @@ class ShiftRegisterDate extends React.Component {
     self = this;
   }
 
-  // shouldComponentUpdate(nextProps) {
-  //     return !_.isEqual(nextProps.dateData, this.props.dateData);
-  // }
-
   renderShiftItem() {
-    const data = _.sortBy(this.props.dateData.shifts, shift => shift.id);
-    return data.map((shift, index) => (
-      <ShiftRegisterItem shift={shift} key={index} />
-    ));
+    switch (this.props.shiftType) {
+      case 'work_shift':
+        const workShiftData = _.sortBy(
+          this.props.dateData.shifts,
+          (shift) => shift.work_shift.work_shift_session.id,
+        );
+        return workShiftData.map((shift, index) => (
+          <ShiftRegisterItem
+            shift={shift}
+            key={index}
+            shiftType={this.props.shiftType}
+          />
+        ));
+      case 'shift':
+        const shiftData = _.sortBy(
+          this.props.dateData.shifts,
+          (shift) => shift.shift_session.id,
+        );
+        return shiftData.map((shift, index) => (
+          <ShiftRegisterItem
+            shift={shift}
+            key={index}
+            shiftType={this.props.shiftType}
+          />
+        ));
+      default:
+        return null;
+    }
   }
 
   render() {
@@ -33,7 +52,11 @@ class ShiftRegisterDate extends React.Component {
           <CardItem style={{width: '100%'}}>
             <Body style={styles.container}>
               <View style={styles.date}>
-                <Text style={styles.textDate}>{this.props.dateData.date}</Text>
+                <Text style={styles.textDate}>
+                  {moment
+                    .unix(this.props.dateData.date)
+                    .format('dddd DD/MM/YYYY')}
+                </Text>
               </View>
               {this.renderShiftItem()}
             </Body>

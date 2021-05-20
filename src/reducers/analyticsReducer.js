@@ -18,6 +18,7 @@ export default function dashboardReducer(
       return Object.assign({}, state, {
         refreshingAnalyticsRegister: action.refreshingAnalyticsRegister,
         errorAnalyticsRegister: action.errorAnalyticsRegister,
+        isLoadingAnalyticsRegister: action.isLoadingAnalyticsRegister,
       });
     case types.LOAD_DATA_ANALYTICS_REGISTER_SUCCESSFUL:
       return Object.assign({}, state, {
@@ -41,6 +42,7 @@ export default function dashboardReducer(
       return Object.assign({}, state, {
         refreshingAnalyticsRevenue: action.refreshingAnalyticsRevenue,
         errorAnalyticsRevenue: action.errorAnalyticsRevenue,
+        isLoadingAnalyticsRevenue: action.isLoadingAnalyticsRevenue,
       });
     case types.LOAD_DATA_ANALYTICS_REVENUE_SUCCESSFUL:
       return Object.assign({}, state, {

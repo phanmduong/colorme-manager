@@ -45,8 +45,16 @@ class HistoryAttendanceShiftStore {
   };
 
   @computed
-  get listShift() {
+  get listWorkShift() {
     return groupBy(this.shifts, (shift) => shift.work_shift.date, [
+      'date',
+      'shifts',
+    ]);
+  }
+
+  @computed
+  get listShift() {
+    return groupBy(this.shifts, (shift) => shift.date, [
       'date',
       'shifts',
     ]);

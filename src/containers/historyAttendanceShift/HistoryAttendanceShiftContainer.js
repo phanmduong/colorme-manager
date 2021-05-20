@@ -28,8 +28,7 @@ class HistoryAttendanceShiftContainer extends React.Component {
   };
 
   loadData = () => {
-    const startTime = moment().startOf('week').unix();
-    const endTime = moment().endOf('week').unix();
+    const {startTime, endTime} = this.store;
     this.store.loadHistoryShift(
       'shift',
       this.props.user.id,
@@ -38,6 +37,22 @@ class HistoryAttendanceShiftContainer extends React.Component {
       this.props.token,
       this.props.domain,
     );
+  };
+
+  onSelectStartTime = (startTime) => {
+    this.store.onSelectStartTime(startTime);
+  };
+
+  onSelectEndTime = (endTime) => {
+    this.store.onSelectEndTime(endTime);
+  };
+
+  reload = () => {
+    const startTime = moment().startOf('week').unix();
+    const endTime = moment().endOf('week').unix();
+    this.onSelectStartTime(startTime);
+    this.onSelectEndTime(endTime);
+    this.loadData();
   };
 
   errorData() {
@@ -51,7 +66,7 @@ class HistoryAttendanceShiftContainer extends React.Component {
           iconLeft
           danger
           small
-          onPress={this.loadData}
+          onPress={this.reload}
           style={{marginTop: 10, alignSelf: null}}>
           <MaterialCommunityIcons name="reload" color="white" size={20} />
           <Text>Thử lại</Text>
@@ -76,7 +91,13 @@ class HistoryAttendanceShiftContainer extends React.Component {
         ) : error || (shifts && shifts.length <= 0) ? (
           this.errorData()
         ) : (
-          <ListHistoryAttendanceShift store={this.store} />
+          <ListHistoryAttendanceShift
+            store={this.store}
+            onSelectStartTime={this.onSelectStartTime}
+            onSelectEndTime={this.onSelectEndTime}
+            loadData={this.loadData}
+            shiftType={'shift'}
+          />
         )}
       </Container>
     );

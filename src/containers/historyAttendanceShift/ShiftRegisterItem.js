@@ -12,14 +12,60 @@ class ShiftRegisterItem extends React.Component {
     super(props, context);
   }
 
+  getShiftName = () => {
+    const {shift} = this.props;
+    switch (this.props.shiftType) {
+      case 'work_shift':
+        return shift.work_shift.work_shift_session.name;
+      case 'shift':
+        return shift.shift_session.name;
+      default:
+        return null;
+    }
+  };
+
+  getShiftStartTime = () => {
+    const {shift} = this.props;
+    switch (this.props.shiftType) {
+      case 'work_shift':
+        return moment
+          .unix(shift.work_shift.work_shift_session.start_time)
+          .utcOffset('+0700')
+          .format('HH:mm');
+      case 'shift':
+        return moment
+          .unix(shift.shift_session.start_time)
+          .utcOffset('+0700')
+          .format('HH:mm');
+      default:
+        return null;
+    }
+  };
+
+  getShiftEndTime = () => {
+    const {shift} = this.props;
+    switch (this.props.shiftType) {
+      case 'work_shift':
+        return moment
+          .unix(shift.work_shift.work_shift_session.end_time)
+          .utcOffset('+0700')
+          .format('HH:mm');
+      case 'shift':
+        return moment
+          .unix(shift.shift_session.end_time)
+          .utcOffset('+0700')
+          .format('HH:mm');
+      default:
+        return null;
+    }
+  };
+
   render() {
     const {shift} = this.props;
     const data = this.getTimeAttendance(shift);
     return (
       <View style={styles.register}>
-        <Text style={styles.titleShift}>
-          {shift.work_shift.work_shift_session.name}
-        </Text>
+        <Text style={styles.titleShift}>{this.getShiftName()}</Text>
         {this.progressAttendance(data)}
         <View style={styles.timeAttendance}>
           <Text>
@@ -33,13 +79,7 @@ class ShiftRegisterItem extends React.Component {
             ) : (
               <Text style={styles.textTime}>--:--</Text>
             )}
-            <Text style={styles.textTime}>
-              /
-              {moment
-                .unix(shift.work_shift.work_shift_session.start_time)
-                .utcOffset('+0700')
-                .format('HH:mm')}
-            </Text>
+            <Text style={styles.textTime}>/{this.getShiftStartTime()}</Text>
           </Text>
           <Text>
             {shift.check_out ? (
@@ -52,13 +92,7 @@ class ShiftRegisterItem extends React.Component {
             ) : (
               <Text style={styles.textTime}>--:--</Text>
             )}
-            <Text style={styles.textTime}>
-              /
-              {moment
-                .unix(shift.work_shift.work_shift_session.end_time)
-                .utcOffset('+0700')
-                .format('HH:mm')}
-            </Text>
+            <Text style={styles.textTime}>/{this.getShiftEndTime()}</Text>
           </Text>
         </View>
       </View>
@@ -72,14 +106,8 @@ class ShiftRegisterItem extends React.Component {
     const checkOutTime = shift.check_out
       ? moment.unix(shift.check_out.time).utcOffset('+0700').format('HH:mm')
       : '';
-    const startTime = moment
-      .unix(shift.work_shift.work_shift_session.start_time)
-      .utcOffset('+0700')
-      .format('HH:mm');
-    const endTime = moment
-      .unix(shift.work_shift.work_shift_session.end_time)
-      .utcOffset('+0700')
-      .format('HH:mm');
+    const startTime = this.getShiftStartTime();
+    const endTime = this.getShiftEndTime();
 
     return calculatorAttendance(checkInTime, checkOutTime, startTime, endTime);
   }

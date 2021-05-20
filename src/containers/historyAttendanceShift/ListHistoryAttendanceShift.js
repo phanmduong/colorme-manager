@@ -32,16 +32,38 @@ class ListHistoryAttendanceShift extends React.Component {
   };
 
   render() {
-    const {listShift} = this.props.store;
-
-    if (listShift.length > 0) {
-      return (
-        <List
-          ListHeaderComponent={this.headerComponent}
-          dataArray={listShift}
-          renderRow={(date) => <ShiftRegisterDate dateData={date} />}
-        />
-      );
+    if (this.props.shiftType === 'work_shift') {
+      const {listWorkShift} = this.props.store;
+      if (listWorkShift.length > 0) {
+        return (
+          <List
+            ListHeaderComponent={this.headerComponent}
+            dataArray={listWorkShift}
+            renderRow={(date) => (
+              <ShiftRegisterDate
+                dateData={date}
+                shiftType={this.props.shiftType}
+              />
+            )}
+          />
+        );
+      }
+    } else if (this.props.shiftType === 'shift') {
+      const {listShift} = this.props.store;
+      if (listShift.length > 0) {
+        return (
+          <List
+            ListHeaderComponent={this.headerComponent}
+            dataArray={listShift}
+            renderRow={(date) => (
+              <ShiftRegisterDate
+                dateData={date}
+                shiftType={this.props.shiftType}
+              />
+            )}
+          />
+        );
+      }
     }
     return <View />;
   }

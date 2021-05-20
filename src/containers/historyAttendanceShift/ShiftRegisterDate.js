@@ -15,13 +15,34 @@ class ShiftRegisterDate extends React.Component {
   }
 
   renderShiftItem() {
-    const data = _.sortBy(
-      this.props.dateData.shifts,
-      (shift) => shift.work_shift.work_shift_session.id,
-    );
-    return data.map((shift, index) => (
-      <ShiftRegisterItem shift={shift} key={index} />
-    ));
+    switch (this.props.shiftType) {
+      case 'work_shift':
+        const workShiftData = _.sortBy(
+          this.props.dateData.shifts,
+          (shift) => shift.work_shift.work_shift_session.id,
+        );
+        return workShiftData.map((shift, index) => (
+          <ShiftRegisterItem
+            shift={shift}
+            key={index}
+            shiftType={this.props.shiftType}
+          />
+        ));
+      case 'shift':
+        const shiftData = _.sortBy(
+          this.props.dateData.shifts,
+          (shift) => shift.shift_session.id,
+        );
+        return shiftData.map((shift, index) => (
+          <ShiftRegisterItem
+            shift={shift}
+            key={index}
+            shiftType={this.props.shiftType}
+          />
+        ));
+      default:
+        return null;
+    }
   }
 
   render() {
@@ -32,7 +53,9 @@ class ShiftRegisterDate extends React.Component {
             <Body style={styles.container}>
               <View style={styles.date}>
                 <Text style={styles.textDate}>
-                  {moment.unix(this.props.dateData.date).format('dddd DD/MM/YYYY')}
+                  {moment
+                    .unix(this.props.dateData.date)
+                    .format('dddd DD/MM/YYYY')}
                 </Text>
               </View>
               {this.renderShiftItem()}

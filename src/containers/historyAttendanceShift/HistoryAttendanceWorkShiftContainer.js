@@ -98,6 +98,7 @@ class HistoryAttendanceShiftContainer extends React.Component {
             onSelectStartTime={this.onSelectStartTime}
             onSelectEndTime={this.onSelectEndTime}
             loadData={this.loadData}
+            shiftType={'work_shift'}
           />
         )}
       </Container>

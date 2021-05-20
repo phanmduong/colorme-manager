@@ -32,7 +32,7 @@ class ShiftRegisterDate extends React.Component {
             <Body style={styles.container}>
               <View style={styles.date}>
                 <Text style={styles.textDate}>
-                  {moment.unix(this.props.dateData.date).format('DD/MM/YYYY')}
+                  {moment.unix(this.props.dateData.date).format('dddd DD/MM/YYYY')}
                 </Text>
               </View>
               {this.renderShiftItem()}

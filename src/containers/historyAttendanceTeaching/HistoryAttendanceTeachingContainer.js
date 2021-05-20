@@ -12,7 +12,6 @@ import {Button, Container, Text, View} from 'native-base';
 import ListHistoryAttendanceTeaching from './ListHistoryAttendanceTeaching';
 import * as alert from '../../constants/alert';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import moment from 'moment';
 
 const {width} = Dimensions.get('window');
 
@@ -28,8 +27,7 @@ class HistoryAttendanceTeachingContainer extends React.Component {
   }
 
   loadData = () => {
-    const startTime = moment().startOf('week').unix();
-    const endTime = moment().endOf('week').unix();
+    const {startTime, endTime} = this.store;
     this.store.loadHistoryTeaching(
       this.props.user.id,
       startTime,
@@ -37,6 +35,14 @@ class HistoryAttendanceTeachingContainer extends React.Component {
       this.props.token,
       this.props.domain,
     );
+  };
+
+  onSelectStartTime = (startTime) => {
+    this.store.onSelectStartTime(startTime);
+  };
+
+  onSelectEndTime = (endTime) => {
+    this.store.onSelectEndTime(endTime);
   };
 
   errorData() {
@@ -75,7 +81,12 @@ class HistoryAttendanceTeachingContainer extends React.Component {
         ) : error || (attendances && attendances.length <= 0) ? (
           this.errorData()
         ) : (
-          <ListHistoryAttendanceTeaching store={this.store} />
+          <ListHistoryAttendanceTeaching
+            store={this.store}
+            onSelectStartTime={this.onSelectStartTime}
+            onSelectEndTime={this.onSelectEndTime}
+            loadData={this.loadData}
+          />
         )}
       </Container>
     );

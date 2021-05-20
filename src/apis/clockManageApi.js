@@ -27,28 +27,3 @@ export function getWorkShiftClock(time, token, domain) {
     time;
   return axios.get(url);
 }
-
-export function historyShiftsApi(
-  search,
-  type,
-  employee_id,
-  start_time,
-  end_time,
-  token,
-  domain,
-) {
-  let url =
-    env.manageApiUrlAuth(domain) +
-    '/v1/check-in-check-outs?search=' +
-    search +
-    '&type=' +
-    type +
-    (!isEmptyInput(employee_id) ? '&employee_ids[]=' + employee_id : '') +
-    '&start_time=' +
-    start_time +
-    '&end_time=' +
-    end_time +
-    '&token=' +
-    token;
-  return axios.get(url);
-}

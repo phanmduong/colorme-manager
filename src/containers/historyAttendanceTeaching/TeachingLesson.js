@@ -1,9 +1,10 @@
 import React from 'react';
 import {View} from 'react-native';
-import {Text, Button} from 'native-base';
+import {Text} from 'native-base';
 import {calculatorAttendance} from '../../helper';
 import theme from '../../styles';
 import {observer} from 'mobx-react';
+import moment from 'moment';
 
 @observer
 class TeachingLesson extends React.Component {
@@ -16,24 +17,48 @@ class TeachingLesson extends React.Component {
     const data = this.getTimeAttendance(lesson);
     return (
       <View style={styles.register}>
-        <Text style={styles.titleShift}>Buổi {lesson.order}</Text>
+        <Text style={styles.titleShift}>
+          {moment.unix(lesson.class_lesson.time).format('dddd DD/MM/YYYY')}
+        </Text>
         {this.progressAttendance(data)}
         <View style={styles.timeAttendance}>
           <Text>
             {lesson.check_in ? (
-              <Text style={{color: 'black'}}>{lesson.check_in.time}</Text>
+              <Text style={{color: 'black'}}>
+                {moment
+                  .unix(lesson.check_in.time)
+                  .utcOffset('+0700')
+                  .format('HH:mm')}
+              </Text>
             ) : (
               <Text style={styles.textTime}>--:--</Text>
             )}
-            <Text style={styles.textTime}>/{lesson.start_time}</Text>
+            <Text style={styles.textTime}>
+              /
+              {moment
+                .unix(lesson.class_lesson.start_time)
+                .utcOffset('+0700')
+                .format('HH:mm')}
+            </Text>
           </Text>
           <Text>
             {lesson.check_out ? (
-              <Text style={{color: 'black'}}>{lesson.check_out.time}</Text>
+              <Text style={{color: 'black'}}>
+                {moment
+                  .unix(lesson.check_out.time)
+                  .utcOffset('+0700')
+                  .format('HH:mm')}
+              </Text>
             ) : (
               <Text style={styles.textTime}>--:--</Text>
             )}
-            <Text style={styles.textTime}>/{lesson.end_time}</Text>
+            <Text style={styles.textTime}>
+              /
+              {moment
+                .unix(lesson.class_lesson.end_time)
+                .utcOffset('+0700')
+                .format('HH:mm')}
+            </Text>
           </Text>
         </View>
       </View>
@@ -41,15 +66,22 @@ class TeachingLesson extends React.Component {
   }
 
   getTimeAttendance(lesson) {
-    const checkInTime = lesson.check_in ? lesson.check_in.time : '';
-    const checkOutTime = lesson.check_out ? lesson.check_out.time : '';
+    const checkInTime = lesson.check_in
+      ? moment.unix(lesson.check_in.time).utcOffset('+0700').format('HH:mm')
+      : '';
+    const checkOutTime = lesson.check_out
+      ? moment.unix(lesson.check_out.time).utcOffset('+0700').format('HH:mm')
+      : '';
+    const startTime = moment
+      .unix(lesson.class_lesson.start_time)
+      .utcOffset('+0700')
+      .format('HH:mm');
+    const endTime = moment
+      .unix(lesson.class_lesson.end_time)
+      .utcOffset('+0700')
+      .format('HH:mm');
 
-    return calculatorAttendance(
-      checkInTime,
-      checkOutTime,
-      lesson.start_time,
-      lesson.end_time,
-    );
+    return calculatorAttendance(checkInTime, checkOutTime, startTime, endTime);
   }
 
   progressAttendance(data) {

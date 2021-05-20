@@ -1,5 +1,6 @@
 import axios from 'axios';
 import * as env from '../constants/env';
+import {isEmptyInput} from '../helper';
 
 export function checkin(device, token, domain) {
   let url =
@@ -18,7 +19,7 @@ export function checkin(device, token, domain) {
 
 export function checkout(device, token, domain) {
   let url =
-      env.manageApiUrlAuth(domain) + '/v1/check-in-check-outs?token=' + token;
+    env.manageApiUrlAuth(domain) + '/v1/check-in-check-outs?token=' + token;
   return axios.post(url, {
     type: 'checkout',
     longtitude: device.long,
@@ -67,4 +68,26 @@ export function historyAttendanceTeacherApi(genID, token, domain) {
       gen_id: genID,
     },
   });
+}
+
+export function historyShiftsApi(
+  type,
+  employee_id,
+  start_time,
+  end_time,
+  token,
+  domain,
+) {
+  let url =
+    env.manageApiUrlAuth(domain) +
+    '/v1/check-in-check-outs?type=' +
+    type +
+    (!isEmptyInput(employee_id) ? '&employee_ids[]=' + employee_id : '') +
+    '&start_time=' +
+    start_time +
+    '&end_time=' +
+    end_time +
+    '&token=' +
+    token;
+  return axios.get(url);
 }

@@ -1,6 +1,6 @@
 import {observable, action, computed} from 'mobx';
 import {groupBy} from '../../helper';
-import {historyShiftsApi} from '../../apis/clockManageApi';
+import {historyShiftsApi} from '../../apis/checkInCheckOutApi';
 
 class HistoryAttendanceShiftStore {
   @observable isLoading = false;
@@ -19,7 +19,7 @@ class HistoryAttendanceShiftStore {
     this.isLoading = true;
     this.error = false;
 
-    historyShiftsApi('', type, employee_id, start_time, end_time, token, domain)
+    historyShiftsApi(type, employee_id, start_time, end_time, token, domain)
       .then((res) => {
         this.shifts = res.data.history;
       })

@@ -1,25 +1,20 @@
 import {observable, action, computed} from 'mobx';
-import {historyAttendanceTeacherApi} from '../../apis/checkInCheckOutApi';
 import {groupBy} from '../../helper';
-import {loadGenApi} from '../../apis/genApi';
+import {historyShiftsApi} from '../../apis/checkInCheckOutApi';
 
 class HistoryAttendanceTeachingStore {
   @observable isLoading = false;
   @observable attendances = [];
   @observable error = false;
-  @observable isLoadingGen = false;
-  @observable gens = [];
-  @observable errorGen = false;
-  @observable selectedGenId = '';
 
   @action
-  loadHistoryTeaching = (token, domain) => {
+  loadHistoryTeaching = (employee_id, start_time, end_time, token, domain) => {
     this.isLoading = true;
     this.error = false;
 
-    historyAttendanceTeacherApi(this.selectedGenId, token, domain)
+    historyShiftsApi('class', employee_id, start_time, end_time, token, domain)
       .then((res) => {
-        this.attendances = res.data.data.teaching;
+        this.attendances = res.data.history;
       })
       .catch(() => {
         this.error = true;
@@ -29,31 +24,13 @@ class HistoryAttendanceTeachingStore {
       });
   };
 
-  @action
-  loadGens = (token, domain) => {
-    this.isLoadingGen = true;
-    this.errorGen = false;
-
-    loadGenApi(token, domain)
-      .then((res) => {
-        this.gens = res.data.data.gens;
-        this.selectedGenId = res.data.data.teaching_gen.id;
-        // this.selectedGenId = 33;
-      })
-      .catch(() => {
-        this.errorGen = true;
-      })
-      .finally(() => {
-        this.isLoadingGen = false;
-      });
-  };
-
   @computed
   get listAttendance() {
-    return groupBy(this.attendances, (attendance) => attendance.class_id, [
-      'class',
-      'lessons',
-    ]);
+    return groupBy(
+      this.attendances,
+      (attendance) => attendance.class_lesson.study_class.id,
+      ['class', 'lessons'],
+    );
   }
 }
 

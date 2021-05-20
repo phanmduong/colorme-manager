@@ -8,12 +8,13 @@ import {observer} from 'mobx-react';
 import HistoryAttendanceTeachingStore from './HistoryAttendanceTeachingStore';
 import Spinkit from 'react-native-spinkit';
 import theme from '../../styles';
-import {Button, Container, Item, Picker, Text, View} from 'native-base';
+import {Button, Container, Text, View} from 'native-base';
 import ListHistoryAttendanceTeaching from './ListHistoryAttendanceTeaching';
 import * as alert from '../../constants/alert';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import moment from 'moment';
 
-var {height, width} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 @observer
 class HistoryAttendanceTeachingContainer extends React.Component {
@@ -24,11 +25,18 @@ class HistoryAttendanceTeachingContainer extends React.Component {
 
   componentWillMount() {
     this.loadData();
-    this.store.loadGens(this.props.token, this.props.domain);
   }
 
   loadData = () => {
-    this.store.loadHistoryTeaching(this.props.token, this.props.domain);
+    const startTime = moment().startOf('week').unix();
+    const endTime = moment().endOf('week').unix();
+    this.store.loadHistoryTeaching(
+      this.props.user.id,
+      startTime,
+      endTime,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   errorData() {
@@ -51,29 +59,10 @@ class HistoryAttendanceTeachingContainer extends React.Component {
     );
   }
 
-  onSelectGenId = (genId) => {
-    this.store.selectedGenId = genId;
-    this.loadData();
-  };
-
   render() {
-    const {isLoading, error, attendances, gens, selectedGenId} = this.store;
+    const {isLoading, error, attendances} = this.store;
     return (
       <Container>
-        <View style={styles.containerPicker}>
-          <Picker
-            iosHeader="Chọn khóa học"
-            mode="dialog"
-            defaultLabel={'Chọn khóa'}
-            selectedValue={selectedGenId}
-            onValueChange={this.onSelectGenId}>
-            {gens.map(function (gen, index) {
-              return (
-                <Item label={'Khóa ' + gen.name} value={gen.id} key={index} />
-              );
-            })}
-          </Picker>
-        </View>
         {isLoading ? (
           <View style={styles.container}>
             <Spinkit

@@ -61,7 +61,7 @@ export default function leadsReducer(state = initialState.leads, action) {
       });
     case types.ON_SELECT_STATUS_LEADS:
       return Object.assign({}, state, {
-        leadStatusId: action.leadStatusId,
+        status_id: action.status_id,
       });
     case types.ON_SELECT_ADDRESS_LEADS:
       return Object.assign({}, state, {
@@ -71,29 +71,9 @@ export default function leadsReducer(state = initialState.leads, action) {
       return Object.assign({}, state, {
         source_id: action.source_id,
       });
-    case types.ON_SELECT_CARER_LEADS:
+    case types.ON_SELECT_PIC_LEADS:
       return Object.assign({}, state, {
-        carer_id: action.carer_id,
-      });
-    case types.RESET_FILTER_LEADS:
-      return Object.assign({}, state, {
-        start_time: action.start_time,
-        end_time: action.end_time,
-        address: action.address,
-        rate: action.rate,
-        campaign_id: action.campaign_id,
-        leadStatusId: action.leadStatusId,
-        source_id: action.source_id,
-        callBackTime: action.callBackTime,
-        mockExamTime: action.mockExamTime,
-        duplicate: action.duplicate,
-        baseId: action.baseId,
-        leadTag: action.leadTag,
-        importedAt: action.importedAt,
-        orderBy: action.orderBy,
-        carer_id: action.carer_id,
-        currentPageLeads: action.currentPageLeads,
-        leads: action.leads,
+        picId: action.picId,
       });
     case types.BEGIN_LOAD_LEAD_STAFFS:
       return Object.assign({}, state, {
@@ -186,13 +166,36 @@ export default function leadsReducer(state = initialState.leads, action) {
         isChangingPICTag: action.isChangingPICTag,
         errorChangePICTag: action.errorChangePICTag,
       });
-    case types.ON_SELECT_CALL_BACK_TIME_LEADS:
+    case types.BEGIN_CHANGE_RATE:
       return Object.assign({}, state, {
-        callBackTime: action.callBackTime,
+        isChangingRate: action.isChangingRate,
+        errorChangeRate: action.errorChangeRate,
       });
-    case types.ON_SELECT_MOCK_EXAM_TIME_LEADS:
+    case types.CHANGE_RATE_SUCCESSFUL:
       return Object.assign({}, state, {
-        mockExamTime: action.mockExamTime,
+        isChangingRate: action.isChangingRate,
+        errorChangeRate: action.errorChangeRate,
+      });
+    case types.CHANGE_RATE_ERROR:
+      return Object.assign({}, state, {
+        isChangingRate: action.isChangingRate,
+        errorChangeRate: action.errorChangeRate,
+      });
+    case types.ON_SELECT_CALL_BACK_START_TIME_LEADS:
+      return Object.assign({}, state, {
+        callBackStartTime: action.callBackStartTime,
+      });
+    case types.ON_SELECT_CALL_BACK_END_TIME_LEADS:
+      return Object.assign({}, state, {
+        callBackEndTime: action.callBackEndTime,
+      });
+    case types.ON_SELECT_MOCK_EXAM_START_TIME_LEADS:
+      return Object.assign({}, state, {
+        mockExamStartTime: action.mockExamStartTime,
+      });
+    case types.ON_SELECT_MOCK_EXAM_END_TIME_LEADS:
+      return Object.assign({}, state, {
+        mockExamEndTime: action.mockExamEndTime,
       });
     case types.ON_SELECT_DUPLICATE_LEADS:
       return Object.assign({}, state, {
@@ -206,13 +209,13 @@ export default function leadsReducer(state = initialState.leads, action) {
       return Object.assign({}, state, {
         baseId: action.baseId,
       });
-    case types.ON_SELECT_IMPORTED_AT_LEADS:
-      return Object.assign({}, state, {
-        importedAt: action.importedAt,
-      });
     case types.ON_SELECT_ORDER_BY_LEADS:
       return Object.assign({}, state, {
         orderBy: action.orderBy,
+      });
+    case types.ON_SELECT_SORTED_BY_LEADS:
+      return Object.assign({}, state, {
+        sortedBy: action.sortedBy,
       });
     default:
       return state;

@@ -1,6 +1,5 @@
 import React from 'react';
-import {RefreshControl} from 'react-native';
-import {View, Text, List, Card, CardItem, Body} from 'native-base';
+import {View, Text, Card, CardItem, Body} from 'native-base';
 import _ from 'lodash';
 import {getFirstDayOfWeek, getLastDayOfWeek} from '../../helper';
 import moment from 'moment';
@@ -13,22 +12,23 @@ class TeachingClass extends React.Component {
     super(props, context);
   }
 
-  // shouldComponentUpdate(nextProps) {
-  //     return (!_.isEqual(nextProps.classData, this.props.classData));
-  // }
-
   renderHeader() {
     const classData = this.props.classData.lessons[0];
     return (
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>{classData.class_name}</Text>
-        <Text>{classData.study_time}</Text>
+        <Text style={styles.headerTitle}>
+          {classData.class_lesson.study_class.name}
+        </Text>
+        <Text>{classData.class_lesson.study_class.study_time}</Text>
       </View>
     );
   }
 
   renderItem() {
-    const data = _.sortBy(this.props.classData.lessons, lesson => lesson.order);
+    const data = _.sortBy(
+      this.props.classData.lessons,
+      (lesson) => lesson.class_lesson.id,
+    );
     return data.map((lesson, index) => (
       <TeachingLesson lesson={lesson} key={index} />
     ));
@@ -36,19 +36,14 @@ class TeachingClass extends React.Component {
 
   render() {
     return (
-      <List
-        ListHeaderComponent={() => this.renderHeader()}
-        dataArray={[0]}
-        renderRow={() => (
-          <View style={styles.card}>
-            <Card>
-              <CardItem style={{width: '100%'}}>
-                <Body style={styles.container}>{this.renderItem()}</Body>
-              </CardItem>
-            </Card>
-          </View>
-        )}
-      />
+      <View style={styles.card}>
+        {this.renderHeader()}
+        <Card>
+          <CardItem style={{width: '100%'}}>
+            <Body style={styles.container}>{this.renderItem()}</Body>
+          </CardItem>
+        </Card>
+      </View>
     );
   }
 

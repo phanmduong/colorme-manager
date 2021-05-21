@@ -56,7 +56,7 @@ import DocumentContainer from '../containers/DocumentContainer';
 import DocumentWebViewContainer from '../containers/DocumentWebViewContainer';
 import AddClassContainer from '../containers/AddClassContainer';
 import LeadsContainer from '../containers/LeadsContainer';
-import AddLeadsContainer from '../containers/AddLeadsContainer';
+import AddLeadsContainer from '../containers/AddEditLeadsContainer';
 import StaffContainer from '../containers/StaffContainer';
 import ClockManageContainer from '../containers/ClockManageContainer';
 import ClockManageWorkShiftDetailsContainer from '../containers/ClockManageWorkShiftDetailsContainer';

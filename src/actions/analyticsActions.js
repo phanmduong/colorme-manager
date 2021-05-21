@@ -17,6 +17,7 @@ export function beginRefreshAnalyticsRegister() {
     type: types.BEGIN_DATA_ANALYTICS_REGISTER_REFRESH,
     refreshingAnalyticsRegister: true,
     errorAnalyticsRegister: false,
+    isLoadingAnalyticsRegister: true,
   };
 }
 
@@ -136,6 +137,7 @@ function beginRefreshAnalyticsRevenue() {
     type: types.BEGIN_DATA_ANALYTICS_REVENUE_REFRESH,
     refreshingAnalyticsRevenue: true,
     errorAnalyticsRevenue: false,
+    isLoadingAnalyticsRevenue: true,
   };
 }
 

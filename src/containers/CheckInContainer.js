@@ -4,10 +4,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import CheckInComponent from '../components/CheckInComponent';
-import {Alert, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import * as checkInCheckOutActions from '../actions/checkInCheckOutActions';
 import {bindActionCreators} from 'redux';
-import {NavigationActions} from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../styles';
 import Geolocation from 'react-native-geolocation-service';
@@ -41,21 +40,11 @@ class CheckInContainer extends React.Component {
   }
 
   onCheck() {
-    // console.log("push");
-    // console.log(this.props.navigation.state.params.type);
     this.props.checkInCheckOutActions.loadCheck(
       this.props.token,
       this.props.navigation.state.params.type,
       this.props.domain,
     );
-  }
-
-  componentWillReceiveProps(nextProps) {
-    // if (nextProps.isLoadingCheckIn !== this.props.isLoadingCheckIn && !nextProps.isLoadingCheckIn) {
-    //     if (!nextProps.errorCheckIn) {
-    //         Alert.alert("Thông báo", "Check in thành công");
-    //     }
-    // }
   }
 
   onExit() {

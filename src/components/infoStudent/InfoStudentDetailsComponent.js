@@ -247,8 +247,9 @@ class InfoStudentDetailsComponent extends React.Component {
           <View style={{alignItems: 'center', marginTop: 25}}>
             <TouchableOpacity
               onPress={() =>
-                this.props.navigation.navigate('InfoStudentEditProfile', {
-                  student: this.props.student,
+                this.props.navigation.navigate('AddLead', {
+                  lead: this.props.student,
+                  mode: 'edit',
                 })
               }>
               <View style={styles.editButton}>
@@ -258,22 +259,34 @@ class InfoStudentDetailsComponent extends React.Component {
           </View>
 
           <InfoRow
+            title={'Giới tính'}
+            value={this.getGender(this.props.student.gender)}
+          />
+          <InfoRow
             title={'Ngày sinh'}
             value={
               this.props.student.dob &&
               moment.unix(this.props.student.dob).format('DD/MM/YYYY')
             }
           />
-          <InfoRow title={'Địa chỉ'} value={this.props.student.address} />
-          <InfoRow title={'Phụ huynh'} value={this.props.student.father_name} />
-          <InfoRow title={'Nơi làm việc'} value={this.props.student.work} />
-          <InfoRow
-            title={'Giới tính'}
-            value={this.getGender(this.props.student.gender)}
-          />
+          <InfoRow title={'Công việc'} value={this.props.student.work} />
           <InfoRow title={'Trường học'} value={this.props.student.university} />
-          <InfoRow title={'Mô tả'} value={this.props.student.description} />
+          <InfoRow title={'Địa chỉ'} value={this.props.student.address} />
+          <InfoRow
+            title={'Phụ huynh 1'}
+            value={this.props.student.father_name}
+          />
+          <InfoRow
+            title={'Phụ huynh 2'}
+            value={this.props.student.mother_name}
+          />
+          <InfoRow
+            title={'Lý do biết đến'}
+            value={this.props.student.how_know}
+          />
           <InfoRow title={'Facebook'} value={this.props.student.facebook} />
+          <InfoRow title={'CMND'} value={this.props.student.identity_code} />
+          <InfoRow title={'Quốc tịch'} value={this.props.student.nationality} />
 
           <View style={{marginTop: 25}}>
             {!isEmptyInput(this.props.student.image1) ? (

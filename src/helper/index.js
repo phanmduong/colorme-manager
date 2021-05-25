@@ -322,3 +322,24 @@ export const getDefault = (array, comparedId) => {
 export function isEmptyObject(obj) {
   return Object.keys(obj).length === 0 && obj.constructor === Object;
 }
+
+export function localeDay(day) {
+  switch (day) {
+    case 'monday':
+      return 'Thứ hai';
+    case 'tuesday':
+      return 'Thứ ba';
+    case 'wednesday':
+      return 'Thứ tư';
+    case 'thursday':
+      return 'Thứ năm';
+    case 'friday':
+      return 'Thứ sáu';
+    case 'saturday':
+      return 'Thứ bảy';
+    case 'sunday':
+      return 'Chủ nhật';
+    default:
+      return null;
+  }
+}

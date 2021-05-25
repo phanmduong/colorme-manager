@@ -140,7 +140,7 @@ class ClassComponent extends React.Component {
       <Container>
         <List
           dataArray={this.props.classData}
-          ListHeaderComponent={this.headerComponent}
+          // ListHeaderComponent={this.headerComponent}
           refreshControl={
             <RefreshControl
               refreshing={this.props.isRefreshing}
@@ -154,15 +154,7 @@ class ClassComponent extends React.Component {
               {...this.props}
               key={item.id}
               nameClass={item.name}
-              avatar={item.course ? item.course.icon_url : null} // CHANGED
-              studyTime={item.study_time}
-              address={
-                item.room ? `${item.room.name} - ${item.room.address}` : null
-              } // CHANGED
-              totalPaid={item.total_paid}
-              totalRegisters={item.total_register}
-              paidTarget={item.target}
-              registerTarget={item.regis_target}
+              avatar={item.course ? item.course.icon_url : null}
               onPress={this.props.onSelectedItem}
               classId={item.id}
               teach={item.teacher}
@@ -175,10 +167,14 @@ class ClassComponent extends React.Component {
               classData={item}
               selectedGenId={this.state.selectedGenId}
               selectedBaseId={this.state.selectedBaseId}
-              date_end={item.date_end_vi}
               teachers={item.teachers}
               teaching_assistants={item.teaching_assistants}
-              date_start={item.datestart_vi}
+              date_start={item.datestart}
+              description={item.description}
+              schedule={item.schedule}
+              base={item.base}
+              target={item.target}
+              register_target={item.register_target}
             />
           )}
           ListEmptyComponent={

@@ -3,62 +3,45 @@
  */
 import axios from 'axios';
 import * as env from '../constants/env';
+import {isEmptyInput} from '../helper';
 
 export function loadClassApi(
   sourceCancel,
-  search,
-  enroll_start_time,
-  enroll_end_time,
-  lesson_start_time,
-  lesson_end_time,
-  start_time,
-  end_time,
-  teacher_id,
-  courseId,
-  province_id,
   page,
+  course_id,
+  base_id,
+  province_id,
+  room_id,
+  employee_id,
   type,
-  status,
-  class_status,
-  genId,
-  baseId,
+  enroll_start_date,
+  enroll_end_date,
+  start_date,
+  end_date,
+  search,
   token,
   domain,
 ) {
   let url =
-    env.manageApiUrlV3(domain) +
-    '/class/all?search=' +
-    search +
-    '&enroll_start_time=' +
-    enroll_start_time +
-    '&enroll_end_time=' +
-    enroll_end_time +
-    '&lesson_start_time=' +
-    lesson_start_time +
-    '&lesson_end_time=' +
-    lesson_end_time +
-    '&start_time=' +
-    start_time +
-    '&end_time=' +
-    end_time +
-    '&teacher_id=' +
-    teacher_id +
-    '&course_id=' +
-    courseId +
-    '&province_id=' +
-    province_id +
-    '&page=' +
+    env.manageApiUrlAuth(domain) +
+    '/v1/study-classes?include=course.parent,room,base.district.province,teachers,teaching_assistants,schedule,class_status&limit=20&orderBy=created_at&sortedBy=desc&page=' +
     page +
-    '&type=' +
-    type +
-    '&status=' +
-    status +
-    '&class_status=' +
-    class_status +
-    '&gen_id=' +
-    genId +
-    '&base_id=' +
-    baseId +
+    (!isEmptyInput(course_id) ? '&course_ids[]=' + course_id : '') +
+    (!isEmptyInput(base_id) ? '&base_ids[]=' + base_id : '') +
+    (!isEmptyInput(province_id) ? '&province_ids[]=' + province_id : '') +
+    (!isEmptyInput(room_id) ? '&room_ids[]=' + room_id : '') +
+    (!isEmptyInput(employee_id) ? '&employee_ids[]=' + employee_id : '') +
+    (!isEmptyInput(type) ? '&types[]=' + type : '') +
+    '&enroll_start_date=' +
+    enroll_start_date +
+    '&enroll_end_date=' +
+    enroll_end_date +
+    '&start_date=' +
+    start_date +
+    '&end_date' +
+    end_date +
+    '&search=' +
+    search +
     '&token=' +
     token;
   return axios.get(url, {cancelToken: sourceCancel.token});

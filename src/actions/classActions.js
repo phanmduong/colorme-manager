@@ -433,6 +433,7 @@ export function changeClassStatus(classId, token, domain) {
         dispatch(changeClassStatusSuccessful());
       })
       .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
         dispatch(changeClassStatusError());
         throw error;
       });
@@ -580,11 +581,11 @@ export function selectedClassStatus(id) {
   };
 }
 
-export function createSchedule(name, study_sessions, token) {
+export function createSchedule(name, study_sessions, token, domain) {
   return function (dispatch) {
     dispatch(beginCreateClassSchedule());
     classApi
-      .createClassSchedule(name, study_sessions, token)
+      .createClassSchedule(name, study_sessions, token, domain)
       .then((res) => {
         Alert.alert('Thông báo', 'Tạo lịch học thành công');
         dispatch(infoCreateClass(token));

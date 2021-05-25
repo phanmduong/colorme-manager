@@ -106,19 +106,21 @@ export function addClass(classData, token, domain) {
 export function loadClassInfo(classId, token, domain) {
   let url =
     env.manageApiUrlV3(domain) + '/class/' + classId + '?token=' + token;
-  console.log(url);
   return axios.get(url);
 }
 
 export function changeClassStatus(classId, token, domain) {
-  let url = env.manageApiUrl(domain) + '/class/change-status?token=' + token;
-  return axios.post(url, {
-    class_id: classId,
-  });
+  let url =
+    env.manageApiUrlAuth(domain) +
+    '/v1/study-classes/' +
+    classId +
+    '/change-form-status?include=course.parent,room,base.district.province,teachers,teaching_assistants,schedule,target,register_target,class_status&token=' +
+    token;
+  return axios.put(url);
 }
 
-export function createClassSchedule(name, study_sessions, token) {
-  let url = env.MANAGE_API_URL_V4 + '/schedule/create?token=' + token;
+export function createClassSchedule(name, study_sessions, token, domain) {
+  let url = env.manageApiUrlV4(domain) + '/schedule/create?token=' + token;
   return axios.post(url, {
     name: name,
     study_sessions: study_sessions,

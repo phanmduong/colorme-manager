@@ -30,9 +30,6 @@ class ListItemClass extends React.Component {
   toggleSwitch = () => {
     this.setState({classStatus: !this.state.classStatus});
     this.props.changeClassStatus(this.props.classId);
-    if (this.props.errorClassStatus) {
-      Alert.alert('Thông báo', 'Có lỗi xảy ra');
-    }
   };
 
   content() {

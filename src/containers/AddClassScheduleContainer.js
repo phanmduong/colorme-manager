@@ -7,7 +7,12 @@ import NavigationLeftHeader from '../components/common/NavigationLeftHeader';
 
 function AddClassScheduleContainer(props) {
   function createSchedule(name, study_sessions) {
-    props.classActions.createSchedule(name, study_sessions, props.token);
+    props.classActions.createSchedule(
+      name,
+      study_sessions,
+      props.token,
+      props.domain,
+    );
   }
 
   return (
@@ -26,6 +31,7 @@ AddClassScheduleContainer.navigationOptions = ({navigation}) => {
 function mapStateToProps(state) {
   return {
     token: state.login.token,
+    domain: state.login.domain,
     creatingClassSchedule: state.class.creatingClassSchedule,
   };
 }

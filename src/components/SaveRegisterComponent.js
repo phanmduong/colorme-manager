@@ -54,9 +54,15 @@ function SaveRegisterComponent(props) {
 
   useEffect(() => {
     // Add a student to a class
-    const classId = props.navigation.getParam('classId');
-    if (classId) {
-      setClassId(classId);
+    const classData = props.navigation.getParam('classData');
+    if (classData?.id) {
+      setClassId(classData.id);
+    }
+    if (classData?.base) {
+      setBaseId(classData.base.id);
+    }
+    if (classData?.course) {
+      setCourseId(classData.course.id);
     }
 
     // Add a register for an existing student

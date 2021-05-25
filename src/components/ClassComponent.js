@@ -135,7 +135,6 @@ class ClassComponent extends React.Component {
               nameClass={item.name}
               avatar={item.course ? item.course.icon_url : null}
               onPress={this.props.onSelectedItem}
-              classId={item.id}
               teach={item.teacher}
               assist={item.teacher_assistant}
               courseId={item.course ? item.course.id : null} // CHANGED

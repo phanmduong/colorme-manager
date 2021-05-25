@@ -38,7 +38,6 @@ class ListItemClass extends React.Component {
       avatar,
       teach,
       assist,
-      classId,
       classData,
       selectedGenId,
       selectedBaseId,
@@ -201,32 +200,30 @@ class ListItemClass extends React.Component {
               </View>
             )}
 
-            {/*TODO*/}
-
-            {/*<View style={styles.buttonContainer}>*/}
-            {/*  <TouchableOpacity*/}
-            {/*    onPress={() =>*/}
-            {/*      this.props.navigation.navigate('SaveRegister', {*/}
-            {/*        classId: classId,*/}
-            {/*      })*/}
-            {/*    }>*/}
-            {/*    <View style={styles.button}>*/}
-            {/*      <Text style={{fontSize: 16}}>Thêm học viên</Text>*/}
-            {/*    </View>*/}
-            {/*  </TouchableOpacity>*/}
-            {/*  <TouchableOpacity*/}
-            {/*    onPress={() =>*/}
-            {/*      this.props.navigation.navigate('EditClass', {*/}
-            {/*        classData: classData,*/}
-            {/*        selectedGenId: selectedGenId,*/}
-            {/*        selectedBaseId: selectedBaseId,*/}
-            {/*      })*/}
-            {/*    }>*/}
-            {/*    <View style={[{marginLeft: 10}, styles.button]}>*/}
-            {/*      <Text style={{fontSize: 16}}>Sửa</Text>*/}
-            {/*    </View>*/}
-            {/*  </TouchableOpacity>*/}
-            {/*</View>*/}
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                onPress={() =>
+                  this.props.navigation.navigate('SaveRegister', {
+                    classData: classData,
+                  })
+                }>
+                <View style={styles.button}>
+                  <Text style={{fontSize: 16}}>Thêm học viên</Text>
+                </View>
+              </TouchableOpacity>
+              {/*<TouchableOpacity*/}
+              {/*  onPress={() =>*/}
+              {/*    this.props.navigation.navigate('EditClass', {*/}
+              {/*      classData: classData,*/}
+              {/*      selectedGenId: selectedGenId,*/}
+              {/*      selectedBaseId: selectedBaseId,*/}
+              {/*    })*/}
+              {/*  }>*/}
+              {/*  <View style={[{marginLeft: 10}, styles.button]}>*/}
+              {/*    <Text style={{fontSize: 16}}>Sửa</Text>*/}
+              {/*  </View>*/}
+              {/*</TouchableOpacity>*/}
+            </View>
           </View>
         </View>
       </View>

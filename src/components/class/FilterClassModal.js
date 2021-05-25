@@ -18,6 +18,9 @@ import moment from 'moment';
 class FilterClassModal extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.state = {
+      displayGen: true,
+    };
   }
 
   render() {
@@ -74,35 +77,49 @@ class FilterClassModal extends React.Component {
                     : '') + item.name
                 }
               />
-              <FilterRow
-                title={'Giai đoạn tuyển sinh'}
-                options={this.props.genData}
-                defaultId={''}
-                header={'Chọn giai đoạn tuyển sinh'}
-                selectedId={this.props.selectedGenId}
-                onChangeValue={(id) => {
-                  const gen = this.props.genData.find((item) => item.id === id);
-                  if (gen) {
-                    this.props.onSelectGenId(id);
-                    this.props.onSelectEnrollStartTime(
-                      moment(gen.start_time).unix(),
+              {this.state.displayGen && (
+                <FilterRow
+                  title={'Giai đoạn tuyển sinh'}
+                  options={this.props.genData}
+                  defaultId={''}
+                  header={'Chọn giai đoạn tuyển sinh'}
+                  selectedId={this.props.selectedGenId}
+                  onChangeValue={(id) => {
+                    const gen = this.props.genData.find(
+                      (item) => item.id === id,
                     );
-                    this.props.onSelectEnrollEndTime(
-                      moment(gen.end_time).unix(),
-                    );
-                  }
-                }}
-              />
+                    if (gen) {
+                      this.props.onSelectGenId(id);
+                      this.props.onSelectEnrollStartTime(
+                        moment(gen.start_time).unix(),
+                      );
+                      this.props.onSelectEnrollEndTime(
+                        moment(gen.end_time).unix(),
+                      );
+                    }
+                  }}
+                />
+              )}
               <FilterRowDate
                 title={'Thời gian bắt đầu tuyển sinh'}
                 selectedDate={this.props.enrollStartTime}
-                onSelectDate={this.props.onSelectEnrollStartTime}
+                onSelectDate={(time) => {
+                  this.setState({displayGen: false});
+                  this.props.onSelectEnrollStartTime(time);
+                  this.props.onSelectGenId('');
+                  setTimeout(() => this.setState({displayGen: true}), 100);
+                }}
                 isUnix
               />
               <FilterRowDate
                 title={'Thời gian kết thúc tuyển sinh'}
                 selectedDate={this.props.enrollEndTime}
-                onSelectDate={this.props.onSelectEnrollEndTime}
+                onSelectDate={(time) => {
+                  this.setState({displayGen: false});
+                  this.props.onSelectEnrollEndTime(time);
+                  this.props.onSelectGenId('');
+                  setTimeout(() => this.setState({displayGen: true}), 100);
+                }}
                 isUnix
               />
               <FilterRowDate

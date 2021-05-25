@@ -94,21 +94,17 @@ export function beginDataClassRefresh() {
 }
 
 export function refreshDataClass(
-  search,
-  enroll_start_time,
-  enroll_end_time,
-  lesson_start_time,
-  lesson_end_time,
-  start_time,
-  end_time,
-  teacher_id,
-  courseId,
+  course_id,
+  base_id,
   province_id,
+  room_id,
+  employee_id,
   type,
-  status,
-  class_status,
-  genId,
-  baseId,
+  enroll_start_date,
+  enroll_end_date,
+  start_date,
+  end_date,
+  search,
   token,
   domain,
 ) {
@@ -117,22 +113,18 @@ export function refreshDataClass(
     dispatch(
       loadDataClass(
         true,
-        search,
-        enroll_start_time,
-        enroll_end_time,
-        lesson_start_time,
-        lesson_end_time,
-        start_time,
-        end_time,
-        teacher_id,
-        courseId,
-        province_id,
         1,
+        course_id,
+        base_id,
+        province_id,
+        room_id,
+        employee_id,
         type,
-        status,
-        class_status,
-        genId,
-        baseId,
+        enroll_start_date,
+        enroll_end_date,
+        start_date,
+        end_date,
+        search,
         token,
         domain,
       ),
@@ -151,21 +143,17 @@ function beginSearchClass(search) {
 }
 
 export function searchClass(
-  search,
-  enroll_start_time,
-  enroll_end_time,
-  lesson_start_time,
-  lesson_end_time,
-  start_time,
-  end_time,
-  teacher_id,
-  courseId,
+  course_id,
+  base_id,
   province_id,
+  room_id,
+  employee_id,
   type,
-  status,
-  class_status,
-  genId,
-  baseId,
+  enroll_start_date,
+  enroll_end_date,
+  start_date,
+  end_date,
+  search,
   token,
   domain,
 ) {
@@ -176,22 +164,18 @@ export function searchClass(
     dispatch(
       loadDataClass(
         false,
-        search,
-        enroll_start_time,
-        enroll_end_time,
-        lesson_start_time,
-        lesson_end_time,
-        start_time,
-        end_time,
-        teacher_id,
-        courseId,
-        province_id,
         1,
+        course_id,
+        base_id,
+        province_id,
+        room_id,
+        employee_id,
         type,
-        status,
-        class_status,
-        genId,
-        baseId,
+        enroll_start_date,
+        enroll_end_date,
+        start_date,
+        end_date,
+        search,
         token,
         domain,
       ),
@@ -273,31 +257,6 @@ export function selectedCourseId(id) {
   return {
     type: types.SELECTED_CLASS_COURSE_ID,
     selectedCourseId: id,
-  };
-}
-
-export function reset() {
-  return {
-    type: types.RESET_CLASS,
-    classData: [],
-    selectedGenId: -1,
-    currentPage: 0,
-    totalPage: 1,
-    search: '',
-    selectedBaseId: -1,
-    selectedCourseId: -1,
-    provinceId: '',
-    courseId: '',
-    enrollStartTime: '',
-    enrollEndTime: '',
-    lessonStartTime: '',
-    lessonEndTime: '',
-    startTime: '',
-    endTime: '',
-    teacherId: '',
-    classType: '',
-    status: '',
-    class_status: '',
   };
 }
 
@@ -651,5 +610,52 @@ function createClassScheduleComplete() {
   return {
     type: types.CREATE_CLASS_SCHEDULE_COMPLETE,
     creatingClassSchedule: false,
+  };
+}
+
+export function loadRooms(token, domain) {
+  return function (dispatch) {
+    dispatch(beginLoadRooms());
+    classApi
+      .loadRooms(token, domain)
+      .then((res) => {
+        dispatch(loadRoomsSuccess(res));
+      })
+      .catch((error) => {
+        dispatch(loadRoomsError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadRooms() {
+  return {
+    type: types.BEGIN_LOAD_ROOMS,
+    isLoadingRooms: true,
+    errorRooms: false,
+  };
+}
+
+function loadRoomsSuccess(res) {
+  return {
+    type: types.LOAD_ROOMS_SUCCESS,
+    isLoadingRooms: false,
+    errorRooms: false,
+    rooms: res.data.rooms,
+  };
+}
+
+function loadRoomsError() {
+  return {
+    type: types.LOAD_ROOMS_ERROR,
+    isLoadingRooms: false,
+    errorRooms: true,
+  };
+}
+
+export function selectedRoomId(id) {
+  return {
+    type: types.SELECTED_CLASS_ROOM_ID,
+    roomId: id,
   };
 }

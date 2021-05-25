@@ -246,6 +246,26 @@ export default function classReducer(state = initialState.class, action) {
       return Object.assign({}, state, {
         creatingClassSchedule: action.creatingClassSchedule,
       });
+    case types.BEGIN_LOAD_ROOMS:
+      return Object.assign({}, state, {
+        isLoadingRooms: action.isLoadingRooms,
+        errorRooms: action.errorRooms,
+      });
+    case types.LOAD_ROOMS_SUCCESS:
+      return Object.assign({}, state, {
+        isLoadingRooms: action.isLoadingRooms,
+        errorRooms: action.errorRooms,
+        rooms: action.rooms,
+      });
+    case types.LOAD_ROOMS_ERROR:
+      return Object.assign({}, state, {
+        isLoadingRooms: action.isLoadingRooms,
+        errorRooms: action.errorRooms,
+      });
+    case types.SELECTED_CLASS_ROOM_ID:
+      return Object.assign({}, state, {
+        roomId: action.roomId,
+      });
     default:
       return state;
   }

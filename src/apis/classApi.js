@@ -124,3 +124,11 @@ export function createClassSchedule(name, study_sessions, token) {
     study_sessions: study_sessions,
   });
 }
+
+export function loadRooms(token, domain) {
+  let url =
+    env.manageApiUrlAuth(domain) +
+    '/v1/rooms?limit=0&orderBy=base_id&sortedBy=asc&token=' +
+    token;
+  return axios.get(url);
+}

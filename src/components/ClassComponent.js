@@ -11,42 +11,19 @@ import {
   Text,
 } from 'react-native';
 import Search from './common/Search';
-import {convertVietText} from '../helper';
 import FilterClassModal from './class/FilterClassModal';
 import theme from '../styles';
 import LinearGradient from 'react-native-linear-gradient';
-var {height, width} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 class ClassComponent extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
       filterModalVisible: false,
-      courseId: -1,
+      courseId: '',
     };
   }
-
-  onSelectProvinceId = (provinceId) => {
-    this.setState({selectedProvinceId: provinceId});
-  };
-
-  searchClass = (classList) => {
-    if (this.state.search === '') {
-      return classList;
-    } else {
-      let searchedClassList = [];
-      for (let classItem of classList) {
-        if (
-          convertVietText(classItem.name).includes(
-            convertVietText(this.state.search),
-          )
-        ) {
-          searchedClassList.push(classItem);
-        }
-      }
-      return searchedClassList;
-    }
-  };
 
   selectTab = (course) => {
     this.setState({courseId: course.id});
@@ -118,6 +95,7 @@ class ClassComponent extends React.Component {
             onSelectStartTime={this.props.onSelectStartTime}
             onSelectEndTime={this.props.onSelectEndTime}
             onSelectClassStatus={this.props.onSelectClassStatus}
+            onSelectRoomId={this.props.onSelectRoomId}
           />
         </View>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -132,7 +110,8 @@ class ClassComponent extends React.Component {
       this.props.isLoadingCourse ||
       this.props.isLoadingBase ||
       this.props.isLoadingGen ||
-      this.props.isLoadingProvinces
+      this.props.isLoadingProvinces ||
+      this.props.isLoadingRooms
     ) {
       return <Loading size={width / 8} />;
     }
@@ -140,7 +119,7 @@ class ClassComponent extends React.Component {
       <Container>
         <List
           dataArray={this.props.classData}
-          // ListHeaderComponent={this.headerComponent}
+          ListHeaderComponent={this.headerComponent}
           refreshControl={
             <RefreshControl
               refreshing={this.props.isRefreshing}
@@ -178,21 +157,15 @@ class ClassComponent extends React.Component {
             />
           )}
           ListEmptyComponent={
-            this.props.isLoadingClass ? (
-              this.props.isRefreshing ? (
-                <View />
-              ) : (
-                <Loading size={width / 8} />
-              )
-            ) : this.props.isRefreshing ? (
-              <View />
-            ) : (
-              <View style={styles.container}>
-                <Text style={{color: theme.dangerColor, fontSize: 16}}>
-                  Không có kết quả
-                </Text>
-              </View>
-            )
+            this.props.isLoadingClass
+              ? !this.props.isRefreshing && <Loading size={width / 8} />
+              : !this.props.isRefreshing && (
+                  <View style={styles.container}>
+                    <Text style={{color: theme.dangerColor, fontSize: 16}}>
+                      Không có kết quả
+                    </Text>
+                  </View>
+                )
           }
         />
       </Container>

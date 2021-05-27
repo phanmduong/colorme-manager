@@ -195,3 +195,13 @@ export const ADDRESS = [
   {id: 'Hà Nội', name: 'Hà Nội'},
   {id: 'Hồ Chí Minh', name: 'Hồ Chí Minh'},
 ];
+
+export const DAYS = [
+  {id: 'monday', name: 'Thứ hai'},
+  {id: 'tuesday', name: 'Thứ ba'},
+  {id: 'wednesday', name: 'Thứ tư'},
+  {id: 'thursday', name: 'Thứ năm'},
+  {id: 'friday', name: 'Thứ sáu'},
+  {id: 'saturday', name: 'Thứ bảy'},
+  {id: 'sunday', name: 'Chủ nhật'},
+];

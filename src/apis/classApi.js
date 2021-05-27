@@ -137,7 +137,7 @@ export function changeClassStatus(classId, token, domain) {
 }
 
 export function createClassSchedule(name, study_sessions, token, domain) {
-  let url = env.manageApiUrlV4(domain) + '/schedule/create?token=' + token;
+  let url = env.manageApiUrlAuth(domain) + '/v1/schedules?token=' + token;
   return axios.post(url, {
     name: name,
     study_sessions: study_sessions,

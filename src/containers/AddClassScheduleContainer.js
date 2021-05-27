@@ -12,6 +12,7 @@ function AddClassScheduleContainer(props) {
       study_sessions,
       props.token,
       props.domain,
+      () => props.navigation.goBack(),
     );
   }
 

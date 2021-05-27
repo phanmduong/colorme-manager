@@ -552,13 +552,24 @@ export function selectedClassStatus(id) {
   };
 }
 
-export function createSchedule(name, study_sessions, token, domain) {
+export function createSchedule(name, study_sessions, token, domain, callback) {
   return function (dispatch) {
     dispatch(beginCreateClassSchedule());
     classApi
       .createClassSchedule(name, study_sessions, token, domain)
       .then((res) => {
-        Alert.alert('Thông báo', 'Tạo lịch học thành công');
+        Alert.alert('Thông báo', 'Tạo lịch học thành công', [
+          {
+            text: 'OK',
+            onPress: () => {
+              // Reload schedules after successfully created
+              dispatch(loadSchedules('', token, domain, false));
+              if (callback) {
+                callback();
+              }
+            },
+          },
+        ]);
       })
       .catch((error) => {
         Alert.alert('Thông báo', 'Có lỗi xảy ra');

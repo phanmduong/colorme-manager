@@ -5,7 +5,7 @@ import * as classActions from '../actions/classActions';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../styles';
-import AddClassComponent from '../components/AddClassComponent';
+import AddEditClassComponent from '../components/AddEditClassComponent';
 import * as genActions from '../actions/genActions';
 import * as leadsActions from '../actions/leadsActions';
 
@@ -38,11 +38,12 @@ class AddEditClassContainer extends React.Component {
     ),
   });
 
-  loadSchedules = (search) => {
+  loadSchedules = (search, isFirstLoad) => {
     this.props.classActions.loadSchedules(
       search,
       this.props.token,
       this.props.domain,
+      isFirstLoad,
     );
   };
 
@@ -58,16 +59,18 @@ class AddEditClassContainer extends React.Component {
     this.props.genActions.loadDataGen(this.props.token, this.props.domain);
   };
 
-  loadStaff = (search) => {
+  loadStaff = (search, isFirstLoad = true) => {
     this.props.leadsActions.getStaff(
       search,
       this.props.token,
       this.props.domain,
+      isFirstLoad,
     );
   };
 
-  addClass = (classData) => {
+  addClass = (classData, isEdit = false) => {
     this.props.classActions.addClass(
+      isEdit,
       classData,
       this.props.token,
       this.props.domain,
@@ -76,12 +79,16 @@ class AddEditClassContainer extends React.Component {
   };
 
   render() {
+    const classData = this.props.navigation.getParam('classData');
+    const isEdit = this.props.navigation.getParam('isEdit');
     return (
-      <AddClassComponent
+      <AddEditClassComponent
         {...this.props}
+        classData={classData}
         addClass={this.addClass}
         searchSchedules={this.loadSchedules}
         searchStaff={this.loadStaff}
+        isEdit={isEdit}
       />
     );
   }
@@ -122,4 +129,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddEditClassContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(AddEditClassContainer);

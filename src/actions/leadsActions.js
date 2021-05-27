@@ -230,9 +230,11 @@ function beginSearchLeads(search) {
   };
 }
 
-export function getStaff(search, token, domain) {
+export function getStaff(search, token, domain, isFirstLoad = true) {
   return function (dispatch) {
-    dispatch(beginLoadStaff());
+    if (isFirstLoad) {
+      dispatch(beginLoadStaff());
+    }
     leadsApi
       .getStaff(search, token, domain)
       .then(function (res) {

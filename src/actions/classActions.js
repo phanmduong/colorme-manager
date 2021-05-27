@@ -300,22 +300,26 @@ export function loadBaseData(token, domain) {
   };
 }
 
-export function addClass(classData, token, domain, callback) {
+export function addClass(isEdit = false, classData, token, domain, callback) {
   return function (dispatch) {
     dispatch(beginAddClass());
     classApi
-      .addClass(classData, token, domain)
+      .addClass(isEdit, classData, token, domain)
       .then(function (res) {
-        Alert.alert('Thông báo', 'Tạo lớp học thành công', [
-          {
-            text: 'OK',
-            onPress: () => {
-              if (callback) {
-                callback();
-              }
+        Alert.alert(
+          'Thông báo',
+          isEdit ? 'Sửa lớp học thành công' : 'Tạo lớp học thành công',
+          [
+            {
+              text: 'OK',
+              onPress: () => {
+                if (callback) {
+                  callback();
+                }
+              },
             },
-          },
-        ]);
+          ],
+        );
         dispatch(addClassSuccessful());
       })
       .catch((error) => {
@@ -400,6 +404,7 @@ export function changeClassStatus(classId, token, domain) {
       })
       .catch((error) => {
         Alert.alert('Thông báo', 'Có lỗi xảy ra');
+        console.log(error.response.data);
         dispatch(changeClassStatusError());
         throw error;
       });
@@ -626,9 +631,11 @@ export function selectedRoomId(id) {
   };
 }
 
-export function loadSchedules(search, token, domain) {
+export function loadSchedules(search, token, domain, isFirstLoad = true) {
   return function (dispatch) {
-    dispatch(beginLoadSchedules());
+    if (isFirstLoad) {
+      dispatch(beginLoadSchedules());
+    }
     classApi
       .loadSchedules(search, token, domain)
       .then((res) => {

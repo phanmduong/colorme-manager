@@ -4,17 +4,15 @@ import {
   Platform,
   TouchableNativeFeedback,
   TouchableOpacity,
-  Animated,
   Switch,
-  Alert,
   View,
   Text,
 } from 'react-native';
 import {Thumbnail} from 'native-base';
 import theme from '../../styles';
-import {getShortName, isEmptyInput, localeDay} from '../../helper';
+import {getShortName, localeDay} from '../../helper';
 import moment from 'moment';
-var {height, width} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 import * as Progress from 'react-native-progress/';
 
 var maxWidthProcess = width / 4;
@@ -29,7 +27,7 @@ class ListItemClass extends React.Component {
 
   toggleSwitch = () => {
     this.setState({classStatus: !this.state.classStatus});
-    this.props.changeClassStatus(this.props.classId);
+    this.props.changeClassStatus(this.props.classData.id);
   };
 
   content() {
@@ -39,8 +37,6 @@ class ListItemClass extends React.Component {
       teach,
       assist,
       classData,
-      selectedGenId,
-      selectedBaseId,
       teachers,
       teaching_assistants,
       date_start,
@@ -52,7 +48,7 @@ class ListItemClass extends React.Component {
     } = this.props;
     return (
       <View style={styles.container}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={styles.row}>
           <Thumbnail small source={{uri: avatar}} style={theme.mainAvatar} />
           <Text numberOfLines={1} style={styles.nameClass}>
             {nameClass}
@@ -64,7 +60,7 @@ class ListItemClass extends React.Component {
             />
           ) : null}
         </View>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={styles.row}>
           <Thumbnail small style={theme.mainAvatar} />
           <View style={styles.infoContainer}>
             <View style={styles.containerSubTitle}>
@@ -211,18 +207,17 @@ class ListItemClass extends React.Component {
                   <Text style={{fontSize: 16}}>Thêm học viên</Text>
                 </View>
               </TouchableOpacity>
-              {/*<TouchableOpacity*/}
-              {/*  onPress={() =>*/}
-              {/*    this.props.navigation.navigate('EditClass', {*/}
-              {/*      classData: classData,*/}
-              {/*      selectedGenId: selectedGenId,*/}
-              {/*      selectedBaseId: selectedBaseId,*/}
-              {/*    })*/}
-              {/*  }>*/}
-              {/*  <View style={[{marginLeft: 10}, styles.button]}>*/}
-              {/*    <Text style={{fontSize: 16}}>Sửa</Text>*/}
-              {/*  </View>*/}
-              {/*</TouchableOpacity>*/}
+              <TouchableOpacity
+                onPress={() =>
+                  this.props.navigation.navigate('AddClass', {
+                    classData: classData,
+                    isEdit: true,
+                  })
+                }>
+                <View style={[{marginLeft: 10}, styles.button]}>
+                  <Text style={{fontSize: 16}}>Sửa</Text>
+                </View>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -329,6 +324,10 @@ const styles = {
     flexWrap: 'wrap',
     marginLeft: 15,
     fontSize: 18,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 };
 

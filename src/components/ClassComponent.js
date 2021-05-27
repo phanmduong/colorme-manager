@@ -140,11 +140,9 @@ class ClassComponent extends React.Component {
               courseId={item.course ? item.course.id : null} // CHANGED
               baseId={item.room ? item.room.base_id : null} // CHANGED
               changeClassStatus={this.props.changeClassStatus}
-              classStatus={item.status}
+              classStatus={item.form_status}
               user={this.props.user}
               classData={item}
-              selectedGenId={this.state.selectedGenId}
-              selectedBaseId={this.state.selectedBaseId}
               teachers={item.teachers}
               teaching_assistants={item.teaching_assistants}
               date_start={item.datestart}

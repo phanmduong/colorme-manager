@@ -70,28 +70,54 @@ export function loadBaseData(token, domain) {
   return axios.get(url);
 }
 
-export function addClass(classData, token, domain) {
-  let url =
-    env.manageApiUrlAuth(domain) +
-    '/v1/study-classes?include=course.parent,room,base.district.province,teachers,teaching_assistants,schedule,target,register_target,permissions&token=' +
-    token;
-  return axios.post(url, {
-    course_id: classData.course_id,
-    datestart: classData.datestart,
-    description: classData.description,
-    enroll_end_date: classData.enroll_end_date,
-    enroll_start_date: classData.enroll_start_date,
-    link_drive: classData.link_drive,
-    name: classData.name,
-    regis_target: classData.regis_target,
-    room_id: classData.room_id,
-    schedule_id: classData.schedule_id,
-    study_time: classData.study_time,
-    target: classData.target,
-    teacher_ids: classData.teacher_ids,
-    teaching_assistant_ids: classData.teaching_assistant_ids,
-    type: classData.type,
-  });
+export function addClass(isEdit, classData, token, domain) {
+  if (isEdit) {
+    let addUrl =
+      env.manageApiUrlAuth(domain) +
+      '/v1/study-classes/' +
+      classData.id +
+      '?include=course.parent,room,base.district.province,teachers,teaching_assistants,schedule,target,register_target,permissions&token=' +
+      token;
+    return axios.put(addUrl, {
+      course_id: classData.course_id,
+      datestart: classData.datestart,
+      description: classData.description,
+      enroll_end_date: classData.enroll_end_date,
+      enroll_start_date: classData.enroll_start_date,
+      link_drive: classData.link_drive,
+      name: classData.name,
+      regis_target: classData.regis_target,
+      room_id: classData.room_id,
+      schedule_id: classData.schedule_id,
+      study_time: classData.study_time,
+      target: classData.target,
+      teacher_ids: classData.teacher_ids,
+      teaching_assistant_ids: classData.teaching_assistant_ids,
+      type: classData.type,
+    });
+  } else {
+    let addUrl =
+      env.manageApiUrlAuth(domain) +
+      '/v1/study-classes?include=course.parent,room,base.district.province,teachers,teaching_assistants,schedule,target,register_target,permissions&token=' +
+      token;
+    return axios.post(addUrl, {
+      course_id: classData.course_id,
+      datestart: classData.datestart,
+      description: classData.description,
+      enroll_end_date: classData.enroll_end_date,
+      enroll_start_date: classData.enroll_start_date,
+      link_drive: classData.link_drive,
+      name: classData.name,
+      regis_target: classData.regis_target,
+      room_id: classData.room_id,
+      schedule_id: classData.schedule_id,
+      study_time: classData.study_time,
+      target: classData.target,
+      teacher_ids: classData.teacher_ids,
+      teaching_assistant_ids: classData.teaching_assistant_ids,
+      type: classData.type,
+    });
+  }
 }
 
 export function loadClassInfo(classId, token, domain) {

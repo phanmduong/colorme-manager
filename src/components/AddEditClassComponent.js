@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {ScrollView, Platform, KeyboardAvoidingView, Alert} from 'react-native';
 import theme from '../styles';
 import SubmitButton from './common/SubmitButton';
@@ -10,8 +10,10 @@ import {CLASS_STATUS_FILTER_NEW} from '../constants/constant';
 import DatePicker from './common/DatePicker';
 import moment from 'moment';
 import Expand from './common/Expand';
+import {isEmptyInput} from '../helper';
 
-function AddClassComponent(props) {
+function AddEditClassComponent(props) {
+  const [id, setId] = useState(null);
   const [courseId, setCourse] = useState(null);
   const [name, setName] = useState(null);
   const [roomId, setRoom] = useState(null);
@@ -38,9 +40,34 @@ function AddClassComponent(props) {
     setExpanded(!expanded);
   }
 
+  useEffect(() => {
+    if (props.classData) {
+      setId(props.classData.id);
+      setCourse(props.classData.course?.id);
+      setName(props.classData.name);
+      setRoom(props.classData.room?.id);
+      setTarget(props.classData.target?.target.toString());
+      setRegisTarget(props.classData.register_target?.target.toString());
+      setSchedule(props.classData.schedule);
+      setType(props.classData.type);
+      setStartDate(props.classData.datestart);
+      setEnrollStart(props.classData.enroll_start_date);
+      setEnrollEnd(props.classData.enroll_end_date);
+      setTeacher(
+        props.classData.teachers.length > 0 && props.classData.teachers[0].id,
+      );
+      setAssist(
+        props.classData.teaching_assistants.length > 0 &&
+          props.classData.teaching_assistants[0].id,
+      );
+      setDescription(props.classData.description);
+    }
+  }, []);
+
   function submit() {
     if (name && target && regisTarget) {
       let classData = {
+        id: id,
         course_id: courseId,
         datestart: startDate,
         description: description,
@@ -57,13 +84,23 @@ function AddClassComponent(props) {
         teaching_assistant_ids: assist ? [assist] : [],
         type: type,
       };
-      props.addClass(classData);
+      if (props.isEdit) {
+        props.addClass(classData, true);
+      } else {
+        props.addClass(classData);
+      }
     } else {
       Alert.alert('Thông báo', 'Bạn cần nhập đủ thông tin');
     }
   }
 
-  if (props.isLoadingCourses || props.isLoadingGen || props.isLoadingRooms) {
+  if (
+    props.isLoadingCourses ||
+    props.isLoadingGen ||
+    props.isLoadingRooms ||
+    props.isLoadingSchedules ||
+    props.isLoadingStaff
+  ) {
     return <Loading />;
   } else {
     return (
@@ -133,7 +170,7 @@ function AddClassComponent(props) {
             selectedId={schedule?.id}
             options={props.schedules}
             isApiSearch
-            onApiSearch={props.searchSchedules}
+            onApiSearch={(search) => props.searchSchedules(search, false)}
           />
           <AddItemButton
             title={'Thêm lịch học'}
@@ -185,7 +222,7 @@ function AddClassComponent(props) {
             selectedId={teacher}
             options={props.staff}
             header={'Chọn giảng viên'}
-            onApiSearch={props.searchStaff}
+            onApiSearch={(search) => props.searchStaff(search, false)}
             isApiSearch
           />
           <InputPicker
@@ -195,7 +232,7 @@ function AddClassComponent(props) {
             options={props.staff}
             selectedId={assist}
             isApiSearch
-            onApiSearch={props.searchStaff}
+            onApiSearch={(search) => props.searchStaff(search, false)}
           />
           <Expand toggleExpand={toggleExpand} isExpanded={expanded} />
           {expanded && (
@@ -243,4 +280,4 @@ const styles = {
   },
 };
 
-export default AddClassComponent;
+export default AddEditClassComponent;

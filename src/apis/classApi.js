@@ -70,36 +70,27 @@ export function loadBaseData(token, domain) {
   return axios.get(url);
 }
 
-export function infoCreateClass(token, domain) {
-  let url =
-    env.manageApiUrl(domain) + '/class/info-create-class?token=' + token;
-  return axios.get(url);
-}
-
 export function addClass(classData, token, domain) {
-  let url = env.manageApiUrl(domain) + '/class/store-class?token=' + token;
+  let url =
+    env.manageApiUrlAuth(domain) +
+    '/v1/study-classes?include=course.parent,room,base.district.province,teachers,teaching_assistants,schedule,target,register_target,permissions&token=' +
+    token;
   return axios.post(url, {
-    id: classData.id,
-    datestart: classData.datestart,
-    name: classData.name,
-    schedule_id: classData.schedule_id,
-    room_id: classData.room_id,
-    description: classData.description,
-    link_drive: classData.link_drive,
-    gen_id: classData.gen_id,
-    target: classData.target,
-    regis_target: classData.regis_target,
     course_id: classData.course_id,
-    teaching_assistant_id: classData.teaching_assistant_id,
-    teacher_id: classData.teacher_id,
-    study_time: classData.study_time,
-    type: classData.type,
-    status: classData.status,
-    teachers: classData.teachers,
-    teaching_assistants: classData.teaching_assistants,
-    enroll_start_date: classData.enroll_start_date,
+    datestart: classData.datestart,
+    description: classData.description,
     enroll_end_date: classData.enroll_end_date,
-    date_end: classData.date_end,
+    enroll_start_date: classData.enroll_start_date,
+    link_drive: classData.link_drive,
+    name: classData.name,
+    regis_target: classData.regis_target,
+    room_id: classData.room_id,
+    schedule_id: classData.schedule_id,
+    study_time: classData.study_time,
+    target: classData.target,
+    teacher_ids: classData.teacher_ids,
+    teaching_assistant_ids: classData.teaching_assistant_ids,
+    type: classData.type,
   });
 }
 
@@ -131,6 +122,16 @@ export function loadRooms(token, domain) {
   let url =
     env.manageApiUrlAuth(domain) +
     '/v1/rooms?limit=0&orderBy=base_id&sortedBy=asc&token=' +
+    token;
+  return axios.get(url);
+}
+
+export function loadSchedules(search, token, domain) {
+  let url =
+    env.manageApiUrlAuth(domain) +
+    '/v1/schedules?search=' +
+    search +
+    '&limit=20&orderBy=name&sortedBy=asc&token=' +
     token;
   return axios.get(url);
 }

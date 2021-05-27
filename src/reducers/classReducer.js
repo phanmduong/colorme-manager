@@ -83,26 +83,6 @@ export default function classReducer(state = initialState.class, action) {
       return Object.assign({}, state, {
         selectedCourseId: action.selectedCourseId,
       });
-    case types.BEGIN_LOAD_INFO_CREATE_CLASS:
-      return Object.assign({}, state, {
-        loadingInfoCreateClass: action.loadingInfoCreateClass,
-        errorInfoCreateClass: action.errorInfoCreateClass,
-      });
-    case types.LOAD_INFO_CREATE_CLASS_SUCCESSFUL:
-      return Object.assign({}, state, {
-        loadingInfoCreateClass: action.loadingInfoCreateClass,
-        errorInfoCreateClass: action.errorInfoCreateClass,
-        schedules: action.schedules,
-        rooms: action.rooms,
-        courses: action.courses,
-        genData: action.genData,
-        staffs: action.staffs,
-      });
-    case types.LOAD_INFO_CREATE_CLASS_ERROR:
-      return Object.assign({}, state, {
-        loadingInfoCreateClass: action.loadingInfoCreateClass,
-        errorInfoCreateClass: action.errorInfoCreateClass,
-      });
     case types.BEGIN_ADD_CLASS:
       return Object.assign({}, state, {
         isUpdatingClass: action.isUpdatingClass,
@@ -265,6 +245,22 @@ export default function classReducer(state = initialState.class, action) {
     case types.SELECTED_CLASS_ROOM_ID:
       return Object.assign({}, state, {
         roomId: action.roomId,
+      });
+    case types.BEGIN_LOAD_CLASS_SCHEDULES:
+      return Object.assign({}, state, {
+        isLoadingSchedules: action.isLoadingSchedules,
+        errorSchedules: action.errorSchedules,
+      });
+    case types.LOAD_CLASS_SCHEDULE_SUCCESS:
+      return Object.assign({}, state, {
+        isLoadingSchedules: action.isLoadingSchedules,
+        errorSchedules: action.errorSchedules,
+        schedules: action.schedules,
+      });
+    case types.LOAD_CLASS_SCHEDULE_ERROR:
+      return Object.assign({}, state, {
+        isLoadingSchedules: action.isLoadingSchedules,
+        errorSchedules: action.errorSchedules,
       });
     default:
       return state;

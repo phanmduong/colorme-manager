@@ -91,10 +91,10 @@ class FilterClassModal extends React.Component {
                     if (gen) {
                       this.props.onSelectGenId(id);
                       this.props.onSelectEnrollStartTime(
-                        moment(gen.start_time).unix(),
+                        moment(gen.start_time).utc('+0700').unix(),
                       );
                       this.props.onSelectEnrollEndTime(
-                        moment(gen.end_time).unix(),
+                        moment(gen.end_time).utc('+0700').unix(),
                       );
                     }
                   }}

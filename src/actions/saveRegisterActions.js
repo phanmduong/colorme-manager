@@ -89,10 +89,16 @@ export function register(token, register, domain, callback) {
       .saveRegisterApi(token, register, domain)
       .then(function (res) {
         dispatch(registerSuccessful(res));
-        Alert.alert('Thông báo', 'Đăng ký thành công');
-        if (callback) {
-          callback();
-        }
+        Alert.alert('Thông báo', 'Đăng ký thành công', [
+          {
+            text: 'OK',
+            onPress: () => {
+              if (callback) {
+                callback();
+              }
+            },
+          },
+        ]);
       })
       .catch((error) => {
         dispatch(registerError());

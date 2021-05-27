@@ -35,10 +35,10 @@ export const CLASS_STATUS_FILTER = [
 ];
 
 export const CLASS_STATUS_FILTER_NEW = [
-  {id: 'active', name: 'Hoạt động'},
-  {id: 'waiting', name: 'Chờ'},
-  {id: 'solo', name: 'Kèm 1-1'},
-  {id: 'business', name: 'Doanh nghiệp'},
+  {id: 'active', name: 'Lớp thường'},
+  {id: 'waiting', name: 'Lớp chờ'},
+  {id: 'solo', name: 'Lớp 1-1'},
+  {id: 'business', name: 'Lớp doanh nghiệp'},
 ];
 
 export const TELE_CALL_STATUS = [

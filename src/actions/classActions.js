@@ -300,60 +300,26 @@ export function loadBaseData(token, domain) {
   };
 }
 
-export function infoCreateClass(token, domain) {
-  return function (dispatch) {
-    dispatch(beginLoadInfoCreateClass());
-    classApi
-      .infoCreateClass(token, domain)
-      .then(function (res) {
-        dispatch(loadInfoCreateClassSuccessful(res));
-      })
-      .catch((error) => {
-        dispatch(loadInfoCreateClassError());
-        throw error;
-      });
-  };
-}
-
-function beginLoadInfoCreateClass() {
-  return {
-    type: types.BEGIN_LOAD_INFO_CREATE_CLASS,
-    loadingInfoCreateClass: true,
-    errorInfoCreateClass: false,
-  };
-}
-
-function loadInfoCreateClassSuccessful(res) {
-  return {
-    type: types.LOAD_INFO_CREATE_CLASS_SUCCESSFUL,
-    loadingInfoCreateClass: false,
-    errorInfoCreateClass: false,
-    schedules: res.data.data.schedules,
-    rooms: res.data.data.rooms,
-    courses: res.data.data.courses,
-    genData: res.data.data.gens,
-    staffs: res.data.data.staffs,
-  };
-}
-
-function loadInfoCreateClassError() {
-  return {
-    type: types.LOAD_INFO_CREATE_CLASS_ERROR,
-    loadingInfoCreateClass: false,
-    errorInfoCreateClass: true,
-  };
-}
-
-export function addClass(classData, baseId, genId, token, domain) {
+export function addClass(classData, token, domain, callback) {
   return function (dispatch) {
     dispatch(beginAddClass());
     classApi
       .addClass(classData, token, domain)
       .then(function (res) {
+        Alert.alert('Thông báo', 'Tạo lớp học thành công', [
+          {
+            text: 'OK',
+            onPress: () => {
+              if (callback) {
+                callback();
+              }
+            },
+          },
+        ]);
         dispatch(addClassSuccessful());
-        dispatch(loadDataClass(baseId, genId, token, domain));
       })
       .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
         dispatch(addClassError());
         throw error;
       });
@@ -588,7 +554,6 @@ export function createSchedule(name, study_sessions, token, domain) {
       .createClassSchedule(name, study_sessions, token, domain)
       .then((res) => {
         Alert.alert('Thông báo', 'Tạo lịch học thành công');
-        dispatch(infoCreateClass(token));
       })
       .catch((error) => {
         Alert.alert('Thông báo', 'Có lỗi xảy ra');
@@ -658,5 +623,45 @@ export function selectedRoomId(id) {
   return {
     type: types.SELECTED_CLASS_ROOM_ID,
     roomId: id,
+  };
+}
+
+export function loadSchedules(search, token, domain) {
+  return function (dispatch) {
+    dispatch(beginLoadSchedules());
+    classApi
+      .loadSchedules(search, token, domain)
+      .then((res) => {
+        dispatch(loadSchedulesSuccess(res));
+      })
+      .catch((error) => {
+        dispatch(loadSchedulesError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadSchedules() {
+  return {
+    type: types.BEGIN_LOAD_CLASS_SCHEDULES,
+    isLoadingSchedules: true,
+    errorSchedules: false,
+  };
+}
+
+function loadSchedulesSuccess(res) {
+  return {
+    type: types.LOAD_CLASS_SCHEDULE_SUCCESS,
+    isLoadingSchedules: false,
+    errorSchedules: false,
+    schedules: res.data.schedules.items,
+  };
+}
+
+function loadSchedulesError() {
+  return {
+    type: types.LOAD_CLASS_SCHEDULE_ERROR,
+    isLoadingSchedules: false,
+    errorSchedules: true,
   };
 }

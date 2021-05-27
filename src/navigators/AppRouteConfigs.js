@@ -46,7 +46,6 @@ import SaveRegisterContainer from '../containers/SaveRegisterContainer';
 import InfoStudentContainer from '../containers/InfoStudentContainer';
 import InfoStudentRegistersContainer from '../containers/infoStudent/InfoStudentRegistersContainer';
 import InfoStudentDetailsContainer from '../containers/infoStudent/InfoStudentDetailsContainer';
-import InfoStudentEditProfileContainer from '../containers/infoStudent/InfoStudentEditProfileContainer';
 import TaskContainer from '../containers/TaskContainer';
 import NotificationContainer from '../containers/NotificationContainer';
 import ProfileContainer from '../containers/ProfileContainer';
@@ -357,13 +356,6 @@ const TabDashboard = createStackNavigator(
     },
     CollectMoney: {
       screen: CollectMoneyContainer,
-      navigationOptions: () => ({
-        headerTintColor: 'black',
-        headerTitleStyle: {color: 'black'},
-      }),
-    },
-    InfoStudentEditProfile: {
-      screen: InfoStudentEditProfileContainer,
       navigationOptions: () => ({
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},

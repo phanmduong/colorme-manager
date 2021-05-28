@@ -1,22 +1,14 @@
 import React from 'react';
-import {
-  Dimensions,
-  Platform,
-  RefreshControl,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
-import {Container, View, List, Text} from 'native-base';
-import Spinkit from 'react-native-spinkit';
+import {RefreshControl, ScrollView, TouchableOpacity} from 'react-native';
+import {View, List, Text} from 'native-base';
 import theme from '../styles';
 import ListItemStudent from './listItem/ListItemStudent';
 import Search from './common/Search';
 import {convertVietText} from '../helper';
 import ListItemClassLesson from './listItem/ListItemClassLesson';
+import Loading from './common/Loading';
 
-var {height, width} = Dimensions.get('window');
-const heightSwiper = Platform.OS === 'ios' ? height - 170 : height - 125;
-class ListStudenClassComponent extends React.Component {
+class ListStudentClassComponent extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -72,20 +64,20 @@ class ListStudenClassComponent extends React.Component {
     );
   };
 
-  searchStudent = (stdLst) => {
+  searchStudent = (registers) => {
     if (this.state.search === '') {
-      return stdLst;
+      return registers;
     } else {
       let searchStdLst = [];
-      for (let student of stdLst) {
+      for (let register of registers) {
         if (
-          convertVietText(student.name).includes(
+          convertVietText(register.user.name).includes(
             convertVietText(this.state.search),
           ) ||
-          student.phone.includes(this.state.search) ||
-          student.email.includes(this.state.search)
+          register.user.phone.includes(this.state.search) ||
+          register.user.email.includes(this.state.search)
         ) {
-          searchStdLst.push(student);
+          searchStdLst.push(register);
         }
       }
       return searchStdLst;
@@ -109,28 +101,19 @@ class ListStudenClassComponent extends React.Component {
         return (
           <ListItemStudent
             {...this.props}
-            name={item.name}
-            avatar={item.avatar_url}
-            phone={item.phone}
-            email={item.email}
-            status={item.status}
             money={item.money}
-            saler={item.saler}
-            campaign={item.campaign}
-            classInfo={this.props.classInfo}
-            studentId={item.id}
-            registerId={item.register_id}
+            user={item.user}
+            classInfo={item.class}
+            registerId={item.id}
             changeCallStatus={this.props.changeCallStatus}
-            token={this.props.token}
             errorChangeCallStatus={this.props.errorChangeCallStatus}
             errorSubmitMoney={this.props.errorSubmitMoney}
             submitMoney={this.props.submitMoney}
             setStudentId={this.props.setStudentId}
-            register_status={item.register_status}
-            source={item.source}
             attendances={item.attendances}
             code={item.code}
             receivedBook={item.received_book_at}
+            paidTime={item.paid_time}
           />
         );
       case 1:
@@ -177,20 +160,8 @@ class ListStudenClassComponent extends React.Component {
   };
 
   render() {
-    console.log(this.props.lessons);
     if (this.props.isLoading || this.props.isLoadingLessons) {
-      return (
-        <Container>
-          <View style={styles.container}>
-            <Spinkit
-              isVisible
-              color={theme.mainColor}
-              type="Wave"
-              size={width / 8}
-            />
-          </View>
-        </Container>
-      );
+      return <Loading />;
     } else {
       return (
         <List
@@ -219,26 +190,6 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  textError: {
-    color: '#d9534f',
-    textAlign: 'center',
-  },
-  wrapper: {},
-  dotStyle: {
-    opacity: 0.4,
-    width: 5,
-    height: 5,
-  },
-  titleList: {
-    paddingTop: 10,
-    width: width,
-    textAlign: 'center',
-    color: theme.colorTitle,
-    fontWeight: '900',
-  },
-  slide: {
-    height: heightSwiper,
-  },
   tag: {
     paddingHorizontal: 20,
     borderRadius: 20,
@@ -255,4 +206,4 @@ const styles = {
   },
 };
 
-export default ListStudenClassComponent;
+export default ListStudentClassComponent;

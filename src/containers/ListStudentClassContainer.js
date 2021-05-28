@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as listStudentClassActions from '../actions/listStudentClassActions';
 import * as currentClassStudyActions from '../actions/currentClassStudyActions';
-import ListStudenClassComponent from '../components/ListStudenClassComponent';
+import ListStudentClassComponent from '../components/ListStudentClassComponent';
 import * as infoStudentActions from '../actions/infoStudentActions';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -192,7 +192,7 @@ class ListStudentClassContainer extends React.Component {
 
   render() {
     return (
-      <ListStudenClassComponent
+      <ListStudentClassComponent
         {...this.props}
         listStudentClass={this.props.listStudentClassData}
         onReload={this.onReload}

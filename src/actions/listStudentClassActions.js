@@ -53,8 +53,7 @@ export function refreshDataListStudentClass(classId, token, domain) {
 export function loadDataSuccessful(res) {
   return {
     type: types.LOAD_DATA_LIST_STUDENT_CLASS_SUCCESSFUL,
-    classInfo: res.data.class,
-    listStudentClassData: res.data.students,
+    listStudentClassData: res.data.registers.items,
     isLoading: false,
     refreshing: false,
     error: false,

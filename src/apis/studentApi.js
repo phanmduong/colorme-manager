@@ -91,7 +91,11 @@ export function loadStudentListByFilterApi(genId, baseId, filter, domain) {
 
 export function loadListStudentClassApi(classId, token, domain) {
   let url =
-    env.apiUrl(domain) + '/class/' + classId + '/students?token=' + token;
+    env.manageApiUrlAuth(domain) +
+    '/v1/registers?include=attendances&limit=0&orderBy=registers.created_at&sortedBy=desc&token=' +
+    token +
+    '&class_ids[]=' +
+    classId;
   return axios.get(url);
 }
 
@@ -99,26 +103,6 @@ export function loadListStudentClassLessonsApi(classId, token, domain) {
   let url =
     env.manageApiUrlV3(domain) + '/class/' + classId + '?token=' + token;
   return axios.get(url);
-}
-
-export function searchStudentApi(
-  sourceCancel,
-  search,
-  token,
-  page,
-  limit = 20,
-) {
-  let url =
-    env.API_URL +
-    '/students?search=' +
-    search +
-    '&page=' +
-    page +
-    '&limit=' +
-    limit +
-    '&token=' +
-    token;
-  return axios.get(url, {cancelToken: sourceCancel.token});
 }
 
 export function searchStudentRegisterApi(

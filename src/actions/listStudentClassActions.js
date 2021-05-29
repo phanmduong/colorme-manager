@@ -20,24 +20,13 @@ export function beginDataListStudentClassRefresh() {
   };
 }
 
-export function loadDataListStudentClass(classId, token, domain) {
+export function loadDataListStudentClass(refreshing, classId, token, domain) {
   return function (dispatch) {
-    dispatch(beginDataListStudentClassLoad());
-    studentApi
-      .loadListStudentClassApi(classId, token, domain)
-      .then(function (res) {
-        dispatch(loadDataSuccessful(res));
-      })
-      .catch((error) => {
-        dispatch(loadDataError());
-        throw error;
-      });
-  };
-}
-
-export function refreshDataListStudentClass(classId, token, domain) {
-  return function (dispatch) {
-    dispatch(beginDataListStudentClassRefresh());
+    if (!refreshing) {
+      dispatch(beginDataListStudentClassLoad());
+    } else {
+      dispatch(beginDataListStudentClassRefresh());
+    }
     studentApi
       .loadListStudentClassApi(classId, token, domain)
       .then(function (res) {
@@ -71,6 +60,7 @@ export function loadDataError() {
 
 export function loadListStudentClassLessons(
   refreshing,
+  page,
   classId,
   token,
   domain,
@@ -82,7 +72,7 @@ export function loadListStudentClassLessons(
       dispatch(beginLoadClassLessons());
     }
     studentApi
-      .loadListStudentClassLessonsApi(classId, token, domain)
+      .loadListStudentClassLessonsApi(page, classId, token, domain)
       .then((res) => dispatch(loadClassLessonsSuccess(res)))
       .catch((error) => {
         dispatch(loadClassLessonsError());
@@ -104,6 +94,9 @@ function beginRefreshClassLessons() {
     type: types.BEGIN_REFRESH_LIST_STUDENT_CLASS_LESSONS,
     refreshingLessons: true,
     errorLessons: false,
+    currentPage: 1,
+    totalPage: 1,
+    lessons: [],
   };
 }
 
@@ -113,7 +106,9 @@ function loadClassLessonsSuccess(res) {
     isLoadingLessons: false,
     errorLessons: false,
     refreshingLessons: false,
-    lessons: res.data.data.class.lessons,
+    lessons: res.data.class_lessons.items,
+    currentPage: res.data.class_lessons.meta.current_page,
+    totalPage: res.data.class_lessons.meta.total_pages,
   };
 }
 
@@ -123,6 +118,16 @@ function loadClassLessonsError() {
     isLoadingLessons: false,
     errorLessons: true,
     refreshingLessons: false,
+  };
+}
+
+export function reset() {
+  return {
+    type: types.RESET_LIST_STUDENT_CLASS,
+    lessons: [],
+    listStudentClassData: [],
+    currentPage: 0,
+    totalPage: 1,
   };
 }
 

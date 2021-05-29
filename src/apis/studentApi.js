@@ -99,9 +99,15 @@ export function loadListStudentClassApi(classId, token, domain) {
   return axios.get(url);
 }
 
-export function loadListStudentClassLessonsApi(classId, token, domain) {
+export function loadListStudentClassLessonsApi(page, classId, token, domain) {
   let url =
-    env.manageApiUrlV3(domain) + '/class/' + classId + '?token=' + token;
+    env.manageApiUrlAuth(domain) +
+    '/v1/class-lessons?include=lesson.exam_templates&orderBy=order&sortedBy=asc&limit=100&class_ids[]=' +
+    classId +
+    '&page=' +
+    page +
+    '&token=' +
+    token;
   return axios.get(url);
 }
 

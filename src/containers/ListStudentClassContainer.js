@@ -17,12 +17,16 @@ import * as leadsActions from '../actions/leadsActions';
 class ListStudentClassContainer extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.onReload = this.onReload.bind(this);
   }
 
   componentWillMount() {
-    this.onReload();
+    this.loadStudentList();
+    this.loadLessons();
     this.loadStaff('');
+  }
+
+  componentWillUnmount() {
+    this.props.listStudentClassActions.reset();
   }
 
   static navigationOptions = ({navigation}) => ({
@@ -69,28 +73,37 @@ class ListStudentClassContainer extends React.Component {
     ),
   });
 
-  onReload() {
+  loadStudentList = () => {
     this.props.listStudentClassActions.loadDataListStudentClass(
-      this.props.selectedClassId,
-      this.props.token,
-      this.props.domain,
-    );
-    this.props.listStudentClassActions.loadListStudentClassLessons(
       false,
       this.props.selectedClassId,
       this.props.token,
       this.props.domain,
     );
-  }
+  };
+
+  loadLessons = () => {
+    if (this.props.currentPageLessons < this.props.totalPageLessons) {
+      this.props.listStudentClassActions.loadListStudentClassLessons(
+        false,
+        this.props.currentPageLessons + 1,
+        this.props.selectedClassId,
+        this.props.token,
+        this.props.domain,
+      );
+    }
+  };
 
   onRefresh = () => {
-    this.props.listStudentClassActions.refreshDataListStudentClass(
+    this.props.listStudentClassActions.loadDataListStudentClass(
+      true,
       this.props.selectedClassId,
       this.props.token,
       this.props.domain,
     );
     this.props.listStudentClassActions.loadListStudentClassLessons(
       true,
+      1,
       this.props.selectedClassId,
       this.props.token,
       this.props.domain,
@@ -195,7 +208,6 @@ class ListStudentClassContainer extends React.Component {
       <ListStudentClassComponent
         {...this.props}
         listStudentClass={this.props.listStudentClassData}
-        onReload={this.onReload}
         changeCallStatus={this.changeCallStatus}
         submitMoney={this.submitMoney}
         setStudentId={this.setStudentId}
@@ -205,6 +217,7 @@ class ListStudentClassContainer extends React.Component {
         changeDate={this.changeDate}
         searchStaff={this.loadStaff}
         changeStaff={this.changeStaff}
+        loadLessons={this.loadLessons}
       />
     );
   }
@@ -242,7 +255,6 @@ function mapStateToProps(state) {
     listStudentClassData: state.listStudentClass.listStudentClassData,
     isLoading: state.listStudentClass.isLoading,
     refreshing: state.listStudentClass.refreshing,
-    classInfo: state.listStudentClass.classInfo,
     error: state.listStudentClass.error,
     isLoadingChangeCallStatus: state.infoStudent.isLoadingChangeCallStatus,
     errorChangeCallStatus: state.infoStudent.errorChangeCallStatus,
@@ -278,6 +290,8 @@ function mapStateToProps(state) {
     changingClassAssist: state.leads.changingClassAssist,
     errorChangeClassAssist: state.leads.errorChangeClassAssist,
     domain: state.login.domain,
+    currentPageLessons: state.listStudentClass.currentPageLessons,
+    totalPageLessons: state.listStudentClass.totalPageLessons,
   };
 }
 

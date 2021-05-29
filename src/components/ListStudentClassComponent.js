@@ -7,6 +7,7 @@ import Search from './common/Search';
 import {convertVietText} from '../helper';
 import ListItemClassLesson from './listItem/ListItemClassLesson';
 import Loading from './common/Loading';
+import EmptyMessage from './common/EmptyMessage';
 
 class ListStudentClassComponent extends React.Component {
   constructor(props, context) {
@@ -119,26 +120,16 @@ class ListStudentClassComponent extends React.Component {
       case 1:
         return (
           <ListItemClassLesson
-            avatar_url={this.props.classInfo.icon_url}
-            name={item.name}
-            teacher={item.teacher}
-            teacher_assistant={item.teacher_assistant}
+            {...this.props}
+            teachers={item.teachers}
+            teaching_assistants={item.teaching_assistants}
             start_time={item.start_time}
             end_time={item.end_time}
             time={item.time}
             lesson={item.lesson}
-            registers={this.props.listStudentClass}
-            total_attendance={item.total_attendance}
             class_id={item.class_id}
             openQrCode={this.props.openQrCode}
-            address={
-              this.props.classInfo?.room?.name &&
-              this.props.classInfo?.base?.address &&
-              this.props.classInfo.room.name +
-                ' - ' +
-                this.props.classInfo.base.address
-            }
-            study_time={this.props.classInfo.study_time}
+            // study_time={this.props.classInfo.study_time}
             class_lesson_time={item.class_lesson_time}
             lessons={this.props.lessons}
             classIndex={rowID}
@@ -152,6 +143,7 @@ class ListStudentClassComponent extends React.Component {
             changeStaff={this.props.changeStaff}
             errorChangeClassTeach={this.props.errorChangeClassTeach}
             errorChangeClassAssist={this.props.errorChangeClassAssist}
+            analytic_attendances={item.analytic_attendances}
           />
         );
       default:
@@ -159,25 +151,38 @@ class ListStudentClassComponent extends React.Component {
     }
   };
 
-  render() {
-    if (this.props.isLoading || this.props.isLoadingLessons) {
-      return <Loading />;
+  emptyComponent = () => {
+    if (this.props.isLoadingLessons || this.props.isLoading) {
+      if (!(this.props.refreshingLessons || this.props.refreshing)) {
+        return <Loading />;
+      }
     } else {
-      return (
-        <List
-          style={styles.list}
-          dataArray={this.data()}
-          ListHeaderComponent={this.headerComponent}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.props.refreshing}
-              onRefresh={() => this.props.onRefresh()}
-            />
-          }
-          renderRow={this.renderRow}
-        />
-      );
+      if (!(this.props.refreshingLessons || this.props.refreshing)) {
+        return <EmptyMessage />;
+      }
+      return <View />;
     }
+  };
+
+  render() {
+    return (
+      <List
+        style={styles.list}
+        dataArray={this.data()}
+        ListHeaderComponent={this.headerComponent}
+        onEndReached={this.props.loadLessons}
+        contentContainerStyle={{flexGrow: 1}}
+        onEndReachedThreshold={0}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.props.refreshing}
+            onRefresh={() => this.props.onRefresh()}
+          />
+        }
+        renderRow={this.renderRow}
+        ListEmptyComponent={this.emptyComponent}
+      />
+    );
   }
 }
 

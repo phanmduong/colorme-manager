@@ -4,6 +4,8 @@
 import * as types from '../constants/actionTypes';
 import initialState from './initialState';
 
+let lessons;
+
 export default function listStudentClassReducer(
   state = initialState.listStudentClass,
   action,
@@ -25,7 +27,6 @@ export default function listStudentClassReducer(
         refreshing: action.refreshing,
         error: action.error,
         listStudentClassData: action.listStudentClassData,
-        classInfo: action.classInfo,
       });
     case types.LOAD_DATA_LIST_STUDENT_CLASS_ERROR:
       return Object.assign({}, state, {
@@ -38,12 +39,26 @@ export default function listStudentClassReducer(
         isLoadingLessons: action.isLoadingLessons,
         errorLessons: action.errorLessons,
       });
+    case types.BEGIN_REFRESH_LIST_STUDENT_CLASS_LESSONS:
+      return Object.assign({}, state, {
+        refreshingLessons: action.refreshingLessons,
+        errorLessons: action.errorLessons,
+        currentPageLessons: action.currentPage,
+        totalPageLessons: action.totalPage,
+        lessons: action.lessons,
+      });
     case types.LOAD_LIST_STUDENT_CLASS_LESSONS_SUCCESSFUL:
+      lessons =
+        action.currentPage === 1
+          ? action.lessons
+          : [...state.lessons, ...action.lessons];
       return Object.assign({}, state, {
         isLoadingLessons: action.isLoadingLessons,
         refreshingLessons: action.refreshingLessons,
         errorLessons: action.errorLessons,
-        lessons: action.lessons,
+        lessons: lessons,
+        currentPageLessons: action.currentPage,
+        totalPageLessons: action.totalPage,
       });
     case types.LOAD_LIST_STUDENT_CLASS_LESSONS_ERROR:
       return Object.assign({}, state, {
@@ -53,9 +68,10 @@ export default function listStudentClassReducer(
       });
     case types.RESET_LIST_STUDENT_CLASS:
       return Object.assign({}, state, {
-        classInfo: action.classInfo,
         lessons: action.lessons,
         listStudentClassData: action.listStudentClassData,
+        currentPageLessons: action.currentPage,
+        totalPageLessons: action.totalPage,
       });
     case types.BEGIN_CHANGE_CLASS_LESSONS:
       return Object.assign({}, state, {

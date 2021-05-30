@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import {Alert, ScrollView, Text, TextInput, View} from 'react-native';
+import {Alert, ScrollView, Text, View} from 'react-native';
 import Modal from 'react-native-modal';
 import theme from '../../styles';
 import {getBottomSpace} from 'react-native-iphone-x-helper';
@@ -7,6 +7,7 @@ import SubmitButton from '../common/SubmitButton';
 import InputPicker from '../common/InputPicker';
 import CheckBox from '@react-native-community/checkbox';
 import Input from '../common/Input';
+import InputCheckBox from '../common/InputCheckBox';
 
 function ChangeStaffModal({
   isVisible,
@@ -116,22 +117,12 @@ function ChangeStaffModal({
             refName={noteRef}
             onSubmitEditing={() => noteRef.current.blur()}
           />
-          <View style={styles.row}>
-            <CheckBox
-              disabled={false}
+          <View style={styles.checkBox}>
+            <InputCheckBox
               value={isReplace}
-              boxType={'square'}
-              style={styles.checkBox}
-              tintColor={'#C8E6C9'}
-              onCheckColor={'#4CAF50'}
-              onFillColor={'#C8E6C9'}
-              onTintColor={'#C8E6C9'}
-              tintColors={{true: '#4CAF50', false: '#C8E6C9'}}
               onValueChange={setReplace}
-              onAnimationType={'bounce'}
-              offAnimationType={'bounce'}
+              name={'Đây là một buổi dạy thay'}
             />
-            <Text>Đây là một buổi dạy thay</Text>
           </View>
           <SubmitButton
             title={'Xác nhận'}
@@ -165,14 +156,6 @@ const styles = {
     alignItems: 'center',
     paddingTop: 30,
   },
-  inputContainer: {
-    marginTop: 8,
-    height: 45,
-    backgroundColor: '#F6F6F6',
-    justifyContent: 'center',
-    paddingHorizontal: 10,
-    borderRadius: 8,
-  },
   titleForm: {
     color: 'black',
     fontSize: 14,
@@ -181,13 +164,7 @@ const styles = {
     marginTop: 30,
   },
   checkBox: {
-    marginRight: 10,
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
     marginTop: 30,
-    marginLeft: 1,
   },
 };
 

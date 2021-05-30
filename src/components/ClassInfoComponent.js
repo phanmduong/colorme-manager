@@ -70,14 +70,20 @@ const ClassInfoComponent = ({loadClassInfo, ...props}) => {
           title={'Đã đóng tiền'}
           value={`${props.classInfo.target?.current_target}/${props.classInfo.target?.target}`}
         />
-        <InfoRow title={'Ngày bắt đầu'} value={props.classInfo.datestart} />
+        <InfoRow
+          title={'Ngày bắt đầu'}
+          value={displayUnixDate(props.classInfo.datestart, 'full-date')}
+        />
         <InfoRow
           title={'Thời gian bắt đầu tuyển sinh'}
-          value={displayUnixDate(props.classInfo.enroll_start_date)}
+          value={displayUnixDate(
+            props.classInfo.enroll_start_date,
+            'full-date',
+          )}
         />
         <InfoRow
           title={'Thời gian kết thúc tuyển sinh'}
-          value={displayUnixDate(props.classInfo.enroll_end_date)}
+          value={displayUnixDate(props.classInfo.enroll_end_date, 'full-date')}
         />
         <InfoRow title={'Môn học'} value={props.classInfo.course?.name} />
       </ScrollView>
@@ -99,10 +105,12 @@ const styles = {
     fontSize: 16,
     fontWeight: 'bold',
     marginTop: 25,
+    textAlign: 'center',
   },
   subTitle: {
     fontSize: 16,
     marginTop: 5,
+    textAlign: 'center',
   },
 };
 

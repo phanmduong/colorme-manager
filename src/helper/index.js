@@ -351,6 +351,8 @@ export function displayUnixDate(unix, type = 'date') {
       return moment.unix(unix).utcOffset('+0700').format('DD/MM/YYYY');
     case 'time':
       return moment.unix(unix).utcOffset('+0700').format('HH:mm');
+    case 'full-date':
+      return moment.unix(unix).utcOffset('+0700').format('dddd, DD/MM/YYYY');
     default:
       return null;
   }

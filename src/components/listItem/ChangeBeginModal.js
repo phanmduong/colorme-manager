@@ -24,7 +24,6 @@ function ChangeBeginModal(props) {
     classId,
     previewClassLessons,
     previews,
-    resetPreview,
   } = props;
 
   function submit() {

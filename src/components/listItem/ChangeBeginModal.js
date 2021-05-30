@@ -45,8 +45,12 @@ function ChangeBeginModal(props) {
         <View style={styles.row}>
           <Text>
             <Text style={styles.bold}>{lessons[index]?.lesson.name}: </Text>
-            {moment.unix(preview.old_time).format('DD/MM/YYYY')} →{' '}
-            {moment.unix(preview.time).format('DD/MM/YYYY')}
+            {moment
+              .unix(preview.old_time)
+              .utcOffset('+0700')
+              .format('DD/MM/YYYY')}{' '}
+            →{' '}
+            {moment.unix(preview.time).utcOffset('+0700').format('DD/MM/YYYY')}
           </Text>
         </View>
       );

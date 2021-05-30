@@ -24,6 +24,7 @@ function ChangeBeginModal(props) {
     classId,
     previewClassLessons,
     previews,
+    resetPreview,
   } = props;
 
   function submit() {
@@ -74,11 +75,11 @@ function ChangeBeginModal(props) {
       avoidKeyboard={true}
       onBackButtonPress={() => {
         closeModal();
-        props.resetPreview();
+        resetPreview();
       }}
       onBackdropPress={() => {
         closeModal();
-        props.resetPreview();
+        resetPreview();
       }}>
       <View style={styles.modal}>
         <ScrollView showsVerticalScrollIndicator={false}>

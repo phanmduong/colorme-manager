@@ -219,7 +219,6 @@ class ListStudentClassContainer extends React.Component {
   };
 
   render() {
-    console.log(this.props.changingClassTeach);
     return (
       <ListStudentClassComponent
         {...this.props}

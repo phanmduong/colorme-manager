@@ -382,7 +382,7 @@ function loadClassInfoSuccessful(res) {
     type: types.LOAD_CLASS_INFO_SUCCESSFUL,
     loadingClassInfo: false,
     errorClassInfo: false,
-    classInfo: res.data.data.class,
+    classInfo: res.data.study_class,
   };
 }
 

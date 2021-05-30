@@ -4,6 +4,7 @@
 
 import _ from 'lodash';
 import {MEETING_STATUS} from '../constants/constant';
+import moment from 'moment';
 
 export function dotNumber(number) {
   if (number) {
@@ -339,6 +340,17 @@ export function localeDay(day) {
       return 'Thứ bảy';
     case 'sunday':
       return 'Chủ nhật';
+    default:
+      return null;
+  }
+}
+
+export function displayUnixDate(unix, type = 'date') {
+  switch (type) {
+    case 'date':
+      return moment.unix(unix).utcOffset('+0700').format('DD/MM/YYYY');
+    case 'time':
+      return moment.unix(unix).utcOffset('+0700').format('HH:mm');
     default:
       return null;
   }

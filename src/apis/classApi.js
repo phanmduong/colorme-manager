@@ -122,7 +122,11 @@ export function addClass(isEdit, classData, token, domain) {
 
 export function loadClassInfo(classId, token, domain) {
   let url =
-    env.manageApiUrlV3(domain) + '/class/' + classId + '?token=' + token;
+    env.manageApiUrlAuth(domain) +
+    '/v1/study-classes/' +
+    classId +
+    '?token=' +
+    token;
   return axios.get(url);
 }
 

@@ -13,7 +13,6 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../styles';
 import {isEmptyInput} from '../helper';
 import * as leadsActions from '../actions/leadsActions';
-import {previewClassLessons} from '../actions/listStudentClassActions';
 
 class ListStudentClassContainer extends React.Component {
   constructor(props, context) {

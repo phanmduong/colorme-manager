@@ -122,7 +122,7 @@ const styles = {
   },
   modal: {
     backgroundColor: 'white',
-    height: 500,
+    height: 420,
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
     paddingHorizontal: theme.mainHorizontal,

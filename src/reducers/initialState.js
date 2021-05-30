@@ -208,6 +208,9 @@ export default {
     errorChangeClassTeach: false,
     changingClassAssist: false,
     errorChangeClassAssist: false,
+    previews: [],
+    previewingClassLessons: false,
+    errorPreviewClassLessons: false,
   },
   listStudentAttendance: {
     listStudentAttendanceData: [],

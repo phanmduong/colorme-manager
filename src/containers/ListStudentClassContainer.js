@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../styles';
 import {isEmptyInput} from '../helper';
 import * as leadsActions from '../actions/leadsActions';
+import {previewClassLessons} from '../actions/listStudentClassActions';
 
 class ListStudentClassContainer extends React.Component {
   constructor(props, context) {
@@ -163,9 +164,18 @@ class ListStudentClassContainer extends React.Component {
     this.props.navigation.navigate('QRCode');
   };
 
-  changeBegin = (lessonsArray) => {
+  changeBegin = (payload, callback) => {
     this.props.listStudentClassActions.changeClassLessons(
-      lessonsArray,
+      payload,
+      this.props.token,
+      this.props.domain,
+      callback,
+    );
+  };
+
+  previewClassLessons = (payload) => {
+    this.props.listStudentClassActions.previewClassLessons(
+      payload,
       this.props.token,
       this.props.domain,
     );
@@ -187,23 +197,30 @@ class ListStudentClassContainer extends React.Component {
     );
   };
 
-  changeStaff = (changedData, type) => {
+  changeStaff = (changedData, type, callback) => {
     if (type === 'teacher') {
       this.props.listStudentClassActions.changeClassTeach(
         changedData,
         this.props.token,
         this.props.domain,
+        callback,
       );
     } else {
       this.props.listStudentClassActions.changeClassAssist(
         changedData,
         this.props.token,
         this.props.domain,
+        callback,
       );
     }
   };
 
+  resetPreview = () => {
+    this.props.listStudentClassActions.resetPreview();
+  };
+
   render() {
+    console.log(this.props.changingClassTeach);
     return (
       <ListStudentClassComponent
         {...this.props}
@@ -218,6 +235,8 @@ class ListStudentClassContainer extends React.Component {
         searchStaff={this.loadStaff}
         changeStaff={this.changeStaff}
         loadLessons={this.loadLessons}
+        previewClassLessons={this.previewClassLessons}
+        resetPreview={this.resetPreview}
       />
     );
   }
@@ -285,13 +304,16 @@ function mapStateToProps(state) {
     staff: state.leads.staff,
     isLoadingStaff: state.leads.isLoadingStaff,
     errorStaff: state.leads.errorStaff,
-    changingClassTeach: state.leads.changingClassTeach,
-    errorChangeClassTeach: state.leads.errorChangeClassTeach,
-    changingClassAssist: state.leads.changingClassAssist,
-    errorChangeClassAssist: state.leads.errorChangeClassAssist,
+    changingClassTeach: state.listStudentClass.changingClassTeach,
+    errorChangeClassTeach: state.listStudentClass.errorChangeClassTeach,
+    changingClassAssist: state.listStudentClass.changingClassAssist,
+    errorChangeClassAssist: state.listStudentClass.errorChangeClassAssist,
     domain: state.login.domain,
     currentPageLessons: state.listStudentClass.currentPageLessons,
     totalPageLessons: state.listStudentClass.totalPageLessons,
+    previews: state.listStudentClass.previews,
+    previewingClassLessons: state.listStudentClass.previewingClassLessons,
+    errorPreviewClassLessons: state.listStudentClass.errorPreviewClassLessons,
   };
 }
 

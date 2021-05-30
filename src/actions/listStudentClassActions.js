@@ -132,13 +132,26 @@ export function reset() {
   };
 }
 
-export function changeClassLessons(classLessons, token, domain) {
+export function changeClassLessons(payload, token, domain, callback) {
   return function (dispatch) {
     dispatch(beginChangeClassLessons());
     studentApi
-      .changeClassLessons(classLessons, token, domain)
-      .then((res) => dispatch(changeClassLessonsSuccess()))
+      .changeClassLessons(payload, token, domain)
+      .then((res) => {
+        Alert.alert('Thông báo', 'Dời lịch thành công', [
+          {
+            text: 'OK',
+            onPress: () => {
+              if (callback) {
+                callback();
+              }
+            },
+          },
+        ]);
+        dispatch(changeClassLessonsSuccess());
+      })
       .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
         changeClassLessonsError();
         throw error;
       });
@@ -166,6 +179,52 @@ function changeClassLessonsError() {
     type: types.BEGIN_CHANGE_CLASS_LESSONS,
     changingClassLessons: false,
     errorChangeClassLessons: true,
+  };
+}
+
+export function previewClassLessons(payload, token, domain) {
+  return function (dispatch) {
+    dispatch(beginPreviewClassLessons());
+    studentApi
+      .previewClassLessons(payload, token, domain)
+      .then((res) => {
+        dispatch(previewClassLessonsSuccess(res));
+      })
+      .catch((error) => {
+        dispatch(previewClassLessonsError());
+        throw error;
+      });
+  };
+}
+function beginPreviewClassLessons() {
+  return {
+    type: types.BEGIN_PREVIEW_CLASS_LESSONS,
+    previewingClassLessons: true,
+    errorPreviewClassLessons: false,
+  };
+}
+
+function previewClassLessonsSuccess(res) {
+  return {
+    type: types.PREVIEW_CLASS_LESSONS_SUCCESS,
+    previewingClassLessons: false,
+    errorPreviewClassLessons: false,
+    previews: res.data.preview_times,
+  };
+}
+
+function previewClassLessonsError() {
+  return {
+    type: types.PREVIEW_CLASS_LESSONS_ERROR,
+    previewingClassLessons: false,
+    errorPreviewClassLessons: true,
+  };
+}
+
+export function resetPreview() {
+  return {
+    type: types.RESET_PREVIEW,
+    previews: [],
   };
 }
 
@@ -208,13 +267,22 @@ function changeClassLessonError() {
   };
 }
 
-export function changeClassTeach(data, token, domain) {
+export function changeClassTeach(data, token, domain, callback) {
   return function (dispatch) {
     dispatch(beginChangeClassTeach());
     studentApi
       .changeTeacherAndAssistant(data, token, domain)
       .then((res) => {
-        Alert.alert('Thông báo', 'Đổi giảng viên thành công');
+        Alert.alert('Thông báo', 'Đổi giảng viên thành công', [
+          {
+            text: 'OK',
+            onPress: () => {
+              if (callback) {
+                callback();
+              }
+            },
+          },
+        ]);
         dispatch(changeClassTeachSuccess());
       })
       .catch((error) => {
@@ -249,13 +317,22 @@ function changeClassTeachError() {
   };
 }
 
-export function changeClassAssist(data, token, domain) {
+export function changeClassAssist(data, token, domain, callback) {
   return function (dispatch) {
     dispatch(beginChangeClassAssist());
     studentApi
       .changeTeacherAndAssistant(data, token, domain)
       .then((res) => {
-        Alert.alert('Thông báo', 'Đổi trợ giảng thành công');
+        Alert.alert('Thông báo', 'Đổi trợ giảng thành công', [
+          {
+            text: 'OK',
+            onPress: () => {
+              if (callback) {
+                callback();
+              }
+            },
+          },
+        ]);
         dispatch(changeClassAssistSuccess());
       })
       .catch((error) => {

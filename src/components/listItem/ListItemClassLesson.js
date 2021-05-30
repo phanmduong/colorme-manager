@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {View, Image, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import theme from '../../styles';
 import {getShortName} from '../../helper';
 import * as Progress from 'react-native-progress';
@@ -20,7 +20,6 @@ const ListItemClassLesson = (props) => {
     lesson,
     class_id,
     openQrCode,
-    study_time,
     class_lesson_time,
     lessons,
     classIndex,
@@ -28,13 +27,9 @@ const ListItemClassLesson = (props) => {
     searchStaff,
     changeBegin,
     changeDate,
-    errorChangeClassLessons,
     errorChangeClassLesson,
     staff,
     changeStaff,
-    errorChangeClassTeach,
-    errorChangeClassAssist,
-
     analytic_attendances,
   } = props;
 
@@ -73,16 +68,16 @@ const ListItemClassLesson = (props) => {
   function executeActions(index) {
     switch (index) {
       case 0:
-        toggleChangeBeginModal();
-        break;
-      case 1:
-        toggleChangeDateModal();
-        break;
-      case 2:
         toggleChangeTeachModal();
         break;
-      case 3:
+      case 1:
         toggleChangeAssistModal();
+        break;
+      case 2:
+        toggleChangeDateModal();
+        break;
+      case 3:
+        toggleChangeBeginModal();
         break;
       default:
         return;
@@ -191,33 +186,15 @@ const ListItemClassLesson = (props) => {
         ref={CustomActionSheet}
         title={'Chọn hành động'}
         options={[
-          'Dời lịch học',
-          'Đổi lịch dạy',
           'Đổi giảng viên',
           'Đổi trợ giảng',
+          'Đổi lịch dạy',
+          'Dời lịch học',
           'Hủy',
         ]}
         cancelButtonIndex={4}
         onPress={executeActions}
       />
-      {/*<ChangeBeginModal*/}
-      {/*  isVisible={isChangeBeginModalVisible}*/}
-      {/*  closeModal={toggleChangeBeginModal}*/}
-      {/*  currentStudyTime={study_time}*/}
-      {/*  currentDate={class_lesson_time}*/}
-      {/*  lessons={lessons}*/}
-      {/*  classIndex={classIndex}*/}
-      {/*  changeBegin={changeBegin}*/}
-      {/*  errorChangeClassLessons={errorChangeClassLessons}*/}
-      {/*/>*/}
-      {/*<ChangeDateModal*/}
-      {/*  isVisible={isChangeDateModalVisible}*/}
-      {/*  closeModal={toggleChangeDateModal}*/}
-      {/*  currentStudyTime={class_lesson_time}*/}
-      {/*  class_lesson_id={class_lesson_id}*/}
-      {/*  errorChangeClassLesson={errorChangeClassLesson}*/}
-      {/*  changeDate={changeDate}*/}
-      {/*/>*/}
       <ChangeStaffModal
         isVisible={isChangeTeachModalVisible}
         closeModal={toggleChangeTeachModal}
@@ -226,8 +203,7 @@ const ListItemClassLesson = (props) => {
         staff={staff}
         class_lesson_id={class_lesson_id}
         changeStaff={changeStaff}
-        errorChangeClassTeach={errorChangeClassTeach}
-        errorChangeClassAssist={errorChangeClassAssist}
+        changingClassTeach={props.changingClassTeach}
       />
       <ChangeStaffModal
         isVisible={isChangeAssistModalVisible}
@@ -239,6 +215,28 @@ const ListItemClassLesson = (props) => {
         isTeach={false}
         class_lesson_id={class_lesson_id}
         changeStaff={changeStaff}
+        changingClassAssist={props.changingClassAssist}
+      />
+      {/*<ChangeDateModal*/}
+      {/*  isVisible={isChangeDateModalVisible}*/}
+      {/*  closeModal={toggleChangeDateModal}*/}
+      {/*  currentStudyTime={class_lesson_time}*/}
+      {/*  class_lesson_id={class_lesson_id}*/}
+      {/*  errorChangeClassLesson={errorChangeClassLesson}*/}
+      {/*  changeDate={changeDate}*/}
+      {/*/>*/}
+      <ChangeBeginModal
+        isVisible={isChangeBeginModalVisible}
+        closeModal={toggleChangeBeginModal}
+        currentLessons={lessons}
+        classIndex={classIndex}
+        changeBegin={changeBegin}
+        previewClassLessons={props.previewClassLessons}
+        previews={props.previews}
+        classId={class_id}
+        previewingClassLessons={props.previewingClassLessons}
+        changingClassLessons={props.changingClassLessons}
+        resetPreview={props.resetPreview}
       />
     </View>
   );

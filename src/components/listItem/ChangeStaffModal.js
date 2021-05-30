@@ -5,28 +5,29 @@ import theme from '../../styles';
 import {getBottomSpace} from 'react-native-iphone-x-helper';
 import SubmitButton from '../common/SubmitButton';
 import InputPicker from '../common/InputPicker';
-import CheckBox from '@react-native-community/checkbox';
 import Input from '../common/Input';
 import InputCheckBox from '../common/InputCheckBox';
 
-function ChangeStaffModal({
-  isVisible,
-  closeModal,
-  searchStaff,
-  staff,
-  isTeach = true,
-  isAssist = false,
-  class_lesson_id,
-  changeStaff,
-  teachers,
-  teaching_assistants,
-}) {
+function ChangeStaffModal(props) {
   const [oldUser, setOldUser] = useState(null);
   const [note, setNote] = useState(null);
   const [newUser, setNewUser] = useState(null);
   const [isReplace, setReplace] = useState(false);
 
   const noteRef = useRef(null);
+
+  const {
+    isVisible,
+    closeModal,
+    searchStaff,
+    staff,
+    isTeach = true,
+    isAssist = false,
+    class_lesson_id,
+    changeStaff,
+    teachers,
+    teaching_assistants,
+  } = props;
 
   function submit() {
     if (class_lesson_id) {
@@ -39,7 +40,7 @@ function ChangeStaffModal({
           new_user_id: newUser,
           type: 'teacher',
         };
-        changeStaff(changedData, 'teacher');
+        changeStaff(changedData, 'teacher', () => closeModal());
       } else {
         const changedData = {
           class_lesson_id,
@@ -49,9 +50,8 @@ function ChangeStaffModal({
           new_user_id: newUser,
           type: 'teaching_assistant',
         };
-        changeStaff(changedData, 'assist');
+        changeStaff(changedData, 'assist', () => closeModal());
       }
-      closeModal();
     } else {
       Alert.alert('Thông báo', 'Có lỗi xảy ra');
     }
@@ -67,7 +67,9 @@ function ChangeStaffModal({
       <View style={styles.modal}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.titleContainer}>
-            <Text style={styles.title}>Đổi giảng viên</Text>
+            <Text style={styles.title}>
+              {isTeach ? 'Đổi giảng viên' : 'Đổi trợ giảng'}
+            </Text>
           </View>
           {isTeach && (
             <>
@@ -126,6 +128,7 @@ function ChangeStaffModal({
           </View>
           <SubmitButton
             title={'Xác nhận'}
+            loading={props.changingClassAssist || props.changingClassTeach}
             containerStyle={styles.submit}
             onPress={submit}
           />

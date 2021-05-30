@@ -107,8 +107,6 @@ class ListStudentClassComponent extends React.Component {
             classInfo={item.class}
             registerId={item.id}
             changeCallStatus={this.props.changeCallStatus}
-            errorChangeCallStatus={this.props.errorChangeCallStatus}
-            errorSubmitMoney={this.props.errorSubmitMoney}
             submitMoney={this.props.submitMoney}
             setStudentId={this.props.setStudentId}
             attendances={item.attendances}
@@ -127,23 +125,18 @@ class ListStudentClassComponent extends React.Component {
             end_time={item.end_time}
             time={item.time}
             lesson={item.lesson}
-            class_id={item.class_id}
+            class_id={this.props.selectedClassId}
             openQrCode={this.props.openQrCode}
-            // study_time={this.props.classInfo.study_time}
             class_lesson_time={item.class_lesson_time}
-            lessons={this.props.lessons}
             classIndex={rowID}
             changeBegin={this.props.changeBegin}
             changeDate={this.props.changeDate}
-            errorChangeClassLessons={this.props.errorChangeClassLessons}
-            errorChangeClassLesson={this.props.errorChangeClassLesson}
             class_lesson_id={item.id}
             searchStaff={this.props.searchStaff}
-            staff={this.props.staff}
             changeStaff={this.props.changeStaff}
-            errorChangeClassTeach={this.props.errorChangeClassTeach}
-            errorChangeClassAssist={this.props.errorChangeClassAssist}
             analytic_attendances={item.analytic_attendances}
+            previewClassLessons={this.props.previewClassLessons}
+            resetPreview={this.props.resetPreview}
           />
         );
       default:

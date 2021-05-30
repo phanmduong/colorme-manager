@@ -184,12 +184,32 @@ export function loadCourses(token, domain) {
   return axios.get(url);
 }
 
-export function changeClassLessons(classLessons, token, domain) {
+export function changeClassLessons(payload, token, domain) {
   let url =
-    env.manageApiUrlV3(domain) + '/class/change-class-lessons?token=' + token;
-  return axios.put(url, {
-    classLessons,
+    env.manageApiUrlAuth(domain) +
+    '/v1/class-lesson-changes/changes?token=' +
+    token;
+  return axios.post(url, {
+    class_id: payload.class_id,
+    class_lesson_ids: payload.class_lesson_ids,
+    note: payload.note,
+    start_time: payload.start_time,
   });
+}
+
+export function previewClassLessons(payload, token, domain) {
+  let url =
+    env.manageApiUrlAuth(domain) +
+    '/v1/class-lesson-changes/preview?class_id=' +
+    payload.class_id +
+    '&start_time=' +
+    payload.start_time +
+    '&token=' +
+    token;
+  payload.class_lesson_ids.forEach((id) => {
+    url += '&class_lesson_ids[]=' + id;
+  });
+  return axios.get(url);
 }
 
 export function changeClassLesson(lesson, token, domain) {

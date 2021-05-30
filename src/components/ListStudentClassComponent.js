@@ -137,7 +137,7 @@ class ListStudentClassComponent extends React.Component {
             changeDate={this.props.changeDate}
             errorChangeClassLessons={this.props.errorChangeClassLessons}
             errorChangeClassLesson={this.props.errorChangeClassLesson}
-            class_lesson_id={item.class_lesson_id}
+            class_lesson_id={item.id}
             searchStaff={this.props.searchStaff}
             staff={this.props.staff}
             changeStaff={this.props.changeStaff}

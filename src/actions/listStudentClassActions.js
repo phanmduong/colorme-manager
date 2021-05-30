@@ -3,6 +3,7 @@
  */
 import * as types from '../constants/actionTypes';
 import * as studentApi from '../apis/studentApi';
+import {Alert} from 'react-native';
 
 export function beginDataListStudentClassLoad() {
   return {
@@ -211,9 +212,13 @@ export function changeClassTeach(data, token, domain) {
   return function (dispatch) {
     dispatch(beginChangeClassTeach());
     studentApi
-      .changeTeacher(data, token, domain)
-      .then((res) => dispatch(changeClassTeachSuccess()))
+      .changeTeacherAndAssistant(data, token, domain)
+      .then((res) => {
+        Alert.alert('Thông báo', 'Đổi giảng viên thành công');
+        dispatch(changeClassTeachSuccess());
+      })
       .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
         dispatch(changeClassTeachError());
         throw error;
       });
@@ -248,9 +253,13 @@ export function changeClassAssist(data, token, domain) {
   return function (dispatch) {
     dispatch(beginChangeClassAssist());
     studentApi
-      .changeAssist(data, token, domain)
-      .then((res) => dispatch(changeClassAssistSuccess()))
+      .changeTeacherAndAssistant(data, token, domain)
+      .then((res) => {
+        Alert.alert('Thông báo', 'Đổi trợ giảng thành công');
+        dispatch(changeClassAssistSuccess());
+      })
       .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
         dispatch(changeClassAssistError());
         throw error;
       });

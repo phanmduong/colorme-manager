@@ -218,32 +218,28 @@ const ListItemClassLesson = (props) => {
       {/*  errorChangeClassLesson={errorChangeClassLesson}*/}
       {/*  changeDate={changeDate}*/}
       {/*/>*/}
-      {/*<ChangeStaffModal*/}
-      {/*  isVisible={isChangeTeachModalVisible}*/}
-      {/*  closeModal={toggleChangeTeachModal}*/}
-      {/*  currentStudyTime={class_lesson_time}*/}
-      {/*  currentTeach={teacher}*/}
-      {/*  searchStaff={searchStaff}*/}
-      {/*  staff={staff}*/}
-      {/*  class_lesson_id={class_lesson_id}*/}
-      {/*  changeStaff={changeStaff}*/}
-      {/*  errorChangeClassTeach={errorChangeClassTeach}*/}
-      {/*  errorChangeClassAssist={errorChangeClassAssist}*/}
-      {/*/>*/}
-      {/*<ChangeStaffModal*/}
-      {/*  isVisible={isChangeAssistModalVisible}*/}
-      {/*  closeModal={toggleChangeAssistModal}*/}
-      {/*  currentStudyTime={class_lesson_time}*/}
-      {/*  currentAssist={teacher_assistant}*/}
-      {/*  searchStaff={searchStaff}*/}
-      {/*  staff={staff}*/}
-      {/*  isAssist={true}*/}
-      {/*  isTeach={false}*/}
-      {/*  class_lesson_id={class_lesson_id}*/}
-      {/*  changeStaff={changeStaff}*/}
-      {/*  errorChangeClassTeach={errorChangeClassTeach}*/}
-      {/*  errorChangeClassAssist={errorChangeClassAssist}*/}
-      {/*/>*/}
+      <ChangeStaffModal
+        isVisible={isChangeTeachModalVisible}
+        closeModal={toggleChangeTeachModal}
+        teachers={teachers}
+        searchStaff={searchStaff}
+        staff={staff}
+        class_lesson_id={class_lesson_id}
+        changeStaff={changeStaff}
+        errorChangeClassTeach={errorChangeClassTeach}
+        errorChangeClassAssist={errorChangeClassAssist}
+      />
+      <ChangeStaffModal
+        isVisible={isChangeAssistModalVisible}
+        closeModal={toggleChangeAssistModal}
+        teaching_assistants={teaching_assistants}
+        searchStaff={searchStaff}
+        staff={staff}
+        isAssist={true}
+        isTeach={false}
+        class_lesson_id={class_lesson_id}
+        changeStaff={changeStaff}
+      />
     </View>
   );
 };

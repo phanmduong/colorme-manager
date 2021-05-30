@@ -202,25 +202,15 @@ export function changeClassLesson(lesson, token, domain) {
   });
 }
 
-export function changeTeacher(changedData, token, domain) {
-  let url = env.manageApiUrlV3(domain) + '/class/change-teacher?token=' + token;
-  return axios.put(url, {
-    id: changedData.id,
-    is_teacher_replace: changedData.is_teacher_replace,
-    note: changedData.note,
-    staff_id: changedData.staff_id,
-  });
-}
-
-export function changeAssist(changedData, token, domain) {
+export function changeTeacherAndAssistant(changedData, token, domain) {
   let url =
-    env.manageApiUrlV3(domain) +
-    '/class/change-teaching-assistant?token=' +
-    token;
-  return axios.put(url, {
-    id: changedData.id,
-    is_teaching_assistant_replace: changedData.is_teaching_assistant_replace,
+    env.manageApiUrlAuth(domain) + '/v1/teaching-lesson-changes?token=' + token;
+  return axios.post(url, {
+    class_lesson_id: changedData.class_lesson_id,
+    is_replace: changedData.is_replace,
+    new_user_id: changedData.new_user_id,
     note: changedData.note,
-    staff_id: changedData.staff_id,
+    old_user_id: changedData.old_user_id,
+    type: changedData.type,
   });
 }

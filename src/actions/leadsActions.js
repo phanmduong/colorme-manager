@@ -230,9 +230,11 @@ function beginSearchLeads(search) {
   };
 }
 
-export function getStaff(search, token, domain) {
+export function getStaff(search, token, domain, isFirstLoad = true) {
   return function (dispatch) {
-    dispatch(beginLoadStaff());
+    if (isFirstLoad) {
+      dispatch(beginLoadStaff());
+    }
     leadsApi
       .getStaff(search, token, domain)
       .then(function (res) {
@@ -277,21 +279,27 @@ export function saveLead(mode = 'add', lead, token, domain, callback) {
       leadsApi
         .saveLead(lead, token, domain)
         .then(function (res) {
-          dispatch(saveLeadSuccessful(res));
-          Alert.alert(
-            'Thông báo',
-            res.data.message ? res.data.message : 'Tạo lead thành công',
-            [
-              {
-                text: 'OK',
-                onPress: () => {
-                  if (callback) {
-                    callback();
-                  }
+          if (res.data.lead) {
+            dispatch(saveLeadSuccessful(res));
+            Alert.alert(
+              'Thông báo',
+              res.data.message ? res.data.message : 'Tạo lead thành công',
+              [
+                {
+                  text: 'OK',
+                  onPress: () => {
+                    if (callback) {
+                      callback();
+                    }
+                  },
                 },
-              },
-            ],
-          );
+              ],
+            );
+          } else {
+            dispatch(saveLeadError());
+            Alert.alert('Thông báo', 'Có lỗi xảy ra');
+            throw error;
+          }
         })
         .catch((error) => {
           dispatch(saveLeadError());
@@ -302,21 +310,27 @@ export function saveLead(mode = 'add', lead, token, domain, callback) {
       leadsApi
         .updateLead(lead, token, domain)
         .then(function (res) {
-          dispatch(saveLeadSuccessful(res));
-          Alert.alert(
-            'Thông báo',
-            res.data.message ? res.data.message : 'Sửa lead thành công',
-            [
-              {
-                text: 'OK',
-                onPress: () => {
-                  if (callback) {
-                    callback();
-                  }
+          if (res.data.lead) {
+            dispatch(saveLeadSuccessful(res));
+            Alert.alert(
+              'Thông báo',
+              res.data.message ? res.data.message : 'Sửa lead thành công',
+              [
+                {
+                  text: 'OK',
+                  onPress: () => {
+                    if (callback) {
+                      callback();
+                    }
+                  },
                 },
-              },
-            ],
-          );
+              ],
+            );
+          } else {
+            dispatch(saveLeadError());
+            Alert.alert('Thông báo', 'Có lỗi xảy ra');
+            throw error;
+          }
         })
         .catch((error) => {
           dispatch(saveLeadError());

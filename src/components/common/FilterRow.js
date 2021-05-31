@@ -18,6 +18,7 @@ const FilterRow = ({
   onChangeValue,
   isApiSearch = false,
   onApiSearch,
+  getLabel,
 }) => {
   const [search, setSearch] = useState('');
 
@@ -106,7 +107,7 @@ const FilterRow = ({
       <CustomPicker
         options={isApiSearch ? originalData : searchedData}
         defaultValue={defaultValue}
-        getLabel={(item) => item.name}
+        getLabel={getLabel ? getLabel : (item) => item.name}
         modalAnimationType={'fade'}
         optionTemplate={renderPickerOption}
         fieldTemplate={renderPickerField}

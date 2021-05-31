@@ -4,16 +4,16 @@ import {
   Platform,
   TouchableNativeFeedback,
   TouchableOpacity,
-  Animated,
   Switch,
-  Alert,
   View,
   Text,
 } from 'react-native';
 import {Thumbnail} from 'native-base';
 import theme from '../../styles';
-import {getShortName, isEmptyInput} from '../../helper';
-var {height, width} = Dimensions.get('window');
+import {getShortName, localeDay} from '../../helper';
+import moment from 'moment';
+const {width} = Dimensions.get('window');
+import * as Progress from 'react-native-progress/';
 
 var maxWidthProcess = width / 4;
 
@@ -27,52 +27,30 @@ class ListItemClass extends React.Component {
 
   toggleSwitch = () => {
     this.setState({classStatus: !this.state.classStatus});
-    this.props.changeClassStatus(this.props.classId);
-    if (this.props.errorClassStatus) {
-      Alert.alert('Thông báo', 'Có lỗi xảy ra');
-    }
+    this.props.changeClassStatus(this.props.classData.id);
   };
 
   content() {
-    var {
+    const {
       nameClass,
-      studyTime,
-      address,
       avatar,
-      totalPaid,
-      totalRegisters,
-      paidTarget,
-      registerTarget,
       teach,
       assist,
-      classId,
-      courseId,
-      baseId,
       classData,
-      selectedGenId,
-      selectedBaseId,
-      date_end,
       teachers,
       teaching_assistants,
       date_start,
+      description,
+      schedule,
+      base,
+      target,
+      register_target,
     } = this.props;
-    var tmpTotalPaid, tmpTotalRegister;
-    tmpTotalPaid = totalPaid < paidTarget ? totalPaid : paidTarget;
-    tmpTotalRegister =
-      totalRegisters < registerTarget ? totalRegisters : registerTarget;
     return (
       <View style={styles.container}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={styles.row}>
           <Thumbnail small source={{uri: avatar}} style={theme.mainAvatar} />
-          <Text
-            numberOfLines={1}
-            style={{
-              fontWeight: '600',
-              flex: 1,
-              flexWrap: 'wrap',
-              marginLeft: 15,
-              fontSize: 18,
-            }}>
+          <Text numberOfLines={1} style={styles.nameClass}>
             {nameClass}
           </Text>
           {this.props.user.role === 2 ? (
@@ -82,11 +60,11 @@ class ListItemClass extends React.Component {
             />
           ) : null}
         </View>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={styles.row}>
           <Thumbnail small style={theme.mainAvatar} />
           <View style={styles.infoContainer}>
             <View style={styles.containerSubTitle}>
-              {teach ? (
+              {teach && (
                 <View
                   style={{
                     ...styles.card,
@@ -94,16 +72,14 @@ class ListItemClass extends React.Component {
                       backgroundColor:
                         !teach.color || teach.color === ''
                           ? theme.processColor1
-                          : '#' + teach.color,
+                          : teach.color,
                       marginRight: 5,
                     },
                   }}>
                   <Text style={styles.saler}>{getShortName(teach.name)}</Text>
                 </View>
-              ) : (
-                <View />
               )}
-              {assist ? (
+              {assist && (
                 <View
                   style={{
                     ...styles.card,
@@ -111,14 +87,12 @@ class ListItemClass extends React.Component {
                       backgroundColor:
                         !assist.color || assist.color === ''
                           ? theme.processColor1
-                          : '#' + assist.color,
+                          : assist.color,
                       marginRight: 5,
                     },
                   }}>
                   <Text style={styles.campaign}>{assist.name.trim()}</Text>
                 </View>
-              ) : (
-                <View />
               )}
               {teachers.map((teacher) => (
                 <View
@@ -128,7 +102,7 @@ class ListItemClass extends React.Component {
                       backgroundColor:
                         !teacher.color || teacher.color === ''
                           ? theme.processColor1
-                          : '#' + teacher.color,
+                          : teacher.color,
                       marginRight: 5,
                     },
                   }}>
@@ -143,7 +117,7 @@ class ListItemClass extends React.Component {
                       backgroundColor:
                         !teacher.color || teacher.color === ''
                           ? theme.processColor1
-                          : '#' + teacher.color,
+                          : teacher.color,
                       marginRight: 5,
                     },
                   }}>
@@ -152,88 +126,81 @@ class ListItemClass extends React.Component {
               ))}
             </View>
             <View>
-              {studyTime ? (
+              {description ? (
                 <Text
                   numberOfLines={1}
                   style={[styles.classInfoContainer, {paddingTop: 0}]}>
-                  {studyTime}
+                  {description}
                 </Text>
               ) : null}
+              {schedule?.study_sessions &&
+                schedule.study_sessions.map((session) => (
+                  <Text numberOfLines={1} style={styles.classInfoContainer}>
+                    {localeDay(session.weekday)}:{' '}
+                    {moment
+                      .unix(session.start_time)
+                      .utcOffset('+0700')
+                      .format('HH:mm')}{' '}
+                    -{' '}
+                    {moment
+                      .unix(session.end_time)
+                      .utcOffset('+0700')
+                      .format('HH:mm')}
+                  </Text>
+                ))}
               {date_start ? (
                 <Text numberOfLines={1} style={styles.classInfoContainer}>
-                  Khai giảng ngày {date_start}
+                  Khải giảng:{' '}
+                  {moment.unix(date_start).format('dddd DD/MM/YYYY')}
                 </Text>
               ) : null}
-              {date_end ? (
+              {base?.name ? (
                 <Text numberOfLines={1} style={styles.classInfoContainer}>
-                  Kết thúc ngày {date_end}
-                </Text>
-              ) : null}
-              {address ? (
-                <Text numberOfLines={1} style={styles.classInfoContainer}>
-                  {address}
+                  {base.name}
                 </Text>
               ) : null}
             </View>
-            <View style={styles.processAndText}>
-              <View
-                style={{
-                  ...styles.process,
-                  ...styles.containerProcess,
-                  ...{
-                    backgroundColor: '#F6F6F6',
-                  },
-                }}>
-                <Animated.View
-                  style={[
-                    styles.process,
-                    styles.bar,
-                    {
-                      width:
-                        paidTarget > 0
-                          ? (maxWidthProcess * tmpTotalPaid) / paidTarget
-                          : 0,
-                      backgroundColor: theme.successColor,
-                    },
-                  ]}
+            {target && (
+              <View style={styles.processAndText}>
+                <Progress.Bar
+                  progress={
+                    target.target > 0
+                      ? target.current_target / target.target
+                      : 0
+                  }
+                  unfilledColor={'#F6F6F6'}
+                  color={theme.successColor}
+                  borderWidth={0}
                 />
+                <Text style={styles.textProcess}>
+                  {target.current_target}/{target.target} đã đóng tiền
+                </Text>
               </View>
-              <Text style={styles.textProcess}>
-                {totalPaid}/{paidTarget} hoàn thành học phí
-              </Text>
-            </View>
-            <View style={styles.processAndText}>
-              <View
-                style={{
-                  ...styles.process,
-                  ...styles.containerProcess,
-                  ...{
-                    backgroundColor: '#F6F6F6',
-                  },
-                }}>
-                <Animated.View
-                  style={[
-                    styles.process,
-                    {
-                      width:
-                        registerTarget > 0
-                          ? (maxWidthProcess * tmpTotalRegister) /
-                            registerTarget
-                          : 0,
-                      backgroundColor: theme.processColor2,
-                    },
-                  ]}
+            )}
+            {register_target && (
+              <View style={styles.processAndText}>
+                <Progress.Bar
+                  progress={
+                    register_target.target > 0
+                      ? register_target.current_target / register_target.target
+                      : 0
+                  }
+                  unfilledColor={'#F6F6F6'}
+                  color={theme.processColor2}
+                  borderWidth={0}
                 />
+                <Text style={styles.textProcess}>
+                  {register_target.current_target}/{register_target.target} đăng
+                  kí
+                </Text>
               </View>
-              <Text style={styles.textProcess}>
-                {totalRegisters}/{registerTarget} đăng kí
-              </Text>
-            </View>
+            )}
+
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 onPress={() =>
                   this.props.navigation.navigate('SaveRegister', {
-                    classId: classId,
+                    classData: classData,
                   })
                 }>
                 <View style={styles.button}>
@@ -242,10 +209,9 @@ class ListItemClass extends React.Component {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() =>
-                  this.props.navigation.navigate('EditClass', {
+                  this.props.navigation.navigate('AddClass', {
                     classData: classData,
-                    selectedGenId: selectedGenId,
-                    selectedBaseId: selectedBaseId,
+                    isEdit: true,
                   })
                 }>
                 <View style={[{marginLeft: 10}, styles.button]}>
@@ -351,6 +317,17 @@ const styles = {
     flexDirection: 'row',
     marginBottom: 10,
     flexWrap: 'wrap',
+  },
+  nameClass: {
+    fontWeight: '600',
+    flex: 1,
+    flexWrap: 'wrap',
+    marginLeft: 15,
+    fontSize: 18,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 };
 

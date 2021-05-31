@@ -20,6 +20,7 @@ const InputPicker = ({
   allOptionId = -1,
   allOptionName = 'Tất cả',
   selectedId,
+  getLabel,
 }) => {
   const [search, setSearch] = useState('');
 
@@ -118,7 +119,7 @@ const InputPicker = ({
         options={finalizedOptions()}
         defaultValue={getDefaultValue()}
         placeholder={placeholder}
-        getLabel={(item) => item.name}
+        getLabel={getLabel ? getLabel : (item) => item.name}
         modalAnimationType={'fade'}
         ref={refPicker}
         optionTemplate={renderPickerOption}

@@ -11,42 +11,19 @@ import {
   Text,
 } from 'react-native';
 import Search from './common/Search';
-import {convertVietText} from '../helper';
 import FilterClassModal from './class/FilterClassModal';
 import theme from '../styles';
 import LinearGradient from 'react-native-linear-gradient';
-var {height, width} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 class ClassComponent extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
       filterModalVisible: false,
-      courseId: -1,
+      courseId: '',
     };
   }
-
-  onSelectProvinceId = (provinceId) => {
-    this.setState({selectedProvinceId: provinceId});
-  };
-
-  searchClass = (classList) => {
-    if (this.state.search === '') {
-      return classList;
-    } else {
-      let searchedClassList = [];
-      for (let classItem of classList) {
-        if (
-          convertVietText(classItem.name).includes(
-            convertVietText(this.state.search),
-          )
-        ) {
-          searchedClassList.push(classItem);
-        }
-      }
-      return searchedClassList;
-    }
-  };
 
   selectTab = (course) => {
     this.setState({courseId: course.id});
@@ -118,6 +95,7 @@ class ClassComponent extends React.Component {
             onSelectStartTime={this.props.onSelectStartTime}
             onSelectEndTime={this.props.onSelectEndTime}
             onSelectClassStatus={this.props.onSelectClassStatus}
+            onSelectRoomId={this.props.onSelectRoomId}
           />
         </View>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -132,7 +110,8 @@ class ClassComponent extends React.Component {
       this.props.isLoadingCourse ||
       this.props.isLoadingBase ||
       this.props.isLoadingGen ||
-      this.props.isLoadingProvinces
+      this.props.isLoadingProvinces ||
+      this.props.isLoadingRooms
     ) {
       return <Loading size={width / 8} />;
     }
@@ -154,49 +133,36 @@ class ClassComponent extends React.Component {
               {...this.props}
               key={item.id}
               nameClass={item.name}
-              avatar={item.course ? item.course.icon_url : null} // CHANGED
-              studyTime={item.study_time}
-              address={
-                item.room ? `${item.room.name} - ${item.room.address}` : null
-              } // CHANGED
-              totalPaid={item.total_paid}
-              totalRegisters={item.total_register}
-              paidTarget={item.target}
-              registerTarget={item.regis_target}
+              avatar={item.course ? item.course.icon_url : null}
               onPress={this.props.onSelectedItem}
-              classId={item.id}
               teach={item.teacher}
               assist={item.teacher_assistant}
               courseId={item.course ? item.course.id : null} // CHANGED
               baseId={item.room ? item.room.base_id : null} // CHANGED
               changeClassStatus={this.props.changeClassStatus}
-              classStatus={item.status}
+              classStatus={item.form_status}
               user={this.props.user}
               classData={item}
-              selectedGenId={this.state.selectedGenId}
-              selectedBaseId={this.state.selectedBaseId}
-              date_end={item.date_end_vi}
               teachers={item.teachers}
               teaching_assistants={item.teaching_assistants}
-              date_start={item.datestart_vi}
+              date_start={item.datestart}
+              description={item.description}
+              schedule={item.schedule}
+              base={item.base}
+              target={item.target}
+              register_target={item.register_target}
             />
           )}
           ListEmptyComponent={
-            this.props.isLoadingClass ? (
-              this.props.isRefreshing ? (
-                <View />
-              ) : (
-                <Loading size={width / 8} />
-              )
-            ) : this.props.isRefreshing ? (
-              <View />
-            ) : (
-              <View style={styles.container}>
-                <Text style={{color: theme.dangerColor, fontSize: 16}}>
-                  Không có kết quả
-                </Text>
-              </View>
-            )
+            this.props.isLoadingClass
+              ? !this.props.isRefreshing && <Loading size={width / 8} />
+              : !this.props.isRefreshing && (
+                  <View style={styles.container}>
+                    <Text style={{color: theme.dangerColor, fontSize: 16}}>
+                      Không có kết quả
+                    </Text>
+                  </View>
+                )
           }
         />
       </Container>

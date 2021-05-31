@@ -5,7 +5,6 @@ import {isEmptyInput} from '../helper';
 export function loadInfoStudent(studentId, token, domain) {
   let url =
     env.manageApiUrlAuth(domain) + '/v1/leads/' + studentId + '?token=' + token;
-  console.log(url);
   return axios.get(url);
 }
 
@@ -46,7 +45,6 @@ export function loadHistoryCollect(studentId, token, domain) {
     (!isEmptyInput(studentId) ? '&user_ids[]=' + studentId : '') +
     '&token=' +
     token;
-  console.log(url);
   return axios.get(url);
 }
 

@@ -10,7 +10,7 @@ function InputCheckBox({
   containerStyle,
 }) {
   return (
-    <View style={[styles.row, containerStyle]}>
+    <View style={[styles.checkBox, containerStyle]}>
       <CheckBox
         disabled={disabled}
         value={value}
@@ -30,9 +30,10 @@ function InputCheckBox({
 }
 
 const styles = {
-  row: {
+  checkBox: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginLeft: 1,
   },
   name: {
     marginLeft: 10,

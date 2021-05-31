@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import {ScrollView, Text, View} from 'react-native';
+import {Alert, ScrollView, Text, View} from 'react-native';
 import Modal from 'react-native-modal';
 import theme from '../../styles';
 import {getBottomSpace} from 'react-native-iphone-x-helper';
@@ -7,11 +7,12 @@ import DatePicker from '../common/DatePicker';
 import SubmitButton from '../common/SubmitButton';
 import Input from '../common/Input';
 import {displayUnixDate} from '../../helper';
+import moment from 'moment';
 
 function ChangeDateModal(props) {
   const [newDate, setNewDate] = useState(null);
-  const [endTime, setEndTime] = useState(null);
-  const [startTime, setStartTime] = useState(null);
+  const [endTime, setEndTime] = useState(moment('00:00', 'HH:mm').unix());
+  const [startTime, setStartTime] = useState(moment('00:00', 'HH:mm').unix());
   const [note, setNote] = useState(null);
 
   const noteRef = useRef(null);
@@ -32,7 +33,11 @@ function ChangeDateModal(props) {
       note: note,
       start_time: startTime,
     };
-    changeDate(classItem, () => closeModal());
+    if (newDate && endTime && startTime) {
+      changeDate(classItem, () => closeModal());
+    } else {
+      Alert.alert('Thông báo', 'Bạn cần nhập đủ thông tin');
+    }
   }
 
   return (

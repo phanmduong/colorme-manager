@@ -20,22 +20,18 @@ export function beginDataClassLoad() {
 
 export function loadDataClass(
   refreshing,
-  search,
-  enroll_start_time,
-  enroll_end_time,
-  lesson_start_time,
-  lesson_end_time,
-  start_time,
-  end_time,
-  teacher_id,
-  courseId,
-  province_id,
   page,
+  course_id,
+  base_id,
+  province_id,
+  room_id,
+  employee_id,
   type,
-  status,
-  class_status,
-  genId,
-  baseId,
+  enroll_start_date,
+  enroll_end_date,
+  start_date,
+  end_date,
+  search,
   token,
   domain,
 ) {
@@ -48,22 +44,18 @@ export function loadDataClass(
     classApi
       .loadClassApi(
         sourceCancel,
-        search,
-        enroll_start_time,
-        enroll_end_time,
-        lesson_start_time,
-        lesson_end_time,
-        start_time,
-        end_time,
-        teacher_id,
-        courseId,
-        province_id,
         page,
+        course_id,
+        base_id,
+        province_id,
+        room_id,
+        employee_id,
         type,
-        status,
-        class_status,
-        genId,
-        baseId,
+        enroll_start_date,
+        enroll_end_date,
+        start_date,
+        end_date,
+        search,
         token,
         domain,
       )
@@ -84,11 +76,11 @@ export function loadDataClass(
 export function loadDataSuccessful(res) {
   return {
     type: types.LOAD_DATA_CLASS_SUCCESSFUL,
-    classData: res.data.classes,
+    classData: res.data.study_classes.items,
     isLoading: false,
     error: false,
-    currentPage: res.data.paginator.current_page,
-    totalPage: res.data.paginator.total_pages,
+    currentPage: res.data.study_classes.meta.current_page,
+    totalPage: res.data.study_classes.meta.total_pages,
     isRefreshing: false,
   };
 }
@@ -102,21 +94,17 @@ export function beginDataClassRefresh() {
 }
 
 export function refreshDataClass(
-  search,
-  enroll_start_time,
-  enroll_end_time,
-  lesson_start_time,
-  lesson_end_time,
-  start_time,
-  end_time,
-  teacher_id,
-  courseId,
+  course_id,
+  base_id,
   province_id,
+  room_id,
+  employee_id,
   type,
-  status,
-  class_status,
-  genId,
-  baseId,
+  enroll_start_date,
+  enroll_end_date,
+  start_date,
+  end_date,
+  search,
   token,
   domain,
 ) {
@@ -125,22 +113,18 @@ export function refreshDataClass(
     dispatch(
       loadDataClass(
         true,
-        search,
-        enroll_start_time,
-        enroll_end_time,
-        lesson_start_time,
-        lesson_end_time,
-        start_time,
-        end_time,
-        teacher_id,
-        courseId,
-        province_id,
         1,
+        course_id,
+        base_id,
+        province_id,
+        room_id,
+        employee_id,
         type,
-        status,
-        class_status,
-        genId,
-        baseId,
+        enroll_start_date,
+        enroll_end_date,
+        start_date,
+        end_date,
+        search,
         token,
         domain,
       ),
@@ -159,21 +143,17 @@ function beginSearchClass(search) {
 }
 
 export function searchClass(
-  search,
-  enroll_start_time,
-  enroll_end_time,
-  lesson_start_time,
-  lesson_end_time,
-  start_time,
-  end_time,
-  teacher_id,
-  courseId,
+  course_id,
+  base_id,
   province_id,
+  room_id,
+  employee_id,
   type,
-  status,
-  class_status,
-  genId,
-  baseId,
+  enroll_start_date,
+  enroll_end_date,
+  start_date,
+  end_date,
+  search,
   token,
   domain,
 ) {
@@ -184,22 +164,18 @@ export function searchClass(
     dispatch(
       loadDataClass(
         false,
-        search,
-        enroll_start_time,
-        enroll_end_time,
-        lesson_start_time,
-        lesson_end_time,
-        start_time,
-        end_time,
-        teacher_id,
-        courseId,
-        province_id,
         1,
+        course_id,
+        base_id,
+        province_id,
+        room_id,
+        employee_id,
         type,
-        status,
-        class_status,
-        genId,
-        baseId,
+        enroll_start_date,
+        enroll_end_date,
+        start_date,
+        end_date,
+        search,
         token,
         domain,
       ),
@@ -284,31 +260,6 @@ export function selectedCourseId(id) {
   };
 }
 
-export function reset() {
-  return {
-    type: types.RESET_CLASS,
-    classData: [],
-    selectedGenId: -1,
-    currentPage: 0,
-    totalPage: 1,
-    search: '',
-    selectedBaseId: -1,
-    selectedCourseId: -1,
-    provinceId: '',
-    courseId: '',
-    enrollStartTime: '',
-    enrollEndTime: '',
-    lessonStartTime: '',
-    lessonEndTime: '',
-    startTime: '',
-    endTime: '',
-    teacherId: '',
-    classType: '',
-    status: '',
-    class_status: '',
-  };
-}
-
 function beginLoadBase() {
   return {
     type: types.BEGIN_LOAD_BASE,
@@ -349,60 +300,30 @@ export function loadBaseData(token, domain) {
   };
 }
 
-export function infoCreateClass(token, domain) {
-  return function (dispatch) {
-    dispatch(beginLoadInfoCreateClass());
-    classApi
-      .infoCreateClass(token, domain)
-      .then(function (res) {
-        dispatch(loadInfoCreateClassSuccessful(res));
-      })
-      .catch((error) => {
-        dispatch(loadInfoCreateClassError());
-        throw error;
-      });
-  };
-}
-
-function beginLoadInfoCreateClass() {
-  return {
-    type: types.BEGIN_LOAD_INFO_CREATE_CLASS,
-    loadingInfoCreateClass: true,
-    errorInfoCreateClass: false,
-  };
-}
-
-function loadInfoCreateClassSuccessful(res) {
-  return {
-    type: types.LOAD_INFO_CREATE_CLASS_SUCCESSFUL,
-    loadingInfoCreateClass: false,
-    errorInfoCreateClass: false,
-    schedules: res.data.data.schedules,
-    rooms: res.data.data.rooms,
-    courses: res.data.data.courses,
-    genData: res.data.data.gens,
-    staffs: res.data.data.staffs,
-  };
-}
-
-function loadInfoCreateClassError() {
-  return {
-    type: types.LOAD_INFO_CREATE_CLASS_ERROR,
-    loadingInfoCreateClass: false,
-    errorInfoCreateClass: true,
-  };
-}
-
-export function addClass(classData, baseId, genId, token, domain) {
+export function addClass(isEdit = false, classData, token, domain, callback) {
   return function (dispatch) {
     dispatch(beginAddClass());
     classApi
-      .addClass(classData, token, domain)
+      .addClass(isEdit, classData, token, domain)
       .then(function (res) {
+        Alert.alert(
+          'Thông báo',
+          isEdit ? 'Sửa lớp học thành công' : 'Tạo lớp học thành công',
+          [
+            {
+              text: 'OK',
+              onPress: () => {
+                if (callback) {
+                  callback();
+                }
+              },
+            },
+          ],
+        );
         dispatch(addClassSuccessful());
-        dispatch(loadDataClass(baseId, genId, token, domain));
       })
       .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
         dispatch(addClassError());
         throw error;
       });
@@ -461,7 +382,7 @@ function loadClassInfoSuccessful(res) {
     type: types.LOAD_CLASS_INFO_SUCCESSFUL,
     loadingClassInfo: false,
     errorClassInfo: false,
-    classInfo: res.data.data.class,
+    classInfo: res.data.study_class,
   };
 }
 
@@ -482,6 +403,8 @@ export function changeClassStatus(classId, token, domain) {
         dispatch(changeClassStatusSuccessful());
       })
       .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
+        console.log(error.response.data);
         dispatch(changeClassStatusError());
         throw error;
       });
@@ -629,14 +552,24 @@ export function selectedClassStatus(id) {
   };
 }
 
-export function createSchedule(name, study_sessions, token) {
+export function createSchedule(name, study_sessions, token, domain, callback) {
   return function (dispatch) {
     dispatch(beginCreateClassSchedule());
     classApi
-      .createClassSchedule(name, study_sessions, token)
+      .createClassSchedule(name, study_sessions, token, domain)
       .then((res) => {
-        Alert.alert('Thông báo', 'Tạo lịch học thành công');
-        dispatch(infoCreateClass(token));
+        Alert.alert('Thông báo', 'Tạo lịch học thành công', [
+          {
+            text: 'OK',
+            onPress: () => {
+              // Reload schedules after successfully created
+              dispatch(loadSchedules('', token, domain, false));
+              if (callback) {
+                callback();
+              }
+            },
+          },
+        ]);
       })
       .catch((error) => {
         Alert.alert('Thông báo', 'Có lỗi xảy ra');
@@ -659,5 +592,94 @@ function createClassScheduleComplete() {
   return {
     type: types.CREATE_CLASS_SCHEDULE_COMPLETE,
     creatingClassSchedule: false,
+  };
+}
+
+export function loadRooms(token, domain) {
+  return function (dispatch) {
+    dispatch(beginLoadRooms());
+    classApi
+      .loadRooms(token, domain)
+      .then((res) => {
+        dispatch(loadRoomsSuccess(res));
+      })
+      .catch((error) => {
+        dispatch(loadRoomsError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadRooms() {
+  return {
+    type: types.BEGIN_LOAD_ROOMS,
+    isLoadingRooms: true,
+    errorRooms: false,
+  };
+}
+
+function loadRoomsSuccess(res) {
+  return {
+    type: types.LOAD_ROOMS_SUCCESS,
+    isLoadingRooms: false,
+    errorRooms: false,
+    rooms: res.data.rooms,
+  };
+}
+
+function loadRoomsError() {
+  return {
+    type: types.LOAD_ROOMS_ERROR,
+    isLoadingRooms: false,
+    errorRooms: true,
+  };
+}
+
+export function selectedRoomId(id) {
+  return {
+    type: types.SELECTED_CLASS_ROOM_ID,
+    roomId: id,
+  };
+}
+
+export function loadSchedules(search, token, domain, isFirstLoad = true) {
+  return function (dispatch) {
+    if (isFirstLoad) {
+      dispatch(beginLoadSchedules());
+    }
+    classApi
+      .loadSchedules(search, token, domain)
+      .then((res) => {
+        dispatch(loadSchedulesSuccess(res));
+      })
+      .catch((error) => {
+        dispatch(loadSchedulesError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadSchedules() {
+  return {
+    type: types.BEGIN_LOAD_CLASS_SCHEDULES,
+    isLoadingSchedules: true,
+    errorSchedules: false,
+  };
+}
+
+function loadSchedulesSuccess(res) {
+  return {
+    type: types.LOAD_CLASS_SCHEDULE_SUCCESS,
+    isLoadingSchedules: false,
+    errorSchedules: false,
+    schedules: res.data.schedules.items,
+  };
+}
+
+function loadSchedulesError() {
+  return {
+    type: types.LOAD_CLASS_SCHEDULE_ERROR,
+    isLoadingSchedules: false,
+    errorSchedules: true,
   };
 }

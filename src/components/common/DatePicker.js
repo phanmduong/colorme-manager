@@ -12,12 +12,21 @@ function DatePicker({selectedDate, onDateChange, title, mode = 'date'}) {
   }
 
   function handleDatePicked(date) {
-    if (mode === 'date') {
-      onDateChange(moment(date).format('YYYY-MM-DD'));
-    } else if (mode === 'time') {
-      onDateChange(moment(date));
-    } else if (mode === 'unix') {
-      onDateChange(moment(date).unix());
+    switch (mode) {
+      case 'date':
+        onDateChange(moment(date).format('YYYY-MM-DD'));
+        break;
+      case 'time':
+        onDateChange(moment(date));
+        break;
+      case 'unix':
+        onDateChange(moment(date).unix());
+        break;
+      case 'unix-time':
+        onDateChange(moment(date).unix());
+        break;
+      default:
+        break;
     }
     setVisible(false);
   }
@@ -26,16 +35,21 @@ function DatePicker({selectedDate, onDateChange, title, mode = 'date'}) {
     if (isEmptyInput(selectedDate)) {
       if (mode === 'date' || mode === 'unix') {
         return 'YYYY-MM-DD';
-      } else if (mode === 'time') {
+      } else if (mode === 'time' || mode === 'unix-time') {
         return '00:00';
       }
     } else {
-      if (mode === 'date') {
-        return moment(selectedDate).format('YYYY-MM-DD');
-      } else if (mode === 'time') {
-        return moment(selectedDate).format('HH:mm');
-      } else if (mode === 'unix') {
-        return moment.unix(selectedDate).format('YYYY-MM-DD');
+      switch (mode) {
+        case 'date':
+          return moment(selectedDate).format('YYYY-MM-DD');
+        case 'time':
+          return moment(selectedDate).format('HH:mm');
+        case 'unix':
+          return moment.unix(selectedDate).format('YYYY-MM-DD');
+        case 'unix-time':
+          return moment.unix(selectedDate).format('HH:mm');
+        default:
+          return null;
       }
     }
   }

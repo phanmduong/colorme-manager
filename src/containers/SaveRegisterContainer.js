@@ -56,13 +56,14 @@ class SaveRegisterContainer extends React.Component {
     );
   };
 
-  loadClasses = (courseId, baseId, search) => {
+  loadClasses = (courseId, baseId, search, isFirstLoad = true) => {
     this.props.saveRegisterActions.loadClasses(
       courseId,
       baseId,
       search,
       this.props.token,
       this.props.domain,
+      isFirstLoad,
     );
   };
 

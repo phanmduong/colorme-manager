@@ -1,70 +1,30 @@
 import React, {useState} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View, Alert} from 'react-native';
 import Modal from 'react-native-modal';
 import theme from '../../styles';
 import DatePicker from '../common/DatePicker';
 import SubmitButton from '../common/SubmitButton';
-import moment from "moment";
+import moment from 'moment';
+import InputPicker from '../common/InputPicker';
+import {DAYS} from '../../constants/constant';
 
 function AddClassScheduleModal({isVisible, closeModal, apply}) {
-  const [schedules, setSchedules] = useState([
-    {weekday: 'Thứ hai'},
-    {weekday: 'Thứ ba'},
-    {weekday: 'Thứ tư'},
-    {weekday: 'Thứ năm'},
-    {weekday: 'Thứ sáu'},
-    {weekday: 'Thứ bảy'},
-    {weekday: 'Chủ nhật'},
-  ]);
-  const [currentIdx, setIdx] = useState(0);
-
-  function renderDates() {
-    return schedules.map((schedule, index) => (
-      <TouchableOpacity onPress={() => setIdx(index)}>
-        <View
-          style={currentIdx === index ? styles.selected : styles.unselected}>
-          <Text
-            style={
-              currentIdx === index ? styles.selectedText : styles.unselectedText
-            }>
-            {index === 6 ? 'CN' : `T${index + 2}`}
-          </Text>
-        </View>
-        <View
-          style={
-            isScheduleSelected(schedule)
-              ? styles.selectedDot
-              : styles.unselectedDot
-          }
-        />
-      </TouchableOpacity>
-    ));
-  }
-
-  function isScheduleSelected(schedule) {
-    return schedule.start_time || schedule.end_time;
-  }
-
-  function setStartDate(time) {
-    let copySchedules = [...schedules];
-    copySchedules[currentIdx].start_time = time;
-    setSchedules(copySchedules);
-  }
-
-  function setEndDate(time) {
-    let copySchedules = [...schedules];
-    copySchedules[currentIdx].end_time = time;
-    setSchedules(copySchedules);
-  }
+  const [startTime, setStartTime] = useState(moment('00:00', 'HH:mm'));
+  const [endTime, setEndTime] = useState(moment('00:00', 'HH:mm'));
+  const [weekday, setWeekday] = useState(null);
 
   function onSubmit() {
-    let selectedSchedules = [];
-    schedules.forEach((schedule) => {
-      if (isScheduleSelected(schedule)) {
-        selectedSchedules.push(schedule);
-      }
-    });
-    apply(selectedSchedules);
+    if (startTime && endTime && weekday) {
+      const schedule = {
+        start_time: startTime.unix(),
+        end_time: endTime.unix(),
+        weekday,
+      };
+      apply(schedule);
+      closeModal();
+    } else {
+      Alert.alert('Thông báo', 'Bạn cần nhập đủ thông tin');
+    }
   }
 
   return (
@@ -77,20 +37,24 @@ function AddClassScheduleModal({isVisible, closeModal, apply}) {
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Thêm ca học</Text>
         </View>
-        <View style={styles.section}>
-          <Text>Chọn ngày trong tuần</Text>
-          <View style={styles.dateContainer}>{renderDates()}</View>
-        </View>
+        <InputPicker
+          title={'Ngày trong tuần'}
+          selectedId={weekday}
+          onChangeValue={setWeekday}
+          options={DAYS}
+          header={'Chọn ngày trong tuần'}
+          required
+        />
         <DatePicker
           title={'Bắt đầu từ'}
-          selectedDate={schedules[currentIdx].start_time}
-          onDateChange={setStartDate}
+          selectedDate={startTime}
+          onDateChange={setStartTime}
           mode={'time'}
         />
         <DatePicker
           title={'Kết thúc lúc'}
-          onDateChange={setEndDate}
-          selectedDate={schedules[currentIdx].end_time}
+          onDateChange={setEndTime}
+          selectedDate={endTime}
           mode={'time'}
         />
         <SubmitButton

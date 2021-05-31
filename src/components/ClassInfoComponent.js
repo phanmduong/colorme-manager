@@ -10,7 +10,7 @@ import {
 import theme from '../styles';
 import Spinkit from 'react-native-spinkit';
 import InfoRow from './common/InfoRow';
-import {CLASS_STATUS_FILTER} from '../constants/constant';
+import {displayUnixDate} from '../helper';
 const {width} = Dimensions.get('window');
 
 const ClassInfoComponent = ({loadClassInfo, ...props}) => {
@@ -26,11 +26,6 @@ const ClassInfoComponent = ({loadClassInfo, ...props}) => {
       </View>
     );
   } else {
-    const type =
-      props.classInfo.type &&
-      CLASS_STATUS_FILTER.find(
-        (filter) => filter.value === props.classInfo.type,
-      ).name;
     return (
       <ScrollView
         style={{marginHorizontal: theme.mainHorizontal}}
@@ -44,7 +39,7 @@ const ClassInfoComponent = ({loadClassInfo, ...props}) => {
         <View style={styles.mainInfoContainer}>
           {props.classInfo.course ? (
             <Image
-              source={{uri: props.classInfo.course.icon_url}}
+              source={{uri: props.classInfo.course?.icon_url}}
               style={theme.largeAvatar}
             />
           ) : (
@@ -53,60 +48,44 @@ const ClassInfoComponent = ({loadClassInfo, ...props}) => {
               style={theme.largeAvatar}
             />
           )}
-          <View style={{marginTop: 25}}>
-            <Text style={styles.title}>{props.classInfo.name}</Text>
-          </View>
-          <View style={{marginTop: 5}}>
-            <Text style={styles.title}>
-              {props.classInfo.room && props.classInfo.room.address}
-            </Text>
-          </View>
-          <View style={{marginTop: 5}}>
-            <Text style={styles.title}>
-              {props.classInfo.room && props.classInfo.room.name}
-            </Text>
-          </View>
+          <Text style={styles.title}>{props.classInfo.name}</Text>
+          <Text style={styles.subTitle}>{props.classInfo.course?.name}</Text>
+          <Text style={styles.subTitle}>
+            {props.classInfo.base?.name + ' - ' + props.classInfo.base?.address}
+          </Text>
+          <Text style={styles.subTitle}>{props.classInfo.room?.name}</Text>
         </View>
+        {props.classInfo.teachers?.map((teacher) => (
+          <InfoRow title={'Giảng viên'} value={teacher.name} />
+        ))}
+        {props.classInfo.teaching_assistants?.map((assist) => (
+          <InfoRow title={'Trợ giảng'} value={assist.name} />
+        ))}
+        <InfoRow title={'Lịch học'} value={props.classInfo.schedule?.name} />
         <InfoRow
-          title={'Giảng viên'}
-          value={props.classInfo.teacher && props.classInfo.teacher.name}
+          title={'Mục tiêu đóng tiền'}
+          value={`${props.classInfo.register_target?.current_target}/${props.classInfo.register_target?.target}`}
         />
         <InfoRow
-          title={'Trợ giảng'}
-          value={
-            props.classInfo.teacher_assistant &&
-            props.classInfo.teacher_assistant.name
-          }
-        />
-        <InfoRow title={'Lịch học'} value={props.classInfo.study_time} />
-        <InfoRow title={'Mô tả'} value={props.classInfo.description} />
-        <InfoRow
-          title={'Chỉ tiêu đăng kí'}
-          value={props.classInfo.regis_target}
-        />
-        <InfoRow title={'Chỉ tiêu nộp tiền'} value={props.classInfo.target} />
-        <InfoRow
-          title={'Ngày khai giảng'}
-          value={props.classInfo.datestart_vi}
-        />
-        <InfoRow title={'Ngày bế giảng'} value={props.classInfo.date_end_vi} />
-        <InfoRow
-          title={'Ngày bắt đầu tuyển sinh'}
-          value={props.classInfo.enroll_start_date_vi}
+          title={'Đã đóng tiền'}
+          value={`${props.classInfo.target?.current_target}/${props.classInfo.target?.target}`}
         />
         <InfoRow
-          title={'Ngày kết thúc tuyển sinh'}
-          value={props.classInfo.enroll_end_date_vi}
-        />
-        <InfoRow title={'Trạng thái'} value={type} />
-        <InfoRow
-          title={'Môn học'}
-          value={props.classInfo.course && props.classInfo.course.name}
+          title={'Ngày bắt đầu'}
+          value={displayUnixDate(props.classInfo.datestart, 'full-date')}
         />
         <InfoRow
-          title={'Khóa'}
-          value={props.classInfo.gen && props.classInfo.gen.name}
+          title={'Thời gian bắt đầu tuyển sinh'}
+          value={displayUnixDate(
+            props.classInfo.enroll_start_date,
+            'full-date',
+          )}
         />
+        <InfoRow
+          title={'Thời gian kết thúc tuyển sinh'}
+          value={displayUnixDate(props.classInfo.enroll_end_date, 'full-date')}
+        />
+        <InfoRow title={'Môn học'} value={props.classInfo.course?.name} />
       </ScrollView>
     );
   }
@@ -124,6 +103,14 @@ const styles = {
   },
   title: {
     fontSize: 16,
+    fontWeight: 'bold',
+    marginTop: 25,
+    textAlign: 'center',
+  },
+  subTitle: {
+    fontSize: 16,
+    marginTop: 5,
+    textAlign: 'center',
   },
 };
 

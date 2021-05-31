@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as listStudentClassActions from '../actions/listStudentClassActions';
 import * as currentClassStudyActions from '../actions/currentClassStudyActions';
-import ListStudenClassComponent from '../components/ListStudenClassComponent';
+import ListStudentClassComponent from '../components/ListStudentClassComponent';
 import * as infoStudentActions from '../actions/infoStudentActions';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -17,12 +17,16 @@ import * as leadsActions from '../actions/leadsActions';
 class ListStudentClassContainer extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.onReload = this.onReload.bind(this);
   }
 
   componentWillMount() {
-    this.onReload();
+    this.loadStudentList();
+    this.loadLessons();
     this.loadStaff('');
+  }
+
+  componentWillUnmount() {
+    this.props.listStudentClassActions.reset();
   }
 
   static navigationOptions = ({navigation}) => ({
@@ -69,28 +73,37 @@ class ListStudentClassContainer extends React.Component {
     ),
   });
 
-  onReload() {
+  loadStudentList = () => {
     this.props.listStudentClassActions.loadDataListStudentClass(
-      this.props.selectedClassId,
-      this.props.token,
-      this.props.domain,
-    );
-    this.props.listStudentClassActions.loadListStudentClassLessons(
       false,
       this.props.selectedClassId,
       this.props.token,
       this.props.domain,
     );
-  }
+  };
+
+  loadLessons = () => {
+    if (this.props.currentPageLessons < this.props.totalPageLessons) {
+      this.props.listStudentClassActions.loadListStudentClassLessons(
+        false,
+        this.props.currentPageLessons + 1,
+        this.props.selectedClassId,
+        this.props.token,
+        this.props.domain,
+      );
+    }
+  };
 
   onRefresh = () => {
-    this.props.listStudentClassActions.refreshDataListStudentClass(
+    this.props.listStudentClassActions.loadDataListStudentClass(
+      true,
       this.props.selectedClassId,
       this.props.token,
       this.props.domain,
     );
     this.props.listStudentClassActions.loadListStudentClassLessons(
       true,
+      1,
       this.props.selectedClassId,
       this.props.token,
       this.props.domain,
@@ -150,19 +163,29 @@ class ListStudentClassContainer extends React.Component {
     this.props.navigation.navigate('QRCode');
   };
 
-  changeBegin = (lessonsArray) => {
+  changeBegin = (payload, callback) => {
     this.props.listStudentClassActions.changeClassLessons(
-      lessonsArray,
+      payload,
+      this.props.token,
+      this.props.domain,
+      callback,
+    );
+  };
+
+  previewClassLessons = (payload) => {
+    this.props.listStudentClassActions.previewClassLessons(
+      payload,
       this.props.token,
       this.props.domain,
     );
   };
 
-  changeDate = (lesson) => {
+  changeDate = (lesson, callback) => {
     this.props.listStudentClassActions.changeClassLesson(
       lesson,
       this.props.token,
       this.props.domain,
+      callback,
     );
   };
 
@@ -174,28 +197,33 @@ class ListStudentClassContainer extends React.Component {
     );
   };
 
-  changeStaff = (changedData, type) => {
+  changeStaff = (changedData, type, callback) => {
     if (type === 'teacher') {
       this.props.listStudentClassActions.changeClassTeach(
         changedData,
         this.props.token,
         this.props.domain,
+        callback,
       );
     } else {
       this.props.listStudentClassActions.changeClassAssist(
         changedData,
         this.props.token,
         this.props.domain,
+        callback,
       );
     }
   };
 
+  resetPreview = () => {
+    this.props.listStudentClassActions.resetPreview();
+  };
+
   render() {
     return (
-      <ListStudenClassComponent
+      <ListStudentClassComponent
         {...this.props}
         listStudentClass={this.props.listStudentClassData}
-        onReload={this.onReload}
         changeCallStatus={this.changeCallStatus}
         submitMoney={this.submitMoney}
         setStudentId={this.setStudentId}
@@ -205,6 +233,9 @@ class ListStudentClassContainer extends React.Component {
         changeDate={this.changeDate}
         searchStaff={this.loadStaff}
         changeStaff={this.changeStaff}
+        loadLessons={this.loadLessons}
+        previewClassLessons={this.previewClassLessons}
+        resetPreview={this.resetPreview}
       />
     );
   }
@@ -242,7 +273,6 @@ function mapStateToProps(state) {
     listStudentClassData: state.listStudentClass.listStudentClassData,
     isLoading: state.listStudentClass.isLoading,
     refreshing: state.listStudentClass.refreshing,
-    classInfo: state.listStudentClass.classInfo,
     error: state.listStudentClass.error,
     isLoadingChangeCallStatus: state.infoStudent.isLoadingChangeCallStatus,
     errorChangeCallStatus: state.infoStudent.errorChangeCallStatus,
@@ -273,11 +303,16 @@ function mapStateToProps(state) {
     staff: state.leads.staff,
     isLoadingStaff: state.leads.isLoadingStaff,
     errorStaff: state.leads.errorStaff,
-    changingClassTeach: state.leads.changingClassTeach,
-    errorChangeClassTeach: state.leads.errorChangeClassTeach,
-    changingClassAssist: state.leads.changingClassAssist,
-    errorChangeClassAssist: state.leads.errorChangeClassAssist,
+    changingClassTeach: state.listStudentClass.changingClassTeach,
+    errorChangeClassTeach: state.listStudentClass.errorChangeClassTeach,
+    changingClassAssist: state.listStudentClass.changingClassAssist,
+    errorChangeClassAssist: state.listStudentClass.errorChangeClassAssist,
     domain: state.login.domain,
+    currentPageLessons: state.listStudentClass.currentPageLessons,
+    totalPageLessons: state.listStudentClass.totalPageLessons,
+    previews: state.listStudentClass.previews,
+    previewingClassLessons: state.listStudentClass.previewingClassLessons,
+    errorPreviewClassLessons: state.listStudentClass.errorPreviewClassLessons,
   };
 }
 

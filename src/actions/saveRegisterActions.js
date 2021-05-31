@@ -42,9 +42,18 @@ function loadCoursesError() {
   };
 }
 
-export function loadClasses(courseId, baseId, search, token, domain) {
+export function loadClasses(
+  courseId,
+  baseId,
+  search,
+  token,
+  domain,
+  isFirstLoad = true,
+) {
   return function (dispatch) {
-    dispatch(beginLoadClasses());
+    if (isFirstLoad) {
+      dispatch(beginLoadClasses());
+    }
     saveRegisterApi
       .loadClassesApi(courseId, baseId, search, token, domain)
       .then(function (res) {
@@ -89,10 +98,16 @@ export function register(token, register, domain, callback) {
       .saveRegisterApi(token, register, domain)
       .then(function (res) {
         dispatch(registerSuccessful(res));
-        Alert.alert('Thông báo', 'Đăng ký thành công');
-        if (callback) {
-          callback();
-        }
+        Alert.alert('Thông báo', 'Đăng ký thành công', [
+          {
+            text: 'OK',
+            onPress: () => {
+              if (callback) {
+                callback();
+              }
+            },
+          },
+        ]);
       })
       .catch((error) => {
         dispatch(registerError());

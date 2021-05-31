@@ -3,6 +3,7 @@
  */
 import * as types from '../constants/actionTypes';
 import * as studentApi from '../apis/studentApi';
+import {Alert} from 'react-native';
 
 export function beginDataListStudentClassLoad() {
   return {
@@ -20,24 +21,13 @@ export function beginDataListStudentClassRefresh() {
   };
 }
 
-export function loadDataListStudentClass(classId, token, domain) {
+export function loadDataListStudentClass(refreshing, classId, token, domain) {
   return function (dispatch) {
-    dispatch(beginDataListStudentClassLoad());
-    studentApi
-      .loadListStudentClassApi(classId, token, domain)
-      .then(function (res) {
-        dispatch(loadDataSuccessful(res));
-      })
-      .catch((error) => {
-        dispatch(loadDataError());
-        throw error;
-      });
-  };
-}
-
-export function refreshDataListStudentClass(classId, token, domain) {
-  return function (dispatch) {
-    dispatch(beginDataListStudentClassRefresh());
+    if (!refreshing) {
+      dispatch(beginDataListStudentClassLoad());
+    } else {
+      dispatch(beginDataListStudentClassRefresh());
+    }
     studentApi
       .loadListStudentClassApi(classId, token, domain)
       .then(function (res) {
@@ -53,8 +43,7 @@ export function refreshDataListStudentClass(classId, token, domain) {
 export function loadDataSuccessful(res) {
   return {
     type: types.LOAD_DATA_LIST_STUDENT_CLASS_SUCCESSFUL,
-    classInfo: res.data.class,
-    listStudentClassData: res.data.students,
+    listStudentClassData: res.data.registers.items,
     isLoading: false,
     refreshing: false,
     error: false,
@@ -72,6 +61,7 @@ export function loadDataError() {
 
 export function loadListStudentClassLessons(
   refreshing,
+  page,
   classId,
   token,
   domain,
@@ -83,7 +73,7 @@ export function loadListStudentClassLessons(
       dispatch(beginLoadClassLessons());
     }
     studentApi
-      .loadListStudentClassLessonsApi(classId, token, domain)
+      .loadListStudentClassLessonsApi(page, classId, token, domain)
       .then((res) => dispatch(loadClassLessonsSuccess(res)))
       .catch((error) => {
         dispatch(loadClassLessonsError());
@@ -105,6 +95,9 @@ function beginRefreshClassLessons() {
     type: types.BEGIN_REFRESH_LIST_STUDENT_CLASS_LESSONS,
     refreshingLessons: true,
     errorLessons: false,
+    currentPage: 1,
+    totalPage: 1,
+    lessons: [],
   };
 }
 
@@ -114,7 +107,9 @@ function loadClassLessonsSuccess(res) {
     isLoadingLessons: false,
     errorLessons: false,
     refreshingLessons: false,
-    lessons: res.data.data.class.lessons,
+    lessons: res.data.class_lessons.items,
+    currentPage: res.data.class_lessons.meta.current_page,
+    totalPage: res.data.class_lessons.meta.total_pages,
   };
 }
 
@@ -127,13 +122,36 @@ function loadClassLessonsError() {
   };
 }
 
-export function changeClassLessons(classLessons, token, domain) {
+export function reset() {
+  return {
+    type: types.RESET_LIST_STUDENT_CLASS,
+    lessons: [],
+    listStudentClassData: [],
+    currentPage: 0,
+    totalPage: 1,
+  };
+}
+
+export function changeClassLessons(payload, token, domain, callback) {
   return function (dispatch) {
     dispatch(beginChangeClassLessons());
     studentApi
-      .changeClassLessons(classLessons, token, domain)
-      .then((res) => dispatch(changeClassLessonsSuccess()))
+      .changeClassLessons(payload, token, domain)
+      .then((res) => {
+        Alert.alert('Thông báo', 'Dời lịch thành công', [
+          {
+            text: 'OK',
+            onPress: () => {
+              if (callback) {
+                callback();
+              }
+            },
+          },
+        ]);
+        dispatch(changeClassLessonsSuccess());
+      })
       .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
         changeClassLessonsError();
         throw error;
       });
@@ -164,15 +182,72 @@ function changeClassLessonsError() {
   };
 }
 
-export function changeClassLesson(lesson, token, domain) {
+export function previewClassLessons(payload, token, domain) {
+  return function (dispatch) {
+    dispatch(beginPreviewClassLessons());
+    studentApi
+      .previewClassLessons(payload, token, domain)
+      .then((res) => {
+        dispatch(previewClassLessonsSuccess(res));
+      })
+      .catch((error) => {
+        dispatch(previewClassLessonsError());
+        throw error;
+      });
+  };
+}
+function beginPreviewClassLessons() {
+  return {
+    type: types.BEGIN_PREVIEW_CLASS_LESSONS,
+    previewingClassLessons: true,
+    errorPreviewClassLessons: false,
+  };
+}
+
+function previewClassLessonsSuccess(res) {
+  return {
+    type: types.PREVIEW_CLASS_LESSONS_SUCCESS,
+    previewingClassLessons: false,
+    errorPreviewClassLessons: false,
+    previews: res.data.preview_times,
+  };
+}
+
+function previewClassLessonsError() {
+  return {
+    type: types.PREVIEW_CLASS_LESSONS_ERROR,
+    previewingClassLessons: false,
+    errorPreviewClassLessons: true,
+  };
+}
+
+export function resetPreview() {
+  return {
+    type: types.RESET_PREVIEW,
+    previews: [],
+  };
+}
+
+export function changeClassLesson(lesson, token, domain, callback) {
   return function (dispatch) {
     dispatch(beginChangeClassLesson());
     studentApi
-      .changeClassLesson(lesson, token, domain)
+      .changeClassLesson(lesson, token, domain, callback)
       .then((res) => {
+        Alert.alert('Thông báo', 'Đổi lịch dạy thành công', [
+          {
+            text: 'OK',
+            onPress: () => {
+              if (callback) {
+                callback();
+              }
+            },
+          },
+        ]);
         dispatch(changeClassLessonSuccess());
       })
       .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
         dispatch(changeClassLessonError());
         throw error;
       });
@@ -203,13 +278,26 @@ function changeClassLessonError() {
   };
 }
 
-export function changeClassTeach(data, token, domain) {
+export function changeClassTeach(data, token, domain, callback) {
   return function (dispatch) {
     dispatch(beginChangeClassTeach());
     studentApi
-      .changeTeacher(data, token, domain)
-      .then((res) => dispatch(changeClassTeachSuccess()))
+      .changeTeacherAndAssistant(data, token, domain)
+      .then((res) => {
+        Alert.alert('Thông báo', 'Đổi giảng viên thành công', [
+          {
+            text: 'OK',
+            onPress: () => {
+              if (callback) {
+                callback();
+              }
+            },
+          },
+        ]);
+        dispatch(changeClassTeachSuccess());
+      })
       .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
         dispatch(changeClassTeachError());
         throw error;
       });
@@ -240,13 +328,26 @@ function changeClassTeachError() {
   };
 }
 
-export function changeClassAssist(data, token, domain) {
+export function changeClassAssist(data, token, domain, callback) {
   return function (dispatch) {
     dispatch(beginChangeClassAssist());
     studentApi
-      .changeAssist(data, token, domain)
-      .then((res) => dispatch(changeClassAssistSuccess()))
+      .changeTeacherAndAssistant(data, token, domain)
+      .then((res) => {
+        Alert.alert('Thông báo', 'Đổi trợ giảng thành công', [
+          {
+            text: 'OK',
+            onPress: () => {
+              if (callback) {
+                callback();
+              }
+            },
+          },
+        ]);
+        dispatch(changeClassAssistSuccess());
+      })
       .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
         dispatch(changeClassAssistError());
         throw error;
       });

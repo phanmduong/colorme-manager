@@ -214,11 +214,13 @@ export function previewClassLessons(payload, token, domain) {
 
 export function changeClassLesson(lesson, token, domain) {
   let url =
-    env.manageApiUrlV3(domain) + '/class/change-class-lesson?token=' + token;
-  return axios.put(url, {
-    id: lesson.id,
+    env.manageApiUrlAuth(domain) + '/v1/class-lesson-changes?token=' + token;
+  return axios.post(url, {
+    class_lesson_id: lesson.class_lesson_id,
+    end_time: lesson.end_time,
+    new_time: lesson.new_time,
     note: lesson.note,
-    time: lesson.time,
+    start_time: lesson.start_time,
   });
 }
 

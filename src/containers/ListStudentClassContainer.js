@@ -180,11 +180,12 @@ class ListStudentClassContainer extends React.Component {
     );
   };
 
-  changeDate = (lesson) => {
+  changeDate = (lesson, callback) => {
     this.props.listStudentClassActions.changeClassLesson(
       lesson,
       this.props.token,
       this.props.domain,
+      callback,
     );
   };
 

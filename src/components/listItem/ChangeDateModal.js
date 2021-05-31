@@ -1,37 +1,38 @@
-import React, {useState} from 'react';
-import {Alert, ScrollView, Text, TextInput, View} from 'react-native';
+import React, {useState, useRef} from 'react';
+import {ScrollView, Text, View} from 'react-native';
 import Modal from 'react-native-modal';
 import theme from '../../styles';
 import {getBottomSpace} from 'react-native-iphone-x-helper';
 import DatePicker from '../common/DatePicker';
 import SubmitButton from '../common/SubmitButton';
+import Input from '../common/Input';
+import {displayUnixDate} from '../../helper';
 
-function ChangeDateModal({
-  isVisible,
-  closeModal,
-  currentStudyTime,
-  class_lesson_id,
-  changeDate,
-  errorChangeClassLesson,
-}) {
-  const [selectedDate, setDate] = useState('');
-  const [note, setNote] = useState('');
+function ChangeDateModal(props) {
+  const [newDate, setNewDate] = useState(null);
+  const [endTime, setEndTime] = useState(null);
+  const [startTime, setStartTime] = useState(null);
+  const [note, setNote] = useState(null);
+
+  const noteRef = useRef(null);
+
+  const {
+    isVisible,
+    closeModal,
+    currentStudyTime,
+    class_lesson_id,
+    changeDate,
+  } = props;
 
   function submit() {
     const classItem = {
-      time: selectedDate,
+      class_lesson_id: class_lesson_id,
+      end_time: endTime,
+      new_time: newDate,
       note: note,
-      id: class_lesson_id,
+      start_time: startTime,
     };
-    changeDate(classItem);
-    closeModal();
-    setTimeout(() => {
-      if (errorChangeClassLesson) {
-        Alert.alert('Thông báo', 'Có lỗi xảy ra');
-      } else {
-        Alert.alert('Thông báo', 'Đổi lịch dạy thành công');
-      }
-    }, 500);
+    changeDate(classItem, () => closeModal());
   }
 
   return (
@@ -46,33 +47,41 @@ function ChangeDateModal({
           <View style={styles.titleContainer}>
             <Text style={styles.title}>Đổi lịch dạy</Text>
           </View>
-          <View style={{marginTop: 30}}>
-            <Text style={styles.titleForm}>Buổi đang được chọn</Text>
-            <View style={styles.inputContainer}>
-              <TextInput
-                value={currentStudyTime}
-                editable={false}
-                style={{fontSize: 15}}
-              />
-            </View>
+          <View style={styles.mainInfoContainer}>
+            <Text>
+              <Text style={styles.bold}>Ngày học hiện tại: </Text>
+              {displayUnixDate(currentStudyTime)}
+            </Text>
           </View>
           <DatePicker
-            title={'Sang buổi mới'}
-            selectedDate={selectedDate}
-            onDateChange={setDate}
+            title={'Ngày mới'}
+            selectedDate={newDate}
+            onDateChange={setNewDate}
+            mode={'unix'}
           />
-          <View style={{marginTop: 30}}>
-            <Text style={styles.titleForm}>Ghi chú</Text>
-            <View style={styles.inputContainer}>
-              <TextInput
-                onChangeText={(text) => setNote(text)}
-                style={{fontSize: 15}}
-                placeholder={'Ghi chú'}
-              />
-            </View>
-          </View>
+          <DatePicker
+            title={'Từ giờ'}
+            selectedDate={startTime}
+            onDateChange={setStartTime}
+            mode={'unix-time'}
+          />
+          <DatePicker
+            title={'Đến giờ'}
+            selectedDate={endTime}
+            onDateChange={setEndTime}
+            mode={'unix-time'}
+          />
+          <Input
+            title={'Ghi chú'}
+            placeholder={'Ghi chú'}
+            value={note}
+            onChangeText={setNote}
+            onSubmitEditing={() => noteRef.current.blur()}
+            refName={noteRef}
+          />
           <SubmitButton
             title={'Xác nhận'}
+            loading={props.changingClassLesson}
             containerStyle={styles.submit}
             onPress={submit}
           />
@@ -103,19 +112,17 @@ const styles = {
     alignItems: 'center',
     paddingTop: 30,
   },
-  inputContainer: {
-    marginTop: 8,
-    height: 45,
-    backgroundColor: '#F6F6F6',
-    justifyContent: 'center',
-    paddingHorizontal: 10,
-    borderRadius: 8,
-  },
   titleForm: {
     color: 'black',
     fontSize: 14,
   },
   submit: {
+    marginTop: 30,
+  },
+  bold: {
+    fontWeight: 'bold',
+  },
+  mainInfoContainer: {
     marginTop: 30,
   },
 };

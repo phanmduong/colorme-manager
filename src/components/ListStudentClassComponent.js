@@ -127,7 +127,7 @@ class ListStudentClassComponent extends React.Component {
             lesson={item.lesson}
             class_id={this.props.selectedClassId}
             openQrCode={this.props.openQrCode}
-            class_lesson_time={item.class_lesson_time}
+            class_lesson_time={item.time}
             classIndex={rowID}
             changeBegin={this.props.changeBegin}
             changeDate={this.props.changeDate}

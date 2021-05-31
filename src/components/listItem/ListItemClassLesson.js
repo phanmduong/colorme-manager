@@ -217,14 +217,15 @@ const ListItemClassLesson = (props) => {
         changeStaff={changeStaff}
         changingClassAssist={props.changingClassAssist}
       />
-      {/*<ChangeDateModal*/}
-      {/*  isVisible={isChangeDateModalVisible}*/}
-      {/*  closeModal={toggleChangeDateModal}*/}
-      {/*  currentStudyTime={class_lesson_time}*/}
-      {/*  class_lesson_id={class_lesson_id}*/}
-      {/*  errorChangeClassLesson={errorChangeClassLesson}*/}
-      {/*  changeDate={changeDate}*/}
-      {/*/>*/}
+      <ChangeDateModal
+        isVisible={isChangeDateModalVisible}
+        closeModal={toggleChangeDateModal}
+        currentStudyTime={class_lesson_time}
+        class_lesson_id={class_lesson_id}
+        errorChangeClassLesson={errorChangeClassLesson}
+        changeDate={changeDate}
+        changingClassLesson={props.changingClassLesson}
+      />
       <ChangeBeginModal
         isVisible={isChangeBeginModalVisible}
         closeModal={toggleChangeBeginModal}

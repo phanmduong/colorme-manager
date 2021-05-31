@@ -228,15 +228,26 @@ export function resetPreview() {
   };
 }
 
-export function changeClassLesson(lesson, token, domain) {
+export function changeClassLesson(lesson, token, domain, callback) {
   return function (dispatch) {
     dispatch(beginChangeClassLesson());
     studentApi
-      .changeClassLesson(lesson, token, domain)
+      .changeClassLesson(lesson, token, domain, callback)
       .then((res) => {
+        Alert.alert('Thông báo', 'Đổi lịch dạy thành công', [
+          {
+            text: 'OK',
+            onPress: () => {
+              if (callback) {
+                callback();
+              }
+            },
+          },
+        ]);
         dispatch(changeClassLessonSuccess());
       })
       .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
         dispatch(changeClassLessonError());
         throw error;
       });

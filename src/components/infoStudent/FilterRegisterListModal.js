@@ -87,6 +87,9 @@ function FilterRegisterListModal(props) {
               onChangeValue={props.onSelectClassId}
               isApiSearch
               onApiSearch={props.loadFilterClasses}
+              getLabel={(item) =>
+                item.name + (item.study_time ? ' - ' + item.study_time : '')
+              }
             />
             <FilterRow
               title={'Thể loại lớp'}

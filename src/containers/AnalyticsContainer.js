@@ -33,10 +33,6 @@ class AnalyticsContainer extends React.Component {
     this.loadProvinces();
   }
 
-  componentWillUnmount() {
-    this.props.classActions.reset();
-  }
-
   static navigationOptions = ({navigation}) => ({
     headerLeft: () => (
       <View style={styles.headerLeftContainer}>

@@ -54,6 +54,7 @@ class ClassContainer extends React.Component {
     this.props.genActions.loadDataGen(this.props.token, this.props.domain);
     this.props.classActions.loadDataCourse(this.props.token, this.props.domain);
     this.props.classActions.loadBaseData(this.props.token, this.props.domain);
+    this.props.classActions.loadRooms(this.props.token, this.props.domain);
     this.props.saveRegisterActions.loadProvinces(
       this.props.token,
       this.props.domain,
@@ -63,83 +64,41 @@ class ClassContainer extends React.Component {
     this.loadStatuses();
   }
 
-  componentWillUnmount() {
-    this.props.classActions.reset();
-  }
-
   loadDataClass = () => {
-    const selectedBaseId =
-      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
-    const selectedGenId =
-      this.props.selectedGenId === -1 ? '' : this.props.selectedGenId;
-    const courseId =
-      this.props.selectedCourseId === -1 ? '' : this.props.selectedCourseId;
-    this.props.classActions.loadDataClass(
-      false,
-      this.props.search,
-      this.props.enrollStartTime !== ''
-        ? this.props.enrollStartTime.format('YYYY-MM-DD')
-        : '',
-      this.props.enrollEndTime !== ''
-        ? this.props.enrollEndTime.format('YYYY-MM-DD')
-        : '',
-      this.props.lessonStartTime !== ''
-        ? this.props.lessonStartTime.format('YYYY-MM-DD')
-        : '',
-      this.props.lessonEndTime !== ''
-        ? this.props.lessonEndTime.format('YYYY-MM-DD')
-        : '',
-      this.props.startTime !== ''
-        ? this.props.startTime.format('YYYY-MM-DD')
-        : '',
-      this.props.endTime !== '' ? this.props.endTime.format('YYYY-MM-DD') : '',
-      this.props.teacherId,
-      courseId,
-      this.props.provinceId,
-      this.props.currentPage + 1,
-      this.props.type,
-      this.props.status,
-      this.props.class_status,
-      selectedGenId,
-      selectedBaseId,
-      this.props.token,
-      this.props.domain,
-    );
+    if (this.props.currentPage < this.props.totalPage) {
+      this.props.classActions.loadDataClass(
+        false,
+        this.props.currentPage + 1,
+        this.props.selectedCourseId,
+        this.props.selectedBaseId,
+        this.props.provinceId,
+        this.props.roomId,
+        this.props.teacherId,
+        this.props.type,
+        this.props.enrollStartTime,
+        this.props.enrollEndTime,
+        this.props.startTime,
+        this.props.endTime,
+        this.props.search,
+        this.props.token,
+        this.props.domain,
+      );
+    }
   };
 
   onRefresh = () => {
-    const selectedBaseId =
-      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
-    const selectedGenId =
-      this.props.selectedGenId === -1 ? '' : this.props.selectedGenId;
-    const courseId =
-      this.props.selectedCourseId === -1 ? '' : this.props.selectedCourseId;
     this.props.classActions.refreshDataClass(
-      this.props.search,
-      this.props.enrollStartTime !== ''
-        ? this.props.enrollStartTime.format('YYYY-MM-DD')
-        : '',
-      this.props.enrollEndTime !== ''
-        ? this.props.enrollEndTime.format('YYYY-MM-DD')
-        : '',
-      this.props.lessonStartTime !== ''
-        ? this.props.lessonStartTime.format('YYYY-MM-DD')
-        : '',
-      this.props.lessonEndTime !== ''
-        ? this.props.lessonEndTime.format('YYYY-MM-DD')
-        : '',
-      this.props.startTime !== ''
-        ? this.props.startTime.format('YYYY-MM-DD')
-        : '',
-      this.props.endTime !== '' ? this.props.endTime.format('YYYY-MM-DD') : '',
-      this.props.teacherId,
-      courseId,
+      this.props.selectedCourseId,
+      this.props.selectedBaseId,
       this.props.provinceId,
+      this.props.roomId,
+      this.props.teacherId,
       this.props.type,
-      this.props.status,
-      this.props.class_status,
-      selectedGenId,
-      selectedBaseId,
+      this.props.enrollStartTime,
+      this.props.enrollEndTime,
+      this.props.startTime,
+      this.props.endTime,
+      this.props.search,
       this.props.token,
       this.props.domain,
     );
@@ -162,38 +121,18 @@ class ClassContainer extends React.Component {
   };
 
   searchClass = (search) => {
-    const selectedBaseId =
-      this.props.selectedBaseId === -1 ? '' : this.props.selectedBaseId;
-    const selectedGenId =
-      this.props.selectedGenId === -1 ? '' : this.props.selectedGenId;
-    const courseId =
-      this.props.selectedCourseId === -1 ? '' : this.props.selectedCourseId;
     this.props.classActions.searchClass(
-      search,
-      this.props.enrollStartTime !== ''
-        ? this.props.enrollStartTime.format('YYYY-MM-DD')
-        : '',
-      this.props.enrollEndTime !== ''
-        ? this.props.enrollEndTime.format('YYYY-MM-DD')
-        : '',
-      this.props.lessonStartTime !== ''
-        ? this.props.lessonStartTime.format('YYYY-MM-DD')
-        : '',
-      this.props.lessonEndTime !== ''
-        ? this.props.lessonEndTime.format('YYYY-MM-DD')
-        : '',
-      this.props.startTime !== ''
-        ? this.props.startTime.format('YYYY-MM-DD')
-        : '',
-      this.props.endTime !== '' ? this.props.endTime.format('YYYY-MM-DD') : '',
-      this.props.teacherId,
-      courseId,
+      this.props.selectedCourseId,
+      this.props.selectedBaseId,
       this.props.provinceId,
+      this.props.roomId,
+      this.props.teacherId,
       this.props.type,
-      this.props.status,
-      this.props.class_status,
-      selectedGenId,
-      selectedBaseId,
+      this.props.enrollStartTime,
+      this.props.enrollEndTime,
+      this.props.startTime,
+      this.props.endTime,
+      search,
       this.props.token,
       this.props.domain,
     );
@@ -265,6 +204,10 @@ class ClassContainer extends React.Component {
     this.props.classActions.selectedEndTime(time);
   };
 
+  onSelectRoomId = (room) => {
+    this.props.classActions.selectedRoomId(room);
+  };
+
   loadStatuses = () => {
     this.props.classActions.loadStatuses(
       'classes',
@@ -302,6 +245,7 @@ class ClassContainer extends React.Component {
         onSelectStartTime={this.onSelectStartTime}
         onSelectEndTime={this.onSelectEndTime}
         onSelectClassStatus={this.onSelectClassStatus}
+        onSelectRoomId={this.onSelectRoomId}
       />
     );
   }
@@ -321,6 +265,7 @@ function mapStateToProps(state) {
     token: state.login.token,
     user: state.login.user,
     selectedClassId: state.class.selectedClassId,
+    selectedGenId: state.class.selectedGenId,
     courseData: state.class.courseData,
     isLoadingCourse: state.class.isLoadingCourse,
     genData: state.gen.genData,
@@ -340,7 +285,6 @@ function mapStateToProps(state) {
     totalPage: state.class.totalPage,
     selectedBaseId: state.class.selectedBaseId,
     selectedCourseId: state.class.selectedCourseId,
-    selectedGenId: state.class.selectedGenId,
     provinceId: state.class.provinceId,
     courseId: state.class.courseId,
     enrollStartTime: state.class.enrollStartTime,
@@ -359,6 +303,10 @@ function mapStateToProps(state) {
     statuses: state.class.statuses,
     isLoadingStatuses: state.class.isLoadingStatuses,
     errorStatuses: state.class.errorStatuses,
+    roomId: state.class.roomId,
+    rooms: state.class.rooms,
+    isLoadingRooms: state.class.isLoadingRooms,
+    errorRooms: state.class.errorRooms,
   };
 }
 

@@ -54,9 +54,15 @@ function SaveRegisterComponent(props) {
 
   useEffect(() => {
     // Add a student to a class
-    const classId = props.navigation.getParam('classId');
-    if (classId) {
-      setClassId(classId);
+    const classData = props.navigation.getParam('classData');
+    if (classData?.id) {
+      setClassId(classData.id);
+    }
+    if (classData?.base) {
+      setBaseId(classData.base.id);
+    }
+    if (classData?.course) {
+      setCourseId(classData.course.id);
     }
 
     // Add a register for an existing student
@@ -109,7 +115,8 @@ function SaveRegisterComponent(props) {
     props.isLoadingSources ||
     props.isLoadingStatuses ||
     props.isLoadingSalers ||
-    props.isLoadingCoupons ? (
+    props.isLoadingCoupons ||
+    props.isLoadingClasses ? (
     <Loading />
   ) : (
     <KeyboardAvoidingView
@@ -163,7 +170,7 @@ function SaveRegisterComponent(props) {
             title={'Môn học/Chương trình học'}
             onChangeValue={(newCourseId) => {
               setCourseId(newCourseId);
-              props.loadClasses(newCourseId, baseId, '');
+              props.loadClasses(newCourseId, baseId, '', false);
             }}
             placeholder={'Lựa chọn'}
             options={props.courses}
@@ -175,7 +182,7 @@ function SaveRegisterComponent(props) {
             title={'Cơ sở'}
             onChangeValue={(newBaseId) => {
               setBaseId(newBaseId);
-              props.loadClasses(courseId, newBaseId, '');
+              props.loadClasses(courseId, newBaseId, '', false);
             }}
             options={props.baseData}
             selectedId={baseId}
@@ -191,7 +198,7 @@ function SaveRegisterComponent(props) {
             isAllOptionAvailable={false}
             isApiSearch={true}
             onApiSearch={(search) =>
-              props.loadClasses(courseId, baseId, search)
+              props.loadClasses(courseId, baseId, search, false)
             }
             required
           />

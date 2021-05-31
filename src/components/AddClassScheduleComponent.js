@@ -6,6 +6,7 @@ import AddClassScheduleModal from './class/AddClassScheduleModal';
 import AddItemButton from './common/AddItemButton';
 import moment from 'moment';
 import SubmitButton from './common/SubmitButton';
+import {localeDay} from '../helper';
 
 function AddClassScheduleComponent(props) {
   const [name, setName] = useState('');
@@ -18,22 +19,18 @@ function AddClassScheduleComponent(props) {
     setVisible(!isVisible);
   }
 
-  function applySchedules(schedules) {
-    setSchedules(schedules);
-    let nameGenerated = '';
-    schedules.forEach((schedule, index) => {
-      nameGenerated += `${schedule.weekday} (${moment(
-        schedule.start_time,
-      ).format('HH:mm')}-${moment(schedule.end_time).format('HH:mm')})`;
-      if (index !== schedules.length - 1) {
-        nameGenerated += ' - ';
-      }
-    });
-    setName(nameGenerated);
+  function applySchedules(schedule) {
+    setSchedules([...schedules, schedule]);
   }
 
   function onSubmit() {
-    props.createSchedule(name, schedules);
+    const finalizedSchedules = schedules.map((schedule, index) => {
+      return {
+        ...schedule,
+        order: index,
+      };
+    });
+    props.createSchedule(name, finalizedSchedules);
   }
 
   return (
@@ -55,9 +52,9 @@ function AddClassScheduleComponent(props) {
           {schedules.map((schedule) => (
             <View style={styles.scheduleItem}>
               <Text>
-                {schedule.weekday} (
-                {moment(schedule.start_time).format('HH:mm')}-
-                {moment(schedule.end_time).format('HH:mm')})
+                {localeDay(schedule.weekday)} (
+                {moment.unix(schedule.start_time).format('HH:mm')}-
+                {moment.unix(schedule.end_time).format('HH:mm')})
               </Text>
             </View>
           ))}

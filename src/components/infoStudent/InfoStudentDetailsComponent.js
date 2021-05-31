@@ -5,7 +5,6 @@ import {
   Dimensions,
   ScrollView,
   Text,
-  Linking,
   TouchableOpacity,
   Alert,
   RefreshControl,
@@ -16,29 +15,10 @@ import ScalableImage from 'react-native-scalable-image';
 import Call from '../common/Call';
 import {isEmptyInput} from '../../helper';
 import ImagePicker from 'react-native-image-picker';
-import TagItem from '../common/TagItem';
-var {height, width} = Dimensions.get('window');
-
-export const GENDER = [
-  {
-    name: 'Nam',
-    id: '1',
-    label: 'Nam',
-    value: '1',
-  },
-  {
-    name: 'Nữ',
-    id: '2',
-    label: 'Nữ',
-    value: '2',
-  },
-  {
-    name: 'Khác',
-    id: '0',
-    label: 'Khác',
-    value: '0',
-  },
-];
+import InfoRow from '../common/InfoRow';
+import moment from 'moment';
+import {GENDER} from '../../constants/constant';
+const {width} = Dimensions.get('window');
 
 class InfoStudentDetailsComponent extends React.Component {
   constructor(props, context) {
@@ -47,11 +27,11 @@ class InfoStudentDetailsComponent extends React.Component {
 
   getGender = (genderId) => {
     for (let gender of GENDER) {
-      if (gender.id === genderId) {
+      if (parseInt(gender.id) === parseInt(genderId)) {
         return gender.name;
       }
     }
-    return 'Khác';
+    return null;
   };
 
   renderStars = (number) => {
@@ -267,8 +247,9 @@ class InfoStudentDetailsComponent extends React.Component {
           <View style={{alignItems: 'center', marginTop: 25}}>
             <TouchableOpacity
               onPress={() =>
-                this.props.navigation.navigate('InfoStudentEditProfile', {
-                  student: this.props.student,
+                this.props.navigation.navigate('AddLead', {
+                  lead: this.props.student,
+                  mode: 'edit',
                 })
               }>
               <View style={styles.editButton}>
@@ -277,126 +258,36 @@ class InfoStudentDetailsComponent extends React.Component {
             </TouchableOpacity>
           </View>
 
-          <TagItem
-            title={'P.I.C'}
-            placeholder={'No P.I.C'}
-            defaultValue={this.props.student.staff_id}
-            options={this.props.staff}
-            hasHashInHexColor={false}
-            onValueChange={(value) =>
-              this.props.changePICTag(value.id, this.props.student.id)
-            }
-            externalSearch={(search) => this.props.loadStaff(search)}
+          <InfoRow
+            title={'Giới tính'}
+            value={this.getGender(this.props.student.gender)}
           />
-          <TagItem
-            title={'Nguồn'}
-            placeholder={'No Source'}
-            defaultValue={this.props.student.source_id}
-            options={this.props.sources}
-            hasHashInHexColor={true}
-            onValueChange={(value) =>
-              this.props.changeSourceTag(value.id, this.props.student.id)
+          <InfoRow
+            title={'Ngày sinh'}
+            value={
+              this.props.student.dob &&
+              moment.unix(this.props.student.dob).format('DD/MM/YYYY')
             }
           />
-          <TagItem
-            title={'Chiến dịch'}
-            placeholder={'No Campaign'}
-            defaultValue={this.props.student.campaign_id}
-            options={this.props.campaigns}
-            hasHashInHexColor={false}
-            onValueChange={(value) =>
-              this.props.changeCampaignTag(value.id, this.props.student.id)
-            }
+          <InfoRow title={'Công việc'} value={this.props.student.work} />
+          <InfoRow title={'Trường học'} value={this.props.student.university} />
+          <InfoRow title={'Địa chỉ'} value={this.props.student.address} />
+          <InfoRow
+            title={'Phụ huynh 1'}
+            value={this.props.student.father_name}
           />
-          <TagItem
-            title={'Trạng thái'}
-            placeholder={'No status'}
-            defaultValue={this.props.student.status_id}
-            options={this.props.statuses}
-            hasHashInHexColor={true}
-            onValueChange={(value) =>
-              this.props.changeStatusTag(value.id, this.props.student.id)
-            }
+          <InfoRow
+            title={'Phụ huynh 2'}
+            value={this.props.student.mother_name}
           />
+          <InfoRow
+            title={'Lý do biết đến'}
+            value={this.props.student.how_know}
+          />
+          <InfoRow title={'Facebook'} value={this.props.student.facebook} />
+          <InfoRow title={'CMND'} value={this.props.student.identity_code} />
+          <InfoRow title={'Quốc tịch'} value={this.props.student.nationality} />
 
-          <View style={{marginTop: 25}}>
-            <Text style={{fontSize: 16}}>Ngày sinh</Text>
-            <Text
-              numberOfLines={1}
-              style={{paddingTop: 8, fontSize: 16, fontWeight: '600'}}>
-              {isEmptyInput(this.props.student.dob)
-                ? 'Chưa có'
-                : this.props.student.dob}
-            </Text>
-          </View>
-          <View style={{marginTop: 25}}>
-            <Text style={{fontSize: 16}}>Địa chỉ</Text>
-            <Text
-              numberOfLines={1}
-              style={{paddingTop: 8, fontSize: 16, fontWeight: '600'}}>
-              {isEmptyInput(this.props.student.address)
-                ? 'Chưa có'
-                : this.props.student.address}
-            </Text>
-          </View>
-          <View style={{marginTop: 25}}>
-            <Text style={{fontSize: 16}}>Phụ huynh</Text>
-            <Text
-              numberOfLines={1}
-              style={{paddingTop: 8, fontSize: 16, fontWeight: '600'}}>
-              {isEmptyInput(this.props.student.father_name)
-                ? 'Chưa có'
-                : this.props.student.father_name}
-            </Text>
-          </View>
-          <View style={{marginTop: 25}}>
-            <Text style={{fontSize: 16}}>Nơi làm việc</Text>
-            <Text
-              numberOfLines={1}
-              style={{paddingTop: 8, fontSize: 16, fontWeight: '600'}}>
-              {isEmptyInput(this.props.student.work)
-                ? 'Chưa có'
-                : this.props.student.work}
-            </Text>
-          </View>
-          <View style={{marginTop: 25}}>
-            <Text style={{fontSize: 16}}>Giới tính</Text>
-            <Text
-              numberOfLines={1}
-              style={{paddingTop: 8, fontSize: 16, fontWeight: '600'}}>
-              {this.getGender(this.props.student.gender)}
-            </Text>
-          </View>
-          <View style={{marginTop: 25}}>
-            <Text style={{fontSize: 16}}>Trường học</Text>
-            <Text
-              numberOfLines={1}
-              style={{paddingTop: 8, fontSize: 16, fontWeight: '600'}}>
-              {isEmptyInput(this.props.student.university)
-                ? 'Chưa có'
-                : this.props.student.university}
-            </Text>
-          </View>
-          <View style={{marginTop: 25}}>
-            <Text style={{fontSize: 16}}>Mô tả</Text>
-            <Text
-              numberOfLines={1}
-              style={{paddingTop: 8, fontSize: 16, fontWeight: '600'}}>
-              {isEmptyInput(this.props.student.description)
-                ? 'Chưa có'
-                : this.props.student.description}
-            </Text>
-          </View>
-          <View style={{marginTop: 25}}>
-            <Text style={{fontSize: 16}}>Facebook</Text>
-            <Text
-              numberOfLines={1}
-              style={{paddingTop: 8, fontSize: 16, fontWeight: '600'}}>
-              {isEmptyInput(this.props.student.facebook)
-                ? 'Chưa có'
-                : this.props.student.facebook}
-            </Text>
-          </View>
           <View style={{marginTop: 25}}>
             {!isEmptyInput(this.props.student.image1) ? (
               <TouchableOpacity onPress={() => this.uploadImage('image1')}>

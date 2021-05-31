@@ -1,59 +1,57 @@
-import React, {useState} from 'react';
-import {Alert, ScrollView, Text, TextInput, View} from 'react-native';
+import React, {useState, useRef} from 'react';
+import {Alert, ScrollView, Text, View} from 'react-native';
 import Modal from 'react-native-modal';
 import theme from '../../styles';
 import {getBottomSpace} from 'react-native-iphone-x-helper';
 import SubmitButton from '../common/SubmitButton';
 import InputPicker from '../common/InputPicker';
-import CheckBox from '@react-native-community/checkbox';
+import Input from '../common/Input';
+import InputCheckBox from '../common/InputCheckBox';
 
-function ChangeStaffModal({
-  isVisible,
-  closeModal,
-  currentStudyTime,
-  currentTeach,
-  currentAssist,
-  searchStaff,
-  staff,
-  isTeach = true,
-  isAssist = false,
-  class_lesson_id,
-  changeStaff,
-  errorChangeClassTeach,
-  errorChangeClassAssist,
-}) {
-  const [note, setNote] = useState('');
-  const [selectedStaffId, setStaffId] = useState(-1);
+function ChangeStaffModal(props) {
+  const [oldUser, setOldUser] = useState(null);
+  const [note, setNote] = useState(null);
+  const [newUser, setNewUser] = useState(null);
   const [isReplace, setReplace] = useState(false);
+
+  const noteRef = useRef(null);
+
+  const {
+    isVisible,
+    closeModal,
+    searchStaff,
+    staff,
+    isTeach = true,
+    isAssist = false,
+    class_lesson_id,
+    changeStaff,
+    teachers,
+    teaching_assistants,
+  } = props;
 
   function submit() {
     if (class_lesson_id) {
       if (isTeach) {
         const changedData = {
-          id: class_lesson_id,
-          is_teacher_replace: isReplace,
+          class_lesson_id,
+          is_replace: isReplace,
           note: note,
-          staff_id: selectedStaffId,
+          old_user_id: oldUser,
+          new_user_id: newUser,
+          type: 'teacher',
         };
-        console.log(changedData);
-        changeStaff(changedData, 'teacher');
+        changeStaff(changedData, 'teacher', () => closeModal());
       } else {
         const changedData = {
-          id: class_lesson_id,
-          is_teaching_assistant_replace: isReplace,
+          class_lesson_id,
+          is_replace: isReplace,
           note: note,
-          staff_id: selectedStaffId,
+          old_user_id: oldUser,
+          new_user_id: newUser,
+          type: 'teaching_assistant',
         };
-        changeStaff(changedData, 'assist');
+        changeStaff(changedData, 'assist', () => closeModal());
       }
-      closeModal();
-      setTimeout(() => {
-        if (errorChangeClassTeach || errorChangeClassAssist) {
-          Alert.alert('Thông báo', 'Có lỗi xảy ra');
-        } else {
-          Alert.alert('Thông báo', 'Đổi lịch dạy thành công');
-        }
-      }, 500);
     } else {
       Alert.alert('Thông báo', 'Có lỗi xảy ra');
     }
@@ -69,93 +67,68 @@ function ChangeStaffModal({
       <View style={styles.modal}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.titleContainer}>
-            <Text style={styles.title}>Đổi giảng viên</Text>
-          </View>
-          <View style={{marginTop: 30}}>
-            <Text style={styles.titleForm}>Buổi đang được chọn</Text>
-            <View style={styles.inputContainer}>
-              <TextInput
-                value={currentStudyTime}
-                editable={false}
-                style={{fontSize: 15}}
-              />
-            </View>
+            <Text style={styles.title}>
+              {isTeach ? 'Đổi giảng viên' : 'Đổi trợ giảng'}
+            </Text>
           </View>
           {isTeach && (
             <>
-              <View style={{marginTop: 30}}>
-                <Text style={styles.titleForm}>Giảng viên hiện tại</Text>
-                <View style={styles.inputContainer}>
-                  <TextInput
-                    value={currentTeach && currentTeach.name}
-                    editable={false}
-                    style={{fontSize: 15}}
-                  />
-                </View>
-              </View>
+              <InputPicker
+                title={'Giảng viên cần đổi'}
+                options={teachers}
+                header={'Chọn giảng viên cần đổi'}
+                selectedId={oldUser}
+                onChangeValue={setOldUser}
+              />
               <InputPicker
                 title={'Giảng viên mới'}
-                header={'Chọn giảng viên mới'}
                 options={staff}
-                onChangeValue={setStaffId}
+                onChangeValue={setNewUser}
+                header={'Chọn giảng viên mới'}
+                selectedId={newUser}
+                isApiSearch
                 onApiSearch={searchStaff}
-                isApiSearch={true}
-                placeholder={'Giảng viên mới'}
               />
             </>
           )}
           {isAssist && (
             <>
-              <View style={{marginTop: 30}}>
-                <Text style={styles.titleForm}>Trợ giảng hiện tại</Text>
-                <View style={styles.inputContainer}>
-                  <TextInput
-                    value={currentAssist && currentAssist.name}
-                    editable={false}
-                    style={{fontSize: 15}}
-                  />
-                </View>
-              </View>
+              <InputPicker
+                title={'Trợ giảng cần đổi'}
+                options={teaching_assistants}
+                header={'Chọn trợ giảng cần đổi'}
+                selectedId={oldUser}
+                onChangeValue={setOldUser}
+              />
               <InputPicker
                 title={'Trợ giảng mới'}
-                header={'Chọn trợ giảng mới'}
                 options={staff}
-                onChangeValue={setStaffId}
+                onChangeValue={setNewUser}
+                header={'Chọn trợ giảng mới'}
+                selectedId={newUser}
+                isApiSearch
                 onApiSearch={searchStaff}
-                isApiSearch={true}
-                placeholder={'Trợ giảng mới'}
               />
             </>
           )}
-          <View style={{marginTop: 30}}>
-            <Text style={styles.titleForm}>Ghi chú</Text>
-            <View style={styles.inputContainer}>
-              <TextInput
-                onChangeText={(text) => setNote(text)}
-                style={{fontSize: 15}}
-                placeholder={'Ghi chú'}
-              />
-            </View>
-          </View>
-          <View style={styles.row}>
-            <CheckBox
-              disabled={false}
+          <Input
+            title={'Ghi chú'}
+            onChangeText={setNote}
+            value={note}
+            placeholder={'Ghi chú'}
+            refName={noteRef}
+            onSubmitEditing={() => noteRef.current.blur()}
+          />
+          <View style={styles.checkBox}>
+            <InputCheckBox
               value={isReplace}
-              boxType={'square'}
-              style={styles.checkBox}
-              tintColor={'#C8E6C9'}
-              onCheckColor={'#4CAF50'}
-              onFillColor={'#C8E6C9'}
-              onTintColor={'#C8E6C9'}
-              tintColors={{true: '#4CAF50', false: '#C8E6C9'}}
               onValueChange={setReplace}
-              onAnimationType={'bounce'}
-              offAnimationType={'bounce'}
+              name={'Đây là một buổi dạy thay'}
             />
-            <Text>Đây là một buổi dạy thay</Text>
           </View>
           <SubmitButton
             title={'Xác nhận'}
+            loading={props.changingClassAssist || props.changingClassTeach}
             containerStyle={styles.submit}
             onPress={submit}
           />
@@ -186,14 +159,6 @@ const styles = {
     alignItems: 'center',
     paddingTop: 30,
   },
-  inputContainer: {
-    marginTop: 8,
-    height: 45,
-    backgroundColor: '#F6F6F6',
-    justifyContent: 'center',
-    paddingHorizontal: 10,
-    borderRadius: 8,
-  },
   titleForm: {
     color: 'black',
     fontSize: 14,
@@ -202,13 +167,7 @@ const styles = {
     marginTop: 30,
   },
   checkBox: {
-    marginRight: 10,
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
     marginTop: 30,
-    marginLeft: 1,
   },
 };
 

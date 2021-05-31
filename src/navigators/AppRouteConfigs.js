@@ -46,15 +46,13 @@ import SaveRegisterContainer from '../containers/SaveRegisterContainer';
 import InfoStudentContainer from '../containers/InfoStudentContainer';
 import InfoStudentRegistersContainer from '../containers/infoStudent/InfoStudentRegistersContainer';
 import InfoStudentDetailsContainer from '../containers/infoStudent/InfoStudentDetailsContainer';
-import InfoStudentEditProfileContainer from '../containers/infoStudent/InfoStudentEditProfileContainer';
 import TaskContainer from '../containers/TaskContainer';
 import NotificationContainer from '../containers/NotificationContainer';
 import ProfileContainer from '../containers/ProfileContainer';
 import EditProfileContainer from '../containers/EditProfileContainer';
-import EditClassContainer from '../containers/EditClassContainer';
 import DocumentContainer from '../containers/DocumentContainer';
 import DocumentWebViewContainer from '../containers/DocumentWebViewContainer';
-import AddClassContainer from '../containers/AddClassContainer';
+import AddEditClassContainer from '../containers/AddEditClassContainer';
 import LeadsContainer from '../containers/LeadsContainer';
 import AddLeadsContainer from '../containers/AddEditLeadsContainer';
 import StaffContainer from '../containers/StaffContainer';
@@ -64,7 +62,6 @@ import ListStudentAttendanceRegisterContainer from '../containers/ListStudentAtt
 import KPIContainer from '../containers/KPIContainer';
 import ClassInfoContainer from '../containers/ClassInfoContainer';
 import AddKPIContainer from '../containers/AddKPIContainer';
-import TeachingScheduleComponent from '../components/TeachingScheduleComponent';
 import TeachingScheduleContainer from '../containers/TeachingScheduleContainer';
 import FormContainer from '../containers/FormContainer';
 import AddFormContainer from '../containers/AddFormContainer';
@@ -364,13 +361,6 @@ const TabDashboard = createStackNavigator(
         headerTitleStyle: {color: 'black'},
       }),
     },
-    InfoStudentEditProfile: {
-      screen: InfoStudentEditProfileContainer,
-      navigationOptions: () => ({
-        headerTintColor: 'black',
-        headerTitleStyle: {color: 'black'},
-      }),
-    },
     StudentRegisterClass: {
       screen: StudentRegisterClassContainer,
     },
@@ -410,13 +400,6 @@ const TabDashboard = createStackNavigator(
         headerTitleStyle: {color: 'black'},
       }),
     },
-    EditClass: {
-      screen: EditClassContainer,
-      navigationOptions: () => ({
-        headerTintColor: 'black',
-        headerTitleStyle: {color: 'black'},
-      }),
-    },
     Document: {
       screen: DocumentContainer,
       navigationOptions: () => ({
@@ -433,7 +416,7 @@ const TabDashboard = createStackNavigator(
       }),
     },
     AddClass: {
-      screen: AddClassContainer,
+      screen: AddEditClassContainer,
       navigationOptions: () => ({
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},

@@ -42,9 +42,18 @@ function loadCoursesError() {
   };
 }
 
-export function loadClasses(courseId, baseId, search, token, domain) {
+export function loadClasses(
+  courseId,
+  baseId,
+  search,
+  token,
+  domain,
+  isFirstLoad = true,
+) {
   return function (dispatch) {
-    dispatch(beginLoadClasses());
+    if (isFirstLoad) {
+      dispatch(beginLoadClasses());
+    }
     saveRegisterApi
       .loadClassesApi(courseId, baseId, search, token, domain)
       .then(function (res) {

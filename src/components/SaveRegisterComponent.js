@@ -115,7 +115,8 @@ function SaveRegisterComponent(props) {
     props.isLoadingSources ||
     props.isLoadingStatuses ||
     props.isLoadingSalers ||
-    props.isLoadingCoupons ? (
+    props.isLoadingCoupons ||
+    props.isLoadingClasses ? (
     <Loading />
   ) : (
     <KeyboardAvoidingView
@@ -169,7 +170,7 @@ function SaveRegisterComponent(props) {
             title={'Môn học/Chương trình học'}
             onChangeValue={(newCourseId) => {
               setCourseId(newCourseId);
-              props.loadClasses(newCourseId, baseId, '');
+              props.loadClasses(newCourseId, baseId, '', false);
             }}
             placeholder={'Lựa chọn'}
             options={props.courses}
@@ -181,7 +182,7 @@ function SaveRegisterComponent(props) {
             title={'Cơ sở'}
             onChangeValue={(newBaseId) => {
               setBaseId(newBaseId);
-              props.loadClasses(courseId, newBaseId, '');
+              props.loadClasses(courseId, newBaseId, '', false);
             }}
             options={props.baseData}
             selectedId={baseId}
@@ -197,7 +198,7 @@ function SaveRegisterComponent(props) {
             isAllOptionAvailable={false}
             isApiSearch={true}
             onApiSearch={(search) =>
-              props.loadClasses(courseId, baseId, search)
+              props.loadClasses(courseId, baseId, search, false)
             }
             required
           />

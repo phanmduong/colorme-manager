@@ -9,9 +9,8 @@ import {
   Linking,
 } from 'react-native';
 import theme from '../../styles';
-import Call from '../common/Call';
 import {Thumbnail} from 'native-base';
-import {dotNumber, getShortName} from '../../helper';
+import {dotNumber} from '../../helper';
 import CallRegisterModal from '../infoStudent/CallRegisterModal';
 import SubmitMoneyModal from '../infoStudent/SubmitMoneyModal';
 import * as Progress from 'react-native-progress';
@@ -36,7 +35,7 @@ class ListItemStudent extends React.Component {
 
   getAttendanceInfo = () => {
     const attended = this.props.attendances.reduce((accum, currentValue) => {
-      return (accum += currentValue.status ? 1 : 0);
+      return (accum += currentValue.hw_status ? 1 : 0);
     }, 0);
     return {attended, total_attendances: this.props.attendances.length};
   };
@@ -52,21 +51,13 @@ class ListItemStudent extends React.Component {
 
   content() {
     const {
-      name,
-      avatar,
       money,
-      phone,
-      saler,
-      campaign,
-      status,
-      email,
+      paidTime,
       classInfo,
-      studentId,
       registerId,
-      register_status,
-      source,
       code,
       receivedBook,
+      user,
     } = this.props;
     return (
       <View>
@@ -75,12 +66,12 @@ class ListItemStudent extends React.Component {
             <View style={{position: 'relative'}}>
               <Thumbnail
                 small
-                source={{uri: avatar}}
+                source={{uri: user.avatar_url}}
                 style={theme.mainAvatar}
               />
             </View>
             <Text numberOfLines={1} style={styles.className}>
-              {name}
+              {user.name}
             </Text>
           </View>
           <Image
@@ -91,75 +82,6 @@ class ListItemStudent extends React.Component {
         <View style={{flexDirection: 'row'}}>
           <View style={styles.classAva} />
           <View style={styles.infoContainer}>
-            <View style={styles.containerSubTitle}>
-              {saler && (
-                <View
-                  style={{
-                    ...styles.card,
-                    ...{
-                      backgroundColor:
-                        !saler.color || saler.color === ''
-                          ? theme.processColor1
-                          : '#' + saler.color,
-                      marginRight: 5,
-                    },
-                  }}>
-                  <Text style={styles.saler}>{getShortName(saler.name)}</Text>
-                </View>
-              )}
-              {campaign && (
-                <View
-                  style={{
-                    ...styles.card,
-                    ...{
-                      backgroundColor:
-                        !campaign.color || campaign.color === ''
-                          ? theme.processColor1
-                          : '#' + campaign.color,
-                    },
-                  }}>
-                  <Text style={styles.campaign}>{campaign.name.trim()}</Text>
-                </View>
-              )}
-              {register_status && (
-                <View
-                  style={{
-                    ...styles.card,
-                    ...{
-                      backgroundColor:
-                        !register_status.color || register_status.color === ''
-                          ? theme.processColor1
-                          : register_status.color,
-                    },
-                  }}>
-                  <Text style={styles.campaign}>
-                    {register_status.name.trim()}
-                  </Text>
-                </View>
-              )}
-              {source && (
-                <View
-                  style={{
-                    ...styles.card,
-                    ...{
-                      backgroundColor:
-                        !source.color || source.color === ''
-                          ? theme.processColor1
-                          : '#' + source.color,
-                    },
-                  }}>
-                  <Text style={styles.campaign}>{source.name.trim()}</Text>
-                </View>
-              )}
-            </View>
-            <View>
-              {phone ? <Call url={'tel:' + phone} phone={phone} /> : null}
-              {email ? (
-                <Text numberOfLines={1} style={styles.classInfoContainer}>
-                  {email}
-                </Text>
-              ) : null}
-            </View>
             <View style={styles.progressContainer}>
               <Progress.Bar
                 width={120}
@@ -172,20 +94,20 @@ class ListItemStudent extends React.Component {
               />
               <Text style={styles.attendanceText}>
                 {this.getAttendanceInfo().attended}/
-                {this.getAttendanceInfo().total_attendances} buổi
+                {this.getAttendanceInfo().total_attendances} bài tập
               </Text>
             </View>
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 onPress={() => {
-                  Linking.openURL(`tel:${phone}`);
+                  Linking.openURL(`tel:${user.phone}`);
                   this.toggleCallModal();
                 }}>
                 <View style={styles.button}>
                   <Text style={{fontSize: 16}}>Gọi điện</Text>
                 </View>
               </TouchableOpacity>
-              {!status ? (
+              {!paidTime ? (
                 <TouchableOpacity onPress={() => this.toggleMoneyModal()}>
                   <View style={styles.button}>
                     <Text style={{fontSize: 16}}>Nộp học phí</Text>
@@ -206,18 +128,18 @@ class ListItemStudent extends React.Component {
             {...this.props}
             isVisible={this.state.callModalVisible}
             onSwipeComplete={this.toggleCallModal}
-            avatar_url={avatar}
-            email={email}
-            phone={phone}
+            avatar_url={user.avatar_url}
+            email={user.email}
+            phone={user.phone}
             changeCallStatus={this.props.changeCallStatus}
-            studentId={studentId}
+            studentId={user.id}
           />
           <SubmitMoneyModal
             {...this.props}
             isVisible={this.state.moneyModalVisible}
             onSwipeComplete={this.toggleMoneyModal}
-            avatar_url={avatar}
-            name={name}
+            avatar_url={user.avatar_url}
+            name={user.name}
             submitMoney={this.props.submitMoney}
             registerId={registerId}
             errorSubmitMoney={this.props.errorSubmitMoney}
@@ -236,9 +158,9 @@ class ListItemStudent extends React.Component {
         <View>
           <TouchableOpacity
             onPress={() => {
-              this.props.setStudentId(this.props.studentId);
+              this.props.setStudentId(this.props.user.id);
               this.props.navigation.navigate('InfoStudent', {
-                studentId: this.props.studentId,
+                studentId: this.props.user.id,
               });
             }}>
             <View style={styles.containerAll}>{this.content()}</View>
@@ -250,9 +172,9 @@ class ListItemStudent extends React.Component {
         <View>
           <TouchableNativeFeedback
             onPress={() => {
-              this.props.setStudentId(this.props.studentId);
+              this.props.setStudentId(this.props.user.id);
               this.props.navigation.navigate('InfoStudent', {
-                studentId: this.props.studentId,
+                studentId: this.props.user.id,
               });
             }}>
             <View style={styles.containerAll}>{this.content()}</View>
@@ -273,63 +195,10 @@ const styles = {
     paddingHorizontal: theme.mainHorizontal,
     paddingVertical: 16,
   },
-  containerExpand: {
-    marginLeft: 55,
-    paddingTop: 5,
-  },
-  content: {
-    flex: 1,
-    marginLeft: 20,
-  },
   containerTitle: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-  },
-  title: {
-    color: 'black',
-    fontWeight: '900',
-    fontSize: Platform.isPad ? 18 : 13,
-    marginRight: 5,
-  },
-  subTitle: {
-    color: '#7d7d7d',
-    fontSize: 12,
-  },
-  icon: {
-    fontSize: 20,
-    color: theme.colorTitle,
-  },
-  line: {
-    height: 1,
-    backgroundColor: theme.borderColor,
-    marginRight: 20,
-    marginLeft: 75,
-  },
-  email: {
-    color: theme.colorSubTitle,
-    marginTop: 5,
-    fontSize: Platform.isPad ? 18 : 13,
-  },
-  contentTitle: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  dotCall: {
-    position: 'absolute',
-    top: 25,
-    left: 25,
-    height: 12,
-    width: 12,
-    borderRadius: 20,
-    borderWidth: 1.5,
-    borderColor: 'white',
-  },
-
-  listItemContainer: {
-    marginHorizontal: theme.mainHorizontal,
-    marginVertical: 10,
   },
   classAva: {
     width: 37,
@@ -341,28 +210,6 @@ const styles = {
     fontWeight: '600',
     marginLeft: 15,
     marginRight: 5,
-  },
-  containerSubTitle: {
-    flexDirection: 'row',
-    marginBottom: 10,
-  },
-  card: {
-    paddingVertical: 4,
-    paddingHorizontal: 10,
-    marginVertical: 5,
-    borderRadius: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  saler: {
-    fontSize: 10,
-    color: 'white',
-    textAlign: 'center',
-  },
-  campaign: {
-    fontSize: 10,
-    color: 'white',
-    textAlign: 'center',
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -382,12 +229,6 @@ const styles = {
     paddingHorizontal: 18,
     borderRadius: 8,
     marginRight: 10,
-  },
-  classInfoContainer: {
-    paddingTop: 5,
-    flex: 1,
-    flexWrap: 'wrap',
-    color: 'black',
   },
   infoContainer: {
     marginLeft: 15,

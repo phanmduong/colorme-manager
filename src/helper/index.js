@@ -4,6 +4,7 @@
 
 import _ from 'lodash';
 import {MEETING_STATUS} from '../constants/constant';
+import moment from 'moment';
 
 export function dotNumber(number) {
   if (number) {
@@ -321,4 +322,38 @@ export const getDefault = (array, comparedId) => {
 
 export function isEmptyObject(obj) {
   return Object.keys(obj).length === 0 && obj.constructor === Object;
+}
+
+export function localeDay(day) {
+  switch (day) {
+    case 'monday':
+      return 'Thứ hai';
+    case 'tuesday':
+      return 'Thứ ba';
+    case 'wednesday':
+      return 'Thứ tư';
+    case 'thursday':
+      return 'Thứ năm';
+    case 'friday':
+      return 'Thứ sáu';
+    case 'saturday':
+      return 'Thứ bảy';
+    case 'sunday':
+      return 'Chủ nhật';
+    default:
+      return null;
+  }
+}
+
+export function displayUnixDate(unix, type = 'date') {
+  switch (type) {
+    case 'date':
+      return moment.unix(unix).utcOffset('+0700').format('DD/MM/YYYY');
+    case 'time':
+      return moment.unix(unix).utcOffset('+0700').format('HH:mm');
+    case 'full-date':
+      return moment.unix(unix).utcOffset('+0700').format('dddd, DD/MM/YYYY');
+    default:
+      return null;
+  }
 }

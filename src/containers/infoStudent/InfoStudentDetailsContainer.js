@@ -85,42 +85,6 @@ class InfoStudentDetailsContainer extends React.Component {
     );
   };
 
-  changeCampaignTag = (campaign_id, user_id) => {
-    this.props.leadsActions.changeCampaignTag(
-      campaign_id,
-      user_id,
-      this.props.token,
-      this.props.domain,
-    );
-  };
-
-  changeSourceTag = (source_id, user_id) => {
-    this.props.leadsActions.changeSourceTag(
-      source_id,
-      user_id,
-      this.props.token,
-      this.props.domain,
-    );
-  };
-
-  changeStatusTag = (status_id, id) => {
-    this.props.leadsActions.changeStatusTag(
-      status_id,
-      id,
-      this.props.token,
-      this.props.domain,
-    );
-  };
-
-  changePICTag = (staff_id, lead_id) => {
-    this.props.leadsActions.changePICTag(
-      staff_id,
-      lead_id,
-      this.props.token,
-      this.props.domain,
-    );
-  };
-
   render() {
     return (
       <InfoStudentDetailsComponent
@@ -132,10 +96,6 @@ class InfoStudentDetailsContainer extends React.Component {
         errorUploadingImage={this.props.errorUploadingImage}
         isUpdatingProfile={this.props.isUpdatingProfile}
         onRefresh={this.loadStudent}
-        changeCampaignTag={this.changeCampaignTag}
-        changeSourceTag={this.changeSourceTag}
-        changeStatusTag={this.changeStatusTag}
-        changePICTag={this.changePICTag}
         loadStaff={this.loadStaff}
       />
     );
@@ -167,26 +127,6 @@ function mapStateToProps(state) {
     isUpdatingProfile: state.infoStudent.isUpdatingProfile,
     errorUpdatingProfile: state.infoStudent.errorUpdatingProfile,
     domain: state.login.domain,
-    isChangingCampaignTag: state.leads.isChangingCampaignTag,
-    errorChangeCampaignTag: state.leads.errorChangeCampaignTag,
-    isChangingStatusTag: state.leads.isChangingStatusTag,
-    errorChangeStatusTag: state.leads.errorChangeStatusTag,
-    isChangingPICTag: state.leads.isChangingPICTag,
-    errorChangePICTag: state.leads.errorChangePICTag,
-    isChangingSourceTag: state.leads.isChangingSourceTag,
-    errorChangeSourceTag: state.leads.errorChangeSourceTag,
-    isLoadingStatuses: state.saveRegister.isLoadingStatuses,
-    errorLoadingStatuses: state.saveRegister.errorLoadingStatuses,
-    statuses: state.saveRegister.statuses,
-    isLoadingCampaigns: state.saveRegister.isLoadingCampaigns,
-    errorLoadingCampaigns: state.saveRegister.errorLoadingCampaigns,
-    campaigns: state.saveRegister.campaigns,
-    isLoadingSources: state.saveRegister.isLoadingSources,
-    errorLoadingSources: state.saveRegister.errorLoadingSources,
-    sources: state.saveRegister.sources,
-    staff: state.leads.staff,
-    isLoadingStaff: state.leads.isLoadingStaff,
-    errorStaff: state.leads.errorStaff,
   };
 }
 

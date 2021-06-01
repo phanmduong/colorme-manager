@@ -35,10 +35,10 @@ export const CLASS_STATUS_FILTER = [
 ];
 
 export const CLASS_STATUS_FILTER_NEW = [
-  {id: 'active', name: 'Hoạt động'},
-  {id: 'waiting', name: 'Chờ'},
-  {id: 'solo', name: 'Kèm 1-1'},
-  {id: 'business', name: 'Doanh nghiệp'},
+  {id: 'active', name: 'Lớp thường'},
+  {id: 'waiting', name: 'Lớp chờ'},
+  {id: 'solo', name: 'Lớp 1-1'},
+  {id: 'business', name: 'Lớp doanh nghiệp'},
 ];
 
 export const TELE_CALL_STATUS = [
@@ -194,4 +194,14 @@ export const PAYMENT_METHOD = [
 export const ADDRESS = [
   {id: 'Hà Nội', name: 'Hà Nội'},
   {id: 'Hồ Chí Minh', name: 'Hồ Chí Minh'},
+];
+
+export const DAYS = [
+  {id: 'monday', name: 'Thứ hai'},
+  {id: 'tuesday', name: 'Thứ ba'},
+  {id: 'wednesday', name: 'Thứ tư'},
+  {id: 'thursday', name: 'Thứ năm'},
+  {id: 'friday', name: 'Thứ sáu'},
+  {id: 'saturday', name: 'Thứ bảy'},
+  {id: 'sunday', name: 'Chủ nhật'},
 ];

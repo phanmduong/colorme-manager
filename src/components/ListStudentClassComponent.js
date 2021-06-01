@@ -1,22 +1,15 @@
 import React from 'react';
-import {
-  Dimensions,
-  Platform,
-  RefreshControl,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
-import {Container, View, List, Text} from 'native-base';
-import Spinkit from 'react-native-spinkit';
+import {RefreshControl, ScrollView, TouchableOpacity} from 'react-native';
+import {View, List, Text} from 'native-base';
 import theme from '../styles';
 import ListItemStudent from './listItem/ListItemStudent';
 import Search from './common/Search';
 import {convertVietText} from '../helper';
 import ListItemClassLesson from './listItem/ListItemClassLesson';
+import Loading from './common/Loading';
+import EmptyMessage from './common/EmptyMessage';
 
-var {height, width} = Dimensions.get('window');
-const heightSwiper = Platform.OS === 'ios' ? height - 170 : height - 125;
-class ListStudenClassComponent extends React.Component {
+class ListStudentClassComponent extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -72,20 +65,20 @@ class ListStudenClassComponent extends React.Component {
     );
   };
 
-  searchStudent = (stdLst) => {
+  searchStudent = (registers) => {
     if (this.state.search === '') {
-      return stdLst;
+      return registers;
     } else {
       let searchStdLst = [];
-      for (let student of stdLst) {
+      for (let register of registers) {
         if (
-          convertVietText(student.name).includes(
+          convertVietText(register.user.name).includes(
             convertVietText(this.state.search),
           ) ||
-          student.phone.includes(this.state.search) ||
-          student.email.includes(this.state.search)
+          register.user.phone.includes(this.state.search) ||
+          register.user.email.includes(this.state.search)
         ) {
-          searchStdLst.push(student);
+          searchStdLst.push(register);
         }
       }
       return searchStdLst;
@@ -109,66 +102,41 @@ class ListStudenClassComponent extends React.Component {
         return (
           <ListItemStudent
             {...this.props}
-            name={item.name}
-            avatar={item.avatar_url}
-            phone={item.phone}
-            email={item.email}
-            status={item.status}
             money={item.money}
-            saler={item.saler}
-            campaign={item.campaign}
-            classInfo={this.props.classInfo}
-            studentId={item.id}
-            registerId={item.register_id}
+            user={item.user}
+            classInfo={item.class}
+            registerId={item.id}
             changeCallStatus={this.props.changeCallStatus}
-            token={this.props.token}
-            errorChangeCallStatus={this.props.errorChangeCallStatus}
-            errorSubmitMoney={this.props.errorSubmitMoney}
             submitMoney={this.props.submitMoney}
             setStudentId={this.props.setStudentId}
-            register_status={item.register_status}
-            source={item.source}
             attendances={item.attendances}
             code={item.code}
             receivedBook={item.received_book_at}
+            paidTime={item.paid_time}
           />
         );
       case 1:
         return (
           <ListItemClassLesson
-            avatar_url={this.props.classInfo.icon_url}
-            name={item.name}
-            teacher={item.teacher}
-            teacher_assistant={item.teacher_assistant}
+            {...this.props}
+            teachers={item.teachers}
+            teaching_assistants={item.teaching_assistants}
             start_time={item.start_time}
             end_time={item.end_time}
             time={item.time}
             lesson={item.lesson}
-            registers={this.props.listStudentClass}
-            total_attendance={item.total_attendance}
-            class_id={item.class_id}
+            class_id={this.props.selectedClassId}
             openQrCode={this.props.openQrCode}
-            address={
-              this.props.classInfo?.room?.name &&
-              this.props.classInfo?.base?.address &&
-              this.props.classInfo.room.name +
-                ' - ' +
-                this.props.classInfo.base.address
-            }
-            study_time={this.props.classInfo.study_time}
-            class_lesson_time={item.class_lesson_time}
-            lessons={this.props.lessons}
+            class_lesson_time={item.time}
             classIndex={rowID}
             changeBegin={this.props.changeBegin}
             changeDate={this.props.changeDate}
-            errorChangeClassLessons={this.props.errorChangeClassLessons}
-            errorChangeClassLesson={this.props.errorChangeClassLesson}
-            class_lesson_id={item.class_lesson_id}
+            class_lesson_id={item.id}
             searchStaff={this.props.searchStaff}
-            staff={this.props.staff}
             changeStaff={this.props.changeStaff}
-            errorChangeClassTeach={this.props.errorChangeClassTeach}
-            errorChangeClassAssist={this.props.errorChangeClassAssist}
+            analytic_attendances={item.analytic_attendances}
+            previewClassLessons={this.props.previewClassLessons}
+            resetPreview={this.props.resetPreview}
           />
         );
       default:
@@ -176,37 +144,38 @@ class ListStudenClassComponent extends React.Component {
     }
   };
 
-  render() {
-    console.log(this.props.lessons);
-    if (this.props.isLoading || this.props.isLoadingLessons) {
-      return (
-        <Container>
-          <View style={styles.container}>
-            <Spinkit
-              isVisible
-              color={theme.mainColor}
-              type="Wave"
-              size={width / 8}
-            />
-          </View>
-        </Container>
-      );
+  emptyComponent = () => {
+    if (this.props.isLoadingLessons || this.props.isLoading) {
+      if (!(this.props.refreshingLessons || this.props.refreshing)) {
+        return <Loading />;
+      }
     } else {
-      return (
-        <List
-          style={styles.list}
-          dataArray={this.data()}
-          ListHeaderComponent={this.headerComponent}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.props.refreshing}
-              onRefresh={() => this.props.onRefresh()}
-            />
-          }
-          renderRow={this.renderRow}
-        />
-      );
+      if (!(this.props.refreshingLessons || this.props.refreshing)) {
+        return <EmptyMessage />;
+      }
+      return <View />;
     }
+  };
+
+  render() {
+    return (
+      <List
+        style={styles.list}
+        dataArray={this.data()}
+        ListHeaderComponent={this.headerComponent}
+        onEndReached={this.props.loadLessons}
+        contentContainerStyle={{flexGrow: 1}}
+        onEndReachedThreshold={0}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.props.refreshing}
+            onRefresh={() => this.props.onRefresh()}
+          />
+        }
+        renderRow={this.renderRow}
+        ListEmptyComponent={this.emptyComponent}
+      />
+    );
   }
 }
 
@@ -218,26 +187,6 @@ const styles = {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  textError: {
-    color: '#d9534f',
-    textAlign: 'center',
-  },
-  wrapper: {},
-  dotStyle: {
-    opacity: 0.4,
-    width: 5,
-    height: 5,
-  },
-  titleList: {
-    paddingTop: 10,
-    width: width,
-    textAlign: 'center',
-    color: theme.colorTitle,
-    fontWeight: '900',
-  },
-  slide: {
-    height: heightSwiper,
   },
   tag: {
     paddingHorizontal: 20,
@@ -255,4 +204,4 @@ const styles = {
   },
 };
 
-export default ListStudenClassComponent;
+export default ListStudentClassComponent;

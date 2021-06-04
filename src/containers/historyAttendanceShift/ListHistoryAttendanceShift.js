@@ -9,6 +9,8 @@ import {List} from 'native-base';
 import DateRangePicker from '../../components/common/DateRangePicker';
 import moment from 'moment';
 import theme from '../../styles';
+import Loading from '../../components/common/Loading';
+import EmptyMessage from '../../components/common/EmptyMessage';
 
 @observer
 class ListHistoryAttendanceShift extends React.Component {
@@ -33,37 +35,49 @@ class ListHistoryAttendanceShift extends React.Component {
 
   render() {
     if (this.props.shiftType === 'work_shift') {
-      const {listWorkShift} = this.props.store;
-      if (listWorkShift.length > 0) {
-        return (
-          <List
-            ListHeaderComponent={this.headerComponent}
-            dataArray={listWorkShift}
-            renderRow={(date) => (
-              <ShiftRegisterDate
-                dateData={date}
-                shiftType={this.props.shiftType}
-              />
-            )}
-          />
-        );
-      }
+      const {listWorkShift, isLoading, error} = this.props.store;
+      return (
+        <List
+          ListHeaderComponent={this.headerComponent}
+          dataArray={listWorkShift}
+          contentContainerStyle={{flexGrow: 1}}
+          renderRow={(date) => (
+            <ShiftRegisterDate
+              dateData={date}
+              shiftType={this.props.shiftType}
+            />
+          )}
+          ListEmptyComponent={
+            isLoading ? (
+              <Loading />
+            ) : (
+              (error || listWorkShift.length <= 0) && <EmptyMessage />
+            )
+          }
+        />
+      );
     } else if (this.props.shiftType === 'shift') {
-      const {listShift} = this.props.store;
-      if (listShift.length > 0) {
-        return (
-          <List
-            ListHeaderComponent={this.headerComponent}
-            dataArray={listShift}
-            renderRow={(date) => (
-              <ShiftRegisterDate
-                dateData={date}
-                shiftType={this.props.shiftType}
-              />
-            )}
-          />
-        );
-      }
+      const {listShift, isLoading, error} = this.props.store;
+      return (
+        <List
+          ListHeaderComponent={this.headerComponent}
+          dataArray={listShift}
+          contentContainerStyle={{flexGrow: 1}}
+          renderRow={(date) => (
+            <ShiftRegisterDate
+              dateData={date}
+              shiftType={this.props.shiftType}
+            />
+          )}
+          ListEmptyComponent={
+            isLoading ? (
+              <Loading />
+            ) : (
+              (error || listShift.length <= 0) && <EmptyMessage />
+            )
+          }
+        />
+      );
     }
     return <View />;
   }

@@ -10,6 +10,7 @@ import moment from 'moment';
 import theme from '../../styles';
 import Loading from '../../components/common/Loading';
 import EmptyMessage from '../../components/common/EmptyMessage';
+import {RefreshControl} from 'react-native';
 
 @observer
 class ListHistoryAttendanceTeaching extends React.Component {
@@ -33,13 +34,19 @@ class ListHistoryAttendanceTeaching extends React.Component {
   };
 
   render() {
-    const {listAttendance, isLoading, error} = this.props.store;
+    const {listAttendance, isLoading, error, refreshing} = this.props.store;
 
     return (
       <List
         ListHeaderComponent={this.headerComponent}
         dataArray={listAttendance}
         contentContainerStyle={{flexGrow: 1}}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={this.props.reload}
+          />
+        }
         renderRow={(classData, index) => (
           <TeachingClass classData={classData} key={index} />
         )}

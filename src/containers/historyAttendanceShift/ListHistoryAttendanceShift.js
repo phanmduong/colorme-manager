@@ -2,7 +2,7 @@
  * Created by phanmduong on 4/24/17.
  */
 import React from 'react';
-import {View} from 'react-native';
+import {RefreshControl, View} from 'react-native';
 import {observer} from 'mobx-react';
 import ShiftRegisterDate from './ShiftRegisterDate';
 import {List} from 'native-base';
@@ -35,12 +35,18 @@ class ListHistoryAttendanceShift extends React.Component {
 
   render() {
     if (this.props.shiftType === 'work_shift') {
-      const {listWorkShift, isLoading, error} = this.props.store;
+      const {listWorkShift, isLoading, error, refreshing} = this.props.store;
       return (
         <List
           ListHeaderComponent={this.headerComponent}
           dataArray={listWorkShift}
           contentContainerStyle={{flexGrow: 1}}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={this.props.reload}
+            />
+          }
           renderRow={(date) => (
             <ShiftRegisterDate
               dateData={date}
@@ -57,12 +63,18 @@ class ListHistoryAttendanceShift extends React.Component {
         />
       );
     } else if (this.props.shiftType === 'shift') {
-      const {listShift, isLoading, error} = this.props.store;
+      const {listShift, isLoading, error, refreshing} = this.props.store;
       return (
         <List
           ListHeaderComponent={this.headerComponent}
           dataArray={listShift}
           contentContainerStyle={{flexGrow: 1}}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={this.props.reload}
+            />
+          }
           renderRow={(date) => (
             <ShiftRegisterDate
               dateData={date}

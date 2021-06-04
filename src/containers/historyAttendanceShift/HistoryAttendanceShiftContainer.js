@@ -21,6 +21,20 @@ class HistoryAttendanceShiftContainer extends React.Component {
   loadData = () => {
     const {startTime, endTime} = this.store;
     this.store.loadHistoryShift(
+      false,
+      'shift',
+      this.props.user.id,
+      startTime,
+      endTime,
+      this.props.token,
+      this.props.domain,
+    );
+  };
+
+  reload = () => {
+    const {startTime, endTime} = this.store;
+    this.store.loadHistoryShift(
+      true,
       'shift',
       this.props.user.id,
       startTime,
@@ -46,6 +60,7 @@ class HistoryAttendanceShiftContainer extends React.Component {
         onSelectEndTime={this.onSelectEndTime}
         loadData={this.loadData}
         shiftType={'shift'}
+        reload={this.reload}
       />
     );
   }

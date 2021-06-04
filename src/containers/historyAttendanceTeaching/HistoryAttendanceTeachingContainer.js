@@ -21,6 +21,7 @@ class HistoryAttendanceTeachingContainer extends React.Component {
   loadData = () => {
     const {startTime, endTime} = this.store;
     this.store.loadHistoryTeaching(
+      false,
       this.props.user.id,
       startTime,
       endTime,
@@ -37,6 +38,18 @@ class HistoryAttendanceTeachingContainer extends React.Component {
     this.store.onSelectEndTime(endTime);
   };
 
+  reload = () => {
+    const {startTime, endTime} = this.store;
+    this.store.loadHistoryTeaching(
+      true,
+      this.props.user.id,
+      startTime,
+      endTime,
+      this.props.token,
+      this.props.domain,
+    );
+  };
+
   render() {
     return (
       <ListHistoryAttendanceTeaching
@@ -44,6 +57,7 @@ class HistoryAttendanceTeachingContainer extends React.Component {
         onSelectStartTime={this.onSelectStartTime}
         onSelectEndTime={this.onSelectEndTime}
         loadData={this.loadData}
+        reload={this.reload}
       />
     );
   }

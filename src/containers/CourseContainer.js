@@ -34,8 +34,8 @@ function CourseContainer(props) {
     props.courseActions.onSearch(search, props.token, props.domain);
   }
 
-  function onStatusChange(id, status) {
-    props.courseActions.onStatusChange(id, status, props.token, props.domain);
+  function onStatusChange(id, payload) {
+    props.courseActions.onStatusChange(id, payload, props.token, props.domain);
   }
 
   return (

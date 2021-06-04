@@ -17,15 +17,12 @@ export function loadCourseApi(sourceCancel, page, search, token, domain) {
   return axios.get(url, {cancelToken: sourceCancel.token});
 }
 
-export function changeStatus(id, status, token, domain) {
+export function changeStatus(id, payload, token, domain) {
   let url =
-    env.manageApiUrlV3(domain) +
-    '/v2/course/' +
-    id +
-    '/change-status?token=' +
-    token;
+    env.manageApiUrlAuth(domain) + '/v1/courses/' + id + '?token=' + token;
   return axios.put(url, {
-    status: status,
+    status: payload.status,
+    name: payload.name,
   });
 }
 

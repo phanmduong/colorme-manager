@@ -101,11 +101,11 @@ export function onSearch(search, token, domain) {
   };
 }
 
-export function onStatusChange(id, status, token, domain) {
+export function onStatusChange(id, payload, token, domain) {
   return function (dispatch) {
     dispatch(beginCourseStatusChange());
     courseApi
-      .changeStatus(id, status, token, domain)
+      .changeStatus(id, payload, token, domain)
       .then((res) => {
         Alert.alert('Thông báo', 'Thay đổi trạng thái thành công');
       })

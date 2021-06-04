@@ -34,7 +34,8 @@ function ListCourseItem({
               <Text style={styles.title}>{name}</Text>
               <Switch
                 onValueChange={(value) => {
-                  onStatusChange(id, value);
+                  const payload = {status: value ? 1 : 0, name};
+                  onStatusChange(id, payload);
                   setStatus(value);
                 }}
                 value={status}

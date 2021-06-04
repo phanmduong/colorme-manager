@@ -6,14 +6,14 @@ import * as env from '../constants/env';
 
 export function loadCourseApi(sourceCancel, page, search, token, domain) {
   let url =
-    env.manageApiUrlV3(domain) +
-    '/v2/course/get-all?token=' +
+    env.manageApiUrlAuth(domain) +
+    '/v1/courses?token=' +
     token +
     '&page=' +
     page +
     '&search=' +
     search +
-    '&only_children=true&is_parent=0&limit=20';
+    '&is_parent=0&limit=20&orderBy=created_at&sortedBy=desc&include=analytics';
   return axios.get(url, {cancelToken: sourceCancel.token});
 }
 

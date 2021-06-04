@@ -39,6 +39,7 @@ export default function courseReducer(state = initialState.course, action) {
         courseData: courses,
         currentPage: action.currentPage,
         refreshing: action.refreshing,
+        totalPage: action.totalPage,
       });
     case types.LOAD_DATA_COURSE_ERROR:
       return Object.assign({}, state, {

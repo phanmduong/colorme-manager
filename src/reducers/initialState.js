@@ -44,6 +44,7 @@ export default {
     error: false,
     selectedCourseId: -1,
     currentPage: 0,
+    totalPage: 1,
     search: '',
     refreshing: false,
     statusChanging: false,

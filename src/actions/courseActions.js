@@ -51,11 +51,12 @@ export function loadDataCourse(refreshing, page, search, token, domain) {
 export function loadDataSuccessful(res) {
   return {
     type: types.LOAD_DATA_COURSE_SUCCESSFUL,
-    courseData: res.data.courses,
+    courseData: res.data.courses.items,
     isLoading: false,
     error: false,
-    currentPage: res.data.paginator.current_page,
+    currentPage: res.data.courses.meta.current_page,
     refreshing: false,
+    totalPage: res.data.courses.meta.total_pages,
   };
 }
 

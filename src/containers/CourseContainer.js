@@ -9,20 +9,21 @@ import AddButton from '../components/common/AddButton';
 function CourseContainer(props) {
   useEffect(() => {
     loadCourses();
-    loadParentCourses();
     return () => {
       props.courseActions.reset();
     };
   }, []);
 
   function loadCourses() {
-    props.courseActions.loadDataCourse(
-      false,
-      props.currentPage + 1,
-      props.search,
-      props.token,
-      props.domain,
-    );
+    if (props.currentPage < props.totalPage) {
+      props.courseActions.loadDataCourse(
+        false,
+        props.currentPage + 1,
+        props.search,
+        props.token,
+        props.domain,
+      );
+    }
   }
 
   function onRefresh() {
@@ -35,10 +36,6 @@ function CourseContainer(props) {
 
   function onStatusChange(id, status) {
     props.courseActions.onStatusChange(id, status, props.token, props.domain);
-  }
-
-  function loadParentCourses() {
-    props.courseActions.loadParentCourses(props.token, props.domain);
   }
 
   return (
@@ -71,11 +68,9 @@ function mapStateToProps(state) {
     error: state.course.error,
     search: state.course.search,
     currentPage: state.course.currentPage,
+    totalPage: state.course.totalPage,
     refreshing: state.course.refreshing,
     statusChanging: state.course.statusChanging,
-    parentCourses: state.course.parentCourses,
-    loadingParentCourses: state.course.loadingParentCourses,
-    errorParentCourses: state.course.errorParentCourses,
     domain: state.login.domain,
   };
 }

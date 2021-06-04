@@ -6,28 +6,16 @@ import {dotNumber} from '../../helper';
 function ListCourseItem({
   name,
   price,
-  lessons,
   description,
   avatar_url,
   id,
   onStatusChange,
   currentStatus,
-  parentCourses,
-  parent_id,
+  parent,
   navigation,
+  analytics,
 }) {
   const [status, setStatus] = useState(currentStatus === 1);
-
-  function getParentCourse() {
-    if (parent_id) {
-      for (const parent of parentCourses) {
-        if (parent.id === parent_id) {
-          return parent.name;
-        }
-      }
-    }
-    return null;
-  }
 
   return (
     <TouchableOpacity
@@ -52,8 +40,8 @@ function ListCourseItem({
                 value={status}
               />
             </View>
-            <View style={styles.row}>
-              {parent_id && (
+            {parent && (
+              <View style={styles.row}>
                 <View
                   style={{
                     ...styles.card,
@@ -61,12 +49,12 @@ function ListCourseItem({
                       backgroundColor: '#32CA41',
                     },
                   }}>
-                  <Text style={styles.saler}>{getParentCourse()}</Text>
+                  <Text style={styles.saler}>{parent.name}</Text>
                 </View>
-              )}
-            </View>
+              </View>
+            )}
             <Text style={styles.info}>{description}</Text>
-            <Text style={styles.info}>{lessons.length} buổi</Text>
+            <Text style={styles.info}>{analytics?.total_classes} buổi</Text>
             <Text style={styles.info}>{dotNumber(price)}đ</Text>
             <View style={styles.buttonContainer}>
               <TouchableOpacity

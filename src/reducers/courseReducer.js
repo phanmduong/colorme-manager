@@ -96,7 +96,7 @@ export default function courseReducer(state = initialState.course, action) {
           courses.splice(idx, 0, action.course);
         }
       } else {
-        courses.push(action.course);
+        courses.unshift(action.course);
       }
       return Object.assign({}, state, {
         courseData: courses,

@@ -33,34 +33,37 @@ export function loadParentCourses(token, domain) {
 }
 
 export function createCourse(data, token, domain) {
-  let url =
-    env.manageApiUrlV3(domain) + '/v2/course/create-edit?token=' + token;
+  let url = env.manageApiUrlAuth(domain) + '/v1/courses?token=' + token;
   return axios.post(url, {
-    name: data.name,
+    color: data.color,
+    cover_url: data.cover_url,
     description: data.description,
     duration: data.duration,
-    price: data.price,
     icon_url: data.icon_url,
-    image_url: data.image_url,
-    cover_url: data.cover_url,
-    front_image: data.front_image,
-    back_image: data.back_image,
-    linkwindow: data.linkwindow,
-    window_how_install: data.window_how_install,
     linkmac: data.linkmac,
+    linkwindow: data.linkwindow,
     mac_how_install: data.mac_how_install,
-    id: data.id,
-    categories: JSON.stringify([{}]),
-    color: '',
-    created_at: '',
-    detail: '',
-    lessons: [],
-    links: [],
-    num_classes: '',
-    pixels: [],
-    terms: [],
-    type: '',
-    type_id: '',
+    name: data.name,
+    price: data.price,
+    window_how_install: data.window_how_install,
+  });
+}
+
+export function updateCourse(data, token, domain) {
+  let url =
+    env.manageApiUrlAuth(domain) + '/v1/courses/' + data.id + '?token=' + token;
+  return axios.put(url, {
+    color: data.color,
+    cover_url: data.cover_url,
+    description: data.description,
+    duration: data.duration,
+    icon_url: data.icon_url,
+    linkmac: data.linkmac,
+    linkwindow: data.linkwindow,
+    mac_how_install: data.mac_how_install,
+    name: data.name,
+    price: data.price,
+    window_how_install: data.window_how_install,
   });
 }
 
@@ -157,10 +160,10 @@ export function createExam(data, token, domain) {
   });
 }
 
-export function uploadImage(uri, token, domain) {
-  let url = env.manageApiUrlV3(domain) + '/file/upload?token=' + token;
+export function uploadImage(uri, token) {
+  let url = env.IMAGE_UPLOAD_URL + '?token=' + token;
   let formData = new FormData();
-  formData.append('file', {
+  formData.append('image', {
     uri: uri,
     type: 'image/jpeg',
     name: 'file',

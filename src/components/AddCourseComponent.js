@@ -20,10 +20,7 @@ function AddCourseComponent(props) {
   const [price, setPrice] = useState(null);
   const [isExpanded, setExpanded] = useState(false);
   const [iconUrl, setIconUrl] = useState(null);
-  const [imageUrl, setImageUrl] = useState(null);
   const [coverUrl, setCoverUrl] = useState(null);
-  const [frontImage, setFrontImage] = useState(null);
-  const [backImage, setBackImage] = useState(null);
   const [linkWindow, setLinkWindow] = useState(null);
   const [linkMac, setLinkMac] = useState(null);
   const [linkInstallWindow, setLinkInstallWindow] = useState(null);
@@ -31,10 +28,6 @@ function AddCourseComponent(props) {
   const [id, setId] = useState(null);
 
   const descriptionRef = useRef(null);
-  const imageUrlRef = useRef(null);
-  const coverUrlRef = useRef(null);
-  const frontImageRef = useRef(null);
-  const backImageRef = useRef(null);
   const linkWindowRef = useRef(null);
   const linkMacRef = useRef(null);
   const linkInstallWindowRef = useRef(null);
@@ -47,9 +40,6 @@ function AddCourseComponent(props) {
       setDuration(props.courseDetails.duration.toString());
       setPrice(props.courseDetails.price.toString());
       setIconUrl(props.courseDetails.icon_url);
-      setImageUrl(props.courseDetails.image_url);
-      setFrontImage(props.courseDetails.front_image);
-      setBackImage(props.courseDetails.back_image);
       setLinkWindow(props.courseDetails.linkwindow);
       setLinkMac(props.courseDetails.linkmac);
       setLinkInstallMac(props.courseDetails.mac_how_install);
@@ -63,22 +53,20 @@ function AddCourseComponent(props) {
   }
 
   function onSubmit() {
-    if (name && description && duration && price) {
+    if (name && duration) {
       const data = {
-        name: name,
-        description: description,
-        duration: parseInt(duration),
-        price: parseInt(price),
-        icon_url: iconUrl,
-        image_url: imageUrl,
-        cover_url: coverUrl,
-        front_image: frontImage,
-        back_image: backImage,
-        linkwindow: linkWindow,
-        linkmac: linkMac,
-        window_how_install: linkInstallWindow,
-        mac_how_install: linkInstallMac,
         id: id,
+        color: null,
+        cover_url: coverUrl,
+        description: description,
+        duration: duration,
+        icon_url: iconUrl,
+        linkmac: linkMac,
+        linkwindow: linkWindow,
+        mac_how_install: linkInstallMac,
+        name: name,
+        price: price.split('.').join(''),
+        window_how_install: linkInstallWindow,
       };
       props.createCourse(data);
     } else {
@@ -107,7 +95,6 @@ function AddCourseComponent(props) {
             title={'Mô tả ngắn'}
             value={description}
             onChangeText={setDescription}
-            required
             refName={descriptionRef}
           />
           <Input
@@ -124,50 +111,10 @@ function AddCourseComponent(props) {
             value={dotNumber(price)}
             onChangeText={setPrice}
             keyboardType={'number-pad'}
-            required
           />
           <Expand isExpanded={isExpanded} toggleExpand={toggleExpand} />
           {isExpanded && (
             <>
-              <Input
-                title={'Ảnh icon'}
-                placeholder={'Ảnh icon'}
-                onChangeText={setIconUrl}
-                value={iconUrl}
-                onSubmitEditing={() => imageUrlRef.current.focus()}
-              />
-              <Input
-                title={'Ảnh đại diện'}
-                placeholder={'Ảnh đại diện'}
-                onChangeText={setImageUrl}
-                value={imageUrl}
-                refName={imageUrlRef}
-                onSubmitEditing={() => coverUrlRef.current.focus()}
-              />
-              <Input
-                title={'Ảnh cover'}
-                placeholder={'Ảnh cover'}
-                onChangeText={setCoverUrl}
-                value={coverUrl}
-                refName={coverUrlRef}
-                onSubmitEditing={() => frontImageRef.current.focus()}
-              />
-              <Input
-                title={'Front Image'}
-                placeholder={'Front Image'}
-                value={frontImage}
-                onChangeText={setFrontImage}
-                refName={frontImageRef}
-                onSubmitEditing={() => backImageRef.current.focus()}
-              />
-              <Input
-                title={'Back Image'}
-                placeholder={'Back Image'}
-                onChangeText={setBackImage}
-                value={backImage}
-                refName={backImageRef}
-                onSubmitEditing={() => linkWindowRef.current.focus()}
-              />
               <Input
                 title={'Link phần mềm Windows'}
                 placeholder={'Link phần mềm Windows'}

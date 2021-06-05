@@ -5,6 +5,7 @@ import {
   Dimensions,
   Alert,
   ActivityIndicator,
+  Text,
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 const {width} = Dimensions.get('window');
@@ -12,9 +13,12 @@ import * as courseApi from '../../apis/courseApi';
 import ImageResizer from 'react-native-image-resizer';
 import {Thumbnail} from 'native-base';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {connect} from 'react-redux';
 
-function ImageUploader({avatar_url, onUpload, containerStyle, token}) {
+function ImageUploader(props) {
   const [loading, setLoading] = useState(false);
+
+  const {title, avatar_url, onUpload, containerStyle} = props;
 
   function uploadImage() {
     const options = {};
@@ -31,7 +35,7 @@ function ImageUploader({avatar_url, onUpload, containerStyle, token}) {
           .then((response) => {
             setLoading(true);
             courseApi
-              .uploadImage(response.uri, token)
+              .uploadImage(response.uri, props.token)
               .then((res) => {
                 onUpload(res.data.url);
               })
@@ -71,6 +75,7 @@ function ImageUploader({avatar_url, onUpload, containerStyle, token}) {
         <TouchableOpacity onPress={uploadImage}>
           <View style={styles.idContainer}>
             <MaterialIcons name={'folder-shared'} size={40} color={'#9c9c9c'} />
+            <Text>{title}</Text>
           </View>
         </TouchableOpacity>
       )}
@@ -94,4 +99,10 @@ const styles = {
   },
 };
 
-export default ImageUploader;
+function mapStateToProp(state) {
+  return {
+    token: state.login.token,
+  };
+}
+
+export default connect(mapStateToProp)(ImageUploader);

@@ -39,7 +39,7 @@ function AddCourseContainer(props) {
 AddCourseContainer.navigationOptions = ({navigation}) => {
   return {
     headerLeft: () => (
-      <NavigationLeftHeader name={'Tạo môn học'} navigation={navigation} />
+      <NavigationLeftHeader name={'Tạo sửa môn học'} navigation={navigation} />
     ),
   };
 };

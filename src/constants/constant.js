@@ -205,3 +205,22 @@ export const DAYS = [
   {id: 'saturday', name: 'Thứ bảy'},
   {id: 'sunday', name: 'Chủ nhật'},
 ];
+
+export const COLORS = [
+  {id: '#1FBC9C', name: 'Xanh lam', color: '#1FBC9C'},
+  {id: '#1CA085', name: 'Xanh lam đậm', color: '#1CA085'},
+  {id: '#2ECC70', name: 'Xanh lá cây', color: '#2ECC70'},
+  {id: '#27AF60', name: 'Xanh lá cây đậm', color: '#27AF60'},
+  {id: '#3398DB', name: 'Xanh dương', color: '#3398DB'},
+  {id: '#2980B9', name: 'Xanh dương đậm', color: '#2980B9'},
+  {id: '#A463BF', name: 'Tím', color: '#A463BF'},
+  {id: '#8E43AD', name: 'Tím đậm', color: '#8E43AD'},
+  {id: '#3D556E', name: 'Xanh đen', color: '#3D556E'},
+  {id: '#222F3D', name: 'Đen', color: '#222F3D'},
+  {id: '#222F3D', name: 'Vàng', color: '#222F3D'},
+  {id: '#F39C19', name: 'Cam', color: '#F39C19'},
+  {id: '#E84B3C', name: 'Đỏ', color: '#E84B3C'},
+  {id: '#C0382B', name: 'Đỏ đậm', color: '#C0382B'},
+  {id: '#DDE6E8', name: 'Trắng', color: '#DDE6E8'},
+  {id: '#BDC3C8', name: 'Xám', color: '#BDC3C8'},
+];

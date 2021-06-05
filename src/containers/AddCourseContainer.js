@@ -14,24 +14,15 @@ function AddCourseContainer(props) {
     }
   }
 
-  useEffect(() => {
-    if (editMode) {
-      loadCourseDetails();
-    }
-  }, []);
-
-  function loadCourseDetails() {
-    props.courseActions.loadCourseDetails(false, id, props.token, props.domain);
-  }
-
   const editMode = props.navigation.getParam('editMode');
-  const id = props.navigation.getParam('id');
+  const course = props.navigation.getParam('course');
 
   return (
     <AddCourseComponent
       {...props}
       createCourse={createCourse}
       editMode={editMode}
+      course={course}
     />
   );
 }

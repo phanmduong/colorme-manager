@@ -18,7 +18,8 @@ function CourseComponent(props) {
         currentStatus={item.status}
         parent={item.parent}
         navigation={props.navigation}
-        analytics={item.analytics}
+        duration={item.duration}
+        course={item}
       />
     );
   }

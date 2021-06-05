@@ -13,7 +13,8 @@ function ListCourseItem({
   currentStatus,
   parent,
   navigation,
-  analytics,
+  duration,
+  course,
 }) {
   const [status, setStatus] = useState(currentStatus === 1);
 
@@ -54,15 +55,19 @@ function ListCourseItem({
                 </View>
               </View>
             )}
-            <Text style={styles.info}>{description}</Text>
-            <Text style={styles.info}>{analytics?.total_classes} buổi</Text>
-            <Text style={styles.info}>{dotNumber(price)}đ</Text>
+            {description ? (
+              <Text style={styles.info}>{description}</Text>
+            ) : null}
+            <Text style={styles.info}>{duration} buổi</Text>
+            {price ? (
+              <Text style={styles.info}>{dotNumber(price)}đ</Text>
+            ) : null}
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 onPress={() =>
                   navigation.navigate('AddCourse', {
                     editMode: true,
-                    id: id,
+                    course: course,
                   })
                 }>
                 <View style={styles.button}>

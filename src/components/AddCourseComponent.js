@@ -12,41 +12,33 @@ import Expand from './common/Expand';
 import SubmitButton from './common/SubmitButton';
 import {dotNumber, isEmptyObject} from '../helper';
 import Loading from './common/Loading';
+import InputPicker from './common/InputPicker';
+import {COLORS} from '../constants/constant';
 
 function AddCourseComponent(props) {
-  const [name, setName] = useState(null);
-  const [description, setDescription] = useState(null);
-  const [duration, setDuration] = useState(null);
-  const [price, setPrice] = useState(null);
+  const [name, setName] = useState(props.course?.name);
+  const [description, setDescription] = useState(props.course?.description);
+  const [duration, setDuration] = useState(props.course?.duration?.toString());
+  const [price, setPrice] = useState(props.course?.price);
   const [isExpanded, setExpanded] = useState(false);
-  const [iconUrl, setIconUrl] = useState(null);
-  const [coverUrl, setCoverUrl] = useState(null);
-  const [linkWindow, setLinkWindow] = useState(null);
-  const [linkMac, setLinkMac] = useState(null);
-  const [linkInstallWindow, setLinkInstallWindow] = useState(null);
-  const [linkInstallMac, setLinkInstallMac] = useState(null);
-  const [id, setId] = useState(null);
+  const [iconUrl, setIconUrl] = useState(props.course?.icon_url);
+  const [coverUrl, setCoverUrl] = useState(props.course?.cover_url);
+  const [linkWindow, setLinkWindow] = useState(props.course?.linkwindow);
+  const [linkMac, setLinkMac] = useState(props.course?.linkmac);
+  const [linkInstallWindow, setLinkInstallWindow] = useState(
+    props.course?.window_how_install,
+  );
+  const [linkInstallMac, setLinkInstallMac] = useState(
+    props.course?.mac_how_install,
+  );
+  const [id, setId] = useState(props.course?.id);
+  const [color, setColor] = useState(props.course?.color);
 
   const descriptionRef = useRef(null);
   const linkWindowRef = useRef(null);
   const linkMacRef = useRef(null);
   const linkInstallWindowRef = useRef(null);
   const linkInstallMacRef = useRef(null);
-
-  useEffect(() => {
-    if (props.editMode && !isEmptyObject(props.courseDetails)) {
-      setName(props.courseDetails.name);
-      setDescription(props.courseDetails.description);
-      setDuration(props.courseDetails.duration.toString());
-      setPrice(props.courseDetails.price.toString());
-      setIconUrl(props.courseDetails.icon_url);
-      setLinkWindow(props.courseDetails.linkwindow);
-      setLinkMac(props.courseDetails.linkmac);
-      setLinkInstallMac(props.courseDetails.mac_how_install);
-      setLinkInstallWindow(props.courseDetails.window_how_install);
-      setId(props.courseDetails.id);
-    }
-  }, [props.courseDetails]);
 
   function toggleExpand() {
     setExpanded(!isExpanded);
@@ -56,7 +48,7 @@ function AddCourseComponent(props) {
     if (name && duration) {
       const data = {
         id: id,
-        color: null,
+        color: color,
         cover_url: coverUrl,
         description: description,
         duration: duration,
@@ -65,7 +57,7 @@ function AddCourseComponent(props) {
         linkwindow: linkWindow,
         mac_how_install: linkInstallMac,
         name: name,
-        price: price.split('.').join(''),
+        price: price && price.split('.').join(''),
         window_how_install: linkInstallWindow,
       };
       props.createCourse(data);
@@ -74,7 +66,7 @@ function AddCourseComponent(props) {
     }
   }
 
-  return !props.loadingCourseDetails ? (
+  return (
     <KeyboardAvoidingView
       style={{flex: 1}}
       behavior={Platform.OS === 'ios' ? 'padding' : ''}
@@ -97,20 +89,30 @@ function AddCourseComponent(props) {
             onChangeText={setDescription}
             refName={descriptionRef}
           />
-          <Input
-            placeholder={'Số buổi'}
-            title={'Số buổi'}
-            value={duration}
-            onChangeText={setDuration}
-            keyboardType={'number-pad'}
-            required
-          />
+          {!props.editMode && (
+            <Input
+              placeholder={'Số buổi'}
+              title={'Số buổi'}
+              value={duration}
+              onChangeText={setDuration}
+              keyboardType={'number-pad'}
+              required
+            />
+          )}
           <Input
             placeholder={'Học phí'}
             title={'Học phí'}
             value={dotNumber(price)}
             onChangeText={setPrice}
             keyboardType={'number-pad'}
+          />
+          <InputPicker
+            title={'Màu'}
+            header={'Chọn màu'}
+            options={COLORS}
+            selectedId={color}
+            onChangeValue={setColor}
+            rendering={props.loadingCourseDetails}
           />
           <Expand isExpanded={isExpanded} toggleExpand={toggleExpand} />
           {isExpanded && (
@@ -158,8 +160,6 @@ function AddCourseComponent(props) {
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
-  ) : (
-    <Loading />
   );
 }
 

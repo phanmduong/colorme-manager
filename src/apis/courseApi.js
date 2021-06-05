@@ -3,6 +3,7 @@
  */
 import axios from 'axios';
 import * as env from '../constants/env';
+import {isEmptyInput} from '../helper';
 
 export function loadCourseApi(sourceCancel, page, search, token, domain) {
   let url =
@@ -160,19 +161,22 @@ export function createExam(data, token, domain) {
   });
 }
 
-export function uploadImage(uri, token) {
+export function uploadImage(
+  file,
+  completeHandler,
+  progressHandler,
+  error,
+  token,
+) {
   let url = env.IMAGE_UPLOAD_URL + '?token=' + token;
   let formData = new FormData();
-  formData.append('image', {
-    uri: uri,
-    type: 'image/jpeg',
-    name: 'file',
-  });
-  return axios({
-    method: 'post',
-    url: url,
-    data: formData,
-  });
+  formData.append('image', file);
+  let ajax = new XMLHttpRequest();
+  ajax.addEventListener('load', completeHandler, false);
+  ajax.upload.onprogress = progressHandler;
+  ajax.addEventListener('error', error, false);
+  ajax.open('POST', url);
+  ajax.send(formData);
 }
 
 export function createLink(data, token, domain) {
@@ -194,4 +198,18 @@ export function deleteLink(id, token, domain) {
     '?token=' +
     token;
   return axios.delete(url);
+}
+
+export function loadLessons(search, page, course_id, token, domain) {
+  let url =
+    env.manageApiUrlAuth(domain) +
+    '/v1/lessons?token=' +
+    token +
+    '&search=' +
+    search +
+    '&page=' +
+    page +
+    (!isEmptyInput(course_id) ? '&course_ids[]=' + course_id : '') +
+    '&limit=10&orderBy=order&sortedBy=asc';
+  return axios.get(url);
 }

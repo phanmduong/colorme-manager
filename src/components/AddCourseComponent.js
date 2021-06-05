@@ -11,7 +11,6 @@ import theme from '../styles';
 import Expand from './common/Expand';
 import SubmitButton from './common/SubmitButton';
 import {dotNumber, isEmptyObject} from '../helper';
-import Loading from './common/Loading';
 import InputPicker from './common/InputPicker';
 import {COLORS} from '../constants/constant';
 

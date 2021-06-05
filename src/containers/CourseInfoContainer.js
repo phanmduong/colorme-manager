@@ -1,34 +1,25 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import CourseInfoComponent from '../components/CourseInfoComponent';
 import {bindActionCreators} from 'redux';
 import * as courseActions from '../actions/courseActions';
 import NavigationLeftHeader from '../components/common/NavigationLeftHeader';
+import {observer} from 'mobx-react';
+import CourseInfoStore from './course/CourseInfoStore';
 
-function CourseInfoContainer(props) {
+const CourseInfoContainer = observer((props) => {
+  const [store] = useState(() => new CourseInfoStore());
+
   useEffect(() => {
-    loadCourseDetails();
-    return () => {
-      props.courseActions.resetCourseDetails();
-    };
+    loadLessons();
   }, []);
 
-  function loadCourseDetails() {
-    props.courseActions.loadCourseDetails(
-      false,
-      courseId,
-      props.token,
-      props.domain,
-    );
+  function loadLessons() {
+    store.loadLessons(false, courseId, props.token, props.domain);
   }
 
-  function refreshCourseDetails() {
-    props.courseActions.loadCourseDetails(
-      true,
-      courseId,
-      props.token,
-      props.domain,
-    );
+  function refreshLessons() {
+    store.loadLessons(true, courseId, props.token, props.domain);
   }
 
   function deleteLesson(id) {
@@ -52,15 +43,17 @@ function CourseInfoContainer(props) {
   return (
     <CourseInfoComponent
       {...props}
-      onRefresh={refreshCourseDetails}
       courseId={courseId}
       changeLessonEvent={changeLessonEvent}
       deleteLesson={deleteLesson}
       duplicateLesson={duplicateLesson}
       deleteLink={deleteLink}
+      loadLessons={loadLessons}
+      store={store}
+      refreshLessons={refreshLessons}
     />
   );
-}
+});
 
 CourseInfoContainer.navigationOptions = ({navigation}) => {
   return {
@@ -77,10 +70,6 @@ CourseInfoContainer.navigationOptions = ({navigation}) => {
 function mapStateToProps(state) {
   return {
     token: state.login.token,
-    loadingCourseDetails: state.course.loadingCourseDetails,
-    errorCourseDetails: state.course.errorCourseDetails,
-    refreshingCourseDetails: state.course.refreshingCourseDetails,
-    courseDetails: state.course.courseDetails,
     domain: state.login.domain,
   };
 }

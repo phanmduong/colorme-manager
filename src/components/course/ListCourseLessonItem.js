@@ -16,9 +16,6 @@ import {isEmptyInput} from '../../helper';
 function ListCourseLessonItem({
   avatar_url,
   name,
-  term_id,
-  terms,
-  description,
   events,
   changeLessonEvent,
   id,
@@ -27,7 +24,6 @@ function ListCourseLessonItem({
   navigation,
   lesson,
   course_id,
-  detail_teacher,
 }) {
   const [isBook, setBook] = useState(false);
   const [isComment, setComment] = useState(false);
@@ -60,17 +56,6 @@ function ListCourseLessonItem({
     } else {
       setWriting(false);
     }
-  }
-
-  function getTerm() {
-    if (term_id) {
-      for (const term of terms) {
-        if (term_id === term.id) {
-          return term.name;
-        }
-      }
-    }
-    return null;
   }
 
   function onDuplicate() {
@@ -106,19 +91,6 @@ function ListCourseLessonItem({
         <Image source={{uri: avatar_url}} style={styles.ava} />
         <View style={styles.infoContainer}>
           <Text style={[styles.title, {flexWrap: 'wrap'}]}>{name.trim()}</Text>
-          <View style={styles.row}>
-            {term_id && (
-              <View
-                style={{
-                  ...styles.card,
-                  ...{
-                    backgroundColor: '#32CA41',
-                  },
-                }}>
-                <Text style={styles.saler}>{getTerm()}</Text>
-              </View>
-            )}
-          </View>
           <View style={styles.switchContainer}>
             <TouchableOpacity
               onPress={() => {
@@ -169,16 +141,6 @@ function ListCourseLessonItem({
               </View>
             </TouchableOpacity>
           </View>
-          {!isEmptyInput(description) && (
-            <Text style={styles.info}>{description}</Text>
-          )}
-          {!isEmptyInput(detail_teacher) && (
-            <Text
-              style={styles.hyperLink}
-              onPress={() => Linking.openURL(detail_teacher)}>
-              {detail_teacher}
-            </Text>
-          )}
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               onPress={() =>

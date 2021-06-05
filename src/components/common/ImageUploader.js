@@ -20,10 +20,19 @@ function ImageUploader(props) {
 
   const {title, avatar_url, onUpload, containerStyle} = props;
 
+  function updateProgress(evt) {
+    if (evt.lengthComputable) {
+      let percentComplete = (evt.loaded / evt.total) * 100;
+      console.log(percentComplete + '% completed');
+    }
+  }
+
   function uploadImage() {
     const options = {};
+    // Chọn ảnh từ máy
     ImagePicker.showImagePicker(options, (response) => {
       if (response.uri) {
+        // Nén ảnh
         ImageResizer.createResizedImage(
           response.uri,
           1000,
@@ -33,19 +42,23 @@ function ImageUploader(props) {
           0,
         )
           .then((response) => {
+            let source = {
+              uri: response.uri,
+              name: 'image.png',
+              type: 'image/*',
+            };
             setLoading(true);
-            courseApi
-              .uploadImage(response.uri, props.token)
-              .then((res) => {
-                onUpload(res.data.url);
-              })
-              .catch((error) => {
-                Alert.alert('Thông báo', 'Không upload được ảnh');
-                throw error;
-              })
-              .finally(() => {
+            // Bắt đầu upload ảnh
+            courseApi.uploadImage(
+              source,
+              (event) => {
                 setLoading(false);
-              });
+                console.log(event.currentTarget.response);
+              },
+              null,
+              () => Alert.alert('Thông báo', 'Không upload được ảnh'),
+              props.token,
+            );
           })
           .catch((err) => {
             console.log(err);

@@ -64,6 +64,11 @@ export default {
     creatingExam: false,
     creatingLink: false,
     deletingLink: false,
+    lessons: [],
+    isLoadingLessons: false,
+    errorLessons: false,
+    currentPageLessons: 0,
+    totalPageLessons: 1,
   },
   gen: {
     genData: [],

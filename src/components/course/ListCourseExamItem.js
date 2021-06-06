@@ -31,6 +31,7 @@ const styles = {
   },
   contentContainer: {
     marginLeft: 10,
+    flex: 1,
   },
   bold: {
     fontWeight: '600',
@@ -38,6 +39,8 @@ const styles = {
   info: {
     marginTop: 5,
     color: '#909090',
+    flexWrap: 'wrap',
+    flex: 1,
   },
 };
 

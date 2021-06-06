@@ -195,33 +195,57 @@ function CourseInfoComponent(props) {
   }
 
   function emptyComponent() {
-    if (
-      isLoadingLessons ||
-      isLoadingExams ||
-      isLoadingGroupExams ||
-      isLoadingLinks
-    ) {
-      if (
-        !(
-          refreshingLessons ||
-          refreshingExams ||
-          refreshingGroupExams ||
-          refreshingLinks
-        )
-      ) {
-        return <Loading />;
-      }
-    } else {
-      if (
-        !(
-          refreshingLessons ||
-          refreshingExams ||
-          refreshingGroupExams ||
-          refreshingLinks
-        )
-      ) {
-        return <EmptyMessage />;
-      }
+    switch (tabIdx) {
+      case 0:
+        if (isLoadingLessons) {
+          if (!refreshingLessons) {
+            return <Loading />;
+          }
+        } else {
+          if (!refreshingLessons) {
+            return <EmptyMessage />;
+          }
+        }
+        return null;
+      case 1:
+        if (isLoadingExams || isLoadingGroupExams) {
+          if (!(refreshingExams || refreshingGroupExams)) {
+            return <Loading />;
+          }
+        } else {
+          if (!(refreshingExams || refreshingGroupExams)) {
+            return <EmptyMessage />;
+          }
+        }
+        return null;
+      case 2:
+        if (isLoadingLinks) {
+          if (!refreshingLinks) {
+            return <Loading />;
+          }
+        } else {
+          if (!refreshingLinks) {
+            return <EmptyMessage />;
+          }
+        }
+        return null;
+      default:
+        return null;
+    }
+  }
+
+  console.log(isLoadingLessons);
+
+  function refreshing() {
+    switch (tabIdx) {
+      case 0:
+        return refreshingLessons;
+      case 1:
+        return refreshingExams || refreshingGroupExams;
+      case 2:
+        return refreshingLinks;
+      default:
+        return false;
     }
   }
 
@@ -233,12 +257,7 @@ function CourseInfoComponent(props) {
       ListHeaderComponent={headerComponent()}
       contentContainerStyle={{flexGrow: 1}}
       onRefresh={onRefresh}
-      refreshing={
-        refreshingLessons ||
-        refreshingExams ||
-        refreshingGroupExams ||
-        refreshingLinks
-      }
+      refreshing={refreshing()}
       ListEmptyComponent={emptyComponent()}
       onEndReached={loadMore}
     />

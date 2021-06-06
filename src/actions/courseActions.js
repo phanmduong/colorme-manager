@@ -173,7 +173,7 @@ function loadParentCoursesError() {
   };
 }
 
-export function createCourse(editMode, data, token, domain) {
+export function createCourse(editMode, data, token, domain, callback) {
   return function (dispatch) {
     dispatch(beginCreateCourse());
     if (!editMode) {
@@ -181,7 +181,16 @@ export function createCourse(editMode, data, token, domain) {
         .createCourse(data, token, domain)
         .then((res) => {
           dispatch(createCourseSuccess(res, editMode));
-          Alert.alert('Thông báo', 'Thêm môn học thành công');
+          Alert.alert('Thông báo', 'Thêm môn học thành công', [
+            {
+              text: 'Ok',
+              onPress: () => {
+                if (callback) {
+                  callback();
+                }
+              },
+            },
+          ]);
         })
         .catch((error) => {
           Alert.alert('Thông báo', 'Có lỗi xảy ra');
@@ -195,7 +204,16 @@ export function createCourse(editMode, data, token, domain) {
         .updateCourse(data, token, domain)
         .then((res) => {
           dispatch(createCourseSuccess(res, editMode));
-          Alert.alert('Thông báo', 'Sửa môn học thành công');
+          Alert.alert('Thông báo', 'Sửa môn học thành công', [
+            {
+              text: 'Ok',
+              onPress: () => {
+                if (callback) {
+                  callback();
+                }
+              },
+            },
+          ]);
         })
         .catch((error) => {
           Alert.alert('Thông báo', 'Có lỗi xảy ra');

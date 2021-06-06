@@ -38,13 +38,11 @@ class CourseInfoStore {
   loadLessons = (refreshing, course_id, token, domain) => {
     if (!refreshing) {
       this.isLoadingLessons = true;
-      this.refreshingLessons = false;
     } else {
       this.lessons = [];
       this.currentPageLessons = 0;
       this.totalPageLessons = 1;
       this.refreshingLessons = true;
-      this.isLoadingLessons = false;
     }
     this.errorLessons = false;
     if (this.currentPageLessons < this.totalPageLessons) {
@@ -62,6 +60,9 @@ class CourseInfoStore {
           this.isLoadingLessons = false;
           this.refreshingLessons = false;
         });
+    } else {
+      this.isLoadingLessons = false;
+      this.refreshingLessons = false;
     }
   };
 
@@ -209,10 +210,8 @@ class CourseInfoStore {
   loadExams = (refreshing, courseId, token, domain) => {
     if (!refreshing) {
       this.isLoadingExams = true;
-      this.refreshingExams = false;
     } else {
       this.refreshingExams = true;
-      this.isLoadingExams = false;
       this.exams = [];
     }
     courseApi
@@ -233,10 +232,8 @@ class CourseInfoStore {
   loadGroupExams = (refreshing, courseId, token, domain) => {
     if (!refreshing) {
       this.isLoadingGroupExams = true;
-      this.refreshingGroupExams = false;
     } else {
       this.refreshingGroupExams = true;
-      this.isLoadingGroupExams = false;
       this.groupExams = [];
     }
     courseApi
@@ -286,10 +283,8 @@ class CourseInfoStore {
   loadLinks = (refreshing, courseId, token, domain) => {
     if (!refreshing) {
       this.isLoadingLinks = true;
-      this.refreshingLinks = false;
     } else {
       this.refreshingLinks = true;
-      this.isLoadingLinks = false;
       this.links = [];
       this.currentPageLinks = 0;
       this.totalPageLinks = 1;
@@ -310,6 +305,9 @@ class CourseInfoStore {
           this.isLoadingLinks = false;
           this.refreshingLinks = false;
         });
+    } else {
+      this.isLoadingLinks = false;
+      this.refreshingLinks = false;
     }
   };
 

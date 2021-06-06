@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as courseActions from '../actions/courseActions';
@@ -8,9 +8,21 @@ import NavigationLeftHeader from '../components/common/NavigationLeftHeader';
 function AddCourseContainer(props) {
   function createCourse(data) {
     if (editMode) {
-      props.courseActions.createCourse(true, data, props.token, props.domain);
+      props.courseActions.createCourse(
+        true,
+        data,
+        props.token,
+        props.domain,
+        () => props.navigation.goBack(),
+      );
     } else {
-      props.courseActions.createCourse(false, data, props.token, props.domain);
+      props.courseActions.createCourse(
+        false,
+        data,
+        props.token,
+        props.domain,
+        () => props.navigation.goBack(),
+      );
     }
   }
 

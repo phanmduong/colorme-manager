@@ -46,14 +46,14 @@ function AddCourseLinkComponent(props) {
           <Input
             title={'Tên tài liệu'}
             onChangeText={setName}
-            placeholder={'Tên tài liệu'}
+            placeholder={'Nhập tên'}
             value={name}
             onSubmitEditing={() => linkRef.current.focus()}
             required
           />
           <Input
-            title={'Đường dẫn'}
-            placeholder={'Đường dẫn'}
+            title={'URL'}
+            placeholder={'Nhập URL'}
             onChangeText={setLink}
             value={link}
             refName={linkRef}
@@ -61,8 +61,8 @@ function AddCourseLinkComponent(props) {
             required
           />
           <Input
-            title={'Mô tả ngắn'}
-            placeholder={'Mô tả ngắn'}
+            title={'Mô tả'}
+            placeholder={'Nhập mô tả'}
             onChangeText={setDescription}
             value={description}
             refName={descriptionRef}

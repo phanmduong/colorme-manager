@@ -234,8 +234,6 @@ function CourseInfoComponent(props) {
     }
   }
 
-  console.log(isLoadingLessons);
-
   function refreshing() {
     switch (tabIdx) {
       case 0:

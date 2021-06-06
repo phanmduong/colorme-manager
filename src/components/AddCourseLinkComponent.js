@@ -9,6 +9,7 @@ import {
 import Input from './common/Input';
 import SubmitButton from './common/SubmitButton';
 import theme from '../styles';
+import {observer} from "mobx-react";
 
 function AddCourseLinkComponent(props) {
   const [name, setName] = useState(null);
@@ -18,8 +19,10 @@ function AddCourseLinkComponent(props) {
   const linkRef = useRef(null);
   const descriptionRef = useRef(null);
 
+  const {creatingLink} = props.store;
+
   function onSubmit() {
-    if (name && link && description) {
+    if (name && link) {
       const data = {
         course_id: props.courseId,
         link_description: description,
@@ -69,7 +72,7 @@ function AddCourseLinkComponent(props) {
           <SubmitButton
             title={'Lưu'}
             containerStyle={styles.btn}
-            loading={props.creatingLink}
+            loading={creatingLink}
             onPress={onSubmit}
           />
         </View>
@@ -85,4 +88,4 @@ const styles = {
   btn: {marginTop: 40},
 };
 
-export default AddCourseLinkComponent;
+export default observer(AddCourseLinkComponent);

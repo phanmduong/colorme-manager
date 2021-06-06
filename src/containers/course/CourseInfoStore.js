@@ -25,6 +25,14 @@ class CourseInfoStore {
   @observable refreshingGroupExams = false;
   @observable creatingExam = false;
 
+  @observable links = [];
+  @observable isLoadingLinks = false;
+  @observable errorLinks = false;
+  @observable refreshingLinks = false;
+  @observable currentPageLinks = 0;
+  @observable totalPageLinks = 1;
+  @observable creatingLink = false;
+
   @action
   loadLessons = (refreshing, course_id, token, domain) => {
     if (!refreshing) {
@@ -270,6 +278,63 @@ class CourseInfoStore {
       })
       .finally(() => {
         this.creatingExam = false;
+      });
+  };
+
+  @action
+  loadLinks = (refreshing, courseId, token, domain) => {
+    if (!refreshing) {
+      this.isLoadingLinks = true;
+      this.refreshingLinks = false;
+    } else {
+      this.refreshingLinks = true;
+      this.isLoadingLinks = false;
+      this.links = [];
+      this.currentPageLinks = 0;
+      this.totalPageLinks = 1;
+    }
+    this.errorLinks = false;
+    if (this.currentPageLinks < this.totalPageLinks) {
+      courseApi
+        .loadLinks(courseId, this.currentPageLinks + 1, token, domain)
+        .then((res) => {
+          this.links = [...this.links, ...res.data.links.items];
+          this.currentPageLinks = res.data.links.meta.current_page;
+          this.totalPageLinks = res.data.links.meta.total_pages;
+        })
+        .catch((error) => {
+          this.errorLinks = true;
+        })
+        .finally(() => {
+          this.isLoadingLinks = false;
+          this.refreshingLinks = false;
+        });
+    }
+  };
+
+  @action
+  createLink = (payload, token, domain, callback) => {
+    this.creatingLink = true;
+    courseApi
+      .createLink(payload, token, domain)
+      .then((res) => {
+        this.links.unshift(res.data.link);
+        Alert.alert('Thông báo', 'Tạo tài liệu thành công', [
+          {
+            text: 'Ok',
+            onPress: () => {
+              if (callback) {
+                callback();
+              }
+            },
+          },
+        ]);
+      })
+      .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
+      })
+      .finally(() => {
+        this.creatingLink = false;
       });
   };
 }

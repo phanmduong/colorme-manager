@@ -22,6 +22,9 @@ function CourseInfoComponent(props) {
     groupExams,
     isLoadingGroupExams,
     refreshingGroupExams,
+    links,
+    isLoadingLinks,
+    refreshingLinks,
   } = props.store;
 
   function headerComponent() {
@@ -96,6 +99,7 @@ function CourseInfoComponent(props) {
               onPress={() =>
                 props.navigation.navigate('AddCourseLink', {
                   courseId: props.courseId,
+                  store: props.store,
                 })
               }
             />
@@ -141,7 +145,6 @@ function CourseInfoComponent(props) {
         <ListCourseLinkItem
           key={item.id}
           name={item.link_name}
-          avatar_url={props.courseDetails && props.courseDetails.icon_url}
           description={item.link_description}
           link={item.link_url}
           id={item.id}
@@ -157,13 +160,20 @@ function CourseInfoComponent(props) {
     } else if (tabIdx === 1) {
       return groupExams.slice();
     } else if (tabIdx === 2) {
-      return [];
+      return links.slice();
     }
   }
 
   function loadMore() {
-    if (tabIdx === 0) {
-      props.loadLessons();
+    switch (tabIdx) {
+      case 0:
+        props.loadLessons();
+        break;
+      case 2:
+        props.loadLinks();
+        break;
+      default:
+        break;
     }
   }
 
@@ -176,18 +186,40 @@ function CourseInfoComponent(props) {
         props.refreshExams();
         props.refreshExamGroups();
         break;
+      case 2:
+        props.refreshLinks();
+        break;
       default:
         break;
     }
   }
 
   function emptyComponent() {
-    if (isLoadingLessons || isLoadingExams || isLoadingGroupExams) {
-      if (!(refreshingLessons || refreshingExams || refreshingGroupExams)) {
+    if (
+      isLoadingLessons ||
+      isLoadingExams ||
+      isLoadingGroupExams ||
+      isLoadingLinks
+    ) {
+      if (
+        !(
+          refreshingLessons ||
+          refreshingExams ||
+          refreshingGroupExams ||
+          refreshingLinks
+        )
+      ) {
         return <Loading />;
       }
     } else {
-      if (!(refreshingLessons || refreshingExams || refreshingGroupExams)) {
+      if (
+        !(
+          refreshingLessons ||
+          refreshingExams ||
+          refreshingGroupExams ||
+          refreshingLinks
+        )
+      ) {
         return <EmptyMessage />;
       }
     }
@@ -201,7 +233,12 @@ function CourseInfoComponent(props) {
       ListHeaderComponent={headerComponent()}
       contentContainerStyle={{flexGrow: 1}}
       onRefresh={onRefresh}
-      refreshing={refreshingLessons || refreshingExams || refreshingGroupExams}
+      refreshing={
+        refreshingLessons ||
+        refreshingExams ||
+        refreshingGroupExams ||
+        refreshingLinks
+      }
       ListEmptyComponent={emptyComponent()}
       onEndReached={loadMore}
     />

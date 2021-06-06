@@ -65,102 +65,94 @@ function ListCourseLessonItem(props) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.row}>
-        <Image source={{uri: avatar_url}} style={styles.ava} />
-        <Text style={[styles.title, {flexWrap: 'wrap', marginLeft: 10}]}>
-          {name.trim()}
-        </Text>
-      </View>
       <View style={styles.infoContainer}>
-        <View style={styles.ava} />
-        <View>
-          <View style={styles.switchContainer}>
-            <TouchableOpacity
-              onPress={() => {
-                if (!isBook) {
-                  props.addLessonEvent(id, 'book');
-                } else {
-                  props.deleteLessonEvent(id, bookId);
-                }
-              }}>
-              <View
-                style={[
-                  styles.switch,
-                  {backgroundColor: isBook ? '#61a1f0' : '#F6F6F6'},
-                ]}>
-                <FontAwesome5
-                  name={'book'}
-                  size={20}
-                  color={isBook ? 'white' : '#cacaca'}
-                />
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                if (!isComment) {
-                  props.addLessonEvent(id, 'comment');
-                } else {
-                  props.deleteLessonEvent(id, commentId);
-                }
-              }}>
-              <View
-                style={[
-                  styles.switch,
-                  {backgroundColor: isComment ? '#32ca41' : '#F6F6F6'},
-                ]}>
-                <FontAwesome
-                  name={'comment'}
-                  size={20}
-                  color={isComment ? 'white' : '#cacaca'}
-                />
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                if (!isWriting) {
-                  props.addLessonEvent(id, 'writing');
-                } else {
-                  props.deleteLessonEvent(id, writingId);
-                }
-              }}>
-              <View
-                style={[
-                  styles.switch,
-                  {backgroundColor: isWriting ? '#fdc403' : '#F6F6F6'},
-                ]}>
-                <Entypo
-                  name={'edit'}
-                  size={20}
-                  color={isWriting ? 'white' : '#cacaca'}
-                />
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              onPress={() =>
-                props.navigation.navigate('AddCourseLesson', {
-                  lesson: lesson,
-                  editMode: true,
-                  courseId: course_id,
-                  store: store,
-                })
-              }>
-              <View style={[styles.button, {marginRight: 10}]}>
-                <Text style={{fontSize: 16}}>Sửa</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={onDuplicate}>
-              <View style={[{marginRight: 10}, styles.button]}>
-                <Text style={{fontSize: 16}}>Nhân bản</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={onDelete}>
-              <View style={[{marginRight: 10}, styles.button]}>
-                <Text style={{fontSize: 16}}>Xóa</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
+        <Text style={[styles.title, {flexWrap: 'wrap'}]}>{name.trim()}</Text>
+        <View style={styles.switchContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              if (!isBook) {
+                props.addLessonEvent(id, 'book');
+              } else {
+                props.deleteLessonEvent(id, bookId);
+              }
+            }}>
+            <View
+              style={[
+                styles.switch,
+                {backgroundColor: isBook ? '#61a1f0' : '#F6F6F6'},
+              ]}>
+              <FontAwesome5
+                name={'book'}
+                size={20}
+                color={isBook ? 'white' : '#cacaca'}
+              />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              if (!isComment) {
+                props.addLessonEvent(id, 'comment');
+              } else {
+                props.deleteLessonEvent(id, commentId);
+              }
+            }}>
+            <View
+              style={[
+                styles.switch,
+                {backgroundColor: isComment ? '#32ca41' : '#F6F6F6'},
+              ]}>
+              <FontAwesome
+                name={'comment'}
+                size={20}
+                color={isComment ? 'white' : '#cacaca'}
+              />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              if (!isWriting) {
+                props.addLessonEvent(id, 'writing');
+              } else {
+                props.deleteLessonEvent(id, writingId);
+              }
+            }}>
+            <View
+              style={[
+                styles.switch,
+                {backgroundColor: isWriting ? '#fdc403' : '#F6F6F6'},
+              ]}>
+              <Entypo
+                name={'edit'}
+                size={20}
+                color={isWriting ? 'white' : '#cacaca'}
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={() =>
+              props.navigation.navigate('AddCourseLesson', {
+                lesson: lesson,
+                editMode: true,
+                courseId: course_id,
+                store: store,
+              })
+            }>
+            <View style={[styles.button, {marginRight: 10}]}>
+              <Text style={{fontSize: 16}}>Sửa</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onDuplicate}>
+            <View style={[{marginRight: 10}, styles.button]}>
+              <Text style={{fontSize: 16}}>Nhân bản</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onDelete}>
+            <View style={[{marginRight: 10}, styles.button]}>
+              <Text style={{fontSize: 16}}>Xóa</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -173,15 +165,10 @@ const styles = {
     paddingHorizontal: theme.mainHorizontal,
   },
   ava: theme.mainAvatar,
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
   title: theme.title,
   infoContainer: {
     flex: 1,
     marginLeft: 10,
-    flexDirection: 'row',
   },
   card: {
     paddingVertical: 4,

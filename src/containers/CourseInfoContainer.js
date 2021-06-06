@@ -16,6 +16,7 @@ function CourseInfoContainer(props) {
     loadLessons();
     loadExams();
     loadGroupExams();
+    loadLinks();
   }, []);
 
   function loadLessons() {
@@ -30,6 +31,10 @@ function CourseInfoContainer(props) {
     store.loadGroupExams(false, courseId, props.token, props.domain);
   }
 
+  function loadLinks() {
+    store.loadLinks(false, courseId, props.token, props.domain);
+  }
+
   function refreshLessons() {
     store.loadLessons(true, courseId, props.token, props.domain);
   }
@@ -40,6 +45,10 @@ function CourseInfoContainer(props) {
 
   function refreshExamGroups() {
     store.loadGroupExams(true, courseId, props.token, props.domain);
+  }
+
+  function refreshLinks() {
+    store.loadLinks(true, courseId, props.token, props.domain);
   }
 
   function deleteLesson(id) {
@@ -76,6 +85,8 @@ function CourseInfoContainer(props) {
       refreshLessons={refreshLessons}
       refreshExams={refreshExams}
       refreshExamGroups={refreshExamGroups}
+      loadLinks={loadLinks}
+      refreshLinks={refreshLinks}
     />
   );
 }

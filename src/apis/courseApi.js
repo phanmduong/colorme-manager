@@ -177,8 +177,7 @@ export function uploadImage(
 }
 
 export function createLink(data, token, domain) {
-  let url =
-    env.manageApiUrlV3(domain) + '/v2/course/create-link?token=' + token;
+  let url = env.manageApiUrlAuth(domain) + '/v1/links?token=' + token;
   return axios.post(url, {
     course_id: data.course_id,
     link_description: data.link_description,
@@ -225,6 +224,17 @@ export function loadGroupExams(courseId, token, domain) {
     env.manageApiUrlAuth(domain) +
     '/v1/group-exams?limit=0&orderBy=order&sortedBy=asc&token=' +
     token +
+    (!isEmptyInput(courseId) ? '&course_ids[]=' + courseId : '');
+  return axios.get(url);
+}
+
+export function loadLinks(courseId, page, token, domain) {
+  let url =
+    env.manageApiUrlAuth(domain) +
+    '/v1/links?limit=10&orderBy=created_at&sortedBy=desc&token=' +
+    token +
+    '&page=' +
+    page +
     (!isEmptyInput(courseId) ? '&course_ids[]=' + courseId : '');
   return axios.get(url);
 }

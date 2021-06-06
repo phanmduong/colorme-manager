@@ -293,46 +293,6 @@ export function reset() {
   };
 }
 
-export function createLink(data, token, domain) {
-  return function (dispatch) {
-    dispatch(beginCreateLink());
-    courseApi
-      .createLink(data, token, domain)
-      .then((res) => {
-        dispatch(createLinkSuccess(res));
-        Alert.alert('Thông báo', 'Tạo tài liệu thành công');
-      })
-      .catch((error) => {
-        Alert.alert('Thông báo', 'Có lỗi xảy ra');
-        throw error;
-      })
-      .finally(() => {
-        dispatch(createLinkComplete());
-      });
-  };
-}
-
-function beginCreateLink() {
-  return {
-    type: types.BEGIN_ADD_COURSE_DETAILS_LINK,
-    creatingLink: true,
-  };
-}
-
-function createLinkSuccess(res) {
-  return {
-    type: types.ADD_COURSE_DETAILS_LINK_SUCCESS,
-    link: res.data.data.link,
-  };
-}
-
-function createLinkComplete() {
-  return {
-    type: types.ADD_COURSE_DETAILS_LINK_COMPLETE,
-    creatingLink: false,
-  };
-}
-
 export function deleteLink(id, token, domain) {
   return function (dispatch) {
     dispatch(beginDeleteLink());

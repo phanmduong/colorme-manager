@@ -30,8 +30,12 @@ const CourseInfoContainer = observer((props) => {
     props.courseActions.duplicateLesson(id, props.token, props.domain);
   }
 
-  function changeLessonEvent(id, type) {
-    store.changeLessonEvent(id, type, props.token, props.domain);
+  function addLessonEvent(id, type) {
+    store.addLessonEvent(id, type, props.token, props.domain);
+  }
+
+  function deleteLessonEvent(lessonId, eventId) {
+    store.deleteLessonEvent(lessonId, eventId, props.token, props.domain);
   }
 
   function deleteLink(id) {
@@ -44,7 +48,8 @@ const CourseInfoContainer = observer((props) => {
     <CourseInfoComponent
       {...props}
       courseId={courseId}
-      changeLessonEvent={changeLessonEvent}
+      addLessonEvent={addLessonEvent}
+      deleteLessonEvent={deleteLessonEvent}
       deleteLesson={deleteLesson}
       duplicateLesson={duplicateLesson}
       deleteLink={deleteLink}

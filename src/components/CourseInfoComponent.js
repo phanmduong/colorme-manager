@@ -104,7 +104,8 @@ const CourseInfoComponent = observer((props) => {
           terms={props.courseDetails && props.courseDetails.terms}
           description={item.description}
           events={item.lesson_events}
-          changeLessonEvent={props.changeLessonEvent}
+          addLessonEvent={props.addLessonEvent}
+          deleteLessonEvent={props.deleteLessonEvent}
           id={item.id}
           deleteLesson={props.deleteLesson}
           duplicateLesson={props.duplicateLesson}

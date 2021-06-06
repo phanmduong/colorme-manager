@@ -1,23 +1,16 @@
 import React, {useState, useEffect} from 'react';
-import {
-  View,
-  Image,
-  Text,
-  TouchableOpacity,
-  Alert,
-  Linking,
-} from 'react-native';
+import {View, Image, Text, TouchableOpacity, Alert} from 'react-native';
 import theme from '../../styles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {isEmptyInput} from '../../helper';
 
 function ListCourseLessonItem({
   avatar_url,
   name,
   events,
-  changeLessonEvent,
+  addLessonEvent,
+  deleteLessonEvent,
   id,
   deleteLesson,
   duplicateLesson,
@@ -28,6 +21,9 @@ function ListCourseLessonItem({
   const [isBook, setBook] = useState(false);
   const [isComment, setComment] = useState(false);
   const [isWriting, setWriting] = useState(false);
+  const [bookId, setBookId] = useState(null);
+  const [commentId, setCommentId] = useState(null);
+  const [writingId, setWritingId] = useState(null);
 
   useEffect(() => {
     activateEvents();
@@ -41,21 +37,12 @@ function ListCourseLessonItem({
     const writingIdx = events.findIndex(
       (event) => event.event_type === 'writing',
     );
-    if (bookIdx > -1) {
-      setBook(true);
-    } else {
-      setBook(false);
-    }
-    if (commentIdx > -1) {
-      setComment(true);
-    } else {
-      setComment(false);
-    }
-    if (writingIdx > -1) {
-      setWriting(true);
-    } else {
-      setWriting(false);
-    }
+    setBook(bookIdx > -1);
+    setBookId(bookIdx > -1 && events[bookIdx].id);
+    setComment(commentIdx > -1);
+    setCommentId(commentIdx > -1 && events[commentIdx].id);
+    setWriting(writingIdx > -1);
+    setWritingId(writingIdx > -1 && events[writingIdx].id);
   }
 
   function onDuplicate() {
@@ -94,7 +81,11 @@ function ListCourseLessonItem({
           <View style={styles.switchContainer}>
             <TouchableOpacity
               onPress={() => {
-                changeLessonEvent(id, 'book');
+                if (!isBook) {
+                  addLessonEvent(id, 'book');
+                } else {
+                  deleteLessonEvent(id, bookId);
+                }
               }}>
               <View
                 style={[
@@ -110,7 +101,11 @@ function ListCourseLessonItem({
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                changeLessonEvent(id, 'comment');
+                if (!isComment) {
+                  addLessonEvent(id, 'comment');
+                } else {
+                  deleteLessonEvent(id, commentId);
+                }
               }}>
               <View
                 style={[
@@ -126,7 +121,11 @@ function ListCourseLessonItem({
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                changeLessonEvent(id, 'writing');
+                if (!isWriting) {
+                  addLessonEvent(id, 'writing');
+                } else {
+                  deleteLessonEvent(id, writingId);
+                }
               }}>
               <View
                 style={[

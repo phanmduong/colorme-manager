@@ -78,12 +78,22 @@ export function loadCourseDetails(id, token, domain) {
   return axios.get(url);
 }
 
-export function changeLessonEvent(id, type, token, domain) {
+export function addLessonEvent(id, type, token, domain) {
   let url = env.manageApiUrlAuth(domain) + '/v1/lesson-events?token=' + token;
   return axios.post(url, {
     lesson_id: id,
     event_type: type,
   });
+}
+
+export function deleteLessonEvent(id, token, domain) {
+  let url =
+    env.manageApiUrlAuth(domain) +
+    '/v1/lesson-events/' +
+    id +
+    '?token=' +
+    token;
+  return axios.delete(url);
 }
 
 export function deleteLesson(id, token, domain) {

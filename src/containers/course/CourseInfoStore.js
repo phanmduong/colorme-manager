@@ -43,13 +43,13 @@ class CourseInfoStore {
   };
 
   @action
-  changeLessonEvent = (id, type, token, domain) => {
+  addLessonEvent = (lessonId, type, token, domain) => {
     this.changingEvent = true;
     courseApi
-      .changeLessonEvent(id, type, token, domain)
+      .addLessonEvent(lessonId, type, token, domain)
       .then((res) => {
         this.lessons = this.lessons.map((lesson) => {
-          if (lesson.id === id) {
+          if (lesson.id === lessonId) {
             return {
               ...lesson,
               lesson_events: [...lesson.lesson_events, res.data.lesson_event],
@@ -60,12 +60,38 @@ class CourseInfoStore {
         Alert.alert('Thông báo', 'Thay đổi sự kiện thành công');
       })
       .catch((error) => {
-        console.log(error);
         Alert.alert('Thông báo', 'Có lỗi xảy ra');
       })
       .finally(() => {
         this.changingEvent = false;
       });
+  };
+
+  @action
+  deleteLessonEvent = (lessonId, eventId, token, domain) => {
+    this.changingEvent = true;
+    courseApi
+      .deleteLessonEvent(eventId, token, domain)
+      .then((res) => {
+        this.lessons = this.lessons.map((lesson) => {
+          if (lesson.id === lessonId) {
+            const lessonIdx = lesson.lesson_events.findIndex(
+              (lesson_event) => lesson_event.id === eventId,
+            );
+            if (lessonIdx > -1) {
+              let updated_lesson_events = [...lesson.lesson_events];
+              updated_lesson_events.splice(lessonIdx, 1);
+              return {...lesson, lesson_events: updated_lesson_events};
+            }
+          }
+          return {...lesson};
+        });
+        Alert.alert('Thông báo', 'Thay đổi sự kiện thành công');
+      })
+      .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
+      })
+      .finally(() => (this.changingEvent = false));
   };
 }
 

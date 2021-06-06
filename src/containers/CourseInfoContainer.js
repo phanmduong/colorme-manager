@@ -68,7 +68,7 @@ function CourseInfoContainer(props) {
   }
 
   function deleteLink(id) {
-    props.courseActions.deleteLink(id, props.token, props.domain);
+    store.deleteLink(id, props.token, props.domain);
   }
 
   return (

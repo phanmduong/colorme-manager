@@ -56,7 +56,6 @@ export default {
     errorCourseDetails: false,
     courseDetails: {},
     refreshingCourseDetails: false,
-    deletingLink: false,
   },
   gen: {
     genData: [],

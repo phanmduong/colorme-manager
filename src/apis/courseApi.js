@@ -188,11 +188,7 @@ export function createLink(data, token, domain) {
 
 export function deleteLink(id, token, domain) {
   let url =
-    env.manageApiUrlV3(domain) +
-    '/v2/course/delete-link/' +
-    id +
-    '?token=' +
-    token;
+    env.manageApiUrlAuth(domain) + '/v1/links/' + id + '?token=' + token;
   return axios.delete(url);
 }
 

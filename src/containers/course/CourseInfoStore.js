@@ -32,6 +32,7 @@ class CourseInfoStore {
   @observable currentPageLinks = 0;
   @observable totalPageLinks = 1;
   @observable creatingLink = false;
+  @observable deletingLink = false;
 
   @action
   loadLessons = (refreshing, course_id, token, domain) => {
@@ -335,6 +336,26 @@ class CourseInfoStore {
       })
       .finally(() => {
         this.creatingLink = false;
+      });
+  };
+
+  @action
+  deleteLink = (id, token, domain) => {
+    this.deletingLink = true;
+    courseApi
+      .deleteLink(id, token, domain)
+      .then((res) => {
+        const linkIdx = this.links.findIndex((link) => link.id === id);
+        if (linkIdx > -1) {
+          this.links.splice(linkIdx, 1);
+        }
+        Alert.alert('Thông báo', 'Xóa tài liệu thành công');
+      })
+      .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
+      })
+      .finally(() => {
+        this.deletingLink = false;
       });
   };
 }

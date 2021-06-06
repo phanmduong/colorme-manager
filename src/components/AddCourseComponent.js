@@ -75,15 +75,15 @@ function AddCourseComponent(props) {
         <View style={styles.container}>
           <Input
             placeholder={'Tên môn học'}
-            title={'Tên môn học'}
+            title={'Nhập tên môn học'}
             required
             onChangeText={setName}
             value={name}
             onSubmitEditing={() => descriptionRef.current.focus()}
           />
           <Input
-            placeholder={'Mô tả ngắn'}
-            title={'Mô tả ngắn'}
+            placeholder={'Mô tả'}
+            title={'Nhập mô tả'}
             value={description}
             onChangeText={setDescription}
             refName={descriptionRef}
@@ -91,7 +91,7 @@ function AddCourseComponent(props) {
           {!props.editMode && (
             <Input
               placeholder={'Số buổi'}
-              title={'Số buổi'}
+              title={'Nhập số buổi'}
               value={duration}
               onChangeText={setDuration}
               keyboardType={'number-pad'}
@@ -100,7 +100,7 @@ function AddCourseComponent(props) {
           )}
           <Input
             placeholder={'Học phí'}
-            title={'Học phí'}
+            title={'Nhập học phí'}
             value={dotNumber(price)}
             onChangeText={setPrice}
             keyboardType={'number-pad'}
@@ -117,32 +117,32 @@ function AddCourseComponent(props) {
           {isExpanded && (
             <>
               <Input
-                title={'Link phần mềm Windows'}
-                placeholder={'Link phần mềm Windows'}
+                title={'URL phần mềm Windows'}
+                placeholder={'Nhập URL phần mềm Windows'}
                 value={linkWindow}
                 onChangeText={setLinkWindow}
                 refName={linkWindowRef}
                 onSubmitEditing={() => linkInstallWindowRef.current.focus()}
               />
               <Input
-                title={'Link hướng dẫn Windows'}
-                placeholder={'Link hướng dẫn Windows'}
+                title={'URL hướng dẫn cài đặt(Windows)'}
+                placeholder={'Nhập URL hướng dẫn cài đặt(Windows)'}
                 onChangeText={setLinkInstallWindow}
                 value={linkInstallWindow}
                 refName={linkInstallWindowRef}
                 onSubmitEditing={() => linkMacRef.current.focus()}
               />
               <Input
-                title={'Link phần mềm Mac'}
-                placeholder={'Link phần mềm Mac'}
+                title={'URL phần mềm MacOS'}
+                placeholder={'Nhập URL phần mềm MacOS'}
                 value={linkMac}
                 onChangeText={setLinkMac}
                 refName={linkMacRef}
                 onSubmitEditing={() => linkInstallMacRef.current.focus()}
               />
               <Input
-                title={'Link hướng dẫn Mac'}
-                placeholder={'Link hướng dẫn Mac'}
+                title={'URL hướng dẫn cài đặt(MacOS)'}
+                placeholder={'Nhập URL hướng dẫn cài đặt(MacOS)'}
                 value={linkInstallMac}
                 onChangeText={setLinkInstallMac}
                 refName={linkInstallMacRef}

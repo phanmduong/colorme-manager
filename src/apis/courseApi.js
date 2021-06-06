@@ -108,8 +108,8 @@ export function deleteLesson(id, token, domain) {
 
 export function duplicateLesson(id, token, domain) {
   let url =
-    env.manageApiUrlV3(domain) +
-    '/v2/lesson/' +
+    env.manageApiUrlAuth(domain) +
+    '/v1/lessons/' +
     id +
     '/duplicate?token=' +
     token;

@@ -27,7 +27,7 @@ const CourseInfoContainer = observer((props) => {
   }
 
   function duplicateLesson(id) {
-    props.courseActions.duplicateLesson(id, props.token, props.domain);
+    store.duplicateLesson(id, props.token, props.domain);
   }
 
   function addLessonEvent(id, type) {

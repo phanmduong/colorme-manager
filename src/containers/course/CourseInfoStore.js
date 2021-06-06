@@ -10,6 +10,7 @@ class CourseInfoStore {
   @observable currentPageLessons = 0;
   @observable totalPageLessons = 1;
   @observable changingEvent = false;
+  @observable duplicatingLesson = false;
 
   @action
   loadLessons = (refreshing, course_id, token, domain) => {
@@ -92,6 +93,23 @@ class CourseInfoStore {
         Alert.alert('Thông báo', 'Có lỗi xảy ra');
       })
       .finally(() => (this.changingEvent = false));
+  };
+
+  @action
+  duplicateLesson = (id, token, domain) => {
+    this.duplicatingLesson = true;
+    courseApi
+      .duplicateLesson(id, token, domain)
+      .then((res) => {
+        this.lessons.unshift(res.data.lesson);
+        Alert.alert('Thông báo', 'Nhân bản thành công');
+      })
+      .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
+      })
+      .finally(() => {
+        this.duplicatingLesson = false;
+      });
   };
 }
 

@@ -57,7 +57,6 @@ export default {
     courseDetails: {},
     refreshingCourseDetails: false,
     deletingLesson: false,
-    duplicatingLesson: false,
     addingLesson: false,
     editingLesson: false,
     creatingExam: false,

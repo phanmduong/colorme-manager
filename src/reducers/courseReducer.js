@@ -155,25 +155,6 @@ export default function courseReducer(state = initialState.course, action) {
         parentCourses: action.parentCourses,
         courseDetails: action.courseDetails,
       });
-    case types.BEGIN_DUPLICATE_COURSE_DETAILS_LESSON:
-      return Object.assign({}, state, {
-        duplicatingLesson: action.duplicatingLesson,
-      });
-    case types.DUPLICATE_COURSE_DETAILS_LESSON_SUCCESS:
-      courseDetails = {...state.courseDetails};
-      const course = courseDetails.lessons.find(
-        (lesson) => lesson.id === action.lessonId,
-      );
-      if (!isEmptyInput(course)) {
-        courseDetails.lessons.push(course);
-      }
-      return Object.assign({}, state, {
-        courseDetails: courseDetails,
-      });
-    case types.DUPLICATE_COURSE_DETAILS_LESSON_COMPLETE:
-      return Object.assign({}, state, {
-        duplicatingLesson: action.duplicatingLesson,
-      });
     case types.BEGIN_ADD_COURSE_DETAILS_LESSON:
       return Object.assign({}, state, {
         addingLesson: action.addingLesson,

@@ -333,46 +333,6 @@ export function reset() {
   };
 }
 
-export function duplicateLesson(id, token, domain) {
-  return function (dispatch) {
-    dispatch(beginDuplicateLesson());
-    courseApi
-      .duplicateLesson(id, token, domain)
-      .then((res) => {
-        dispatch(duplicateLessonSuccess(id));
-        Alert.alert('Thông báo', 'Nhân bản buổi học thành công');
-      })
-      .catch((error) => {
-        Alert.alert('Thông báo', 'Có lỗi xảy ra');
-        throw error;
-      })
-      .finally(() => {
-        dispatch(duplicateLessonComplete());
-      });
-  };
-}
-
-function beginDuplicateLesson() {
-  return {
-    type: types.BEGIN_DUPLICATE_COURSE_DETAILS_LESSON,
-    duplicatingLesson: true,
-  };
-}
-
-function duplicateLessonSuccess(id) {
-  return {
-    type: types.DUPLICATE_COURSE_DETAILS_LESSON_SUCCESS,
-    lessonId: id,
-  };
-}
-
-function duplicateLessonComplete() {
-  return {
-    type: types.DUPLICATE_COURSE_DETAILS_LESSON_COMPLETE,
-    duplicatingLesson: false,
-  };
-}
-
 export function createLesson(data, token, domain) {
   return function (dispatch) {
     dispatch(beginCreateLesson());

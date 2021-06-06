@@ -14,19 +14,7 @@ function ListCourseLessonItem(props) {
   const [commentId, setCommentId] = useState(null);
   const [writingId, setWritingId] = useState(null);
 
-  const {
-    avatar_url,
-    name,
-    events,
-    addLessonEvent,
-    deleteLessonEvent,
-    id,
-    deleteLesson,
-    duplicateLesson,
-    lesson,
-    course_id,
-    store,
-  } = props;
+  const {avatar_url, name, events, id, lesson, course_id, store} = props;
 
   useEffect(() => {
     activateEvents();
@@ -56,7 +44,7 @@ function ListCourseLessonItem(props) {
       },
       {
         text: 'Nhân bản',
-        onPress: () => duplicateLesson(id),
+        onPress: () => props.duplicateLesson(id),
       },
     ]);
   }
@@ -69,7 +57,7 @@ function ListCourseLessonItem(props) {
       },
       {
         text: 'Xóa bỏ',
-        onPress: () => deleteLesson(id),
+        onPress: () => props.deleteLesson(id),
         style: 'destructive',
       },
     ]);
@@ -90,9 +78,9 @@ function ListCourseLessonItem(props) {
             <TouchableOpacity
               onPress={() => {
                 if (!isBook) {
-                  addLessonEvent(id, 'book');
+                  props.addLessonEvent(id, 'book');
                 } else {
-                  deleteLessonEvent(id, bookId);
+                  props.deleteLessonEvent(id, bookId);
                 }
               }}>
               <View
@@ -110,9 +98,9 @@ function ListCourseLessonItem(props) {
             <TouchableOpacity
               onPress={() => {
                 if (!isComment) {
-                  addLessonEvent(id, 'comment');
+                  props.addLessonEvent(id, 'comment');
                 } else {
-                  deleteLessonEvent(id, commentId);
+                  props.deleteLessonEvent(id, commentId);
                 }
               }}>
               <View
@@ -130,9 +118,9 @@ function ListCourseLessonItem(props) {
             <TouchableOpacity
               onPress={() => {
                 if (!isWriting) {
-                  addLessonEvent(id, 'writing');
+                  props.addLessonEvent(id, 'writing');
                 } else {
-                  deleteLessonEvent(id, writingId);
+                  props.deleteLessonEvent(id, writingId);
                 }
               }}>
               <View

@@ -79,13 +79,10 @@ export function loadCourseDetails(id, token, domain) {
 }
 
 export function changeLessonEvent(id, type, token, domain) {
-  let url =
-    env.manageApiUrlV3(domain) +
-    '/v2/lesson/create-lesson-event?token=' +
-    token;
+  let url = env.manageApiUrlAuth(domain) + '/v1/lesson-events?token=' + token;
   return axios.post(url, {
     lesson_id: id,
-    type: type,
+    event_type: type,
   });
 }
 

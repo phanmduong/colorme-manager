@@ -1,5 +1,6 @@
 import {observable, action, computed} from 'mobx';
 import * as courseApi from '../../apis/courseApi';
+import {Alert} from 'react-native';
 
 class CourseInfoStore {
   @observable lessons = [];
@@ -8,6 +9,7 @@ class CourseInfoStore {
   @observable refreshingLessons = false;
   @observable currentPageLessons = 0;
   @observable totalPageLessons = 1;
+  @observable changingEvent = false;
 
   @action
   loadLessons = (refreshing, course_id, token, domain) => {
@@ -38,6 +40,32 @@ class CourseInfoStore {
           this.refreshingLessons = false;
         });
     }
+  };
+
+  @action
+  changeLessonEvent = (id, type, token, domain) => {
+    this.changingEvent = true;
+    courseApi
+      .changeLessonEvent(id, type, token, domain)
+      .then((res) => {
+        this.lessons = this.lessons.map((lesson) => {
+          if (lesson.id === id) {
+            return {
+              ...lesson,
+              lesson_events: [...lesson.lesson_events, res.data.lesson_event],
+            };
+          }
+          return {...lesson};
+        });
+        Alert.alert('Thông báo', 'Thay đổi sự kiện thành công');
+      })
+      .catch((error) => {
+        console.log(error);
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
+      })
+      .finally(() => {
+        this.changingEvent = false;
+      });
   };
 }
 

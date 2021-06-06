@@ -31,7 +31,7 @@ const CourseInfoContainer = observer((props) => {
   }
 
   function changeLessonEvent(id, type) {
-    props.courseActions.changeLessonEvent(id, type, props.token, props.domain);
+    store.changeLessonEvent(id, type, props.token, props.domain);
   }
 
   function deleteLink(id) {

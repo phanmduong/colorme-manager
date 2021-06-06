@@ -4,19 +4,25 @@ import {bindActionCreators} from 'redux';
 import * as courseActions from '../actions/courseActions';
 import AddCourseLessonComponent from '../components/AddCourseLessonComponent';
 import NavigationLeftHeader from '../components/common/NavigationLeftHeader';
+import {observer} from 'mobx-react';
 
 function AddCourseLessonContainer(props) {
   function addLesson(data) {
-    return props.courseActions.createLesson(data, props.token, props.domain);
+    return store.addLesson(data, props.token, props.domain, () =>
+      props.navigation.goBack(),
+    );
   }
 
   function editLesson(data) {
-    props.courseActions.editLesson(data, props.token, props.domain);
+    store.editLesson(data, props.token, props.domain, () =>
+      props.navigation.goBack(),
+    );
   }
 
   const courseId = props.navigation.getParam('courseId');
   const editMode = props.navigation.getParam('editMode');
   const lesson = props.navigation.getParam('lesson');
+  const store = props.navigation.getParam('store');
 
   return (
     <AddCourseLessonComponent
@@ -26,6 +32,7 @@ function AddCourseLessonContainer(props) {
       lesson={lesson}
       editMode={editMode}
       editLesson={editLesson}
+      store={store}
     />
   );
 }
@@ -41,9 +48,6 @@ AddCourseLessonContainer.navigationOptions = ({navigation}) => {
 function mapStateToProps(state) {
   return {
     token: state.login.token,
-    courseDetails: state.course.courseDetails,
-    addingLesson: state.course.addingLesson,
-    editingLesson: state.course.editingLesson,
     domain: state.login.domain,
   };
 }
@@ -55,4 +59,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(AddCourseLessonContainer);
+)(observer(AddCourseLessonContainer));

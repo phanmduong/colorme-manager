@@ -1,69 +1,35 @@
 import React, {useState} from 'react';
 import {View, ScrollView, TouchableOpacity, Text, FlatList} from 'react-native';
-import Search from './common/Search';
 import theme from '../styles';
-import {convertVietText} from '../helper';
 import ListCourseLessonItem from './course/ListCourseLessonItem';
 import AddItemButton from './common/AddItemButton';
 import Loading from './common/Loading';
 import ListCourseExamGroupItem from './course/ListCourseExamGroupItem';
 import ListCourseLinkItem from './course/ListCourseLinkItem';
+import {observer} from 'mobx-react';
+import EmptyMessage from './common/EmptyMessage';
 
 function CourseInfoComponent(props) {
   const [tabIdx, setIdx] = useState(0);
-  const [search, setSearch] = useState('');
 
-  function filterLessons() {
-    if (search === '') {
-      if (tabIdx === 0) {
-        return props.courseDetails.lessons;
-      }
-    } else {
-      if (tabIdx === 0) {
-        return props.courseDetails.lessons.filter((lesson) =>
-          convertVietText(lesson.name).includes(convertVietText(search)),
-        );
-      }
-    }
-  }
-
-  function filterExams() {
-    if (search === '') {
-      if (tabIdx === 1) {
-        return [
-          ...props.courseDetails.group_exams,
-          ...[{id: null, name: 'Không có nhóm'}],
-        ];
-      }
-    } else {
-      if (tabIdx === 1) {
-        const group_exams = props.courseDetails.group_exams.filter(
-          (group_exam) =>
-            convertVietText(group_exam.name).includes(convertVietText(search)),
-        );
-        return [...group_exams, ...[{id: null, name: 'Không có nhóm'}]];
-      }
-    }
-  }
-
-  function filterLinks() {
-    if (search === '') {
-      if (tabIdx === 2) {
-        return props.courseDetails.links;
-      }
-    } else {
-      if (tabIdx === 2) {
-        return props.courseDetails.links.filter((link) =>
-          convertVietText(link.link_name).includes(convertVietText(search)),
-        );
-      }
-    }
-  }
+  const {
+    lessons,
+    isLoadingLessons,
+    refreshingLessons,
+    exams,
+    isLoadingExams,
+    refreshingExams,
+    groupExams,
+    isLoadingGroupExams,
+    refreshingGroupExams,
+    links,
+    isLoadingLinks,
+    refreshingLinks,
+  } = props.store;
 
   function headerComponent() {
     return (
-      <View>
-        <Search placeholder={'Tìm kiếm'} onChangeText={setSearch} />
+      <>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <View style={styles.containerTag}>
             <TouchableOpacity onPress={() => setIdx(0)}>
@@ -109,6 +75,7 @@ function CourseInfoComponent(props) {
               onPress={() =>
                 props.navigation.navigate('AddCourseLesson', {
                   courseId: props.courseId,
+                  store: props.store,
                 })
               }
             />
@@ -120,6 +87,7 @@ function CourseInfoComponent(props) {
               onPress={() =>
                 props.navigation.navigate('AddCourseExam', {
                   courseId: props.courseId,
+                  store: props.store,
                 })
               }
             />
@@ -131,12 +99,13 @@ function CourseInfoComponent(props) {
               onPress={() =>
                 props.navigation.navigate('AddCourseLink', {
                   courseId: props.courseId,
+                  store: props.store,
                 })
               }
             />
           )}
         </View>
-      </View>
+      </>
     );
   }
 
@@ -150,15 +119,16 @@ function CourseInfoComponent(props) {
           term_id={item.term_id}
           terms={props.courseDetails && props.courseDetails.terms}
           description={item.description}
-          events={item.events}
-          changeLessonEvent={props.changeLessonEvent}
+          events={item.lesson_events}
+          addLessonEvent={props.addLessonEvent}
+          deleteLessonEvent={props.deleteLessonEvent}
           id={item.id}
           deleteLesson={props.deleteLesson}
           duplicateLesson={props.duplicateLesson}
-          navigation={props.navigation}
           course_id={item.course_id}
           lesson={item}
           detail_teacher={item.detail_teacher}
+          store={props.store}
         />
       );
     } else if (tabIdx === 1) {
@@ -166,11 +136,7 @@ function CourseInfoComponent(props) {
         <ListCourseExamGroupItem
           key={item.id}
           name={item.name}
-          exam_templates={
-            props.courseDetails && props.courseDetails.exam_templates
-          }
-          lessons={props.courseDetails && props.courseDetails.lessons}
-          avatar_url={props.courseDetails && props.courseDetails.icon_url}
+          exam_templates={exams}
           id={item.id}
         />
       );
@@ -179,7 +145,6 @@ function CourseInfoComponent(props) {
         <ListCourseLinkItem
           key={item.id}
           name={item.link_name}
-          avatar_url={props.courseDetails && props.courseDetails.icon_url}
           description={item.link_description}
           link={item.link_url}
           id={item.id}
@@ -191,11 +156,94 @@ function CourseInfoComponent(props) {
 
   function getData() {
     if (tabIdx === 0) {
-      return props.courseDetails && filterLessons();
+      return lessons.slice();
     } else if (tabIdx === 1) {
-      return props.courseDetails && filterExams();
+      return groupExams.slice();
     } else if (tabIdx === 2) {
-      return props.courseDetails && filterLinks();
+      return links.slice();
+    }
+  }
+
+  function loadMore() {
+    switch (tabIdx) {
+      case 0:
+        props.loadLessons();
+        break;
+      case 2:
+        props.loadLinks();
+        break;
+      default:
+        break;
+    }
+  }
+
+  function onRefresh() {
+    switch (tabIdx) {
+      case 0:
+        props.refreshLessons();
+        break;
+      case 1:
+        props.refreshExams();
+        props.refreshExamGroups();
+        break;
+      case 2:
+        props.refreshLinks();
+        break;
+      default:
+        break;
+    }
+  }
+
+  function emptyComponent() {
+    switch (tabIdx) {
+      case 0:
+        if (isLoadingLessons) {
+          if (!refreshingLessons) {
+            return <Loading />;
+          }
+        } else {
+          if (!refreshingLessons) {
+            return <EmptyMessage />;
+          }
+        }
+        return null;
+      case 1:
+        if (isLoadingExams || isLoadingGroupExams) {
+          if (!(refreshingExams || refreshingGroupExams)) {
+            return <Loading />;
+          }
+        } else {
+          if (!(refreshingExams || refreshingGroupExams)) {
+            return <EmptyMessage />;
+          }
+        }
+        return null;
+      case 2:
+        if (isLoadingLinks) {
+          if (!refreshingLinks) {
+            return <Loading />;
+          }
+        } else {
+          if (!refreshingLinks) {
+            return <EmptyMessage />;
+          }
+        }
+        return null;
+      default:
+        return null;
+    }
+  }
+
+  function refreshing() {
+    switch (tabIdx) {
+      case 0:
+        return refreshingLessons;
+      case 1:
+        return refreshingExams || refreshingGroupExams;
+      case 2:
+        return refreshingLinks;
+      default:
+        return false;
     }
   }
 
@@ -203,14 +251,13 @@ function CourseInfoComponent(props) {
     <FlatList
       data={getData()}
       renderItem={renderLessons}
+      keyExtractor={(item) => item.id}
       ListHeaderComponent={headerComponent()}
       contentContainerStyle={{flexGrow: 1}}
-      onRefresh={props.onRefresh}
-      refreshing={props.refreshingCourseDetails}
-      ListEmptyComponent={
-        props.loadingCourseDetails &&
-        !props.refreshingCourseDetails && <Loading />
-      }
+      onRefresh={onRefresh}
+      refreshing={refreshing()}
+      ListEmptyComponent={emptyComponent()}
+      onEndReached={loadMore}
     />
   );
 }
@@ -227,13 +274,10 @@ const styles = {
     flexDirection: 'row',
     paddingHorizontal: theme.mainHorizontal,
   },
-  children: {
-    paddingHorizontal: theme.mainHorizontal,
-  },
   btnContainer: {
     marginTop: 10,
     paddingHorizontal: theme.mainHorizontal,
   },
 };
 
-export default CourseInfoComponent;
+export default observer(CourseInfoComponent);

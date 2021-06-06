@@ -6,12 +6,14 @@ import moment from 'moment';
 class HistoryAttendanceShiftStore {
   @observable isLoading = false;
   @observable shifts = [];
+  @observable refreshing = false;
   @observable error = false;
   @observable startTime = moment().startOf('week').unix();
   @observable endTime = moment().endOf('week').unix();
 
   @action
   loadHistoryShift = (
+    refreshing,
     type,
     employee_id,
     start_time,
@@ -19,7 +21,11 @@ class HistoryAttendanceShiftStore {
     token,
     domain,
   ) => {
-    this.isLoading = true;
+    if (!refreshing) {
+      this.isLoading = true;
+    } else {
+      this.refreshing = true;
+    }
     this.error = false;
 
     historyShiftsApi(type, employee_id, start_time, end_time, token, domain)
@@ -31,6 +37,7 @@ class HistoryAttendanceShiftStore {
       })
       .finally(() => {
         this.isLoading = false;
+        this.refreshing = false;
       });
   };
 
@@ -54,10 +61,7 @@ class HistoryAttendanceShiftStore {
 
   @computed
   get listShift() {
-    return groupBy(this.shifts, (shift) => shift.date, [
-      'date',
-      'shifts',
-    ]);
+    return groupBy(this.shifts, (shift) => shift.date, ['date', 'shifts']);
   }
 }
 

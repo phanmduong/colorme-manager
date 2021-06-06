@@ -110,7 +110,6 @@ function CourseInfoComponent(props) {
           id={item.id}
           deleteLesson={props.deleteLesson}
           duplicateLesson={props.duplicateLesson}
-          navigation={props.navigation}
           course_id={item.course_id}
           lesson={item}
           detail_teacher={item.detail_teacher}

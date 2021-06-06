@@ -4,27 +4,29 @@ import theme from '../../styles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {withNavigation} from 'react-navigation';
 
-function ListCourseLessonItem({
-  avatar_url,
-  name,
-  events,
-  addLessonEvent,
-  deleteLessonEvent,
-  id,
-  deleteLesson,
-  duplicateLesson,
-  navigation,
-  lesson,
-  course_id,
-  store,
-}) {
+function ListCourseLessonItem(props) {
   const [isBook, setBook] = useState(false);
   const [isComment, setComment] = useState(false);
   const [isWriting, setWriting] = useState(false);
   const [bookId, setBookId] = useState(null);
   const [commentId, setCommentId] = useState(null);
   const [writingId, setWritingId] = useState(null);
+
+  const {
+    avatar_url,
+    name,
+    events,
+    addLessonEvent,
+    deleteLessonEvent,
+    id,
+    deleteLesson,
+    duplicateLesson,
+    lesson,
+    course_id,
+    store,
+  } = props;
 
   useEffect(() => {
     activateEvents();
@@ -149,7 +151,7 @@ function ListCourseLessonItem({
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate('AddCourseLesson', {
+                props.navigation.navigate('AddCourseLesson', {
                   lesson: lesson,
                   editMode: true,
                   courseId: course_id,
@@ -238,4 +240,4 @@ const styles = {
   },
 };
 
-export default ListCourseLessonItem;
+export default withNavigation(ListCourseLessonItem);

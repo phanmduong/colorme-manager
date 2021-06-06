@@ -12,6 +12,8 @@ class CourseInfoStore {
   @observable changingEvent = false;
   @observable duplicatingLesson = false;
   @observable deletingLesson = false;
+  @observable addingLesson = false;
+  @observable editingLesson = false;
 
   @action
   loadLessons = (refreshing, course_id, token, domain) => {
@@ -131,6 +133,57 @@ class CourseInfoStore {
       .finally(() => {
         this.deletingLesson = false;
       });
+  };
+
+  @action
+  addLesson = (payload, token, domain, callback) => {
+    this.addingLesson = true;
+    courseApi
+      .createLesson(payload, token, domain)
+      .then((res) => {
+        this.lessons.unshift(res.data.lesson);
+        Alert.alert('Thông báo', 'Thêm buổi học thành công', [
+          {
+            text: 'Ok',
+            onPress: () => {
+              if (callback) {
+                callback();
+              }
+            },
+          },
+        ]);
+      })
+      .catch((error) => Alert.alert('Thông báo', 'Có lỗi xảy ra'))
+      .finally(() => (this.addingLesson = false));
+  };
+
+  @action
+  editLesson = (payload, token, domain, callback) => {
+    this.editingLesson = true;
+    courseApi
+      .editLesson(payload, token, domain)
+      .then((res) => {
+        const lessonIdx = this.lessons.findIndex(
+          (lesson) => lesson.id === payload.id,
+        );
+        if (lessonIdx > -1) {
+          this.lessons.splice(lessonIdx, 1, res.data.lesson);
+        }
+        Alert.alert('Thông báo', 'Sửa buổi học thành công', [
+          {
+            text: 'Ok',
+            onPress: () => {
+              if (callback) {
+                callback();
+              }
+            },
+          },
+        ]);
+      })
+      .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
+      })
+      .finally(() => (this.editingLesson = false));
   };
 }
 

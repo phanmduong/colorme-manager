@@ -9,7 +9,7 @@ import ListCourseLinkItem from './course/ListCourseLinkItem';
 import {observer} from 'mobx-react';
 import EmptyMessage from './common/EmptyMessage';
 
-const CourseInfoComponent = observer((props) => {
+function CourseInfoComponent(props) {
   const [tabIdx, setIdx] = useState(0);
 
   const {lessons, isLoadingLessons, refreshingLessons} = props.store;
@@ -62,6 +62,7 @@ const CourseInfoComponent = observer((props) => {
               onPress={() =>
                 props.navigation.navigate('AddCourseLesson', {
                   courseId: props.courseId,
+                  store: props.store,
                 })
               }
             />
@@ -113,6 +114,7 @@ const CourseInfoComponent = observer((props) => {
           course_id={item.course_id}
           lesson={item}
           detail_teacher={item.detail_teacher}
+          store={props.store}
         />
       );
     } else if (tabIdx === 1) {
@@ -145,7 +147,7 @@ const CourseInfoComponent = observer((props) => {
 
   function getData() {
     if (tabIdx === 0) {
-      return lessons;
+      return lessons.slice();
     } else if (tabIdx === 1) {
       return [];
     } else if (tabIdx === 2) {
@@ -186,7 +188,7 @@ const CourseInfoComponent = observer((props) => {
       onEndReached={loadMore}
     />
   );
-});
+};
 
 const styles = {
   tag: {
@@ -206,4 +208,4 @@ const styles = {
   },
 };
 
-export default CourseInfoComponent;
+export default observer(CourseInfoComponent);

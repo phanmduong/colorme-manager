@@ -17,6 +17,7 @@ function ListCourseLessonItem({
   navigation,
   lesson,
   course_id,
+  store,
 }) {
   const [isBook, setBook] = useState(false);
   const [isComment, setComment] = useState(false);
@@ -152,6 +153,7 @@ function ListCourseLessonItem({
                   lesson: lesson,
                   editMode: true,
                   courseId: course_id,
+                  store: store,
                 })
               }>
               <View style={[styles.button, {marginRight: 10}]}>

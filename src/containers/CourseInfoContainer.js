@@ -7,7 +7,7 @@ import NavigationLeftHeader from '../components/common/NavigationLeftHeader';
 import {observer} from 'mobx-react';
 import CourseInfoStore from './course/CourseInfoStore';
 
-const CourseInfoContainer = observer((props) => {
+function CourseInfoContainer(props) {
   const [store] = useState(() => new CourseInfoStore());
 
   useEffect(() => {
@@ -58,7 +58,7 @@ const CourseInfoContainer = observer((props) => {
       refreshLessons={refreshLessons}
     />
   );
-});
+}
 
 CourseInfoContainer.navigationOptions = ({navigation}) => {
   return {
@@ -88,4 +88,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(CourseInfoContainer);
+)(observer(CourseInfoContainer));

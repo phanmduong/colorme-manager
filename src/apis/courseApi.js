@@ -113,17 +113,13 @@ export function duplicateLesson(id, token, domain) {
 }
 
 export function createLesson(data, token, domain) {
-  let url =
-    env.manageApiUrlV3(domain) +
-    '/v2/lesson/create-lesson/' +
-    data.course_id +
-    '?token=' +
-    token;
+  let url = env.manageApiUrlAuth(domain) + '/v1/lessons?token=' + token;
   return axios.post(url, {
     audio_url: data.audio_url,
     course_id: data.course_id,
     description: data.description,
     detail_teacher: data.detail_teacher,
+    image_url: data.image_url,
     name: data.name,
     order: data.order,
     term_id: data.term_id,
@@ -133,16 +129,13 @@ export function createLesson(data, token, domain) {
 
 export function editLesson(data, token, domain) {
   let url =
-    env.manageApiUrlV3(domain) +
-    '/v2/lesson/edit-lesson/' +
-    data.id +
-    '?token=' +
-    token;
+    env.manageApiUrlAuth(domain) + '/v1/lessons/' + data.id + '?token=' + token;
   return axios.put(url, {
     audio_url: data.audio_url,
     course_id: data.course_id,
     description: data.description,
     detail_teacher: data.detail_teacher,
+    image_url: data.image_url,
     name: data.name,
     order: data.order,
     term_id: data.term_id,

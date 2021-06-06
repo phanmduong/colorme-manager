@@ -11,6 +11,7 @@ class CourseInfoStore {
   @observable totalPageLessons = 1;
   @observable changingEvent = false;
   @observable duplicatingLesson = false;
+  @observable deletingLesson = false;
 
   @action
   loadLessons = (refreshing, course_id, token, domain) => {
@@ -109,6 +110,26 @@ class CourseInfoStore {
       })
       .finally(() => {
         this.duplicatingLesson = false;
+      });
+  };
+
+  @action
+  deleteLesson = (id, token, domain) => {
+    this.deletingLesson = true;
+    courseApi
+      .deleteLesson(id, token, domain)
+      .then((res) => {
+        const lessonIdx = this.lessons.findIndex((lesson) => lesson.id === id);
+        if (lessonIdx > -1) {
+          this.lessons.splice(lessonIdx, 1);
+        }
+        Alert.alert('Thông báo', 'Xóa buổi học thành công');
+      })
+      .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
+      })
+      .finally(() => {
+        this.deletingLesson = false;
       });
   };
 }

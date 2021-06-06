@@ -23,7 +23,7 @@ const CourseInfoContainer = observer((props) => {
   }
 
   function deleteLesson(id) {
-    props.courseActions.deleteLesson(id, props.token, props.domain);
+    store.deleteLesson(id, props.token, props.domain);
   }
 
   function duplicateLesson(id) {

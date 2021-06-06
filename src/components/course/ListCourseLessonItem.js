@@ -76,8 +76,13 @@ function ListCourseLessonItem({
     <View style={styles.container}>
       <View style={styles.row}>
         <Image source={{uri: avatar_url}} style={styles.ava} />
-        <View style={styles.infoContainer}>
-          <Text style={[styles.title, {flexWrap: 'wrap'}]}>{name.trim()}</Text>
+        <Text style={[styles.title, {flexWrap: 'wrap', marginLeft: 10}]}>
+          {name.trim()}
+        </Text>
+      </View>
+      <View style={styles.infoContainer}>
+        <View style={styles.ava} />
+        <View>
           <View style={styles.switchContainer}>
             <TouchableOpacity
               onPress={() => {
@@ -178,11 +183,13 @@ const styles = {
   ava: theme.mainAvatar,
   row: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   title: theme.title,
   infoContainer: {
     flex: 1,
     marginLeft: 10,
+    flexDirection: 'row',
   },
   card: {
     paddingVertical: 4,

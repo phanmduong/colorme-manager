@@ -282,46 +282,6 @@ function loadCourseDetailsError() {
   };
 }
 
-export function deleteLesson(id, token, domain) {
-  return function (dispatch) {
-    dispatch(beginDeleteLesson());
-    courseApi
-      .deleteLesson(id, token, domain)
-      .then((res) => {
-        {
-          dispatch(deleteLessonSuccess(id));
-          Alert.alert('Thông báo', 'Xóa buổi học thành công');
-        }
-      })
-      .catch((error) => {
-        Alert.alert('Thông báo', 'Có lỗi xảy ra');
-        throw error;
-      })
-      .finally(() => dispatch(deleteLessonComplete()));
-  };
-}
-
-function beginDeleteLesson() {
-  return {
-    type: types.BEGIN_DELETE_COURSE_DETAILS_LESSON,
-    deletingLesson: true,
-  };
-}
-
-function deleteLessonSuccess(id) {
-  return {
-    type: types.DELETE_COURSE_DETAILS_LESSON_SUCCESS,
-    lessonId: id,
-  };
-}
-
-function deleteLessonComplete() {
-  return {
-    type: types.DELETE_COURSE_DETAILS_LESSON_COMPLETE,
-    deletingLesson: false,
-  };
-}
-
 export function reset() {
   return {
     type: types.RESET_DATA_COURSE,

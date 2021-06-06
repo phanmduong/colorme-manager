@@ -128,25 +128,6 @@ export default function courseReducer(state = initialState.course, action) {
         errorCourseDetails: action.errorCourseDetails,
         refreshingCourseDetails: action.refreshingCourseDetails,
       });
-    case types.BEGIN_DELETE_COURSE_DETAILS_LESSON:
-      return Object.assign({}, state, {
-        deletingLesson: action.deletingLesson,
-      });
-    case types.DELETE_COURSE_DETAILS_LESSON_SUCCESS:
-      courseDetails = {...state.courseDetails};
-      lessonIdx = courseDetails.lessons.findIndex(
-        (lesson) => lesson.id === action.lessonId,
-      );
-      if (lessonIdx > -1) {
-        courseDetails.lessons.splice(lessonIdx, 1);
-      }
-      return Object.assign({}, state, {
-        courseDetails: courseDetails,
-      });
-    case types.DELETE_COURSE_DETAILS_LESSON_COMPLETE:
-      return Object.assign({}, state, {
-        deletingLesson: action.deletingLesson,
-      });
     case types.RESET_DATA_COURSE:
       return Object.assign({}, state, {
         courseData: action.courseData,

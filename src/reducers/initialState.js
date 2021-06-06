@@ -56,7 +56,6 @@ export default {
     errorCourseDetails: false,
     courseDetails: {},
     refreshingCourseDetails: false,
-    deletingLesson: false,
     addingLesson: false,
     editingLesson: false,
     creatingExam: false,

@@ -98,11 +98,7 @@ export function deleteLessonEvent(id, token, domain) {
 
 export function deleteLesson(id, token, domain) {
   let url =
-    env.manageApiUrlV3(domain) +
-    '/v2/lesson/delete-lesson/' +
-    id +
-    '?token=' +
-    token;
+    env.manageApiUrlAuth(domain) + '/v1/lessons/' + id + '?token=' + token;
   return axios.delete(url);
 }
 

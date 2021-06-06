@@ -10,16 +10,36 @@ import CourseInfoStore from './course/CourseInfoStore';
 function CourseInfoContainer(props) {
   const [store] = useState(() => new CourseInfoStore());
 
+  const courseId = props.navigation.getParam('id');
+
   useEffect(() => {
     loadLessons();
+    loadExams();
+    loadGroupExams();
   }, []);
 
   function loadLessons() {
     store.loadLessons(false, courseId, props.token, props.domain);
   }
 
+  function loadExams() {
+    store.loadExams(false, courseId, props.token, props.domain);
+  }
+
+  function loadGroupExams() {
+    store.loadGroupExams(false, courseId, props.token, props.domain);
+  }
+
   function refreshLessons() {
     store.loadLessons(true, courseId, props.token, props.domain);
+  }
+
+  function refreshExams() {
+    store.loadExams(true, courseId, props.token, props.domain);
+  }
+
+  function refreshExamGroups() {
+    store.loadGroupExams(true, courseId, props.token, props.domain);
   }
 
   function deleteLesson(id) {
@@ -42,8 +62,6 @@ function CourseInfoContainer(props) {
     props.courseActions.deleteLink(id, props.token, props.domain);
   }
 
-  const courseId = props.navigation.getParam('id');
-
   return (
     <CourseInfoComponent
       {...props}
@@ -56,6 +74,8 @@ function CourseInfoContainer(props) {
       loadLessons={loadLessons}
       store={store}
       refreshLessons={refreshLessons}
+      refreshExams={refreshExams}
+      refreshExamGroups={refreshExamGroups}
     />
   );
 }

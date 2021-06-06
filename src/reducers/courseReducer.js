@@ -140,20 +140,6 @@ export default function courseReducer(state = initialState.course, action) {
       return Object.assign({}, state, {
         courseDetails: action.courseDetails,
       });
-    case types.BEGIN_ADD_COURSE_DETAILS_EXAM:
-      return Object.assign({}, state, {
-        creatingExam: action.creatingExam,
-      });
-    case types.ADD_COURSE_DETAILS_EXAM_SUCCESS:
-      courseDetails = {...state.courseDetails};
-      courseDetails.exam_templates.push(action.exam);
-      return Object.assign({}, state, {
-        courseDetails: courseDetails,
-      });
-    case types.ADD_COURSE_DETAILS_EXAM_COMPLETE:
-      return Object.assign({}, state, {
-        creatingExam: action.creatingExam,
-      });
     case types.BEGIN_ADD_COURSE_DETAILS_LINK:
       return Object.assign({}, state, {
         creatingLink: action.creatingLink,

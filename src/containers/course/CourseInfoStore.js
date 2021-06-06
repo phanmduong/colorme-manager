@@ -15,6 +15,16 @@ class CourseInfoStore {
   @observable addingLesson = false;
   @observable editingLesson = false;
 
+  @observable exams = [];
+  @observable isLoadingExams = false;
+  @observable errorExams = false;
+  @observable refreshingExams = false;
+  @observable groupExams = [];
+  @observable isLoadingGroupExams = false;
+  @observable errorGroupExams = false;
+  @observable refreshingGroupExams = false;
+  @observable creatingExam = false;
+
   @action
   loadLessons = (refreshing, course_id, token, domain) => {
     if (!refreshing) {
@@ -184,6 +194,83 @@ class CourseInfoStore {
         Alert.alert('Thông báo', 'Có lỗi xảy ra');
       })
       .finally(() => (this.editingLesson = false));
+  };
+
+  @action
+  loadExams = (refreshing, courseId, token, domain) => {
+    if (!refreshing) {
+      this.isLoadingExams = true;
+      this.refreshingExams = false;
+    } else {
+      this.refreshingExams = true;
+      this.isLoadingExams = false;
+      this.exams = [];
+    }
+    courseApi
+      .loadExams(courseId, token, domain)
+      .then((res) => {
+        this.exams = res.data.exam_templates;
+      })
+      .catch((error) => {
+        this.errorExams = true;
+      })
+      .finally(() => {
+        this.isLoadingExams = false;
+        this.refreshingExams = false;
+      });
+  };
+
+  @action
+  loadGroupExams = (refreshing, courseId, token, domain) => {
+    if (!refreshing) {
+      this.isLoadingGroupExams = true;
+      this.refreshingGroupExams = false;
+    } else {
+      this.refreshingGroupExams = true;
+      this.isLoadingGroupExams = false;
+      this.groupExams = [];
+    }
+    courseApi
+      .loadGroupExams(courseId, token, domain)
+      .then((res) => {
+        this.groupExams = [
+          ...res.data.group_exams,
+          {id: -1, name: 'Không có nhóm'},
+        ];
+      })
+      .catch((error) => {
+        this.errorGroupExams = true;
+      })
+      .finally(() => {
+        this.isLoadingGroupExams = false;
+        this.refreshingGroupExams = false;
+      });
+  };
+
+  @action
+  createExam = (payload, token, domain, callback) => {
+    this.creatingExam = true;
+    courseApi
+      .createExam(payload, token, domain)
+      .then((res) => {
+        this.exams.unshift(res.data.exam_template);
+        Alert.alert('Thông báo', 'Tạo bài kiểm tra thành công', [
+          {
+            text: 'Ok',
+            onPress: () => {
+              if (callback) {
+                callback();
+              }
+            },
+          },
+        ]);
+      })
+      .catch((error) => {
+        Alert.alert('Thông báo', 'Có lỗi xảy ra');
+      })
+      .finally(() => {
+        this.creatingExam = false;
+      });
   };
 }
 

@@ -12,7 +12,17 @@ import EmptyMessage from './common/EmptyMessage';
 function CourseInfoComponent(props) {
   const [tabIdx, setIdx] = useState(0);
 
-  const {lessons, isLoadingLessons, refreshingLessons} = props.store;
+  const {
+    lessons,
+    isLoadingLessons,
+    refreshingLessons,
+    exams,
+    isLoadingExams,
+    refreshingExams,
+    groupExams,
+    isLoadingGroupExams,
+    refreshingGroupExams,
+  } = props.store;
 
   function headerComponent() {
     return (
@@ -74,6 +84,7 @@ function CourseInfoComponent(props) {
               onPress={() =>
                 props.navigation.navigate('AddCourseExam', {
                   courseId: props.courseId,
+                  store: props.store,
                 })
               }
             />
@@ -121,11 +132,7 @@ function CourseInfoComponent(props) {
         <ListCourseExamGroupItem
           key={item.id}
           name={item.name}
-          exam_templates={
-            props.courseDetails && props.courseDetails.exam_templates
-          }
-          lessons={props.courseDetails && props.courseDetails.lessons}
-          avatar_url={props.courseDetails && props.courseDetails.icon_url}
+          exam_templates={exams}
           id={item.id}
         />
       );
@@ -148,7 +155,7 @@ function CourseInfoComponent(props) {
     if (tabIdx === 0) {
       return lessons.slice();
     } else if (tabIdx === 1) {
-      return [];
+      return groupExams.slice();
     } else if (tabIdx === 2) {
       return [];
     }
@@ -165,8 +172,24 @@ function CourseInfoComponent(props) {
       case 0:
         props.refreshLessons();
         break;
+      case 1:
+        props.refreshExams();
+        props.refreshExamGroups();
+        break;
       default:
         break;
+    }
+  }
+
+  function emptyComponent() {
+    if (isLoadingLessons || isLoadingExams || isLoadingGroupExams) {
+      if (!(refreshingLessons || refreshingExams || refreshingGroupExams)) {
+        return <Loading />;
+      }
+    } else {
+      if (!(refreshingLessons || refreshingExams || refreshingGroupExams)) {
+        return <EmptyMessage />;
+      }
     }
   }
 
@@ -178,16 +201,12 @@ function CourseInfoComponent(props) {
       ListHeaderComponent={headerComponent()}
       contentContainerStyle={{flexGrow: 1}}
       onRefresh={onRefresh}
-      refreshing={refreshingLessons}
-      ListEmptyComponent={
-        isLoadingLessons
-          ? !refreshingLessons && <Loading />
-          : !refreshingLessons && <EmptyMessage />
-      }
+      refreshing={refreshingLessons || refreshingExams || refreshingGroupExams}
+      ListEmptyComponent={emptyComponent()}
       onEndReached={loadMore}
     />
   );
-};
+}
 
 const styles = {
   tag: {

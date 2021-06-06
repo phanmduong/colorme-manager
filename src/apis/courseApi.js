@@ -144,7 +144,7 @@ export function editLesson(data, token, domain) {
 }
 
 export function createExam(data, token, domain) {
-  let url = env.manageApiUrlV4(domain) + '/exam/template/create?token=' + token;
+  let url = env.manageApiUrlAuth(domain) + '/v1/exam-templates?token=' + token;
   return axios.post(url, {
     avatar_url: data.avatar_url,
     course_id: data.course_id,
@@ -152,6 +152,7 @@ export function createExam(data, token, domain) {
     description: data.description,
     group_exam_id: data.group_exam_id,
     lesson_id: data.lesson_id,
+    order: data.order,
     title: data.title,
     weight: data.weight,
   });
@@ -207,5 +208,23 @@ export function loadLessons(search, page, course_id, token, domain) {
     page +
     (!isEmptyInput(course_id) ? '&course_ids[]=' + course_id : '') +
     '&limit=10&orderBy=order&sortedBy=asc';
+  return axios.get(url);
+}
+
+export function loadExams(courseId, token, domain) {
+  let url =
+    env.manageApiUrlAuth(domain) +
+    '/v1/exam-templates?limit=0&orderBy=order&sortedBy=asc&token=' +
+    token +
+    (!isEmptyInput(courseId) ? '&course_ids[]=' + courseId : '');
+  return axios.get(url);
+}
+
+export function loadGroupExams(courseId, token, domain) {
+  let url =
+    env.manageApiUrlAuth(domain) +
+    '/v1/group-exams?limit=0&orderBy=order&sortedBy=asc&token=' +
+    token +
+    (!isEmptyInput(courseId) ? '&course_ids[]=' + courseId : '');
   return axios.get(url);
 }

@@ -10,7 +10,7 @@ import Input from './common/Input';
 import theme from '../styles';
 import Expand from './common/Expand';
 import SubmitButton from './common/SubmitButton';
-import {dotNumber, isEmptyObject} from '../helper';
+import {dotNumber} from '../helper';
 import InputPicker from './common/InputPicker';
 import {COLORS} from '../constants/constant';
 
@@ -18,7 +18,7 @@ function AddCourseComponent(props) {
   const [name, setName] = useState(props.course?.name);
   const [description, setDescription] = useState(props.course?.description);
   const [duration, setDuration] = useState(props.course?.duration?.toString());
-  const [price, setPrice] = useState(props.course?.price);
+  const [price, setPrice] = useState(props.course?.price?.toString());
   const [isExpanded, setExpanded] = useState(false);
   const [iconUrl, setIconUrl] = useState(props.course?.icon_url);
   const [coverUrl, setCoverUrl] = useState(props.course?.cover_url);

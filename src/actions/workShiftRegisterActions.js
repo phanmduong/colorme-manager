@@ -94,7 +94,7 @@ export function register(workShiftId, token, domain) {
           registering(
             JSON.stringify({
               id: workShiftId,
-              user: res.data.data.user,
+              user: res.data.work_shift_user.user,
             }),
           ),
         );
@@ -185,7 +185,7 @@ export function unregister(workShiftId, token, domain) {
           unregistering(
             JSON.stringify({
               id: workShiftId,
-              user: res.data.data.user,
+              user: res.data.work_shift_user.user,
             }),
           ),
         );

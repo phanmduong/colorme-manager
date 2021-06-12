@@ -3,6 +3,7 @@ import {View, Text, TouchableOpacity, Image} from 'react-native';
 import WorkShiftRegisterParticipatesModal from './WorkShiftRegisterParticipatesModal';
 import _ from 'lodash';
 import theme from '../../styles';
+import {displayUnixDate} from '../../helper';
 
 class WorkShiftRegisterItem extends React.Component {
   constructor(props, context) {
@@ -27,12 +28,20 @@ class WorkShiftRegisterItem extends React.Component {
   };
 
   shiftRegistered = () => {
-    for (let i = 0; i < this.props.participates.length; i++) {
-      if (this.props.user.id === this.props.participates[i].id) {
+    for (let user of this.props.participates) {
+      if (user.id === this.props.user.id) {
         return true;
       }
     }
     return false;
+
+
+    // for (let i = 0; i < this.props.participates.length; i++) {
+    //   if (this.props.user.id === this.props.participates[i].id) {
+    //     return true;
+    //   }
+    // }
+    // return false;
   };
 
   processAuthorName = (name) => {
@@ -42,6 +51,7 @@ class WorkShiftRegisterItem extends React.Component {
   };
 
   render() {
+    // console.log(this.props.participates);
     if (this.props.isRegistering) {
       return (
         <View full style={styles.available}>
@@ -58,12 +68,16 @@ class WorkShiftRegisterItem extends React.Component {
       return (
         <TouchableOpacity
           onPress={
-            this.props.disable
+            !this.props.permissions.unsubscribe
               ? () => null
               : () => this.props.onUnregister(this.props.shiftId)
           }>
           <View
-            style={this.props.disable ? styles.registerLock : styles.register}>
+            style={
+              !this.props.permissions.unsubscribe
+                ? styles.registerLock
+                : styles.register
+            }>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Image
                 style={styles.registeredAvatar}
@@ -101,9 +115,9 @@ class WorkShiftRegisterItem extends React.Component {
             shift={
               this.props.name +
               ': ' +
-              this.props.start_time +
+              displayUnixDate(this.props.start_time, 'time') +
               ' - ' +
-              this.props.end_time
+              displayUnixDate(this.props.end_time, 'time')
             }
             participates={this.props.participates}
             date={this.props.date}
@@ -114,22 +128,24 @@ class WorkShiftRegisterItem extends React.Component {
       return (
         <TouchableOpacity
           onPress={
-            this.props.disable
+            !this.props.permissions.subscribe
               ? () => null
               : () => this.props.onRegister(this.props.shiftId)
           }>
           <View
             style={
-              this.props.disable ? styles.availableLock : styles.available
+              !this.props.permissions.subscribe
+                ? styles.availableLock
+                : styles.available
             }>
             <Text style={styles.shiftText}>
               {this.props.errorRegistering
                 ? 'Đăng ký thất bại. Thử lại?'
                 : this.props.name +
                   ': ' +
-                  this.props.start_time +
+                  displayUnixDate(this.props.start_time, 'time') +
                   ' - ' +
-                  this.props.end_time}
+                  displayUnixDate(this.props.end_time, 'time')}
             </Text>
             <TouchableOpacity onPress={this.toggleModal}>
               <View style={styles.row}>
@@ -157,9 +173,9 @@ class WorkShiftRegisterItem extends React.Component {
             shift={
               this.props.name +
               ': ' +
-              this.props.start_time +
+              displayUnixDate(this.props.start_time, 'time') +
               ' - ' +
-              this.props.end_time
+              displayUnixDate(this.props.end_time, 'time')
             }
             participates={this.props.participates}
             date={this.props.date}

@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import WorkShiftRegisterItem from './WorkShiftRegisterItem';
-import _ from 'lodash';
+import {displayUnixDate} from '../../helper';
 
 class WorkShiftRegisterDate extends React.Component {
   constructor(props, context) {
@@ -13,13 +13,12 @@ class WorkShiftRegisterDate extends React.Component {
   }
 
   renderShiftItem = () => {
-    const shifts = [...this.props.shifts].reverse();
-    return shifts.map(shift => (
+    return this.props.shifts.map((shift) => (
       <WorkShiftRegisterItem
         shift={shift}
-        name={shift.name}
-        start_time={shift.start_time}
-        end_time={shift.end_time}
+        name={shift.work_shift_session.name}
+        start_time={shift.work_shift_session.start_time}
+        end_time={shift.work_shift_session.end_time}
         participates={shift.users}
         date={this.props.date}
         user={this.props.user}
@@ -31,6 +30,7 @@ class WorkShiftRegisterDate extends React.Component {
         errorRegistering={shift.isRegistering}
         errorUnregistering={shift.isUnregistering}
         disable={shift.disable}
+        permissions={shift.permissions}
       />
     ));
   };
@@ -38,7 +38,9 @@ class WorkShiftRegisterDate extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.dateText}>{this.props.date}</Text>
+        <Text style={styles.dateText}>
+          {displayUnixDate(this.props.date, 'full-date')}
+        </Text>
         {this.renderShiftItem()}
       </View>
     );
@@ -49,7 +51,6 @@ const styles = {
   container: {
     backgroundColor: '#F7F8F7',
     padding: 19,
-    marginHorizontal: 10,
     borderRadius: 5,
     marginVertical: 5,
   },

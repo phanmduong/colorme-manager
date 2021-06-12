@@ -6,7 +6,6 @@ import {
   RefreshControl,
   Image,
 } from 'react-native';
-import WorkShiftRegisterWeek from './workShiftRegister/WorkShiftRegisterWeek';
 import theme from '../styles';
 import {Button, List, Text} from 'native-base';
 import * as alert from '../constants/alert';
@@ -19,6 +18,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import DropdownPicker from './common/DropdownPicker';
 import DateRangePicker from './common/DateRangePicker';
 import Loading from './common/Loading';
+import {groupBy} from '../helper';
+import WorkShiftRegisterDate from './workShiftRegister/WorkShiftRegisterDate';
 
 class WorkShiftRegisterComponent extends React.Component {
   constructor(props, context) {
@@ -29,20 +30,15 @@ class WorkShiftRegisterComponent extends React.Component {
     };
   }
 
-  renderShiftWeek = (index) => {
+  renderShiftByDate = (item) => {
     return (
-      <WorkShiftRegisterWeek
-        week={this.props.workShiftRegisterData.weeks[index]}
+      <WorkShiftRegisterDate
+        date={item.date}
+        shifts={item.shifts}
         user={this.props.user}
         onRegister={this.props.onRegister}
         onUnregister={this.props.onUnregister}
       />
-    );
-  };
-
-  showShift = (index) => {
-    return (
-      <View style={{marginBottom: 50}}>{this.renderShiftWeek(index)}</View>
     );
   };
 
@@ -53,11 +49,8 @@ class WorkShiftRegisterComponent extends React.Component {
         (subscriber) => subscriber.id === user.id,
       );
       if (subscribedUser) {
-        const startTime = moment.unix(
-          workShift.work_shift_session.start_time,
-          'HH:mm',
-        );
-        const endTime = moment(workShift.work_shift_session.end_time, 'HH:mm');
+        const startTime = moment.unix(workShift.work_shift_session.start_time);
+        const endTime = moment.unix(workShift.work_shift_session.end_time);
         const hours = moment.duration(endTime.diff(startTime)).asHours();
         total += hours;
       }
@@ -181,6 +174,11 @@ class WorkShiftRegisterComponent extends React.Component {
 
   render() {
     if (!this.props.isLoadingBases) {
+      const workShifts = groupBy(
+        this.props.workShiftRegisterData,
+        (workShift) => workShift.date,
+        ['date', 'shifts'],
+      );
       return (
         <View
           style={
@@ -189,9 +187,9 @@ class WorkShiftRegisterComponent extends React.Component {
               : {flex: 1, marginTop: 20}
           }>
           <List
-            dataArray={this.props.workShiftRegisterData}
+            dataArray={workShifts}
             contentContainerStyle={{flexGrow: 1, marginHorizontal: 16}}
-            renderRow={(item, sectionID, rowID) => null}
+            renderRow={this.renderShiftByDate}
             refreshControl={
               <RefreshControl
                 refreshing={this.props.refreshing}
@@ -252,8 +250,6 @@ class WorkShiftRegisterComponent extends React.Component {
     }
   }
 }
-
-// !this.props.isLoadingWorkShiftRegister
 
 const styles = {
   container: {

@@ -17,20 +17,20 @@ export function loadWorkShift(startTime, endTime, baseId, token, domain) {
 
 export function registerWorkShift(workShiftId, token, domain) {
   let url =
-    env.manageApiUrlV3(domain) +
-    '/work-shift/register-shift/' +
+    env.manageApiUrlAuth(domain) +
+    '/v1/work-shifts/' +
     workShiftId +
-    '?token=' +
+    '/subscribe?token=' +
     token;
   return axios.put(url);
 }
 
 export function removeWorkShift(workShiftId, token, domain) {
   let url =
-    env.manageApiUrlV3(domain) +
-    '/work-shift/remove-register-shift/' +
+    env.manageApiUrlAuth(domain) +
+    '/v1/work-shifts/' +
     workShiftId +
-    '?token=' +
+    '/unsubscribe?token=' +
     token;
   return axios.put(url);
 }

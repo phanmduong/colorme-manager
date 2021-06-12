@@ -4,20 +4,18 @@ import * as workShiftRegisterAction from '../actions/workShiftRegisterActions.js
 import WorkShiftRegisterComponent from '../components/WorkShiftRegisterComponent';
 import {bindActionCreators} from 'redux';
 import * as baseActions from '../actions/baseActions';
-import * as genActions from '../actions/genActions';
 
 class WorkShiftRegisterContainer extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
       checkedDataBase: false,
-      checkedDataGen: false,
       checkedDataWorkShiftRegister: false,
     };
   }
 
   componentWillMount = () => {
-    this.loadBaseAndGenData();
+    this.loadBaseData();
   };
 
   componentWillReceiveProps = (nextProps) => {
@@ -30,30 +28,25 @@ class WorkShiftRegisterContainer extends React.Component {
       this.props.workShiftRegisterAction.selectedBaseId(props.baseData[0].id);
     }
 
-    if (props.genData.length > 0 && !this.state.checkedDataGen) {
-      this.setState({checkedDataGen: true});
-      this.props.workShiftRegisterAction.selectedGenId(props.currentGen.id);
-    }
-
-    if (
-      props.genData.length > 0 &&
-      props.baseData.length > 0 &&
-      !this.state.checkedDataWorkShiftRegister
-    ) {
+    if (props.baseData.length > 0 && !this.state.checkedDataWorkShiftRegister) {
       this.setState({checkedDataWorkShiftRegister: true});
-      this.loadDataWorkShiftRegister(props.baseData[0].id, props.currentGen.id);
+      this.loadDataWorkShiftRegister(
+        props.startTime,
+        props.endTime,
+        props.baseData[0].id,
+      );
     }
   };
 
-  loadBaseAndGenData = () => {
+  loadBaseData = () => {
     this.props.baseActions.loadDataBase(this.props.token, this.props.domain);
-    this.props.genActions.loadDataGen(this.props.token, this.props.domain);
   };
 
-  loadDataWorkShiftRegister = (baseId, genId) => {
+  loadDataWorkShiftRegister = (startTime, endTime, baseId) => {
     this.props.workShiftRegisterAction.loadWorkShift(
+      startTime,
+      endTime,
       baseId,
-      genId,
       this.props.token,
       this.props.domain,
     );
@@ -61,12 +54,11 @@ class WorkShiftRegisterContainer extends React.Component {
 
   onSelectBaseId = (baseId) => {
     this.props.workShiftRegisterAction.selectedBaseId(baseId);
-    this.loadDataWorkShiftRegister(baseId, this.props.selectedGenId);
-  };
-
-  onSelectGenId = (genId) => {
-    this.props.workShiftRegisterAction.selectedGenId(genId);
-    this.loadDataWorkShiftRegister(this.props.selectedBaseId, genId);
+    this.loadDataWorkShiftRegister(
+      this.props.startTime,
+      this.props.endTime,
+      baseId,
+    );
   };
 
   onRegister = (shiftId) => {
@@ -93,7 +85,6 @@ class WorkShiftRegisterContainer extends React.Component {
         genData={this.props.genData}
         baseData={this.props.baseData}
         onSelectBaseId={this.onSelectBaseId}
-        onSelectGenId={this.onSelectGenId}
         errorWorkShiftRegister={this.props.errorWorkShiftRegister}
         user={this.props.user}
         avatar_url={this.props.user.avatar_url}
@@ -117,22 +108,20 @@ function mapStateToProps(state) {
     isLoadingWorkShiftRegister: state.workShiftRegister.isLoading,
     workShiftRegisterData: state.workShiftRegister.workShiftRegisterData,
     baseData: state.base.baseData,
-    genData: state.gen.genData,
-    currentGen: state.gen.currentGen,
+    isLoadingBases: state.base.isLoading,
     selectedBaseId: state.workShiftRegister.selectedBaseId,
-    selectedGenId: state.workShiftRegister.selectedGenId,
-    errorGen: state.gen.error,
     errorBase: state.base.error,
     errorWorkShiftRegister: state.workShiftRegister.error,
     user: state.login.user,
     domain: state.login.domain,
+    startTime: state.workShiftRegister.startTime,
+    endTime: state.workShiftRegister.endTime,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     baseActions: bindActionCreators(baseActions, dispatch),
-    genActions: bindActionCreators(genActions, dispatch),
     workShiftRegisterAction: bindActionCreators(
       workShiftRegisterAction,
       dispatch,

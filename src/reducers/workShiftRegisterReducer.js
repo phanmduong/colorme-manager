@@ -28,10 +28,6 @@ export default function workShiftRegisterReducer(
       return Object.assign({}, state, {
         selectedBaseId: action.selectedBaseId,
       });
-    case type.SELECTED_GEN_ID_WORK_SHIFT_REGISTER:
-      return Object.assign({}, state, {
-        selectedGenId: action.selectedGenId,
-      });
     case type.BEGIN_WORK_SHIFT_REGISTER: {
       workShiftRegisterData = state.workShiftRegisterData;
       workShiftRegisterData = loadingRegistering(

@@ -1,11 +1,11 @@
 import * as workShiftRegisterApi from '../apis/workShiftRegisterApi';
 import * as type from '../constants/actionTypes';
 
-export function loadWorkShift(baseId, genId, token, domain) {
+export function loadWorkShift(startTime, endTime, baseId, token, domain) {
   return function (dispatch) {
     dispatch(beginLoadWorkShiftData());
     workShiftRegisterApi
-      .loadWorkShift(baseId, genId, token, domain)
+      .loadWorkShift(startTime, endTime, baseId, token, domain)
       .then(function (res) {
         dispatch(loadWorkShiftDataSuccessful(res));
       })
@@ -23,13 +23,6 @@ export function selectedBaseId(baseId) {
   };
 }
 
-export function selectedGenId(genId) {
-  return {
-    type: type.SELECTED_GEN_ID_WORK_SHIFT_REGISTER,
-    selectedGenId: genId,
-  };
-}
-
 export function beginLoadWorkShiftData() {
   return {
     type: type.BEGIN_LOAD_WORK_SHIFT_DATA,
@@ -41,7 +34,7 @@ export function beginLoadWorkShiftData() {
 export function loadWorkShiftDataSuccessful(res) {
   return {
     type: type.LOAD_WORK_SHIFT_DATA_SUCCESSFUL,
-    workShiftRegisterData: res.data.data,
+    workShiftRegisterData: res.data.work_shifts,
     isLoading: false,
     error: false,
   };

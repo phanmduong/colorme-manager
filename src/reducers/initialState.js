@@ -326,9 +326,10 @@ export default {
   workShiftRegister: {
     isLoading: false,
     error: false,
-    workShiftRegisterData: {},
-    selectedBaseId: -1,
-    selectedGenId: -1,
+    workShiftRegisterData: [],
+    selectedBaseId: '',
+    startTime: moment().startOf('week').unix(),
+    endTime: moment().endOf('week').unix(),
   },
   teachingRating: {
     isLoadingTeacherRating: false,

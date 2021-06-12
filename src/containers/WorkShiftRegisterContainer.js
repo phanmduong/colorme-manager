@@ -31,6 +31,7 @@ class WorkShiftRegisterContainer extends React.Component {
     if (props.baseData.length > 0 && !this.state.checkedDataWorkShiftRegister) {
       this.setState({checkedDataWorkShiftRegister: true});
       this.loadDataWorkShiftRegister(
+        false,
         props.startTime,
         props.endTime,
         props.baseData[0].id,
@@ -42,8 +43,9 @@ class WorkShiftRegisterContainer extends React.Component {
     this.props.baseActions.loadDataBase(this.props.token, this.props.domain);
   };
 
-  loadDataWorkShiftRegister = (startTime, endTime, baseId) => {
+  loadDataWorkShiftRegister = (refreshing, startTime, endTime, baseId) => {
     this.props.workShiftRegisterAction.loadWorkShift(
+      refreshing,
       startTime,
       endTime,
       baseId,
@@ -55,10 +57,19 @@ class WorkShiftRegisterContainer extends React.Component {
   onSelectBaseId = (baseId) => {
     this.props.workShiftRegisterAction.selectedBaseId(baseId);
     this.loadDataWorkShiftRegister(
+      true,
       this.props.startTime,
       this.props.endTime,
       baseId,
     );
+  };
+
+  onSelectStartTime = (time) => {
+    this.props.workShiftRegisterAction.selectedStartTime(time);
+  };
+
+  onSelectEndTime = (time) => {
+    this.props.workShiftRegisterAction.selectedEndTime(time);
   };
 
   onRegister = (shiftId) => {
@@ -77,26 +88,25 @@ class WorkShiftRegisterContainer extends React.Component {
     );
   };
 
+  onRefresh = () => {
+    this.loadDataWorkShiftRegister(
+      true,
+      this.props.startTime,
+      this.props.endTime,
+      this.props.selectedBaseId,
+    );
+  };
+
   render() {
     return (
       <WorkShiftRegisterComponent
-        workShiftRegisterData={this.props.workShiftRegisterData}
-        isLoadingWorkShiftRegister={this.props.isLoadingWorkShiftRegister}
-        genData={this.props.genData}
-        baseData={this.props.baseData}
+        {...this.props}
         onSelectBaseId={this.onSelectBaseId}
-        errorWorkShiftRegister={this.props.errorWorkShiftRegister}
-        user={this.props.user}
-        avatar_url={this.props.user.avatar_url}
-        onRefresh={() =>
-          this.loadDataWorkShiftRegister(
-            this.props.selectedBaseId,
-            this.props.selectedGenId,
-          )
-        }
+        onSelectStartTime={this.onSelectStartTime}
+        onSelectEndTime={this.onSelectEndTime}
+        onRefresh={this.onRefresh}
         onRegister={this.onRegister}
         onUnregister={this.onUnregister}
-        {...this.props}
       />
     );
   }
@@ -116,6 +126,7 @@ function mapStateToProps(state) {
     domain: state.login.domain,
     startTime: state.workShiftRegister.startTime,
     endTime: state.workShiftRegister.endTime,
+    refreshing: state.workShiftRegister.refreshing,
   };
 }
 

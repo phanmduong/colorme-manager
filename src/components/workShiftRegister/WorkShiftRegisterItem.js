@@ -14,10 +14,7 @@ class WorkShiftRegisterItem extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     if (nextProps.shift === this.props.shift) {
-      if (nextState.isVisible !== this.state.isVisible) {
-        return true;
-      }
-      return false;
+      return nextState.isVisible !== this.state.isVisible;
     } else {
       return true;
     }

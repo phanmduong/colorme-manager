@@ -59,7 +59,7 @@ function DropdownPicker({options, onChangeValue, selectedId}) {
     if (selectedId) {
       return getDefault(options, selectedId);
     }
-    return null;
+    return options[0];
   }
 
   return (
@@ -89,7 +89,6 @@ const styles = {
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 24,
-    marginLeft: 10,
   },
   headerFooterContainer: {
     padding: 10,

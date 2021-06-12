@@ -1,6 +1,5 @@
 import initialState from './initialState';
 import * as type from '../constants/actionTypes';
-import {BEGIN_WORK_SHIFT_UNREGISTER} from '../constants/actionTypes';
 
 let workShiftRegisterData;
 export default function workShiftRegisterReducer(
@@ -13,20 +12,36 @@ export default function workShiftRegisterReducer(
         isLoading: action.isLoading,
         error: action.error,
       });
+    case type.BEGIN_REFRESH_WORK_SHIFT_DATA:
+      return Object.assign({}, state, {
+        refreshing: action.refreshing,
+        error: action.error,
+        workShiftRegisterData: action.workShiftRegisterData,
+      });
     case type.LOAD_WORK_SHIFT_DATA_SUCCESSFUL:
       return Object.assign({}, state, {
         workShiftRegisterData: action.workShiftRegisterData,
         isLoading: action.isLoading,
         error: action.error,
+        refreshing: action.refreshing,
       });
     case type.LOAD_WORK_SHIFT_DATA_ERROR:
       return Object.assign({}, state, {
         isLoading: action.isLoading,
         error: action.error,
+        refreshing: action.refreshing,
       });
     case type.SELECTED_BASE_ID_WORK_SHIFT_REGISTER:
       return Object.assign({}, state, {
         selectedBaseId: action.selectedBaseId,
+      });
+    case type.SELECTED_START_TIME_WORK_SHIFT_REGISTER:
+      return Object.assign({}, state, {
+        startTime: action.startTime,
+      });
+    case type.SELECTED_END_TIME_WORK_SHIFT_REGISTER:
+      return Object.assign({}, state, {
+        endTime: action.endTime,
       });
     case type.BEGIN_WORK_SHIFT_REGISTER: {
       workShiftRegisterData = state.workShiftRegisterData;
@@ -154,9 +169,9 @@ export default function workShiftRegisterReducer(
 function registering(workShiftId, field, user) {
   try {
     if (workShiftRegisterData.weeks) {
-      let weeks = workShiftRegisterData.weeks.map(week => {
-        let dates = week.dates.map(date => {
-          let shifts = date.shifts.map(shift => {
+      let weeks = workShiftRegisterData.weeks.map((week) => {
+        let dates = week.dates.map((date) => {
+          let shifts = date.shifts.map((shift) => {
             if (shift.id === workShiftId) {
               let users = shift.users;
               users.push(user);
@@ -179,9 +194,9 @@ function registering(workShiftId, field, user) {
 function loadingRegistering(workShiftId, field, value) {
   try {
     if (workShiftRegisterData.weeks) {
-      let weeks = workShiftRegisterData.weeks.map(week => {
-        let dates = week.dates.map(date => {
-          let shifts = date.shifts.map(shift => {
+      let weeks = workShiftRegisterData.weeks.map((week) => {
+        let dates = week.dates.map((date) => {
+          let shifts = date.shifts.map((shift) => {
             if (shift.id === workShiftId) {
               return {...shift, [field]: value};
             }
@@ -202,9 +217,9 @@ function loadingRegistering(workShiftId, field, value) {
 function unregistering(workShiftId, field, user) {
   try {
     if (workShiftRegisterData.weeks) {
-      let weeks = workShiftRegisterData.weeks.map(week => {
-        let dates = week.dates.map(date => {
-          let shifts = date.shifts.map(shift => {
+      let weeks = workShiftRegisterData.weeks.map((week) => {
+        let dates = week.dates.map((date) => {
+          let shifts = date.shifts.map((shift) => {
             if (shift.id === workShiftId) {
               let users = shift.users;
               let itemIndex = getIndex(users, user);
@@ -227,5 +242,5 @@ function unregistering(workShiftId, field, user) {
 }
 
 function getIndex(array, user) {
-  return array.findIndex(item => item.id === user.id);
+  return array.findIndex((item) => item.id === user.id);
 }

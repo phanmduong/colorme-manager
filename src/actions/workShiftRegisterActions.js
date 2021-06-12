@@ -1,9 +1,20 @@
 import * as workShiftRegisterApi from '../apis/workShiftRegisterApi';
 import * as type from '../constants/actionTypes';
 
-export function loadWorkShift(startTime, endTime, baseId, token, domain) {
+export function loadWorkShift(
+  refreshing,
+  startTime,
+  endTime,
+  baseId,
+  token,
+  domain,
+) {
   return function (dispatch) {
-    dispatch(beginLoadWorkShiftData());
+    if (!refreshing) {
+      dispatch(beginLoadWorkShiftData());
+    } else {
+      dispatch(beginRefreshWorkShiftData());
+    }
     workShiftRegisterApi
       .loadWorkShift(startTime, endTime, baseId, token, domain)
       .then(function (res) {
@@ -23,6 +34,29 @@ export function selectedBaseId(baseId) {
   };
 }
 
+export function selectedStartTime(time) {
+  return {
+    type: type.SELECTED_START_TIME_WORK_SHIFT_REGISTER,
+    startTime: time,
+  };
+}
+
+export function selectedEndTime(time) {
+  return {
+    type: type.SELECTED_END_TIME_WORK_SHIFT_REGISTER,
+    endTime: time,
+  };
+}
+
+export function beginRefreshWorkShiftData() {
+  return {
+    type: type.BEGIN_REFRESH_WORK_SHIFT_DATA,
+    refreshing: true,
+    error: false,
+    workShiftRegisterData: [],
+  };
+}
+
 export function beginLoadWorkShiftData() {
   return {
     type: type.BEGIN_LOAD_WORK_SHIFT_DATA,
@@ -37,6 +71,7 @@ export function loadWorkShiftDataSuccessful(res) {
     workShiftRegisterData: res.data.work_shifts,
     isLoading: false,
     error: false,
+    refreshing: false,
   };
 }
 
@@ -45,6 +80,7 @@ export function loadWorkShiftDataError(error) {
     type: type.LOAD_WORK_SHIFT_DATA_ERROR,
     isLoading: false,
     error: true,
+    refreshing: false,
   };
 }
 

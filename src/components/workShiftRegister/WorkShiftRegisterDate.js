@@ -9,11 +9,7 @@ class WorkShiftRegisterDate extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if (nextProps.shifts === this.props.shifts) {
-      return false;
-    } else {
-      return true;
-    }
+    return nextProps.shifts !== this.props.shifts;
   }
 
   renderShiftItem = () => {

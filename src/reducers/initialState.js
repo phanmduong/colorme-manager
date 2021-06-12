@@ -326,6 +326,7 @@ export default {
   workShiftRegister: {
     isLoading: false,
     error: false,
+    refreshing: false,
     workShiftRegisterData: [],
     selectedBaseId: '',
     startTime: moment().startOf('week').unix(),

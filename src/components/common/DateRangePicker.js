@@ -47,6 +47,19 @@ function DateRangePicker({
     setVisible(!isVisible);
   }
 
+  function displayDateFormat(date) {
+    switch (dateType) {
+      case 'unix':
+        return moment.unix(date).format('DD/MM/YYYY');
+      case 'normal':
+        return moment(date).format('DD/MM/YYYY');
+      case 'moment':
+        return date.format('DD/MM/YYYY');
+      default:
+        return null;
+    }
+  }
+
   return (
     <View>
       {mode === 'form' && (
@@ -55,8 +68,8 @@ function DateRangePicker({
           <TouchableOpacity style={styles.dateContainer} onPress={toggleModal}>
             <EntypoIcon name={'calendar'} size={17} color={'black'} />
             <Text style={{marginLeft: 10}}>
-              {startDate ? moment.unix(startDate).format('DD/MM/YYYY') : null} -{' '}
-              {endDate ? moment.unix(endDate).format('DD/MM/YYYY') : null}
+              {startDate ? displayDateFormat(startDate) : null} -{' '}
+              {endDate ? displayDateFormat(endDate) : null}
             </Text>
           </TouchableOpacity>
         </View>
@@ -67,8 +80,8 @@ function DateRangePicker({
           onPress={toggleModal}>
           <EntypoIcon name={'calendar'} size={17} color={'black'} />
           <Text style={{marginLeft: 10}}>
-            {startDate ? startDate.format('DD/MM/YYYY') : null} -{' '}
-            {endDate ? endDate.format('DD/MM/YYYY') : null}
+            {startDate ? displayDateFormat(startDate) : null} -{' '}
+            {endDate ? displayDateFormat(endDate) : null}
           </Text>
         </TouchableOpacity>
       )}

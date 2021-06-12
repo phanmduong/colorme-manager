@@ -11,11 +11,7 @@ class WorkShiftRegisterWeek extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if (nextProps.week === this.props.week) {
-      return false;
-    } else {
-      return true;
-    }
+    return nextProps.week !== this.props.week;
   }
 
   renderShiftDate = () => {

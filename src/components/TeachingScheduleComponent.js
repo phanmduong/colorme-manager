@@ -49,8 +49,8 @@ function TeachingScheduleComponent(props) {
           <DateRangePicker
             mode={'filter'}
             dateType={'normal'}
-            startDate={moment(props.startTime)}
-            endDate={moment(props.endTime)}
+            startDate={props.startTime}
+            endDate={props.endTime}
             onSelectEndDate={props.onSelectEndDate}
             onSelectStartDate={props.onSelectStartDate}
             apply={props.loadSchedules}

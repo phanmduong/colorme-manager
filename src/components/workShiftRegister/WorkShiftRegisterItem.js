@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import WorkShiftRegisterParticipatesModal from './WorkShiftRegisterParticipatesModal';
-import _ from 'lodash';
 import theme from '../../styles';
 import {displayUnixDate} from '../../helper';
 
@@ -34,14 +33,6 @@ class WorkShiftRegisterItem extends React.Component {
       }
     }
     return false;
-
-
-    // for (let i = 0; i < this.props.participates.length; i++) {
-    //   if (this.props.user.id === this.props.participates[i].id) {
-    //     return true;
-    //   }
-    // }
-    // return false;
   };
 
   processAuthorName = (name) => {
@@ -51,7 +42,6 @@ class WorkShiftRegisterItem extends React.Component {
   };
 
   render() {
-    // console.log(this.props.participates);
     if (this.props.isRegistering) {
       return (
         <View full style={styles.available}>

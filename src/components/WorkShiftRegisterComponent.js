@@ -7,12 +7,11 @@ import {
   Image,
 } from 'react-native';
 import theme from '../styles';
-import {Button, List, Text} from 'native-base';
-import * as alert from '../constants/alert';
+import {List, Text} from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import WorkShiftRegisterHoursReviewModal from './workShiftRegister/WorkShiftRegisterHoursReviewModal';
 import {isIphoneX, getStatusBarHeight} from 'react-native-iphone-x-helper';
-var {height, width} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 import moment from 'moment';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import DropdownPicker from './common/DropdownPicker';
@@ -20,6 +19,7 @@ import DateRangePicker from './common/DateRangePicker';
 import Loading from './common/Loading';
 import {groupBy} from '../helper';
 import WorkShiftRegisterDate from './workShiftRegister/WorkShiftRegisterDate';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 class WorkShiftRegisterComponent extends React.Component {
   constructor(props, context) {
@@ -57,27 +57,6 @@ class WorkShiftRegisterComponent extends React.Component {
     });
     return total;
   };
-
-  errorData() {
-    return (
-      <View style={{marginTop: height * 0.3, alignItems: 'center'}}>
-        <Text style={styles.textError}>
-          {this.props.errorWorkShiftRegister
-            ? alert.LOAD_DATA_ERROR
-            : alert.NO_DATA_WORK_SHIFT_REGISTER}
-        </Text>
-        <Button
-          iconLeft
-          danger
-          small
-          onPress={this.props.onRefresh}
-          style={{marginTop: 10, alignSelf: null}}>
-          <MaterialCommunityIcons name="reload" color="white" size={20} />
-          <Text>Thử lại</Text>
-        </Button>
-      </View>
-    );
-  }
 
   greenBarLength = () => {
     let barLen;
@@ -122,35 +101,25 @@ class WorkShiftRegisterComponent extends React.Component {
 
           {/*TODO: Work shift reports*/}
 
-          {/*<View style={styles.row}>*/}
-          {/*  <TouchableOpacity onPress={this.toggleModal}>*/}
-          {/*    <View style={[styles.headerIconContainer, {marginRight: 10}]}>*/}
-          {/*      <Entypo name={'bar-graph'} size={20} color={'black'} />*/}
-          {/*    </View>*/}
-          {/*  </TouchableOpacity>*/}
-          {/*  <TouchableOpacity*/}
-          {/*    onPress={() =>*/}
-          {/*      this.props.navigation.navigate(*/}
-          {/*        'ListDetailShiftsRegistered',*/}
-          {/*        {*/}
-          {/*          week: this.props.workShiftRegisterData.weeks[*/}
-          {/*            this.state.index*/}
-          {/*          ].week,*/}
-          {/*          dates: this.props.workShiftRegisterData.weeks[*/}
-          {/*            this.state.index*/}
-          {/*          ].dates,*/}
-          {/*        },*/}
-          {/*      )*/}
-          {/*    }>*/}
-          {/*    <View style={styles.headerIconContainer}>*/}
-          {/*      <MaterialCommunityIcons*/}
-          {/*        name={'information'}*/}
-          {/*        size={20}*/}
-          {/*        color={'black'}*/}
-          {/*      />*/}
-          {/*    </View>*/}
-          {/*  </TouchableOpacity>*/}
-          {/*</View>*/}
+          <View style={styles.row}>
+            <TouchableOpacity onPress={this.toggleModal}>
+              <View style={[styles.headerIconContainer, {marginRight: 10}]}>
+                <Entypo name={'bar-graph'} size={20} color={'black'} />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                this.props.navigation.navigate('ListDetailShiftsRegistered')
+              }>
+              <View style={styles.headerIconContainer}>
+                <MaterialCommunityIcons
+                  name={'information'}
+                  size={20}
+                  color={'black'}
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
         <View style={styles.containerPicker}>
           <DropdownPicker
@@ -200,30 +169,8 @@ class WorkShiftRegisterComponent extends React.Component {
             ListEmptyComponent={
               this.props.isLoadingWorkShiftRegister && <Loading />
             }
+            ListFooterComponent={() => <View style={styles.footer} />}
           />
-
-          {/*  /!*TODO: Render work shift dates instead of weeks*!/*/}
-
-          {/*  /!*{this.props.workShiftRegisterData.weeks.length > 0 &&*!/*/}
-          {/*  /!*!this.props.errorWorkShiftRegister ? (*!/*/}
-          {/*  /!*  <View style={{flex: 1}}>*!/*/}
-          {/*  /!*    <ScrollView>{this.showShift(this.state.index)}</ScrollView>*!/*/}
-          {/*  /!*    <WorkShiftRegisterHoursReviewModal*!/*/}
-          {/*  /!*      weekIndex={*!/*/}
-          {/*  /!*        this.props.workShiftRegisterData.weeks[this.state.index]*!/*/}
-          {/*  /!*          .week*!/*/}
-          {/*  /!*      }*!/*/}
-          {/*  /!*      isVisible={this.state.isVisible}*!/*/}
-          {/*  /!*      closeModal={() => this.toggleModal()}*!/*/}
-          {/*  /!*      dates={*!/*/}
-          {/*  /!*        this.props.workShiftRegisterData.weeks[this.state.index]*!/*/}
-          {/*  /!*          .dates*!/*/}
-          {/*  /!*      }*!/*/}
-          {/*  /!*    />*!/*/}
-          {/*  /!*  </View>*!/*/}
-          {/*  /!*) : (*!/*/}
-          {/*  /!*  <View>{this.errorData()}</View>*!/*/}
-          {/*  /!*)}*!/*/}
           <View style={styles.hoursContainer}>
             <View style={styles.hoursSubContainer}>
               <Image
@@ -320,6 +267,17 @@ const styles = {
   },
   datePicker: {
     marginTop: 5,
+  },
+  footer: {
+    height: 80,
+  },
+  headerIconContainer: {
+    width: 40,
+    height: 40,
+    backgroundColor: '#F6F6F6',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 20,
   },
 };
 

@@ -167,74 +167,26 @@ export default function workShiftRegisterReducer(
 }
 
 function registering(workShiftId, field, user) {
-  try {
-
     return workShiftRegisterData.map(shift => {
       if (shift.id === workShiftId) {
         let users = shift.users;
         users.push(user);
-        console.log('hehe');
         return {...shift, [field]: users};
       }
       return shift;
     })
-
-    // if (workShiftRegisterData.weeks) {
-    //   let weeks = workShiftRegisterData.weeks.map((week) => {
-    //     let dates = week.dates.map((date) => {
-    //       let shifts = date.shifts.map((shift) => {
-    //         if (shift.id === workShiftId) {
-    //           let users = shift.users;
-    //           users.push(user);
-    //           return {...shift, [field]: users};
-    //         }
-    //         return shift;
-    //       });
-    //       return {...date, shifts: shifts};
-    //     });
-    //     return {...week, dates: dates};
-    //   });
-    //   return {...workShiftRegisterData, weeks: weeks};
-    // }
-  } catch (err) {
-    throw new Error(err);
-  }
 }
 
 function loadingRegistering(workShiftId, field, value) {
-  // try {
-
     return workShiftRegisterData.map(shift => {
       if (shift.id === workShiftId) {
         return {...shift, [field]: value}
       }
       return shift;
     })
-
-
-    // if (workShiftRegisterData.weeks) {
-    //   let weeks = workShiftRegisterData.weeks.map((week) => {
-    //     let dates = week.dates.map((date) => {
-    //       let shifts = date.shifts.map((shift) => {
-    //         if (shift.id === workShiftId) {
-    //           return {...shift, [field]: value};
-    //         }
-    //         return shift;
-    //       });
-    //       return {...date, shifts: shifts};
-    //     });
-    //     return {...week, dates: dates};
-    //   });
-    //   return {...workShiftRegisterData, weeks: weeks};
-    // }
-  // } catch (err) {
-  //   throw new Error(err);
-  // }
 }
 
 function unregistering(workShiftId, field, user) {
-  // try {
-
     return workShiftRegisterData.map(shift => {
       if (shift.id === workShiftId) {
         let users = shift.users;
@@ -244,30 +196,6 @@ function unregistering(workShiftId, field, user) {
       }
       return shift;
     })
-
-    // if (workShiftRegisterData.weeks) {
-    //   let weeks = workShiftRegisterData.weeks.map((week) => {
-    //     let dates = week.dates.map((date) => {
-    //       let shifts = date.shifts.map((shift) => {
-    //         if (shift.id === workShiftId) {
-    //           let users = shift.users;
-    //           let itemIndex = getIndex(users, user);
-    //           console.log(itemIndex);
-    //           users.splice(itemIndex, 1);
-    //           return {...shift, [field]: users};
-    //         }
-    //         return shift;
-    //       });
-    //       return {...date, shifts: shifts};
-    //     });
-    //     return {...week, dates: dates};
-    //   });
-    //   return {...workShiftRegisterData, weeks: weeks};
-    // }
-  // } catch (err) {
-  //   throw new Error(err);
-  // }
-  // return workShiftRegisterData;
 }
 
 function getIndex(array, user) {

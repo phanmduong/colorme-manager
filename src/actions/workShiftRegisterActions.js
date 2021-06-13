@@ -6,6 +6,7 @@ export function loadWorkShift(
   startTime,
   endTime,
   baseId,
+  selectedStaffId,
   token,
   domain,
 ) {
@@ -18,7 +19,7 @@ export function loadWorkShift(
     workShiftRegisterApi
       .loadWorkShift(startTime, endTime, baseId, token, domain)
       .then(function (res) {
-        dispatch(loadWorkShiftDataSuccessful(res));
+        dispatch(loadWorkShiftDataSuccessful(res, selectedStaffId));
       })
       .catch((error) => {
         dispatch(loadWorkShiftDataError(error));
@@ -65,13 +66,14 @@ export function beginLoadWorkShiftData() {
   };
 }
 
-export function loadWorkShiftDataSuccessful(res) {
+export function loadWorkShiftDataSuccessful(res, selectedStaffId) {
   return {
     type: type.LOAD_WORK_SHIFT_DATA_SUCCESSFUL,
     workShiftRegisterData: res.data.work_shifts,
     isLoading: false,
     error: false,
     refreshing: false,
+    selectedStaffId: selectedStaffId,
   };
 }
 
@@ -195,5 +197,12 @@ export function unregister(workShiftId, token, domain) {
         dispatch(workShiftUnregisterError(workShiftId));
         throw error;
       });
+  };
+}
+
+export function onSelectStaffId(id) {
+  return {
+    type: type.SELECTED_STAFF_ID_WORK_SHIFT_REGISTER,
+    selectedStaffId: id,
   };
 }

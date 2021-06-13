@@ -4,6 +4,8 @@ import * as workShiftRegisterAction from '../actions/workShiftRegisterActions.js
 import WorkShiftRegisterComponent from '../components/WorkShiftRegisterComponent';
 import {bindActionCreators} from 'redux';
 import * as baseActions from '../actions/baseActions';
+import * as staffActions from '../actions/staffActions';
+import {onSelectStaffId} from '../actions/workShiftRegisterActions.js';
 
 class WorkShiftRegisterContainer extends React.Component {
   constructor(props, context) {
@@ -15,6 +17,7 @@ class WorkShiftRegisterContainer extends React.Component {
   }
 
   componentWillMount = () => {
+    this.loadStaff('');
     this.loadBaseData();
   };
 
@@ -35,20 +38,48 @@ class WorkShiftRegisterContainer extends React.Component {
         props.startTime,
         props.endTime,
         props.baseData[0].id,
+        props.selectedStaffId,
       );
     }
+  };
+
+  loadStaff = () => {
+    this.props.staffActions.getStaff(
+      false,
+      1,
+      '',
+      this.props.token,
+      this.props.domain,
+    );
+  };
+
+  searchStaff = (search) => {
+    this.props.staffActions.getStaff(
+      true,
+      1,
+      search,
+      this.props.token,
+      this.props.domain,
+    );
   };
 
   loadBaseData = () => {
     this.props.baseActions.loadDataBase(this.props.token, this.props.domain);
   };
 
-  loadDataWorkShiftRegister = (refreshing, startTime, endTime, baseId) => {
+  loadDataWorkShiftRegister = (
+    refreshing,
+    startTime,
+    endTime,
+    baseId,
+    selectedStaffId,
+  ) => {
     this.props.workShiftRegisterAction.loadWorkShift(
       refreshing,
       startTime,
       endTime,
       baseId,
+      selectedStaffId,
       this.props.token,
       this.props.domain,
     );
@@ -61,6 +92,7 @@ class WorkShiftRegisterContainer extends React.Component {
       this.props.startTime,
       this.props.endTime,
       baseId,
+      this.props.selectedStaffId,
     );
   };
 
@@ -86,6 +118,7 @@ class WorkShiftRegisterContainer extends React.Component {
       startTime,
       endTime,
       this.props.selectedBaseId,
+      this.props.selectedStaffId,
     );
   };
 
@@ -103,6 +136,18 @@ class WorkShiftRegisterContainer extends React.Component {
       this.props.startTime,
       this.props.endTime,
       this.props.selectedBaseId,
+      this.props.selectedStaffId,
+    );
+  };
+
+  onSelectStaffId = (staffId) => {
+    this.props.workShiftRegisterAction.onSelectStaffId(staffId);
+    this.loadDataWorkShiftRegister(
+      true,
+      this.props.startTime,
+      this.props.endTime,
+      this.props.selectedBaseId,
+      staffId,
     );
   };
 
@@ -117,6 +162,8 @@ class WorkShiftRegisterContainer extends React.Component {
         onRegister={this.onRegister}
         onUnregister={this.onUnregister}
         onNavigateWeek={this.onNavigateWeek}
+        searchStaff={this.searchStaff}
+        onSelectStaffId={this.onSelectStaffId}
       />
     );
   }
@@ -137,12 +184,18 @@ function mapStateToProps(state) {
     startTime: state.workShiftRegister.startTime,
     endTime: state.workShiftRegister.endTime,
     refreshing: state.workShiftRegister.refreshing,
+    staff: state.staff.staff,
+    isLoadingStaff: state.staff.isLoadingStaff,
+    errorStaff: state.staff.errorStaff,
+    refreshingStaff: state.staff.refreshingStaff,
+    selectedStaffId: state.workShiftRegister.selectedStaffId,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     baseActions: bindActionCreators(baseActions, dispatch),
+    staffActions: bindActionCreators(staffActions, dispatch),
     workShiftRegisterAction: bindActionCreators(
       workShiftRegisterAction,
       dispatch,

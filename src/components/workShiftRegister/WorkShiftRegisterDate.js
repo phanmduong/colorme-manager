@@ -31,6 +31,7 @@ class WorkShiftRegisterDate extends React.Component {
         errorUnregistering={shift.isUnregistering}
         disable={shift.disable}
         permissions={shift.permissions}
+        selectedStaffId={this.props.selectedStaffId}
       />
     ));
   };

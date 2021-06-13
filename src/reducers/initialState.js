@@ -331,6 +331,7 @@ export default {
     selectedBaseId: '',
     startTime: moment().startOf('week').day('Monday').unix(),
     endTime: moment().endOf('week').unix(),
+    selectedStaffId: '',
   },
   teachingRating: {
     isLoadingTeacherRating: false,

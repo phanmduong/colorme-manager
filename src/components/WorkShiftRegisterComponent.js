@@ -13,7 +13,6 @@ import WorkShiftRegisterHoursReviewModal from './workShiftRegister/WorkShiftRegi
 import {isIphoneX, getStatusBarHeight} from 'react-native-iphone-x-helper';
 const {width} = Dimensions.get('window');
 import moment from 'moment';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import DropdownPicker from './common/DropdownPicker';
 import DateRangePicker from './common/DateRangePicker';
 import Loading from './common/Loading';
@@ -21,12 +20,12 @@ import {groupBy} from '../helper';
 import WorkShiftRegisterDate from './workShiftRegister/WorkShiftRegisterDate';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import EmptyMessage from './common/EmptyMessage';
 
 class WorkShiftRegisterComponent extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      index: 0,
       isVisible: false,
     };
   }
@@ -39,6 +38,7 @@ class WorkShiftRegisterComponent extends React.Component {
         user={this.props.user}
         onRegister={this.props.onRegister}
         onUnregister={this.props.onUnregister}
+        selectedStaffId={this.state.staffId}
       />
     );
   };
@@ -150,6 +150,7 @@ class WorkShiftRegisterComponent extends React.Component {
             options={this.props.baseData}
             selectedId={this.props.selectedBaseId}
             onChangeValue={this.props.onSelectBaseId}
+            header={'Chọn cơ sở'}
           />
           <View style={styles.weekNavBar}>
             <TouchableOpacity
@@ -185,12 +186,26 @@ class WorkShiftRegisterComponent extends React.Component {
           mode={'filter'}
           containerStyle={styles.datePicker}
         />
+        <View style={styles.containerPicker}>
+          <DropdownPicker
+            options={this.props.staff}
+            header={'Chọn nhân viên'}
+            onChangeValue={this.props.onSelectStaffId}
+            selectedId={this.props.selectedStaffId}
+            isAllOptionAvailable
+            onApiSearch={this.props.searchStaff}
+            isApiSearch
+            allOptionName={'Tất cả nhân viên'}
+            placeholder={'Chọn nhân viên'}
+            containerStyle={styles.staffPicker}
+          />
+        </View>
       </>
     );
   };
 
   render() {
-    if (!this.props.isLoadingBases) {
+    if (!this.props.isLoadingBases && !this.props.isLoadingStaff) {
       const workShifts = groupBy(
         this.props.workShiftRegisterData,
         (workShift) => workShift.date,
@@ -215,7 +230,9 @@ class WorkShiftRegisterComponent extends React.Component {
             }
             ListHeaderComponent={this.headerComponent}
             ListEmptyComponent={
-              this.props.isLoadingWorkShiftRegister && <Loading />
+              this.props.isLoadingWorkShiftRegister
+                ? !this.props.refreshing && <Loading />
+                : !this.props.refreshing && <EmptyMessage />
             }
             ListFooterComponent={() => <View style={styles.footer} />}
           />
@@ -339,6 +356,9 @@ const styles = {
     alignItems: 'center',
     backgroundColor: '#f0f0f0',
     borderRadius: 24,
+  },
+  staffPicker: {
+    marginTop: 10,
   },
 };
 

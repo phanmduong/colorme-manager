@@ -39,7 +39,10 @@ function WorkShiftStatisticsItem(props) {
               borderWidth={0}
             />
             <Text style={styles.textProcess}>
-              {hoursOf(statistics.total_time)}/20 số giờ đăng kí
+              <Text style={styles.bold}>
+                {hoursOf(statistics.total_time)}/20H
+              </Text>{' '}
+              đăng kí
             </Text>
           </View>
           <View style={styles.processAndText}>
@@ -55,8 +58,11 @@ function WorkShiftStatisticsItem(props) {
               borderWidth={0}
             />
             <Text style={styles.textProcess}>
-              {hoursOf(statistics.total_valid_time)}/
-              {hoursOf(statistics.total_time)} số giờ hợp lệ
+              <Text style={styles.bold}>
+                {hoursOf(statistics.total_valid_time)}/
+                {hoursOf(statistics.total_time)}H
+              </Text>{' '}
+              hợp lệ
             </Text>
           </View>
           <View style={styles.processAndText}>
@@ -72,8 +78,11 @@ function WorkShiftStatisticsItem(props) {
               borderWidth={0}
             />
             <Text style={styles.textProcess}>
-              {hoursOf(statistics.total_invalid_time)}/
-              {hoursOf(statistics.total_time)} số giờ vi phạm
+              <Text style={styles.bold}>
+                {hoursOf(statistics.total_invalid_time)}/
+                {hoursOf(statistics.total_time)}H
+              </Text>{' '}
+              vi phạm
             </Text>
           </View>
           <View style={styles.processAndText}>
@@ -92,11 +101,15 @@ function WorkShiftStatisticsItem(props) {
               borderWidth={0}
             />
             <Text style={styles.textProcess}>
-              {hoursOf(
-                statistics.total_time -
-                  (statistics.total_invalid_time + statistics.total_valid_time),
-              )}
-              /{hoursOf(statistics.total_time)} số giờ chưa diễn ra
+              <Text style={styles.bold}>
+                {hoursOf(
+                  statistics.total_time -
+                    (statistics.total_invalid_time +
+                      statistics.total_valid_time),
+                )}
+                /{hoursOf(statistics.total_time)}H
+              </Text>{' '}
+              chưa diễn ra
             </Text>
           </View>
         </View>
@@ -133,6 +146,9 @@ const styles = {
   },
   textProcess: {
     marginLeft: 10,
+  },
+  bold: {
+    fontWeight: '600',
   },
 };
 

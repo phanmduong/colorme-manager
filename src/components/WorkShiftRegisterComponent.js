@@ -8,8 +8,6 @@ import {
 } from 'react-native';
 import theme from '../styles';
 import {List, Text} from 'native-base';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import WorkShiftRegisterHoursReviewModal from './workShiftRegister/WorkShiftRegisterHoursReviewModal';
 import {isIphoneX, getStatusBarHeight} from 'react-native-iphone-x-helper';
 const {width} = Dimensions.get('window');
 import moment from 'moment';
@@ -122,28 +120,14 @@ class WorkShiftRegisterComponent extends React.Component {
             </TouchableOpacity>
             <Text style={styles.headerTitle}>Đăng ký làm việc</Text>
           </View>
-
-          {/*TODO: Work shift reports*/}
-
-          <View style={styles.row}>
-            <TouchableOpacity onPress={this.toggleModal}>
-              <View style={[styles.headerIconContainer, {marginRight: 10}]}>
-                <Entypo name={'bar-graph'} size={20} color={'black'} />
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() =>
-                this.props.navigation.navigate('WorkShiftStatistics')
-              }>
-              <View style={styles.headerIconContainer}>
-                <MaterialCommunityIcons
-                  name={'information'}
-                  size={20}
-                  color={'black'}
-                />
-              </View>
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            onPress={() =>
+              this.props.navigation.navigate('WorkShiftStatistics')
+            }>
+            <View style={styles.headerIconContainer}>
+              <Entypo name={'bar-graph'} size={20} color={'black'} />
+            </View>
+          </TouchableOpacity>
         </View>
         <View style={styles.containerPicker}>
           <DropdownPicker

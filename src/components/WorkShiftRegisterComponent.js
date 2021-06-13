@@ -20,6 +20,7 @@ import Loading from './common/Loading';
 import {groupBy} from '../helper';
 import WorkShiftRegisterDate from './workShiftRegister/WorkShiftRegisterDate';
 import Entypo from 'react-native-vector-icons/Entypo';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 class WorkShiftRegisterComponent extends React.Component {
   constructor(props, context) {
@@ -84,6 +85,29 @@ class WorkShiftRegisterComponent extends React.Component {
     });
   };
 
+  weekNavigate = (type) => {
+    let startTime;
+    let endTime;
+    switch (type) {
+      case 'forward':
+        startTime = this.props.startTime + 604800;
+        endTime = this.props.endTime + 604800;
+        this.props.onSelectStartTime(startTime);
+        this.props.onSelectEndTime(endTime);
+        this.props.onNavigateWeek(startTime, endTime);
+        break;
+      case 'backward':
+        startTime = this.props.startTime - 604800;
+        endTime = this.props.endTime - 604800;
+        this.props.onSelectStartTime(startTime);
+        this.props.onSelectEndTime(endTime);
+        this.props.onNavigateWeek(startTime, endTime);
+        break;
+      default:
+        break;
+    }
+  };
+
   headerComponent = () => {
     return (
       <>
@@ -127,6 +151,30 @@ class WorkShiftRegisterComponent extends React.Component {
             selectedId={this.props.selectedBaseId}
             onChangeValue={this.props.onSelectBaseId}
           />
+          <View style={styles.weekNavBar}>
+            <TouchableOpacity
+              disabled={
+                this.props.refreshing || this.props.isLoadingWorkShiftRegister
+              }
+              style={styles.weekButton}
+              onPress={() => this.weekNavigate('backward')}>
+              <Text>
+                <AntDesign name={'caretleft'} size={15} color={'black'} /> 7
+                ngày trước
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              disabled={
+                this.props.refreshing || this.props.isLoadingWorkShiftRegister
+              }
+              style={styles.weekButton}
+              onPress={() => this.weekNavigate('forward')}>
+              <Text>
+                7 ngày sau{' '}
+                <AntDesign name={'caretright'} size={15} color={'black'} />
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
         <DateRangePicker
           endDate={this.props.endTime}
@@ -205,7 +253,9 @@ const styles = {
     alignItems: 'center',
   },
   containerPicker: {
+    flex: 1,
     flexDirection: 'row',
+    alignItems: 'center',
     flexWrap: 'wrap',
   },
   textError: {
@@ -278,6 +328,17 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 20,
+  },
+  weekNavBar: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  weekButton: {
+    flex: 1,
+    paddingVertical: 10,
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+    borderRadius: 24,
   },
 };
 

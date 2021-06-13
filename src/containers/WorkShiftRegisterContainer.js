@@ -80,6 +80,15 @@ class WorkShiftRegisterContainer extends React.Component {
     );
   };
 
+  onNavigateWeek = (startTime, endTime) => {
+    this.loadDataWorkShiftRegister(
+      true,
+      startTime,
+      endTime,
+      this.props.selectedBaseId,
+    );
+  };
+
   onUnregister = (shiftId) => {
     this.props.workShiftRegisterAction.unregister(
       shiftId,
@@ -107,6 +116,7 @@ class WorkShiftRegisterContainer extends React.Component {
         onRefresh={this.onRefresh}
         onRegister={this.onRegister}
         onUnregister={this.onUnregister}
+        onNavigateWeek={this.onNavigateWeek}
       />
     );
   }

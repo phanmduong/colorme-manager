@@ -5,6 +5,7 @@ import Modal from 'react-native-modal';
 import {getBottomSpace} from 'react-native-iphone-x-helper';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import moment from 'moment';
+import {displayUnixDate} from "../../helper";
 
 function DateRangePicker({
   startDate,
@@ -50,7 +51,7 @@ function DateRangePicker({
   function displayDateFormat(date) {
     switch (dateType) {
       case 'unix':
-        return moment.unix(date).format('DD/MM/YYYY');
+        return displayUnixDate(date);
       case 'normal':
         return moment(date).format('DD/MM/YYYY');
       case 'moment':

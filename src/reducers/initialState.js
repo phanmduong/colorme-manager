@@ -329,7 +329,7 @@ export default {
     refreshing: false,
     workShiftRegisterData: [],
     selectedBaseId: '',
-    startTime: moment().startOf('week').unix(),
+    startTime: moment().startOf('week').day('Monday').unix(),
     endTime: moment().endOf('week').unix(),
   },
   teachingRating: {

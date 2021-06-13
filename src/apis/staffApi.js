@@ -3,8 +3,8 @@ import axios from 'axios';
 
 export function getStaff(sourceCancel = {}, page, search, token, domain) {
   let url =
-    env.manageApiUrlV3(domain) +
-    '/get-staffs?page=' +
+    env.manageApiUrlAuth(domain) +
+    '/v1/employees?limit=20&orderBy=created_at&sortedBy=desc&page=' +
     page +
     '&search=' +
     search +

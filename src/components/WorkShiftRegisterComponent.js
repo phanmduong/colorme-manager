@@ -1,168 +1,65 @@
 import React from 'react';
 import {
   View,
-  ScrollView,
   Dimensions,
   TouchableOpacity,
   RefreshControl,
-  Alert,
   Image,
 } from 'react-native';
-import WorkShiftRegisterWeek from './workShiftRegister/WorkShiftRegisterWeek';
-import Spinkit from 'react-native-spinkit';
 import theme from '../styles';
-import {CustomPicker} from 'react-native-custom-picker';
-import LinearGradient from 'react-native-linear-gradient';
-import {Button, Text} from 'native-base';
-import * as alert from '../constants/alert';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import WorkShiftRegisterHoursReviewModal from './workShiftRegister/WorkShiftRegisterHoursReviewModal';
+import {List, Text} from 'native-base';
 import {isIphoneX, getStatusBarHeight} from 'react-native-iphone-x-helper';
-var {height, width} = Dimensions.get('window');
-import Entypo from 'react-native-vector-icons/Entypo';
+const {width} = Dimensions.get('window');
 import moment from 'moment';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import DropdownPicker from './common/DropdownPicker';
+import DateRangePicker from './common/DateRangePicker';
+import Loading from './common/Loading';
+import {groupBy} from '../helper';
+import WorkShiftRegisterDate from './workShiftRegister/WorkShiftRegisterDate';
+import Entypo from 'react-native-vector-icons/Entypo';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import EmptyMessage from './common/EmptyMessage';
 
 class WorkShiftRegisterComponent extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      index: 0,
       isVisible: false,
     };
   }
 
-  renderShiftWeek = (index) => {
+  renderShiftByDate = (item) => {
     return (
-      <WorkShiftRegisterWeek
-        week={this.props.workShiftRegisterData.weeks[index]}
+      <WorkShiftRegisterDate
+        date={item.date}
+        shifts={item.shifts}
         user={this.props.user}
         onRegister={this.props.onRegister}
         onUnregister={this.props.onUnregister}
+        selectedStaffId={this.state.staffId}
       />
     );
   };
 
-  showShift = (index) => {
-    return (
-      <View style={{marginBottom: 50}}>{this.renderShiftWeek(index)}</View>
-    );
-  };
-
-  totalHours = (index, user) => {
+  totalHours = (user) => {
     let total = 0;
-    for (
-      let i = 0;
-      i < this.props.workShiftRegisterData.weeks[index].dates.length;
-      i++
-    ) {
-      for (
-        let j = 0;
-        j <
-        this.props.workShiftRegisterData.weeks[index].dates[i].shifts.length;
-        j++
-      ) {
-        for (
-          let k = 0;
-          k <
-          this.props.workShiftRegisterData.weeks[index].dates[i].shifts[j].users
-            .length;
-          k++
-        ) {
-          if (
-            this.props.workShiftRegisterData.weeks[index].dates[i].shifts[j]
-              .users[k].id === user.id
-          ) {
-            const startTime = moment(
-              this.props.workShiftRegisterData.weeks[index].dates[i].shifts[j]
-                .start_time,
-              'HH:mm',
-            );
-            const endTime = moment(
-              this.props.workShiftRegisterData.weeks[index].dates[i].shifts[j]
-                .end_time,
-              'HH:mm',
-            );
-            const hours = moment.duration(endTime.diff(startTime)).asHours();
-            total += hours;
-          }
-        }
+    this.props.workShiftRegisterData.forEach((workShift) => {
+      const subscribedUser = workShift.users.find(
+        (subscriber) => subscriber.id === user.id,
+      );
+      if (subscribedUser) {
+        const startTime = moment.unix(workShift.work_shift_session.start_time);
+        const endTime = moment.unix(workShift.work_shift_session.end_time);
+        const hours = moment.duration(endTime.diff(startTime)).asHours();
+        total += hours;
       }
-    }
+    });
     return total;
   };
 
-  setWeekIndex = (value, array) => {
-    for (let i = 0; i < array.length; i++) {
-      if (value === array[i]) {
-        this.setState({index: i});
-      }
-    }
-  };
-
-  renderBasePickerHeader = () => {
-    return (
-      <View style={styles.headerFooterContainer}>
-        <Text style={styles.headerFooterText}>Chọn cơ sở</Text>
-      </View>
-    );
-  };
-
-  renderBasePickerField = (settings) => {
-    const {selectedItem, defaultText, getLabel} = settings;
-    return (
-      <LinearGradient
-        colors={['#f6f6f6', '#f6f6f6']}
-        style={styles.gradientSize}
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 0}}>
-        {!selectedItem && (
-          <Text style={{color: 'black', fontSize: 16}}>
-            {getLabel(defaultText)} ▼
-          </Text>
-        )}
-        {selectedItem && (
-          <Text style={{color: 'black', fontSize: 16}}>
-            {getLabel(selectedItem)} ▼
-          </Text>
-        )}
-      </LinearGradient>
-    );
-  };
-
-  renderBasePickerOption = (settings) => {
-    const {item, getLabel} = settings;
-    return (
-      <View style={styles.options}>
-        <Text style={{fontSize: 16}}>{getLabel(item)}</Text>
-      </View>
-    );
-  };
-
-  errorData() {
-    return (
-      <View style={{marginTop: height * 0.3, alignItems: 'center'}}>
-        <Text style={styles.textError}>
-          {this.props.errorWorkShiftRegister
-            ? alert.LOAD_DATA_ERROR
-            : alert.NO_DATA_WORK_SHIFT_REGISTER}
-        </Text>
-        <Button
-          iconLeft
-          danger
-          small
-          onPress={this.props.onRefresh}
-          style={{marginTop: 10, alignSelf: null}}>
-          <MaterialCommunityIcons name="reload" color="white" size={20} />
-          <Text>Thử lại</Text>
-        </Button>
-      </View>
-    );
-  }
-
-  greenBarLength = (index) => {
-    let barLen = 0;
-    let totalHours = this.totalHours(index, this.props.user);
+  greenBarLength = () => {
+    let barLen;
+    let totalHours = this.totalHours(this.props.user);
     if (totalHours > 20) {
       barLen = width - 80;
     } else {
@@ -173,7 +70,7 @@ class WorkShiftRegisterComponent extends React.Component {
 
   greenBar = () => {
     return {
-      width: this.greenBarLength(this.state.index),
+      width: this.greenBarLength(),
       height: 8,
       borderRadius: 6,
       backgroundColor: '#32CA41',
@@ -186,32 +83,118 @@ class WorkShiftRegisterComponent extends React.Component {
     });
   };
 
-  setWeekIndexTest = (mode) => {
-    if (mode === 'back') {
-      if (this.state.index - 1 >= 0) {
-        this.setState({index: this.state.index - 1});
-      }
-    }
-    if (mode === 'next') {
-      if (
-        this.state.index + 1 <
-        this.props.workShiftRegisterData.weeks.length
-      ) {
-        this.setState({index: this.state.index + 1});
-      }
+  weekNavigate = (type) => {
+    let startTime;
+    let endTime;
+    switch (type) {
+      case 'forward':
+        startTime = this.props.startTime + 604800;
+        endTime = this.props.endTime + 604800;
+        this.props.onSelectStartTime(startTime);
+        this.props.onSelectEndTime(endTime);
+        this.props.onNavigateWeek(startTime, endTime);
+        break;
+      case 'backward':
+        startTime = this.props.startTime - 604800;
+        endTime = this.props.endTime - 604800;
+        this.props.onSelectStartTime(startTime);
+        this.props.onSelectEndTime(endTime);
+        this.props.onNavigateWeek(startTime, endTime);
+        break;
+      default:
+        break;
     }
   };
 
-  render() {
-    if (
-      this.props.workShiftRegisterData &&
-      this.props.workShiftRegisterData.weeks
-    ) {
-      let baseOptions = [];
-      for (let i = 0; i < this.props.baseData.length; i++) {
-        baseOptions.push(this.props.baseData[i]);
-      }
+  headerComponent = () => {
+    return (
+      <>
+        <View style={styles.headerContainer}>
+          <View style={styles.row}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Profile')}>
+              <Image
+                source={{uri: this.props.user.avatar_url}}
+                style={styles.headerAva}
+              />
+            </TouchableOpacity>
+            <Text style={styles.headerTitle}>Đăng ký làm việc</Text>
+          </View>
+          <TouchableOpacity
+            onPress={() =>
+              this.props.navigation.navigate('WorkShiftStatistics')
+            }>
+            <View style={styles.headerIconContainer}>
+              <Entypo name={'bar-graph'} size={20} color={'black'} />
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.containerPicker}>
+          <DropdownPicker
+            options={this.props.baseData}
+            selectedId={this.props.selectedBaseId}
+            onChangeValue={this.props.onSelectBaseId}
+            header={'Chọn cơ sở'}
+          />
+          <View style={styles.weekNavBar}>
+            <TouchableOpacity
+              disabled={
+                this.props.refreshing || this.props.isLoadingWorkShiftRegister
+              }
+              style={styles.weekButton}
+              onPress={() => this.weekNavigate('backward')}>
+              <Text>
+                <AntDesign name={'caretleft'} size={15} color={'black'} /> 7
+                ngày trước
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              disabled={
+                this.props.refreshing || this.props.isLoadingWorkShiftRegister
+              }
+              style={styles.weekButton}
+              onPress={() => this.weekNavigate('forward')}>
+              <Text>
+                7 ngày sau{' '}
+                <AntDesign name={'caretright'} size={15} color={'black'} />
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <DateRangePicker
+          endDate={this.props.endTime}
+          startDate={this.props.startTime}
+          onSelectEndDate={this.props.onSelectEndTime}
+          onSelectStartDate={this.props.onSelectStartTime}
+          apply={this.props.onRefresh}
+          mode={'filter'}
+          containerStyle={styles.datePicker}
+        />
+        <View style={styles.containerPicker}>
+          <DropdownPicker
+            options={this.props.staff}
+            header={'Chọn nhân viên'}
+            onChangeValue={this.props.onSelectStaffId}
+            selectedId={this.props.selectedStaffId}
+            isAllOptionAvailable
+            onApiSearch={this.props.searchStaff}
+            isApiSearch
+            allOptionName={'Tất cả nhân viên'}
+            placeholder={'Chọn nhân viên'}
+            containerStyle={styles.staffPicker}
+          />
+        </View>
+      </>
+    );
+  };
 
+  render() {
+    if (!this.props.isLoadingBases && !this.props.isLoadingStaff) {
+      const workShifts = groupBy(
+        this.props.workShiftRegisterData,
+        (workShift) => workShift.date,
+        ['date', 'shifts'],
+      );
       return (
         <View
           style={
@@ -219,169 +202,47 @@ class WorkShiftRegisterComponent extends React.Component {
               ? {flex: 1, marginTop: getStatusBarHeight() + 10}
               : {flex: 1, marginTop: 20}
           }>
-          <ScrollView
+          <List
+            dataArray={workShifts}
+            contentContainerStyle={{flexGrow: 1, marginHorizontal: 16}}
+            renderRow={this.renderShiftByDate}
             refreshControl={
               <RefreshControl
-                refreshing={this.props.isLoadingWorkShiftRegister}
+                refreshing={this.props.refreshing}
                 onRefresh={this.props.onRefresh}
               />
-            }>
-            <View style={styles.headerContainer}>
-              <View style={styles.row}>
-                <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate('Profile')}>
-                  <Image
-                    source={{uri: this.props.avatar_url}}
-                    style={styles.headerAva}
-                  />
-                </TouchableOpacity>
-                <Text style={styles.headerTitle}>Đăng ký làm việc</Text>
-              </View>
-              <View style={styles.row}>
-                <TouchableOpacity onPress={this.toggleModal}>
-                  <View style={[styles.headerIconContainer, {marginRight: 10}]}>
-                    <Entypo name={'bar-graph'} size={20} color={'black'} />
-                  </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() =>
-                    this.props.navigation.navigate(
-                      'ListDetailShiftsRegistered',
-                      {
-                        week: this.props.workShiftRegisterData.weeks[
-                          this.state.index
-                        ].week,
-                        dates: this.props.workShiftRegisterData.weeks[
-                          this.state.index
-                        ].dates,
-                      },
-                    )
-                  }>
-                  <View style={styles.headerIconContainer}>
-                    <MaterialCommunityIcons
-                      name={'information'}
-                      size={20}
-                      color={'black'}
-                    />
-                  </View>
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View style={styles.containerPicker}>
-              <CustomPicker
-                options={baseOptions}
-                defaultValue={baseOptions[0]}
-                getLabel={(item) => item.name}
-                modalAnimationType={'fade'}
-                optionTemplate={this.renderBasePickerOption}
-                fieldTemplate={this.renderBasePickerField}
-                headerTemplate={this.renderBasePickerHeader}
-                footerTemplate={this.renderCoursePickerFooter}
-                modalStyle={{
-                  borderRadius: 6,
-                }}
-                onValueChange={(value) => {
-                  this.props.onSelectBaseId(value.id);
-                }}
+            }
+            ListHeaderComponent={this.headerComponent}
+            ListEmptyComponent={
+              this.props.isLoadingWorkShiftRegister
+                ? !this.props.refreshing && <Loading />
+                : !this.props.refreshing && <EmptyMessage />
+            }
+            ListFooterComponent={() => <View style={styles.footer} />}
+          />
+          <View style={styles.hoursContainer}>
+            <View style={styles.hoursSubContainer}>
+              <Image
+                source={{uri: this.props.user.avatar_url}}
+                style={styles.hoursAva}
               />
-            </View>
-
-            <View style={styles.weekNavigatorContainer}>
-              <TouchableOpacity onPress={() => this.setWeekIndexTest('next')}>
-                <MaterialIcons
-                  name={'navigate-before'}
-                  color={'black'}
-                  size={30}
-                />
-              </TouchableOpacity>
-              {this.props.workShiftRegisterData.weeks[this.state.index] && (
-                <View style={styles.dateContainer}>
-                  <Text style={styles.bold}>
-                    Tuần{' '}
-                    {
-                      this.props.workShiftRegisterData.weeks[this.state.index]
-                        .week
-                    }
-                  </Text>
-                  <Text>
-                    {this.props.workShiftRegisterData.weeks[
-                      this.state.index
-                    ].dates[
-                      this.props.workShiftRegisterData.weeks[this.state.index]
-                        .dates.length - 1
-                    ].date.slice(-10)}{' '}
-                    -{' '}
-                    {this.props.workShiftRegisterData.weeks[
-                      this.state.index
-                    ].dates[0].date.slice(-10)}
+              <View>
+                <View style={styles.hoursTextContainer}>
+                  <Text style={styles.hoursText}>Bạn đã đăng kí</Text>
+                  <Text style={styles.hoursText}>
+                    {this.totalHours(this.props.user)}H/20H
                   </Text>
                 </View>
-              )}
-              <TouchableOpacity onPress={() => this.setWeekIndexTest('back')}>
-                <MaterialIcons
-                  name={'navigate-next'}
-                  color={'black'}
-                  size={30}
-                />
-              </TouchableOpacity>
-            </View>
-
-            {this.props.workShiftRegisterData.weeks.length > 0 &&
-            !this.props.errorWorkShiftRegister ? (
-              <View style={{flex: 1}}>
-                <ScrollView>{this.showShift(this.state.index)}</ScrollView>
-                <WorkShiftRegisterHoursReviewModal
-                  weekIndex={
-                    this.props.workShiftRegisterData.weeks[this.state.index]
-                      .week
-                  }
-                  isVisible={this.state.isVisible}
-                  closeModal={() => this.toggleModal()}
-                  dates={
-                    this.props.workShiftRegisterData.weeks[this.state.index]
-                      .dates
-                  }
-                />
-              </View>
-            ) : (
-              <View>{this.errorData()}</View>
-            )}
-          </ScrollView>
-          {this.props.workShiftRegisterData.weeks.length > 0 &&
-          !this.props.errorWorkShiftRegister ? (
-            <View style={styles.hoursContainer}>
-              <View style={styles.hoursSubContainer}>
-                <Image
-                  source={{uri: this.props.avatar_url}}
-                  style={styles.hoursAva}
-                />
-                <View>
-                  <View style={styles.hoursTextContainer}>
-                    <Text style={styles.hoursText}>Bạn đã đăng kí</Text>
-                    <Text style={styles.hoursText}>
-                      {this.totalHours(this.state.index, this.props.user)}H/20H
-                    </Text>
-                  </View>
-                  <View style={styles.grayBar}>
-                    <View style={this.greenBar()} />
-                  </View>
+                <View style={styles.grayBar}>
+                  <View style={this.greenBar()} />
                 </View>
               </View>
             </View>
-          ) : null}
+          </View>
         </View>
       );
     } else {
-      return (
-        <View style={styles.container}>
-          <Spinkit
-            isVisible
-            color={theme.mainColor}
-            type="Wave"
-            size={width / 8}
-          />
-        </View>
-      );
+      return <Loading />;
     }
   }
 }
@@ -392,45 +253,15 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  containerList: {
-    borderTopColor: theme.borderColor,
-    borderTopWidth: 1,
-  },
-  gradientSize: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 24,
-    marginLeft: 10,
-  },
-  headerFooterContainer: {
-    padding: 10,
-    alignItems: 'center',
-  },
-  headerFooterText: {
-    fontSize: 19,
-    fontWeight: 'bold',
-    color: 'black',
-  },
-  options: {
-    marginVertical: 10,
-    paddingVertical: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F0F0F0',
-    marginHorizontal: 20,
-  },
   containerPicker: {
+    flex: 1,
     flexDirection: 'row',
+    alignItems: 'center',
     flexWrap: 'wrap',
   },
   textError: {
     color: '#d9534f',
     textAlign: 'center',
-  },
-  switchGenBaseLoading: {
-    marginTop: height * 0.05,
-    alignItems: 'center',
   },
   hoursContainer: {
     backgroundColor: 'white',
@@ -463,7 +294,6 @@ const styles = {
     width: width - 80,
   },
   headerContainer: {
-    marginHorizontal: theme.mainHorizontal,
     marginTop: 20,
     marginBottom: 10,
     flexDirection: 'row',
@@ -486,6 +316,12 @@ const styles = {
     flexDirection: 'row',
     alignItems: 'center',
   },
+  datePicker: {
+    marginTop: 5,
+  },
+  footer: {
+    height: 80,
+  },
   headerIconContainer: {
     width: 40,
     height: 40,
@@ -494,18 +330,19 @@ const styles = {
     alignItems: 'center',
     borderRadius: 20,
   },
-  weekNavigatorContainer: {
+  weekNavBar: {
+    flex: 1,
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 5,
-    marginVertical: 10,
   },
-  bold: {
-    fontWeight: 'bold',
-  },
-  dateContainer: {
+  weekButton: {
+    flex: 1,
+    paddingVertical: 10,
     alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+    borderRadius: 24,
+  },
+  staffPicker: {
+    marginTop: 10,
   },
 };
 

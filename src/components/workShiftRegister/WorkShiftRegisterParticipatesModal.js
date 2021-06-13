@@ -11,7 +11,8 @@ import {
 } from 'react-native';
 import Modal from 'react-native-modal';
 import theme from '../../styles';
-var {height, width} = Dimensions.get('window');
+import {displayUnixDate} from '../../helper';
+const {height} = Dimensions.get('window');
 
 class WorkShiftRegisterParticipatesModal extends React.Component {
   constructor(props, context) {
@@ -31,7 +32,7 @@ class WorkShiftRegisterParticipatesModal extends React.Component {
             <View>
               <Text
                 style={[styles.headerTitle, {fontWeight: '600', fontSize: 17}]}>
-                {this.props.date}
+                {displayUnixDate(this.props.date, 'full-date')}
               </Text>
               <Text style={[styles.headerTitle, {marginTop: 5}]}>
                 {this.props.shift}
@@ -47,7 +48,7 @@ class WorkShiftRegisterParticipatesModal extends React.Component {
             </TouchableWithoutFeedback>
           </View>
           <ScrollView>
-            {this.props.participates.map(participate => {
+            {this.props.participates.map((participate) => {
               return (
                 <View style={styles.containerItem}>
                   <View style={styles.containerPerson}>

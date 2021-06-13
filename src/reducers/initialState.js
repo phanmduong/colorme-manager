@@ -332,6 +332,10 @@ export default {
     startTime: moment().startOf('week').day('Monday').unix(),
     endTime: moment().endOf('week').unix(),
     selectedStaffId: '',
+    statistics: [],
+    isLoadingStatistics: false,
+    errorStatistics: false,
+    refreshingStatistics: false,
   },
   teachingRating: {
     isLoadingTeacherRating: false,

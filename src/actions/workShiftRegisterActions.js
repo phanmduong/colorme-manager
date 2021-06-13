@@ -206,3 +206,65 @@ export function onSelectStaffId(id) {
     selectedStaffId: id,
   };
 }
+
+export function loadStatistics(
+  refreshing,
+  startTime,
+  endTime,
+  baseId,
+  token,
+  domain,
+) {
+  return function (dispatch) {
+    if (!refreshing) {
+      dispatch(beginLoadStatistics());
+    } else {
+      dispatch(beginRefreshStatistics());
+    }
+    workShiftRegisterApi
+      .loadStatistics(startTime, endTime, baseId, token, domain)
+      .then((res) => {
+        dispatch(loadStatisticsSuccessful(res));
+      })
+      .catch((error) => {
+        dispatch(loadStatisticsError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadStatistics() {
+  return {
+    type: type.BEGIN_LOAD_WORK_SHIFT_STATISTICS,
+    isLoadingStatistics: true,
+    errorStatistics: false,
+  };
+}
+
+function beginRefreshStatistics() {
+  return {
+    type: type.BEGIN_REFRESH_WORK_SHIFT_STATISTICS,
+    refreshingStatistics: true,
+    errorStatistics: false,
+    statistics: [],
+  };
+}
+
+function loadStatisticsSuccessful(res) {
+  return {
+    type: type.LOAD_WORK_SHIFT_STATISTICS_SUCCESSFUL,
+    statistics: res.data.statistic,
+    isLoadingStatistics: false,
+    errorStatistics: false,
+    refreshingStatistics: false,
+  };
+}
+
+function loadStatisticsError() {
+  return {
+    type: type.LOAD_WORK_SHIFT_STATISTICS_ERROR,
+    isLoadingStatistics: false,
+    errorStatistics: true,
+    refreshingStatistics: false,
+  };
+}

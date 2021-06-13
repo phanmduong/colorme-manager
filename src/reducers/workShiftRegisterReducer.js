@@ -172,6 +172,30 @@ export default function workShiftRegisterReducer(
         selectedStaffId: action.selectedStaffId,
       });
     }
+    case type.BEGIN_LOAD_WORK_SHIFT_STATISTICS:
+      return Object.assign({}, state, {
+        isLoadingStatistics: action.isLoadingStatistics,
+        errorStatistics: action.errorStatistics,
+      });
+    case type.BEGIN_REFRESH_WORK_SHIFT_STATISTICS:
+      return Object.assign({}, state, {
+        refreshingStatistics: action.refreshingStatistics,
+        errorStatistics: action.errorStatistics,
+        statistics: action.statistics,
+      });
+    case type.LOAD_WORK_SHIFT_STATISTICS_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isLoadingStatistics: action.isLoadingStatistics,
+        errorStatistics: action.errorStatistics,
+        statistics: action.statistics,
+        refreshingStatistics: action.refreshingStatistics,
+      });
+    case type.LOAD_WORK_SHIFT_STATISTICS_ERROR:
+      return Object.assign({}, state, {
+        isLoadingStatistics: action.isLoadingStatistics,
+        errorStatistics: action.errorStatistics,
+        refreshingStatistics: action.refreshingStatistics,
+      });
     default:
       return state;
   }

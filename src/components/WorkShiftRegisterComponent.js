@@ -133,7 +133,7 @@ class WorkShiftRegisterComponent extends React.Component {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() =>
-                this.props.navigation.navigate('ListDetailShiftsRegistered')
+                this.props.navigation.navigate('WorkShiftStatistics')
               }>
               <View style={styles.headerIconContainer}>
                 <MaterialCommunityIcons

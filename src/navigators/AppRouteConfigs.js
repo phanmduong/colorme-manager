@@ -38,7 +38,7 @@ import HistoryMeetingContainer from '../containers/meeting/HistoryMeetingContain
 import HistoryMeetingDetailsContainer from '../containers/meetingDetail/HistoryMeetingDetailsContainer';
 import TeachingRatingContainer from '../containers/TeachingRatingContainer';
 import DetailShiftsContainer from '../containers/DetailShiftsContainer';
-import ListDetailShiftsRegisteredContainer from '../containers/ListDetailShiftsRegisteredContainer';
+import WorkShiftStatisticsContainer from '../containers/WorkShiftStatisticsContainer';
 import ListTeacherAndAssistantContainer from '../containers/ListTeacherAndAssistantContainer';
 import TeachingRatingDuplicateContainer from '../containers/TeachingRatingDuplicateContainer';
 import MakeupClassContainer from '../containers/MakeupClassContainer';
@@ -603,8 +603,8 @@ const TabWorkShift = createStackNavigator(
         headerTitleStyle: {color: 'black'},
       }),
     },
-    ListDetailShiftsRegistered: {
-      screen: ListDetailShiftsRegisteredContainer,
+    WorkShiftStatistics: {
+      screen: WorkShiftStatisticsContainer,
       navigationOptions: () => ({
         headerTintColor: 'black',
         headerTitleStyle: {color: 'black'},

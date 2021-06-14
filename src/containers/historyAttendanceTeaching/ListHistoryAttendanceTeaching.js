@@ -22,8 +22,8 @@ class ListHistoryAttendanceTeaching extends React.Component {
     const {startTime, endTime} = this.props.store;
     return (
       <DateRangePicker
-        startDate={startTime && moment.unix(startTime)}
-        endDate={endTime && moment.unix(endTime)}
+        startDate={startTime}
+        endDate={endTime}
         onSelectStartDate={this.props.onSelectStartTime}
         onSelectEndDate={this.props.onSelectEndTime}
         containerStyle={styles.container}

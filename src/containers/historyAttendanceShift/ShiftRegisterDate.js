@@ -4,6 +4,7 @@ import ShiftRegisterItem from './ShiftRegisterItem';
 import {observer} from 'mobx-react';
 import moment from 'moment';
 import _ from 'lodash';
+import {displayUnixDate} from '../../helper';
 
 var self;
 
@@ -53,9 +54,7 @@ class ShiftRegisterDate extends React.Component {
             <Body style={styles.container}>
               <View style={styles.date}>
                 <Text style={styles.textDate}>
-                  {moment
-                    .unix(this.props.dateData.date)
-                    .format('dddd DD/MM/YYYY')}
+                  {displayUnixDate(this.props.dateData.date, 'full-date')}
                 </Text>
               </View>
               {this.renderShiftItem()}

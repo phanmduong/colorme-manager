@@ -7,7 +7,6 @@ import {observer} from 'mobx-react';
 import ShiftRegisterDate from './ShiftRegisterDate';
 import {List} from 'native-base';
 import DateRangePicker from '../../components/common/DateRangePicker';
-import moment from 'moment';
 import theme from '../../styles';
 import Loading from '../../components/common/Loading';
 import EmptyMessage from '../../components/common/EmptyMessage';
@@ -22,8 +21,8 @@ class ListHistoryAttendanceShift extends React.Component {
     const {startTime, endTime} = this.props.store;
     return (
       <DateRangePicker
-        startDate={startTime && moment.unix(startTime)}
-        endDate={endTime && moment.unix(endTime)}
+        startDate={startTime}
+        endDate={endTime}
         onSelectStartDate={this.props.onSelectStartTime}
         onSelectEndDate={this.props.onSelectEndTime}
         containerStyle={styles.container}

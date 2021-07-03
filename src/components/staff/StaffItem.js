@@ -3,6 +3,8 @@ import {Dimensions, Platform} from 'react-native';
 import {View, Text, Thumbnail} from 'native-base';
 import theme from '../../styles';
 import Call from '../../components/common/Call';
+import {getValidUrl, isValidUrl} from '../../helper';
+import ImagePlaceholder from '../common/ImagePlaceholder';
 
 const {width} = Dimensions.get('window');
 const maxWidthProcess = width / 2;
@@ -16,7 +18,15 @@ class StaffItem extends React.Component {
     const {name, avatar, email, phone, department} = this.props;
     return (
       <View style={styles.container}>
-        <Thumbnail small source={{uri: avatar}} style={theme.mainAvatar} />
+        {isValidUrl(avatar) ? (
+          <Thumbnail
+            small
+            source={{uri: getValidUrl(avatar)}}
+            style={theme.mainAvatar}
+          />
+        ) : (
+          <ImagePlaceholder />
+        )}
         <View style={styles.content}>
           <View style={styles.containerTitle}>
             <Text style={styles.title}>{name.trim()}</Text>

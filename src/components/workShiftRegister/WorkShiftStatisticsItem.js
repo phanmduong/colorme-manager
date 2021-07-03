@@ -4,6 +4,7 @@ import {Thumbnail} from 'native-base';
 import theme from '../../styles';
 import * as Progress from 'react-native-progress';
 import ImagePlaceholder from '../common/ImagePlaceholder';
+import {getValidUrl, isValidUrl} from "../../helper";
 
 function WorkShiftStatisticsItem(props) {
   const {user, statistics} = props;
@@ -15,10 +16,10 @@ function WorkShiftStatisticsItem(props) {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        {user.avatar_url ? (
+        {isValidUrl(user.avatar_url) ? (
           <Thumbnail
             small
-            source={{uri: user.avatar_url}}
+            source={{uri: getValidUrl(user.avatar_url)}}
             style={theme.mainAvatar}
           />
         ) : (

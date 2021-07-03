@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import Modal from 'react-native-modal';
 import theme from '../../styles';
-import {displayUnixDate} from '../../helper';
+import {displayUnixDate, getValidUrl, isValidUrl} from '../../helper';
 const {height} = Dimensions.get('window');
 
 class WorkShiftRegisterParticipatesModal extends React.Component {
@@ -52,10 +52,17 @@ class WorkShiftRegisterParticipatesModal extends React.Component {
               return (
                 <View style={styles.containerItem}>
                   <View style={styles.containerPerson}>
-                    <Image
-                      source={{uri: participate.avatar_url}}
-                      style={styles.avatar}
-                    />
+                    {isValidUrl(participate.avatar_url) ? (
+                      <Image
+                        source={{uri: getValidUrl(participate.avatar_url)}}
+                        style={styles.avatar}
+                      />
+                    ) : (
+                      <Image
+                        source={require('../../../assets/img/placeholderAvatar.png')}
+                        style={styles.avatar}
+                      />
+                    )}
                     <View>
                       <Text style={{fontWeight: '600'}}>
                         {participate.name}

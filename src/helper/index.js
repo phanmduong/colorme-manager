@@ -357,3 +357,34 @@ export function displayUnixDate(unix, type = 'date') {
       return null;
   }
 }
+
+export function isValidUrl(url) {
+  if (isEmptyInput(url)) {
+    return false;
+  }
+
+  const pattern = new RegExp(
+    '^(https?:\\/\\/)?' + // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$',
+    'i',
+  ); // fragment locator
+  return !!pattern.test(url);
+}
+
+export function getValidUrl(url) {
+  let newUrl = window.decodeURIComponent(url);
+  newUrl = newUrl.trim().replace(/\s/g, "");
+
+  if(/^(:\/\/)/.test(newUrl)){
+    return `http${newUrl}`;
+  }
+  if(!/^(f|ht)tps?:\/\//i.test(newUrl)){
+    return `https://${newUrl}`;
+  }
+
+  return newUrl;
+}

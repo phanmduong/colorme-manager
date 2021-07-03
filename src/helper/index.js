@@ -305,8 +305,7 @@ export const getSearchedResults = (array, search) => {
 
 export const getData = (array, id, placeholder, color) => {
   let defaultOption = {id: id, name: placeholder, color: color};
-  const data = [defaultOption].concat(array);
-  return data;
+  return [defaultOption].concat(array);
 };
 
 export const getDefault = (array, comparedId) => {
@@ -319,10 +318,6 @@ export const getDefault = (array, comparedId) => {
   }
   return array[0];
 };
-
-export function isEmptyObject(obj) {
-  return Object.keys(obj).length === 0 && obj.constructor === Object;
-}
 
 export function localeDay(day) {
   switch (day) {

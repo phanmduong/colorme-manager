@@ -19,7 +19,7 @@ class TeachingClass extends React.Component {
         <Text style={styles.headerTitle}>
           {classData.class_lesson.study_class.name}
         </Text>
-        <Text>{classData.class_lesson.study_class.study_time}</Text>
+        <Text>{classData.class_lesson.study_class.schedule.name}</Text>
       </View>
     );
   }

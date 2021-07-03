@@ -1,10 +1,9 @@
 import React from 'react';
 import {View} from 'react-native';
 import {Text} from 'native-base';
-import {calculatorAttendance} from '../../helper';
+import {calculatorAttendance, displayUnixDate} from '../../helper';
 import theme from '../../styles';
 import {observer} from 'mobx-react';
-import moment from 'moment';
 
 @observer
 class ShiftRegisterItem extends React.Component {
@@ -28,15 +27,12 @@ class ShiftRegisterItem extends React.Component {
     const {shift} = this.props;
     switch (this.props.shiftType) {
       case 'work_shift':
-        return moment
-          .unix(shift.work_shift.work_shift_session.start_time)
-          .utcOffset('+0700')
-          .format('HH:mm');
+        return displayUnixDate(
+          shift.work_shift.work_shift_session.start_time,
+          'time',
+        );
       case 'shift':
-        return moment
-          .unix(shift.shift_session.start_time)
-          .utcOffset('+0700')
-          .format('HH:mm');
+        return displayUnixDate(shift.shift_session.start_time, 'time');
       default:
         return null;
     }
@@ -46,15 +42,12 @@ class ShiftRegisterItem extends React.Component {
     const {shift} = this.props;
     switch (this.props.shiftType) {
       case 'work_shift':
-        return moment
-          .unix(shift.work_shift.work_shift_session.end_time)
-          .utcOffset('+0700')
-          .format('HH:mm');
+        return displayUnixDate(
+          shift.work_shift.work_shift_session.end_time,
+          'time',
+        );
       case 'shift':
-        return moment
-          .unix(shift.shift_session.end_time)
-          .utcOffset('+0700')
-          .format('HH:mm');
+        return displayUnixDate(shift.shift_session.end_time, 'time');
       default:
         return null;
     }
@@ -71,10 +64,7 @@ class ShiftRegisterItem extends React.Component {
           <Text>
             {shift.check_in ? (
               <Text style={{color: 'black'}}>
-                {moment
-                  .unix(shift.check_in.time)
-                  .utcOffset('+0700')
-                  .format('HH:mm')}
+                {displayUnixDate(shift.check_in.time, 'time')}
               </Text>
             ) : (
               <Text style={styles.textTime}>--:--</Text>
@@ -84,10 +74,7 @@ class ShiftRegisterItem extends React.Component {
           <Text>
             {shift.check_out ? (
               <Text style={{color: 'black'}}>
-                {moment
-                  .unix(shift.check_out.time)
-                  .utcOffset('+0700')
-                  .format('HH:mm')}
+                {displayUnixDate(shift.check_out.time, 'time')}
               </Text>
             ) : (
               <Text style={styles.textTime}>--:--</Text>
@@ -101,10 +88,10 @@ class ShiftRegisterItem extends React.Component {
 
   getTimeAttendance(shift) {
     const checkInTime = shift.check_in
-      ? moment.unix(shift.check_in.time).utcOffset('+0700').format('HH:mm')
+      ? displayUnixDate(shift.check_in.time, 'time')
       : '';
     const checkOutTime = shift.check_out
-      ? moment.unix(shift.check_out.time).utcOffset('+0700').format('HH:mm')
+      ? displayUnixDate(shift.check_out.time, 'time')
       : '';
     const startTime = this.getShiftStartTime();
     const endTime = this.getShiftEndTime();

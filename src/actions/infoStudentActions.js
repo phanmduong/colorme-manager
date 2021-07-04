@@ -134,6 +134,7 @@ export function submitMoney(
   received_book_at,
   token,
   domain,
+  callback,
 ) {
   return function (dispatch) {
     dispatch(beginLoadSubmitMoney());
@@ -152,6 +153,9 @@ export function submitMoney(
       .then(function (res) {
         Alert.alert('Thông báo', 'Ghi nhận thành công');
         dispatch(loadSubmitMoneySuccessful());
+        if (callback) {
+          callback(res.data.register);
+        }
       })
       .catch((error) => {
         Alert.alert('Thông báo', 'Có lỗi xảy ra');
@@ -182,6 +186,13 @@ function loadSubmitMoneyError() {
     type: types.LOAD_SUBMIT_MONEY_ERROR,
     isLoadingSubmitMoney: false,
     errorSubmitMoney: true,
+  };
+}
+
+export function updateRegisterAfterSubmitMoney(register) {
+  return {
+    type: types.UPDATE_INFO_STUDENT_REGISTER_AFTER_SUBMIT_MONEY,
+    register,
   };
 }
 

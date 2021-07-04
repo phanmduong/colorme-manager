@@ -2,7 +2,8 @@ import React from 'react';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import WorkShiftRegisterParticipatesModal from './WorkShiftRegisterParticipatesModal';
 import theme from '../../styles';
-import {displayUnixDate} from '../../helper';
+import {displayUnixDate, getValidUrl, isValidUrl} from '../../helper';
+import ImagePlaceholder from '../common/ImagePlaceholder';
 
 class WorkShiftRegisterItem extends React.Component {
   constructor(props, context) {
@@ -69,10 +70,14 @@ class WorkShiftRegisterItem extends React.Component {
                 : styles.register
             }>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Image
-                style={styles.registeredAvatar}
-                source={{uri: this.props.user.avatar_url}}
-              />
+              {isValidUrl(this.props.user.avatar_url) ? (
+                <Image
+                  style={styles.registeredAvatar}
+                  source={{uri: getValidUrl(this.props.user.avatar_url)}}
+                />
+              ) : (
+                <ImagePlaceholder avatarStyle={styles.registeredAvatar} />
+              )}
               <Text style={styles.textRegisteredByUser}>
                 {this.props.errorUnregistering
                   ? 'Hủy đăng ký thất bất. Thử lại?'
@@ -82,11 +87,13 @@ class WorkShiftRegisterItem extends React.Component {
             <TouchableOpacity onPress={this.toggleModal}>
               <View style={styles.row}>
                 {this.props.participates.slice(0, 2).map((participate) => {
-                  return (
+                  return isValidUrl(participate.avatar_url) ? (
                     <Image
                       style={styles.participatesAvatar}
-                      source={{uri: participate.avatar_url}}
+                      source={{uri: getValidUrl(participate.avatar_url)}}
                     />
+                  ) : (
+                    <ImagePlaceholder avatarStyle={styles.participatesAvatar} />
                   );
                 })}
                 {this.props.participates.length > 2 && (
@@ -140,11 +147,13 @@ class WorkShiftRegisterItem extends React.Component {
             <TouchableOpacity onPress={this.toggleModal}>
               <View style={styles.row}>
                 {this.props.participates.slice(0, 2).map((participate) => {
-                  return (
+                  return isValidUrl(participate.avatar_url) ? (
                     <Image
                       style={styles.participatesAvatar}
-                      source={{uri: participate.avatar_url}}
+                      source={{uri: getValidUrl(participate.avatar_url)}}
                     />
+                  ) : (
+                    <ImagePlaceholder avatarStyle={styles.participatesAvatar} />
                   );
                 })}
                 {this.props.participates.length > 2 && (

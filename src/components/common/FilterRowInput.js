@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Text, View, TextInput} from 'react-native';
 
 function FilterRowInput({
@@ -7,21 +7,14 @@ function FilterRowInput({
   placeholder = 'Tìm kiếm',
   value,
 }) {
-  const [internalValue, setValue] = useState(value);
-
-  function onChangeInternalValue(text) {
-    setValue(text);
-    onChangeValue(internalValue);
-  }
-
   return (
     <View style={styles.filterTitle}>
       <Text style={styles.title}>{title}</Text>
       <TextInput
         style={styles.filterContainer}
-        onChangeText={onChangeInternalValue}
+        onChangeText={onChangeValue}
         placeholder={placeholder}
-        value={internalValue}
+        value={value}
       />
     </View>
   );

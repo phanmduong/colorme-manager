@@ -14,10 +14,7 @@ class StaffContainer extends React.Component {
   }
 
   componentDidMount = () => {
-    this.loadBases();
-    this.loadDepartments();
     this.loadStaff();
-    this.loadRoles();
   };
 
   componentWillUnmount = () => {
@@ -34,21 +31,6 @@ class StaffContainer extends React.Component {
         this.props.domain,
       );
     }
-  };
-
-  loadBases = () => {
-    this.props.baseActions.loadDataBase(this.props.token, this.props.domain);
-  };
-
-  loadDepartments = () => {
-    this.props.staffActions.loadDepartments(
-      this.props.token,
-      this.props.domain,
-    );
-  };
-
-  loadRoles = () => {
-    this.props.staffActions.loadRoles(this.props.token, this.props.domain);
   };
 
   searchStaff = (search) => {
@@ -114,15 +96,6 @@ function mapStateToProps(state) {
     currentPage: state.staff.currentPage,
     search: state.staff.search,
     refreshingStaff: state.staff.refreshingStaff,
-    baseData: state.base.baseData,
-    isLoadingBase: state.base.isLoading,
-    errorBase: state.base.error,
-    departments: state.staff.departments,
-    isLoadingDepartments: state.staff.isLoadingDepartments,
-    errorDepartments: state.staff.errorDepartments,
-    roles: state.staff.roles,
-    isLoadingRoles: state.staff.isLoadingRoles,
-    errorRoles: state.staff.errorRoles,
     domain: state.login.domain,
   };
 }

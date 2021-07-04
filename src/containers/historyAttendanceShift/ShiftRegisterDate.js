@@ -2,7 +2,6 @@ import React from 'react';
 import {View, Text, Card, CardItem, Body} from 'native-base';
 import ShiftRegisterItem from './ShiftRegisterItem';
 import {observer} from 'mobx-react';
-import moment from 'moment';
 import _ from 'lodash';
 import {displayUnixDate} from '../../helper';
 

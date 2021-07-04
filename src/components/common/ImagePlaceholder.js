@@ -1,22 +1,15 @@
 import React from 'react';
-import {View} from 'react-native';
 import theme from '../../styles';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import {Thumbnail} from 'native-base';
 
-function ImagePlaceholder() {
+function ImagePlaceholder({avatarStyle}) {
   return (
-    <View style={[theme.mainAvatar, styles.container]}>
-      <Ionicons name={'md-person'} size={20} color={'black'} />
-    </View>
+    <Thumbnail
+      small
+      source={require('../../../assets/img/placeholderAvatar.png')}
+      style={avatarStyle ? avatarStyle : theme.mainAvatar}
+    />
   );
 }
-
-const styles = {
-  container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#f6f6f6',
-  },
-};
 
 export default ImagePlaceholder;

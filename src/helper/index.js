@@ -305,8 +305,7 @@ export const getSearchedResults = (array, search) => {
 
 export const getData = (array, id, placeholder, color) => {
   let defaultOption = {id: id, name: placeholder, color: color};
-  const data = [defaultOption].concat(array);
-  return data;
+  return [defaultOption].concat(array);
 };
 
 export const getDefault = (array, comparedId) => {
@@ -319,10 +318,6 @@ export const getDefault = (array, comparedId) => {
   }
   return array[0];
 };
-
-export function isEmptyObject(obj) {
-  return Object.keys(obj).length === 0 && obj.constructor === Object;
-}
 
 export function localeDay(day) {
   switch (day) {
@@ -356,4 +351,35 @@ export function displayUnixDate(unix, type = 'date') {
     default:
       return null;
   }
+}
+
+export function isValidUrl(url) {
+  if (isEmptyInput(url)) {
+    return false;
+  }
+
+  const pattern = new RegExp(
+    '^(https?:\\/\\/)?' + // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$',
+    'i',
+  ); // fragment locator
+  return !!pattern.test(url);
+}
+
+export function getValidUrl(url) {
+  let newUrl = window.decodeURIComponent(url);
+  newUrl = newUrl.trim().replace(/\s/g, "");
+
+  if(/^(:\/\/)/.test(newUrl)){
+    return `http${newUrl}`;
+  }
+  if(!/^(f|ht)tps?:\/\//i.test(newUrl)){
+    return `https://${newUrl}`;
+  }
+
+  return newUrl;
 }

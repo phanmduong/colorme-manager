@@ -14,11 +14,12 @@ import moment from 'moment';
 import DropdownPicker from './common/DropdownPicker';
 import DateRangePicker from './common/DateRangePicker';
 import Loading from './common/Loading';
-import {groupBy} from '../helper';
+import {getValidUrl, groupBy, isValidUrl} from '../helper';
 import WorkShiftRegisterDate from './workShiftRegister/WorkShiftRegisterDate';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import EmptyMessage from './common/EmptyMessage';
+import ImagePlaceholder from './common/ImagePlaceholder';
 
 class WorkShiftRegisterComponent extends React.Component {
   constructor(props, context) {
@@ -222,10 +223,14 @@ class WorkShiftRegisterComponent extends React.Component {
           />
           <View style={styles.hoursContainer}>
             <View style={styles.hoursSubContainer}>
-              <Image
-                source={{uri: this.props.user.avatar_url}}
-                style={styles.hoursAva}
-              />
+              {isValidUrl(this.props.user.avatar_url) ? (
+                <Image
+                  source={{uri: getValidUrl(this.props.user.avatar_url)}}
+                  style={styles.hoursAva}
+                />
+              ) : (
+                <ImagePlaceholder avatarStyle={styles.hoursAva} />
+              )}
               <View>
                 <View style={styles.hoursTextContainer}>
                   <Text style={styles.hoursText}>Bạn đã đăng kí</Text>

@@ -32,6 +32,7 @@ class CurrentClassItem extends React.Component {
 
   render() {
     const {
+      id,
       name,
       icon,
       teacher,
@@ -155,12 +156,15 @@ class CurrentClassItem extends React.Component {
                 )}
               </View>
               <View>
+                <Text
+                  numberOfLines={1}
+                  style={[styles.classInfoContainer, {paddingTop: 0}]}>
+                  Id: {id}
+                </Text>
                 {!isEmptyInput(nameSelectedDate) &&
                 !isEmptyInput(startTime) &&
                 !isEmptyInput(endTime) ? (
-                  <Text
-                    numberOfLines={1}
-                    style={[styles.classInfoContainer, {paddingTop: 0}]}>
+                  <Text numberOfLines={1} style={styles.classInfoContainer}>
                     {nameSelectedDate} - {startTime}-{endTime}
                   </Text>
                 ) : null}

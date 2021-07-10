@@ -142,8 +142,8 @@ android {
         applicationId "vn.colorme.manage.eduto"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 35
-        versionName "1.9"
+        versionCode 36
+        versionName "1.10"
         missingDimensionStrategy 'react-native-camera', 'general'
 
         manifestPlaceholders = [onesignal_app_id               : "ceea18e8-322a-4748-b18b-fdf066d9a5ff",

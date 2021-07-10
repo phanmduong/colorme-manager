@@ -89,6 +89,8 @@ function TeachingScheduleComponent(props) {
         onSelectCourseId={props.onSelectCourseId}
         onSelectTeacherId={props.onSelectTeacherId}
         onSelectType={props.onSelectType}
+        onSelectRoomId={props.onSelectRoomId}
+        onSelectGen={props.onSelectGen}
         loadStaff={props.loadStaff}
         {...props}
       />

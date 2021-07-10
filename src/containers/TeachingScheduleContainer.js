@@ -10,6 +10,7 @@ import * as saveRegisterActions from '../actions/saveRegisterActions';
 import * as baseActions from '../actions/baseActions';
 import * as classActions from '../actions/classActions';
 import * as staffActions from '../actions/staffActions';
+import * as genActions from '../actions/genActions';
 
 function TeachingScheduleContainer(props) {
   useEffect(() => {
@@ -18,6 +19,8 @@ function TeachingScheduleContainer(props) {
     loadDataBase();
     loadCourses();
     loadStaff('');
+    loadRooms();
+    loadDataGens();
   }, []);
 
   function loadSchedules() {
@@ -25,6 +28,14 @@ function TeachingScheduleContainer(props) {
       '',
       props.startTime,
       props.endTime,
+      props.courseId,
+      props.type,
+      props.baseId,
+      props.provinceId,
+      props.roomId,
+      props.teacherId,
+      props.enrollStartDate,
+      props.enrollEndDate,
       props.token,
       props.domain,
     );
@@ -32,6 +43,10 @@ function TeachingScheduleContainer(props) {
 
   function loadStaff(search) {
     props.staffActions.getStaff(false, 1, search, props.token, props.domain);
+  }
+
+  function loadRooms() {
+    props.classActions.loadRooms(props.token, props.domain);
   }
 
   function loadProvinces() {
@@ -44,6 +59,10 @@ function TeachingScheduleContainer(props) {
 
   function loadDataBase() {
     props.baseActions.loadDataBase(props.token, props.domain);
+  }
+
+  function loadDataGens() {
+    props.genActions.loadDataGenV2(props.token, props.domain);
   }
 
   function onSelectStartDate(date) {
@@ -70,8 +89,16 @@ function TeachingScheduleContainer(props) {
     props.teachingScheduleActions.selectedTeacherId(id);
   }
 
+  function onSelectGen(item) {
+    props.teachingScheduleActions.selectedGen(item);
+  }
+
   function onSelectType(id) {
     props.teachingScheduleActions.selectedType(id);
+  }
+
+  function onSelectRoomId(id) {
+    props.teachingScheduleActions.selectedRoomId(id);
   }
 
   function onSelectedItem(classData) {
@@ -94,6 +121,8 @@ function TeachingScheduleContainer(props) {
       onSelectClass={onSelectedItem}
       onSelectTeacherId={onSelectTeacherId}
       onSelectType={onSelectType}
+      onSelectRoomId={onSelectRoomId}
+      onSelectGen={onSelectGen}
       loadStaff={loadStaff}
     />
   );
@@ -149,6 +178,14 @@ function mapStateToProps(state) {
     isLoadingStaff: state.staff.isLoadingStaff,
     errorStaff: state.staff.errorStaff,
     domain: state.login.domain,
+    rooms: state.class.rooms,
+    isLoadingRooms: state.class.isLoadingRooms,
+    roomId: state.teachingSchedule.roomId,
+    isLoadingGen: state.gen.isLoading,
+    genData: state.gen.genDataV2,
+    genId: state.teachingSchedule.genId,
+    enrollStartDate: state.teachingSchedule.enrollStartDate,
+    enrollEndDate: state.teachingSchedule.enrollEndDate,
   };
 }
 
@@ -160,6 +197,7 @@ function mapDispatchToProps(dispatch) {
     ),
     saveRegisterActions: bindActionCreators(saveRegisterActions, dispatch),
     baseActions: bindActionCreators(baseActions, dispatch),
+    genActions: bindActionCreators(genActions, dispatch),
     classActions: bindActionCreators(classActions, dispatch),
     staffActions: bindActionCreators(staffActions, dispatch),
   };

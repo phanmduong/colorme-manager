@@ -1,11 +1,39 @@
 import * as types from '../constants/actionTypes';
 import * as teachingScheduleApi from '../apis/teachingScheduleApi';
 
-export function loadSchedules(search, startTime, endTime, token, domain) {
+export function loadSchedules(
+  search,
+  startTime,
+  endTime,
+  courseId,
+  type,
+  baseId,
+  provinceId,
+  roomId,
+  employeeId,
+  enrollStartDate,
+  enrollEndDate,
+  token,
+  domain,
+) {
   return function (dispatch) {
     dispatch(beginLoadSchedules());
     teachingScheduleApi
-      .loadClassApi(search, startTime, endTime, token, domain)
+      .loadClassApi(
+        search,
+        startTime,
+        endTime,
+        courseId,
+        type,
+        baseId,
+        provinceId,
+        roomId,
+        employeeId,
+        enrollStartDate,
+        enrollEndDate,
+        token,
+        domain,
+      )
       .then((res) => dispatch(loadSchedulesSuccess(res)))
       .catch((error) => {
         dispatch(loadSchedulesError());
@@ -85,5 +113,21 @@ export function selectedType(id) {
   return {
     type: types.ON_SELECT_TYPE_SCHEDULES,
     scheduleType: id,
+  };
+}
+
+export function selectedRoomId(id) {
+  return {
+    type: types.ON_SELECT_ROOM_SCHEDULES,
+    roomId: id,
+  };
+}
+
+export function selectedGen(item) {
+  return {
+    type: types.ON_SELECT_GEN_SCHEDULES,
+    genId: item.id,
+    enrollStartDate: item.start_time,
+    enrollEndDate: item.end_time,
   };
 }

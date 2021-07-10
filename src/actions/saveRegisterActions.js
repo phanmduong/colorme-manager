@@ -30,7 +30,7 @@ function loadCoursesSuccessful(res) {
     type: types.LOAD_COURSES_SUCCESSFUL,
     isLoadingCourses: false,
     errorLoadingCourses: false,
-    courses: res.data,
+    courses: res.data.courses,
   };
 }
 

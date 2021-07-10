@@ -64,6 +64,7 @@ export default {
     selectedGenId: -1,
     currentGen: 0,
     teachingGen: 0,
+    genDataV2: [],
   },
   lessonCourse: {
     lessonCourseData: [],
@@ -638,6 +639,10 @@ export default {
     type: '',
     startTime: moment().startOf('month').unix(),
     endTime: moment().endOf('month').unix(),
+    roomId: '',
+    genId: '',
+    enrollStartDate: '',
+    enrollEndDate: '',
   },
   form: {
     forms: [],

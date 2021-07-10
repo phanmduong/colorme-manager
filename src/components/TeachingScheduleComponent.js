@@ -21,21 +21,21 @@ function TeachingScheduleComponent(props) {
   const [isFilterVisible, setVisible] = useState(false);
 
   function renderScheduleItems() {
-    return props.classes.map((classItem) => {
-      const filteredLessons = classItem.lessons.filter(
-        (lesson) => lesson.time === selectedDate,
-      );
-      return filteredLessons.map((lesson) => (
-        <TeachingScheduleItem
-          name={classItem.name}
-          avatar_url={classItem.course.icon_url}
-          end_time={lesson.end_time}
-          start_time={lesson.start_time}
-          classData={classItem}
-          onSelectClass={props.onSelectClass}
-        />
-      ));
-    });
+    const filteredLessons = props.classes.filter(
+      (classItem) =>
+        moment.unix(classItem.time).format('YYYY-MM-DD') === selectedDate &&
+        classItem.study_class,
+    );
+    return filteredLessons.map((lesson) => (
+      <TeachingScheduleItem
+        name={lesson.study_class.name}
+        avatar_url={lesson.study_class.course.icon_url}
+        end_time={lesson.end_time}
+        start_time={lesson.start_time}
+        classData={lesson.study_class}
+        onSelectClass={props.onSelectClass}
+      />
+    ));
   }
 
   function toggleFilter() {
@@ -48,7 +48,7 @@ function TeachingScheduleComponent(props) {
         <View style={{flex: 1}}>
           <DateRangePicker
             mode={'filter'}
-            dateType={'normal'}
+            dateType={'unix'}
             startDate={props.startTime}
             endDate={props.endTime}
             onSelectEndDate={props.onSelectEndDate}
@@ -67,7 +67,12 @@ function TeachingScheduleComponent(props) {
       </View>
       {!props.loading ? (
         <>
-          <CalendarSchedule classes={props.classes} onSelectDate={setDate} />
+          <CalendarSchedule
+            classes={props.classes}
+            onSelectDate={setDate}
+            startTime={props.startTime}
+            endTime={props.endTime}
+          />
           <ScrollView showsVerticalScrollIndicator={false}>
             {renderScheduleItems()}
           </ScrollView>
@@ -84,6 +89,8 @@ function TeachingScheduleComponent(props) {
         onSelectCourseId={props.onSelectCourseId}
         onSelectTeacherId={props.onSelectTeacherId}
         onSelectType={props.onSelectType}
+        onSelectRoomId={props.onSelectRoomId}
+        onSelectGen={props.onSelectGen}
         loadStaff={props.loadStaff}
         {...props}
       />

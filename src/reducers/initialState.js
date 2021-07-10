@@ -636,8 +636,8 @@ export default {
     courseId: '',
     provinceId: '',
     type: '',
-    startTime: moment().startOf('month').format('YYYY-MM-DD'),
-    endTime: moment().endOf('month').format('YYYY-MM-DD'),
+    startTime: moment().startOf('month').unix(),
+    endTime: moment().endOf('month').unix(),
   },
   form: {
     forms: [],

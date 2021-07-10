@@ -1,31 +1,11 @@
 import * as types from '../constants/actionTypes';
 import * as teachingScheduleApi from '../apis/teachingScheduleApi';
 
-export function loadSchedules(
-  baseId,
-  courseId,
-  teacherId,
-  provinceId,
-  type,
-  startTime,
-  endTime,
-  token,
-  domain,
-) {
+export function loadSchedules(search, startTime, endTime, token, domain) {
   return function (dispatch) {
     dispatch(beginLoadSchedules());
     teachingScheduleApi
-      .loadClassApi(
-        baseId,
-        courseId,
-        teacherId,
-        provinceId,
-        type,
-        startTime,
-        endTime,
-        token,
-        domain,
-      )
+      .loadClassApi(search, startTime, endTime, token, domain)
       .then((res) => dispatch(loadSchedulesSuccess(res)))
       .catch((error) => {
         dispatch(loadSchedulesError());
@@ -47,7 +27,7 @@ function loadSchedulesSuccess(res) {
     type: types.LOAD_SCHEDULES_SUCCESS,
     loading: false,
     error: false,
-    classes: res.data.data.classes,
+    classes: res.data.class_lessons,
   };
 }
 

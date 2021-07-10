@@ -22,11 +22,7 @@ function TeachingScheduleContainer(props) {
 
   function loadSchedules() {
     props.teachingScheduleActions.loadSchedules(
-      props.baseId,
-      props.courseId,
-      props.teacherId,
-      props.provinceId,
-      props.type,
+      '',
       props.startTime,
       props.endTime,
       props.token,

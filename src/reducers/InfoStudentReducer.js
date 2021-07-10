@@ -1,6 +1,8 @@
 import initialState from './initialState';
 import * as type from '../constants/actionTypes';
 
+let registers;
+
 export function infoStudentReducer(state = initialState.infoStudent, action) {
   switch (action.type) {
     case type.INFO_STUDENT_SET_STUDENT_ID:
@@ -59,6 +61,15 @@ export function infoStudentReducer(state = initialState.infoStudent, action) {
       return Object.assign({}, state, {
         isLoadingSubmitMoney: action.isLoadingSubmitMoney,
         errorSubmitMoney: action.errorSubmitMoney,
+      });
+    case type.UPDATE_INFO_STUDENT_REGISTER_AFTER_SUBMIT_MONEY:
+      registers = state.registers;
+      registers = getUpdatedRegistersAfterSubmitMoney(
+        registers,
+        action.register,
+      );
+      return Object.assign({}, state, {
+        registers: registers,
       });
     case type.BEGIN_LOAD_STUDENT:
       return Object.assign({}, state, {
@@ -193,4 +204,13 @@ export function infoStudentReducer(state = initialState.infoStudent, action) {
     default:
       return state;
   }
+}
+
+function getUpdatedRegistersAfterSubmitMoney(registers, updatedRegister) {
+  return registers.map((register) => {
+    if (register.id === updatedRegister.id) {
+      return updatedRegister;
+    }
+    return register;
+  });
 }

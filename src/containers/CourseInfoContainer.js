@@ -1,63 +1,92 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import CourseInfoComponent from '../components/CourseInfoComponent';
 import {bindActionCreators} from 'redux';
 import * as courseActions from '../actions/courseActions';
 import NavigationLeftHeader from '../components/common/NavigationLeftHeader';
+import {observer} from 'mobx-react';
+import CourseInfoStore from './course/CourseInfoStore';
 
 function CourseInfoContainer(props) {
+  const [store] = useState(() => new CourseInfoStore());
+
+  const courseId = props.navigation.getParam('id');
+
   useEffect(() => {
-    loadCourseDetails();
-    return () => {
-      props.courseActions.resetCourseDetails();
-    };
+    loadLessons();
+    loadExams();
+    loadGroupExams();
+    loadLinks();
   }, []);
 
-  function loadCourseDetails() {
-    props.courseActions.loadCourseDetails(
-      false,
-      courseId,
-      props.token,
-      props.domain,
-    );
+  function loadLessons() {
+    store.loadLessons(false, courseId, props.token, props.domain);
   }
 
-  function refreshCourseDetails() {
-    props.courseActions.loadCourseDetails(
-      true,
-      courseId,
-      props.token,
-      props.domain,
-    );
+  function loadExams() {
+    store.loadExams(false, courseId, props.token, props.domain);
+  }
+
+  function loadGroupExams() {
+    store.loadGroupExams(false, courseId, props.token, props.domain);
+  }
+
+  function loadLinks() {
+    store.loadLinks(false, courseId, props.token, props.domain);
+  }
+
+  function refreshLessons() {
+    store.loadLessons(true, courseId, props.token, props.domain);
+  }
+
+  function refreshExams() {
+    store.loadExams(true, courseId, props.token, props.domain);
+  }
+
+  function refreshExamGroups() {
+    store.loadGroupExams(true, courseId, props.token, props.domain);
+  }
+
+  function refreshLinks() {
+    store.loadLinks(true, courseId, props.token, props.domain);
   }
 
   function deleteLesson(id) {
-    props.courseActions.deleteLesson(id, props.token, props.domain);
+    store.deleteLesson(id, props.token, props.domain);
   }
 
   function duplicateLesson(id) {
-    props.courseActions.duplicateLesson(id, props.token, props.domain);
+    store.duplicateLesson(id, props.token, props.domain);
   }
 
-  function changeLessonEvent(id, type) {
-    props.courseActions.changeLessonEvent(id, type, props.token, props.domain);
+  function addLessonEvent(id, type) {
+    store.addLessonEvent(id, type, props.token, props.domain);
+  }
+
+  function deleteLessonEvent(lessonId, eventId) {
+    store.deleteLessonEvent(lessonId, eventId, props.token, props.domain);
   }
 
   function deleteLink(id) {
-    props.courseActions.deleteLink(id, props.token, props.domain);
+    store.deleteLink(id, props.token, props.domain);
   }
-
-  const courseId = props.navigation.getParam('id');
 
   return (
     <CourseInfoComponent
       {...props}
-      onRefresh={refreshCourseDetails}
       courseId={courseId}
-      changeLessonEvent={changeLessonEvent}
+      addLessonEvent={addLessonEvent}
+      deleteLessonEvent={deleteLessonEvent}
       deleteLesson={deleteLesson}
       duplicateLesson={duplicateLesson}
       deleteLink={deleteLink}
+      loadLessons={loadLessons}
+      store={store}
+      refreshLessons={refreshLessons}
+      refreshExams={refreshExams}
+      refreshExamGroups={refreshExamGroups}
+      loadLinks={loadLinks}
+      refreshLinks={refreshLinks}
     />
   );
 }
@@ -77,10 +106,6 @@ CourseInfoContainer.navigationOptions = ({navigation}) => {
 function mapStateToProps(state) {
   return {
     token: state.login.token,
-    loadingCourseDetails: state.course.loadingCourseDetails,
-    errorCourseDetails: state.course.errorCourseDetails,
-    refreshingCourseDetails: state.course.refreshingCourseDetails,
-    courseDetails: state.course.courseDetails,
     domain: state.login.domain,
   };
 }
@@ -94,4 +119,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(CourseInfoContainer);
+)(observer(CourseInfoContainer));

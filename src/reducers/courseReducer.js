@@ -39,6 +39,7 @@ export default function courseReducer(state = initialState.course, action) {
         courseData: courses,
         currentPage: action.currentPage,
         refreshing: action.refreshing,
+        totalPage: action.totalPage,
       });
     case types.LOAD_DATA_COURSE_ERROR:
       return Object.assign({}, state, {
@@ -95,7 +96,7 @@ export default function courseReducer(state = initialState.course, action) {
           courses.splice(idx, 0, action.course);
         }
       } else {
-        courses.push(action.course);
+        courses.unshift(action.course);
       }
       return Object.assign({}, state, {
         courseData: courses,
@@ -127,45 +128,6 @@ export default function courseReducer(state = initialState.course, action) {
         errorCourseDetails: action.errorCourseDetails,
         refreshingCourseDetails: action.refreshingCourseDetails,
       });
-    case types.BEGIN_CHANGE_LESSON_EVENT:
-      return Object.assign({}, state, {
-        changingEvent: action.changingEvent,
-      });
-    case types.CHANGE_LESSON_EVENT_SUCCESS:
-      courseDetails = {...state.courseDetails};
-      lessonIdx = courseDetails.lessons.findIndex(
-        (lesson) => lesson.id === action.lesson.id,
-      );
-      if (lessonIdx > -1) {
-        courseDetails.lessons.splice(lessonIdx, 1);
-        courseDetails.lessons.splice(lessonIdx, 0, action.lesson);
-      }
-      return Object.assign({}, state, {
-        courseDetails: courseDetails,
-      });
-    case types.CHANGE_LESSON_EVENT_COMPLETE:
-      return Object.assign({}, state, {
-        changingEvent: action.changingEvent,
-      });
-    case types.BEGIN_DELETE_COURSE_DETAILS_LESSON:
-      return Object.assign({}, state, {
-        deletingLesson: action.deletingLesson,
-      });
-    case types.DELETE_COURSE_DETAILS_LESSON_SUCCESS:
-      courseDetails = {...state.courseDetails};
-      lessonIdx = courseDetails.lessons.findIndex(
-        (lesson) => lesson.id === action.lessonId,
-      );
-      if (lessonIdx > -1) {
-        courseDetails.lessons.splice(lessonIdx, 1);
-      }
-      return Object.assign({}, state, {
-        courseDetails: courseDetails,
-      });
-    case types.DELETE_COURSE_DETAILS_LESSON_COMPLETE:
-      return Object.assign({}, state, {
-        deletingLesson: action.deletingLesson,
-      });
     case types.RESET_DATA_COURSE:
       return Object.assign({}, state, {
         courseData: action.courseData,
@@ -174,97 +136,9 @@ export default function courseReducer(state = initialState.course, action) {
         parentCourses: action.parentCourses,
         courseDetails: action.courseDetails,
       });
-    case types.BEGIN_DUPLICATE_COURSE_DETAILS_LESSON:
-      return Object.assign({}, state, {
-        duplicatingLesson: action.duplicatingLesson,
-      });
-    case types.DUPLICATE_COURSE_DETAILS_LESSON_SUCCESS:
-      courseDetails = {...state.courseDetails};
-      const course = courseDetails.lessons.find(
-        (lesson) => lesson.id === action.lessonId,
-      );
-      if (!isEmptyInput(course)) {
-        courseDetails.lessons.push(course);
-      }
-      return Object.assign({}, state, {
-        courseDetails: courseDetails,
-      });
-    case types.DUPLICATE_COURSE_DETAILS_LESSON_COMPLETE:
-      return Object.assign({}, state, {
-        duplicatingLesson: action.duplicatingLesson,
-      });
-    case types.BEGIN_ADD_COURSE_DETAILS_LESSON:
-      return Object.assign({}, state, {
-        addingLesson: action.addingLesson,
-      });
-    case types.ADD_COURSE_DETAILS_LESSON_SUCCESS:
-      courseDetails = {...state.courseDetails};
-      courseDetails.lessons.push(action.lesson);
-      return Object.assign({}, state, {
-        courseDetails: courseDetails,
-      });
-    case types.ADD_COURSE_DETAILS_LESSON_COMPLETE:
-      return Object.assign({}, state, {
-        addingLesson: action.addingLesson,
-      });
     case types.RESET_COURSE_DETAILS:
       return Object.assign({}, state, {
         courseDetails: action.courseDetails,
-      });
-    case types.BEGIN_EDIT_COURSE_DETAILS_LESSON:
-      return Object.assign({}, state, {
-        editingLesson: action.editingLesson,
-      });
-    case types.EDIT_COURSE_DETAILS_LESSON_COMPLETE:
-      return Object.assign({}, state, {
-        editingLesson: action.editingLesson,
-      });
-    case types.BEGIN_ADD_COURSE_DETAILS_EXAM:
-      return Object.assign({}, state, {
-        creatingExam: action.creatingExam,
-      });
-    case types.ADD_COURSE_DETAILS_EXAM_SUCCESS:
-      courseDetails = {...state.courseDetails};
-      courseDetails.exam_templates.push(action.exam);
-      return Object.assign({}, state, {
-        courseDetails: courseDetails,
-      });
-    case types.ADD_COURSE_DETAILS_EXAM_COMPLETE:
-      return Object.assign({}, state, {
-        creatingExam: action.creatingExam,
-      });
-    case types.BEGIN_ADD_COURSE_DETAILS_LINK:
-      return Object.assign({}, state, {
-        creatingLink: action.creatingLink,
-      });
-    case types.ADD_COURSE_DETAILS_LINK_SUCCESS:
-      courseDetails = {...state.courseDetails};
-      courseDetails.links.push(action.link);
-      return Object.assign({}, state, {
-        courseDetails: courseDetails,
-      });
-    case types.ADD_COURSE_DETAILS_LINK_COMPLETE:
-      return Object.assign({}, state, {
-        creatingLink: action.creatingLink,
-      });
-    case types.BEGIN_DELETE_COURSE_DETAILS_LINK:
-      return Object.assign({}, state, {
-        deletingLink: action.deletingLink,
-      });
-    case types.DELETE_COURSE_DETAILS_LINK_SUCCESS:
-      courseDetails = {...state.courseDetails};
-      const linkIdx = courseDetails.links.findIndex(
-        (link) => link.id === action.linkId,
-      );
-      if (linkIdx > -1) {
-        courseDetails.links.splice(linkIdx, 1);
-      }
-      return Object.assign({}, state, {
-        courseDetails: courseDetails,
-      });
-    case types.DELETE_COURSE_DETAILS_LINK_COMPLETE:
-      return Object.assign({}, state, {
-        deletingLink: action.deletingLink,
       });
     default:
       return state;

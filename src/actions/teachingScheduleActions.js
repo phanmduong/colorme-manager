@@ -2,13 +2,17 @@ import * as types from '../constants/actionTypes';
 import * as teachingScheduleApi from '../apis/teachingScheduleApi';
 
 export function loadSchedules(
-  baseId,
-  courseId,
-  teacherId,
-  provinceId,
-  type,
+  search,
   startTime,
   endTime,
+  courseId,
+  type,
+  baseId,
+  provinceId,
+  roomId,
+  employeeId,
+  enrollStartDate,
+  enrollEndDate,
   token,
   domain,
 ) {
@@ -16,13 +20,17 @@ export function loadSchedules(
     dispatch(beginLoadSchedules());
     teachingScheduleApi
       .loadClassApi(
-        baseId,
-        courseId,
-        teacherId,
-        provinceId,
-        type,
+        search,
         startTime,
         endTime,
+        courseId,
+        type,
+        baseId,
+        provinceId,
+        roomId,
+        employeeId,
+        enrollStartDate,
+        enrollEndDate,
         token,
         domain,
       )
@@ -47,7 +55,7 @@ function loadSchedulesSuccess(res) {
     type: types.LOAD_SCHEDULES_SUCCESS,
     loading: false,
     error: false,
-    classes: res.data.data.classes,
+    classes: res.data.class_lessons,
   };
 }
 
@@ -105,5 +113,21 @@ export function selectedType(id) {
   return {
     type: types.ON_SELECT_TYPE_SCHEDULES,
     scheduleType: id,
+  };
+}
+
+export function selectedRoomId(id) {
+  return {
+    type: types.ON_SELECT_ROOM_SCHEDULES,
+    roomId: id,
+  };
+}
+
+export function selectedGen(item) {
+  return {
+    type: types.ON_SELECT_GEN_SCHEDULES,
+    genId: item.id,
+    enrollStartDate: item.start_time,
+    enrollEndDate: item.end_time,
   };
 }

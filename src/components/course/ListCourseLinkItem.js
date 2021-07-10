@@ -1,22 +1,8 @@
 import React from 'react';
-import {
-  View,
-  Image,
-  Text,
-  Linking,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import {View, Text, Linking, TouchableOpacity, Alert} from 'react-native';
 import theme from '../../styles';
 
-function ListCourseLinkItem({
-  name,
-  avatar_url,
-  description,
-  link,
-  id,
-  deleteLink,
-}) {
+function ListCourseLinkItem({name, description, link, id, deleteLink}) {
   function onDelete() {
     Alert.alert('Thông báo', 'Bạn có muốn xóa không?', [
       {
@@ -33,26 +19,18 @@ function ListCourseLinkItem({
 
   return (
     <View style={styles.container}>
-      <View style={styles.row}>
-        <Image source={{uri: avatar_url}} style={styles.ava} />
-        <View style={styles.rightContainer}>
-          <Text style={styles.title}>{name}</Text>
-        </View>
-      </View>
-      <View style={styles.contentContainer}>
-        <View style={{width: 35}} />
-        <View style={styles.rightContainer}>
-          <Text style={styles.info}>{description}</Text>
-          <Text style={styles.hyperLink} onPress={() => Linking.openURL(link)}>
-            {link}
-          </Text>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={onDelete}>
-              <View style={[{marginRight: 10}, styles.button]}>
-                <Text style={{fontSize: 16}}>Xóa</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
+      <View style={styles.rightContainer}>
+        <Text style={styles.title}>{name}</Text>
+        {description ? <Text style={styles.info}>{description}</Text> : null}
+        <Text style={styles.hyperLink} onPress={() => Linking.openURL(link)}>
+          {link}
+        </Text>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity onPress={onDelete}>
+            <View style={[{marginRight: 10}, styles.button]}>
+              <Text style={{fontSize: 16}}>Xóa</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -64,15 +42,7 @@ const styles = {
     paddingVertical: theme.mainHorizontal,
     paddingHorizontal: theme.mainHorizontal,
   },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
   ava: theme.mainAvatar,
-  contentContainer: {
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
   title: theme.title,
   rightContainer: {
     flex: 1,

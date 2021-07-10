@@ -6,17 +6,21 @@ import NavigationLeftHeader from '../components/common/NavigationLeftHeader';
 import AddCourseExamComponent from '../components/AddCourseExamComponent';
 
 function AddCourseExamContainer(props) {
-  function createExam(data) {
-    props.courseActions.createExam(data, props.token, props.domain);
-  }
-
   const courseId = props.navigation.getParam('courseId');
+  const store = props.navigation.getParam('store');
+
+  function createExam(data) {
+    store.createExam(data, props.token, props.domain, () =>
+      props.navigation.goBack(),
+    );
+  }
 
   return (
     <AddCourseExamComponent
       {...props}
       createExam={createExam}
       courseId={courseId}
+      store={store}
     />
   );
 }

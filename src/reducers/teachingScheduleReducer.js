@@ -50,6 +50,16 @@ export default function teachingScheduleReducer(
       return Object.assign({}, state, {
         type: action.scheduleType,
       });
+    case types.ON_SELECT_ROOM_SCHEDULES:
+      return Object.assign({}, state, {
+        roomId: action.roomId,
+      });
+    case types.ON_SELECT_GEN_SCHEDULES:
+      return Object.assign({}, state, {
+        genId: action.genId,
+        enrollStartDate: action.enrollStartDate,
+        enrollEndDate: action.enrollEndDate,
+      });
     default:
       return state;
   }

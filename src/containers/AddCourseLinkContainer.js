@@ -6,17 +6,21 @@ import * as courseActions from '../actions/courseActions';
 import NavigationLeftHeader from '../components/common/NavigationLeftHeader';
 
 function AddCourseLinkContainer(props) {
-  function createLink(data) {
-    props.courseActions.createLink(data, props.token, props.domain);
-  }
-
   const courseId = props.navigation.getParam('courseId');
+  const store = props.navigation.getParam('store');
+
+  function createLink(data) {
+    store.createLink(data, props.token, props.domain, () =>
+      props.navigation.goBack(),
+    );
+  }
 
   return (
     <AddCourseLinkComponent
       {...props}
       createLink={createLink}
       courseId={courseId}
+      store={store}
     />
   );
 }

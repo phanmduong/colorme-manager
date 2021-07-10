@@ -1,70 +1,41 @@
 import React from 'react';
-import {
-  Dimensions,
-  Image,
-  Platform,
-} from 'react-native';
+import {Dimensions, Platform} from 'react-native';
 import {View, Text, Thumbnail} from 'native-base';
 import theme from '../../styles';
 import Call from '../../components/common/Call';
+import {getValidUrl, isValidUrl} from '../../helper';
+import ImagePlaceholder from '../common/ImagePlaceholder';
 
-var {height, width} = Dimensions.get('window');
-var maxWidthProcess = width / 2;
+const {width} = Dimensions.get('window');
+const maxWidthProcess = width / 2;
 
 class StaffItem extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
 
-  getBaseInfo = () => {
-    const {baseData, base_id} = this.props;
-    const base = baseData.find(base => base.id == base_id);
-    if (base) {
-      return `${base.name}: ${base.address}`;
-    }
-    return 'Không có cơ sở';
-  };
-
-  getDepartmentInfo = () => {
-    const {departments, department_id} = this.props;
-    const department = departments.find(
-      department => department.id == department_id,
-    );
-    if (department) {
-      return department.name;
-    }
-    return 'Không có bộ phận';
-  };
-
-  getRoleInfo = () => {
-    const {roles, role_id} = this.props;
-    const role = roles.find(role => role.id == role_id);
-    if (role) {
-      return role.role_title;
-    }
-    return 'Không có chúc vụ';
-  };
-
   content() {
-    const {name, avatar, email, phone, role} = this.props;
+    const {name, avatar, email, phone, department} = this.props;
     return (
       <View style={styles.container}>
-        <Thumbnail small source={{uri: avatar}} style={theme.mainAvatar} />
+        {isValidUrl(avatar) ? (
+          <Thumbnail
+            small
+            source={{uri: getValidUrl(avatar)}}
+            style={theme.mainAvatar}
+          />
+        ) : (
+          <ImagePlaceholder />
+        )}
         <View style={styles.content}>
           <View style={styles.containerTitle}>
             <Text style={styles.title}>{name.trim()}</Text>
-            {role === 2 ? (
-              <Image
-                source={require('../../../assets/img/icons8-star-100-filled.png')}
-                style={styles.starIcon}
-              />
-            ) : null}
           </View>
           <View style={styles.containerSubTitle}>
             <Text style={styles.subTitle}>{email}</Text>
-            <Text style={styles.subTitle}>{this.getBaseInfo()}</Text>
-            <Text style={styles.subTitle}>{this.getRoleInfo()}</Text>
-            <Text style={styles.subTitle}>{this.getDepartmentInfo()}</Text>
+            {department ? (
+              <Text style={styles.subTitle}>{department.name}</Text>
+            ) : null}
             <Call
               url={'tel:' + phone}
               phone={phone}
@@ -87,8 +58,8 @@ class StaffItem extends React.Component {
 
 const styles = {
   containerAll: {
-    paddingHorizontal: 20,
-    paddingVertical: 20,
+    paddingHorizontal: theme.mainHorizontal,
+    paddingVertical: 16,
   },
   container: {
     flexDirection: 'row',

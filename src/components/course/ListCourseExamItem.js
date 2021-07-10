@@ -1,26 +1,8 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-import theme from '../../styles';
 
-function ListCourseExamItem({
-  title,
-  deadline,
-  description,
-  weight,
-  lesson_id,
-  lessons,
-}) {
-  function getLesson() {
-    if (lesson_id) {
-      const lesson = lessons.find((lesson) => lesson.id === lesson_id);
-      if (lesson) {
-        return lesson.name;
-      }
-    }
-    return 'Buổi diễn ra';
-  }
-
+function ListCourseExamItem({title, deadline, description, weight, lesson}) {
   return (
     <View style={styles.container}>
       <View style={styles.row}>
@@ -30,7 +12,8 @@ function ListCourseExamItem({
             {title} - {description}
           </Text>
           <Text style={styles.info}>
-            Hệ số {weight} - {getLesson()} - {deadline} ngày
+            Hệ số {weight} - {lesson ? lesson.name : 'Không có buổi học'} - Hạn
+            chót {deadline} ngày
           </Text>
         </View>
       </View>
@@ -48,6 +31,7 @@ const styles = {
   },
   contentContainer: {
     marginLeft: 10,
+    flex: 1,
   },
   bold: {
     fontWeight: '600',
@@ -55,6 +39,8 @@ const styles = {
   info: {
     marginTop: 5,
     color: '#909090',
+    flexWrap: 'wrap',
+    flex: 1,
   },
 };
 

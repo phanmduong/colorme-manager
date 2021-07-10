@@ -1,6 +1,6 @@
 import initialState from './initialState';
 import * as type from '../constants/actionTypes';
-import {BEGIN_WORK_SHIFT_UNREGISTER} from '../constants/actionTypes';
+import {isEmptyInput} from '../helper';
 
 let workShiftRegisterData;
 export default function workShiftRegisterReducer(
@@ -13,24 +13,41 @@ export default function workShiftRegisterReducer(
         isLoading: action.isLoading,
         error: action.error,
       });
-    case type.LOAD_WORK_SHIFT_DATA_SUCCESSFUL:
+    case type.BEGIN_REFRESH_WORK_SHIFT_DATA:
       return Object.assign({}, state, {
+        refreshing: action.refreshing,
+        error: action.error,
         workShiftRegisterData: action.workShiftRegisterData,
+      });
+    case type.LOAD_WORK_SHIFT_DATA_SUCCESSFUL:
+      workShiftRegisterData = action.workShiftRegisterData;
+      workShiftRegisterData = filterParticipates(
+        'users',
+        action.selectedStaffId,
+      );
+      return Object.assign({}, state, {
+        workShiftRegisterData: workShiftRegisterData,
         isLoading: action.isLoading,
         error: action.error,
+        refreshing: action.refreshing,
       });
     case type.LOAD_WORK_SHIFT_DATA_ERROR:
       return Object.assign({}, state, {
         isLoading: action.isLoading,
         error: action.error,
+        refreshing: action.refreshing,
       });
     case type.SELECTED_BASE_ID_WORK_SHIFT_REGISTER:
       return Object.assign({}, state, {
         selectedBaseId: action.selectedBaseId,
       });
-    case type.SELECTED_GEN_ID_WORK_SHIFT_REGISTER:
+    case type.SELECTED_START_TIME_WORK_SHIFT_REGISTER:
       return Object.assign({}, state, {
-        selectedGenId: action.selectedGenId,
+        startTime: action.startTime,
+      });
+    case type.SELECTED_END_TIME_WORK_SHIFT_REGISTER:
+      return Object.assign({}, state, {
+        endTime: action.endTime,
       });
     case type.BEGIN_WORK_SHIFT_REGISTER: {
       workShiftRegisterData = state.workShiftRegisterData;
@@ -150,86 +167,83 @@ export default function workShiftRegisterReducer(
         workShiftRegisterData: workShiftRegisterData,
       });
     }
+    case type.SELECTED_STAFF_ID_WORK_SHIFT_REGISTER: {
+      return Object.assign({}, state, {
+        selectedStaffId: action.selectedStaffId,
+      });
+    }
+    case type.BEGIN_LOAD_WORK_SHIFT_STATISTICS:
+      return Object.assign({}, state, {
+        isLoadingStatistics: action.isLoadingStatistics,
+        errorStatistics: action.errorStatistics,
+      });
+    case type.BEGIN_REFRESH_WORK_SHIFT_STATISTICS:
+      return Object.assign({}, state, {
+        refreshingStatistics: action.refreshingStatistics,
+        errorStatistics: action.errorStatistics,
+        statistics: action.statistics,
+      });
+    case type.LOAD_WORK_SHIFT_STATISTICS_SUCCESSFUL:
+      return Object.assign({}, state, {
+        isLoadingStatistics: action.isLoadingStatistics,
+        errorStatistics: action.errorStatistics,
+        statistics: action.statistics,
+        refreshingStatistics: action.refreshingStatistics,
+      });
+    case type.LOAD_WORK_SHIFT_STATISTICS_ERROR:
+      return Object.assign({}, state, {
+        isLoadingStatistics: action.isLoadingStatistics,
+        errorStatistics: action.errorStatistics,
+        refreshingStatistics: action.refreshingStatistics,
+      });
     default:
       return state;
   }
 }
 
 function registering(workShiftId, field, user) {
-  try {
-    if (workShiftRegisterData.weeks) {
-      let weeks = workShiftRegisterData.weeks.map(week => {
-        let dates = week.dates.map(date => {
-          let shifts = date.shifts.map(shift => {
-            if (shift.id === workShiftId) {
-              let users = shift.users;
-              users.push(user);
-              return {...shift, [field]: users};
-            }
-            return shift;
-          });
-          return {...date, shifts: shifts};
-        });
-        return {...week, dates: dates};
-      });
-      return {...workShiftRegisterData, weeks: weeks};
+  return workShiftRegisterData.map((shift) => {
+    if (shift.id === workShiftId) {
+      let users = shift.users;
+      users.push(user);
+      return {...shift, [field]: users};
     }
-  } catch (err) {
-    throw new Error(err);
-  }
-  return workShiftRegisterData;
+    return shift;
+  });
 }
 
 function loadingRegistering(workShiftId, field, value) {
-  try {
-    if (workShiftRegisterData.weeks) {
-      let weeks = workShiftRegisterData.weeks.map(week => {
-        let dates = week.dates.map(date => {
-          let shifts = date.shifts.map(shift => {
-            if (shift.id === workShiftId) {
-              return {...shift, [field]: value};
-            }
-            return shift;
-          });
-          return {...date, shifts: shifts};
-        });
-        return {...week, dates: dates};
-      });
-      return {...workShiftRegisterData, weeks: weeks};
+  return workShiftRegisterData.map((shift) => {
+    if (shift.id === workShiftId) {
+      return {...shift, [field]: value};
     }
-  } catch (err) {
-    throw new Error(err);
-  }
-  return workShiftRegisterData;
+    return shift;
+  });
 }
 
 function unregistering(workShiftId, field, user) {
-  try {
-    if (workShiftRegisterData.weeks) {
-      let weeks = workShiftRegisterData.weeks.map(week => {
-        let dates = week.dates.map(date => {
-          let shifts = date.shifts.map(shift => {
-            if (shift.id === workShiftId) {
-              let users = shift.users;
-              let itemIndex = getIndex(users, user);
-              console.log(itemIndex);
-              users.splice(itemIndex, 1);
-              return {...shift, [field]: users};
-            }
-            return shift;
-          });
-          return {...date, shifts: shifts};
-        });
-        return {...week, dates: dates};
-      });
-      return {...workShiftRegisterData, weeks: weeks};
+  return workShiftRegisterData.map((shift) => {
+    if (shift.id === workShiftId) {
+      let users = shift.users;
+      let itemIndex = getIndex(users, user);
+      users.splice(itemIndex, 1);
+      return {...shift, [field]: users};
     }
-  } catch (err) {
-    throw new Error(err);
-  }
-  return workShiftRegisterData;
+    return shift;
+  });
+}
+
+function filterParticipates(field, selectedStaffId) {
+  return workShiftRegisterData.map((shift) => {
+    if (!isEmptyInput(selectedStaffId)) {
+      let users = shift.users.filter((user) => user.id === selectedStaffId);
+      return {...shift, [field]: users};
+    } else {
+      return shift;
+    }
+  });
 }
 
 function getIndex(array, user) {
-  return array.findIndex(item => item.id === user.id);
+  return array.findIndex((item) => item.id === user.id);
 }

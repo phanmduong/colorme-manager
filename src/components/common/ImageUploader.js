@@ -5,6 +5,7 @@ import {
   Dimensions,
   Alert,
   ActivityIndicator,
+  Text,
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 const {width} = Dimensions.get('window');
@@ -12,14 +13,26 @@ import * as courseApi from '../../apis/courseApi';
 import ImageResizer from 'react-native-image-resizer';
 import {Thumbnail} from 'native-base';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {connect} from 'react-redux';
 
-function ImageUploader({avatar_url, onUpload, containerStyle, token}) {
+function ImageUploader(props) {
   const [loading, setLoading] = useState(false);
+
+  const {title, avatar_url, onUpload, containerStyle} = props;
+
+  function updateProgress(evt) {
+    if (evt.lengthComputable) {
+      let percentComplete = (evt.loaded / evt.total) * 100;
+      console.log(percentComplete + '% completed');
+    }
+  }
 
   function uploadImage() {
     const options = {};
+    // Chọn ảnh từ máy
     ImagePicker.showImagePicker(options, (response) => {
       if (response.uri) {
+        // Nén ảnh
         ImageResizer.createResizedImage(
           response.uri,
           1000,
@@ -29,19 +42,23 @@ function ImageUploader({avatar_url, onUpload, containerStyle, token}) {
           0,
         )
           .then((response) => {
+            let source = {
+              uri: response.uri,
+              name: 'image.png',
+              type: 'image/*',
+            };
             setLoading(true);
-            courseApi
-              .uploadImage(response.uri, token)
-              .then((res) => {
-                onUpload(res.data.url);
-              })
-              .catch((error) => {
-                Alert.alert('Thông báo', 'Không upload được ảnh');
-                throw error;
-              })
-              .finally(() => {
+            // Bắt đầu upload ảnh
+            courseApi.uploadImage(
+              source,
+              (event) => {
                 setLoading(false);
-              });
+                console.log(event.currentTarget.response);
+              },
+              null,
+              () => Alert.alert('Thông báo', 'Không upload được ảnh'),
+              props.token,
+            );
           })
           .catch((err) => {
             console.log(err);
@@ -71,6 +88,7 @@ function ImageUploader({avatar_url, onUpload, containerStyle, token}) {
         <TouchableOpacity onPress={uploadImage}>
           <View style={styles.idContainer}>
             <MaterialIcons name={'folder-shared'} size={40} color={'#9c9c9c'} />
+            <Text>{title}</Text>
           </View>
         </TouchableOpacity>
       )}
@@ -94,4 +112,10 @@ const styles = {
   },
 };
 
-export default ImageUploader;
+function mapStateToProp(state) {
+  return {
+    token: state.login.token,
+  };
+}
+
+export default connect(mapStateToProp)(ImageUploader);

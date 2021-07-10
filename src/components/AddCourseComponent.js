@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef} from 'react';
 import {
   ScrollView,
   View,
@@ -10,75 +10,54 @@ import Input from './common/Input';
 import theme from '../styles';
 import Expand from './common/Expand';
 import SubmitButton from './common/SubmitButton';
-import {dotNumber, isEmptyObject} from '../helper';
-import Loading from './common/Loading';
+import {dotNumber} from '../helper';
+import InputPicker from './common/InputPicker';
+import {COLORS} from '../constants/constant';
 
 function AddCourseComponent(props) {
-  const [name, setName] = useState(null);
-  const [description, setDescription] = useState(null);
-  const [duration, setDuration] = useState(null);
-  const [price, setPrice] = useState(null);
+  const [name, setName] = useState(props.course?.name);
+  const [description, setDescription] = useState(props.course?.description);
+  const [duration, setDuration] = useState(props.course?.duration?.toString());
+  const [price, setPrice] = useState(props.course?.price?.toString());
   const [isExpanded, setExpanded] = useState(false);
-  const [iconUrl, setIconUrl] = useState(null);
-  const [imageUrl, setImageUrl] = useState(null);
-  const [coverUrl, setCoverUrl] = useState(null);
-  const [frontImage, setFrontImage] = useState(null);
-  const [backImage, setBackImage] = useState(null);
-  const [linkWindow, setLinkWindow] = useState(null);
-  const [linkMac, setLinkMac] = useState(null);
-  const [linkInstallWindow, setLinkInstallWindow] = useState(null);
-  const [linkInstallMac, setLinkInstallMac] = useState(null);
-  const [id, setId] = useState(null);
+  const [iconUrl, setIconUrl] = useState(props.course?.icon_url);
+  const [coverUrl, setCoverUrl] = useState(props.course?.cover_url);
+  const [linkWindow, setLinkWindow] = useState(props.course?.linkwindow);
+  const [linkMac, setLinkMac] = useState(props.course?.linkmac);
+  const [linkInstallWindow, setLinkInstallWindow] = useState(
+    props.course?.window_how_install,
+  );
+  const [linkInstallMac, setLinkInstallMac] = useState(
+    props.course?.mac_how_install,
+  );
+  const [id, setId] = useState(props.course?.id);
+  const [color, setColor] = useState(props.course?.color);
 
   const descriptionRef = useRef(null);
-  const imageUrlRef = useRef(null);
-  const coverUrlRef = useRef(null);
-  const frontImageRef = useRef(null);
-  const backImageRef = useRef(null);
   const linkWindowRef = useRef(null);
   const linkMacRef = useRef(null);
   const linkInstallWindowRef = useRef(null);
   const linkInstallMacRef = useRef(null);
-
-  useEffect(() => {
-    if (props.editMode && !isEmptyObject(props.courseDetails)) {
-      setName(props.courseDetails.name);
-      setDescription(props.courseDetails.description);
-      setDuration(props.courseDetails.duration.toString());
-      setPrice(props.courseDetails.price.toString());
-      setIconUrl(props.courseDetails.icon_url);
-      setImageUrl(props.courseDetails.image_url);
-      setFrontImage(props.courseDetails.front_image);
-      setBackImage(props.courseDetails.back_image);
-      setLinkWindow(props.courseDetails.linkwindow);
-      setLinkMac(props.courseDetails.linkmac);
-      setLinkInstallMac(props.courseDetails.mac_how_install);
-      setLinkInstallWindow(props.courseDetails.window_how_install);
-      setId(props.courseDetails.id);
-    }
-  }, [props.courseDetails]);
 
   function toggleExpand() {
     setExpanded(!isExpanded);
   }
 
   function onSubmit() {
-    if (name && description && duration && price) {
+    if (name && duration) {
       const data = {
-        name: name,
-        description: description,
-        duration: parseInt(duration),
-        price: parseInt(price),
-        icon_url: iconUrl,
-        image_url: imageUrl,
-        cover_url: coverUrl,
-        front_image: frontImage,
-        back_image: backImage,
-        linkwindow: linkWindow,
-        linkmac: linkMac,
-        window_how_install: linkInstallWindow,
-        mac_how_install: linkInstallMac,
         id: id,
+        color: color,
+        cover_url: coverUrl,
+        description: description,
+        duration: duration,
+        icon_url: iconUrl,
+        linkmac: linkMac,
+        linkwindow: linkWindow,
+        mac_how_install: linkInstallMac,
+        name: name,
+        price: price && price.split('.').join(''),
+        window_how_install: linkInstallWindow,
       };
       props.createCourse(data);
     } else {
@@ -86,7 +65,7 @@ function AddCourseComponent(props) {
     }
   }
 
-  return !props.loadingCourseDetails ? (
+  return (
     <KeyboardAvoidingView
       style={{flex: 1}}
       behavior={Platform.OS === 'ios' ? 'padding' : ''}
@@ -96,105 +75,74 @@ function AddCourseComponent(props) {
         <View style={styles.container}>
           <Input
             placeholder={'Tên môn học'}
-            title={'Tên môn học'}
+            title={'Nhập tên môn học'}
             required
             onChangeText={setName}
             value={name}
             onSubmitEditing={() => descriptionRef.current.focus()}
           />
           <Input
-            placeholder={'Mô tả ngắn'}
-            title={'Mô tả ngắn'}
+            placeholder={'Mô tả'}
+            title={'Nhập mô tả'}
             value={description}
             onChangeText={setDescription}
-            required
             refName={descriptionRef}
           />
-          <Input
-            placeholder={'Số buổi'}
-            title={'Số buổi'}
-            value={duration}
-            onChangeText={setDuration}
-            keyboardType={'number-pad'}
-            required
-          />
+          {!props.editMode && (
+            <Input
+              placeholder={'Số buổi'}
+              title={'Nhập số buổi'}
+              value={duration}
+              onChangeText={setDuration}
+              keyboardType={'number-pad'}
+              required
+            />
+          )}
           <Input
             placeholder={'Học phí'}
-            title={'Học phí'}
+            title={'Nhập học phí'}
             value={dotNumber(price)}
             onChangeText={setPrice}
             keyboardType={'number-pad'}
-            required
+          />
+          <InputPicker
+            title={'Màu'}
+            header={'Chọn màu'}
+            options={COLORS}
+            selectedId={color}
+            onChangeValue={setColor}
+            rendering={props.loadingCourseDetails}
           />
           <Expand isExpanded={isExpanded} toggleExpand={toggleExpand} />
           {isExpanded && (
             <>
               <Input
-                title={'Ảnh icon'}
-                placeholder={'Ảnh icon'}
-                onChangeText={setIconUrl}
-                value={iconUrl}
-                onSubmitEditing={() => imageUrlRef.current.focus()}
-              />
-              <Input
-                title={'Ảnh đại diện'}
-                placeholder={'Ảnh đại diện'}
-                onChangeText={setImageUrl}
-                value={imageUrl}
-                refName={imageUrlRef}
-                onSubmitEditing={() => coverUrlRef.current.focus()}
-              />
-              <Input
-                title={'Ảnh cover'}
-                placeholder={'Ảnh cover'}
-                onChangeText={setCoverUrl}
-                value={coverUrl}
-                refName={coverUrlRef}
-                onSubmitEditing={() => frontImageRef.current.focus()}
-              />
-              <Input
-                title={'Front Image'}
-                placeholder={'Front Image'}
-                value={frontImage}
-                onChangeText={setFrontImage}
-                refName={frontImageRef}
-                onSubmitEditing={() => backImageRef.current.focus()}
-              />
-              <Input
-                title={'Back Image'}
-                placeholder={'Back Image'}
-                onChangeText={setBackImage}
-                value={backImage}
-                refName={backImageRef}
-                onSubmitEditing={() => linkWindowRef.current.focus()}
-              />
-              <Input
-                title={'Link phần mềm Windows'}
-                placeholder={'Link phần mềm Windows'}
+                title={'URL phần mềm Windows'}
+                placeholder={'Nhập URL phần mềm Windows'}
                 value={linkWindow}
                 onChangeText={setLinkWindow}
                 refName={linkWindowRef}
                 onSubmitEditing={() => linkInstallWindowRef.current.focus()}
               />
               <Input
-                title={'Link hướng dẫn Windows'}
-                placeholder={'Link hướng dẫn Windows'}
+                title={'URL hướng dẫn cài đặt(Windows)'}
+                placeholder={'Nhập URL hướng dẫn cài đặt(Windows)'}
                 onChangeText={setLinkInstallWindow}
                 value={linkInstallWindow}
                 refName={linkInstallWindowRef}
                 onSubmitEditing={() => linkMacRef.current.focus()}
               />
               <Input
-                title={'Link phần mềm Mac'}
-                placeholder={'Link phần mềm Mac'}
+                title={'URL phần mềm MacOS'}
+                placeholder={'Nhập URL phần mềm MacOS'}
                 value={linkMac}
                 onChangeText={setLinkMac}
                 refName={linkMacRef}
                 onSubmitEditing={() => linkInstallMacRef.current.focus()}
               />
               <Input
-                title={'Link hướng dẫn Mac'}
-                placeholder={'Link hướng dẫn Mac'}
+                title={'URL hướng dẫn cài đặt(MacOS)'}
+                placeholder={'Nhập URL hướng dẫn cài đặt(MacOS)'}
                 value={linkInstallMac}
                 onChangeText={setLinkInstallMac}
                 refName={linkInstallMacRef}
@@ -211,8 +159,6 @@ function AddCourseComponent(props) {
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
-  ) : (
-    <Loading />
   );
 }
 

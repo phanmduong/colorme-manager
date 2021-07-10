@@ -1,13 +1,25 @@
 import * as workShiftRegisterApi from '../apis/workShiftRegisterApi';
 import * as type from '../constants/actionTypes';
 
-export function loadWorkShift(baseId, genId, token, domain) {
+export function loadWorkShift(
+  refreshing,
+  startTime,
+  endTime,
+  baseId,
+  selectedStaffId,
+  token,
+  domain,
+) {
   return function (dispatch) {
-    dispatch(beginLoadWorkShiftData());
+    if (!refreshing) {
+      dispatch(beginLoadWorkShiftData());
+    } else {
+      dispatch(beginRefreshWorkShiftData());
+    }
     workShiftRegisterApi
-      .loadWorkShift(baseId, genId, token, domain)
+      .loadWorkShift(startTime, endTime, baseId, token, domain)
       .then(function (res) {
-        dispatch(loadWorkShiftDataSuccessful(res));
+        dispatch(loadWorkShiftDataSuccessful(res, selectedStaffId));
       })
       .catch((error) => {
         dispatch(loadWorkShiftDataError(error));
@@ -23,10 +35,26 @@ export function selectedBaseId(baseId) {
   };
 }
 
-export function selectedGenId(genId) {
+export function selectedStartTime(time) {
   return {
-    type: type.SELECTED_GEN_ID_WORK_SHIFT_REGISTER,
-    selectedGenId: genId,
+    type: type.SELECTED_START_TIME_WORK_SHIFT_REGISTER,
+    startTime: time,
+  };
+}
+
+export function selectedEndTime(time) {
+  return {
+    type: type.SELECTED_END_TIME_WORK_SHIFT_REGISTER,
+    endTime: time,
+  };
+}
+
+export function beginRefreshWorkShiftData() {
+  return {
+    type: type.BEGIN_REFRESH_WORK_SHIFT_DATA,
+    refreshing: true,
+    error: false,
+    workShiftRegisterData: [],
   };
 }
 
@@ -38,12 +66,14 @@ export function beginLoadWorkShiftData() {
   };
 }
 
-export function loadWorkShiftDataSuccessful(res) {
+export function loadWorkShiftDataSuccessful(res, selectedStaffId) {
   return {
     type: type.LOAD_WORK_SHIFT_DATA_SUCCESSFUL,
-    workShiftRegisterData: res.data.data,
+    workShiftRegisterData: res.data.work_shifts,
     isLoading: false,
     error: false,
+    refreshing: false,
+    selectedStaffId: selectedStaffId,
   };
 }
 
@@ -52,6 +82,7 @@ export function loadWorkShiftDataError(error) {
     type: type.LOAD_WORK_SHIFT_DATA_ERROR,
     isLoading: false,
     error: true,
+    refreshing: false,
   };
 }
 
@@ -65,7 +96,7 @@ export function register(workShiftId, token, domain) {
           registering(
             JSON.stringify({
               id: workShiftId,
-              user: res.data.data.user,
+              user: res.data.work_shift_user.user,
             }),
           ),
         );
@@ -156,7 +187,7 @@ export function unregister(workShiftId, token, domain) {
           unregistering(
             JSON.stringify({
               id: workShiftId,
-              user: res.data.data.user,
+              user: res.data.work_shift_user.user,
             }),
           ),
         );
@@ -166,5 +197,74 @@ export function unregister(workShiftId, token, domain) {
         dispatch(workShiftUnregisterError(workShiftId));
         throw error;
       });
+  };
+}
+
+export function onSelectStaffId(id) {
+  return {
+    type: type.SELECTED_STAFF_ID_WORK_SHIFT_REGISTER,
+    selectedStaffId: id,
+  };
+}
+
+export function loadStatistics(
+  refreshing,
+  startTime,
+  endTime,
+  baseId,
+  token,
+  domain,
+) {
+  return function (dispatch) {
+    if (!refreshing) {
+      dispatch(beginLoadStatistics());
+    } else {
+      dispatch(beginRefreshStatistics());
+    }
+    workShiftRegisterApi
+      .loadStatistics(startTime, endTime, baseId, token, domain)
+      .then((res) => {
+        dispatch(loadStatisticsSuccessful(res));
+      })
+      .catch((error) => {
+        dispatch(loadStatisticsError());
+        throw error;
+      });
+  };
+}
+
+function beginLoadStatistics() {
+  return {
+    type: type.BEGIN_LOAD_WORK_SHIFT_STATISTICS,
+    isLoadingStatistics: true,
+    errorStatistics: false,
+  };
+}
+
+function beginRefreshStatistics() {
+  return {
+    type: type.BEGIN_REFRESH_WORK_SHIFT_STATISTICS,
+    refreshingStatistics: true,
+    errorStatistics: false,
+    statistics: [],
+  };
+}
+
+function loadStatisticsSuccessful(res) {
+  return {
+    type: type.LOAD_WORK_SHIFT_STATISTICS_SUCCESSFUL,
+    statistics: res.data.statistic,
+    isLoadingStatistics: false,
+    errorStatistics: false,
+    refreshingStatistics: false,
+  };
+}
+
+function loadStatisticsError() {
+  return {
+    type: type.LOAD_WORK_SHIFT_STATISTICS_ERROR,
+    isLoadingStatistics: false,
+    errorStatistics: true,
+    refreshingStatistics: false,
   };
 }

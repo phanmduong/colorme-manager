@@ -13,14 +13,34 @@ export function beginDataGenLoad() {
 }
 
 export function loadDataGen(token, domain) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginDataGenLoad());
     genApi
       .loadGenApi(token, domain)
-      .then(function(res) {
+      .then(function (res) {
         dispatch(loadDataSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
+        dispatch(loadDataError());
+        throw error;
+      });
+  };
+}
+
+export function loadDataGenV2(token, domain) {
+  return function (dispatch) {
+    dispatch(beginDataGenLoad());
+    genApi
+      .loadGenV2Api(token, domain)
+      .then((res) => {
+        dispatch({
+          type: types.LOAD_DATA_GEN_V2_SUCCESSFUL,
+          genData: res.data.gens,
+          isLoading: false,
+          error: false,
+        });
+      })
+      .catch((error) => {
         dispatch(loadDataError());
         throw error;
       });

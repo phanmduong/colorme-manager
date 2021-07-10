@@ -12,15 +12,14 @@ function CourseComponent(props) {
         name={item.name}
         description={item.description}
         avatar_url={item.icon_url}
-        lessons={item.lessons}
         price={item.price}
         id={item.id}
         onStatusChange={props.onStatusChange}
         currentStatus={item.status}
-        parentCourses={props.parentCourses}
-        is_parent={item.is_parent}
-        parent_id={item.parent_id}
+        parent={item.parent}
         navigation={props.navigation}
+        duration={item.duration}
+        course={item}
       />
     );
   }

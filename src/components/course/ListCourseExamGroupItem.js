@@ -1,24 +1,17 @@
-import React, {useState} from 'react';
-import {View, Text, Image, TouchableOpacity} from 'react-native';
-import Collapsible from 'react-native-collapsible';
+import React from 'react';
+import {View, Text} from 'react-native';
 import theme from '../../styles';
 import ListCourseExamItem from './ListCourseExamItem';
 
-function ListCourseExamGroupItem({
-  name,
-  exam_templates,
-  lessons,
-  avatar_url,
-  id,
-}) {
-  const [isCollapsed, setCollapsed] = useState(true);
-
-  function toggleCollapsed() {
-    setCollapsed(!isCollapsed);
-  }
-
+function ListCourseExamGroupItem({name, exam_templates, id}) {
   function filterExams() {
-    return exam_templates.filter((exam) => exam.group_exam_id === id);
+    return exam_templates.filter((exam) => {
+      if (id === -1) {
+        return !exam.group_exam;
+      } else {
+        return exam.group_exam && exam.group_exam.id === id;
+      }
+    });
   }
 
   function renderExams() {
@@ -28,8 +21,7 @@ function ListCourseExamGroupItem({
         title={exam.title}
         description={exam.description}
         deadline={exam.deadline}
-        lesson_id={exam.lesson_id}
-        lessons={lessons}
+        lesson={exam.lesson}
         weight={exam.weight}
       />
     ));
@@ -37,13 +29,10 @@ function ListCourseExamGroupItem({
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={toggleCollapsed}>
-        <View style={styles.row}>
-          <Image source={{uri: avatar_url}} style={styles.ava} />
-          <Text style={styles.title}>{name}</Text>
-        </View>
-      </TouchableOpacity>
-      <Collapsible collapsed={isCollapsed}>{renderExams()}</Collapsible>
+      <View style={styles.row}>
+        <Text style={styles.title}>{name}</Text>
+      </View>
+      {renderExams()}
     </View>
   );
 }
@@ -51,9 +40,8 @@ function ListCourseExamGroupItem({
 const styles = {
   container: {
     paddingHorizontal: theme.mainHorizontal,
-    paddingVertical: 16,
+    paddingTop: 16,
   },
-  ava: theme.mainAvatar,
   row: {
     flexDirection: 'row',
   },
@@ -62,9 +50,6 @@ const styles = {
     fontWeight: theme.title.fontWeight,
     marginLeft: 10,
     alignSelf: 'center',
-  },
-  contentContainer: {
-    marginLeft: 10,
   },
 };
 

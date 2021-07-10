@@ -6,7 +6,7 @@ let CancelToken = axios.CancelToken;
 let sourceCancel = CancelToken.source();
 
 export function getStaff(refreshing, page, search, token, domain) {
-  return function(dispatch) {
+  return function (dispatch) {
     if (!refreshing) {
       dispatch(beginLoadStaff());
     } else {
@@ -14,10 +14,10 @@ export function getStaff(refreshing, page, search, token, domain) {
     }
     staffApi
       .getStaff(sourceCancel, page, search, token, domain)
-      .then(function(res) {
+      .then(function (res) {
         dispatch(loadStaffSuccessful(res));
       })
-      .catch(error => {
+      .catch((error) => {
         if (axios.isCancel(error)) {
           console.log('Request canceled', error.message);
         } else {
@@ -39,11 +39,11 @@ function beginLoadStaff() {
 function loadStaffSuccessful(res) {
   return {
     type: types.LOAD_MANAGE_STAFF_SUCCESSFUL,
-    staff: res.data.staffs,
+    staff: res.data.employees.items,
     isLoadingStaff: false,
     errorStaff: false,
-    currentPage: res.data.paginator.current_page,
-    totalPage: res.data.paginator.total_pages,
+    currentPage: res.data.employees.meta.current_page,
+    totalPage: res.data.employees.meta.total_pages,
     refreshingStaff: false,
   };
 }
@@ -70,7 +70,7 @@ function beginSearchStaff(search) {
 export function searchStaff(search, token, domain) {
   sourceCancel.cancel('Canceled by staff api.');
   sourceCancel = CancelToken.source();
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginSearchStaff(search));
     dispatch(getStaff(false, 1, search, token, domain));
   };
@@ -85,7 +85,7 @@ function beginRefreshStaff() {
 }
 
 export function refreshStaff(search, token, domain) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginSearchStaff(search));
     dispatch(getStaff(true, 1, search, token, domain));
   };
@@ -98,85 +98,5 @@ export function resetStaff() {
     search: '',
     currentPage: 0,
     totalPage: 1,
-  };
-}
-
-export function loadDepartments(token, domain) {
-  return function(dispatch) {
-    dispatch(beginLoadDepartments());
-    staffApi
-      .getDepartments(token, domain)
-      .then(function(res) {
-        dispatch(loadDepartmentsSuccessful(res));
-      })
-      .catch(error => {
-        loadDepartmentsError();
-        throw error;
-      });
-  };
-}
-
-function beginLoadDepartments() {
-  return {
-    type: types.BEGIN_LOAD_DEPARTMENTS,
-    isLoadingDepartments: true,
-    errorDepartments: false,
-  };
-}
-
-function loadDepartmentsSuccessful(res) {
-  return {
-    type: types.LOAD_DEPARTMENTS_SUCCESSFUL,
-    isLoadingDepartments: false,
-    errorDepartments: false,
-    departments: res.data.data.departments,
-  };
-}
-
-function loadDepartmentsError() {
-  return {
-    type: types.LOAD_DEPARTMENTS_ERROR,
-    isLoadingDepartments: false,
-    errorDepartments: true,
-  };
-}
-
-export function loadRoles(token, domain) {
-  return function(dispatch) {
-    dispatch(beginLoadRoles());
-    staffApi
-      .getRoles(token, domain)
-      .then(function(res) {
-        dispatch(loadRolesSuccessful(res));
-      })
-      .catch(error => {
-        loadRolesError();
-        throw error;
-      });
-  };
-}
-
-function beginLoadRoles() {
-  return {
-    type: types.BEGIN_LOAD_ROLES,
-    isLoadingRoles: true,
-    errorRoles: false,
-  };
-}
-
-function loadRolesSuccessful(res) {
-  return {
-    type: types.LOAD_ROLES_SUCCESSFUL,
-    isLoadingRoles: true,
-    errorRoles: false,
-    roles: res.data.data.roles,
-  };
-}
-
-function loadRolesError() {
-  return {
-    type: types.LOAD_ROLES_ERROR,
-    isLoadingRoles: true,
-    errorRoles: false,
   };
 }

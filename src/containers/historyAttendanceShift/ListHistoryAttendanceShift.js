@@ -2,13 +2,14 @@
  * Created by phanmduong on 4/24/17.
  */
 import React from 'react';
-import {View} from 'react-native';
+import {RefreshControl, View} from 'react-native';
 import {observer} from 'mobx-react';
 import ShiftRegisterDate from './ShiftRegisterDate';
 import {List} from 'native-base';
 import DateRangePicker from '../../components/common/DateRangePicker';
-import moment from 'moment';
 import theme from '../../styles';
+import Loading from '../../components/common/Loading';
+import EmptyMessage from '../../components/common/EmptyMessage';
 
 @observer
 class ListHistoryAttendanceShift extends React.Component {
@@ -20,8 +21,8 @@ class ListHistoryAttendanceShift extends React.Component {
     const {startTime, endTime} = this.props.store;
     return (
       <DateRangePicker
-        startDate={startTime && moment.unix(startTime)}
-        endDate={endTime && moment.unix(endTime)}
+        startDate={startTime}
+        endDate={endTime}
         onSelectStartDate={this.props.onSelectStartTime}
         onSelectEndDate={this.props.onSelectEndTime}
         containerStyle={styles.container}
@@ -33,37 +34,61 @@ class ListHistoryAttendanceShift extends React.Component {
 
   render() {
     if (this.props.shiftType === 'work_shift') {
-      const {listWorkShift} = this.props.store;
-      if (listWorkShift.length > 0) {
-        return (
-          <List
-            ListHeaderComponent={this.headerComponent}
-            dataArray={listWorkShift}
-            renderRow={(date) => (
-              <ShiftRegisterDate
-                dateData={date}
-                shiftType={this.props.shiftType}
-              />
-            )}
-          />
-        );
-      }
+      const {listWorkShift, isLoading, error, refreshing} = this.props.store;
+      return (
+        <List
+          ListHeaderComponent={this.headerComponent}
+          dataArray={listWorkShift}
+          contentContainerStyle={{flexGrow: 1}}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={this.props.reload}
+            />
+          }
+          renderRow={(date) => (
+            <ShiftRegisterDate
+              dateData={date}
+              shiftType={this.props.shiftType}
+            />
+          )}
+          ListEmptyComponent={
+            isLoading ? (
+              <Loading />
+            ) : (
+              (error || listWorkShift.length <= 0) && <EmptyMessage />
+            )
+          }
+        />
+      );
     } else if (this.props.shiftType === 'shift') {
-      const {listShift} = this.props.store;
-      if (listShift.length > 0) {
-        return (
-          <List
-            ListHeaderComponent={this.headerComponent}
-            dataArray={listShift}
-            renderRow={(date) => (
-              <ShiftRegisterDate
-                dateData={date}
-                shiftType={this.props.shiftType}
-              />
-            )}
-          />
-        );
-      }
+      const {listShift, isLoading, error, refreshing} = this.props.store;
+      return (
+        <List
+          ListHeaderComponent={this.headerComponent}
+          dataArray={listShift}
+          contentContainerStyle={{flexGrow: 1}}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={this.props.reload}
+            />
+          }
+          renderRow={(date) => (
+            <ShiftRegisterDate
+              dateData={date}
+              shiftType={this.props.shiftType}
+            />
+          )}
+          ListEmptyComponent={
+            isLoading ? (
+              <Loading />
+            ) : (
+              (error || listShift.length <= 0) && <EmptyMessage />
+            )
+          }
+        />
+      );
     }
     return <View />;
   }

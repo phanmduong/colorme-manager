@@ -10,6 +10,7 @@ import * as alert from '../constants/alert';
 import LoginComponent from '../components/LoginComponent';
 import * as loginActions from '../actions/loginActions';
 import * as autoLoginActions from '../actions/autoLoginActions';
+import {NOTIFICATION_ID} from "../constants/constant";
 
 class LoginContainer extends React.Component {
   constructor(props) {
@@ -48,15 +49,7 @@ class LoginContainer extends React.Component {
       this.props.login.password &&
       this.props.domain
     ) {
-      const merchant = this.props.domains.find(
-        (merchant) =>
-          merchant.domain.trim().toLowerCase() ===
-          this.props.domain.trim().toLowerCase(),
-      );
-      const notificationId =
-        merchant && merchant.notification_id
-          ? merchant.notification_id
-          : EMPTY_NOTIFICATION_ID;
+      const notificationId = NOTIFICATION_ID;
       this.props.loginActions.loginUser(
         this.props.login,
         this.props.domain,

@@ -6,6 +6,7 @@ import {bindActionCreators} from 'redux';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as loginActions from '../actions/loginActions';
 import {isEmptyInput} from '../helper';
+import {NOTIFICATION_ID} from '../constants/constant';
 
 class AuthLoadingContainer extends React.Component {
   constructor(props) {
@@ -37,15 +38,13 @@ class AuthLoadingContainer extends React.Component {
   _bootstrapAsync = async () => {
     const username = await AsyncStorage.getItem('@ColorME:username');
     const password = await AsyncStorage.getItem('@ColorME:password');
-    const notificationId = await AsyncStorage.getItem(
-        '@ColorME:notificationId',
-    );
+    const notificationId = NOTIFICATION_ID;
     if (username && password) {
       setTimeout(() => {
         this.props.loginActions.loginUser(
           {username, password},
           this.props.domain,
-            notificationId,
+          notificationId,
           this._whenLoginSuccess,
           this._logout,
         );

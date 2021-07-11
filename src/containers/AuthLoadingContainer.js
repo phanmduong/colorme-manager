@@ -1,11 +1,13 @@
 import React from 'react';
-import {Dimensions, Image, Platform, Text, View} from 'react-native';
+import {Dimensions, Image, Platform, View} from 'react-native';
 import Spinkit from 'react-native-spinkit';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as loginActions from '../actions/loginActions';
 import {isEmptyInput} from '../helper';
+import {NOTIFICATION_ID} from "../constants/constant";
+
 const {width} = Dimensions.get('window');
 
 class AuthLoadingContainer extends React.Component {
@@ -39,14 +41,11 @@ class AuthLoadingContainer extends React.Component {
     const username = await AsyncStorage.getItem('@ColorME:username');
     const password = await AsyncStorage.getItem('@ColorME:password');
     const domain = await AsyncStorage.getItem('@ColorME:domain');
-    const notificationId = await AsyncStorage.getItem(
-      '@ColorME:notificationId',
-    );
     if (username && password && domain) {
       this.props.loginActions.loginUser(
         {username, password},
         domain,
-        notificationId,
+        NOTIFICATION_ID,
         this._whenLoginSuccess,
         this._logout,
       );

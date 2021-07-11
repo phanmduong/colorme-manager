@@ -63,6 +63,8 @@
 	<string>Determine current location for punch in and punch out</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Attendance taking feature requires the location to confirm that the students are in classes</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>For QR code scan to extract student attendance data, upload ID and avatar pictures</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Photo library is used to select photos to upload ID and avatar pictures</string>
 	<key>UIAppFonts</key>

@@ -38,13 +38,12 @@ class AuthLoadingContainer extends React.Component {
   _bootstrapAsync = async () => {
     const username = await AsyncStorage.getItem('@ColorME:username');
     const password = await AsyncStorage.getItem('@ColorME:password');
-    const notificationId = NOTIFICATION_ID;
     if (username && password) {
       setTimeout(() => {
         this.props.loginActions.loginUser(
           {username, password},
           this.props.domain,
-          notificationId,
+          NOTIFICATION_ID,
           this._whenLoginSuccess,
           this._logout,
         );

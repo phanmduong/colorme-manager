@@ -6,28 +6,17 @@ import {dotNumber} from '../../helper';
 function ListCourseItem({
   name,
   price,
-  lessons,
   description,
   avatar_url,
   id,
   onStatusChange,
   currentStatus,
-  parentCourses,
-  parent_id,
+  parent,
   navigation,
+  duration,
+  course,
 }) {
   const [status, setStatus] = useState(currentStatus === 1);
-
-  function getParentCourse() {
-    if (parent_id) {
-      for (const parent of parentCourses) {
-        if (parent.id === parent_id) {
-          return parent.name;
-        }
-      }
-    }
-    return null;
-  }
 
   return (
     <TouchableOpacity
@@ -46,14 +35,15 @@ function ListCourseItem({
               <Text style={styles.title}>{name}</Text>
               <Switch
                 onValueChange={(value) => {
-                  onStatusChange(id, value);
+                  const payload = {status: value ? 1 : 0, name};
+                  onStatusChange(id, payload);
                   setStatus(value);
                 }}
                 value={status}
               />
             </View>
-            <View style={styles.row}>
-              {parent_id && (
+            {parent && (
+              <View style={styles.row}>
                 <View
                   style={{
                     ...styles.card,
@@ -61,19 +51,23 @@ function ListCourseItem({
                       backgroundColor: '#32CA41',
                     },
                   }}>
-                  <Text style={styles.saler}>{getParentCourse()}</Text>
+                  <Text style={styles.saler}>{parent.name}</Text>
                 </View>
-              )}
-            </View>
-            <Text style={styles.info}>{description}</Text>
-            <Text style={styles.info}>{lessons.length} buổi</Text>
-            <Text style={styles.info}>{dotNumber(price)}đ</Text>
+              </View>
+            )}
+            {description ? (
+              <Text style={styles.info}>{description}</Text>
+            ) : null}
+            <Text style={styles.info}>{duration} buổi</Text>
+            {price ? (
+              <Text style={styles.info}>{dotNumber(price)}đ</Text>
+            ) : null}
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 onPress={() =>
                   navigation.navigate('AddCourse', {
                     editMode: true,
-                    id: id,
+                    course: course,
                   })
                 }>
                 <View style={styles.button}>

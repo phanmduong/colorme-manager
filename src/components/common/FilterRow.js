@@ -19,6 +19,7 @@ const FilterRow = ({
   isApiSearch = false,
   onApiSearch,
   getLabel,
+  shouldReturnObject = false,
 }) => {
   const [search, setSearch] = useState('');
 
@@ -115,7 +116,13 @@ const FilterRow = ({
         footerTemplate={renderPickerFooter}
         onBlur={() => setSearch('')}
         modalStyle={styles.modalStyle}
-        onValueChange={(value) => onChangeValue(value.id)}
+        onValueChange={(value) => {
+          if (!shouldReturnObject) {
+            onChangeValue(value.id);
+          } else {
+            onChangeValue(value);
+          }
+        }}
       />
     </View>
   );

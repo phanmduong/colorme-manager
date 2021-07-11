@@ -4,14 +4,14 @@ import {Calendar} from 'react-native-calendars';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import moment from 'moment';
 
-function CalendarSchedule({classes, onSelectDate}) {
+function CalendarSchedule({classes, onSelectDate, startTime, endTime}) {
   const [selected, setSelected] = useState(moment().format('YYYY-MM-DD'));
   const [markedDates, setMarked] = useState({});
 
   useEffect(() => {
     function markDates() {
-      const beginMonth = moment().startOf('month');
-      const endMonth = moment().endOf('month');
+      const beginMonth = moment.unix(startTime);
+      const endMonth = moment.unix(endTime);
       const markedDatesTemp = {};
       for (
         const m = beginMonth;
@@ -36,10 +36,11 @@ function CalendarSchedule({classes, onSelectDate}) {
 
   function isMarkable(date) {
     for (const classItem of classes) {
-      for (const lesson of classItem.lessons) {
-        if (lesson.time === date.format('YYYY-MM-DD')) {
-          return true;
-        }
+      if (
+        moment.unix(classItem.time).format('YYYY-MM-DD') ===
+        date.format('YYYY-MM-DD')
+      ) {
+        return true;
       }
     }
     return false;

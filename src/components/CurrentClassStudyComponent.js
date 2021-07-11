@@ -10,6 +10,7 @@ import {View, Text} from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {getStatusBarHeight, isIphoneX} from 'react-native-iphone-x-helper';
 import moment from 'moment';
+// Do NOT remove moment_timezone
 import moment_timezone from 'moment-timezone';
 import ProgressCircle from 'react-native-progress-circle';
 import Spinkit from 'react-native-spinkit';
@@ -17,7 +18,7 @@ import CurrentClassItem from './class/CurrentClassItem';
 import theme from '../styles';
 import {isEmptyInput} from '../helper';
 import FilterCurrentClassModal from './class/FilterCurrentClassModal';
-var {height, width} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 class ClassComponent extends React.Component {
   constructor(props, context) {
@@ -27,6 +28,7 @@ class ClassComponent extends React.Component {
       selectedCourseId: -1,
       selectedBaseId: -1,
       selectedProvinceId: -1,
+      id: '',
       filterModalVisible: false,
     };
   }
@@ -66,6 +68,8 @@ class ClassComponent extends React.Component {
         isVisible={this.state.filterModalVisible}
         provinces={this.props.provinces}
         isLoadingProvinces={this.props.isLoadingProvinces}
+        onChangeId={this.onChangeId}
+        id={this.state.id}
       />
     </View>
   );
@@ -73,6 +77,7 @@ class ClassComponent extends React.Component {
   renderClassItem = (classList) => {
     return classList.map((classItem) => (
       <CurrentClassItem
+        id={classItem.id}
         name={classItem.name}
         icon={classItem.course ? classItem.course.icon_url : null}
         teacher={classItem.teacher}
@@ -104,6 +109,10 @@ class ClassComponent extends React.Component {
 
   onSelectCourseId = (courseId) => {
     this.setState({selectedCourseId: courseId});
+  };
+
+  onChangeId = (id) => {
+    this.setState({id});
   };
 
   createWeek = (dateData) => {
@@ -151,9 +160,14 @@ class ClassComponent extends React.Component {
     return null;
   };
 
-  filterFutureClass = () => {
+  filterByFilter = () => {
     let filterClasses = this.props.classData;
-    let futureClasses = [];
+
+    if (this.state.id !== '') {
+      filterClasses = filterClasses.filter(
+        (classItem) => classItem.id === parseInt(this.state.id),
+      );
+    }
     if (this.state.selectedCourseId !== -1) {
       filterClasses = filterClasses.filter(
         (classItem) => classItem.course.id === this.state.selectedCourseId,
@@ -170,7 +184,14 @@ class ClassComponent extends React.Component {
           classItem.base.district.province.id === this.state.selectedProvinceId,
       );
     }
-    for (let classItem of filterClasses) {
+
+    return filterClasses;
+  };
+
+  filterFutureClass = () => {
+    let futureClasses = [];
+
+    for (let classItem of this.filterByFilter()) {
       let classLesson = this.getCurrentLesson(
         this.props.selectedDate,
         classItem.class_lesson,
@@ -189,19 +210,9 @@ class ClassComponent extends React.Component {
   };
 
   filterPastClass = () => {
-    let filterClasses = this.props.classData;
     let pastClasses = [];
-    if (this.state.selectedCourseId !== -1) {
-      filterClasses = filterClasses.filter(
-        (classItem) => classItem.course.id === this.state.selectedCourseId,
-      );
-    }
-    if (this.state.selectedBaseId !== -1) {
-      filterClasses = filterClasses.filter(
-        (classItem) => classItem.base.id === this.state.selectedBaseId,
-      );
-    }
-    for (let classItem of filterClasses) {
+
+    for (let classItem of this.filterByFilter()) {
       let classLesson = this.getCurrentLesson(
         this.props.selectedDate,
         classItem.class_lesson,
@@ -220,19 +231,8 @@ class ClassComponent extends React.Component {
   };
 
   filterCurrentClass = () => {
-    let filterClasses = this.props.classData;
     let pastClasses = [];
-    if (this.state.selectedCourseId !== -1) {
-      filterClasses = filterClasses.filter(
-        (classItem) => classItem.course.id === this.state.selectedCourseId,
-      );
-    }
-    if (this.state.selectedBaseId !== -1) {
-      filterClasses = filterClasses.filter(
-        (classItem) => classItem.base.id === this.state.selectedBaseId,
-      );
-    }
-    for (let classItem of filterClasses) {
+    for (let classItem of this.filterByFilter()) {
       let classLesson = this.getCurrentLesson(
         this.props.selectedDate,
         classItem.class_lesson,

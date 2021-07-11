@@ -28,7 +28,10 @@ export function saveRegisterApi(token, register, domain) {
 }
 
 export function loadCoursesApi(token, domain) {
-  let url = env.apiUrl(domain) + '/paid-courses?token=' + token;
+  let url =
+    env.manageApiUrlAuth(domain) +
+    '/v1/courses?limit=0&status=1&is_parent=0&orderBy=name&sortedBy=asc&token=' +
+    token;
   return axios.get(url);
 }
 

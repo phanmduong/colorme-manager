@@ -35,10 +35,7 @@ class StaffComponent extends React.Component {
       phone={item.phone}
       email={item.email}
       name={item.name}
-      base_id={item.base_id}
-      department_id={item.department_id}
-      role_id={item.role_id}
-      role={item.role}
+      department={item.department}
     />
   );
 

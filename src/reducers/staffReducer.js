@@ -56,38 +56,6 @@ export default function staffReducer(state = initialState.staff, action) {
         currentPage: action.currentPage,
         totalPage: action.totalPage,
       });
-    case types.BEGIN_LOAD_DEPARTMENTS:
-      return Object.assign({}, state, {
-        isLoadingDepartments: action.isLoadingDepartments,
-        errorDepartments: action.errorDepartments,
-      });
-    case types.LOAD_DEPARTMENTS_SUCCESSFUL:
-      return Object.assign({}, state, {
-        isLoadingDepartments: action.isLoadingDepartments,
-        errorDepartments: action.errorDepartments,
-        departments: action.departments,
-      });
-    case types.LOAD_DEPARTMENTS_ERROR:
-      return Object.assign({}, state, {
-        isLoadingDepartments: action.isLoadingDepartments,
-        errorDepartments: action.errorDepartments,
-      });
-    case types.BEGIN_LOAD_ROLES:
-      return Object.assign({}, state, {
-        isLoadingRoles: action.isLoadingRoles,
-        errorRoles: action.errorRoles,
-      });
-    case types.LOAD_ROLES_SUCCESSFUL:
-      return Object.assign({}, state, {
-        isLoadingRoles: action.isLoadingRoles,
-        errorRoles: action.errorRoles,
-        roles: action.roles,
-      });
-    case types.LOAD_ROLES_ERROR:
-      return Object.assign({}, state, {
-        isLoadingRoles: action.isLoadingRoles,
-        errorRoles: action.errorRoles,
-      });
     default:
       return state;
   }

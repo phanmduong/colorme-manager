@@ -2,13 +2,15 @@
  * Created by phanmduong on 4/24/17.
  */
 import React from 'react';
-import {View} from 'react-native';
 import {observer} from 'mobx-react';
 import TeachingClass from './TeachingClass';
 import {List} from 'native-base';
 import DateRangePicker from '../../components/common/DateRangePicker';
 import moment from 'moment';
 import theme from '../../styles';
+import Loading from '../../components/common/Loading';
+import EmptyMessage from '../../components/common/EmptyMessage';
+import {RefreshControl} from 'react-native';
 
 @observer
 class ListHistoryAttendanceTeaching extends React.Component {
@@ -20,8 +22,8 @@ class ListHistoryAttendanceTeaching extends React.Component {
     const {startTime, endTime} = this.props.store;
     return (
       <DateRangePicker
-        startDate={startTime && moment.unix(startTime)}
-        endDate={endTime && moment.unix(endTime)}
+        startDate={startTime}
+        endDate={endTime}
         onSelectStartDate={this.props.onSelectStartTime}
         onSelectEndDate={this.props.onSelectEndTime}
         containerStyle={styles.container}
@@ -32,20 +34,31 @@ class ListHistoryAttendanceTeaching extends React.Component {
   };
 
   render() {
-    const {listAttendance} = this.props.store;
+    const {listAttendance, isLoading, error, refreshing} = this.props.store;
 
-    if (listAttendance.length > 0) {
-      return (
-        <List
-          ListHeaderComponent={this.headerComponent}
-          dataArray={listAttendance}
-          renderRow={(classData, index) => (
-            <TeachingClass classData={classData} key={index} />
-          )}
-        />
-      );
-    }
-    return <View />;
+    return (
+      <List
+        ListHeaderComponent={this.headerComponent}
+        dataArray={listAttendance}
+        contentContainerStyle={{flexGrow: 1}}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={this.props.reload}
+          />
+        }
+        renderRow={(classData, index) => (
+          <TeachingClass classData={classData} key={index} />
+        )}
+        ListEmptyComponent={
+          isLoading ? (
+            <Loading />
+          ) : (
+            (error || listAttendance.length <= 0) && <EmptyMessage />
+          )
+        }
+      />
+    );
   }
 }
 

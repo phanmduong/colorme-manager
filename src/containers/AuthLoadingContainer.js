@@ -1,14 +1,12 @@
 import React from 'react';
 import {Dimensions, Image, Platform, Text, View} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import Spinkit from 'react-native-spinkit';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-// import * as loginActions from '../actions/loginActions';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as loginActions from '../actions/loginActions';
 import {isEmptyInput} from '../helper';
-var {height, width} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 class AuthLoadingContainer extends React.Component {
   constructor(props) {
@@ -25,7 +23,6 @@ class AuthLoadingContainer extends React.Component {
 
   _whenLoginSuccess = () => {
     const params = this.props.navigation.state.params;
-    console.log(params);
     if (params && params.routeName) {
       const {routeName, ...routeParams} = params;
       this.props.navigation.navigate({routeName, params: routeParams});
@@ -42,10 +39,14 @@ class AuthLoadingContainer extends React.Component {
     const username = await AsyncStorage.getItem('@ColorME:username');
     const password = await AsyncStorage.getItem('@ColorME:password');
     const domain = await AsyncStorage.getItem('@ColorME:domain');
+    const notificationId = await AsyncStorage.getItem(
+      '@ColorME:notificationId',
+    );
     if (username && password && domain) {
       this.props.loginActions.loginUser(
         {username, password},
         domain,
+        notificationId,
         this._whenLoginSuccess,
         this._logout,
       );

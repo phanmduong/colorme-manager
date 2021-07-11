@@ -29,3 +29,5 @@ export function manageApiUrlV4(domain) {
 export function manageApiUrlAuth(domain) {
   return `https://${domain.toLowerCase()}.eduto.net/api/auth`;
 }
+
+export const IMAGE_UPLOAD_URL = 'https://colorme.vn/api/v3/upload-image-public';

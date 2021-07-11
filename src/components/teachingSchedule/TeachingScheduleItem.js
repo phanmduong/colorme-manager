@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Image, Text, TouchableOpacity} from 'react-native';
 import theme from '../../styles';
+import {displayUnixDate} from '../../helper';
 
 function TeachingScheduleItem({
   avatar_url,
@@ -18,7 +19,8 @@ function TeachingScheduleItem({
           <Text style={styles.name}>{name}</Text>
         </View>
         <Text>
-          {start_time.slice(0, 5)} - {end_time.slice(0, 5)}
+          {displayUnixDate(start_time, 'time')} -{' '}
+          {displayUnixDate(end_time, 'time')}
         </Text>
       </View>
     </TouchableOpacity>

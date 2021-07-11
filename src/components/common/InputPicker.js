@@ -52,7 +52,9 @@ const InputPicker = ({
     const {item, getLabel} = settings;
     return (
       <View style={styles.options}>
-        <Text style={{fontSize: 16}}>{getLabel(item)}</Text>
+        <Text style={{fontSize: 16, color: item.color ? item.color : 'black'}}>
+          {getLabel(item)}
+        </Text>
       </View>
     );
   };

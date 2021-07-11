@@ -7,11 +7,10 @@ import AsyncStorage from '@react-native-community/async-storage';
 import DeviceInfo from 'react-native-device-info';
 import OneSignal from 'react-native-onesignal';
 
-export function updateDataLoginForm(login, domain) {
+export function updateDataLoginForm(login, domain, domains) {
   return {
     type: types.UPDATE_DATA_LOGIN_FORM,
     login: Object.assign({}, login),
-    domain: domain,
   };
 }
 
@@ -32,7 +31,13 @@ export function beginLogin() {
   };
 }
 
-export function loginUser(login, domain, openMainScreen, logout) {
+export function loginUser(
+  login,
+  domain,
+  notificationId,
+  openMainScreen,
+  logout,
+) {
   let device = {
     device_id: DeviceInfo.getUniqueId(),
     name: DeviceInfo.getModel(),
@@ -46,6 +51,10 @@ export function loginUser(login, domain, openMainScreen, logout) {
         loadLoginApi
           .loadCheckDevice(device, res.data.token, domain)
           .then(function (resCheckDevice) {
+            // Initialize notification configuration
+            OneSignal.setAppId(notificationId);
+            OneSignal.sendTags({device_type: 'mobile_manage'});
+
             if (resCheckDevice.data.status === 0) {
               dispatch(
                 loginSuccess(
@@ -61,8 +70,6 @@ export function loginUser(login, domain, openMainScreen, logout) {
             if (res.data.user.role > 0) {
               openMainScreen();
             }
-            // dispatch(openMainScreen(res));
-            // dispatch(changeStatusBarColor('default'));
             dispatch(changeStatusTransaction(res.data.user));
           });
       })
@@ -101,7 +108,6 @@ export function loginSuccess(res, domain, isCheckIn = true, deviceUser = {}) {
   OneSignal.sendTags({
     user_id: res.data.user ? res.data.user.id : 0,
     type: 'mobile',
-    domain: domain,
   });
   return {
     type: types.LOGIN_USER,
@@ -156,12 +162,13 @@ function changeStatusTransaction(user) {
   };
 }
 
-export function setDataLogin(login, domain) {
+export function setDataLogin(login, domain, notificationId) {
   return async function () {
     try {
       await AsyncStorage.setItem('@ColorME:username', login.username);
       await AsyncStorage.setItem('@ColorME:password', login.password);
       await AsyncStorage.setItem('@ColorME:domain', domain);
+      await AsyncStorage.setItem('@ColorME:notificationId', notificationId);
     } catch (error) {}
   };
 }

@@ -62,7 +62,12 @@ class ProfileComponent extends React.Component {
   };
 
   async clearAll(navigation) {
-    const keys = ['@ColorME:username', '@ColorME:password', '@ColorME:domain'];
+    const keys = [
+      '@ColorME:username',
+      '@ColorME:password',
+      '@ColorME:domain',
+      '@ColorME:notificationId',
+    ];
     try {
       await AsyncStorage.multiRemove(keys);
       navigation.navigate('Login');
@@ -73,7 +78,7 @@ class ProfileComponent extends React.Component {
 
   changeAvatar = () => {
     const options = {};
-    ImagePicker.showImagePicker(options, response => {
+    ImagePicker.showImagePicker(options, (response) => {
       if (response.uri) {
         let imageUri = response.uri;
         this.props.changeAvatar(imageUri);

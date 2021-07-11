@@ -24,14 +24,18 @@ class LoginContainer extends React.Component {
     this.props.loginActions.getDataLogin();
   }
 
-  saveDataLogin() {
-    this.props.loginActions.setDataLogin(this.props.login, this.props.domain);
+  saveDataLogin(notificationId) {
+    this.props.loginActions.setDataLogin(
+      this.props.login,
+      this.props.domain,
+      notificationId,
+    );
   }
 
   updateFormData(name, value) {
     let login = this.props.login;
     login[name] = value;
-    this.props.loginActions.updateDataLoginForm(login, this.props.domain);
+    this.props.loginActions.updateDataLoginForm(login);
   }
 
   openMainScreen = () => {
@@ -44,12 +48,22 @@ class LoginContainer extends React.Component {
       this.props.login.password &&
       this.props.domain
     ) {
+      const merchant = this.props.domains.find(
+        (merchant) =>
+          merchant.domain.trim().toLowerCase() ===
+          this.props.domain.trim().toLowerCase(),
+      );
+      const notificationId =
+        merchant && merchant.notification_id
+          ? merchant.notification_id
+          : EMPTY_NOTIFICATION_ID;
       this.props.loginActions.loginUser(
         this.props.login,
         this.props.domain,
+        notificationId,
         this.openMainScreen,
       );
-      this.saveDataLogin();
+      this.saveDataLogin(notificationId);
     } else {
       Alert.alert('Thông báo', alert.CHECK_INFO_LOGIN);
     }

@@ -22,7 +22,6 @@ class AuthLoadingContainer extends React.Component {
 
   _whenLoginSuccess = () => {
     const params = this.props.navigation.state.params;
-    console.log(params);
     if (params && params.routeName) {
       const {routeName, ...routeParams} = params;
       this.props.navigation.navigate({routeName, params: routeParams});
@@ -38,11 +37,15 @@ class AuthLoadingContainer extends React.Component {
   _bootstrapAsync = async () => {
     const username = await AsyncStorage.getItem('@ColorME:username');
     const password = await AsyncStorage.getItem('@ColorME:password');
+    const notificationId = await AsyncStorage.getItem(
+        '@ColorME:notificationId',
+    );
     if (username && password) {
       setTimeout(() => {
         this.props.loginActions.loginUser(
           {username, password},
           this.props.domain,
+            notificationId,
           this._whenLoginSuccess,
           this._logout,
         );

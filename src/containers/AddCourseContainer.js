@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as courseActions from '../actions/courseActions';
@@ -8,30 +8,33 @@ import NavigationLeftHeader from '../components/common/NavigationLeftHeader';
 function AddCourseContainer(props) {
   function createCourse(data) {
     if (editMode) {
-      props.courseActions.createCourse(true, data, props.token, props.domain);
+      props.courseActions.createCourse(
+        true,
+        data,
+        props.token,
+        props.domain,
+        () => props.navigation.goBack(),
+      );
     } else {
-      props.courseActions.createCourse(false, data, props.token, props.domain);
+      props.courseActions.createCourse(
+        false,
+        data,
+        props.token,
+        props.domain,
+        () => props.navigation.goBack(),
+      );
     }
-  }
-
-  useEffect(() => {
-    if (editMode) {
-      loadCourseDetails();
-    }
-  }, []);
-
-  function loadCourseDetails() {
-    props.courseActions.loadCourseDetails(false, id, props.token, props.domain);
   }
 
   const editMode = props.navigation.getParam('editMode');
-  const id = props.navigation.getParam('id');
+  const course = props.navigation.getParam('course');
 
   return (
     <AddCourseComponent
       {...props}
       createCourse={createCourse}
       editMode={editMode}
+      course={course}
     />
   );
 }
@@ -39,7 +42,7 @@ function AddCourseContainer(props) {
 AddCourseContainer.navigationOptions = ({navigation}) => {
   return {
     headerLeft: () => (
-      <NavigationLeftHeader name={'Tạo môn học'} navigation={navigation} />
+      <NavigationLeftHeader name={'Tạo sửa môn học'} navigation={navigation} />
     ),
   };
 };

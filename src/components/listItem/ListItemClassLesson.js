@@ -98,6 +98,7 @@ const ListItemClassLesson = (props) => {
                     !teacher.color || teacher.color === ''
                       ? theme.processColor1
                       : teacher.color,
+                  marginRight: 5,
                 },
               }}>
               <Text style={styles.tagName}>
@@ -114,7 +115,7 @@ const ListItemClassLesson = (props) => {
                     !assist.color || assist.color === ''
                       ? theme.processColor1
                       : assist.color,
-                  marginLeft: 5,
+                  marginRight: 5,
                 },
               }}>
               <Text style={styles.tagName}>

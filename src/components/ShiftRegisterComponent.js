@@ -139,14 +139,6 @@ class ShiftRegisterComponent extends React.Component {
     );
   };
 
-  renderCoursePickerHeader = () => {
-    return (
-      <View style={styles.headerFooterContainer}>
-        <Text style={styles.headerFooterText}>Chọn khóa học</Text>
-      </View>
-    );
-  };
-
   renderCoursePickerFooter(action) {
     return (
       <TouchableOpacity

@@ -63,7 +63,12 @@ class InfoStudentRegistersContainer extends React.Component {
       received_book_at,
       this.props.token,
       this.props.domain,
+      this.updateRegisterAfterSubmitMoney,
     );
+  };
+
+  updateRegisterAfterSubmitMoney = (register) => {
+    this.props.infoStudentActions.updateRegisterAfterSubmitMoney(register);
   };
 
   render() {

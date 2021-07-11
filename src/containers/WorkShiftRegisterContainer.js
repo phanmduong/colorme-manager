@@ -4,20 +4,21 @@ import * as workShiftRegisterAction from '../actions/workShiftRegisterActions.js
 import WorkShiftRegisterComponent from '../components/WorkShiftRegisterComponent';
 import {bindActionCreators} from 'redux';
 import * as baseActions from '../actions/baseActions';
-import * as genActions from '../actions/genActions';
+import * as staffActions from '../actions/staffActions';
+import {onSelectStaffId} from '../actions/workShiftRegisterActions.js';
 
 class WorkShiftRegisterContainer extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
       checkedDataBase: false,
-      checkedDataGen: false,
       checkedDataWorkShiftRegister: false,
     };
   }
 
   componentWillMount = () => {
-    this.loadBaseAndGenData();
+    this.loadStaff('');
+    this.loadBaseData();
   };
 
   componentWillReceiveProps = (nextProps) => {
@@ -30,30 +31,55 @@ class WorkShiftRegisterContainer extends React.Component {
       this.props.workShiftRegisterAction.selectedBaseId(props.baseData[0].id);
     }
 
-    if (props.genData.length > 0 && !this.state.checkedDataGen) {
-      this.setState({checkedDataGen: true});
-      this.props.workShiftRegisterAction.selectedGenId(props.currentGen.id);
-    }
-
-    if (
-      props.genData.length > 0 &&
-      props.baseData.length > 0 &&
-      !this.state.checkedDataWorkShiftRegister
-    ) {
+    if (props.baseData.length > 0 && !this.state.checkedDataWorkShiftRegister) {
       this.setState({checkedDataWorkShiftRegister: true});
-      this.loadDataWorkShiftRegister(props.baseData[0].id, props.currentGen.id);
+      this.loadDataWorkShiftRegister(
+        false,
+        props.startTime,
+        props.endTime,
+        props.baseData[0].id,
+        props.selectedStaffId,
+      );
     }
   };
 
-  loadBaseAndGenData = () => {
-    this.props.baseActions.loadDataBase(this.props.token, this.props.domain);
-    this.props.genActions.loadDataGen(this.props.token, this.props.domain);
+  loadStaff = () => {
+    this.props.staffActions.getStaff(
+      false,
+      1,
+      '',
+      this.props.token,
+      this.props.domain,
+    );
   };
 
-  loadDataWorkShiftRegister = (baseId, genId) => {
+  searchStaff = (search) => {
+    this.props.staffActions.getStaff(
+      true,
+      1,
+      search,
+      this.props.token,
+      this.props.domain,
+    );
+  };
+
+  loadBaseData = () => {
+    this.props.baseActions.loadDataBase(this.props.token, this.props.domain);
+  };
+
+  loadDataWorkShiftRegister = (
+    refreshing,
+    startTime,
+    endTime,
+    baseId,
+    selectedStaffId,
+  ) => {
     this.props.workShiftRegisterAction.loadWorkShift(
+      refreshing,
+      startTime,
+      endTime,
       baseId,
-      genId,
+      selectedStaffId,
       this.props.token,
       this.props.domain,
     );
@@ -61,12 +87,21 @@ class WorkShiftRegisterContainer extends React.Component {
 
   onSelectBaseId = (baseId) => {
     this.props.workShiftRegisterAction.selectedBaseId(baseId);
-    this.loadDataWorkShiftRegister(baseId, this.props.selectedGenId);
+    this.loadDataWorkShiftRegister(
+      true,
+      this.props.startTime,
+      this.props.endTime,
+      baseId,
+      this.props.selectedStaffId,
+    );
   };
 
-  onSelectGenId = (genId) => {
-    this.props.workShiftRegisterAction.selectedGenId(genId);
-    this.loadDataWorkShiftRegister(this.props.selectedBaseId, genId);
+  onSelectStartTime = (time) => {
+    this.props.workShiftRegisterAction.selectedStartTime(time);
+  };
+
+  onSelectEndTime = (time) => {
+    this.props.workShiftRegisterAction.selectedEndTime(time);
   };
 
   onRegister = (shiftId) => {
@@ -74,6 +109,16 @@ class WorkShiftRegisterContainer extends React.Component {
       shiftId,
       this.props.token,
       this.props.domain,
+    );
+  };
+
+  onNavigateWeek = (startTime, endTime) => {
+    this.loadDataWorkShiftRegister(
+      true,
+      startTime,
+      endTime,
+      this.props.selectedBaseId,
+      this.props.selectedStaffId,
     );
   };
 
@@ -85,27 +130,40 @@ class WorkShiftRegisterContainer extends React.Component {
     );
   };
 
+  onRefresh = () => {
+    this.loadDataWorkShiftRegister(
+      true,
+      this.props.startTime,
+      this.props.endTime,
+      this.props.selectedBaseId,
+      this.props.selectedStaffId,
+    );
+  };
+
+  onSelectStaffId = (staffId) => {
+    this.props.workShiftRegisterAction.onSelectStaffId(staffId);
+    this.loadDataWorkShiftRegister(
+      true,
+      this.props.startTime,
+      this.props.endTime,
+      this.props.selectedBaseId,
+      staffId,
+    );
+  };
+
   render() {
     return (
       <WorkShiftRegisterComponent
-        workShiftRegisterData={this.props.workShiftRegisterData}
-        isLoadingWorkShiftRegister={this.props.isLoadingWorkShiftRegister}
-        genData={this.props.genData}
-        baseData={this.props.baseData}
+        {...this.props}
         onSelectBaseId={this.onSelectBaseId}
-        onSelectGenId={this.onSelectGenId}
-        errorWorkShiftRegister={this.props.errorWorkShiftRegister}
-        user={this.props.user}
-        avatar_url={this.props.user.avatar_url}
-        onRefresh={() =>
-          this.loadDataWorkShiftRegister(
-            this.props.selectedBaseId,
-            this.props.selectedGenId,
-          )
-        }
+        onSelectStartTime={this.onSelectStartTime}
+        onSelectEndTime={this.onSelectEndTime}
+        onRefresh={this.onRefresh}
         onRegister={this.onRegister}
         onUnregister={this.onUnregister}
-        {...this.props}
+        onNavigateWeek={this.onNavigateWeek}
+        searchStaff={this.searchStaff}
+        onSelectStaffId={this.onSelectStaffId}
       />
     );
   }
@@ -117,22 +175,27 @@ function mapStateToProps(state) {
     isLoadingWorkShiftRegister: state.workShiftRegister.isLoading,
     workShiftRegisterData: state.workShiftRegister.workShiftRegisterData,
     baseData: state.base.baseData,
-    genData: state.gen.genData,
-    currentGen: state.gen.currentGen,
+    isLoadingBases: state.base.isLoading,
     selectedBaseId: state.workShiftRegister.selectedBaseId,
-    selectedGenId: state.workShiftRegister.selectedGenId,
-    errorGen: state.gen.error,
     errorBase: state.base.error,
     errorWorkShiftRegister: state.workShiftRegister.error,
     user: state.login.user,
     domain: state.login.domain,
+    startTime: state.workShiftRegister.startTime,
+    endTime: state.workShiftRegister.endTime,
+    refreshing: state.workShiftRegister.refreshing,
+    staff: state.staff.staff,
+    isLoadingStaff: state.staff.isLoadingStaff,
+    errorStaff: state.staff.errorStaff,
+    refreshingStaff: state.staff.refreshingStaff,
+    selectedStaffId: state.workShiftRegister.selectedStaffId,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     baseActions: bindActionCreators(baseActions, dispatch),
-    genActions: bindActionCreators(genActions, dispatch),
+    staffActions: bindActionCreators(staffActions, dispatch),
     workShiftRegisterAction: bindActionCreators(
       workShiftRegisterAction,
       dispatch,

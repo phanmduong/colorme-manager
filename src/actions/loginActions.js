@@ -98,7 +98,11 @@ export function changeStatusBarColor(color) {
 
 export function loginSuccess(res, domain, isCheckIn = true, deviceUser = {}) {
   let token = res.data.token;
-  OneSignal.sendTags({user_id: res.data.user ? res.data.user.id : 0});
+  OneSignal.sendTags({
+    user_id: res.data.user ? res.data.user.id : 0,
+    type: 'mobile',
+    domain: domain,
+  });
   return {
     type: types.LOGIN_USER,
     token: token,

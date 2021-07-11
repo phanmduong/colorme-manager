@@ -1,14 +1,11 @@
 import React from 'react';
-import {Dimensions, Image, Platform, Text, View} from 'react-native';
+import {Platform, View, Image} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import Spinkit from 'react-native-spinkit';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-// import * as loginActions from '../actions/loginActions';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as loginActions from '../actions/loginActions';
 import {isEmptyInput} from '../helper';
-var {height, width} = Dimensions.get('window');
 
 class AuthLoadingContainer extends React.Component {
   constructor(props) {
@@ -16,7 +13,7 @@ class AuthLoadingContainer extends React.Component {
   }
 
   componentDidMount() {
-    if (isEmptyInput(this.props.token) || isEmptyInput(this.props.domain)) {
+    if (isEmptyInput(this.props.token)) {
       this._bootstrapAsync();
     } else {
       this._whenLoginSuccess();
@@ -41,14 +38,15 @@ class AuthLoadingContainer extends React.Component {
   _bootstrapAsync = async () => {
     const username = await AsyncStorage.getItem('@ColorME:username');
     const password = await AsyncStorage.getItem('@ColorME:password');
-    const domain = await AsyncStorage.getItem('@ColorME:domain');
-    if (username && password && domain) {
-      this.props.loginActions.loginUser(
-        {username, password},
-        domain,
-        this._whenLoginSuccess,
-        this._logout,
-      );
+    if (username && password) {
+      setTimeout(() => {
+        this.props.loginActions.loginUser(
+          {username, password},
+          this.props.domain,
+          this._whenLoginSuccess,
+          this._logout,
+        );
+      }, 1500);
     } else {
       this._logout();
     }
@@ -56,13 +54,16 @@ class AuthLoadingContainer extends React.Component {
 
   render() {
     return (
-      <View style={styles.containerColorME}>
-        <Image
-          source={require('../../assets/img/alibabaLogo.jpg')}
-          style={{transform: [{scale: 0.3}], borderRadius: 30}}
-        />
-        <Spinkit isVisible color="#FC7800" type="ThreeBounce" size={40} />
-      </View>
+      <LinearGradient
+        colors={['#FFC5B8', '#FFC5B8']}
+        style={styles.containerColorME}>
+        <View style={styles.contentColorME}>
+          <Image
+            source={require('../../assets/img/colormeanimate.gif')}
+            style={{marginLeft: 30}}
+          />
+        </View>
+      </LinearGradient>
     );
   }
 }
@@ -73,10 +74,7 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  contentColorME: {
-    alignItems: 'flex-end',
-    marginBottom: width / 2,
-  },
+  contentColorME: {},
   textColor: {
     color: 'white',
     fontSize: 35,

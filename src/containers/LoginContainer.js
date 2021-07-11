@@ -5,12 +5,12 @@ import React from 'react';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 import {bindActionCreators} from 'redux';
-import {Alert, PermissionsAndroid} from 'react-native';
+import {Alert} from 'react-native';
 import * as alert from '../constants/alert';
 import LoginComponent from '../components/LoginComponent';
 import * as loginActions from '../actions/loginActions';
 import * as autoLoginActions from '../actions/autoLoginActions';
-import SplashScreen from 'react-native-splash-screen';
+import {EMPTY_NOTIFICATION_ID} from '../constants/constant';
 
 class LoginContainer extends React.Component {
   constructor(props) {
@@ -25,14 +25,18 @@ class LoginContainer extends React.Component {
     this.props.loginActions.getDataLogin();
   }
 
-  saveDataLogin() {
-    this.props.loginActions.setDataLogin(this.props.login, this.props.domain);
+  saveDataLogin(notificationId) {
+    this.props.loginActions.setDataLogin(
+      this.props.login,
+      this.props.domain,
+      notificationId,
+    );
   }
 
   updateFormData(name, value) {
     let login = this.props.login;
     login[name] = value;
-    this.props.loginActions.updateDataLoginForm(login, this.props.domain);
+    this.props.loginActions.updateDataLoginForm(login);
   }
 
   updateDomainForm = (domain) => {
@@ -47,14 +51,25 @@ class LoginContainer extends React.Component {
     if (
       this.props.login.username &&
       this.props.login.password &&
-      this.props.domain
+      this.props.domain &&
+      this.props.domains.length > 0
     ) {
+      const merchant = this.props.domains.find(
+        (merchant) =>
+          merchant.domain.trim().toLowerCase() ===
+          this.props.domain.trim().toLowerCase(),
+      );
+      const notificationId =
+        merchant && merchant.notification_id
+          ? merchant.notification_id
+          : EMPTY_NOTIFICATION_ID;
       this.props.loginActions.loginUser(
         this.props.login,
         this.props.domain,
+        notificationId,
         this.openMainScreen,
       );
-      this.saveDataLogin();
+      this.saveDataLogin(notificationId);
     } else {
       Alert.alert('Thông báo', alert.CHECK_INFO_LOGIN);
     }
@@ -99,10 +114,6 @@ class LoginContainer extends React.Component {
     );
   }
 }
-
-// LoginContainer.navigationOptions = {
-//     title: 'Đăng nhập',
-// };
 
 function mapStateToProps(state) {
   return {

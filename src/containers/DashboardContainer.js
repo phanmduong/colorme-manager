@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import * as analyticsActions from '../actions/analyticsActions';
 import * as tabActions from '../actions/tabActions';
 import MeetingStore from './meeting/MeetingStore';
+import OneSignal from 'react-native-onesignal';
 
 class DashboardContainer extends React.Component {
   constructor(props, context) {
@@ -26,6 +27,11 @@ class DashboardContainer extends React.Component {
     this.loadNotifications();
     this.loadTabs();
     this.getAnalyticsGenData();
+
+    // Calling registerForPushNotifications
+    OneSignal.promptForPushNotificationsWithUserResponse((response) =>
+      console.log(response),
+    );
   }
 
   loadTabs = () => {

@@ -56,8 +56,7 @@ class LoginContainer extends React.Component {
     if (
       this.props.login.username &&
       this.props.login.password &&
-      this.props.domain &&
-      this.props.domains.length > 0
+      this.props.domain
     ) {
       const merchant = this.props.domains.find(
         (merchant) =>

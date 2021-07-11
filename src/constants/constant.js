@@ -224,3 +224,5 @@ export const COLORS = [
   {id: '#DDE6E8', name: 'Trắng', color: '#DDE6E8'},
   {id: '#BDC3C8', name: 'Xám', color: '#BDC3C8'},
 ];
+
+export const EMPTY_NOTIFICATION_ID = 'EMPTY_NOTIFICATION_ID';

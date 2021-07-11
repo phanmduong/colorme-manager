@@ -7,13 +7,9 @@ import initialState from './initialState';
 export default function loginReducer(state = initialState.login, action) {
   switch (action.type) {
     case types.UPDATE_DATA_LOGIN_FORM:
-      return {
-        ...initialState.login,
-        ...{
-          login: action.login,
-        },
-        domain: action.domain,
-      };
+      return Object.assign({}, state, {
+        login: action.login,
+      });
     case types.UPDATE_DOMAIN_FORM:
       return Object.assign({}, state, {
         domain: action.domain,

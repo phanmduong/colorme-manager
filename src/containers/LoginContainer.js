@@ -10,7 +10,7 @@ import * as alert from '../constants/alert';
 import LoginComponent from '../components/LoginComponent';
 import * as loginActions from '../actions/loginActions';
 import * as autoLoginActions from '../actions/autoLoginActions';
-import {EMPTY_NOTIFICATION_ID} from '../constants/constant';
+import {NOTIFICATION_ID} from '../constants/constant';
 
 class LoginContainer extends React.Component {
   constructor(props) {
@@ -39,10 +39,6 @@ class LoginContainer extends React.Component {
     this.props.loginActions.updateDataLoginForm(login);
   }
 
-  updateDomainForm = (domain) => {
-    this.props.loginActions.updateDomainForm(domain);
-  };
-
   openMainScreen = () => {
     this.props.navigation.navigate('Main');
   };
@@ -51,18 +47,9 @@ class LoginContainer extends React.Component {
     if (
       this.props.login.username &&
       this.props.login.password &&
-      this.props.domain &&
-      this.props.domains.length > 0
+      this.props.domain
     ) {
-      const merchant = this.props.domains.find(
-        (merchant) =>
-          merchant.domain.trim().toLowerCase() ===
-          this.props.domain.trim().toLowerCase(),
-      );
-      const notificationId =
-        merchant && merchant.notification_id
-          ? merchant.notification_id
-          : EMPTY_NOTIFICATION_ID;
+      const notificationId = NOTIFICATION_ID;
       this.props.loginActions.loginUser(
         this.props.login,
         this.props.domain,
@@ -76,7 +63,6 @@ class LoginContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('hello');
     if (!_.isUndefined(nextProps.token) && nextProps.token.trim().length > 0) {
       if (!nextProps.isLoading && !nextProps.error) {
         if (nextProps.user.role <= 0) {

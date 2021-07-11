@@ -10,14 +10,10 @@ import {
   KeyboardAvoidingView,
   TextInput,
   Image,
-  Dimensions,
   TouchableWithoutFeedback,
-  Platform,
 } from 'react-native';
 import Spinkit from 'react-native-spinkit';
 import theme from '../styles';
-import Autocomplete from 'react-native-autocomplete-input';
-import {isEmptyInput} from '../helper';
 
 let self;
 

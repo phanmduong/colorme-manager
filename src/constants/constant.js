@@ -225,4 +225,4 @@ export const COLORS = [
   {id: '#BDC3C8', name: 'Xám', color: '#BDC3C8'},
 ];
 
-export const EMPTY_NOTIFICATION_ID = 'EMPTY_NOTIFICATION_ID';
+export const NOTIFICATION_ID = 'NULL';

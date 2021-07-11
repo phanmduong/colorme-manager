@@ -1,4 +1,4 @@
-package vn.colorme.manage.eduto;
+package vn.edu.alibabaenglish.keetool.app.alibabamanagenew;
 
 import android.content.Intent;
 import android.os.Bundle;

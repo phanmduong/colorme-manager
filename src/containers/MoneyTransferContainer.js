@@ -32,7 +32,7 @@ class MoneyTransferContainer extends React.Component {
       transports: ['websocket'],
     });
 
-    this.socket.on('colorme-channel:notification', (data) => {
+    this.socket.on('edu-channel:notification', (data) => {
       if (data.notification && data.notification.transaction) {
         this.props.moneyTransferActions.updateHistoryTransactionWithSocket(
           this.props.token,

@@ -22,10 +22,7 @@ export default {
     isGetDataLocalSuccessful: false,
     isCheckIn: false,
     deviceUser: {},
-    domain: null,
-    domains: [],
-    isLoadingDomains: false,
-    errorDomains: false,
+    domain: 'alibaba',
   },
   tab: {
     tabs: [],

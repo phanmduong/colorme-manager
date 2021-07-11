@@ -12,7 +12,7 @@ import SplashScreen from 'react-native-splash-screen';
 export default class ColorMEManager extends Component {
   constructor(props) {
     super(props);
-    OneSignal.init('ceea18e8-322a-4748-b18b-fdf066d9a5ff');
+    OneSignal.init('02640883-e837-44b2-8b53-2d9c1a9c797e');
     OneSignal.sendTags({device_type: 'mobile_manage'});
   }
 

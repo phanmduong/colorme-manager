@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Eduto Manage</string>
+	<string>Alibaba Manage</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -64,7 +64,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Attendance taking feature requires the location to confirm that the students are in classes</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string></string>
+	<string>Take attendance via QR code</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Photo library is used to select photos to upload ID and avatar pictures</string>
 	<key>UIAppFonts</key>
@@ -112,6 +112,7 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>Fontisto.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

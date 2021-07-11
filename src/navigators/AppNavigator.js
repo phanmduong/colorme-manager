@@ -34,7 +34,7 @@ Object.assign(MainNavigation.router, {
 
 export const AppNavigator = createAppContainer(MainNavigation);
 
-const prefix = 'colorme-manager://';
+const prefix = 'edu-manager://';
 
 class AppWithNavigationState extends React.Component {
   constructor(props) {

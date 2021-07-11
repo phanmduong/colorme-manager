@@ -63,35 +63,6 @@ class LoginComponent extends React.Component {
     self.props.changeStatusBarColor('light-content');
   }
 
-  filterSearch = () => {
-    if (isEmptyInput(this.props.domain)) {
-      return this.props.domains.sort(function (a, b) {
-        if (a.domain < b.domain) {
-          return -1;
-        }
-        if (a.domain > b.domain) {
-          return 1;
-        }
-        return 0;
-      });
-    }
-    return this.props.domains
-      .filter((item) => {
-        return item.domain
-          .toLowerCase()
-          .includes(this.props.domain.toLowerCase());
-      })
-      .sort(function (a, b) {
-        if (a.domain < b.domain) {
-          return -1;
-        }
-        if (a.domain > b.domain) {
-          return 1;
-        }
-        return 0;
-      });
-  };
-
   render() {
     return (
       <TouchableWithoutFeedback
@@ -105,112 +76,12 @@ class LoginComponent extends React.Component {
           style={styles.container}>
           <View style={styles.logoContainer}>
             <Image
-              source={require('../../assets/img/edutoLogo.png')}
-              style={{transform: [{scale: 0.2}]}}
+              source={require('../../assets/img/alibabaLogo.jpg')}
+              style={{transform: [{scale: 0.3}], borderRadius: 30}}
             />
           </View>
           <View style={styles.loginContainer}>
-            {Platform.OS === 'ios' ? (
-              <Autocomplete
-                data={this.filterSearch()}
-                inputContainerStyle={{borderWidth: 0}}
-                hideResults={this.state.hideResults}
-                listStyle={styles.listStyle}
-                renderItem={({item, i}) => (
-                  <TouchableOpacity
-                    onPress={() => {
-                      this.props.updateDomainForm(item.domain);
-                      this.setState({hideResults: true});
-                    }}>
-                    <Text style={styles.listName}>{item.domain}</Text>
-                  </TouchableOpacity>
-                )}
-                renderTextInput={() => (
-                  <View>
-                    <Text style={styles.titleForm}>Chọn trung tâm</Text>
-                    <View style={styles.inputContainer}>
-                      <TextInput
-                        value={this.props.domain}
-                        ref={'domain'}
-                        onChangeText={(data) => {
-                          this.props.updateDomainForm(data);
-                          this.setState({hideResults: false});
-                        }}
-                        returnKeyType={'next'}
-                        placeholder="Chọn trung tâm"
-                        blurOnSubmit={false}
-                        onFocus={() => this.setState({hideResults: false})}
-                        onBlur={() => this.setState({hideResults: true})}
-                        onSubmitEditing={(event) => {
-                          this.refs.username.focus();
-                          this.setState({hideResults: true});
-                        }}
-                        editable={!this.props.isLoading}
-                        autoCapitalize={'none'}
-                        style={{fontSize: 15}}
-                      />
-                    </View>
-                  </View>
-                )}
-              />
-            ) : (
-              <View
-                style={{
-                  flex: 1,
-                  left: 0,
-                  position: 'absolute',
-                  right: 0,
-                  top: 0,
-                  zIndex: 1,
-                }}>
-                <Autocomplete
-                  data={this.filterSearch()}
-                  inputContainerStyle={{borderWidth: 0}}
-                  hideResults={this.state.hideResults}
-                  listStyle={styles.listStyle}
-                  renderItem={({item, i}) => (
-                    <TouchableOpacity
-                      onPress={() => {
-                        this.props.updateDomainForm(item.domain);
-                        this.setState({hideResults: true});
-                      }}>
-                      <Text style={styles.listName}>{item.domain}</Text>
-                    </TouchableOpacity>
-                  )}
-                  renderTextInput={() => (
-                    <View>
-                      <Text style={styles.titleForm}>Chọn trung tâm</Text>
-                      <View style={styles.inputContainer}>
-                        <TextInput
-                          value={this.props.domain}
-                          ref={'domain'}
-                          onChangeText={(data) => {
-                            this.props.updateDomainForm(data);
-                            this.setState({hideResults: false});
-                          }}
-                          returnKeyType={'next'}
-                          placeholder="Chọn trung tâm"
-                          blurOnSubmit={false}
-                          onFocus={() => this.setState({hideResults: false})}
-                          onBlur={() => this.setState({hideResults: true})}
-                          onSubmitEditing={(event) => {
-                            this.refs.username.focus();
-                            this.setState({hideResults: true});
-                          }}
-                          editable={!this.props.isLoading}
-                          autoCapitalize={'none'}
-                          style={{fontSize: 15}}
-                        />
-                      </View>
-                    </View>
-                  )}
-                />
-              </View>
-            )}
-            <View
-              style={
-                Platform.OS === 'ios' ? {marginTop: 30} : {marginTop: 100}
-              }>
+            <View style={{marginTop: 30}}>
               <Text style={styles.titleForm}>Tên đăng nhập</Text>
               <View style={styles.inputContainer}>
                 <TextInput
@@ -287,7 +158,7 @@ const styles = {
     borderRadius: 25,
   },
   btnSubmit: {
-    backgroundColor: '#0A66E9',
+    backgroundColor: '#FC7800',
     paddingHorizontal: 20,
     borderRadius: 25,
     height: 45,

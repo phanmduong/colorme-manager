@@ -23,7 +23,6 @@ class LoginContainer extends React.Component {
 
   componentWillMount() {
     this.props.loginActions.getDataLogin();
-    this.loadDomains();
   }
 
   saveDataLogin() {
@@ -35,10 +34,6 @@ class LoginContainer extends React.Component {
     login[name] = value;
     this.props.loginActions.updateDataLoginForm(login, this.props.domain);
   }
-
-  loadDomains = () => {
-    this.props.loginActions.loadDomains();
-  };
 
   updateDomainForm = (domain) => {
     this.props.loginActions.updateDomainForm(domain);
@@ -66,6 +61,7 @@ class LoginContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('hello');
     if (!_.isUndefined(nextProps.token) && nextProps.token.trim().length > 0) {
       if (!nextProps.isLoading && !nextProps.error) {
         if (nextProps.user.role <= 0) {
@@ -94,13 +90,11 @@ class LoginContainer extends React.Component {
     return (
       <LoginComponent
         updateFormData={this.updateFormData}
-        updateDomainForm={this.updateDomainForm}
         onClickLogin={this.onClickLogin}
         username={this.props.login.username}
         password={this.props.login.password}
         isLoading={this.props.isLoading}
         changeStatusBarColor={this.props.loginActions.changeStatusBarColor}
-        domains={this.props.domains}
         domain={this.props.domain}
       />
     );
@@ -121,9 +115,6 @@ function mapStateToProps(state) {
     isGetDataLocalSuccessful: state.login.isGetDataLocalSuccessful,
     isAutoLogin: state.autoLogin.isAutoLogin,
     domain: state.login.domain,
-    domains: state.login.domains,
-    isLoadingDomains: state.login.isLoadingDomains,
-    errorDomains: state.login.errorDomains,
   };
 }
 

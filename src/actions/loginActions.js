@@ -125,7 +125,7 @@ export function getDataLogin() {
     try {
       const username = await AsyncStorage.getItem('@ColorME:username');
       const password = await AsyncStorage.getItem('@ColorME:password');
-      const domain = await AsyncStorage.getItem('@ColorME:domain');
+      // const domain = await AsyncStorage.getItem('@ColorME:domain');
       dispatch(gotDataLogin(username, password, domain));
     } catch (error) {}
   };
@@ -138,7 +138,7 @@ export function gotDataLogin(username, password, domain) {
       username: username,
       password: password,
     },
-    domain: domain,
+    // domain: domain,
     isGetDataLocalSuccessful: true,
   };
 }
@@ -159,45 +159,5 @@ export function setDataLogin(login, domain) {
       await AsyncStorage.setItem('@ColorME:password', login.password);
       await AsyncStorage.setItem('@ColorME:domain', domain);
     } catch (error) {}
-  };
-}
-
-export function loadDomains() {
-  return function (dispatch) {
-    dispatch(beginLoadDomains());
-    loadLoginApi
-      .loadDomains()
-      .then(function (res) {
-        dispatch(loadDomainsSuccessful(res));
-      })
-      .catch((error) => {
-        dispatch(loadDomainsError());
-        throw error;
-      });
-  };
-}
-
-function beginLoadDomains() {
-  return {
-    type: types.BEGIN_LOAD_DOMAINS,
-    isLoadingDomains: true,
-    errorDomains: false,
-  };
-}
-
-function loadDomainsSuccessful(res) {
-  return {
-    type: types.LOAD_DOMAINS_SUCCESSFUL,
-    isLoadingDomains: false,
-    errorDomains: false,
-    domains: res.data.merchants,
-  };
-}
-
-function loadDomainsError() {
-  return {
-    type: types.LOAD_DOMAINS_ERROR,
-    isLoadingDomains: false,
-    errorDomains: true,
   };
 }

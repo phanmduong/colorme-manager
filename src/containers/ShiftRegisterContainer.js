@@ -19,10 +19,10 @@ class ShiftRegisterContainer extends React.Component {
       transports: ['websocket'],
     });
 
-    this.socket.on('colorme-channel:regis-shift', (data) => {
+    this.socket.on('edu-channel:regis-shift', (data) => {
       this.props.shiftRegisterActions.updateDataRegister(data);
     });
-    this.socket.on('colorme-channel:remove-shift', (data) => {
+    this.socket.on('edu-channel:remove-shift', (data) => {
       this.props.shiftRegisterActions.updateDataRegister(data);
     });
 

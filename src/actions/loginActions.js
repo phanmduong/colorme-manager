@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import DeviceInfo from 'react-native-device-info';
 import OneSignal from 'react-native-onesignal';
 
-export function updateDataLoginForm(login, domain, domains) {
+export function updateDataLoginForm(login) {
   return {
     type: types.UPDATE_DATA_LOGIN_FORM,
     login: Object.assign({}, login),

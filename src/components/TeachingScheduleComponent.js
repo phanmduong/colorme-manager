@@ -24,7 +24,8 @@ function TeachingScheduleComponent(props) {
     const filteredLessons = props.classes.filter(
       (classItem) =>
         moment.unix(classItem.time).format('YYYY-MM-DD') === selectedDate &&
-        classItem.study_class,
+        classItem.study_class &&
+        classItem.study_class.course,
     );
     return filteredLessons.map((lesson) => (
       <TeachingScheduleItem
